@@ -1,4 +1,4 @@
-                <!-- START Template Footer -->
+<!-- ini START Template Footer -->
         <footer id="footer" role="contentinfo">
             <!-- container -->
             <div class="container">
@@ -7,7 +7,7 @@
                     <!-- About -->
                     <div class="col-md-4">
                         <h4 class="font-alt mt0">About Us</h4>
-                        <p>Adminre is a clean and flat backend and frontend theme build with Twitter bootstrap 3.1.1</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do </p>
                         <p> Ut enim ad minim veniam,
                         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                         consequat. Duis aute irure dolor in reprehenderit in voluptate velit.</p>
