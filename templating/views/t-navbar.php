@@ -81,7 +81,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="meta">
-                                        <span class="text">Daftarooo</span>
+                                        <span class="text">Daftar</span>
                                     </span>
                                 </a>
                                
