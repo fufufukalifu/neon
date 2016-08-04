@@ -32,16 +32,6 @@
                         <div class="col-md-7">
                              <form class="form-horizontal">
 
-                                 <div class="form-group">
-                                    <label>Judul :</label>
-                                    <input type="text" class="form-control" id="title" placeholder="Apa pertanyaan mu?.....">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Persoalan: </label>
-                                    <textarea class="form-control" id="pertanyaan" rows="9" placeholder="Hal yang ingin ditanyakan....."></textarea>
-                                </div>
-
                                 <div class="form-group ">                                                
                                     <label>Pelajaran: </label>
                                          <select class="form-control">
@@ -52,6 +42,24 @@
                                             <option value="dll">....</option>
                                             </select>
                                 </div>
+
+                                 <div class="form-group ">                                                
+                                    <label>Sub-Bab: </label>
+                                         <select class="form-control">
+                                            <option >---</option>
+                                            <option value="mtk">Aljabar1</option>
+                                            <option value="biologi">Aljabar2</option>
+                                            <option value="fisika">Linier</option>
+                                            <option value="dll">....</option>
+                                            </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Persoalan: </label>
+                                    <textarea class="form-control" id="pertanyaan" rows="9" placeholder="Hal yang ingin ditanyakan....."></textarea>
+                                </div>
+
+                               
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Kirim <i class="ico-paper-plane"></i> </button>
