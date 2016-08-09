@@ -7,14 +7,14 @@
                 <!--/ pattern -->
                 <div class="container pt15 pb15">
                     <div class="page-header-section">
-                        <h4 class="title font-alt">Account Register User</h4>
+                        <h4 class="title font-alt"> Register Akun User</h4>
                     </div>
                     <div class="page-header-section">
                         <!-- Toolbar -->
                         <div class="toolbar">
                             <ol class="breadcrumb breadcrumb-transparent nm">
                                 <li><a href="javascript:void(0);">Pages</a></li>
-                                <li class="active">Account Register User</li>
+                                <li class="active"> Register Akun User</li>
                             </ol>
                         </div>
                         <!--/ Toolbar -->
