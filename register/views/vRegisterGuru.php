@@ -87,7 +87,7 @@
 
                         <div class="col-md-6">
                             <!-- Register form -->
-                            <form class="panel nm" name="form-register" action="">
+                            <form class="panel nm" name="form-register" action="<?=base_url()?>register/saveguru" method="post">
                                 <ul class="list-table pa15">
                                     <li>
                                         <!-- Alert message -->
@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Nama</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
+                                            <input type="text" class="form-control" name="nama" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
@@ -113,14 +113,14 @@
                                     <div class="form-group">
                                         <label class="control-label">Alamat</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
+                                            <input type="text" class="form-control" name="alamat" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Mata Pelajaran</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
+                                            <input type="text" class="form-control" name="mtpelajaran" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
@@ -152,16 +152,16 @@
                                 <hr class="nm">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="control-label">Username</label>
+                                        <label class="control-label">Nama Pengguna</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
+                                            <input type="text" class="form-control" name="namaPengguna" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Password</label>
+                                        <label class="control-label">Kata Sandi</label>
                                         <div class="has-icon pull-left">
-                                            <input type="password" class="form-control" name="password" data-parsley-required>
+                                            <input type="password" class="form-control" name="kataSandi" data-parsley-required>
                                             <i class="ico-key2 form-control-icon"></i>
                                         </div>
                                     </div>
