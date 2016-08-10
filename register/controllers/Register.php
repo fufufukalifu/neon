@@ -37,8 +37,8 @@ class Register extends CI_Controller{
        $this->load->view('templating/t-footer');
     }
 
-    // function untuk menampung nilai dari form kemudian di lempar 
-    // ke function insert_guru di kelas model Mregister
+    // function untuk menampung data dari form kemudian di lempar 
+    // ke function insert_guru dan insert_pengguna di kelas model Mregister
     public function saveguru()
     {     
       $namaDepan=htmlspecialchars($this->input->post('namadepan'));
@@ -47,8 +47,12 @@ class Register extends CI_Controller{
       $alamat=htmlspecialchars($this->input->post('alamat'));
       $noKontak=htmlspecialchars($this->input->post('nokontak'));
       $namaPengguna=htmlspecialchars($this->input->post('namapengguna'));
-
+      $kataSandi=htmlspecialchars(md5($this->input->post('katasandi')));
+      $hakAkses='Guru';
+      //melempar data guru ke function insert_guru di kelas model
       $data['mregister']=$this->mregister->insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$namaPengguna);
+      //melempar data guru ke function insert_pengguna di kelas model
+      $data['mregister']=$this->mregister->insert_pengguna($namaPengguna,$kataSandi,$hakAkses);
 
     }
 

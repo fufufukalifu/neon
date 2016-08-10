@@ -77,7 +77,7 @@
                             <div class="table-layout">
                                 <div class="col-xs-2 valign-top"><img src="<?=base_url('assets/image/icons/supportservices.png')?>" width="100%"></div>
                                 <div class="col-xs-10 valign-top pl15">
-                                    <h4 class="font-alt mt0">24 Hour Support</h4>
+                                    <h4 class="font-alt mt0">xx Hour Support</h4>
                                     <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
                                 </div>
@@ -92,7 +92,7 @@
                                     <li>
                                         <!-- Alert message -->
                                         <div class="alert alert-warning nm">
-                                            <span class="semibold">Note :</span>&nbsp;&nbsp;Please fill all the below field.
+                                            <span class="semibold">Catatan :</span>&nbsp;&nbsp;Silahkan diisi Semua.
                                         </div>
                                         <!--/ Alert message -->
                                     </li>
@@ -106,12 +106,12 @@
                                         <label class="col-md-12 control-label">Nama</label>
                                         <div class="col-md-6">
                                             <div class="has-icon pull-left">
-                                                <input type="text" class="form-control" name="namadepan" data-parsley-required>
+                                                <input type="text" class="form-control" name="namadepan" placeholder="Nama Depan" data-parsley-required>
                                                 <i class="ico-user2 form-control-icon"></i>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                             <input type="text" class="form-control" name="namadepan" data-parsley-required>
+                                             <input type="text" class="form-control" name="namabelakang" placeholder="Nama Belakang" data-parsley-required>
                                         </div>
                                       
                                     </div>
@@ -175,7 +175,7 @@
                                     <div class="col-md-12 form-group">
                                         <label class="control-label">Kata Sandi</label>
                                         <div class="has-icon pull-left">
-                                            <input type="password" class="form-control" name="kataSandi" data-parsley-required>
+                                            <input type="password" class="form-control" name="katasandi" data-parsley-required>
                                             <i class="ico-key2 form-control-icon"></i>
                                         </div>
                                     </div>
