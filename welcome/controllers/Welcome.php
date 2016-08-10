@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends MX_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,8 +18,21 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
-		$this->load->view('welcome_message');
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('Mmatapelajaran');
+	}
+
+	public function index(){
+	   $data['pelajaran_sma'] = $this->load->Mmatapelajaran->get_pelajaran_sma();
+	   $data['pelajaran_smk'] = $this->load->Mmatapelajaran->get_pelajaran_smk();
+	   $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
+	   $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
+
+
+	   $this->load->view('templating/t-header');
+       $this->load->view('templating/t-navbar');
+       $this->load->view('v-welcome', $data);
+       $this->load->view('templating/t-footer');
 	}
 }

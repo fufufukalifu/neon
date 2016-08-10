@@ -5,10 +5,11 @@ class Video extends CI_Controller{
         parent::__construct();
     }
     
+    ########### FRONT END  ####################
     public function index() {
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');
-       //$this->load->view('templating/t-container');
+       $this->load->view('v-large-menu-video');
        $this->load->view('templating/t-footer');
     }
 
@@ -36,7 +37,16 @@ class Video extends CI_Controller{
 
        $this->load->view('templating/t-footer');
     }
-
+    ########### FRONT END  ####################
+    
+    #----------# BACK END  #----------#
+    public function uploadvideo(){
+       $this->load->view('templating/t-header');
+       $this->load->view('templating/t-navbar');
+       $this->load->view('v-b-form-upload-video');
+       $this->load->view('templating/t-footer');
+    }   
+     #----------# BACK END  #----------#
 
 
 
