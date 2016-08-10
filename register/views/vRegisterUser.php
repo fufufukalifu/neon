@@ -87,12 +87,12 @@
 
                         <div class="col-md-6">
                             <!-- Register form -->
-                            <form class="panel nm" name="form-register" action="">
+                            <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/savesiswa" method="post">
                                 <ul class="list-table pa15">
                                     <li>
                                         <!-- Alert message -->
                                         <div class="alert alert-warning nm">
-                                            <span class="semibold">Note :</span>&nbsp;&nbsp;Please fill all the below field.
+                                            <span class="semibold">Catatan :</span>&nbsp;&nbsp;Silahkan diisi Semua.
                                         </div>
                                         <!--/ Alert message -->
                                     </li>
@@ -101,48 +101,52 @@
 
 
                                 <hr class="nm">
+                                <!-- start form data siswa -->
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="control-label">Nama</label>
-                                        <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                        <label class="col-md-12 control-label">Nama</label>
+                                        <div class="col-md-6">
+                                            <div class="has-icon pull-left">
+                                                <input type="text" class="form-control" name="namadepan" placeholder="Nama Depan" data-parsley-required>
+                                                <i class="ico-user2 form-control-icon"></i>
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                             <input type="text" class="form-control" name="namabelakang" placeholder="Nama Belakang" data-parsley-required>
+                                        </div>
+                                      
                                     </div>
 
-                                    <div class="form-group">
+
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Alamat</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                            <input type="text" class="form-control" name="alamat" data-parsley-required>
+                                            <i class="ico-home10 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Sekolah</label>
+
+                                     <div class="col-md-12 form-group">
+                                        <label class="control-label">No Kontak</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                            <input type="text" class="form-control" name="nokontak" data-parsley-required>
+                                            <i class="ico-phone3 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Alamat Sekolah</label>
-                                        <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
-                                        </div>
-                                    </div>
+                                 
                                 </div>
+                                <!-- end form data siswa -->
 
                                 <hr class="nm">
+                                <!-- start form upload poto -->
                                 <div class="panel-body">
                                     <div class="form-group">
-                                            <label class="col-sm-3 control-label">Photo</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-9">
                                                 <div class="btn-group pr5">
                                                     <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg')?>" alt="" width="34px">
                                                 </div>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">Change photo</button>
+                                                    <button type="button" class="btn btn-default">Upload photo</button>
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">.
                                                         <span class="caret"></span>
                                                     </button>
@@ -154,24 +158,48 @@
                                             </div>
                                     </div>
                                 </div>
+                                <!-- end form upload poto -->
 
                                 <hr class="nm">
+                                <!-- start form data sekolah -->
                                 <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="control-label">Username</label>
+                                   <div class="col-md-12 form-group">
+                                        <label class="control-label">Nama Sekolah</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="username" data-parsley-required>
+                                            <input type="text" class="form-control" name="namasekolah" data-parsley-required>
+                                            <i class="ico-home form-control-icon"></i>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-12 form-group">
+                                        <label class="control-label">Alamat Sekolah</label>
+                                        <div class="has-icon pull-left">
+                                            <input type="text" class="form-control" name="alamatsekolah" data-parsley-required>
+                                            <i class="ico-home form-control-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end form data siswa -->
+
+
+                                <hr class="nm">
+                                <!-- star form akun -->
+                                <div class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        <label class="control-label">Nama Pengguna</label>
+                                        <div class="has-icon pull-left">
+                                            <input type="text" class="form-control" name="namapengguna" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Password</label>
+                                    <div class="col-md-12 form-group">
+                                        <label class="control-label">Kata Sandi</label>
                                         <div class="has-icon pull-left">
-                                            <input type="password" class="form-control" name="password" data-parsley-required>
+                                            <input type="password" class="form-control" name="katasandi" data-parsley-required>
                                             <i class="ico-key2 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Retype Password</label>
                                         <div class="has-icon pull-left">
                                             <input type="password" class="form-control" name="retype-password" data-parsley-equalto="input[name=password]">
@@ -179,8 +207,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- end form akun -->
 
                                 <hr class="nm">
+                                <!-- Star form konfirmasi akun by email -->
                                 <div class="panel-body">
                                     <p class="semibold text-muted">To confirm and activate your new account, we will need to send the activation code to your e-mail.</p>
                                     <div class="form-group">
@@ -203,6 +233,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- end form konfirmasi akun by email -->
                                 <div class="panel-footer">
                                     <button type="submit" class="btn btn-block btn-success"><span class="semibold">Sign up</span></button>
                                 </div>

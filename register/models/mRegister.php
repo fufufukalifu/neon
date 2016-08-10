@@ -32,9 +32,16 @@ class Mregister extends CI_Model
 	}
 
 	//merupakan function untuk menyimpan data guru ke tabel siswa di databse netjoo  
-	public function insert_siswa()
+	public function insert_siswa($namaDepan,$namaBelakang,$alamat,$noKontak,$namaSekolah,$alamatSekolah)
 	{
-		echo "belum tersedia";
+		$this->db->set('namaDepan',$namaDepan);
+		$this->db->set('namaBelakang',$namaBelakang);
+		$this->db->set('alamat',$alamat);
+		$this->db->set('noKontak',$noKontak);
+		$this->db->set('namaSekolah',$namaSekolah);
+		$this->db->set('alamatSekolah');
+		$this->db->insert('tb_siswa');
+
 	}
 
 
