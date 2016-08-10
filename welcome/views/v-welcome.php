@@ -1,4 +1,5 @@
 <?php var_dump($pelajaran_sma);?>
+<!-- mega menu -->
 <section id="main" role="main">
 	<div class="container">
 		<div class="row">
@@ -34,6 +35,7 @@
 	</div>
 </section>
 
+<!-- greeting -->
 <section class="section mb10">
 	<hr>
   <div class="container">
@@ -48,7 +50,7 @@
   </div>
 </section>
 
-
+<!-- slidder video -->
 <section class="section">
 	<div class="container" style="width:90%">
 		<section class="jumbotron nm">
@@ -81,7 +83,78 @@
                 </div>
             </section></div>
 </section>
-            
+
+<!-- featured video -->
+<section class="section">
+   <div class="container">
+      <!-- video baru saja dilihat  -->            
+      <div class="section-header section-header-bordered mb15">
+          <h4 class="section-title">
+              <p class="font-alt nm">Baru Saja Dilihat</p>
+          </h4>
+      </div>
+      <!-- carousel -->            
+         <div class="col-md-3">
+            <!-- portfolio #1 -->
+            <div class="item text-center">
+                <!-- thumbnail -->
+                <div class="thumbnail nm">
+                    <!-- media -->
+                    <div class="media">
+                        <a href=""><video data-toggle="unveil" src="<?=base_url('assets/image/portfolio/placeholder.jpg');?>" data-src="<?=base_url('assets/image/portfolio/placeholder2.jpg');?>" alt="Photo" width="100%"/></a>
+                    </div>
+                    <!--/ media -->
+                </div>
+                <!--/ thumbnail -->
+                <!-- Meta -->
+                <h5 class="font-alt text-center mb5">Judul Video</h5>
+                <div class="text-center">
+                    <i class="ico-tags text-muted"></i>
+                    <a href="javascript:void(0);" class="text-muted">SMA - IPA</a>
+                </div>
+                <!--/ Meta -->
+            </div>
+            <!--/ portfolio #1 -->
+         </div>
+       <!--/ carousel -->
+   </div>
+</section>
+
+<!-- featured video 1-->
+<section class="section">
+   <div class="container">
+      <!-- video baru saja dilihat  -->            
+      <div class="section-header section-header-bordered mb15">
+          <h4 class="section-title">
+              <p class="font-alt nm">Topik Favorite</p>
+          </h4>
+      </div>
+      <!-- carousel -->            
+         <div class="col-md-3">
+            <!-- portfolio #1 -->
+            <div class="item text-center">
+                <!-- thumbnail -->
+                <div class="thumbnail nm">
+                    <!-- media -->
+                    <div class="media">
+                        <a href=""><video data-toggle="unveil" src="<?=base_url('assets/image/portfolio/placeholder.jpg');?>" data-src="<?=base_url('assets/image/portfolio/placeholder2.jpg');?>" alt="Photo" width="100%"/></a>
+                    </div>
+                    <!--/ media -->
+                </div>
+                <!--/ thumbnail -->
+                <!-- Meta -->
+                <h5 class="font-alt text-center mb5">Judul Bab</h5>
+                <div class="text-center">
+                    <i class="ico-tags text-muted"></i>
+                    <a href="javascript:void(0);" class="text-muted">SMA - IPA</a>
+                </div>
+                <!--/ Meta -->
+            </div>
+            <!--/ portfolio #1 -->
+         </div>
+       <!--/ carousel -->
+   </div>
+</section>
 
 <script type="text/javascript">
 	$('.carousel').carousel()
