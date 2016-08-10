@@ -25,9 +25,7 @@ class Register extends CI_Controller{
     //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru(){
        $this->load->view('templating/t-header');
-       $this->load->view('templating/t-navbar');
        $this->load->view('vRegisterGuru');
-       $this->load->view('templating/t-footer');
     }
 
     //function untuk menyimpan data pendaftaran user siswa ke database
