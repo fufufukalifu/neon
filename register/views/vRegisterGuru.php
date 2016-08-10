@@ -87,7 +87,7 @@
 
                         <div class="col-md-6">
                             <!-- Register form -->
-                            <form class="panel nm" name="form-register" action="<?=base_url()?>register/saveguru" method="post">
+                            <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/saveguru" method="post">
                                 <ul class="list-table pa15">
                                     <li>
                                         <!-- Alert message -->
@@ -103,25 +103,40 @@
                                 <hr class="nm">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="control-label">Nama</label>
-                                        <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="nama" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                        <label class="col-md-12 control-label">Nama</label>
+                                        <div class="col-md-6">
+                                            <div class="has-icon pull-left">
+                                                <input type="text" class="form-control" name="namadepan" data-parsley-required>
+                                                <i class="ico-user2 form-control-icon"></i>
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                             <input type="text" class="form-control" name="namadepan" data-parsley-required>
+                                        </div>
+                                      
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label">Alamat</label>
-                                        <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="alamat" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Mata Pelajaran</label>
                                         <div class="has-icon pull-left">
                                             <input type="text" class="form-control" name="mtpelajaran" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                            <i class="ico-book3 form-control-icon"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 form-group">
+                                        <label class="control-label">Alamat</label>
+                                        <div class="has-icon pull-left">
+                                            <input type="text" class="form-control" name="alamat" data-parsley-required>
+                                            <i class="ico-home10 form-control-icon"></i>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-12 form-group">
+                                        <label class="control-label">No Kontak</label>
+                                        <div class="has-icon pull-left">
+                                            <input type="text" class="form-control" name="nokontak" data-parsley-required>
+                                            <i class="ico-phone3 form-control-icon"></i>
                                         </div>
                                     </div>
                                  
@@ -130,13 +145,12 @@
                                 <hr class="nm">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                            <label class="col-sm-3 control-label">Photo</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-9">
                                                 <div class="btn-group pr5">
                                                     <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg')?>" alt="" width="34px">
                                                 </div>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">Change photo</button>
+                                                    <button type="button" class="btn btn-default">Upload photo</button>
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">.
                                                         <span class="caret"></span>
                                                     </button>
@@ -151,21 +165,21 @@
 
                                 <hr class="nm">
                                 <div class="panel-body">
-                                    <div class="form-group">
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Nama Pengguna</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="namaPengguna" data-parsley-required>
+                                            <input type="text" class="form-control" name="namapengguna" data-parsley-required>
                                             <i class="ico-user2 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Kata Sandi</label>
                                         <div class="has-icon pull-left">
                                             <input type="password" class="form-control" name="kataSandi" data-parsley-required>
                                             <i class="ico-key2 form-control-icon"></i>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="col-md-12 form-group">
                                         <label class="control-label">Retype Password</label>
                                         <div class="has-icon pull-left">
                                             <input type="password" class="form-control" name="retype-password" data-parsley-equalto="input[name=password]">
