@@ -48,7 +48,7 @@
                     <hr><!-- horizontal line -->
 
                     <!-- Login form -->
-                    <form class="panel" name="form-login" action="<?= base_url('index.php/Login/validasiLogin'); ?>" method="post">
+                    <form class="panel" name="form-login" action="<?= base_url('index.php/login/validasiLogin'); ?>" method="post">
                         <div class="panel-body">
                             <!-- Alert message -->
                             <div class="alert alert-warning">

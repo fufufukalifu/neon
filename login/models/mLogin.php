@@ -1,6 +1,6 @@
 <?php
 
-class mLogin extends CI_Model {
+class Mlogin extends CI_Model {
 
     //put your code here
 
@@ -9,7 +9,6 @@ class mLogin extends CI_Model {
     }
 
     public function cekUser($username, $password) {
-//        echo 'akses database';
         $this->db->select('*');
         $this->db->from('tb_pengguna');
         $this->db->where('namaPengguna', $username);
@@ -18,6 +17,8 @@ class mLogin extends CI_Model {
 
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
+echo "ada akun";
+
             return $query->result(); //if data is true
         } else {
             echo 'tidak ada akun';
