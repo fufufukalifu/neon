@@ -8,8 +8,8 @@ class Video extends CI_Controller{
     ########### FRONT END  ####################
     public function index() {
        $this->load->view('templating/t-header');
-       $this->load->view('templating/t-navbar');
-       $this->load->view('v-large-menu-video');
+       $this->load->view('templating/t-navbarUser');
+       $this->load->view('templating/t-title-site');
        $this->load->view('templating/t-footer');
     }
 
