@@ -109,10 +109,12 @@
                                             <div class="has-icon pull-left">
                                                 <input type="text" class="form-control" name="namadepan" placeholder="Nama Depan" data-parsley-required>
                                                 <i class="ico-user2 form-control-icon"></i>
+                                                 <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
+                                                <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                             <input type="text" class="form-control" name="namabelakang" placeholder="Nama Belakang" data-parsley-required>
+                                             <input type="text" class="form-control" name="namabelakang" placeholder="Nama Belakang" >
                                         </div>
                                       
                                     </div>
@@ -123,6 +125,8 @@
                                         <div class="has-icon pull-left">
                                             <input type="text" class="form-control" name="alamat" data-parsley-required>
                                             <i class="ico-home10 form-control-icon"></i>
+                                            <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
+                                           <span class="text-danger"> <?php echo form_error('alamat'); ?></span>
                                         </div>
                                     </div>
 
@@ -131,6 +135,8 @@
                                         <div class="has-icon pull-left">
                                             <input type="text" class="form-control" name="nokontak" data-parsley-required>
                                             <i class="ico-phone3 form-control-icon"></i>
+                                            <!-- untuk menampilkan pesan kesalahan penginputan no kontak -->
+                                           <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
                                         </div>
                                     </div>
                                  
@@ -186,24 +192,29 @@
                                 <!-- star form akun -->
                                 <div class="panel-body">
                                     <div class="col-md-12 form-group">
-                                        <label class="control-label">Nama Pengguna</label>
+                                        <label class="control-label" for="namapengguna">Nama Pengguna</label>
                                         <div class="has-icon pull-left">
-                                            <input type="text" class="form-control" name="namapengguna" data-parsley-required>
-                                            <i class="ico-user2 form-control-icon"></i>
+                                            <input type="text" class="form-control" name="namapengguna" value="<?php echo set_value('namapengguna'); ?>"  data-parsley-required>
+                                            <i class="ico-tag9 form-control-icon"></i>
+                                            <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
+                                            <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <label class="control-label">Kata Sandi</label>
                                         <div class="has-icon pull-left">
-                                            <input type="password" class="form-control" name="katasandi" data-parsley-required>
+                                            <input type="password" class="form-control" name="katasandi" required>
                                             <i class="ico-key2 form-control-icon"></i>
+                                            <!-- untuk menampilkan pesan kesalahan penginputan kata sandi -->
+                                            <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <label class="control-label">Retype Password</label>
+                                        <label class="control-label">Ulangi kata sandi</label>
                                         <div class="has-icon pull-left">
-                                            <input type="password" class="form-control" name="retype-password" data-parsley-equalto="input[name=password]">
+                                            <input type="password" class="form-control" name="passconf" data-parsley-equalto="input[name=password]">
                                             <i class="ico-asterisk form-control-icon"></i>
+                                            <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -216,8 +227,10 @@
                                     <div class="form-group">
                                         <label class="control-label">Email</label>
                                         <div class="has-icon pull-left">
-                                            <input type="email" class="form-control" name="email" placeholder="you@mail.com">
+                                            <input type="email" class="form-control" name="email" placeholder="xxx@mail.com">
                                             <i class="ico-envelop form-control-icon"></i>
+                                            <!-- untuk menampilkan pesan kesalahan penginputan email -->
+                                            <span class="text-danger"><?php echo form_error('email'); ?></span>
                                         </div>
                                     </div>
                                     <div class="form-group">

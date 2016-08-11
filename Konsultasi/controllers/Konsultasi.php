@@ -1,5 +1,5 @@
 <?php 
-class Konsultasi extends CI_Controller{
+class Konsultasi extends MX_Controller{
     //put your code here
     public function __construct() {
         parent::__construct();
