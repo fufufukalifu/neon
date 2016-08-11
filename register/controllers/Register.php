@@ -77,7 +77,7 @@ class Register extends MX_Controller{
           $namaPengguna=htmlspecialchars($this->input->post('namapengguna'));
           $kataSandi=htmlspecialchars(md5($this->input->post('katasandi')));
           $email=htmlspecialchars($this->input->post('email'));
-          $hakAkses='murid';
+          $hakAkses='user';
 
 
            //melempar data guru ke function insert_pengguna di kelas model
@@ -152,7 +152,7 @@ class Register extends MX_Controller{
 
         //melempar data guru ke function insert_guru di kelas model
         $data['mregister']=$this->mregister->insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$namaPengguna,$data);
-        
+
       }
       
 

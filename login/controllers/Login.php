@@ -59,7 +59,6 @@ class Login extends MX_Controller {
                 } elseif ($hakAkses == 'murid') {
 //                    redirect(site_url('peserta-bimbel'));
                 } elseif ($hakAkses == 'user') {
-		    echo 'murid';
                    	$this->user();
                 } else {
                     echo 'tidak ada hak akses';
