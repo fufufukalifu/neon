@@ -8,7 +8,7 @@
             <div class="section-header text-center">
                 <h2 class="section-title">
                     <br>
-                    <div class="font-alt nm">Nama Video Belajar</div>
+                    <div class="font-alt nm">Mata Pelajaran <?=$aliaspelajaran ?> Untuk Tingkat <?=$aliastingkat ?></div>
                 </h2>
             </div>
         </div>

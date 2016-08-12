@@ -7,7 +7,7 @@
 			<ol class="col-md-3">
 				<li class="dropdown-header bold"><a href="#">SD</a></li>
 				<?php foreach ($pelajaran_sd as $pelajaran_items): ?>
-					<li><a href="#"  class="text-info"><?=$pelajaran_items->namaMataPelajaran ?></a></li>
+					<li><a href="../index.php/video/"  class="text-info"><?=$pelajaran_items->namaMataPelajaran ?></a></li>
 				<?php endforeach ?>
 			</ol>
 
@@ -28,7 +28,7 @@
 			<ol class="col-md-3">
 				<li class="dropdown-header bold"><a href="#"  >SMA</a></li>
 				<?php foreach ($pelajaran_sma as $pelajaran_items): ?>
-					<li><a href="#"  class="text-success"><?=$pelajaran_items->namaMataPelajaran ?></a></li>
+					<li><a href="../index.php/video/daftarvideo/<?=$pelajaran_items->aliasMataPelajaran ?>/<?=$pelajaran_items->aliasTingkat ?>"  class="text-success"><?=$pelajaran_items->namaMataPelajaran ?></a></li>
 				<?php endforeach ?>
 			</ol>
 		</div>

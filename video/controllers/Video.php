@@ -1,8 +1,9 @@
 <?php 
-class Video extends CI_Controller{
+class Video extends MX_Controller{
     //put your code here
     public function __construct() {
         parent::__construct();
+        $this->load->model('Mvideos');
     }
     
     ########### FRONT END  ####################
@@ -29,10 +30,14 @@ class Video extends CI_Controller{
        $this->load->view('templating/t-footer');
     }
 
-    public function daftarvideo(){
+    public function daftarvideo($alias_pelajaran="", $alias_tingkat=""){
+      $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($alias_tingkat, $alias_pelajaran);
+      $data['aliastingkat'] = $alias_tingkat;
+      $data['aliaspelajaran'] = $alias_pelajaran;
+       
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');
-       $this->load->view('v-banner-videoBelajar');
+       $this->load->view('v-banner-videoBelajar', $data);
        $this->load->view('v-video-list');
 
        $this->load->view('templating/t-footer');
