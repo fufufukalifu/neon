@@ -6,8 +6,40 @@
                     </div>
                     <div class="row" id="masonry">
                         <!-- post ke-1 -->
-                        <?php foreach($bab_video as $bab_video_items): ?>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 post">
+
+                        <!-- untuk menampung value sementara digunakan untuk pengecekan -->
+                        <?php 
+                        $cekjudulbab=null;
+                        $i="0";
+                        foreach($bab_video as $bab_video_items): ?>                     
+                            
+                            <?php
+                            $judulbab=$bab_video_items->judulBab;
+                            $subbab=$bab_video_items->judulSubBab;
+                            ?>
+
+
+                            <?php
+                            
+                            if ($cekjudulbab != $judulbab) {?>
+
+
+                                <!--  start pengecekan unutk mmmm -->
+                                <?php
+                                if ($i=="1") {
+                                ?>
+                                           <!-- Meta & button -->
+                                    <a href="<?=base_url('index.php/video/videobelajar') ?>" class="btn btn-success">Lihat Semua Video <i class="ico-eye-open"></i></a>
+                                    <!-- Meta & button -->
+                                </section>
+                                <!--/ Content -->
+                            </article>
+                        </div>
+                                <?php 
+                                } ?>
+                                <!--  start pengecekan unutk mmmm -->
+
+                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 post">
                             <article class="panel overflow-hidden">
                                 <!-- Content -->
                                 <section class="panel-body">
@@ -23,16 +55,34 @@
                                         </ol>
                                     </div>
                                     <!--/ text -->
+                            <?php
+                                $cekjudulbab=$judulbab;
+                                $i='1';
+                            } else {?>
+                            
+                                    <div class="text-default">
+                                        <ol>
+                                            <a href="<?=base_url('index.php/video/videobelajarsingle') ?>"><li><?=$bab_video_items->judulSubBab  ?></li></a>
+                                        </ol>
+                                    </div>
+                            <?php  
+                              
+                            }
+                            
 
-                                    <!-- Meta & button -->
+                            ?>
+
+                        <!-- post ke-1 -->
+                        <?php endforeach ?>
+                                                                   <!-- Meta & button -->
                                     <a href="<?=base_url('index.php/video/videobelajar') ?>" class="btn btn-success">Lihat Semua Video <i class="ico-eye-open"></i></a>
                                     <!-- Meta & button -->
                                 </section>
                                 <!--/ Content -->
                             </article>
                         </div>
-                        <!-- post ke-1 -->
-                        <?php endforeach ?>
+
+
                     </div>
                     
                 </div>
