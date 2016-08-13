@@ -22,7 +22,8 @@ class Video extends MX_Controller{
        $this->load->view('templating/t-footer');
     }
 
-    public function videobelajarsingle(){
+    public function videobelajarsingle($idSubBab){
+
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');
        $this->load->view('v-banner-videoBelajar');
@@ -34,6 +35,7 @@ class Video extends MX_Controller{
       $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($alias_tingkat, $alias_pelajaran);
       $data['aliastingkat'] = $alias_tingkat;
       $data['aliaspelajaran'] = $alias_pelajaran;
+
        
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');

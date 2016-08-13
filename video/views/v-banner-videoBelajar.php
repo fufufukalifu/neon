@@ -8,7 +8,12 @@
             <div class="section-header text-center">
                 <h2 class="section-title">
                     <br>
-                    <div class="font-alt nm">Mata Pelajaran <?=$aliaspelajaran ?> Untuk Tingkat <?=$aliastingkat ?></div>
+                    <?php if (isset($aliaspelajaran)): ?>
+                        <div class="font-alt nm">Mata Pelajaran <?=$aliaspelajaran ?> Untuk Tingkat <?=$aliastingkat ?></div>
+                    <?php else: ?>
+                        <div class="font-alt nm">Judul Video</div>
+                    <?php endif ?>
+                    
                 </h2>
             </div>
         </div>
