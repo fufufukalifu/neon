@@ -7,12 +7,11 @@ class Mregister extends CI_Model
 {
 
 	//merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
-	public function insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$namaPengguna,$data)
+	public function insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$data)
 	{
 		foreach ($data['tb_pengguna'] as $row) {
 			$idPengguna=$row['id'];
 
-			$this->db->set('namaPengguna',$namaPengguna);
 			$this->db->set('namaDepan',$namaDepan);
 			$this->db->set('namaBelakang',$namaBelakang);
 			$this->db->set('mataPelajaran',$mataPelajaran);

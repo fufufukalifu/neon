@@ -151,7 +151,7 @@ class Register extends MX_Controller{
         $data['tb_pengguna']=$this->mregister->get_idPengguna($namaPengguna);
 
         //melempar data guru ke function insert_guru di kelas model
-        $data['mregister']=$this->mregister->insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$namaPengguna,$data);
+        $data['mregister']=$this->mregister->insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$data);
 
       }
       
