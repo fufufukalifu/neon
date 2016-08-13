@@ -41,7 +41,7 @@
 
                                 <!-- text -->
                                 <div class="text-default">
-                                    <p>Lorem ipsum dolor sit amet, ex tritani mandamus mea. Numquam saperet labores in quo, et nam animal fuisset. Id eum mutat impedit, ei sumo dicat accusata eam. Quo no debet omnes probatus. Sit alienum deleniti insolens cu, ut sed utinam ubique iracundia. Cum sanctus corpora ponderum ea, te mei alii cetero, ea tollit docendi reprimique pri. Essent torquatos an eam.</p>
+                                    <p><?=$judul_sub_bab->deskripsi ?></p>
                                 </div>
                                 <!--/ text -->
 
