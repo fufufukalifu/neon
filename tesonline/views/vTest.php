@@ -1,4 +1,3 @@
-
         <!-- START Template Main -->
         <section id="main" role="main">
             <!-- START page header -->
@@ -72,9 +71,9 @@
                         <div class="col-md-9">
                             <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
                                             Matematika<br/>
                                             <small>Pertambahan</small>
@@ -83,15 +82,15 @@
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
-                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat1.jpg');?>" alt="" width="75px" height="75px">
-                                        <h5 class="text-center text-success semibold mb0">89 Orang</h5>
+                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="75px" height="75px">
+                                        <h5 class="text-center text-success semibold mb0">80 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
                                     <!-- table -->
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -102,18 +101,18 @@
 
                              <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
-                                            Matematika<br/>
-                                            <small>Pertambahan</small>
+                                            Fisika<br/>
+                                            <small>Gravitasi</small>
                                         </h4>
                                     </div>
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
-                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat2.jpg');?>" alt="" width="75px" height="75px">
+                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio2.jpg');?>" alt="" width="75px" height="75px">
                                         <h5 class="text-center text-success semibold mb0">89 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
@@ -121,7 +120,7 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -132,26 +131,26 @@
 
                              <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
-                                            Matematika<br/>
-                                            <small>Pertambahan</small>
+                                            Biologi<br/>
+                                            <small>Hewan</small>
                                         </h4>
                                     </div>
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
                                         <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat3.jpg');?>" alt="" width="75px" height="75px">
-                                        <h5 class="text-center text-success semibold mb0">89 Orang</h5>
+                                        <h5 class="text-center text-success semibold mb0">50 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
                                     <!-- table -->
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -162,18 +161,18 @@
 
                              <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
-                                            Matematika<br/>
-                                            <small>Pertambahan</small>
+                                            Kimia<br/>
+                                            <small>Termodinamika</small>
                                         </h4>
                                     </div>
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
-                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat1.jpg');?>" alt="" width="75px" height="75px">
+                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio3.jpg');?>" alt="" width="75px" height="75px">
                                         <h5 class="text-center text-success semibold mb0">89 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
@@ -181,7 +180,7 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -192,9 +191,9 @@
 
                              <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
                                             Matematika<br/>
                                             <small>Pertambahan</small>
@@ -203,7 +202,7 @@
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
-                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat2.jpg');?>" alt="" width="75px" height="75px">
+                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio4.jpg');?>" alt="" width="75px" height="75px">
                                         <h5 class="text-center text-success semibold mb0">89 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
@@ -211,7 +210,7 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -222,9 +221,9 @@
 
                              <div class="col-md-4">
                                 <!-- START Panel pricing -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-primary">
                                     <!-- panel heading -->
-                                    <div class="panel-heading text-center pa15" style="min-height:120px;">
+                                    <div class="panel-heading text-center pa15" style="min-height:100px;">
                                         <h4 class="semibold mt0">
                                             Matematika<br/>
                                             <small>Pertambahan</small>
@@ -233,7 +232,7 @@
                                     <!-- panel heading -->
                                     <!-- panel body -->
                                     <div class="panel-body text-center" style="margin-top:-50px;">
-                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/cat3.jpg');?>" alt="" width="75px" height="75px">
+                                        <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio6.jpg');?>" alt="" width="75px" height="75px">
                                         <h5 class="text-center text-success semibold mb0">89 Orang</h5>
                                     </div>
                                     <!--/ panel body -->
@@ -241,7 +240,7 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" align="center"><button class="btn btn-default">Coba Test</button></td>
+                                                <td colspan="2" align="center"><a href="<?=base_url('index.php/tesonline/detailtest');?>"><button class="btn btn-default">Coba Test</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -273,81 +272,3 @@
             <!--/ END To Top Scroller -->
         </section>
         <!--/ END Template Main -->
-
-        <!-- START Template Footer -->
-        <footer id="footer" role="contentinfo">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- About -->
-                    <div class="col-md-4">
-                        <h4 class="font-alt mt0">About Us</h4>
-                        <p>Adminre is a clean and flat backend and frontend theme build with Twitter bootstrap 3.1.1</p>
-                        <p> Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-                        <a href="javascript:void(0);" class="text-primary">Learn More</a>
-                    </div>
-                    <!--/ About -->
-
-                    <!-- Address + Social -->
-                    <div class="col-md-4">
-                        <h4 class="font-alt mt0">Address</h4>
-                        <address>
-                            <strong>Twitter, Inc.</strong><br>
-                            795 Folsom Ave, Suite 600<br>
-                            San Francisco, CA 94107<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                        </address>
-                        <h4 class="font-alt mt0">Stay Connect</h4>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Facebook"><i class="ico-facebook2"></i></a>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Twitter"><i class="ico-twitter2"></i></a>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Vimeo"><i class="ico-vimeo"></i></a>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Flickr"><i class="ico-flickr2"></i></a>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Google+"><i class="ico-google-plus2"></i></a>
-                        <a href="javascript:void(0);" class="text-muted mr15" data-toggle="tooltip" title="Instagram"><i class="ico-instagram2"></i></a>
-                    </div>
-                    <!--/ Address + Social -->
-
-                    <!-- Newsletter -->
-                    <div class="col-md-4">
-                        <h4 class="font-alt mt0">NewsLetter</h4>
-                        <form role="form">
-                            <div class="form-group">
-                                <p class="form-control-static">Subscribe to our newsletter and stay up to date with the latest news and deals!</p>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="newsletter_email" placeholder="Enter email">
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Subscribe Now</button>
-                        </form>
-                    </div>
-                    <!--/ Newsletter -->
-                </div>
-                <!--/ row -->
-            </div>
-            <!--/ container -->
-
-            <!-- bottom footer -->
-            <div class="footer-bottom">
-                <!-- container -->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <!-- copyright -->
-                            <p class="nm text-muted">&copy; Copyright 2014 by <a href="javascript:void(0);" class="text-white">Netjoo</a>. All Rights Reserved.</p>
-                            <!--/ copyright -->
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="javascript:void(0);" class="text-white">Privacy Policy</a>
-                            <span class="ml5 mr5">&#8226;</span>
-                            <a href="javascript:void(0);" class="text-white">Terms of Service</a>
-                        </div>
-                    </div>
-                </div>
-                <!--/ container -->
-            </div>
-            <!--/ bottom footer -->
-        </footer>
-        <!--/ END Template Footer -->

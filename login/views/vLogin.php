@@ -40,7 +40,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <!-- Social button -->
                     <ul class="list-table">
-                        <li><a href="<?= $this->facebook->login_url(); ?>">Connect with <i class="ico-facebook2 ml5"></i></a></li>
+                        <li><button type="button" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></button></li>
                         <li><button type="button" class="btn btn-block btn-twitter">Connect with <i class="ico-twitter2 ml5"></i></button></li>
                     </ul>
                     <!-- Social button -->
