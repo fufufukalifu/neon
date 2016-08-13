@@ -1,3 +1,4 @@
+
 <?php
 
 class Login extends MX_Controller {
@@ -6,6 +7,7 @@ class Login extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('facebook');
         $this->load->helper('url');
         $this->load->model('Mlogin');
         $this->load->library('session');
@@ -75,7 +77,7 @@ class Login extends MX_Controller {
         $this->session->unset_userdata("id");
         $this->session->unset_userdata("USERNAME");
         $this->session->unset_userdata("HAKAKSES");
-        redirect(base_url('index.php/login'));
+        $this->facebook->destroy_session();
     }
 
 }
