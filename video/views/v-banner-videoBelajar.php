@@ -11,9 +11,8 @@
                     <?php if (isset($aliaspelajaran)): ?>
                         <div class="font-alt nm">Mata Pelajaran <?=$aliaspelajaran ?> Untuk Tingkat <?=$aliastingkat ?></div>
                     <?php else: ?>
-                        <div class="font-alt nm">Judul Video</div>
+                        <div class="font-alt nm"><?=$judul_sub_bab->judulSubBab ?></div>
                     <?php endif ?>
-                    
                 </h2>
             </div>
         </div>

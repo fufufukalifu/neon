@@ -21,6 +21,14 @@ class Mvideos extends CI_Model
               return $query->result();
        
 	}
+  function get_all_subab($id_sub_bab){
+      $this->db->select('*');
+      $this->db->from('tb_subbab subbab'); 
+      $this->db->join('tb_video video','subbab.id=video.subBabId');
+      $this->db->where('subbab.id',$id_sub_bab);
+      $query = $this->db->get();
+      $this->db->last_query();
+      return $query->result();
+  }
 }
-
  ?>

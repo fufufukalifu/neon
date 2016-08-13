@@ -12,12 +12,12 @@
 
                             <div class="col-xs-9 col-sm-11 col-md-11">
                                 <!-- heading -->
-                                <h3 class="font-alt ellipsis mt0"><a href="javascript:void(0);" class="text-default">Judul Video</a></h3>
+                                <h3 class="font-alt ellipsis mt0"><a href="javascript:void(0);" class="text-default"></a></h3>
                                 <!--/ heading -->
 
                                 <!-- meta -->
                                 <p class="meta">
-                                    <span class=""><a href="<?=base_url('index.php/video/daftarvideo') ?>"><i class="ico ico-file"></i> Matematika</a></span>
+                                    <span class=""><a href="<?=base_url('index.php/video/daftarvideo') ?>"><i class="ico ico-file"></i>Matematika</a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>                            
                                     <span class=""><a href="<?=base_url('index.php/video/videobelajar') ?>"><i class="ico ico-facetime-video"></i> Semua Video </a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>
@@ -168,9 +168,9 @@
                                 </div>
                                 <!--/ Header -->
                                 <ol class="list-unstyled">
-                                    <?php for($i=0;$i<10;$i++): ?>
-                                         <li class="mb5"><a href="javascript:void(0);">Judul ke - <?=$i ?></a></li>
-                                    <?php endfor?>
+                                    <?php foreach($subBab as $sub_bab_items): ?>
+                                         <li class="mb5"><a href="javascript:void(0);"><?=$sub_bab_items->judulVideo ?></a></li>
+                                    <?php endforeach?>
                                 </ol>
                             </div>
                             </div>

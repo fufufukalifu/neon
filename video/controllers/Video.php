@@ -22,12 +22,15 @@ class Video extends MX_Controller{
        $this->load->view('templating/t-footer');
     }
 
-    public function videobelajarsingle($idSubBab){
+    public function videobelajarsingle($id_sub_bab){
+       $data['subBab'] = $this->load->Mvideos->get_all_subab($id_sub_bab);
+       //
+       $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab($id_sub_bab)[0];
 
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');
-       $this->load->view('v-banner-videoBelajar');
-       $this->load->view('v-single-video');
+       $this->load->view('v-banner-videoBelajar',$data);
+       $this->load->view('v-single-video', $data);
        $this->load->view('templating/t-footer');
     }
 

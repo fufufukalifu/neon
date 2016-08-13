@@ -1,4 +1,3 @@
-<?php var_dump($pelajaran_sma);?>
 <!-- mega menu -->
 <section id="main" role="main">
 	<div class="container">
