@@ -4,7 +4,7 @@
 /**
 * 
 */
-class DashboardGuru extends MX_Controller
+class Guru extends MX_Controller
 {
 	
 	 public function __construct() {
