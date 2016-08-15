@@ -1,4 +1,10 @@
 <!-- START asdasd Header -->
+<?php
+if (!isset($this->session->userdata['HAKAKSES'])) {
+header("location:".base_url());
+}
+?>
+
 <header id="header" class="navbar navbar-fixed-top">
     <div class="container">
         <!-- START navbar header -->
@@ -29,17 +35,6 @@
             </ul>
             <!--/ END Left nav -->
 
-            <!-- START navbar form -->
-            <div class="navbar-form navbar-left dropdown" id="dropdown-form">
-                <form action="" role="search">
-                    <div class="has-icon">
-                        <input type="text" class="form-control" placeholder="Search this site...">
-                        <i class="ico-search form-control-icon"></i>
-                    </div>
-                </form>
-            </div>
-            <!-- START navbar form -->
-
             <!-- START Right nav -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Profile dropdown -->
@@ -47,7 +42,7 @@
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="meta">
                             <span class="avatar"><img src="<?= base_url('assets/image/avatar/avatar7.jpg'); ?>" class="img-circle" alt="" /></span>
-                            <span class="text hidden-xs hidden-sm pl5">Erich Reyes</span>
+                            <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['USERNAME'] ;?></span>
                             <span class="caret"></span>
                         </span>
                     </a>
@@ -56,7 +51,7 @@
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                         <li class="divider"></li>
-                        <li><a href="<?php echo base_url('index.php/Login/Logout'); ?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+                        <li><a href="<?php echo base_url('index.php/login/logout'); ?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
                     </ul>
                 </li>
                 <!-- Profile dropdown -->

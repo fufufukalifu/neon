@@ -1,6 +1,4 @@
-
 <?php
-
 class Login extends MX_Controller {
 
     //put your code here
@@ -18,17 +16,6 @@ class Login extends MX_Controller {
         $this->load->view('templating/t-navbar');
         $this->load->view('vLogin.php');
         $this->load->view('templating/t-footer');
-    }
-
-    public function user() {
-        if ($this->session->userdata('HAKAKSES') == 'user') {
-            $this->load->view('templating/t-header');
-            $this->load->view('templating/t-navbarUser');
-            $this->load->view('vUser.php');
-            $this->load->view('templating/t-footer1');
-        } else {
-            redirect(base_url('index.php/login'));
-        }
     }
 
     //Fungsi untuk login, mengecek username dan password
@@ -52,7 +39,7 @@ class Login extends MX_Controller {
                 $this->session->set_userdata($sess_array);
 
                 if ($hakAkses == 'admin') {
-                    redirect(base_url('index.php/login/user'));
+//                    redirect(base_url('index.php/login/user'));
 //                    echo 'admin';
 //                    redirect(site_url('peserta-free'));
                 } elseif ($hakAkses == 'guru') {
@@ -61,7 +48,7 @@ class Login extends MX_Controller {
                 } elseif ($hakAkses == 'murid') {
 //                    redirect(site_url('peserta-bimbel'));
                 } elseif ($hakAkses == 'user') {
-                   	$this->user();
+                   	redirect(site_url('welcome'));
                 } else {
                     echo 'tidak ada hak akses';
                 }
@@ -78,8 +65,8 @@ class Login extends MX_Controller {
         $this->session->unset_userdata("USERNAME");
         $this->session->unset_userdata("HAKAKSES");
         $this->facebook->destroy_session();
+        redirect(base_url());
     }
-
 }
 
 ?>
