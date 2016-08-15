@@ -7,7 +7,7 @@ class Mguru extends CI_Model
 	public function update_guru($penggunaID,$data)
 	{
 		echo "update guru";
-		$this->db->where('penggunaID',$penggunaID);
+		$this->db->where('id',$penggunaID);
 		$this->db->update('tb_guru',$data);
 
 	}

@@ -88,7 +88,7 @@
                             <!-- tab-pane: profile -->
                             <div class="tab-pane active" id="profile">
                                 <!-- form profile -->
-                                <form class="panel form-horizontal form-bordered" name="form-profile" action="<?=base_url()?>index.php/dashboardguru/ubahprofileguru" method="POST">
+                                <form class="panel form-horizontal form-bordered" name="form-profile" action="<?=base_url()?>index.php/guru/ubahprofileguru" method="POST">
                                     <div class="panel-body pt0 pb0">
                                         <div class="form-group header bgcolor-default">
                                             <div class="col-md-12">
@@ -118,6 +118,7 @@
                                             <label class="col-sm-3 control-label">Name</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" name="namadepan" value="Erich">
+                                                <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                                             </div>
                                               <div class="col-sm-3">
                                                 <input type="text" class="form-control" name="namabelakang" value="Reyes">
@@ -128,19 +129,21 @@
                                             <label class="col-sm-3 control-label">Mata Pelajaran</label>
                                             <div class="col-sm-5">
                                                 <input type="text" class="form-control" name="mtpelajaran" value="Biologi">
-                                                <p class="help-block">Where in the world are you?</p>
+                                                
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Alamat</label>
                                             <div class="col-sm-6">
                                                  <input type="text" class="form-control" name="alamat" value"">
+                                                 <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">No Kontak</label>
                                             <div class="col-sm-6">
                                                  <input type="text" class="form-control" name="nokontak" value"">
+                                                 <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -178,7 +181,7 @@
                             <!-- tab-pane: account -->
                             <div class="tab-pane" id="account">
                                 <!-- form account -->
-                                <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/dashboardguru/ubahakunguru" method="POST" >
+                                <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/guru/ubahakunguru" method="POST" >
                                     <div class="panel-body pt0 pb0">
                                         <div class="form-group header bgcolor-default">
                                             <div class="col-md-12">
@@ -190,6 +193,7 @@
                                             <label class="col-sm-3 control-label">Nama Pengguna</label>
                                             <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="namapengguna" value="erich.reyes">
+                                                <span class="text-danger"> <?php echo form_error('nnamapengguna'); ?></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -197,6 +201,7 @@
                                             <div class="col-sm-5">
                                                 <input type="text" class="form-control" name="email">
                                                 <p class="help-block">Email will not be publicly displayed. <a href="javascript:void(0);">Learn more.</a></p>
+                                                <span class="text-danger"> <?php echo form_error('email'); ?></span>
                                             </div>
                                         </div>
 
@@ -216,7 +221,7 @@
                             <!-- tab-pane: katasandi -->
                             <div class="tab-pane" id="password">
                                 <!-- form password -->
-                                <form class="panel form-horizontal form-bordered" name="form-password" action="<?=base_url()?>index.php/dashboardguru/ubahkatasandi" method="POST">
+                                <form class="panel form-horizontal form-bordered" name="form-password" action="<?=base_url()?>index.php/guru/ubahkatasandi" method="POST">
                                     <div class="panel-body pt0 pb0">
                                         <div class="form-group header bgcolor-default">
                                             <div class="col-md-12">
@@ -227,20 +232,20 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kata Sandi Lama</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control" name="currentpass">
+                                                <input type="password" class="form-control" name="sandilama">
                                                 <p class="help-block"><a href="javascript:void(0);">Forgot password?</a></p>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kata Sandi Baru</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control" name="newpass">
+                                                <input type="password" class="form-control" name="newpass">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Verifikasi Kata Sandi</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control" name="verifypass">
+                                                <input type="password" class="form-control" name="verifypass">
                                             </div>
                                         </div>
                                     </div>

@@ -19,6 +19,8 @@ class Mregister extends CI_Model
 			$this->db->set('nokontak',$noKontak);
 			$this->db->set('penggunaID',$idPengguna);
 			$this->db->insert('tb_guru');
+
+
 		}
 		
 
@@ -33,7 +35,7 @@ class Mregister extends CI_Model
 
 		$this->db->set('namaPengguna',$namaPengguna);
 		$this->db->set('kataSandi',$kataSandi);
-		$this->db->set('email',$email);
+		$this->db->set('eMail',$email);
 		$this->db->set('hakAkses',$hakAkses);
 		$this->db->insert('tb_pengguna');
 
@@ -52,6 +54,8 @@ class Mregister extends CI_Model
 			$this->db->set('alamatSekolah',$alamatSekolah);
 			$this->db->set('penggunaID',$idPengguna);
 			$this->db->insert('tb_siswa');
+
+			redirect(base_url('index.php/login'));
 		}
 
 
