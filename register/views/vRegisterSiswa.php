@@ -13,7 +13,7 @@
                         <!-- Toolbar -->
                         <div class="toolbar">
                             <ol class="breadcrumb breadcrumb-transparent nm">
-                                <li><a href="javascript:void(0);">Pages</a></li>
+                                <li><a href="<?= base_url();?>">Beranda</a></li>
                                 <li class="active"> Register Akun User</li>
                             </ol>
                         </div>
