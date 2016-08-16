@@ -10,26 +10,31 @@ class Siswa extends MX_Controller
 	 public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
+        
     }
 
      // function untuk menampikan halam pertama saat registrasi
     public function index() {
-    	
+    	 $data['tb_siswa']=$this->msiswa->get_siswa();
        $this->load->view('templating/t-header');
-       $this->load->view('vProfileSiswa');
+       $this->load->view('vPengaturanProfile');
        $this->load->view('templating/t-footer');
+
+
     }
 
-    public function profilesiswa()
+    public function PengaturanProfile()
     {
-    	echo "a";
+    	 $data['tb_siswa']=$this->msiswa->get_siswa();
     	 $this->load->view('templating/t-header');
-       $this->load->view('vProfileSiswa');
+       $this->load->view('vPengaturanProfile');
        $this->load->view('templating/t-footer');
+
+
     }
 
 
-    public function ubahprofilesiswa()
+    public function ubahPengaturanProfile()
     { 
 
       //load library n helper
@@ -52,7 +57,7 @@ class Siswa extends MX_Controller
 
       if ($this->form_validation->run() == FALSE) {
         $this->load->view('templating/t-header');
-        $this->load->view('vProfileSiswa');
+        $this->load->view('vPengaturanProfile');
         $this->load->view('templating/t-footer');
       } else {
         $namaDepan=htmlspecialchars($this->input->post('namadepan'));
@@ -101,7 +106,7 @@ class Siswa extends MX_Controller
 
       if ($this->form_validation->run() == FALSE) {
         $this->load->view('templating/t-header');
-        $this->load->view('vProfileSiswa');
+        $this->load->view('vPengaturanProfile');
         $this->load->view('templating/t-footer');
       } else {
         $email=htmlspecialchars($this->input->post('email'));
@@ -138,7 +143,7 @@ class Siswa extends MX_Controller
 
       if ($this->form_validation->run() == FALSE) {
         $this->load->view('templating/t-header');
-        $this->load->view('vProfilesiswa');
+        $this->load->view('vPengaturanProfile');
         $this->load->view('templating/t-footer');
       } else {
         $kataSandi=htmlspecialchars(md5($this->input->post('newpass')));

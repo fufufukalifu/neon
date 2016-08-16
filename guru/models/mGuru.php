@@ -4,24 +4,26 @@
 class Mguru extends CI_Model
 {
 
-	public function update_guru($penggunaID,$data)
-	{
-		echo "update guru";
-		$this->db->where('id',$penggunaID);
+	public function update_guru($data)
+	{	
+		$penggunaID=$this->session->userdata['id'] ;
+		$this->db->where('penggunaID',$penggunaID);
 		$this->db->update('tb_guru',$data);
-
+		echo "profile telah diubah";
 	}
 
-	public function update_akun($id,$data)
-	{
-		echo "update akun";
+
+	public function update_akun($data)
+	{	
+		$id=$this->session->userdata['id'] ;
 		$this->db->where('id',$id);
 		$this->db->update('tb_pengguna',$data);
 	}
 
-	public function update_katasandi($id,$data)
+	public function update_katasandi($data)
 	{
-		echo "update katasandi";
+		
+		$id=$this->session->userdata['id'] ;
 		$this->db->where('id',$id);
 		$this->db->update('tb_pengguna',$data);
 

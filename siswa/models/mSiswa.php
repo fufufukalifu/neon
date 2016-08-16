@@ -30,6 +30,20 @@ class Msiswa extends CI_Model
 
 	}
 
+	public function get_siswa()
+	{
+			$penggunaID=$this->session->userdata['id'] ;
+			//select from 2 table di join semuanya
+              $this->db->select('namaDepan');
+              $this->db->from('tb_guru guru'); 
+              $this->db->join('tb_pengguna pengguna', 'pengguna.id=guru.penggunaID');
+
+       //where 
+             $this->db->where('penggunaID',$penggunaID);       
+              $query = $this->db->get();
+              return $query->result();
+	}
+
 }
 
  ?>

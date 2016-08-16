@@ -27,7 +27,7 @@
                         <!-- tab menu -->
                         <ul class="list-group list-group-tabs">
                             <li class="list-group-item active"><a href="#profile" data-toggle="tab"><i class="ico-user2 mr5"></i> Profile</a></li>
-                            <li class="list-group-item"><a href="#account" data-toggle="tab"><i class="ico-archive2 mr5"></i> Account</a></li>
+                            <li class="list-group-item"><a href="#account" data-toggle="tab"><i class="ico-envelop2 mr5"></i> Email</a></li>
                             <li class="list-group-item"><a href="#password" data-toggle="tab"><i class="ico-key2 mr5"></i> Password</a></li>
                         </ul>
                         <!-- tab menu -->
@@ -40,7 +40,7 @@
                                 <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg');?>" alt="" width="65px">
                             </li>
                             <li class="text-left">
-                                <h5 class="semibold ellipsis mt0">Erich Reyes</h5>
+                                <h5 class="semibold ellipsis mt0"><?=$this->session->userdata['USERNAME'] ;?></h5>
                                 <div style="max-width:200px;">
                                     <div class="progress progress-xs mb5">
                                         <div class="progress-bar progress-bar-warning" style="width:70%"></div>
@@ -185,17 +185,11 @@
                                     <div class="panel-body pt0 pb0">
                                         <div class="form-group header bgcolor-default">
                                             <div class="col-md-12">
-                                                <h4 class="semibold text-primary mt0 mb5">Akun</h4>
+                                                <h4 class="semibold text-primary mt0 mb5">Email</h4>
                                                 <p class="text-default nm">Change your basic account and language settings.</p>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Nama Pengguna</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="namapengguna" value="erich.reyes">
-                                                <span class="text-danger"> <?php echo form_error('nnamapengguna'); ?></span>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Email</label>
                                             <div class="col-sm-5">

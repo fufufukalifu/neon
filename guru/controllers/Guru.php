@@ -22,7 +22,7 @@ class Guru extends MX_Controller
 
     public function profileguru()
     {
-    	echo "a";
+    	
     	 $this->load->view('templating/t-header');
        $this->load->view('vProfileGuru');
        $this->load->view('templating/t-footer');
@@ -55,7 +55,6 @@ class Guru extends MX_Controller
         $this->load->view('vProfileGuru');
         $this->load->view('templating/t-footer');
       } else {
-        echo "masuk else";
         $namaDepan=htmlspecialchars($this->input->post('namadepan'));
         $namaBelakang=htmlspecialchars($this->input->post('namabelakang'));
         $mataPelajaran=htmlspecialchars($this->input->post('mtpelajaran'));
@@ -63,7 +62,7 @@ class Guru extends MX_Controller
         $noKontak=htmlspecialchars($this->input->post('nokontak'));
         $biografi=htmlspecialchars($this->input->post('biografi'));
 
-        $penggunaID='1';
+
         $data_post=array(
           'namaDepan'=>$namaDepan,
           'namaBelakang'=>$namaBelakang,
@@ -73,7 +72,7 @@ class Guru extends MX_Controller
           'biografi'=>$biografi,
           );
 
-        $this->mguru->update_guru($penggunaID,$data_post);
+        $this->mguru->update_guru($data_post);
       }
     }
 
@@ -108,19 +107,12 @@ class Guru extends MX_Controller
       } else {
         $namaPengguna=htmlspecialchars($this->input->post('namapengguna'));
         $email=htmlspecialchars($this->input->post('email'));
-        //$id var sementara
-        $id='1';
           $data_post=array(
-          'id'=>'1',
           'namaPengguna'=>$namaPengguna,
           'email'=>$email,
           );
-        $this->mguru->update_akun($id,$data_post);
+        $this->mguru->update_akun($data_post);
       }
-      
-
-
-
     }
 
 
@@ -134,7 +126,7 @@ class Guru extends MX_Controller
 
       //syarat pengisian form perubahan pasword
       $this->form_validation->set_rules('sandilama', 'Kata Sandi Lama',   'required');
-      $this->form_validation->set_rules('newpass', 'Kata Sandi Baru',   'required|matches[passconf]');
+      $this->form_validation->set_rules('newpass', 'Kata Sandi Baru',   'required|matches[verifypass]');
       $this->form_validation->set_rules('verifypass', 'Password Confirmation', 'required');
 
        //pesan error atau pesan kesalahan pengisian form 
@@ -148,13 +140,11 @@ class Guru extends MX_Controller
         $this->load->view('templating/t-footer');
       } else {
         $kataSandi=htmlspecialchars(md5($this->input->post('newpass')));
-        //$id var sementara
-        $id='1';
+     
           $data_post=array(
-          'id'=>'1',
           'kataSandi'=>$kataSandi,
           );
-        $this->mguru->update_katasandi($id,$data_post);
+        $this->mguru->update_katasandi($data_post);
       }
       
 
