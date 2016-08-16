@@ -8,6 +8,10 @@
         <link rel="stylesheet" href="<?=base_url('assets/library/bootstrap/css/bootstrap.min.css');?>">
         <link rel="stylesheet" href="<?=base_url('assets/stylesheet/layout.css');?>">
         <link rel="stylesheet" href="<?=base_url('assets/stylesheet/uielement.css');?>">
+
+        <link rel="stylesheet" href="<?=base_url('assets/plugins/selectize/css/selectize.min.css');?>">
+        <!--/ Plugins stylesheet -->
+        <!-- Application stylesheet : mandatory -->
         <!--/ Application stylesheet -->
         <!-- END STYLESHEETS -->
 
