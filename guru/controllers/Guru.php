@@ -13,8 +13,19 @@ class Guru extends MX_Controller
     }
 
      // function untuk menampikan halam pertama saat registrasi
-    public function index() {
-    	
+    public function index(){
+       $this->load->view('templating/t-header');
+       //$this->load->view('templating/t-navbarUser');
+
+       $this->load->view('v-banner-guru');
+       //$this->load->view('v-left-bar');
+       $this->load->view('v-container-video');
+       $this->load->view('templating/t-load-sidebar-js');
+
+    }
+
+    //untuk merubah data guru.
+    public function setting() {
        $this->load->view('templating/t-header');
        $this->load->view('vProfileGuru');
        $this->load->view('templating/t-footer');
