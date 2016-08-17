@@ -6,6 +6,8 @@
 class Mregister extends CI_Model
 {
 
+	private $verifikasiCode;//menampung code verifikasi email  
+
 	//merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
 	public function insert_guru($namaDepan,$namaBelakang,$mataPelajaran,$alamat,$noKontak,$data)
 	{
@@ -20,50 +22,38 @@ class Mregister extends CI_Model
 			$this->db->set('penggunaID',$idPengguna);
 			$this->db->insert('tb_guru');
 
-
-		}
-		
-
-
-
-		
+		}		
 	}
 
 	//merupakan function untuk menyimpan data guru ke tabel penggunas di databse netjoo  
-	public function insert_pengguna($namaPengguna,$kataSandi,$email,$hakAkses)
+	public function insert_pengguna($data)
 	{
 
-		$this->db->set('namaPengguna',$namaPengguna);
-		$this->db->set('kataSandi',$kataSandi);
-		$this->db->set('eMail',$email);
-		$this->db->set('hakAkses',$hakAkses);
-		$this->db->insert('tb_pengguna');
-
+		$this->db->insert('tb_pengguna',$data);
 	}
 
 	//merupakan function untuk menyimpan data guru ke tabel siswa di databse netjoo  
-	public function insert_siswa($namaDepan,$namaBelakang,$alamat,$noKontak,$namaSekolah,$alamatSekolah,$data)
+	public function insert_siswa($data_siswa,$data_akun)
 	{
-		foreach ($data['tb_pengguna'] as $row) {
-			$idPengguna=$row['id'];
-			$this->db->set('namaDepan',$namaDepan);
-			$this->db->set('namaBelakang',$namaBelakang);
-			$this->db->set('alamat',$alamat);
-			$this->db->set('noKontak',$noKontak);
-			$this->db->set('namaSekolah',$namaSekolah);
-			$this->db->set('alamatSekolah',$alamatSekolah);
-			$this->db->set('penggunaID',$idPengguna);
-			$this->db->insert('tb_siswa');
+		$this->db->insert('tb_siswa',$data_siswa);
 
-			redirect(base_url('index.php/login'));
+		if ($this->db->affected_rows() === 1) {
+			$penggunaID=$data_siswa['penggunaID'];
+			$this->set_verifikasicode($penggunaID);
+			$this->session->set_userdata($data_akun);
+			$this->send_verifikasi_email ();
+			// redirect(base_url('index.php/register/verifikasiemail'));
+		}else{
+			echo"masuk else";
 		}
 
 
 	}
 
+	//untuk mngambil nilai id penngguna untuk digunakan FK di tb_siswa
 	public function get_idPengguna($data)
 	{
-		echo "masuk get ID ";
+		
 		$this->db->where('namaPengguna',$data);
 		$this->db->select('id')->from('tb_pengguna');
 		$query=$this->db->get();
@@ -72,7 +62,74 @@ class Mregister extends CI_Model
 
 	}
 
+	//set verifikasi code untuk memverifikasi email
+	private function set_verifikasicode($penggunaID)
+	{
+		$sql = "SELECT regTime FROM tb_pengguna WHERE id= '" . $penggunaID . "'";
+		$result = $this->db->query($sql);
+		$row = $result->row();
+		$this->verifikasiCode = md5((string)$row->regTime);
 
+	}
+
+	// function untuk mengirim code verifikasi email ke email user/siswa 
+	public function send_verifikasi_email ()
+	{	
+		
+		$this->load->library('email'); // load email library
+		$verifikasiCode = $this->verifikasiCode;
+		$address=$this->session->userdata['eMail'];
+        $this->email->from('noreply@sibejooclass.com', 'Netjoo');
+        $this->email->to($address);
+        $this->email->subject('Verifikasi Email');
+        $message  ='<html><meta/><head/><body>';
+        $message .='<p> Dear'. $this->session->userdata['namaPengguna'] . ',</p>'; 
+        $message .='<p>Terimakasih telah mendaftar di netjoo. Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/'.$address.'/'.$verifikasiCode.'">klik disini</a></strong> untuk aktifasi akun anda. Setelah Aktifasi akun anda, anda akan bla2x</p>';
+        $message .= '<p>Terimakasih</p>';
+        $message .= '<p>Netjoo</p>';
+        $message .= '</body></html>';
+        $this->email->message($message);
+        if ($this->email->send())
+            echo "Mail Sent!";//untuk testing
+        else
+            echo "There is error in sending mail!";//untuk testing
+	}
+
+	public function verifikasi_email($address,$code)
+	{
+		$sql = "SELECT regTime FROM tb_pengguna WHERE eMail = '" . $address . "'";
+		$result = $this->db->query($sql);
+		$row = $result->row();
+
+		if ($result->num_rows()=== 1) 
+		{
+			if (md5((string)$row->regTime)===$code)
+				$result = $this->aktifasi_akun($address);
+				if ($result === true) {
+					echo "akun telah di aktifasi"; // for testing
+				} else {
+					echo "gagal di aktifasi";//for testing
+				}
+				
+		} else {
+			//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		}
+
+		
+	}
+
+	public function aktifasi_akun($address)
+	{
+		if ($address == $this->session->userdata['eMail'] ) {
+			$this->db->where('eMail',$address);
+			$this->db->set('aktivasi','1');
+			$this->db->update('tb_pengguna');
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 }
 
 ?>
