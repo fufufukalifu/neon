@@ -29,6 +29,15 @@ class Mguru extends CI_Model
 
 	}
 
+	public function get_single_guru($data){
+		$this->db->select('*');
+        $this->db->from('tb_guru guru'); 
+        $this->db->join('tb_mata-pelajaran pelajaran','guru.mataPelajaranID=pelajaran.id'); 
+		$this->db->where('guru.id',$data);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
 }
 
  ?>

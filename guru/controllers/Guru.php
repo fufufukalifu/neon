@@ -10,18 +10,24 @@ class Guru extends MX_Controller
 	 public function __construct() {
         parent::__construct();
         $this->load->model('mguru');
+        $this->load->model('video/mvideos');
     }
 
-     // function untuk menampikan halam pertama saat registrasi
-    public function index(){
+    // function untuk menampikan halam pertama saat registrasi
+    function index(){
+
+    }
+
+    public function dashboard($guru_id=""){
+       $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
+       //untuk mengambil data guru
+       $data['data_guru'] = $this->load->mguru->get_single_guru($guru_id)[0];
+       //untuk menghitung berapa banyak video yang sudah diupload
+       $data['jumlah_video'] = count($this->load->mvideos->get_video_by_teacher($guru_id));
+          
        $this->load->view('templating/t-header');
-       //$this->load->view('templating/t-navbarUser');
-
        $this->load->view('v-banner-guru');
-       //$this->load->view('v-left-bar');
-       $this->load->view('v-container-video');
-       $this->load->view('templating/t-load-sidebar-js');
-
+       $this->load->view('v-container-video', $data);
     }
 
     //untuk merubah data guru.

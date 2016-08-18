@@ -1,55 +1,125 @@
- 	  <header id="header" class="navbar navbar-fixed-top">
-            <!-- START navbar header -->
-            <div class="navbar-header">
-                <!-- Brand -->
-                <a class="navbar-brand" href="javascript:void(0);">
-                    <span class="logo-figure"></span>
-                    <span class="logo-text"></span>
-                </a>
-                <!--/ Brand -->
-            </div>
-       </header>
+<!-- header -->
+<header id="header" class="navbar navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="javascript:void(0);">
+            <span class="logo-figure"></span>
+            <span class="logo-text"></span>
+        </a>
+    </div>
+</header>
+
+<!-- menu kiri -->
+<aside class="sidebar sidebar-left sidebar-menu">     
+ <section class="content slimscroll">
+ <h5 class="heading">Main Menu</h5>
+
+ <ul class="topmenu topmenu-responsive" data-toggle="menu">
+  <li >
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-home"></i></span>
+       <span class="text">Dashboard</span>
+   </a>
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-folder"></i></span>
+       <span class="text">Pengelolaan Video</span>
+   </a>
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-file-upload"></i></span>
+       <span class="text">Upload Video</span>
+   </a>
 
 
+  </li>
+ </ul>
+ </section>
+</aside>
+
+<!-- konten -->
 <section id="main" role="main">
-                <!-- START Template Container -->
-                <div class="container-fluid">
+ <div class="container-fluid">
 
-                    <div class="row">
-					<!-- START Navigasi-->
-                        <div class="col-md-3" style="background:white">
-                            <div class="panel panel-minimal">
-                              	A
-                            </div>
-                        </div>
-                        <!--/ END Navigasi-->
+  <div class="page-header page-header-block">
+   <div class="page-header-section">
+    <h4 class="title semibold">Dashboard</h4>
+   </div>
+  </div>
 
-                        <!-- START Left Side -->
-                        <div class="col-md-9" style="background:white">
-                           <div class="panel panel-minimal">
-                               B
-                            </div>
-                        </div>
-                        <!--/ END Left Side -->
+  <!-- profile -->
+<div class="col-xs-12">
+<div class="widget panel">
+    <div class="thumbnail">
+      <div class="media">
+            <div class="indicator"><span class="spinner"></span></div>
+         <div class="meta bottom text-center">
+             <img class="img-circle img-bordered-teal mb10" src="<?=base_url('assets/image/avatar/avatar8.jpg')?>" alt="" width="120px" height="120px">
+             <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6"><?= $data_guru['namaDepan']." ".$data_guru['namaBelakang'] ?></span></h4>
+             <h6 class="nm" style="color:black"><span class="iconmoon-location-6"><?=$data_guru['namaMataPelajaran'] ?></span></h6>
 
-                        
+         </div>
+            <img data-toggle="unveil" src="<?=base_url('assets/image/background/400x250/placeholder.jpg')?>" alt="Cover" height="30%"/>
+      </div>
+     </div>
+     
+     <!-- meta user -->
+     <div class="panel-body">
+         <ul class="nav nav-section nav-justified">
+             <li>
+                 <div class="section">
+                     <p class="nm text-muted">Jumlah Video</p>
+                     <h4 class="nm"><?=$jumlah_video ?></h4>
+                 </div>
+             </li>
+             <li>
+                 <div class="section">
+                     <p class="nm text-muted">Jumlah Komentar</p>
+                     <h4 class="nm">10</h4>
+                 </div>
+             </li>
+         </ul>
+              <!--/ Nav section -->
+          </div>
+          <!--/ panel body -->
+      </div>
+      <!--/ END Widget Panel -->
+  </div>
+  <div class="row">
+   <div class="col-sm-12">
+   <div class="page-header-section">
+    <h5 class="title semibold">Video Baru Saja Di Upload</h5>
+   </div>
 
-                    </div>
-                </div>
-                <!--/ END Template Container -->
-
-                <!-- START To Top Scroller -->
-                <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-                <!--/ END To Top Scroller -->
-            </section>
- 	
-<!--  	<section id="main" role="main" class="mt8" style="margin-left:230px">
-           <div class="container-fluid">
-			<h1>ini container-fluid Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h1>
+    <div class="owl-carousel" id="stats">
+     <?php foreach ($videos_uploaded as $video): ?>
+     <div class="item panel no-border">
+      <div class="panel-body">
+          <a href=""><h6 class="semibold nm"><i class="ico ico-bubble-video-chat"></i><?=$video->judulVideo ?></h6></a>
+           <div class="media">
+               <a href=""><img class="unveiled" data-toggle="unveil" src="<?=base_url('assets/image/video/video.PNG');?>" data-src="<?=base_url('assets/image/video/video.PNG');?>" alt="Photo" height="140px"></a>
            </div>
-       </section> -->
+       </div>
+     </div>
+     <?php endforeach ?>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+<script type="text/javascript" src="<?=base_url('assets/library/jquery/js/jquery.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/library/jquery/js/jquery-migrate.min.js');?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/library/bootstrap/js/bootstrap.min.js');?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/library/core/js/core.min.js');?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/sparkline/js/jquery.sparkline.min.js')?>"></script>
+
+<script type="text/javascript" src="<?=base_url('assets/javascript/app.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/javascript/pages/dashboard-v2.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.categories.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.tooltip.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.resize.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.spline.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/datatables/js/jquery.datatables.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/jvectormap/js/jvectormap.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/javascript/maps/vector-world-mill.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/javascript/pages/dashboard-v2.js')?>"></script>  
