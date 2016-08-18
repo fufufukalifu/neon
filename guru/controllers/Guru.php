@@ -162,10 +162,23 @@ class Guru extends MX_Controller
           'kataSandi'=>$kataSandi,
           );
         $this->mguru->update_katasandi($data_post);
-      }
-      
+      } 
 
     }
+
+    public function kirimemail()
+    {
+       $this->load->library('email'); // load email library
+        $this->email->from('noreply@sibejooclass.com', 'sender name');
+        $this->email->to('goichinime@gmail.com');
+        $this->email->subject('test subjek');
+        $this->email->message('test kirim');
+        if ($this->email->send())
+            echo "Mail Sent!";
+        else
+            echo "There is error in sending mail!";
+    }
+
 }
 
 ?>

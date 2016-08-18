@@ -28,6 +28,12 @@ class Register extends MX_Controller {
         $this->load->view('vRegisterGuru');
     }
 
+    public function verifikasiemail()
+    {
+        $this->load->view('vVerifikasi');
+    }
+
+
     //function untuk menyimpan data pendaftaran user siswa ke database
     public function savesiswa() {
         //load library n helper
@@ -41,17 +47,16 @@ class Register extends MX_Controller {
         $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
         $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]');
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[tb_pengguna.email]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
 
 
         //pesan error atau pesan kesalahan pengisian form registrasi siswa
-        $this->form_validation->set_message('namapengguna', 'is_unique', '*Nama Pengguna sudah terpakai');
-        $this->form_validation->set_message('is_unique', 'email', '*Email sudah terpakai');
-        $this->form_validation->set_message('is_unique', '*Nama Pengguna sudah terpakai');
+        $this->form_validation->set_message('is_unique', '*Nama Pengguna atau email sudah terpakai');
         $this->form_validation->set_message('max_length', '*Nama Pengguna maksimal 12 karakter!');
         $this->form_validation->set_message('min_length', '*Nama Pengguna minimal 5 karakter!');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
+        $this->form_validation->set_message('valid_email','*silahkan masukan alamat email anda dengan benar');
 
         //pengecekan pengisian form regitrasi siswa
         if ($this->form_validation->run() == FALSE) {
@@ -75,14 +80,36 @@ class Register extends MX_Controller {
             $email = htmlspecialchars($this->input->post('email'));
             $hakAkses = 'user';
 
+            $data_akun=array(
+              'namaPengguna'=>$namaPengguna,
+              'kataSandi'=>$kataSandi,
+              'eMail'=>$email,
+              'hakAkses'=>$hakAkses,
+              
+            );
+
 
             //melempar data guru ke function insert_pengguna di kelas model
-            $data['mregister'] = $this->mregister->insert_pengguna($namaPengguna, $kataSandi, $email, $hakAkses);
+            $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
             //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
-            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna);
+            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
+
+            $penggunaID=$data['tb_pengguna']['id'];
+
+
+            $data_siswa=array(
+
+                'namaDepan'=>$namaDepan,
+                'namaBelakang'=>$namaBelakang,
+                'alamat'=>$alamat,
+                'noKontak'=>$noKontak,
+                'namaSekolah'=>$namaSekolah,
+                'alamatSekolah'=>$alamatSekolah,
+                'penggunaID'=>$penggunaID,
+                );
 
             //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_siswa($namaDepan, $namaBelakang, $alamat, $noKontak, $namaSekolah, $alamatSekolah, $data);
+            $data['mregister'] = $this->mregister->insert_siswa($data_siswa,$data_akun);
         }
     }
 
@@ -142,6 +169,18 @@ class Register extends MX_Controller {
             $data['mregister'] = $this->mregister->insert_guru($namaDepan, $namaBelakang, $mataPelajaran, $alamat, $noKontak, $data);
         }
     }
+
+    public function verifikasi_email($address,$code)
+    {
+        $code = trim($code);
+        $this->mregister->verifikasi_email($address,$code);
+    }
+
+    public function FunctionName()
+    {
+        # code...
+    }
+
 
 }
 

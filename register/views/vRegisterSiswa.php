@@ -144,29 +144,6 @@
                                 <!-- end form data siswa -->
 
                                 <hr class="nm">
-                                <!-- start form upload poto -->
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                            <div class="col-md-9">
-                                                <div class="btn-group pr5">
-                                                    <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg')?>" alt="" width="34px">
-                                                </div>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">Upload photo</button>
-                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">.
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Upload photo</a></li>
-                                                        <li><a href="#">Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                                <!-- end form upload poto -->
-
-                                <hr class="nm">
                                 <!-- start form data sekolah -->
                                 <div class="panel-body">
                                    <div class="col-md-12 form-group">
