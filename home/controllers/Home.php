@@ -8,7 +8,7 @@ class Home extends CI_Controller{
     public function index() {
        $this->load->view('templating/t-header');
        $this->load->view('templating/t-navbar');
-       //$this->load->view('templating/t-container');
+       $this->load->view('vindex');
        $this->load->view('templating/t-footer');
     }
 
