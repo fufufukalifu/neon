@@ -200,7 +200,7 @@
                                 <hr class="nm">
                                 <!-- Star form konfirmasi akun by email -->
                                 <div class="panel-body">
-                                    <p class="semibold text-muted">To confirm and activate your new account, we will need to send the activation code to your e-mail.</p>
+                                    <p class="semibold text-muted">Untuk konfirmasi dan pengaktifan akun baru anda, kita akan mengirim aktivasi code ke email anda.</p>
                                     <div class="form-group">
                                         <label class="control-label">Email</label>
                                         <div class="has-icon pull-left">
@@ -216,12 +216,7 @@
                                             <label for="agree">&nbsp;&nbsp;I agree to the <a class="semibold" href="javascript:void(0);">Term Of Services</a></label>   
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="news" id="news" value="1">  
-                                            <label for="news">&nbsp;&nbsp;Send me Newsletters.</label>   
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <!-- end form konfirmasi akun by email -->
                                 <div class="panel-footer">
