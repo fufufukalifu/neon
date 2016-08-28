@@ -67,6 +67,9 @@ class Video extends MX_Controller {
             $this->load->view( 'templating/t-footer' );
         }else {
             $data['title'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id )[0]->judulSubBab;
+            $babId = $data['judulbab'][0]->babID;
+            $data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
+            print_r( $data['materisubab'] );
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );
             $this->load->view( 'v-banner-videoBelajar' );
@@ -106,12 +109,13 @@ class Video extends MX_Controller {
 
             //ambil index 0 yang akan dijadikan judul di title
             $onevideo = $data['videosingle'];
+            $data['video'] = $onevideo[0];
 
             $data['title'] = $onevideo[0]->judulVideo;
             $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
-            
+
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'v-banner-videoBelajar', $data );

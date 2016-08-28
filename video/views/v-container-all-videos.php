@@ -45,14 +45,14 @@
                     <!-- Header -->
                     <div class="section-header section-header-bordered mb15">
                         <h4 class="section-title">
-                            <p class="font-alt nm">Video Terfavorit</p>
+                            <p class="font-alt nm">Materi Terkait</p>
                         </h4>
                     </div>
                     <!--/ Header -->
 
                     <!-- carousel -->
                     <div class="owl-carousel" id="lovely-client">
-                        <?php for ( $i=1;$i<=5;$i++ ): ?>
+                        <?php foreach ($materisubab as $materisubab_items): ?>
                         <!-- portfolio #1 -->
                         <div class="item text-center">
                             <!-- thumbnail -->
@@ -66,6 +66,7 @@
                                     <div class="overlay">
                                         <div class="toolbar">
                                             <a href="<?php echo base_url( '/index.php/video/seevideo' );?>/<?php echo $video_item->id ?>" class="btn btn-success"><i class="ico-play"></i></a>
+                                            <p style="padding:3px;text-align:left;font-weight:bold"><?=$materisubab_items->keterangan ?></p>
                                         </div>
                                     </div>
                                     <!--/ toolbar overlay -->
@@ -75,10 +76,10 @@
                             </div>
                             <!--/ thumbnail -->
                             <!-- Meta -->
-                            <h5 class="font-alt text-center mb5">Judul Video <?php echo $i ?></h5>
+                            <h5 class="font-alt text-center mb5"><?=$materisubab_items->judulSubBab ?></h5>
                             <!--/ Meta -->
                         </div>
-                        <?php endfor ?>
+                        <?php endforeach ?>
                         <!--/ portfolio #1 -->
                     </div>
                     <!--/ carousel -->
