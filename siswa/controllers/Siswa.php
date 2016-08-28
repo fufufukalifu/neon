@@ -34,7 +34,7 @@ class Siswa extends MX_Controller
     }
 
 
-    public function ubahPengaturanProfile()
+    public function ubahprofilesiswa()
     { 
 
       //load library n helper
