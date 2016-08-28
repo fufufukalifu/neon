@@ -37,7 +37,7 @@
                                         <p>Beberapa video yang tersedia : </p>
 
                                         <ul>
-                                            <a href="<?=base_url('index.php/video/videosub/'.$bab_video_items->subid) ?>">
+                                            <a href="<?=base_url('index.php/video/videobysub/'.$bab_video_items->subid) ?>">
                                                 <li><?=$bab_video_items->judulSubBab  ?></li>
                                             </a>
                                         </ul>
@@ -49,7 +49,7 @@
                             } else {?>
                                     <div class="text-default">
                                         <ul>
-                                            <a href="<?=base_url('index.php/video/videosub/'.$bab_video_items->subid) ?>">
+                                            <a href="<?=base_url('index.php/video/videobysub/'.$bab_video_items->subid) ?>">
                                                 <li><?=$bab_video_items->judulSubBab  ?></li>
                                             </a>
                                         </ul>

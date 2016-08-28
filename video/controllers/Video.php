@@ -19,46 +19,60 @@ class Video extends MX_Controller {
     }
 
     //halaman tampilkan sub bab dan video
-    public function videosub($id_sub_bab, $id_video='1') {
+    public function videosub( $id_sub_bab, $id_video=null ) {
+        //digunakan untuk semua video
         $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+        //digunakan untuk judul subab
         $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+        if ( !isset( $id_video ) ) {
+            //tidak ada id video
+            echo "string";
+            if ( $data['judul_sub_bab']==array() ) {
+                //kalo yang diklik belum punya video
 
-        if ( $data['judul_sub_bab']==array() ) {
-            //kalo yang diklik belum punya video
-            $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'templating/t-navbarUser' );
-            $this->load->view( 'v-banner-videoBelajar', $data );
-            $this->load->view( 'templating/t-footer' );
+                $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
+                $this->load->view( 'templating/t-header' );
+                $this->load->view( 'templating/t-navbarUser' );
+                $this->load->view( 'v-banner-videoBelajar', $data );
+                $this->load->view( 'templating/t-footer' );
+            }else {
+                //kalo yang diklik sudah punya video
+
+                //digunakan untuk mengambil array index0, jadi pada saat klik sub diambil video yang urutan pertama untuk ditampilkan
+                $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
+                $data['title'] = $data['judul_sub_bab']->judulSubBab;
+                $this->load->view( 'templating/t-header' );
+                $this->load->view( 'templating/t-navbarUser' );
+                $this->load->view( 'v-banner-videoBelajar', $data );
+                $this->load->view( 'v-single-video', $data );
+                $this->load->view( 'templating/t-footer' );
+            }
+            //$data['title'] = $data['judul_sub_bab']->judulSubBab;
         }else {
-            //kalo yang diklik sudah punya video
-            $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
-            $data['title'] = $data['judul_sub_bab']->judulSubBab;
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'templating/t-navbarUser' );
-            $this->load->view( 'v-banner-videoBelajar', $data );
-            $this->load->view( 'v-single-video', $data );
-            $this->load->view( 'templating/t-footer' );
+            //ada id video
+            echo "string2";
         }
-        //$data['title'] = $data['judul_sub_bab']->judulSubBab;
     }
 
     //halaman tampilkan semua video dalam 1 subab
-    public function videobysub( $bab_id ) {
+    public function videobysub( $sub_bab_id ) {
         //tampilkan seluruh video yang diklik bab
-        $data['judulbab'] = $this->load->Mvideos->get_sub_bab( $bab_id );
-        $data['title'] = $this->load->Mvideos->get_sub_bab( $bab_id )[0]->judulSubBab;
+        $data['judulbab'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id );
 
-        if ( isset( $data['title'] ) ) {
+        if ( $data['judulbab']==array() ) {
+            $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
+            $this->load->view( 'templating/t-header' );
+            $this->load->view( 'templating/t-navbarUser', $data );
+            $this->load->view( 'v-banner-videoBelajar' );
+            $this->load->view( 'templating/t-footer' );
+        }else {
+            $data['title'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id )[0]->judulSubBab;
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );
             $this->load->view( 'v-banner-videoBelajar' );
             $this->load->view( 'v-container-all-videos' );
             $this->load->view( 'templating/t-footer' );
-        }else {
-            echo "masuk ke else";
         }
-
     }
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
@@ -77,25 +91,37 @@ class Video extends MX_Controller {
         $this->load->view( 'templating/t-footer' );
     }
 
-    public function seevideo($subid, $idvideo){
-        $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
-        $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+    public function seevideo( $idvideo ) {
+        $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
 
-        if ( $data['judul_sub_bab']==array() ) {
-            $data['title'] = $this->pesan_error;
+        if ( $data['videosingle']==array() ) {
+            $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'v-banner-videoBelajar', $data );
             $this->load->view( 'templating/t-footer' );
         }else {
-            $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
-            $data['title'] = $data['judul_sub_bab']->judulSubBab;
+            //ambil satu video bedasarkan idnya
+            $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
+
+            //ambil index 0 yang akan dijadikan judul di title
+            $onevideo = $data['videosingle'];
+
+            $data['title'] = $onevideo[0]->judulVideo;
+            $subid = $onevideo[0]->subBabID;
+            //ambil list semua video yang memiliki sub id yang sama
+            $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
+            
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'v-banner-videoBelajar', $data );
             $this->load->view( 'v-single-video', $data );
             $this->load->view( 'templating/t-footer' );
         }
+    }
+
+    function watchvideo( $id_video ) {
+
     }
 
     //########## FRONT END  ####################

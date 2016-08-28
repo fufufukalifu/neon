@@ -47,11 +47,20 @@ class Mvideos extends CI_Model
 
   }
 
-  function get_sub_bab() {
+  function get_video_by_sub( $id_sub ) {
+    $this->db->select( '*, video.id' );
+    $this->db->from( 'tb_video video' );
+    $this->db->join( 'tb_subbab subbab', 'subbab.id=video.subBabID' );
+    $this->db->where( 'subbab.id', $id_sub );
+    $query = $this->db->get();
+
+    return $query->result();
+  }
+
+  function get_single_video( $id_video ) {
     $this->db->select( '*' );
     $this->db->from( 'tb_video video' );
-    $this->db->join( 'tb_subbab subab', 'subab.id=video.subBabID' );
-    $this->db->where( 'subbab.id', $guru_id );
+    $this->db->where( 'id', $id_video );
     $query = $this->db->get();
 
     return $query->result();

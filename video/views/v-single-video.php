@@ -168,9 +168,8 @@
                                 </div>
                                 <!--/ Header -->
                                 <ol class="list-unstyled">
-                                    <?php //print_r($subBab) ?>
-                                    <?php foreach($subBab as $sub_bab_items): ?>
-                                         <li class="mb5"><a href="<?=$sub_bab_items->subBabID ?>/<?=$sub_bab_items->id ?>"><?=$sub_bab_items->judulVideo ?></a></li>
+                                    <?php foreach($videobysub as $sub_bab_items): ?>
+                                         <li class="mb5"><a href="<?=base_url('index.php/video/seevideo/') ?><?=$sub_bab_items->id?>"><?=$sub_bab_items->judulVideo ?></a></li>
                                     <?php endforeach?>
                                 </ol>
                             </div>
