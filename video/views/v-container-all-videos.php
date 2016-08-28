@@ -4,7 +4,7 @@
                 <div class="container">
                     <!-- START row -->
                     <div class="row" id="shuffle-grid">
-                    	<?php for($i=1;$i<=8;$i++): ?>
+                    	<?php foreach($judulbab as $video_item): ?>
                         <div class="col-sm-3 shuffle mb15" data-groups='["creative", "people"]'>
                             <!-- thumbnail -->
                             <div class="thumbnail nm">
@@ -26,11 +26,11 @@
                             </div>
                             <!--/ thumbnail -->
                             <!-- Meta -->
-                            <h4 class="font-alt ellipsis text-center mb10">Judul Video</h4>
+                            <h4 class="font-alt ellipsis text-center mb10"><?=$video_item->judulVideo ?></h4>
                             
                             <!--/ Meta -->
                         </div>
-                        <?php endfor ?>
+                        <?php endforeach ?>
                     </div>
 
                     <!--/ END row -->

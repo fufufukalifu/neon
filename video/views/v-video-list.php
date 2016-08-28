@@ -22,20 +22,24 @@
                             </article>
                         </div>
                         <?php } ?>
+
                         <!--  start pengecekan unutk mmmm -->
                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 post">
                             <article class="panel overflow-hidden">
                                 <!-- Content -->
                                 <section class="panel-body">
                                     <!-- heading -->
-                                    <h4 class="font-alt mt0 ellipsis"><?=$bab_video_items->judulBab  ?></h4>
+                                <a href="<?=base_url('index.php/video/lihatvideo') ?>/<?=$bab_video_items->babid ?>" title="Lihat Semua Video"><h4 class="font-alt mt0 ellipsis"><?=$bab_video_items->judulBab  ?> <i class="ico ico-eye-open"></i></h4></a> 
                                     <!--/ heading -->
 
                                     <!-- text -->
                                     <div class="text-default">
                                         <p>Beberapa video yang tersedia : </p>
+
                                         <ul>
-                                            <a href="<?=base_url('index.php/video/videobelajarsingle/'.$bab_video_items->subid) ?>"><li><?=$bab_video_items->judulSubBab  ?></li></a>
+                                            <a href="<?=base_url('index.php/video/videosub/'.$bab_video_items->subid) ?>">
+                                                <li><?=$bab_video_items->judulSubBab  ?></li>
+                                            </a>
                                         </ul>
                                     </div>
                                     <!--/ text -->
@@ -45,11 +49,12 @@
                             } else {?>
                                     <div class="text-default">
                                         <ul>
-                                            <a href="<?=base_url('index.php/video/videobelajarsingle/'.$bab_video_items->subid) ?>"><li><?=$bab_video_items->judulSubBab  ?></li></a>
+                                            <a href="<?=base_url('index.php/video/videosub/'.$bab_video_items->subid) ?>">
+                                                <li><?=$bab_video_items->judulSubBab  ?></li>
+                                            </a>
                                         </ul>
                                     </div>
                             <?php } ?>
-                        <!-- post ke-1 -->
                         <?php endforeach ?>
                                 </section>
                                 <!--/ Content -->

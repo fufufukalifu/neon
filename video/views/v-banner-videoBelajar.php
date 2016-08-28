@@ -8,11 +8,9 @@
             <div class="section-header text-center">
                 <h2 class="section-title">
                     <br>
-                    <?php if (isset($aliaspelajaran)): ?>
-                        <div class="font-alt nm">Mata Pelajaran <?=$aliaspelajaran ?> Untuk Tingkat <?=$aliastingkat ?></div>
-                    <?php else: ?>
-                        <div class="font-alt nm"><?=$judul_sub_bab->judulSubBab ?></div>
-                    <?php endif ?>
+                        <div class="font-alt nm">
+                            <?=$title ?>
+                        </div>
                 </h2>
             </div>
         </div>

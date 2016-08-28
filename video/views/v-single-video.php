@@ -168,8 +168,9 @@
                                 </div>
                                 <!--/ Header -->
                                 <ol class="list-unstyled">
+                                    <?php //print_r($subBab) ?>
                                     <?php foreach($subBab as $sub_bab_items): ?>
-                                         <li class="mb5"><a href="javascript:void(0);"><?=$sub_bab_items->judulVideo ?></a></li>
+                                         <li class="mb5"><a href="<?=$sub_bab_items->subBabID ?>/<?=$sub_bab_items->id ?>"><?=$sub_bab_items->judulVideo ?></a></li>
                                     <?php endforeach?>
                                 </ol>
                             </div>
