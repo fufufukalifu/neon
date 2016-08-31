@@ -13,34 +13,31 @@ class Siswa extends MX_Controller
         
     }
 
-     // function untuk menampikan halam pertama saat registrasi
+     // 
     public function index() {
-    	 $data['tb_siswa']=$this->msiswa->get_siswa();
+    	 $data['siswa']=$this->msiswa->get_datsiswa();
        $this->load->view('templating/t-header');
-       $this->load->view('vPengaturanProfile');
+       $this->load->view('vPengaturanProfile',$data);
        $this->load->view('templating/t-footer');
 
 
     }
 
+    //menampilkan halaman pengaturan profile
     public function PengaturanProfile()
     {
-    	 $data['tb_siswa']=$this->msiswa->get_siswa();
+    	 $data['tb_siswa']=$this->msiswa->get_datsiswa();
     	 $this->load->view('templating/t-header');
-       $this->load->view('vPengaturanProfile');
+       $this->load->view('vPengaturanProfile',$data);
        $this->load->view('templating/t-footer');
-
-
     }
 
 
     public function ubahprofilesiswa()
     { 
-
       //load library n helper
       $this->load->helper(array('form', 'url'));
       $this->load->library('form_validation');
-
 
       //syarat pengisian form perubahan profile
       $this->form_validation->set_rules('namadepan', 'Nama Depan',  'required');
@@ -119,7 +116,6 @@ class Siswa extends MX_Controller
       
 
 
-
     }
 
 
@@ -147,15 +143,51 @@ class Siswa extends MX_Controller
         $this->load->view('templating/t-footer');
       } else {
         $kataSandi=htmlspecialchars(md5($this->input->post('newpass')));
-   
-          $data_post=array(
-          'kataSandi'=>$kataSandi,
-          );
-        $this->msiswa->update_katasandi($data_post);
+        $inputSandi=htmlspecialchars(md5($this->input->post('sandilama')));
+          $data_post=array('kataSandi'=>$kataSandi, );
+          $data['pengguna']=$this->msiswa->get_password()[0];
+          $kataSandi=$data['pengguna']['kataSandi'];
+          var_dump($kataSandi);
+          if ($kataSandi==$inputSandi) {
+            $this->msiswa->update_katasandi($data_post);
+            
+          } else {
+            # code...
+             echo "salah";//for testing
+          }
+        
       }
       
 
     }
+
+    public function upload()
+    {
+        echo "masuk upload";
+        $config['upload_path']          = './assets/image/photo/siswa';
+        $config['allowed_types']        = 'jpeg|gif|jpg|png|mkv';
+        $config['max_size']             = 100;
+        $config['max_width']            = 1024;
+        $config['max_height']           = 768;
+        $this->load->library('upload',$config);
+
+        if (!$this->upload->do_upload('photo')) {
+            
+            $error = array('error'=>$this->upload->display_errors());
+            var_dump($error);
+            echo "gagal upload";//for teting
+            // $this->load->view('beranda/main_view',$error);
+        } else {
+            $file_data = $this->upload->data();
+            $photo=$file_data['file_name'];
+            $this->msiswa->update_photo($photo);
+            echo "berhasil upload";//for testing
+            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
+            // $this->load->view('beranda/success_msg',$data);
+        }
+        
+    }
+
 }
 
 ?>

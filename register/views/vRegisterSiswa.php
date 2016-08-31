@@ -212,7 +212,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="agree" id="agree" value="1">  
+                                            <input type="checkbox" name="agree" id="agree" value="1" required>  
                                             <label for="agree">&nbsp;&nbsp;I agree to the <a class="semibold" href="javascript:void(0);">Term Of Services</a></label>   
                                         </div>
                                     </div>
