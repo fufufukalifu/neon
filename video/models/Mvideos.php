@@ -70,12 +70,27 @@ class Mvideos extends CI_Model
   }
 
   //ambil subab yang berada dalam bab yang sama
-  function get_sub_by_babid($bab_id) {
+  function get_sub_by_babid( $bab_id ) {
     $this->db->select( '*' );
     $this->db->from( 'tb_subbab subbab' );
     $this->db->where( 'babID', $bab_id );
     $query = $this->db->get();
 
+    return $query->result();
+  }
+
+  //ambil meta data dari video
+  function get_matapelajaran( $idvideo ) {
+    $this->db->select( '*' );
+    $this->db->from( 'tb_mata-pelajaran mapel' );
+
+    $this->db->join( 'tb_tingkat-pelajaran tipel', 'mapel.id=tipel.mataPelajaranID' );
+    $this->db->join( 'tb_bab bab', 'bab.tingkatPelajaranID=tipel.id' );
+    $this->db->join( 'tb_subbab subab', 'bab.id=subab.babID' );
+    $this->db->join( 'tb_video video', 'video.subBabID=subab.id' );
+    $this->db->where( 'video.id', $idvideo );
+
+    $query = $this->db->get();
     return $query->result();
   }
 }

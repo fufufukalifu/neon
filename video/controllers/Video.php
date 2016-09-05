@@ -7,9 +7,12 @@ class Video extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'Mvideos' );
+        $this->load->model( 'Guru/Mguru' );
     }
 
     //########## FRONT END  ####################
+
+
 
     public function index() {
         $this->load->view( 'templating/t-header' );
@@ -110,12 +113,18 @@ class Video extends MX_Controller {
             //ambil index 0 yang akan dijadikan judul di title
             $onevideo = $data['videosingle'];
             $data['video'] = $onevideo[0];
-
             $data['title'] = $onevideo[0]->judulVideo;
+
+            $data['videoData'] = $this->load->Mvideos->get_matapelajaran( $idvideo )[0];
+            
+            //get id guru
+            $guruID = $onevideo[0]->guruID;
+            //ambil data guru yang membuat video
+            $data['penulis'] = $this->load->Mguru->get_penulis( $guruID )[0];
+
             $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
-
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'v-banner-videoBelajar', $data );

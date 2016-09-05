@@ -17,15 +17,14 @@
 
                                 <!-- meta -->
                                 <p class="meta">
-                                    <span class=""><a href="<?=base_url('index.php/video/daftarvideo') ?>"><i class="ico ico-file"></i>Matematika</a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>                            
                                     <span class=""><a href="<?=base_url('index.php/video/videobysub') ?>/<?=$video->subBabID ?>"><i class="ico ico-facetime-video"></i> Semua Video </a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>
                                     <a href="javascript:void(0);">6 tanggapan</a><!-- comments -->
                                     <span class="text-muted mr5 ml5">&#8226;</span>
-                                    <span class="text-muted">Kategori </span><a href="javascript:void(0);">Matematika</a><!-- category -->
+                                    <span class="text-muted">Kategori </span><a href="javascript:void(0);"><?=$videoData->namaMataPelajaran ?></a><!-- category -->
                                     <span class="text-muted mr5 ml5">&#8226;</span>
-                                    <span class="text-muted">Dibuat Oleh </span><a href="javascript:void(0);">Asep Munandar</a><!-- author -->
+                                    <span class="text-muted">Dibuat Oleh </span><a href="javascript:void(0);"><?=htmlspecialchars($penulis['namaDepan']." ".$penulis['namaBelakang']) ?></a><!-- author -->
                                     <hr>
                                 </p>
                                 <!--/ meta -->
@@ -66,8 +65,8 @@
                                                 <img class="img-circle" src="<?=base_url('assets/image/avatar/avatar4.jpg');?>" alt="" width="70px" height="70px">
                                             </li>
                                             <li class="text-left">
-                                                <h5 class="semibold mt0 text-accent">Asep Munandar</h5>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing .</p>  
+                                                <h5 class="semibold mt0 text-accent"><?=htmlspecialchars($penulis['namaDepan']." ".$penulis['namaBelakang']) ?></h5>
+                                                <p><?=htmlspecialchars($penulis['biografi']) ?></p>  
                                             </li>
                                         </ul>
                                     </div>
