@@ -8,6 +8,7 @@ class Video extends MX_Controller {
         parent::__construct();
         $this->load->model( 'Mvideos' );
         $this->load->model( 'Guru/Mguru' );
+        $this->load->model( 'komen/mKomen' );
     }
 
     //########## FRONT END  ####################
@@ -72,7 +73,7 @@ class Video extends MX_Controller {
             $data['title'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id )[0]->judulSubBab;
             $babId = $data['judulbab'][0]->babID;
             $data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
-            print_r( $data['materisubab'] );
+           // print_r( $data['materisubab'] );
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );
             $this->load->view( 'v-banner-videoBelajar' );
@@ -116,15 +117,17 @@ class Video extends MX_Controller {
             $data['title'] = $onevideo[0]->judulVideo;
 
             $data['videoData'] = $this->load->Mvideos->get_matapelajaran( $idvideo )[0];
-            
+
             //get id guru
             $guruID = $onevideo[0]->guruID;
             //ambil data guru yang membuat video
             $data['penulis'] = $this->load->Mguru->get_penulis( $guruID )[0];
-
             $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
+            //ambil komen berdasarkan id video
+            $data['komen']=$this->load->mKomen->get_komen_byvideo( $idvideo );
+            var_dump( $data['komen'] );
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'v-banner-videoBelajar', $data );
