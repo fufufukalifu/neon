@@ -1,5 +1,28 @@
 <!-- START Template Main -->
 <section id="main" role="main">
+    <!-- START page header -->
+    <section class="page-header page-header-block nm">
+        <!-- pattern -->
+        <div class="pattern pattern9"></div>
+        <!--/ pattern -->
+        <div class="container pt15 pb15">
+            <div class="page-header-section">
+                <h4 class="title font-alt">Login Akun User</h4>
+            </div>
+            <div class="page-header-section">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <ol class="breadcrumb breadcrumb-transparent nm">
+                        <li><a href="<?= base_url(); ?>">Beranda</a></li>
+                        <li class="active">Login Akun User</li>
+                    </ol>
+                </div>
+                <!--/ Toolbar -->
+            </div>
+        </div>
+    </section>
+    <!--/ END page header -->
+
     <!-- START Register Content -->
     <section class="section bgcolor-white">
         <div class="container">
@@ -56,7 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <a href="javascript:void(0);">Lost password?</a>
+                                        <a href="<?= base_url('index.php/register'); ?>">Sudah punya akun?</a>
                                     </div>
                                 </div>
                             </div>
