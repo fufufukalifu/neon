@@ -93,5 +93,10 @@ class Mvideos extends CI_Model
     $query = $this->db->get();
     return $query->result();
   }
+
+  public function insertComment($data_komen)
+  {
+     $this->db->insert('tb_komen', $data_komen);
+  }
 }
 ?>
