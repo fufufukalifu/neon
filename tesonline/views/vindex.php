@@ -14,20 +14,19 @@
 
             <!-- Layer #2 -->
             <h1 class="ls-l font-alt" style="top:110px;left:150px;" data-ls="offsetxin:0;durationin:2000;delayin:1500;easingin:easeOutElastic;rotatexin:-90;transformoriginin:50% top 0;offsetxout:-200;durationout:1000;">
-                Selamat Datang di <span class="text-primary">NETJOO</span> 
+                Selamat Datang di <span class="text-primary">JOONET</span> 
             </h1>
             <!--/ Layer #2 -->
 
             <!-- Layer #3 -->
             <h5 class="ls-l font-alt thin text-default" style="top:170px;left:150px;width:550px;" data-ls="offsetxin:0; durationin:2000; delayin:2000; easingin:easeOutElastic; rotatexin:90; transformoriginin:50% top 0; offsetxout:-400;">
-                Cari Soal Ujian dan Latihan Soal Sekarang, <span class="text-primary">Gratis !</span> 
-
-                Terdapat ribuan latihan soal seperti Ujian Nasional, Ujian Semester, Soal SBMPTN untuk semua jenjang (SD, SMP, dan SMA)
+                Masih belajar dengan cara gitu-gitu aja? Bingung cari tempat belajar yang kualitasnya terjamin?
+                Temukan cara belajar masa kini bersama <b>Joonet</b>!
             </h5>
             <!--/ Layer #3 -->
 
             <!-- Layer #4 -->
-            <a href="javascript:void(0);" class="ls-l btn btn-primary" style="top:250px; left:150px;" data-ls="offsetxin:0; durationin:2000; delayin:2500; easingin:easeOutElastic; rotatexin:90; transformoriginin:50% top 0; offsetxout:-400;">
+            <a href="<?= base_url('index.php/register'); ?>" class="ls-l btn btn-primary" style="top:220px; left:150px;" data-ls="offsetxin:0; durationin:2000; delayin:2500; easingin:easeOutElastic; rotatexin:90; transformoriginin:50% top 0; offsetxout:-400;">
                 Daftar Sekarang !</i>
             </a>
             <!--/ Layer #4 -->
@@ -43,21 +42,20 @@
 
             <!-- Layer #2 -->
             <h1 class="ls-l font-alt text-right" style="top:110px;left:65%;width:550px;" data-ls="easingin:easeOutElastic; delayin:0;">
-                <span class="text-primary">Analisis topik</span> &amp; manajemen waktu yang komprehensif
+                <span class="text-primary">Berkualitas</span> &amp; Tutor terbaik bersama 
             </h1>
             <!--/ Layer #2 -->
 
             <!-- Layer #3 -->
             <p class="ls-l text-default text-right" style="top:210px;left:65%;width:550px;" data-ls="easingin:easeOutElastic; delayin:500;">
-                Nilai latihan tersedia dalam hitungan detik setelah penyelesaian soal. 
-                Terdapat analisis penguasaan dan manajemen waktu setiap topik dalam soal.
-                Belajar jadi lebih fokus
+                Mencari materi belajar yang sesuai dan guru yang asik?
+                Tidak hanya dibimbing oleh tutor-tutor terbaik, Joonet juga memiliki materi lengkap sesuai kurikulum sekolah untuk kelas 9, 10, 11, dan 12.
             </p>
             <!--/ Layer #3 -->
 
             <!-- Layer #5 -->
             <p class="ls-l text-default text-right" style="top:265px;left:65%;width:550px;" data-ls="easingin:easeOutElastic; delayin:1000;">
-                <a href="javascript:void(0);" class="btn btn-primary">
+                <a href="<?= base_url('index.php/login'); ?>" class="btn btn-primary">
                     Ayo Coba!</i>
                 </a>
             </p>
