@@ -1,4 +1,5 @@
 <?php
+
 class Login extends MX_Controller {
 
     //put your code here
@@ -44,11 +45,11 @@ class Login extends MX_Controller {
 //                    redirect(site_url('peserta-free'));
                 } elseif ($hakAkses == 'guru') {
                     echo 'guru';
-//                    redirect(site_url('peserta-berbayar'));
-                } elseif ($hakAkses == 'murid') {
-//                    redirect(site_url('peserta-bimbel'));
+                    redirect(site_url('guru/dashboard')); 
+                } elseif ($hakAkses == 'siswa') {
+                    redirect(site_url('welcome'));
                 } elseif ($hakAkses == 'user') {
-                   	redirect(site_url('welcome'));
+//                   	redirect(site_url('welcome'));
                 } else {
                     echo 'tidak ada hak akses';
                 }
@@ -67,6 +68,7 @@ class Login extends MX_Controller {
         $this->facebook->destroy_session();
         redirect(base_url());
     }
+
 }
 
 ?>
