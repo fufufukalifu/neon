@@ -16,7 +16,8 @@ class Guru extends MX_Controller {
         
     }
 
-    public function dashboard($guru_id = "") {
+    public function dashboard() {
+        $guru_id = $this->session->userdata['id_guru'];
         $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
         //untuk mengambil data guru
         $data['data_guru'] = $this->load->mguru->get_single_guru($guru_id)[0];

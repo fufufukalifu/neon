@@ -44,8 +44,13 @@ class Login extends MX_Controller {
 //                    echo 'admin';
 //                    redirect(site_url('peserta-free'));
                 } elseif ($hakAkses == 'guru') {
-                    echo 'guru';
-                    redirect(site_url('guru/dashboard')); 
+                    $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
+
+                    foreach ($guru as $value) {
+                        $this->session->set_userdata('id_guru', $value->id);
+                    }
+                    
+                    redirect(site_url('guru/dashboard/'));
                 } elseif ($hakAkses == 'siswa') {
                     redirect(site_url('welcome'));
                 } elseif ($hakAkses == 'user') {
