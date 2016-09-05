@@ -1,9 +1,9 @@
 <!-- START asdasd Header -->
-<?php
-if (!isset($this->session->userdata['HAKAKSES'])) {
-header("location:".base_url());
-}
-?>
+//<?php
+//if (!isset($this->session->userdata['HAKAKSES'])) {
+//header("location:".base_url());
+//}
+//?>
 
 <header id="header" class="navbar navbar-fixed-top">
     <div class="container">
@@ -42,7 +42,8 @@ header("location:".base_url());
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="meta">
                             <span class="avatar"><img src="<?= base_url('assets/image/avatar/avatar7.jpg'); ?>" class="img-circle" alt="" /></span>
-                            <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['USERNAME'] ;?></span>
+                            <!--<span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['USERNAME'] ;?></span>-->
+                            <span class="text hidden-xs hidden-sm pl5">User</span>
                             <span class="caret"></span>
                         </span>
                     </a>

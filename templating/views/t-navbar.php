@@ -34,7 +34,7 @@
             <!-- START nav collapse -->
             <div class="collapse navbar-collapse navbar-collapse-alt" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-<!--                    <li class="dropdown">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="meta">
                                 <span class="text">Test Online</span>
@@ -46,8 +46,8 @@
                             <li><a href="<?= base_url('index.php/tesonline/test'); ?>">TO UN/SBMPTN</a></li>
                             <li><a href="<?= base_url('index.php/tesonline/test'); ?>">TO Perguruan Tinggi</a></li>
                         </ul>
-                    </li>-->
-<!--                    <li class="dropdown">
+                    </li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="meta">
                                 <span class="text">Video Belajar</span>
@@ -71,7 +71,7 @@
                             <li><a href="<?= base_url('index.php/konsultasi');?>">Pelajaran</a></li>
                             <li><a href="<?= base_url('index.php/konsultasi');?>">Jurusan</a></li>
                         </ul>
-                    </li>-->
+                    </li>
                     <li class="dropdown">
                         <a href="<?= base_url('index.php/register');?>">
                             <span class="meta">

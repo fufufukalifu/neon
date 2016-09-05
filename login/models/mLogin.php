@@ -17,7 +17,7 @@ class Mlogin extends CI_Model {
 
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
-echo "ada akun";
+            echo "ada akun";
 
             return $query->result(); //if data is true
         } else {
