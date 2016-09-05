@@ -80,6 +80,7 @@ class Register extends MX_Controller {
             $email = htmlspecialchars($this->input->post('email'));
             $hakAkses = 'user';
 
+            //data array akun
             $data_akun=array(
               'namaPengguna'=>$namaPengguna,
               'kataSandi'=>$kataSandi,
@@ -96,7 +97,7 @@ class Register extends MX_Controller {
 
             $penggunaID=$data['tb_pengguna']['id'];
 
-
+            //data array siswa
             $data_siswa=array(
 
                 'namaDepan'=>$namaDepan,
@@ -158,15 +159,37 @@ class Register extends MX_Controller {
             $email = htmlspecialchars($this->input->post('email'));
             $hakAkses = 'guru';
 
+            //data array akun
+            $data_akun=array(
+              'namaPengguna'=>$namaPengguna,
+              'kataSandi'=>$kataSandi,
+              'eMail'=>$email,
+              'hakAkses'=>$hakAkses,
+              
+            );
+
+
 
             //melempar data guru ke function insert_pengguna di kelas model
-            $data['mregister'] = $this->mregister->insert_pengguna($namaPengguna, $kataSandi, $email, $hakAkses);
+            $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
 
             //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
-            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna);
+            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
+            $penggunaID=$data['tb_pengguna']['id'];
+
+            //data array guru
+            $data_guru=array(
+
+                'namaDepan'=>$namaDepan,
+                'namaBelakang'=>$namaBelakang,
+                'mataPelajaran'=> $mataPelajaran,
+                'alamat'=>$alamat,
+                'noKontak'=>$noKontak,
+                'penggunaID'=>$penggunaID,
+                );
 
             //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_guru($namaDepan, $namaBelakang, $mataPelajaran, $alamat, $noKontak, $data);
+            $data['mregister'] = $this->mregister->insert_guru($data_guru,$data_akun);
         }
     }
 

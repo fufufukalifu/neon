@@ -150,27 +150,6 @@
 
                                 <hr class="nm">
                                 <div class="panel-body">
-                                    <div class="form-group">
-                                            <div class="col-md-9">
-                                                <div class="btn-group pr5">
-                                                    <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg')?>" alt="" width="34px">
-                                                </div>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">Upload photo</button>
-                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">.
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Upload photo</a></li>
-                                                        <li><a href="#">Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-
-                                <hr class="nm">
-                                <div class="panel-body">
                                     <div class="col-md-12 form-group">
                                         <label class="control-label">Nama Pengguna</label>
                                         <div class="has-icon pull-left">
@@ -201,7 +180,7 @@
 
                                 <hr class="nm">
                                 <div class="panel-body">
-                                    <p class="semibold text-muted">To confirm and activate your new account, we will need to send the activation code to your e-mail.</p>
+                                    <p class="semibold text-muted">Untuk konfirmasi dan pengaktifan akun baru anda, kita akan mengirim aktivasi code ke email anda.</p>
                                     <div class="form-group">
                                         <label class="control-label">Email</label>
                                         <div class="has-icon pull-left">
@@ -213,14 +192,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="agree" id="agree" value="1">  
-                                            <label for="agree">&nbsp;&nbsp;I agree to the <a class="semibold" href="javascript:void(0);">Term Of Services</a></label>   
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="news" id="news" value="1">  
-                                            <label for="news">&nbsp;&nbsp;Send me Newsletters.</label>   
+                                            <input type="checkbox" name="agree" id="agree" value="1" required>  
+                                            <label for="agree">&nbsp;&nbsp;Saya menyetujui <a class="semibold" href="javascript:void(0);">Term Of Services</a></label>   
                                         </div>
                                     </div>
                                 </div>

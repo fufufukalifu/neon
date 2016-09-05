@@ -4,7 +4,7 @@
                 <div class="container">
                     <!-- START row -->
                     <div class="row" id="shuffle-grid">
-                    	<?php for($i=1;$i<=8;$i++): ?>
+                        <?php foreach ( $judulbab as $video_item ): ?>
                         <div class="col-sm-3 shuffle mb15" data-groups='["creative", "people"]'>
                             <!-- thumbnail -->
                             <div class="thumbnail nm">
@@ -16,21 +16,22 @@
                                     <!-- toolbar overlay -->
                                     <div class="overlay">
                                         <div class="toolbar">
-                                            <a href="<?=base_url('/index.php/video/videobelajarsingle');?>" class="btn btn-default" title="Judul Video"><i class="ico-play"></i></a>
+                                            <a href="<?php echo base_url( '/index.php/video/seevideo' );?>/<?php echo $video_item->id ?>" class="btn btn-default" title="<?php echo $video_item->judulVideo ?>"><i class="ico-play"></i></a>
+                                            <p style="text-align:left;padding:3px"><?php echo $video_item->deskripsi ?></p>
                                         </div>
                                     </div>
                                     <!--/ toolbar overlay -->
-                                    <img data-toggle="unveil" src="<?=base_url('assets/image/portfolio/placeholder-grey.jpg');?>" data-src="<?=base_url('assets/image/portfolio/placeholder-grey.jpg');?>" alt="Photo" width="100%" />
+                                    <img data-toggle="unveil" src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" data-src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" alt="Photo" width="100%" />
                                 </div>
                                 <!--/ media -->
                             </div>
                             <!--/ thumbnail -->
                             <!-- Meta -->
-                            <h4 class="font-alt ellipsis text-center mb10">Judul Video</h4>
-                            
+                            <h4 class="font-alt ellipsis text-center mb10"><?php echo $video_item->judulVideo ?></h4>
+
                             <!--/ Meta -->
                         </div>
-                        <?php endfor ?>
+                        <?php endforeach ?>
                     </div>
 
                     <!--/ END row -->
@@ -44,14 +45,14 @@
                     <!-- Header -->
                     <div class="section-header section-header-bordered mb15">
                         <h4 class="section-title">
-                            <p class="font-alt nm">Video Terfavorit</p>
+                            <p class="font-alt nm">Materi Terkait</p>
                         </h4>
                     </div>
                     <!--/ Header -->
 
                     <!-- carousel -->
                     <div class="owl-carousel" id="lovely-client">
-                    	<?php for($i=1;$i<=5;$i++): ?>
+                        <?php foreach ($materisubab as $materisubab_items): ?>
                         <!-- portfolio #1 -->
                         <div class="item text-center">
                             <!-- thumbnail -->
@@ -64,24 +65,25 @@
                                     <!-- toolbar overlay -->
                                     <div class="overlay">
                                         <div class="toolbar">
-                                            <a href="#" class="btn btn-success"><i class="ico-play"></i></a>
+                                            <a href="<?php echo base_url( '/index.php/video/seevideo' );?>/<?php echo $video_item->id ?>" class="btn btn-success"><i class="ico-play"></i></a>
+                                            <p style="padding:3px;text-align:left;font-weight:bold"><?=$materisubab_items->keterangan ?></p>
                                         </div>
                                     </div>
                                     <!--/ toolbar overlay -->
-                                    <img data-toggle="unveil" src="<?=base_url('assets/image/portfolio/placeholder-grey.jpg');?>" data-src="<?=base_url('assets/image/portfolio/placeholder-grey.jpg');?>" alt="Photo" width="100%" />
+                                    <img data-toggle="unveil" src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" data-src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" alt="Photo" width="100%" />
                                 </div>
                                 <!--/ media -->
                             </div>
                             <!--/ thumbnail -->
                             <!-- Meta -->
-                            <h5 class="font-alt text-center mb5">Judul Video <?=$i ?></h5>
+                            <h5 class="font-alt text-center mb5"><?=$materisubab_items->judulSubBab ?></h5>
                             <!--/ Meta -->
                         </div>
-                        <?php endfor ?>
+                        <?php endforeach ?>
                         <!--/ portfolio #1 -->
                     </div>
                     <!--/ carousel -->
-                    
+
 
                 </div>
             </section>

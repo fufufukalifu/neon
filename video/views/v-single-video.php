@@ -19,7 +19,7 @@
                                 <p class="meta">
                                     <span class=""><a href="<?=base_url('index.php/video/daftarvideo') ?>"><i class="ico ico-file"></i>Matematika</a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>                            
-                                    <span class=""><a href="<?=base_url('index.php/video/videobelajar') ?>"><i class="ico ico-facetime-video"></i> Semua Video </a></span>
+                                    <span class=""><a href="<?=base_url('index.php/video/videobysub') ?>/<?=$video->subBabID ?>"><i class="ico ico-facetime-video"></i> Semua Video </a></span>
                                     <span class="text-muted mr5 ml5">&#8226;</span>
                                     <a href="javascript:void(0);">6 tanggapan</a><!-- comments -->
                                     <span class="text-muted mr5 ml5">&#8226;</span>
@@ -33,7 +33,7 @@
                                 <!-- video -->
                                 <div class="container" style="witdh:100%;height:420px">
                                     <div class="media">
-                                        <video preload controls src="<?=base_url('assets/video/algoritma1.mp4');?>"></video>                                  
+                                        <video preload controls src="<?=base_url('assets/video/');?><?=$video->namaFile ?>"></video>                                  
                                     </div>    
                                     
                                 </div>
@@ -41,7 +41,7 @@
 
                                 <!-- text -->
                                 <div class="text-default">
-                                    <p><?=$judul_sub_bab->deskripsi ?></p>
+                                    <p><?=$video->deskripsi ?></p>
                                 </div>
                                 <!--/ text -->
 
@@ -168,8 +168,8 @@
                                 </div>
                                 <!--/ Header -->
                                 <ol class="list-unstyled">
-                                    <?php foreach($subBab as $sub_bab_items): ?>
-                                         <li class="mb5"><a href="javascript:void(0);"><?=$sub_bab_items->judulVideo ?></a></li>
+                                    <?php foreach($videobysub as $sub_bab_items): ?>
+                                         <li class="mb5"><a href="<?=base_url('index.php/video/seevideo/') ?><?=$sub_bab_items->id?>"><?=$sub_bab_items->judulVideo ?></a></li>
                                     <?php endforeach?>
                                 </ol>
                             </div>

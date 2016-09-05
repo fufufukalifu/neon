@@ -1,25 +1,21 @@
 <?php
 
-/**
- * 
- */
 class Mregister extends CI_Model {
 
     private $verifikasiCode; //menampung code verifikasi email  
 
     //merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
 
-    public function insert_guru($namaDepan, $namaBelakang, $mataPelajaran, $alamat, $noKontak, $data) {
-        foreach ($data['tb_pengguna'] as $row) {
-            $idPengguna = $row['id'];
+    public function insert_guru($data_guru, $data_akun) {
+        $this->db->insert('tb_guru', $data_guru);
 
-            $this->db->set('namaDepan', $namaDepan);
-            $this->db->set('namaBelakang', $namaBelakang);
-            $this->db->set('mataPelajaran', $mataPelajaran);
-            $this->db->set('alamat', $alamat);
-            $this->db->set('nokontak', $noKontak);
-            $this->db->set('penggunaID', $idPengguna);
-            $this->db->insert('tb_guru');
+        if ($this->db->affected_rows() === 1) {
+            $penggunaID = $data_guru['penggunaID'];
+            $this->set_verifikasicode($penggunaID);
+            $this->session->set_userdata($data_akun);
+            $this->send_verifikasi_email();
+        } else {
+            echo"masuk else"; //for testign
         }
     }
 
