@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <a href="<?= base_url('index.php/register'); ?>">Sudah punya akun?</a>
+                                        <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
                                     </div>
                                 </div>
                             </div>

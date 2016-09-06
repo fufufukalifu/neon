@@ -42,7 +42,6 @@ class Mregister extends CI_Model {
 
     //untuk mngambil nilai id penngguna untuk digunakan FK di tb_siswa
     public function get_idPengguna($data) {
-
         $this->db->where('namaPengguna', $data);
         $this->db->select('id')->from('tb_pengguna');
         $query = $this->db->get();
@@ -107,5 +106,23 @@ class Mregister extends CI_Model {
             return false;
         }
     }
+
+    //cek user dari validasi email
+    public function cekUser($email) {
+        $this->db->select('*');
+        $this->db->from('tb_pengguna');
+        $this->db->where('eMail', $email);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+        if ($query->num_rows() == 1) {
+            echo "ada akun";
+            return $query->result(); //if data is true
+        } else {
+            echo 'tidak ada akun';
+            return false; //if data is wrong
+        }
+    }
 }
+
 ?>
