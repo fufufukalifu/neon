@@ -61,7 +61,7 @@ insert  into `tb_guru`(`id`,`uuid`,`namaDepan`,`namaBelakang`,`mataPelajaran`,`a
 /*Table structure for table `tb_komen` */
 
 CREATE TABLE `tb_komen` (
-  `id` int(10) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `isiKomen` text,
   `timestampe` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `videoID` int(10) DEFAULT NULL,
@@ -71,9 +71,11 @@ CREATE TABLE `tb_komen` (
   KEY `tb_komen_ibfk_2` (`userID`),
   CONSTRAINT `tb_komen_ibfk_1` FOREIGN KEY (`videoID`) REFERENCES `tb_video` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `tb_komen_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_pengguna` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_komen` */
+
+insert  into `tb_komen`(`id`,`isiKomen`,`timestampe`,`videoID`,`userID`) values (1,'Lorem ipsum dolor sit amet, eu vide nusquam sed, sit et vitae vocent. At est possit numquam percipit. Vidisse aliquip comprehensam pro cu, vim ex dolore docendi. komen by guru','2016-09-05 14:28:02',1,4),(2,'Lorem ipsum dolor sit amet, eu vide nusquam sed, sit et vitae vocent. At est possit numquam percipit. Vidisse aliquip comprehensam pro cu, vim ex dolore docendi. komen by siswa','2016-09-05 14:28:56',1,3);
 
 /*Table structure for table `tb_mata-pelajaran` */
 

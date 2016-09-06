@@ -73,7 +73,7 @@ class Video extends MX_Controller {
             $data['title'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id )[0]->judulSubBab;
             $babId = $data['judulbab'][0]->babID;
             $data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
-           // print_r( $data['materisubab'] );
+            // print_r( $data['materisubab'] );
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );
             $this->load->view( 'v-banner-videoBelajar' );

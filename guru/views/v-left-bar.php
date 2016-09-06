@@ -1,17 +1,35 @@
-<!-- START Template Sidebar (Left) -->
-        <aside class="sidebar sidebar-left sidebar-menu">
-            <!-- START Sidebar Content -->
-            <section class="content slimscroll">
-                <h5 class="heading">Main Menu</h5>
-                <!-- START Template Navigation/Menu -->
-                <ul class="topmenu topmenu-responsive" data-toggle="menu">
-                    <li >
-                        <a href="../gh_frontend">
-                            <span class="figure"><i class="ico-trophy"></i></span>
-                            <span class="text">Frontend</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-        </aside>
-        <!--/ END Template Sidebar (Left) -->
+<!-- header -->
+<header id="header" class="navbar navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="javascript:void(0);">
+            <span class="logo-figure"></span>
+            <span class="logo-text"></span>
+        </a>
+    </div>
+</header>
+
+<!-- menu kiri -->
+<aside class="sidebar sidebar-left sidebar-menu">     
+ <section class="content slimscroll">
+ <h5 class="heading">Main Menu</h5>
+
+ <ul class="topmenu topmenu-responsive" data-toggle="menu">
+  <li >
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-home"></i></span>
+       <span class="text">Dashboard</span>
+   </a>
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-folder"></i></span>
+       <span class="text">Pengelolaan Video</span>
+   </a>
+   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-file-upload"></i></span>
+       <span class="text">Upload Video</span>
+   </a>
+
+
+  </li>
+ </ul>
+ </section>
+</aside>
