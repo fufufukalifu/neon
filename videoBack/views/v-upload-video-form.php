@@ -67,30 +67,30 @@
 											Pilih Video
 										</label>
 										<input style="display:none;" type="file" id="file" name="file"/>
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Judul Video</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Judul Video</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control">
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Deskripsi Video</label>
-								<div class="col-sm-9">
-									<textarea class="form-control"></textarea>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Deskripsi Video</label>
+									<div class="col-sm-9">
+										<textarea class="form-control"></textarea>
+									</div>
 								</div>
-							</div>
 
-							<div class="panel-footer">
-								<button type="reset" class="btn btn-default">Reset</button>
-								<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
-							</div>
-						</form>
-						<!--/ END Form panel -->
+								<div class="panel-footer">
+									<button type="reset" class="btn btn-default">Reset</button>
+									<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+								</div>
+							</form>
+							<!--/ END Form panel -->
+						</div>
 					</div>
-				</div>
-				<!--/ END row -->
-			</section>
+					<!--/ END row -->
+				</section>

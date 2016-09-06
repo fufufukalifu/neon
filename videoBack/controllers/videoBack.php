@@ -2,7 +2,7 @@
 /**
  *
  */
-class Upvideo extends MX_Controller
+class videoBack extends MX_Controller
 {
 
     function __construct() {
