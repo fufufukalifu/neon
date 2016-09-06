@@ -1,58 +1,89 @@
+<!-- START Head -->
+<head>
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
+    <!--/ Plugins stylesheet -->
+</head>
+<!--/ END Head -->
 <!-- konten -->
-<section id="main" role="main" class="mt10" style="font-size=.1em">
-	<div class="col-md-12">
-		<!-- START row -->
-		<div class="row">
-			<div class="col-md-12">
-				<!-- START panel -->
-				<div class="panel panel-primary">
-					<!-- panel heading/header -->
-					<div class="panel-heading">
-						<h3 class="panel-title text-center">Video Yang Telah Anda Upload</h3>
-					</div>
-					<!--/ panel heading/header -->
-					<!-- panel toolbar wrapper -->
-					<div class="panel-toolbar-wrapper pl0 pt5 pb5">
-						<br><br>
-					</div>
-					<!--/ panel toolbar wrapper -->
+<section id="main" role="main">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10" style="padding-left: 30px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Video Yang Telah Anda Upload</h3>
+                    </div>
+                    <table class="table table-striped" id="zero-configuration" style="font-size: 14px">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Judul Video</th>
+                                <th>Nama File</th>
+                                <th>Deskripsi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($videos_uploaded as $videos): ?>
+                                <tr>
+                                    <?php
+                                    $i = 1;
+                                    $i++;
+                                    ?>
+                                    <?php // print_r($videos) ?>
+                                    <td><?= $i ?></td>
+                                    <td>Judul Video</td>
+                                    <td>Nama File</td>
+                                    <td><p>Deskripsi</p></td>
+                                    <td class="text-center">
+                                        <span><a href="javascript:void(0);" title="Edit"><i class="icon ico-pencil"></i></a></span>&nbsp  &nbsp
+                                        <span><a href="javascript:void(0);" title="Delete"class="text-danger"><i class="icon ico-remove3"></i></a></span>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <!--START To Top Scroller--> 
+    <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
+    <!--/ END To Top Scroller--> 
 
-					<!-- panel body with collapse capabale -->
-					<div class="table-responsive panel-collapse pull out">
-						<table class="table table-bordered table-hover" id="table1">
-							<thead>
-								<tr>
-									<th class="text-center">ID</th>
-									<th class="text-center">Judul Video</th>
-									<th class="text-center">Nama File</th>
-									<th class="text-center">Deskripsi</th>
-									<th width="10%" class="text-center">Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($videos_uploaded as $videos): ?>
-								<tr>
-									<?php $i=1;
-									$i++;
-									?>
-									<?php print_r($videos) ?>
-									<td><?=$i ?></td>
-									<td>Judul Video</td>
-									<td>Nama File</td>
-									<td><p>Deskripsi</p></td>
-									<td class="text-center">
-										<span><a href="javascript:void(0);" title="Edit"><i class="icon ico-pencil"></i></a></span>&nbsp  &nbsp
-										<span><a href="javascript:void(0);" title="Delete"class="text-danger"><i class="icon ico-remove3"></i></a></span>
-									</td>
-								</tr>
-							<?php endforeach ?>
-						</tbody>
-					</table>
-				</div>
-				<!--/ panel body with collapse capabale -->
-			</div>
-		</div>
-	</div>
-	<!--/ END row -->
-</div>
 </section>
+
+
+<!-- START JAVASCRIPT SECTION (Load javascripts at bottom to reduce load time) -->
+<!-- Library script : mandatory -->
+<script type="text/javascript" src="../library/jquery/js/jquery.min.js"></script>
+<script type="text/javascript" src="../library/jquery/js/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="../library/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../library/core/js/core.min.js"></script>
+<script type="text/javascript" src="../plugins/sparkline/js/jquery.sparkline.min.js"></script><!-- will be use globaly as a summary on sidebar menu -->
+
+<!--/ Library script -->
+
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery-migrate.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/bootstrap/js/bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/core/js/core.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/sparkline/js/jquery.sparkline.min.js') ?>"></script>
+
+
+
+<script type="text/javascript" src="<?= base_url('assets/javascript/app.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+
+
+<!--/ App and page level script -->
+<!--/ END JAVASCRIPT SECTION -->
+</body>
+<!--/ END Body -->
+
+
