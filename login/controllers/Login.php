@@ -49,7 +49,6 @@ class Login extends MX_Controller {
                     foreach ($guru as $value) {
                         $this->session->set_userdata('id_guru', $value->id);
                     }
-
                     redirect(site_url('guru/dashboard/'));
                 } elseif ($hakAkses == 'siswa') {
                     redirect(site_url('welcome'));

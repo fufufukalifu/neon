@@ -28,11 +28,9 @@ class Register extends MX_Controller {
         $this->load->view('vRegisterGuru');
     }
 
-    public function verifikasiemail()
-    {
+    public function verifikasiemail() {
         $this->load->view('vVerifikasi');
     }
-
 
     //function untuk menyimpan data pendaftaran user siswa ke database
     public function savesiswa() {
@@ -56,7 +54,7 @@ class Register extends MX_Controller {
         $this->form_validation->set_message('min_length', '*Nama Pengguna minimal 5 karakter!');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
-        $this->form_validation->set_message('valid_email','*silahkan masukan alamat email anda dengan benar');
+        $this->form_validation->set_message('valid_email', '*silahkan masukan alamat email anda dengan benar');
 
         //pengecekan pengisian form regitrasi siswa
         if ($this->form_validation->run() == FALSE) {
@@ -81,12 +79,11 @@ class Register extends MX_Controller {
             $hakAkses = 'user';
 
             //data array akun
-            $data_akun=array(
-              'namaPengguna'=>$namaPengguna,
-              'kataSandi'=>$kataSandi,
-              'eMail'=>$email,
-              'hakAkses'=>$hakAkses,
-              
+            $data_akun = array(
+                'namaPengguna' => $namaPengguna,
+                'kataSandi' => $kataSandi,
+                'eMail' => $email,
+                'hakAkses' => $hakAkses,
             );
 
 
@@ -95,22 +92,22 @@ class Register extends MX_Controller {
             //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
             $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
 
-            $penggunaID=$data['tb_pengguna']['id'];
+            $penggunaID = $data['tb_pengguna']['id'];
 
             //data array siswa
-            $data_siswa=array(
-
-                'namaDepan'=>$namaDepan,
-                'namaBelakang'=>$namaBelakang,
-                'alamat'=>$alamat,
-                'noKontak'=>$noKontak,
-                'namaSekolah'=>$namaSekolah,
-                'alamatSekolah'=>$alamatSekolah,
-                'penggunaID'=>$penggunaID,
-                );
+            $data_siswa = array(
+                'namaDepan' => $namaDepan,
+                'namaBelakang' => $namaBelakang,
+                'alamat' => $alamat,
+                'noKontak' => $noKontak,
+                'namaSekolah' => $namaSekolah,
+                'alamatSekolah' => $alamatSekolah,
+                'penggunaID' => $penggunaID,
+            );
 
             //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_siswa($data_siswa,$data_akun);
+            $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $data_akun);
+            redirect(site_url('login/konfirmasi'));
         }
     }
 
@@ -160,12 +157,11 @@ class Register extends MX_Controller {
             $hakAkses = 'guru';
 
             //data array akun
-            $data_akun=array(
-              'namaPengguna'=>$namaPengguna,
-              'kataSandi'=>$kataSandi,
-              'eMail'=>$email,
-              'hakAkses'=>$hakAkses,
-              
+            $data_akun = array(
+                'namaPengguna' => $namaPengguna,
+                'kataSandi' => $kataSandi,
+                'eMail' => $email,
+                'hakAkses' => $hakAkses,
             );
 
 
@@ -175,35 +171,33 @@ class Register extends MX_Controller {
 
             //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
             $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
-            $penggunaID=$data['tb_pengguna']['id'];
+            $penggunaID = $data['tb_pengguna']['id'];
 
             //data array guru
-            $data_guru=array(
-
-                'namaDepan'=>$namaDepan,
-                'namaBelakang'=>$namaBelakang,
-                'mataPelajaran'=> $mataPelajaran,
-                'alamat'=>$alamat,
-                'noKontak'=>$noKontak,
-                'penggunaID'=>$penggunaID,
-                );
+            $data_guru = array(
+                'namaDepan' => $namaDepan,
+                'namaBelakang' => $namaBelakang,
+                'mataPelajaran' => $mataPelajaran,
+                'alamat' => $alamat,
+                'noKontak' => $noKontak,
+                'penggunaID' => $penggunaID,
+            );
 
             //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_guru($data_guru,$data_akun);
+            $data['mregister'] = $this->mregister->insert_guru($data_guru, $data_akun);
+            redirect(site_url('login/konfirmasi'));
         }
     }
 
-    public function verifikasi_email($address,$code)
-    {
+    public function verifikasi_email($address, $code) {
         $code = trim($code);
-        $this->mregister->verifikasi_email($address,$code);
+        $this->mregister->verifikasi_email($address, $code);
+        redirect(site_url('welcome'));
     }
 
-    public function FunctionName()
-    {
+    public function FunctionName() {
         # code...
     }
-
 
 }
 
