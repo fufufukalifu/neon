@@ -76,7 +76,7 @@ class Register extends MX_Controller {
             $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
             $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
             $email = htmlspecialchars($this->input->post('email'));
-            $hakAkses = 'user';
+            $hakAkses = 'siswa';
 
             //data array akun
             $data_akun = array(
@@ -190,9 +190,46 @@ class Register extends MX_Controller {
     }
 
     public function verifikasi_email($address, $code) {
+        $this->load->model('login/Mlogin');
         $code = trim($code);
         $this->mregister->verifikasi_email($address, $code);
-        redirect(site_url('welcome'));
+
+        if ($result = $this->mregister->cekUser($address)) {
+            //variabelSession
+            $sess_array = array();
+            foreach ($result as $row) {
+
+                $hakAkses = $row->hakAkses;
+                //membuat session
+                $sess_array = array(
+                    'id' => $row->id,
+                    'USERNAME' => $row->namaPengguna,
+                    'HAKAKSES' => $row->hakAkses,
+                    'AKTIVASI' => $row->aktivasi
+                );
+                $this->session->set_userdata($sess_array);
+
+                if ($hakAkses == 'admin') {
+//                    redirect(base_url('index.php/login/user'));
+//                    echo 'admin';
+//                    redirect(site_url('peserta-free'));
+                } elseif ($hakAkses == 'guru') {
+                    $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
+                    foreach ($guru as $value) {
+                        $this->session->set_userdata('id_guru', $value->id);
+                    }
+                    redirect(site_url('guru/dashboard/'));
+                } elseif ($hakAkses == 'siswa') {
+                    redirect(site_url('welcome'));
+                } else {
+                    echo 'tidak ada hak akses';
+                }
+            }
+            return TRUE;
+        } else {
+            echo 'gagal login';
+            return FALSE;
+        }
     }
 
     public function FunctionName() {
