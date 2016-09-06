@@ -9,6 +9,7 @@ class videoBack extends MX_Controller
         parent::__construct();
         $this->load->model( 'MvideoBack' );
         $this->load->library( 'table' );
+        $this->load->model( 'guru/mguru' );
     }
 
     public function index() {
