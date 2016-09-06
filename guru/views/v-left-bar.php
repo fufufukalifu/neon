@@ -15,15 +15,15 @@
 
  <ul class="topmenu topmenu-responsive" data-toggle="menu">
   <li >
-   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+   <a href="<?=base_url('index.php/guru/dashboard') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-home"></i></span>
        <span class="text">Dashboard</span>
    </a>
-   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+   <a href="<?=base_url('index.php/videoBack/managervideo') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-folder"></i></span>
        <span class="text">Pengelolaan Video</span>
    </a>
-   <a href="javascript:void(0);" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+   <a href="<?=base_url('index.php/videoBack/formupvideo') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-file-upload"></i></span>
        <span class="text">Upload Video</span>
    </a>

@@ -11,7 +11,7 @@ class Guru extends MX_Controller {
         $this->load->model( 'mguru' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
-       // $this->load->controller( 'videoBack/videoBack' );
+        
     }
 
     //set get untuk session
@@ -58,6 +58,7 @@ class Guru extends MX_Controller {
     //halaman untuk mengupload  video
     public function uploadvideo() {
        // $this->load->videoBack->index();
+        redirect('/videoback');
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'v-banner-guru' );
         $this->load->view( 'v-left-bar' );
@@ -121,7 +122,7 @@ class Guru extends MX_Controller {
                 'alamat' => $alamat,
                 'noKontak' => $noKontak,
                 'biografi' => $biografi,
-            );
+                );
 
             $this->mguru->update_guru( $data_post );
         }
@@ -160,7 +161,7 @@ class Guru extends MX_Controller {
             $data_post = array(
                 'namaPengguna' => $namaPengguna,
                 'email' => $email,
-            );
+                );
             $this->mguru->update_akun( $data_post );
         }
     }
@@ -191,7 +192,7 @@ class Guru extends MX_Controller {
 
             $data_post = array(
                 'kataSandi' => $kataSandi,
-            );
+                );
             $this->mguru->update_katasandi( $data_post );
         }
     }

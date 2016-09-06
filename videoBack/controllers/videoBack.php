@@ -7,23 +7,27 @@ class videoBack extends MX_Controller
 
     function __construct() {
         parent::__construct();
-       $this->load->model( 'MvideoBack' );
+        $this->load->model( 'MvideoBack' );
+        $this->load->library( 'table' );
     }
 
     public function index() {
+
+    }
+
+    //menampilkan view form upload
+    public function formupvideo() {
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'guru/v-left-bar' );
         $this->load->view( 'v-upload-video-form' );
         $this->load->view( 'templating/t-footer-back' );
     }
 
-    //menampilkan view form upload
-    public function formupvideo() {
+    public function managervideo() {
         $this->load->view( 'templating/t-header' );
-        $this->load->view( 'v-banner-guru' );
-        $this->load->view( 'templating/t-header' );
-        $this->load->view( 'v-upload-video-form' );
-        $this->load->view( 'templating/t-footer' );
+        $this->load->view( 'guru/v-left-bar' );
+        $this->load->view( 'v-video-manager');
+        $this->load->view( 'templating/t-footer-back' );
     }
 
     // fungsi untuk upload video
