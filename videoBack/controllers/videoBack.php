@@ -7,13 +7,13 @@ class videoBack extends MX_Controller
 
     function __construct() {
         parent::__construct();
-        $this->load->model( 'mUpvideo' );
+       $this->load->model( 'MvideoBack' );
     }
 
     public function index() {
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'guru/v-left-bar' );
-        $this->load->view( 'vupvideo' );
+        $this->load->view( 'v-upload-video-form' );
         $this->load->view( 'templating/t-footer-back' );
     }
 
@@ -22,7 +22,7 @@ class videoBack extends MX_Controller
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'v-banner-guru' );
         $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vupvideo' );
+        $this->load->view( 'v-upload-video-form' );
         $this->load->view( 'templating/t-footer' );
     }
 

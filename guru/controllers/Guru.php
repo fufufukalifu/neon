@@ -11,6 +11,7 @@ class Guru extends MX_Controller {
         $this->load->model( 'mguru' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
+       // $this->load->controller( 'videoBack/videoBack' );
     }
 
     //set get untuk session
@@ -56,6 +57,7 @@ class Guru extends MX_Controller {
 
     //halaman untuk mengupload  video
     public function uploadvideo() {
+       // $this->load->videoBack->index();
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'v-banner-guru' );
         $this->load->view( 'v-left-bar' );
