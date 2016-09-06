@@ -12,7 +12,10 @@ class videoBack extends MX_Controller
     }
 
     public function index() {
-
+        $this->load->view( 'templating/t-header' );
+        $this->load->view( 'guru/v-left-bar' );
+        $this->load->view( 'v-upload-video-form' );
+        $this->load->view( 'templating/t-footer-back' );
     }
 
     //menampilkan view form upload
@@ -33,19 +36,32 @@ class videoBack extends MX_Controller
     // fungsi untuk upload video
     public function upvideo() {
         echo "masuk upvideokkkkk";//for testing
-        $config['upload_path']          = './video/';
+        $config['upload_path']          = './assets/video';
         $config['allowed_types']        = 'jpeg|gif|jpg|png|mkv|mp4';
         $config['max_size']             = 90000;
         $this->load->library( 'upload', $config );
-
-        if ( !$this->upload->do_upload( 'userfile' ) ) {
+        //do_opload(name input)
+        var_dump($this->upload->do_upload( 'video' ) );
+        if ( !$this->upload->do_upload( 'video' ) ) {
             echo "gagal";
             $error = array( 'error'=>$this->upload->display_errors() );
-            $this->load->view( 'beranda/main_view', $error );
         } else {
-            $file_data = $this->upload->data();
-            $data['img'] = base_url().'/images/'.$file_data['file_name'];
-            $this->load->view( 'beranda/success_msg', $data );
+             $file_data = $this->upload->data();
+            $video = $file_data['file_name'];
+
+            //data post dari form upload video
+            $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
+            $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+            //data yg akan di masukan ke tabel video
+            $data_video=array(
+
+                'judulVideo'=>$judulVideo,
+                'namaFile'=>$video,
+                'deskripsi'=>$deskripsi,
+                );
+            var_dump($data_video);
+            $this->MvideoBack->insertVideo($data_video);
+            
         }
     }
 }

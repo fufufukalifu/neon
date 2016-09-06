@@ -6,14 +6,10 @@
 
 <script type="text/javascript" src="<?=base_url('assets/javascript/app.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/javascript/pages/dashboard-v2.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.min.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.categories.min.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.tooltip.min.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.resize.min.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/plugins/flot/jquery.flot.spline.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/plugins/datatables/js/jquery.datatables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/plugins/jvectormap/js/jvectormap.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/javascript/maps/vector-world-mill.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/javascript/pages/dashboard-v2.js')?>"></script>  
+<script type="text/javascript" src="<?=base_url('assets/library/jquery/js/preview.js')?>"></script>

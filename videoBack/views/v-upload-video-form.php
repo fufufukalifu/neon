@@ -2,7 +2,7 @@
 <section id="main" role="main" class="mt10">
 	<div class="col-md-12">
 		<!-- START Form panel -->
-		<form class="panel panel-default form-horizontal form-bordered">
+		<form class="panel panel-default form-horizontal form-bordered" action="<?=base_url()?>index.php/videoback/upvideo" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 			<div class="panel-heading"><h5 class="panel-title">Upload Video</h5></div>
 			<div class="panel-body pt0">
 				<div class="form-group message-container"></div><!-- will be use as done/fail message container -->
@@ -63,34 +63,36 @@
 						<div class="col-sm-9">
 							
 							<label for="file" class="btn btn-success">
-								<I class="glyphicon gliphicon-circle-arrow-up"></i>
-									Pilih Video
-								</label>
-								<input style="display:none;" type="file" id="file" name="file"/>
-							</div>
+								Pilih Video
+							</label>
+							<input style="display:none;" type="file" id="file" name="video"/>
 						</div>
+					</div>
 
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Judul Video</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control">
-							</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Judul Video</label>
+						<div class="col-sm-9">
+							<input type="text" name="judulvideo" class="form-control">
 						</div>
+					</div>
 
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Deskripsi Video</label>
-							<div class="col-sm-9">
-								<textarea class="form-control"></textarea>
-							</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Deskripsi Video</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" name="deskripsi"></textarea>
 						</div>
+					</div>
 
-						<div class="panel-footer">
-							<button type="reset" class="btn btn-default">Reset</button>
-							<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
-						</div>
-					</form>
-					<!--/ END Form panel -->
-				</div>
+					<div class="panel-footer">
+						<button type="reset" class="btn btn-default">Reset</button>
+						<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+					</div>
+				</form>
+				<!--/ END Form panel -->
 			</div>
-			<!--/ END row -->
-		</section>
+		</div>
+		<!--/ END row -->
+
+
+	</section>
+	
