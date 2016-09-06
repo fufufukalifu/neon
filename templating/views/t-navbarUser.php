@@ -1,6 +1,6 @@
 <!-- START asdasd Header -->
 <?php
-if ($this->session->userdata['HAKAKSES']==0) {
+if ($this->session->userdata['AKTIVASI']==0) {
 header("location:".base_url('index.php/login/konfirmasi'));
 }
 ?>
