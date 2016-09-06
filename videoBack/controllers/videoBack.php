@@ -9,7 +9,18 @@ class videoBack extends MX_Controller
         parent::__construct();
         $this->load->model( 'MvideoBack' );
         $this->load->library( 'table' );
+        $this->load->model( 'video/mvideos' );
         $this->load->model( 'guru/mguru' );
+
+    }
+
+    function get_video_manager(){
+        $guru_id=$this->session->userdata['id_guru'];
+        $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher( $guru_id );
+        //untuk mengambil data guru
+        //untuk menghitung berapa banyak video yang sudah diupload
+        $data['jumlah_video'] = count( $this->load->mvideos->get_video_by_teacher( $guru_id ) );
+        return $data;
     }
 
     public function index() {
@@ -30,7 +41,7 @@ class videoBack extends MX_Controller
     public function managervideo() {
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'guru/v-left-bar' );
-        $this->load->view( 'v-video-manager');
+        $this->load->view( 'v-video-manager',$this->get_video_manager());
         $this->load->view( 'templating/t-footer-back' );
     }
 

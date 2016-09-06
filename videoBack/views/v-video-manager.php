@@ -30,8 +30,13 @@
 								</tr>
 							</thead>
 							<tbody>
+								<?php foreach ($videos_uploaded as $videos): ?>
 								<tr>
-									<td>ID</td>
+									<?php $i=1;
+									$i++;
+									?>
+									<?php print_r($videos) ?>
+									<td><?=$i ?></td>
 									<td>Judul Video</td>
 									<td>Nama File</td>
 									<td><p>Deskripsi</p></td>
@@ -40,14 +45,14 @@
 										<span><a href="javascript:void(0);" title="Delete"class="text-danger"><i class="icon ico-remove3"></i></a></span>
 									</td>
 								</tr>
-
-							</tbody>
-						</table>
-					</div>
-					<!--/ panel body with collapse capabale -->
+							<?php endforeach ?>
+						</tbody>
+					</table>
 				</div>
+				<!--/ panel body with collapse capabale -->
 			</div>
 		</div>
-		<!--/ END row -->
 	</div>
+	<!--/ END row -->
+</div>
 </section>

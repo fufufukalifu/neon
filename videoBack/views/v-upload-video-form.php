@@ -83,10 +83,14 @@
 						</div>
 					</div>
 
-					<div class="panel-footer">
-						<button type="reset" class="btn btn-default">Reset</button>
-						<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+					<div class="form-group">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<button type="reset" class="btn btn-default">Reset</button>
+							<button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+						</div>
 					</div>
+
 				</form>
 				<!--/ END Form panel -->
 			</div>
