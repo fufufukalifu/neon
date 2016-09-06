@@ -115,6 +115,7 @@ class Video extends MX_Controller {
             $onevideo = $data['videosingle'];
             $data['video'] = $onevideo[0];
             $data['title'] = $onevideo[0]->judulVideo;
+            $data['idvideo']=$onevideo[0]->id;
 
             $data['videoData'] = $this->load->Mvideos->get_matapelajaran( $idvideo )[0];
 
@@ -151,7 +152,25 @@ class Video extends MX_Controller {
         $this->load->view( 'templating/t-footer' );
     }
 
+    public function comment()
+    {
+       $isiKomen=htmlspecialchars($this->input->post('comment'));
+       $idvideo=htmlspecialchars($this->input->post('idvideo'));
+       $userID=$this->session->userdata['id'];
+
+       $dataKomen=array(
+
+                'isiKomen'=>$isiKomen,
+                'videoID'=>$idvideo,
+                'userID'=> $userID,
+                
+                );
+      $this->Mvideos->insertComment($dataKomen);
+    }
+
     //----------# BACK END  #----------#
+
+
 }
 
 ?>

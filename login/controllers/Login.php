@@ -14,7 +14,7 @@ class Login extends MX_Controller {
 
     public function index() {
         $this->load->view('templating/t-header');
-        $this->load->view('templating/t-navbar');
+//        $this->load->view('templating/t-navbar');
         $this->load->view('vLogin.php');
         $this->load->view('templating/t-footer');
     }
@@ -36,6 +36,7 @@ class Login extends MX_Controller {
                     'id' => $row->id,
                     'USERNAME' => $row->namaPengguna,
                     'HAKAKSES' => $row->hakAkses,
+                    'AKTIVASI' => $row->aktivasi
                 );
                 $this->session->set_userdata($sess_array);
 
@@ -45,11 +46,10 @@ class Login extends MX_Controller {
 //                    redirect(site_url('peserta-free'));
                 } elseif ($hakAkses == 'guru') {
                     $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
-
                     foreach ($guru as $value) {
                         $this->session->set_userdata('id_guru', $value->id);
                     }
-                    
+
                     redirect(site_url('guru/dashboard/'));
                 } elseif ($hakAkses == 'siswa') {
                     redirect(site_url('welcome'));
@@ -72,6 +72,12 @@ class Login extends MX_Controller {
         $this->session->unset_userdata("HAKAKSES");
         $this->facebook->destroy_session();
         redirect(base_url());
+    }
+
+    public function konfirmasi() {
+        $this->load->view('templating/t-header');
+        $this->load->view('vKonfirmasi.php');
+        $this->load->view('templating/t-footer');
     }
 
 }

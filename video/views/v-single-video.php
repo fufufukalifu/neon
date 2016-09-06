@@ -113,7 +113,7 @@
                             <a href="javascript:void(0);" class="btn btn-link">Don't have an accound? register here.</a>
                         </div> -->
                         <!-- Login message -->
-                        <form class="form-horizontal" data-toggle="formajax" data-options='{ "url": "server/form-ajax.php" }'>
+                        <form class="form-horizontal"  action="<?=base_url()?>index.php/video/comment" method="post">
                             <div class="form-group message-container">
                                 <div class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -121,10 +121,11 @@
                                     <p class="nm">Dimohon untuk tidak melakukan spam.</p>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" >
                                 <label class="col-sm-3 control-label">Tanggapan</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="6" name="comment"></textarea>
+                                    <input type="text" name="idvideo" value="<?=$idvideo;?>" hidden="true" />
+                                    <textarea class="form-control" rows="6" name="comment"><?=$idvideo;?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">

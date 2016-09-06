@@ -1,10 +1,4 @@
 <!-- START asdasd Header -->
-<?php
-if ($this->session->userdata['AKTIVASI']==0) {
-header("location:".base_url('index.php/login/konfirmasi'));
-}
-?>
-
 <header id="header" class="navbar navbar-fixed-top">
     <div class="container">
         <!-- START navbar header -->
