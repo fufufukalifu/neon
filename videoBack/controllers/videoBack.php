@@ -41,7 +41,7 @@ class videoBack extends MX_Controller {
         $this->load->view('templating/t-header');
         $this->load->view('guru/v-left-bar');
         $this->load->view('v-video-manager', $this->get_video_manager());
-//        $this->load->view( 'templating/t-footer-back' );
+       $this->load->view( 'templating/t-footer-back' );
     }
 
     // fungsi untuk upload video

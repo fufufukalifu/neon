@@ -39,10 +39,11 @@ class Mvideos extends CI_Model
   }
   //ambil semua video yang dibuat oleh guru
   function get_video_by_teacher( $guru_id ) {
-    $this->db->select( '*' );
+    $this->db->select( '*, video.id as videoID' );
     $this->db->from( 'tb_video video' );
     $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
     $this->db->where( 'guru.id', $guru_id );
+    $this->db->where('video.status', '1');
     $query = $this->db->get();
 
     return $query->result();
@@ -94,9 +95,17 @@ class Mvideos extends CI_Model
     return $query->result();
   }
 
-  public function insertComment($data_komen)
-  {
-     $this->db->insert('tb_komen', $data_komen);
+  public function insertComment( $data_komen ) {
+    $this->db->insert( 'tb_komen', $data_komen );
+  }
+
+  public function deleteVideo($idVideo, $idGuru) {
+    $data = array( 'status' => 0 );
+    $this->db->where( 'id', $idVideo );
+    $this->db->where( 'guruID', $idGuru );
+
+    $this->db->update( 'tb_video', $data );
+
   }
 }
 ?>
