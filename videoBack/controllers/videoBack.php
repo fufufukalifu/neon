@@ -23,11 +23,10 @@ class videoBack extends MX_Controller {
     }
 
     public function index() {
-        $data['tingkat']=$this->MvideoBack->scTingkat();
         $this->load->view('templating/t-footer-back');
         $this->load->view('templating/t-header');
         $this->load->view('guru/v-left-bar');
-        $this->load->view('v-upload-video-form',$data);
+        $this->load->view('v-upload-video-form');
     }
 
     //menampilkan view form upload
@@ -89,6 +88,10 @@ class videoBack extends MX_Controller {
     public function getSubbab($babID)
     {
         $this->MvideoBack->scSubbab($babID);
+    }
+
+    public function getTingkat(){
+        $data['tingkat']=$this->MvideoBack->scTingkat();
     }
 
     #Start function untuk dropdown dependent pada form upload video#

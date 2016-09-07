@@ -156,31 +156,30 @@ class Video extends MX_Controller {
                 $idGuru = $this->session->userdata['id_guru'];  
                 $this->load->Mvideos->deleteVideo($idVideo, $idGuru);
                 $videoHapus=$this->load->Mvideos->get_single_video($idVideo)[0]->namaFile;
-                echo "$videoHapus";
                 unlink( FCPATH . "assets\uploaded\\".$videoHapus );
-               // redirect(base_url('index.php/videoback/managervideo'));
+                redirect(base_url('index.php/videoback/managervideo'));
 
             }
 
             public function comment()
             {
-             $isiKomen=htmlspecialchars($this->input->post('comment'));
-             $idvideo=htmlspecialchars($this->input->post('idvideo'));
-             $userID=$this->session->userdata['id'];
+               $isiKomen=htmlspecialchars($this->input->post('comment'));
+               $idvideo=htmlspecialchars($this->input->post('idvideo'));
+               $userID=$this->session->userdata['id'];
 
-             $dataKomen=array(
+               $dataKomen=array(
 
                 'isiKomen'=>$isiKomen,
                 'videoID'=>$idvideo,
                 'userID'=> $userID,
                 
                 );
-             $this->Mvideos->insertComment($dataKomen);
-         }
+               $this->Mvideos->insertComment($dataKomen);
+           }
 
     //----------# BACK END  #----------#
 
 
-     }
+       }
 
-     ?>
+       ?>
