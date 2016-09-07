@@ -52,7 +52,7 @@
                         <div class="panel-body">
                             <!-- Alert message -->
                             <div class="alert alert-warning">
-                                <span class="semibold">Note :</span>&nbsp;&nbsp;Just put anything and hit 'sign-in' button.
+                                <span class="semibold">Note :</span>&nbsp;&nbsp;Siap untuk menjelajahi angkasa? Isi form, tekan Login!
                             </div>
                             <!--/ Alert message -->
                             <div class="form-group">
