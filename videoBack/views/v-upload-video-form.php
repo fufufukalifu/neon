@@ -56,6 +56,9 @@
 						<div class="col-md-3 bottom"> 
 							<h6>Type: <span id="filetype"></span></h6> 
 						</div>
+						<progress id="prog" max="100" value="0" style="display: none;"></progress>
+						<div id="percent"></div>
+						<div id="here"></div>
 					</div>
 
 					<div class="form-group">
@@ -67,6 +70,7 @@
 							</label>
 							<input style="display:none;" type="file" id="file" name="video"/>
 						</div>
+
 					</div>
 
 					<div class="form-group">
