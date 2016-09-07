@@ -14,5 +14,4 @@
 <script type="text/javascript" src="<?= base_url('assets/plugins/jvectormap/js/jvectormap.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/maps/vector-world-mill.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/javascript/pages/dashboard-v2.js') ?>"></script>  
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/pages/dashboard-v2.js') ?>"></script>

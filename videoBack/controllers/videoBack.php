@@ -23,10 +23,11 @@ class videoBack extends MX_Controller {
     }
 
     public function index() {
+        $data['tingkat']=$this->MvideoBack->scTingkat();
+        $this->load->view('templating/t-footer-back');
         $this->load->view('templating/t-header');
         $this->load->view('guru/v-left-bar');
-        $this->load->view('v-upload-video-form');
-        $this->load->view('templating/t-footer-back');
+        $this->load->view('v-upload-video-form',$data);
     }
 
     //menampilkan view form upload
@@ -73,6 +74,24 @@ class videoBack extends MX_Controller {
             $this->MvideoBack->insertVideo($data_video);
         }
     }
+
+    #Start function untuk dropdown dependent pada form upload video#
+    public function getPelajaran($tingkatID)
+    {
+        $this->MvideoBack->scPelajaran($tingkatID);
+    }
+
+    public function getBab($tpelajaranID)
+    {
+        $this->MvideoBack->scBab($tpelajaranID);
+    }
+
+    public function getSubbab($babID)
+    {
+        $this->MvideoBack->scSubbab($babID);
+    }
+
+    #Start function untuk dropdown dependent pada form upload video#
 
 }
 
