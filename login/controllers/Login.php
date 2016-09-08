@@ -35,7 +35,9 @@ class Login extends MX_Controller {
                     'id' => $row->id,
                     'USERNAME' => $row->namaPengguna,
                     'HAKAKSES' => $row->hakAkses,
-                    'AKTIVASI' => $row->aktivasi
+                    'AKTIVASI' => $row->aktivasi,
+                    'eMail'    => $row->mail
+
                 );
                 $this->session->set_userdata($sess_array);
 

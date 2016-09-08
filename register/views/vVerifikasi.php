@@ -41,7 +41,7 @@
 				<div class="col-md-6 col-md-offset-3">
 					
 
-					<form class="panel nm" name="form-register" action="http://localhost/netjoo-2/index.php/register/savesiswa" method="post">
+					<form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/ch_mail_aktivasi" method="post">
 						<ul class="list-table pa15">
 							<li>
 								<!-- Alert message -->
@@ -66,7 +66,7 @@
 									<input type="email" class="form-control" name="email" placeholder="xxx@mail.com">
 									<i class="ico-envelop form-control-icon"></i>
 									<!-- untuk menampilkan pesan kesalahan penginputan email -->
-									<span class="text-danger"></span>
+									<span class="text-danger"><?php echo form_error('email'); ?></span>
 								</div>
 							</div>
 							<div class="form-group">
