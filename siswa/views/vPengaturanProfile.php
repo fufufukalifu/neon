@@ -183,7 +183,7 @@
                                                 </div>
                                                 <div class="btn-group">
                                                    
-                                                <input type="file" name="photo" class="btn btn-default" />
+                                                <input type="file" id="file" name="photo" class="btn btn-default" />
                                                 </div>
                                             </div>
                                         </div>
