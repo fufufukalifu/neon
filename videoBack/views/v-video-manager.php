@@ -54,15 +54,6 @@
 
 </section>
 
-
-<!-- START JAVASCRIPT SECTION (Load javascripts at bottom to reduce load time) -->
-<!-- Library script : mandatory -->
-<script type="text/javascript" src="../library/jquery/js/jquery.min.js"></script>
-<script type="text/javascript" src="../library/jquery/js/jquery-migrate.min.js"></script>
-<script type="text/javascript" src="../library/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../library/core/js/core.min.js"></script>
-<script type="text/javascript" src="../plugins/sparkline/js/jquery.sparkline.min.js"></script><!-- will be use globaly as a summary on sidebar menu -->
-
 <!--/ Library script -->
 
 <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
