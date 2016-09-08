@@ -121,7 +121,7 @@
 
 
 	<script>
-	Script for getting the dynamic values from database using jQuery and AJAX
+	// Script for getting the dynamic values from database using jQuery and AJAX
 	$(document).ready(function() {
 		$('#eTingkat').change(function() {
 
