@@ -63,6 +63,7 @@ class videoBack extends MX_Controller {
             $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
             $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
             $subBabID = htmlspecialchars($this->input->post('subBab'));
+            $published = htmlspecialchars($this->input->post('publish'));
 
             $penggunaID = $this->session->userdata['id'];
             $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
@@ -73,6 +74,7 @@ class videoBack extends MX_Controller {
                 'judulVideo' => $judulVideo,
                 'namaFile' => $video,
                 'deskripsi' => $deskripsi,
+                'published' => $published,
                 'guruID' => $guruID,
                 'subBabID' => $subBabID
             );

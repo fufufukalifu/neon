@@ -94,12 +94,12 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-2">Size</label>
+						<label class="control-label col-sm-2">Published</label>
 						<div class="col-sm-4">
-							<select name="size" class="form-control">
-								<option value="">Select</option>
-								<option value="Private">Share</option>
-								<option value="Public">Public</option>
+							<select name="publish" class="form-control">
+								<option selected="">Select</option>
+								<option value="0">Private</option>
+								<option value="1">Public</option>
 							</select>
 						</div>
 					</div>
