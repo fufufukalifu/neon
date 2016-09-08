@@ -13,7 +13,10 @@ class Siswa extends MX_Controller {
     // 
     public function index() {
         $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->load->view('templating/t-sessionKonfirm');
+        $this->load->view('templating/t-sessionSiswa');
         $this->load->view('templating/t-header');
+        $this->load->view('templating/t-navbarUser');
         $this->load->view('vPengaturanProfile', $data);
         $this->load->view('templating/t-footer');
     }
@@ -21,7 +24,10 @@ class Siswa extends MX_Controller {
     //menampilkan halaman pengaturan profile
     public function PengaturanProfile() {
         $data['tb_siswa'] = $this->msiswa->get_datsiswa();
+        $this->load->view('templating/t-sessionKonfirm');
+        $this->load->view('templating/t-sessionSiswa');
         $this->load->view('templating/t-header');
+        $this->load->view('templating/t-navbarUser');
         $this->load->view('vPengaturanProfile', $data);
         $this->load->view('templating/t-footer');
     }

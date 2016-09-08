@@ -100,4 +100,6 @@
         <!-- slider -->
         <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
         <script type="text/javascript" src="<?=base_url('assets/javascript/pages/frontend/home.js');?>"></script>
+            <!--js buat menampilakan priview file sebelum di upload  -->
+         <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 </body>

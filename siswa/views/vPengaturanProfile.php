@@ -15,7 +15,7 @@
         <section id="main" role="main">
 
             <!-- START Template Container -->
-            <div class="container-fluid">
+            <div class="container">
                 <!-- Page Header -->
                 <div class="page-header page-header-block">
                     <div class="page-header-section">
@@ -178,7 +178,8 @@
                                             <label class="col-sm-3 control-label">Photo</label>
                                             <div class="col-sm-9">
                                                 <div class="btn-group pr5">
-                                                    <img class="img-circle img-bordered" src="<?=$photo;?>" alt="" width="34px">
+                                                  
+                                                   <img id="preview" class="img-circle img-bordered" src="<?=$photo;?>" alt="" width="34px" />
                                                 </div>
                                                 <div class="btn-group">
                                                    
