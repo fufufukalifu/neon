@@ -62,11 +62,19 @@ class videoBack extends MX_Controller {
             //data post dari form upload video
             $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
             $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+            $subBabID = htmlspecialchars($this->input->post('subBab'));
+
+            $penggunaID = $this->session->userdata['id'];
+            $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+            $guruID = $data['tb_guru']['id'];
+
             //data yg akan di masukan ke tabel video
             $data_video = array(
                 'judulVideo' => $judulVideo,
                 'namaFile' => $video,
                 'deskripsi' => $deskripsi,
+                'guruID' => $guruID,
+                'subBabID' => $subBabID
             );
             var_dump($data_video);
             $this->MvideoBack->insertVideo($data_video);

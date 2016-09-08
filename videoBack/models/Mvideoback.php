@@ -49,6 +49,15 @@ class Mvideoback extends CI_Model
 		return $query->result_array();
 	}
 
+	//get ID Guru
+	public function getIDguru($penggunaID)
+	{
+		$this->db->where('penggunaID',$penggunaID);
+		$this->db->select('id')->from('tb_guru');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 
 }
 ?>
