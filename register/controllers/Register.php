@@ -185,7 +185,7 @@ class Register extends MX_Controller {
 
             //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_guru($data_guru, $data_akun);
-            redirect(site_url('login/konfirmasi'));
+            redirect(site_url('register/verifikasi'));
         }
     }
 
@@ -232,8 +232,10 @@ class Register extends MX_Controller {
         }
     }
 
-    public function FunctionName() {
-        # code...
+    public function verifikasi() {
+        $this->load->view('templating/t-header');
+        $this->load->view('vVerifikasi.php');
+        $this->load->view('templating/t-footer');
     }
 
 }

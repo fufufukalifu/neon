@@ -120,29 +120,29 @@
 
 
 	<script>
-	//Script for getting the dynamic values from database using jQuery and AJAX
-	// $(document).ready(function() {
-	// 	$('#eTingkat').change(function() {
+	Script for getting the dynamic values from database using jQuery and AJAX
+	$(document).ready(function() {
+		$('#eTingkat').change(function() {
 
-	// 		var form_data = {
-	// 			name: $('#eTingkat').val()
-	// 		};
+			var form_data = {
+				name: $('#eTingkat').val()
+			};
 
-	// 		$.ajax({
-	// 			url: "<?php echo site_url('videoback/getPelajaran'); ?>",
-	// 			type: 'POST',
-	// 			data: form_data,
-	// 			success: function(msg) {
-	// 				var sc='';
-	// 				$.each(msg, function(key, val) {
-	// 					sc+='<option value="'+val.id+'">'+val.keterangan+'</option>';
-	// 				});
-	// 				$("#ePelajaran option").remove();
-	// 				$("#ePelajaran").append(sc);
-	// 			}
-	// 		});
-	// 	});
-	// });
+			$.ajax({
+				url: "<?php echo site_url('videoback/getPelajaran'); ?>",
+				type: 'POST',
+				data: form_data,
+				success: function(msg) {
+					var sc='';
+					$.each(msg, function(key, val) {
+						sc+='<option value="'+val.id+'">'+val.keterangan+'</option>';
+					});
+					$("#ePelajaran option").remove();
+					$("#ePelajaran").append(sc);
+				}
+			});
+		});
+	});
 
 
 function loadmatapelajaran(){
