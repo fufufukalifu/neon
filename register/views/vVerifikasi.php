@@ -47,7 +47,7 @@
 								<!-- Alert message -->
 								<div class="alert alert-warning">
 									<span class="semibold">Info :</span>&nbsp;&nbsp;Kami sudah mengirimkan kode aktivasi. Silahkan cek email Anda. 
-									<a href="#">Kirim ulang email ?</a>
+									<a href="<?=base_url('index.php/register/resend_mail/');?>">Kirim ulang email ?</a>
 								</div>
 								<!--/ Alert message -->
 							</li>

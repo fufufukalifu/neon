@@ -238,6 +238,12 @@ class Register extends MX_Controller {
         $this->load->view('templating/t-footer');
     }
 
+    public function resend_mail()
+    {   
+        echo "masuk resen";//
+        $this->mregister->send_verifikasi_email();
+    }
+
 }
 
 ?>
