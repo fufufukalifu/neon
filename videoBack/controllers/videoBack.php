@@ -23,10 +23,10 @@ class videoBack extends MX_Controller {
     }
 
     public function index() {
+        $this->load->view('templating/t-footer-back');
         $this->load->view('templating/t-header');
         $this->load->view('guru/v-left-bar');
         $this->load->view('v-upload-video-form');
-        $this->load->view('templating/t-footer-back');
     }
 
     //menampilkan view form upload
@@ -41,7 +41,7 @@ class videoBack extends MX_Controller {
         $this->load->view('templating/t-header');
         $this->load->view('guru/v-left-bar');
         $this->load->view('v-video-manager', $this->get_video_manager());
-        $this->load->view('templating/t-footer-back' );
+        $this->load->view('templating/t-footer-back');
     }
 
     // fungsi untuk upload video
@@ -59,7 +59,6 @@ class videoBack extends MX_Controller {
         } else {
             $file_data = $this->upload->data();
             $video = $file_data['file_name'];
-
             //data post dari form upload video
             $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
             $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
@@ -74,6 +73,32 @@ class videoBack extends MX_Controller {
         }
     }
 
+    //Start function untuk dropdown dependent pada form upload video#
+    public function getPelajaran($tingkatID) {
+        // if ( isset( $_POST['tingkatID'] ) ) {
+        $data = $this->output
+                ->set_content_type("application/json")
+                ->set_output(json_encode($this->MvideoBack->scPelajaran($tingkatID)));
+        //print_r( $data );
+        // }
+    }
+
+    public function getBab($tpelajaranID) {
+        $this->MvideoBack->scBab($tpelajaranID);
+    }
+
+    public function getSubbab($babID) {
+        $this->MvideoBack->scSubbab($babID);
+    }
+
+    public function getTingkat() {
+        $data = $this->output
+                ->set_content_type("application/json")
+                ->set_output(json_encode($this->MvideoBack->scTingkat()));
+        // print_r($data);
+    }
+
+    //Start function untuk dropdown dependent pada form upload video#
 }
 
 ?>
