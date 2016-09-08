@@ -96,6 +96,7 @@ class Mregister extends CI_Model {
         }
     }
 
+    //funtion updatae aktivasi email 
     public function aktifasi_akun($address) {
         if ($address == $this->session->userdata['eMail']) {
             $this->db->where('eMail', $address);
@@ -123,6 +124,20 @@ class Mregister extends CI_Model {
             return false; //if data is wrong
         }
     }
+
+    //function untuk merubah aktivasi email
+    public function update_email_ak($email)
+    {   
+        $id=$this->session->userdata['id'];
+        $this->db->where('id',$id);
+        $this->db->set('eMail',$email);
+        $this->db->update('tb_pengguna');
+        $sess_array = array( 'eMail'    => $email);
+        $this->session->set_userdata($sess_array);
+
+    }
+
+
 }
 
 ?>

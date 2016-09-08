@@ -38,22 +38,29 @@
                 </div>
 
                 <div class="col-md-6 col-md-offset-3">
-                    <!-- Social button -->
-                    <ul class="list-table">
-                        <li><button type="button" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></button></li>
-                        <li><button type="button" class="btn btn-block btn-twitter">Connect with <i class="ico-twitter2 ml5"></i></button></li>
-                    </ul>
-                    <!-- Social button -->
+                    <?php
+                    if (!empty($authUrl)) {
+                        echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';
+                    }
+                    ?>
 
-                    <hr><!-- horizontal line -->
+                    <hr><!--horizontal line -->
 
-                    <!-- Login form -->
-                    <form class="panel" name="form-login" action="<?= base_url('index.php/login/validasiLogin'); ?>" method="post">
-                        <div class="panel-body">
-                            <!-- Alert message -->
-                            <div class="alert alert-warning">
-                                <span class="semibold">Note :</span>&nbsp;&nbsp;Siap untuk menjelajahi angkasa? Isi form, tekan Login!
-                            </div>
+                    <!--Login form -->
+                    <form class = "panel" name = "form-login" action = "<?= base_url('index.php/login/validasiLogin'); ?>" method = "post">
+                        <div class = "panel-body">
+                            <!--Alert message -->
+                            <?php if ($this->session->flashdata('notif') != '') {
+                                ?>
+                                <div class="alert alert-warning">
+                                    <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
+                                </div>
+                            <?php } else { ?>
+                                <div class="alert alert-warning">
+                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Siap untuk menjelajahi angkasa? Isi form, tekan Login!
+                                </div>
+                            <?php }; ?>
+
                             <!--/ Alert message -->
                             <div class="form-group">
                                 <div class="form-stack has-icon pull-left">

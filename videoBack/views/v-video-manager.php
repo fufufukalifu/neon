@@ -2,8 +2,6 @@
 <!-- konten -->
 
 
-
-
 <section id="main" role="main" class="mt10">
     <div class="col-md-12">
         <div class="row">
@@ -25,47 +23,61 @@
                         </thead>
                         <tbody>
                             <?php foreach ($videos_uploaded as $videos): ?>
-                            <tr>
-                                <?php  //print_r($videos) ?>
-                                <td><?= $videos->videoID ?></td>
-                                <td><?=$videos->judulVideo ?></td>
-                                <td><?=$videos->namaFile ?></td>
-                                <td width="30%"><p><?=$videos->deskripsi ?></p></td>
-                                <td class="text-center">
-                                    <span><a href="" title="Edit"><i class="icon ico-pencil"></i></a></span>&nbsp  &nbsp
-                                    <span><a data-namavideo="<?=$videos->namaFile?>" data-id="<?=$videos->videoID?>" title="Delete" class="text-danger deletevideo" data-toggle="modal" data-target="#confirm-delete"><i class="icon ico-remove3"></i></a></span>
-                                </td>
+                                <tr>
+                                    <?php //print_r($videos) ?>
+                                    <td><?= $videos->videoID ?></td>
+                                    <td><?= $videos->judulVideo ?></td>
+                                    <td><?= $videos->namaFile ?></td>
+                                    <td width="30%"><p><?= $videos->deskripsi ?></p></td>
+                                    <td class="text-center">
+                                        <span><a href="" title="Edit"><i class="icon ico-pencil"></i></a></span>&nbsp  &nbsp
+                                        <span><a data-namavideo="<?= $videos->namaFile ?>" data-id="<?= $videos->videoID ?>" title="Delete" class="text-danger deletevideo" data-toggle="modal" data-target="#confirm-delete"><i class="icon ico-remove3"></i></a></span>
+                                    </td>
 
-                                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                Konfirmasi Hapus Video
-                                            </div>
-                                            <div class="modal-body">
-                                                <h5 class="text-danger">Anda Yakin Akan Menghapus Video ?</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form action="<?=base_url("index.php/video/dropvideo/$videos->videoID") ?>">
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                    <button type="submit" data-dismis="modal" class="btn btn-primary">Cancel</button>
-                                                </form>
-                                            </div>
+                            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            Konfirmasi Hapus Video
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="text-danger">Anda Yakin Akan Menghapus Video ?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="<?= base_url("index.php/video/dropvideo/$videos->videoID") ?>">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" data-dismis="modal" class="btn btn-primary">Cancel</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
                             </tr>
                         <?php endforeach ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div> 
-</div>
-<!--START To Top Scroller--> 
-<a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-<!--/ END To Top Scroller--> 
+        </div> 
+    </div>
+    <!--START To Top Scroller--> 
+    <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
+    <!--/ END To Top Scroller--> 
 </section>
 
 
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery-migrate.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/bootstrap/js/bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/core/js/core.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/sparkline/js/jquery.sparkline.min.js') ?>"></script>
+
+
+
+<script type="text/javascript" src="<?= base_url('assets/javascript/app.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>

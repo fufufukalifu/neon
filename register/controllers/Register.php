@@ -6,6 +6,8 @@ class Register extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('mregister');
+         $this->load->model('siswa/msiswa');
+
     }
 
     // function untuk menampikan halam pertama saat registrasi
@@ -94,6 +96,10 @@ class Register extends MX_Controller {
 
             $penggunaID = $data['tb_pengguna']['id'];
 
+            //session buat id
+            $id_arr=array('id'=>$penggunaID);
+            $this->session->set_userdata($id_arr);
+
             //data array siswa
             $data_siswa = array(
                 'namaDepan' => $namaDepan,
@@ -107,7 +113,7 @@ class Register extends MX_Controller {
 
             //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $data_akun);
-            redirect(site_url('login/konfirmasi'));
+            redirect(site_url('register/verifikasi'));
         }
     }
 
@@ -185,7 +191,7 @@ class Register extends MX_Controller {
 
             //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_guru($data_guru, $data_akun);
-            redirect(site_url('login/konfirmasi'));
+            redirect(site_url('register/verifikasi'));
         }
     }
 
@@ -232,8 +238,52 @@ class Register extends MX_Controller {
         }
     }
 
-    public function FunctionName() {
-        # code...
+
+    //halam untulk memnberitahu link aktivassi ke email atau untuk meresen email
+    public function verifikasi() {
+        $this->load->view('templating/t-header');
+        $this->load->view('vVerifikasi.php');
+        $this->load->view('templating/t-footer');
+    }
+
+
+    //function untuk mengirim urang aktivasi ke email
+    public function resend_mail()
+    {   
+        echo "masuk resen";//for testing
+        $this->mregister->send_verifikasi_email();
+        redirect(site_url('register/verifikasi'));
+
+    }
+
+    //function untuk mengganti email aktivasi akun
+    public function ch_mail_aktivasi ()
+    {   
+          //load library n helper
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+
+        echo "masuk function ch_mail_aktifasi";
+
+
+
+        //set rule untuk inputan email agar email yg dinputkan uniq
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
+        //set pesan untuk inputan kesalahan email telah digunkan
+        $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
+        
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templating/t-header');
+            $this->load->view('vVerifikasi.php');
+            $this->load->view('templating/t-footer');
+        }else{
+            $email = htmlspecialchars($this->input->post('email'));
+            var_dump($email);
+            $this->mregister->update_email_ak($email);
+            $this->mregister->send_verifikasi_email();
+        }
+
     }
 
 }
