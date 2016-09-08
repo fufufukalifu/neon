@@ -76,30 +76,28 @@ class videoBack extends MX_Controller {
 
     //Start function untuk dropdown dependent pada form upload video#
     public function getPelajaran( $tingkatID ) {
-        // if ( isset( $_POST['tingkatID'] ) ) {
-            $data = $this->output
-            ->set_content_type( "application/json" )
-            ->set_output( json_encode( $this->MvideoBack->scPelajaran( $tingkatID ) ) ) ;
-            //print_r( $data );
-        // }
+        $data = $this->output
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scPelajaran( $tingkatID ) ) ) ;
     }
 
     public function getBab( $tpelajaranID ) {
-        $this->MvideoBack->scBab( $tpelajaranID );
+        $data = $this->output
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scBab( $tpelajaranID ) ) ) ;
     }
 
     public function getSubbab( $babID ) {
-        $this->MvideoBack->scSubbab( $babID );
+        $data = $this->output
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scSubbab( $babID ) ) );
     }
 
     public function getTingkat() {
         $data = $this->output
         ->set_content_type( "application/json" )
         ->set_output( json_encode( $this->MvideoBack->scTingkat() ) ) ;
-        // print_r($data);
     }
-
-    //Start function untuk dropdown dependent pada form upload video#
 
 }
 

@@ -23,7 +23,7 @@
 
 					<label class="col-sm-2 control-label">Mata Pelajaran</label>
 					<div class="col-sm-4">
-						<select class="form-control" name="mataPelajaran" id="ePelajaran">
+						<select class="form-control" name="mataPelajaran" id="pelajaran">
 
 						</select>
 					</div>
@@ -32,17 +32,15 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label">Bab</label>
 					<div class="col-sm-4">
-						<select class="form-control" name="bab">
-							<option value="">A</option>
-							<option value="">A</option>
+						<select class="form-control" name="bab" id="bab">
+
 						</select>
 					</div>
 
 					<label class="col-sm-2 control-label">Subab</label>
 					<div class="col-sm-4">
-						<select class="form-control" name="subBab">
-							<option value="">A</option>
-							<option value="">A</option>
+						<select class="form-control" name="subBab" id="subbab">
+
 						</select>
 					</div>
 				</div>
@@ -123,24 +121,33 @@
 function loadTingkat(){
 	jQuery(document).ready(function(){
 		var tingkat_id = {"tingkat_id" : $('#tingkat').val()};
-		//alert(tingkat_id)
-
-
 		$.ajax({
 			type: "POST",
 			data: tingkat_id,
 			url: "<?php echo base_url() ?>index.php/videoback/getTingkat",
 
 			success: function(data){
+				console.log("Data"+data); 
+				$('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
 				$.each(data, function(i, data){
 					$('#tingkat').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
-					idTingkat=data.id;
+					return idTingkat=data.id;
 				});
 			}
 		});
+		
 		$('#tingkat').change(function(){
-			console.log(tingkat_id);
-			loadPelajaran(idTingkat);
+			tingkat_id={"tingkat_id" : $('#tingkat').val()};
+			loadPelajaran($('#tingkat').val());
+		})
+
+		$('#pelajaran').change(function(){
+			pelajaran_id = {"pelajaran_id":$('#pelajaran').val()};
+			load_bab($('#pelajaran').val());
+		})
+
+		$('#bab').change(function(){
+			load_sub_bab($('#bab').val());
 		})
 	})};
 
@@ -148,18 +155,52 @@ function loadTingkat(){
 	function loadPelajaran(tingkatID){
 		$.ajax({
 			type: "POST",
-			data: tingkatID,
+			data: tingkatID.tingkat_id,
+
 			url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
-
 			success: function(data){
-				$('#ePelajaran').html('<option value="">-- Select Type --</option>');
-
+				$('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
 				$.each(data, function(i, data){
-					$('#ePelajaran').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
+					$('#pelajaran').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
 				});
 			}
 		});
 	}
+	//buat load bab
+	function load_bab(mapelID){
+		$.ajax({
+			type: "POST",
+			data: mapelID.mapel_id,
+
+			url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
+			success: function(data){
+				$('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+				//console.log(data);
+				$.each(data, function(i, data){
+					$('#bab').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
+				});
+			}
+
+		});
+	}
+	//load sub bab
+	function load_sub_bab(babID){
+		$.ajax({
+			type: "POST",
+			data: babID.bab_id,
+
+			url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
+			success: function(data){
+				$('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+				console.log(data);
+				$.each(data, function(i, data){
+					$('#subbab').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
+				});
+			}
+
+		});
+	}
+
 
 	loadTingkat();
 	</script>

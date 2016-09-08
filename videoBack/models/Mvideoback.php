@@ -34,8 +34,8 @@ class Mvideoback extends CI_Model
 	//get value bab pelajaran berdasarkan id tingkat pelajaran
 	public function scBab($tpelajaranID)
 	{
-		$this->db->where('tingkatPelajaranID', $tingkatID);
-		$this->db->select('id, keterangan')->from('tb_bab');
+		$this->db->where('tingkatPelajaranID', $tpelajaranID);
+		$this->db->select('id, keterangan, judulBab')->from('tb_bab');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
