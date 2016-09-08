@@ -18,7 +18,8 @@
 					<label class="col-sm-1 control-label">Tingkat</label>
 					<div class="col-sm-4">
 						<select class="form-control" name="tingkat" id="tingkat">
-							<option value=""></option>
+							<option>-Pilih Tingkat-</option>
+
 						</select>
 					</div>
 
@@ -145,22 +146,49 @@
 	});
 
 
-function loadmatapelajaran(){
+// function loadmatapelajaran(){
 
-}
+// }
 
-function loadtingkat(){
-	var tingkat=$("#tingkat").val();
-	$.ajax({
-		url:"<?php echo base_url();?>videoback/getTingkat",
-		data:"tingkat=" + tingkat ,
-		success: function(html)
-		{
-			// $("#konsentrasi").html(html);
-			// loadmatapelajaran();
+//buat load tingkat
+function loadTingkat(){
+	jQuery(document).ready(function(){
+		var tingkat_id = {"tingkat_id" : $('#tingkat').val()};
+		var idTingkat;
+		
 
-		}
-	});
-}
-</script>
+		$.ajax({
+			type: "POST",
+			data: tingkat_id,
+			url: "<?= base_url() ?>index.php/videoback/getTingkat",
+
+			success: function(data){
+				$.each(data, function(i, data){
+					$('#tingkat').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
+					idTingkat=data.id;
+				});
+			}
+		});
+		$('#tingkat').change(function(){
+			loadPelajaran(idTingkat);
+		})
+	})};
+
+	//buat load pelajaran
+	function loadPelajaran(tingkatID){
+		$.ajax({
+			type: "POST",
+			data: tingkatID,
+			url: "<?= base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
+
+			success: function(data){
+				$.each(data, function(i, data){
+					$('#ePelajaran').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
+				});
+			}
+		});
+	}
+
+	loadTingkat();
+	</script>
 
