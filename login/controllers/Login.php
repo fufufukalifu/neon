@@ -13,8 +13,8 @@ class Login extends MX_Controller {
 
     public function index() {
         $this->load->view('templating/t-header');
-//        $this->facebookIdentity();
-        $this->load->view('vLogin.php');
+        $this->facebookIdentity();
+//        $this->load->view('vLogin.php');
         $this->load->view('templating/t-sessionlogin');
         $this->load->view('templating/t-footer');
     }
@@ -70,27 +70,26 @@ class Login extends MX_Controller {
         $this->session->unset_userdata("USERNAME");
         $this->session->unset_userdata("HAKAKSES");
         $this->session->unset_userdata('userData');
-//        $this->session->sess_destroy();
+        $this->session->sess_destroy();
         $this->session->set_flashdata('notif', ' Terimakasih sudah belajar bersama kami');
         redirect(site_url('login'));
-//        redirect(base_url());
     }
 
     public function konfirmasi() {
         $this->load->view('templating/t-header');
-//        $this->load->view('templating/t-session');
+//        $this->load->view('templating/t-sessionKonfirm');
         $this->load->view('vKonfirmasi.php');
         $this->load->view('templating/t-footer');
     }
 
     public function facebookIdentity() {
         // Include the facebook api php libraries
-//        include_once APPPATH . "libraries/facebook-api-php-codexworld/facebook.php";
+        include_once APPPATH . "libraries/facebook-api-php-codexworld/facebook.php";
 
         // Facebook API Configuration
         $appId = '303600290003894';
         $appSecret = 'ac2f5e4c92821409ccc160928a5a70a6';
-        $redirectUrl = base_url() . 'index.php/welcome';
+        $redirectUrl = base_url() . 'index.php/login';
         $fbPermissions = 'email';
 
         //Call Facebook API
@@ -121,7 +120,7 @@ class Login extends MX_Controller {
             } else {
                 $data['userData'] = array();
             }
-            $this->createSession($userID);
+            $this->createSession($userData['email']);
         } else {
             $fbuser = '';
             $data['authUrl'] = $facebook->getLoginUrl(array('redirect_uri' => $redirectUrl, 'scope' => $fbPermissions));

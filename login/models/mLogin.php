@@ -30,13 +30,12 @@ class Mlogin extends CI_Model {
     public function cekUser3($id) {
         $this->db->select('*');
         $this->db->from('tb_pengguna');
-        $this->db->where('id', $id);
+        $this->db->where('eMail', $id);
         $this->db->limit(1);
 
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
             echo "ada akun";
-
             return $query->result(); //if data is true
         } else {
             echo 'tidak ada akun';
