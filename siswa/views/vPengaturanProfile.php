@@ -9,7 +9,7 @@
             $namaSekolah = $row['namaSekolah'];
             $alamatSekolah  = $row['alamatSekolah']; 
             $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
-        } 
+        } ;
      ?>           
         <!-- START Template Main -->
         <section id="main" role="main">

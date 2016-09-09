@@ -136,7 +136,13 @@ class Mregister extends CI_Model {
         $this->session->set_userdata($sess_array);
 
     }
-
+    //function unutk dropdown mata pelajran
+    public function get_matapelajaran()
+    {
+        $this->db->select('id,aliasMataPelajaran')->from('tb_mata-pelajaran');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
 }
 

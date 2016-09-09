@@ -26,8 +26,10 @@ class Register extends MX_Controller {
 
     //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
+         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $this->load->view('templating/t-header');
-        $this->load->view('vRegisterGuru');
+        $this->load->view('vRegisterGuru',$data);
+         // var_dump( $data['mataPelajaran']); for testing
     }
 
     public function verifikasiemail() {
@@ -125,11 +127,11 @@ class Register extends MX_Controller {
         $this->load->library('form_validation');
 
         //syarat pengisian form regitrasi guru
-        $this->form_validation->set_rules('namapengguna', 'Nama Pengguna', 'trim|required|min_length[5]|max_length[12]|is_unique[tb_pengguna.namaPengguna]');
+        $this->form_validation->set_rules('namapengguna', 'Nama Pengguna', 'trim|required|min_length[6]|max_length[12]|is_unique[tb_pengguna.namaPengguna]');
         $this->form_validation->set_rules('namadepan', 'Nama Depan', 'required');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
         $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
-        $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]');
+        $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]min_length[6]');
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|is_unique[tb_pengguna.email]');
 
@@ -139,7 +141,7 @@ class Register extends MX_Controller {
         $this->form_validation->set_message('is_unique', 'email', '*Email sudah terpakai');
         $this->form_validation->set_message('is_unique', '*Nama Pengguna sudah terpakai');
         $this->form_validation->set_message('max_length', '*Nama Pengguna maksimal 12 karakter!');
-        $this->form_validation->set_message('min_length', '*Nama Pengguna minimal 5 karakter!');
+        $this->form_validation->set_message('min_length', '*Inputan minimal 6 karakter!');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
 
