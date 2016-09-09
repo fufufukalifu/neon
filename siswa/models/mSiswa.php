@@ -4,6 +4,7 @@
 class Msiswa extends CI_Model
 {
 
+	#Start function pengaturan profile siswa#
 	public function update_siswa($data)
 	{
 		

@@ -42,7 +42,7 @@
                 <div class="col-md-6 col-md-offset-3">
 
 
-                    <form class="panel nm" name="form-register" action="<?= base_url() ?>index.php/register/ch_mail_aktivasi" method="post">
+                    <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/resetdatapassword" method="post">
                         <ul class="list-table pa15">
                             <li>
                                 <!-- Alert message -->
@@ -61,8 +61,9 @@
                             <div class="form-group">
                                 <label class="control-label">Kata Sandi Baru</label>
                                 <div class="has-icon pull-left">
-                                    <input type="email" class="form-control" name="email" placeholder="Password">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                     <i class="ico-lock2 form-control-icon"></i>
+
                                     <!-- untuk menampilkan pesan kesalahan penginputan email -->
                                     <span class="text-danger"><?php echo form_error('email'); ?></span>
                                 </div>
@@ -70,10 +71,11 @@
                             <div class="form-group">
                                 <label class="control-label">Ulangi Kata Sandi</label>
                                 <div class="has-icon pull-left">
-                                    <input type="email" class="form-control" name="email" placeholder="Password">
+                                    <input type="password" class="form-control" id="password2" name="oldpassword" placeholder="Password" required onkeyup="checkPass(); return false;">
+                                    <span id="confirmMessage" class="confirmMessage"></span>
                                     <i class="ico-lock2 form-control-icon"></i>
+
                                     <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                                    <span class="text-danger"><?php echo form_error('email'); ?></span>
                                 </div>
                             </div>
 
@@ -88,6 +90,7 @@
             </div>
         </div>
     </section>
+
     <!--/ END Register Content -->
 
     <!-- START To Top Scroller -->
@@ -95,3 +98,37 @@
     <!--/ END To Top Scroller -->
 </section>
 <!--/ END Template Main -->
+<script type="text/javascript">
+    function checkPass() {
+        //Store the password field objects into variables ...
+        var pass1 = document.getElementById('password');
+        var pass2 = document.getElementById('password2');
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('confirmMessage');
+        //Set the colors we will be using ...
+        var goodColor = "#66cc66";
+        var badColor = "#ff6666";
+        var blank = "#fff"
+        //Compare the values in the password field
+        //and the confirmation field
+
+        if (pass2.value == "") {
+            message.style.color = blank;
+            message.innerHTML = ""
+        } else if (pass1.value == pass2.value) {
+            //The passwords match.
+            //Set the color to the good color and inform
+            //the user that they have entered the correct password
+            message.style.color = goodColor;
+            message.innerHTML = "Passwords Cocok!"
+        } else {
+            //The passwords do not match.
+            //Set the color to the bad color and
+            //notify the user.
+            message.style.color = badColor;
+            message.innerHTML = "Passwords Tidak Cocok!"
+        }
+    }
+
+</script>
+

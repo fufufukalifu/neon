@@ -11,6 +11,7 @@ class Guru extends MX_Controller {
         $this->load->model( 'mguru' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
+        $this->load->model( 'register/mregister' );
 
     }
 
@@ -81,7 +82,7 @@ class Guru extends MX_Controller {
     }
 
     public function pengaturanProfileguru() {
-
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['guru'] = $this->mguru->get_datguru();
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'vPengaturanProfileGuru',$data );
@@ -110,9 +111,12 @@ class Guru extends MX_Controller {
 
 
         if ( $this->form_validation->run() == FALSE ) {
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'vProfileGuru' );
-            $this->load->view( 'templating/t-footer' );
+
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['guru'] = $this->mguru->get_datguru();
+        $this->load->view( 'templating/t-header' );
+        $this->load->view( 'vPengaturanProfileGuru',$data );
+        $this->load->view( 'templating/t-footer' );
         } else {
             $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
             $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );
@@ -159,8 +163,10 @@ class Guru extends MX_Controller {
 
 
         if ( $this->form_validation->run() == FALSE ) {
+            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+            $data['guru'] = $this->mguru->get_datguru();
             $this->load->view( 'templating/t-header' );
-            $this->load->view( 'vProfileGuru' );
+            $this->load->view( 'vPengaturanProfileGuru',$data );
             $this->load->view( 'templating/t-footer' );
         } else {
             $namaPengguna = htmlspecialchars( $this->input->post( 'namapengguna' ) );
@@ -168,7 +174,7 @@ class Guru extends MX_Controller {
             $data_post = array(
                 'namaPengguna' => $namaPengguna,
                 'email' => $email,
-            );
+                );
             $this->mguru->update_akun( $data_post );
         }
     }
@@ -191,9 +197,11 @@ class Guru extends MX_Controller {
 
 
         if ( $this->form_validation->run() == FALSE ) {
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'vProfileGuru' );
-            $this->load->view( 'templating/t-footer' );
+         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+         $data['guru'] = $this->mguru->get_datguru();
+         $this->load->view( 'templating/t-header' );
+         $this->load->view( 'vPengaturanProfileGuru',$data );
+         $this->load->view( 'templating/t-footer' );
         } else {
             $kataSandi = htmlspecialchars( md5( $this->input->post( 'newpass' ) ) );
 
@@ -204,16 +212,37 @@ class Guru extends MX_Controller {
         }
     }
 
-    public function kirimemail() {
-        $this->load->library( 'email' ); // load email library
-        $this->email->from( 'noreply@sibejooclass.com', 'sender name' );
-        $this->email->to( 'goichinime@gmail.com' );
-        $this->email->subject( 'test subjek' );
-        $this->email->message( 'test kirim' );
-        if ( $this->email->send() )
-            echo "Mail Sent!";
-        else
-            echo "There is error in sending mail!";
+     public function upload() {
+        echo "masuk upload";
+        $config['upload_path'] = './assets/image/photo/guru';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('photo')) {
+
+
+            $data['error'] = array('error' => $this->upload->display_errors());
+            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+            $data['guru'] = $this->mguru->get_datguru();
+            $this->load->view( 'templating/t-header' );
+            $this->load->view( 'vPengaturanProfileGuru',$data );
+            $this->load->view( 'templating/t-footer' );
+            
+
+            // $this->load->view('beranda/main_view',$error);, 
+
+        } else {
+            $file_data = $this->upload->data();
+            $photo = $file_data['file_name'];
+            $this->mguru->update_photo($photo);
+            echo "berhasil upload"; //for testing
+            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
+            // $this->load->view('beranda/success_msg',$data);
+        }
     }
+
 }
 ?>
