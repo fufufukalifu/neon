@@ -9,7 +9,7 @@ class Siswa extends MX_Controller {
         parent::__construct();
         $this->load->model( 'msiswa' );
         $this->load->helper( 'session' );
-        checkcookie();
+
     }
 
     //
