@@ -106,14 +106,14 @@
                                                 <label class="col-md-12 control-label">Nama</label>
                                                 <div class="col-md-6">
                                                     <div class="has-icon pull-left">
-                                                        <input type="text" class="form-control" name="namadepan" placeholder="Nama Depan" data-parsley-required>
+                                                        <input type="text" class="form-control" name="namadepan" value="<?php echo set_value('namadepan'); ?>" placeholder="Nama Depan" data-parsley-required>
                                                         <i class="ico-user2 form-control-icon"></i>
                                                         <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
                                                         <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                 <input type="text" class="form-control" name="namabelakang" placeholder="Nama Belakang" data-parsley-required>
+                                                 <input type="text" class="form-control" name="namabelakang" value="<?php echo set_value('namabelakang'); ?>" placeholder="Nama Belakang" data-parsley-required>
                                              </div>
 
                                          </div>
@@ -121,7 +121,7 @@
                                          <div class="col-md-12 form-group">
                                              <label class="control-label">Mata Pelajaran</label>
                                              <div class="has-icon pull-left">
-                                                <select class="form-control" name="tingkat" id="tingkat">
+                                                <select class="form-control" name="mataPelajaran" >
                                                 <option >-Pilih Matapelajaragn-</option>
                                                     <?php 
                                                     foreach ($mataPelajaran as $row) {
@@ -143,7 +143,7 @@
                                         <div class="col-md-12 form-group">
                                             <label class="control-label">Alamat</label>
                                             <div class="has-icon pull-left">
-                                                <input type="text" class="form-control" name="alamat" data-parsley-required>
+                                                <input type="text" class="form-control" name="alamat" value="<?php echo set_value('alamat'); ?>" data-parsley-required>
                                                 <i class="ico-home10 form-control-icon"></i>
                                                 <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
                                                 <span class="text-danger"> <?php echo form_error('alamat'); ?></span>
@@ -153,7 +153,7 @@
                                         <div class="col-md-12 form-group">
                                             <label class="control-label">No Kontak</label>
                                             <div class="has-icon pull-left">
-                                                <input type="text" class="form-control" name="nokontak" data-parsley-required>
+                                                <input type="text" class="form-control" name="nokontak" value="<?php echo set_value('nokontak'); ?>" data-parsley-required>
                                                 <i class="ico-phone3 form-control-icon"></i>
                                                 <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
                                                 <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
@@ -167,7 +167,7 @@
                                         <div class="col-md-12 form-group">
                                             <label class="control-label">Nama Pengguna</label>
                                             <div class="has-icon pull-left">
-                                                <input type="text" class="form-control" name="namapengguna" data-parsley-required>
+                                                <input type="text" class="form-control" name="namapengguna" value="<?php echo set_value('namapengguna'); ?>" data-parsley-required>
                                                 <i class="ico-tag9 form-control-icon"></i>
                                                 <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
                                                 <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
@@ -198,7 +198,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Email</label>
                                             <div class="has-icon pull-left">
-                                                <input type="email" class="form-control" name="email" placeholder="you@mail.com">
+                                                <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="you@mail.com">
                                                 <i class="ico-envelop form-control-icon"></i>
                                                 <!-- untuk menampilkan pesan kesalahan penginputan email -->
                                                 <span class="text-danger"><?php echo form_error('email'); ?></span>
