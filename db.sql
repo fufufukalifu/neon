@@ -27,11 +27,11 @@ CREATE TABLE `tb_bab` (
   PRIMARY KEY (`id`),
   KEY `tinkatPelajaranID` (`tingkatPelajaranID`),
   CONSTRAINT `tb_bab_ibfk_1` FOREIGN KEY (`tingkatPelajaranID`) REFERENCES `tb_tingkat-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_bab` */
 
-insert  into `tb_bab`(`id`,`judulBab`,`keterangan`,`status`,`tingkatPelajaranID`) values (1,'IPA SD BAB 6','','1',4),(2,'IPA SD BAB 1','','1',4),(3,'IPA SD BAB 2','','1',4),(4,'IPA SD BAB 3','','1',4),(5,'IPA SD BAB 4','','1',4),(6,'IPA SD BAB 5','','1',4),(7,'ENGLISH SD BAB 1','','1',6),(8,'ENGLISH SD BAB 2','','1',6),(9,'ENGLISH SD BAB 3','','1',6),(10,'ENGLISH SD BAB 4','','1',6),(11,'ENGLISH SD BAB 5','','1',6),(12,'IPS SD BAB 1','','1',5),(13,'IPS SD BAB 2','','1',5),(14,'IPS SD BAB 3','','1',5),(15,'IPS SD BAB 4','','1',5),(16,'IPA SMP BAB 6','','1',7),(17,'IPA SMP BAB 1','','1',7),(18,'IPA SMP BAB 2','','1',7),(19,'IPA SMP BAB 3','','1',7),(20,'IPA SMP BAB 4','','1',7),(21,'IPA SMP BAB 5','','1',7),(22,'ENGLISH SMP BAB 1','','1',9),(23,'ENGLISH SMP BAB 2','','1',9),(24,'ENGLISH SMP BAB 3','','1',9),(25,'ENGLISH SMP BAB 4','','1',9),(26,'ENGLISH SMP BAB 5','','1',9),(27,'IPS SMP BAB 1','','1',8),(28,'IPS SMP BAB 2','','1',8),(29,'IPS SMP BAB 3','','1',8),(30,'IPS SMP BAB 4','','1',8),(31,'IPA SMK BAB 6','','1',10),(32,'IPA SMK BAB 1','','1',10),(33,'IPA SMK BAB 2','','1',10),(34,'IPA SMK BAB 3','','1',10),(35,'IPA SMK BAB 4','','1',10),(36,'IPA SMK BAB 5','','1',10),(37,'ENGLISH SMK BAB 1','','1',12),(38,'ENGLISH SMK BAB 2','','1',12),(39,'ENGLISH SMK BAB 3','','1',12),(40,'ENGLISH SMK BAB 4','','1',12),(41,'ENGLISH SMK BAB 5','','1',12),(42,'IPS SMK BAB 1','','1',11),(43,'IPS SMK BAB 2','','1',11),(44,'IPS SMK BAB 3','','1',11),(45,'IPS SMK BAB 4','','1',11),(46,'IPA SMA BAB 6','','1',1),(47,'IPA SMA BAB 1','','1',1),(48,'IPA SMA BAB 2','','1',1),(49,'IPA SMA BAB 3','','1',1),(50,'IPA SMA BAB 4','','1',1),(51,'IPA SMA BAB 5','','1',1),(52,'ENGLISH SMA BAB 1','','1',3),(53,'ENGLISH SMA BAB 2','','1',3),(54,'ENGLISH SMA BAB 3','','1',3),(55,'ENGLISH SMA BAB 4','','1',3),(56,'ENGLISH SMA BAB 5','','1',3),(57,'IPS SMA BAB 1','','1',2),(58,'IPS SMA BAB 2','','1',2),(59,'IPS SMA BAB 3','','1',2),(60,'IPS SMA BAB 4','','1',2),(61,'','','1',2);
+insert  into `tb_bab`(`id`,`judulBab`,`keterangan`,`status`,`tingkatPelajaranID`) values (62,'Ciri-ciri mahluk hidup','','1',13),(63,'Perkembangan mahluk hidup','','1',13),(64,'Keseimbangan ekosistem','','1',13),(65,'Greetings','','1',14),(66,'Text','','1',14),(67,'Tenses','','1',14),(68,'Salam','','1',15),(69,'Jenis Teks','','1',15),(70,'Pola Kalimat','','1',15),(71,'Sejarah','','1',16),(72,'Perang Dunia II','','1',16),(73,'Perang Dunia I','','1',16),(74,'4','','1',16);
 
 /*Table structure for table `tb_guru` */
 
@@ -52,11 +52,9 @@ CREATE TABLE `tb_guru` (
   KEY `a` (`mataPelajaranID`),
   CONSTRAINT `tb_guru_ibfk_2` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_guru_ibfk_3` FOREIGN KEY (`mataPelajaranID`) REFERENCES `tb_mata-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_guru` */
-
-insert  into `tb_guru`(`id`,`uuid`,`namaDepan`,`namaBelakang`,`mataPelajaran`,`alamat`,`noKontak`,`penggunaID`,`mataPelajaranID`,`biografi`,`status`) values (203,'','Ferris','Dominique','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(204,'','Thor','Breanna','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(205,'','Boris','Lani','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(206,'','Jonas','Donna','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(207,'','Dolan','Evangeline','Chemistry',NULL,NULL,4,1,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(208,'','Kyle','Maggie','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(209,'','Ferris','Kiayada','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(210,'','Mohammad','Xena','Physic',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(211,'','Nigel','Francesca','Math',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(212,'','Xavier','Karleigh','Chemistry',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(213,'','Hiram','Kristen','English',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(214,'','Lucian','Lynn','Math',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(215,'','Gareth','Brenna','English',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(216,'','Akeem','Gretchen','English',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1'),(217,'','Giacomo','Ori','Math',NULL,NULL,NULL,NULL,'Ini adalah biografi Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco','1');
 
 /*Table structure for table `tb_komen` */
 
@@ -71,17 +69,14 @@ CREATE TABLE `tb_komen` (
   KEY `tb_komen_ibfk_2` (`userID`),
   CONSTRAINT `tb_komen_ibfk_1` FOREIGN KEY (`videoID`) REFERENCES `tb_video` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `tb_komen_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_pengguna` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_komen` */
-
-insert  into `tb_komen`(`id`,`isiKomen`,`timestampe`,`videoID`,`userID`) values (1,'Lorem ipsum dolor sit amet, eu vide nusquam sed, sit et vitae vocent. At est possit numquam percipit. Vidisse aliquip comprehensam pro cu, vim ex dolore docendi. komen by guru','2016-09-05 14:28:02',1,4),(2,'Lorem ipsum dolor sit amet, eu vide nusquam sed, sit et vitae vocent. At est possit numquam percipit. Vidisse aliquip comprehensam pro cu, vim ex dolore docendi. komen by siswa','2016-09-05 14:28:56',1,3);
 
 /*Table structure for table `tb_mata-pelajaran` */
 
 CREATE TABLE `tb_mata-pelajaran` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `uuidMapel` varchar(200) NOT NULL,
   `aliasMataPelajaran` varchar(10) NOT NULL,
   `namaMataPelajaran` varchar(32) NOT NULL,
   `status` int(1) DEFAULT '1',
@@ -90,7 +85,7 @@ CREATE TABLE `tb_mata-pelajaran` (
 
 /*Data for the table `tb_mata-pelajaran` */
 
-insert  into `tb_mata-pelajaran`(`id`,`uuidMapel`,`aliasMataPelajaran`,`namaMataPelajaran`,`status`) values (1,'629bfcea-70fa-11e6-aa82-0cd292656f16','IPA','Ilmu Pengetahuan Alam',1),(2,'62a341e4-70fa-11e6-aa82-0cd292656f16','IPS','Ilmu Pengetahuan Sosial',1),(3,'62a34302-70fa-11e6-aa82-0cd292656f16','ING','Bahasa Inggris',1),(4,'62a34374-70fa-11e6-aa82-0cd292656f16','IND','Bahasa Indonesia',1);
+insert  into `tb_mata-pelajaran`(`id`,`aliasMataPelajaran`,`namaMataPelajaran`,`status`) values (1,'IPA','Ilmu Pengetahuan Alam',1),(2,'IPS','Ilmu Pengetahuan Sosial',1),(3,'ING','Bahasa Inggris',1),(4,'IND','Bahasa Indonesia',1);
 
 /*Table structure for table `tb_pengguna` */
 
@@ -101,14 +96,18 @@ CREATE TABLE `tb_pengguna` (
   `eMail` varchar(64) NOT NULL,
   `regTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `aktivasi` char(1) DEFAULT NULL,
+  `avatar` varchar(64) DEFAULT NULL,
+  `oauth_uid` varchar(255) DEFAULT NULL,
+  `oauth_provider` varchar(255) DEFAULT NULL,
   `hakAkses` varchar(12) DEFAULT NULL,
   `status` char(1) DEFAULT '1',
+  `last_akses` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_pengguna` */
 
-insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`hakAkses`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','2016-08-26 13:01:29',NULL,'user','1'),(3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1','siswa','1'),(4,'guru','77e69c137812518e359196bb2f5e9bb9','','2016-09-05 14:18:38','1','guru','1');
+insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','2016-08-26 13:01:29','1',NULL,NULL,NULL,'user','1','2016-09-08 21:47:20'),(3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(4,'guru','77e69c137812518e359196bb2f5e9bb9','','2016-09-05 14:18:38','1',NULL,NULL,NULL,'guru','1','2016-09-08 21:47:20'),(5,NULL,NULL,'opik.sutisna@mail.unpas.ac.id','2016-09-08 21:47:25','1',NULL,'1875070992721359','facebook','siswa','1','2016-09-08 17:06:57'),(6,'fufufukalifu','21232f297a57a5a743894a0e4a801fc3','op.sutisna@gmail.com','2016-09-08 21:57:31','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:57:31');
 
 /*Table structure for table `tb_siswa` */
 
@@ -128,11 +127,9 @@ CREATE TABLE `tb_siswa` (
   PRIMARY KEY (`id`),
   KEY `penggunaID` (`penggunaID`),
   CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_siswa` */
-
-insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`status`) values (1,'opik','sutisba','jln.cibaduyut raya no 286','123123','jkjlk','',0,NULL,NULL,NULL,'');
 
 /*Table structure for table `tb_subbab` */
 
@@ -145,11 +142,11 @@ CREATE TABLE `tb_subbab` (
   PRIMARY KEY (`id`),
   KEY `babID` (`babID`),
   CONSTRAINT `tb_subbab_ibfk_1` FOREIGN KEY (`babID`) REFERENCES `tb_bab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_subbab` */
 
-insert  into `tb_subbab`(`id`,`judulSubBab`,`babID`,`keterangan`,`status`) values (1,'IPA_SMA-bab1:Judul Sub 1',47,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(2,'IPA_SMA-bab1:Judul Sub 2',47,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(3,'IPA_SMA-bab1:Judul Sub 3',47,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(4,'IPA_SMA-bab2:Judul Sub 1',48,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(5,'IPA_SMA-bab2:Judul Sub 2',48,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(6,'IPA_SMA-bab2:Judul Sub 3',48,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(7,'IPA_SMA-bab3:Judul Sub 1',49,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(8,'IPA_SMA-bab3:Judul Sub 2',49,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(9,'IPA_SMA-bab3:Judul Sub 3',49,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(10,'IPA_SMA-bab3:Judul Sub 4',49,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(11,'IPA_SD-bab1:Judul Sub 1',2,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(12,'IPA_SD-bab1:Judul Sub 2',2,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(13,'IPA_SD-bab1:Judul Sub 3',2,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(14,'IPA_SD-bab2:Judul Sub 1',3,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(15,'IPA_SD-bab2:Judul Sub 2',3,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(16,'IPA_SD-bab2:Judul Sub 3',3,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(17,'IPA_SD-bab3:Judul Sub 1',4,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(18,'IPA_SD-bab3:Judul Sub 2',4,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(19,'IPA_SD-bab3:Judul Sub 3',4,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(20,'IPA_SD-bab3:Judul Sub 4',4,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(21,'IPA_SMK-bab1:Judul Sub 1',32,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(22,'IPA_SMK-bab1:Judul Sub 2',32,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(23,'IPA_SMK-bab1:Judul Sub 3',32,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(24,'IPA_SMK-bab2:Judul Sub 1',33,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(25,'IPA_SMK-bab2:Judul Sub 2',33,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(26,'IPA_SMK-bab2:Judul Sub 3',33,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(27,'IPA_SMK-bab3:Judul Sub 1',34,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(28,'IPA_SMK-bab3:Judul Sub 2',34,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(29,'IPA_SMK-bab3:Judul Sub 3',34,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL),(30,'IPA_SMK-bab3:Judul Sub 4',34,' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n tempor incididunt ut labore',NULL);
+insert  into `tb_subbab`(`id`,`judulSubBab`,`babID`,`keterangan`,`status`) values (31,'Hewan',62,NULL,'1'),(32,'Melestarikan Jenis',63,NULL,'1'),(33,'Berkembang Biak',63,NULL,'1'),(34,'Kegiatan Manusia',64,NULL,'1'),(35,'Greetings 1',65,NULL,'1'),(36,'Narative Text',66,NULL,'1'),(37,'Present Tense',67,NULL,'1'),(38,'Perfect Tense',67,NULL,'1'),(39,'Salam 1',68,NULL,'1'),(40,'Gaya Salam',68,NULL,'1'),(41,'Jenis Teks',69,NULL,'1'),(42,'Laporan',69,NULL,'1'),(43,'Pola Kalimat 1',70,NULL,'1'),(44,'Polat Kalimat 2',70,NULL,'1'),(45,'Sejarah',71,NULL,'1'),(46,'Tujuan Belajar Sejarah',71,NULL,'1'),(47,'Deskripsi Singkat',72,NULL,'1'),(48,'Penyebab',72,NULL,'1'),(49,'Deskripsi Singkat',73,NULL,'1'),(50,'Penyebab',73,NULL,'1');
 
 /*Table structure for table `tb_tingkat` */
 
@@ -178,11 +175,11 @@ CREATE TABLE `tb_tingkat-pelajaran` (
   KEY `mataPelajaranID` (`mataPelajaranID`),
   CONSTRAINT `tb_tingkat-pelajaran_ibfk_1` FOREIGN KEY (`tingkatID`) REFERENCES `tb_tingkat` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_tingkat-pelajaran_ibfk_2` FOREIGN KEY (`mataPelajaranID`) REFERENCES `tb_mata-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_tingkat-pelajaran` */
 
-insert  into `tb_tingkat-pelajaran`(`id`,`tingkatID`,`mataPelajaranID`,`keterangan`,`status`) values (1,1,1,'SMA IPA','1'),(2,1,2,'SMA IPS\r\n','1'),(3,1,3,'SMA INGGRIS','1'),(4,2,1,'SD IPA','1'),(5,2,2,'SD IPS','1'),(6,2,3,'SD INGGRIS','1'),(7,3,1,'SMP IPA','1'),(8,3,2,'SMP IPS','1'),(9,3,3,'SMP INGGRIS','1'),(10,4,1,'SMK IPA','1'),(11,4,2,'SMK IPS','1'),(12,4,3,'SMK INGGRIS','1');
+insert  into `tb_tingkat-pelajaran`(`id`,`tingkatID`,`mataPelajaranID`,`keterangan`,`status`) values (13,2,1,'IPA-SD','1'),(14,1,3,'INGGRIS-SMA','1'),(15,3,4,'INDONESIA-SMP','1'),(16,4,2,'SMK-IPS','1');
 
 /*Table structure for table `tb_video` */
 
@@ -193,18 +190,19 @@ CREATE TABLE `tb_video` (
   `deskripsi` text,
   `path` varchar(64) DEFAULT NULL,
   `guruID` int(10) DEFAULT NULL,
+  `published` char(1) DEFAULT NULL,
   `subBabID` int(10) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `status` char(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `tb_video_ibfk_1` (`subBabID`),
-  KEY `guruID` (`guruID`),
+  KEY `tb_video_ibfk_2` (`guruID`),
   CONSTRAINT `tb_video_ibfk_1` FOREIGN KEY (`subBabID`) REFERENCES `tb_subbab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_video_ibfk_2` FOREIGN KEY (`guruID`) REFERENCES `tb_guru` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_video` */
 
-insert  into `tb_video`(`id`,`judulVideo`,`namaFile`,`deskripsi`,`path`,`guruID`,`subBabID`,`status`) values (1,'Judul video 0','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non',NULL,207,1,1),(2,'Judul video 1','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,1,1),(3,'Judul video 2','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,1,1),(4,'Judul video 3','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,1,1),(5,'Judul video 4','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,2,1),(6,'Judul Video 5','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,2,1),(7,'Judul Video 6','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,2,1),(8,'Judul Video 7','algoritma1.mp4',' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\n tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\n consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\n proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,207,2,1);
+insert  into `tb_video`(`id`,`judulVideo`,`namaFile`,`deskripsi`,`path`,`guruID`,`published`,`subBabID`,`status`) values (9,'Cicak','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n',NULL,NULL,NULL,31,'1'),(10,'Penebangan','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,NULL,NULL,34,'1'),(11,'Perburuan Liar','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,NULL,NULL,34,'1');
 
 /*Table structure for table `view_pelajaran_sd` */
 
