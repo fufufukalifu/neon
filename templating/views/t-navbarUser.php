@@ -30,7 +30,7 @@
             <!--/ END Left nav -->
 
             <!-- START Right nav -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" >
                 <!-- Profile dropdown -->
                 <li class="dropdown profile">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">

@@ -62,43 +62,60 @@ class videoBack extends MX_Controller {
             //data post dari form upload video
             $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
             $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
+            $subBabID = htmlspecialchars($this->input->post('subBab'));
+            $published = htmlspecialchars($this->input->post('publish'));
+
+            $penggunaID = $this->session->userdata['id'];
+            $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+            $guruID = $data['tb_guru']['id'];
+
             //data yg akan di masukan ke tabel video
             $data_video = array(
                 'judulVideo' => $judulVideo,
                 'namaFile' => $video,
                 'deskripsi' => $deskripsi,
+                'published' => $published,
+                'guruID' => $guruID,
+                'subBabID' => $subBabID
             );
-            var_dump($data_video);
+           
             $this->MvideoBack->insertVideo($data_video);
         }
     }
 
     //Start function untuk dropdown dependent pada form upload video#
-    public function getPelajaran($tingkatID) {
-        // if ( isset( $_POST['tingkatID'] ) ) {
+
+    public function getPelajaran( $tingkatID ) {
         $data = $this->output
-                ->set_content_type("application/json")
-                ->set_output(json_encode($this->MvideoBack->scPelajaran($tingkatID)));
-        //print_r( $data );
-        // }
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scPelajaran( $tingkatID ) ) ) ;
     }
 
-    public function getBab($tpelajaranID) {
-        $this->MvideoBack->scBab($tpelajaranID);
+    public function getBab( $tpelajaranID ) {
+        $data = $this->output
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scBab( $tpelajaranID ) ) ) ;
     }
 
-    public function getSubbab($babID) {
-        $this->MvideoBack->scSubbab($babID);
+    public function getSubbab( $babID ) {
+        $data = $this->output
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scSubbab( $babID ) ) );
+
+
     }
 
     public function getTingkat() {
         $data = $this->output
-                ->set_content_type("application/json")
-                ->set_output(json_encode($this->MvideoBack->scTingkat()));
-        // print_r($data);
+        ->set_content_type( "application/json" )
+        ->set_output( json_encode( $this->MvideoBack->scTingkat() ) ) ;
     }
 
+
+
+
     //Start function untuk dropdown dependent pada form upload video#
+
 }
 
 ?>
