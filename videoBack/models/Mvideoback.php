@@ -10,6 +10,7 @@ class Mvideoback extends CI_Model
 	{	
 		
 		$this->db->insert('tb_video', $data_video);
+		redirect(site_url('videoBack/managervideo'));
 
 
 	}

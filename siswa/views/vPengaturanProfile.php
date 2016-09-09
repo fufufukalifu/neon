@@ -180,10 +180,11 @@
                                                 <div class="btn-group pr5">
                                                   
                                                    <img id="preview" class="img-circle img-bordered" src="<?=$photo;?>" alt="" width="34px" />
+                                                   
                                                 </div>
                                                 <div class="btn-group">
                                                    
-                                                <input type="file" id="file" name="photo" class="btn btn-default" />
+                                                <input type="file" id="file" name="photo" class="btn btn-default" required="true"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,9 +216,9 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Email</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control" name="email" value="">
-                                                <p class="help-block">Email will not be publicly displayed. <a href="javascript:void(0);">Learn more.</a></p>
+                                                <input type="email" class="form-control" name="email" value="" required="true">
                                                 <span class="text-danger"> <?php echo form_error('email'); ?></span>
+
                                             </div>
                                         </div>
 
@@ -248,7 +249,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kata Sandi Lama</label>
                                             <div class="col-sm-5">
-                                                <input type="password" class="form-control" name="sandilama">
+                                                <input type="password" class="form-control" name="sandilama" required="true">
                                                 <p class="help-block"><a href="javascript:void(0);">Forgot password?</a></p>
                                                  <span class="text-danger"> <?php echo form_error('sandilama'); ?></span>
                                             </div>
@@ -256,14 +257,14 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kata Sandi Baru</label>
                                             <div class="col-sm-5">
-                                                <input type="password" class="form-control" name="newpass">
+                                                <input type="password" class="form-control" name="newpass" required="true">
                                                  <span class="text-danger"> <?php echo form_error('newpass'); ?></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Verifikasi Kata Sandi</label>
                                             <div class="col-sm-5">
-                                                <input type="password" class="form-control" name="verifypass">
+                                                <input type="password" class="form-control" name="verifypass" required="true">
                                                  <span class="text-danger"> <?php echo form_error('verifypass'); ?></span>
                                             </div>
                                         </div>

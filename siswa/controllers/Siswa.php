@@ -52,8 +52,12 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
+            $data['siswa'] = $this->msiswa->get_datsiswa();
+            $this->load->view('templating/t-sessionKonfirm');
+            $this->load->view('templating/t-sessionSiswa');
             $this->load->view('templating/t-header');
-            $this->load->view('vPengaturanProfile');
+            $this->load->view('templating/t-navbarUser');
+            $this->load->view('vPengaturanProfile', $data);
             $this->load->view('templating/t-footer');
         } else {
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
@@ -73,7 +77,7 @@ class Siswa extends MX_Controller {
                 'biografi' => $biografi,
                 'namaSekolah' => $namaSekolah,
                 'alamatSekolah' => $alamatSekolah,
-            );
+                );
 
             $this->msiswa->update_siswa($data_post);
         }
@@ -92,23 +96,27 @@ class Siswa extends MX_Controller {
 
         //syarat pengisian form perubahan nama pengguna dan email
 
-        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[tb_pengguna.email]');
+        $this->form_validation->set_rules('email', 'email', 'required|is_unique[tb_pengguna.eMail]');
 
         //pesan error atau pesan kesalahan pengisian form 
-        $this->form_validation->set_message('is_unique', 'email', '*Email sudah terpakai');
+        $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
 
 
         if ($this->form_validation->run() == FALSE) {
+            $data['siswa'] = $this->msiswa->get_datsiswa();
+            $this->load->view('templating/t-sessionKonfirm');
+            $this->load->view('templating/t-sessionSiswa');
             $this->load->view('templating/t-header');
-            $this->load->view('vPengaturanProfile');
+            $this->load->view('templating/t-navbarUser');
+            $this->load->view('vPengaturanProfile', $data);
             $this->load->view('templating/t-footer');
         } else {
             $email = htmlspecialchars($this->input->post('email'));
 
             $data_post = array(
                 'eMail' => $email,
-            );
+                );
             $this->msiswa->update_email($data_post);
         }
     }
@@ -131,19 +139,23 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templating/t-header');
-            $this->load->view('vPengaturanProfile');
-            $this->load->view('templating/t-footer');
+          $data['siswa'] = $this->msiswa->get_datsiswa();
+          $this->load->view('templating/t-sessionKonfirm');
+          $this->load->view('templating/t-sessionSiswa');
+          $this->load->view('templating/t-header');
+          $this->load->view('templating/t-navbarUser');
+          $this->load->view('vPengaturanProfile', $data);
+          $this->load->view('templating/t-footer');
+      } else {
+        $kataSandi = htmlspecialchars(md5($this->input->post('newpass')));
+        $inputSandi = htmlspecialchars(md5($this->input->post('sandilama')));
+        $data_post = array('kataSandi' => $kataSandi,);
+        $data['pengguna'] = $this->msiswa->get_password()[0];
+        $kataSandi = $data['pengguna']['kataSandi'];
+        var_dump($kataSandi);
+        if ($kataSandi == $inputSandi) {
+            $this->msiswa->update_katasandi($data_post);
         } else {
-            $kataSandi = htmlspecialchars(md5($this->input->post('newpass')));
-            $inputSandi = htmlspecialchars(md5($this->input->post('sandilama')));
-            $data_post = array('kataSandi' => $kataSandi,);
-            $data['pengguna'] = $this->msiswa->get_password()[0];
-            $kataSandi = $data['pengguna']['kataSandi'];
-            var_dump($kataSandi);
-            if ($kataSandi == $inputSandi) {
-                $this->msiswa->update_katasandi($data_post);
-            } else {
                 # code...
                 echo "salah"; //for testing
             }
@@ -161,10 +173,20 @@ class Siswa extends MX_Controller {
 
         if (!$this->upload->do_upload('photo')) {
 
-            $error = array('error' => $this->upload->display_errors());
-            var_dump($error);
-            echo "gagal upload"; //for teting
-            // $this->load->view('beranda/main_view',$error);
+         
+            $data['error'] = array('error' => $this->upload->display_errors());
+         $data['siswa'] = $this->msiswa->get_datsiswa();
+          $this->load->view('templating/t-sessionKonfirm');
+          $this->load->view('templating/t-sessionSiswa');
+          $this->load->view('templating/t-header');
+          $this->load->view('templating/t-navbarUser');
+          $this->load->view('vPengaturanProfile', $data);
+         
+          $this->load->view('templating/t-footer');
+            
+
+            // $this->load->view('beranda/main_view',$error);, 
+
         } else {
             $file_data = $this->upload->data();
             $photo = $file_data['file_name'];

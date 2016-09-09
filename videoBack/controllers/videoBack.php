@@ -78,7 +78,7 @@ class videoBack extends MX_Controller {
                 'guruID' => $guruID,
                 'subBabID' => $subBabID
             );
-            var_dump($data_video);
+           
             $this->MvideoBack->insertVideo($data_video);
         }
     }
