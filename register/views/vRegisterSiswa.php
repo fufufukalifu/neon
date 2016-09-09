@@ -211,11 +211,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="agree" id="agree" value="1" required>  
-                                    <label for="agree">&nbsp;&nbsp;Saya setuju dengan <a class="semibold" href="javascript:void(0);">Ketentuan Pelayanan</a></label>   
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div class="checkbox custom-checkbox">  
+                                            <input type="checkbox" name="agree" id="agree" value="1" required>  
+                                            <label for="agree">&nbsp;&nbsp;Saya setuju dengan <a class="semibold" href="javascript:void(0);">Ketentuan Pelayanan</a></label>     
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <a href="<?= base_url('index.php/login'); ?>">Ada akun?</a>
+                                    </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
                         <!-- end form konfirmasi akun by email -->
@@ -239,9 +246,9 @@
 <script type="text/javascript">
     function enable() {
         if (this.checked) {
-             document.getElementById("kirimdata").disabled = false;
+            document.getElementById("kirimdata").disabled = false;
         } else {
-             document.getElementById("kirimdata").disabled = true;
+            document.getElementById("kirimdata").disabled = true;
         }
     }
     document.getElementById("agree").addEventListener("change", enable);

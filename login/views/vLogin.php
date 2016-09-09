@@ -79,14 +79,16 @@
 
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-5">
                                         <div class="checkbox custom-checkbox">  
                                             <input type="checkbox" name="remember" id="remember" value="1">  
-                                            <label for="remember">&nbsp;&nbsp;Remember me</label>   
+                                            <label for="remember">&nbsp;&nbsp;Ingat?</label>   
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 text-right">
+                                    <div class="col-xs-7 text-right">
                                         <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
+                                        |
+                                        <a href="<?= base_url('index.php/register/lupaPassword'); ?>">Lupa password?</a>
                                     </div>
                                 </div>
                             </div>

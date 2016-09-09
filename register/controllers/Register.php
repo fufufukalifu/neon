@@ -6,8 +6,7 @@ class Register extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('mregister');
-         $this->load->model('siswa/msiswa');
-
+        $this->load->model('siswa/msiswa');
     }
 
     // function untuk menampikan halam pertama saat registrasi
@@ -26,10 +25,10 @@ class Register extends MX_Controller {
 
     //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
-         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $this->load->view('templating/t-header');
-        $this->load->view('vRegisterGuru',$data);
-         // var_dump( $data['mataPelajaran']); for testing
+        $this->load->view('vRegisterGuru', $data);
+        // var_dump( $data['mataPelajaran']); for testing
     }
 
     public function verifikasiemail() {
@@ -99,7 +98,7 @@ class Register extends MX_Controller {
             $penggunaID = $data['tb_pengguna']['id'];
 
             //session buat id
-            $id_arr=array('id'=>$penggunaID);
+            $id_arr = array('id' => $penggunaID);
             $this->session->set_userdata($id_arr);
 
             //data array siswa
@@ -240,7 +239,6 @@ class Register extends MX_Controller {
         }
     }
 
-
     //halam untulk memnberitahu link aktivassi ke email atau untuk meresen email
     public function verifikasi() {
         $this->load->view('templating/t-header');
@@ -248,20 +246,16 @@ class Register extends MX_Controller {
         $this->load->view('templating/t-footer');
     }
 
-
     //function untuk mengirim urang aktivasi ke email
-    public function resend_mail()
-    {   
-        echo "masuk resen";//for testing
+    public function resend_mail() {
+        echo "masuk resen"; //for testing
         $this->mregister->send_verifikasi_email();
         redirect(site_url('register/verifikasi'));
-
     }
 
     //function untuk mengganti email aktivasi akun
-    public function ch_mail_aktivasi ()
-    {   
-          //load library n helper
+    public function ch_mail_aktivasi() {
+        //load library n helper
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
@@ -273,19 +267,56 @@ class Register extends MX_Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
         //set pesan untuk inputan kesalahan email telah digunkan
         $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
-        
+
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templating/t-header');
             $this->load->view('vVerifikasi.php');
             $this->load->view('templating/t-footer');
-        }else{
+        } else {
             $email = htmlspecialchars($this->input->post('email'));
             var_dump($email);
             $this->mregister->update_email_ak($email);
             $this->mregister->send_verifikasi_email();
         }
+    }
 
+    public function lupaPassword() {
+        $this->load->view('templating/t-header');
+        $this->load->view('vLupapassword.php');
+        $this->load->view('templating/t-footer');
+    }
+
+    public function resetPassword() {
+        $this->load->view('templating/t-header');
+        $this->load->view('vResetPassword.php');
+        $this->load->view('templating/t-footer');
+    }
+
+    //function untuk mengganti email aktivasi akun
+    public function ch_sent_reset() {
+        //load library n helper
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+
+
+        $email = htmlspecialchars($this->input->post('email'));
+
+        if ($result = $this->mregister->cekUser($email)) {
+            //variabelSession
+            $this->mregister->send_reset_email($email);
+            $this->session->set_flashdata('notif', ' Cek email mu, kode reset telah dikirim');
+            redirect(base_url('index.php/register/lupapassword'));
+            return TRUE;
+        } else {
+            $this->session->set_flashdata('notif', ' Akun dengan email yang dimasukan tidak ada');
+            redirect(base_url('index.php/register/lupapassword'));
+            return FALSE;
+        }
+    }
+
+    public function verifikasiPassword($address, $code) {
+        $this->mregister->verifikasi_password($address, $code);
     }
 
 }
