@@ -42,7 +42,6 @@ class Guru extends MX_Controller {
         $data['data_guru'] = $this->load->mguru->get_single_guru( $guru_id )[0];
         //untuk menghitung berapa banyak video yang sudah diupload
         $data['jumlah_video'] = count( $this->load->mvideos->get_video_by_teacher( $guru_id ) );
-       // var_dump($data);
         return $data;
     }
 
@@ -55,7 +54,7 @@ class Guru extends MX_Controller {
         $videos = $this->videobyteacher();
         //print_r($videos['data_guru']);
         if ($videos==array()) {
-            $this->load->view( 'v-container-video',  $videos['data_guru']);
+            $this->load->view( 'v-container-video',  $videos['data_guru ']);
         }else{
            $this->load->view( 'v-container-video',  $videos); 
         }
@@ -80,11 +79,10 @@ class Guru extends MX_Controller {
         $this->load->view( 'templating/t-footer' );
     }
 
-    public function pengaturanProfileguru() {
+    public function profileguru() {
 
-        $data['guru'] = $this->mguru->get_datguru();
         $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vPengaturanProfileGuru',$data );
+        $this->load->view( 'vProfileGuru' );
         $this->load->view( 'templating/t-footer' );
     }
 

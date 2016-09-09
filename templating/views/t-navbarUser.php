@@ -42,8 +42,8 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
-                        <li><a href="<?= base_url('index.php/siswa'); ?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
+                        <li><a href="<?= base_url('index.php/siswa'); ?>"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
+                        <li><a href="<?= base_url('index.php/siswa/profilesetting'); ?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                         <li class="divider"></li>
                         <li><a href="<?php echo base_url('index.php/login/logout'); ?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
