@@ -45,7 +45,7 @@ class Register extends MX_Controller {
         $this->form_validation->set_rules('namadepan', 'Nama Depan', 'required');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
         $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
-        $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]');
+        $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]|min_length[5]');
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
 
@@ -53,7 +53,7 @@ class Register extends MX_Controller {
         //pesan error atau pesan kesalahan pengisian form registrasi siswa
         $this->form_validation->set_message('is_unique', '*Nama Pengguna atau email sudah terpakai');
         $this->form_validation->set_message('max_length', '*Nama Pengguna maksimal 12 karakter!');
-        $this->form_validation->set_message('min_length', '*Nama Pengguna minimal 5 karakter!');
+        $this->form_validation->set_message('min_length', '*Inputan minimal 6 karakter!');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
         $this->form_validation->set_message('valid_email', '*silahkan masukan alamat email anda dengan benar');
