@@ -42,6 +42,15 @@ class Mguru extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	public function get_datguru()
+	{
+		$penggunaID=$this->session->userdata['id'] ;	
+		$this->db->select('namaDepan,namaBelakang,alamat,noKontak,mataPelajaranID,biografi');
+		$this->db->from('tb_guru');
+		$this->db->where('penggunaID',$penggunaID); 
+		$query = $this->db->get();
+         return $query->result_array();
+	}
 
 }
 

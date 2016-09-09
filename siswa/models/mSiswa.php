@@ -19,7 +19,7 @@ class Msiswa extends CI_Model
 		$id=$this->session->userdata['id'] ;
 		$this->db->where('id',$id);
 		$this->db->update('tb_pengguna',$data);
-		redirect(site_url('siswa'));
+		
 	}
 
 	public function update_katasandi($data)

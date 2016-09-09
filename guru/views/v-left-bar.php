@@ -27,6 +27,10 @@
        <span class="figure"><i class="ico-file-upload"></i></span>
        <span class="text">Upload Video</span>
    </a>
+    <a href="<?=base_url('index.php/guru/pengaturanProfileGuru') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-file-upload"></i></span>
+       <span class="text">Pengaturan Profile</span>
+   </a>
 
 
   </li>

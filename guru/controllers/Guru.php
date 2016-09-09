@@ -68,10 +68,11 @@ class Guru extends MX_Controller {
         $this->load->view( 'templating/t-footer' );
     }
 
-    public function profileguru() {
+    public function pengaturanProfileguru() {
 
+        $data['guru'] = $this->mguru->get_datguru();
         $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vProfileGuru' );
+        $this->load->view( 'vPengaturanProfileGuru',$data );
         $this->load->view( 'templating/t-footer' );
     }
 
