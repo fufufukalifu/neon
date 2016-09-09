@@ -35,7 +35,8 @@ class Login extends MX_Controller {
                     'id' => $row->id,
                     'USERNAME' => $row->namaPengguna,
                     'HAKAKSES' => $row->hakAkses,
-                    'AKTIVASI' => $row->aktivasi
+                    'AKTIVASI' => $row->aktivasi,
+                    'EMAIL' => $row->eMail 
                 );
                 $this->session->set_userdata($sess_array);
 
@@ -71,6 +72,7 @@ class Login extends MX_Controller {
         $this->session->unset_userdata("HAKAKSES");
         $this->session->unset_userdata('userData');
         $this->session->sess_destroy();
+
         $this->session->set_flashdata('notif', ' Terimakasih sudah belajar bersama kami');
         redirect(site_url('login'));
     }
