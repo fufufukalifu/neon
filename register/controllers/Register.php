@@ -287,12 +287,16 @@ class Register extends MX_Controller {
     }
 
     public function resetpassword() {
-        $this->load->view('templating/t-header');
-        $this->load->view('vResetPassword.php');
-        $this->load->view('templating/t-footer');
+        if (!empty($this->session->userdata['reset_email']) && $this->session->userdata['reset_password'] == '1') {
+            $this->load->view('templating/t-header');
+            $this->load->view('vResetPassword.php');
+            $this->load->view('templating/t-footer');
+        } else {
+            redirect(base_url('index.php/login'));
+        }
     }
 
-    //function untuk mengganti email aktivasi akun
+    //function untuk mengganti password akun
     public function ch_sent_reset() {
         //load library n helper
         $this->load->helper(array('form', 'url'));
@@ -319,10 +323,12 @@ class Register extends MX_Controller {
     }
 
     public function resetdatapassword() {
-        $kode = 
-        $kataSandi = htmlspecialchars(md5($this->input->post('password')));
-        $this->mregister->reset_katasandi();
-        echo $kataSandi;
+        $newpassword = htmlspecialchars(md5($this->input->post('password')));
+        $this->mregister->reset_katasandi($newpassword);
+        $this->session->unset_userdata("reset_email");
+        $this->session->unset_userdata('reset_password');
+        $this->session->set_flashdata('notif', ' Kata sandi mu telah berhasil dirubah');
+        redirect(base_url('index.php/login'));
     }
 
 }

@@ -184,7 +184,8 @@ class Mregister extends CI_Model {
 
         if ($result->num_rows() === 1) {
             if (md5((string) $row->regTime) === $code) {
-                $this->session->set_userdata('id_resetpassword', $code);
+                $this->session->set_userdata('reset_email', $address);
+                $this->session->set_userdata('reset_password', '1');
                 redirect(base_url('index.php/register/resetpassword'));
             } else {
                 redirect(base_url());
@@ -193,9 +194,12 @@ class Mregister extends CI_Model {
             redirect(base_url());
         }
     }
-    
-    public function reset_katasandi() {
-        
+
+    public function reset_katasandi($data) {
+        $email = $this->session->userdata['reset_email'];
+        $this->db->where('eMail', $email);
+        $this->db->set('kataSandi', $data);
+        $this->db->update('tb_pengguna');
     }
 
 }
