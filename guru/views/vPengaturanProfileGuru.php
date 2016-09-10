@@ -8,13 +8,15 @@
     $mataPelajaranID = $row['mataPelajaranID'];
     $biografi = $row['biografi'];
     $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
-} 
+} ;
+
 ?>           
 <!-- START Template Main -->
-<section id="main" role="main">
+<section id="main" role="main" class="mt10">
 
     <!-- START Template Container -->
-    <div class="container">
+
+    <div class="container-fluid" >
         <!-- Page Header -->
         <div class="page-header page-header-block">
             <div class="page-header-section">
@@ -106,7 +108,7 @@
                                     <label class="col-sm-3 control-label">Matapelajaran</label>
                                     <div class="col-sm-6">
                                       <select class="form-control" name="mataPelajaran" >
-                                        <option >-Pilih Matapelajaragn-</option>
+                                        <option value="<?=$mataPelajaranID;?>">-Pilih Matapelajaragn-</option>
                                         <?php 
                                         foreach ($mataPelajaran as $row) {
                                             $id = $row['id'];

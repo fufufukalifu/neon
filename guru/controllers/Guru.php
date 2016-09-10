@@ -80,13 +80,14 @@ class Guru extends MX_Controller {
         $this->load->view( 'vProfileGuru' );
         $this->load->view( 'templating/t-footer' );
     }
-
+    //untuk menampilkan form updt guru
     public function pengaturanProfileguru() {
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['guru'] = $this->mguru->get_datguru();
+        $this->load->view('templating/t-footer-back');
+        $this->load->view('guru/v-left-bar');
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'vPengaturanProfileGuru',$data );
-        $this->load->view( 'templating/t-footer' );
     }
 
     public function ubahprofileguru() {
@@ -109,7 +110,7 @@ class Guru extends MX_Controller {
         $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
 
 
-
+        //pengecekan inputan / pengisian form
         if ( $this->form_validation->run() == FALSE ) {
 
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
@@ -120,7 +121,7 @@ class Guru extends MX_Controller {
         } else {
             $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
             $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );
-            $mataPelajaran = htmlspecialchars( $this->input->post( 'mtpelajaran' ) );
+            $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
             $alamat = htmlspecialchars( $this->input->post( 'alamat' ) );
             $noKontak = htmlspecialchars( $this->input->post( 'nokontak' ) );
             $biografi = htmlspecialchars( $this->input->post( 'biografi' ) );
@@ -129,7 +130,7 @@ class Guru extends MX_Controller {
             $data_post = array(
                 'namaDepan' => $namaDepan,
                 'namaBelakang' => $namaBelakang,
-                'mataPelajaran' => $mataPelajaran,
+                'mataPelajaranID' =>$mataPelajaranID,
                 'alamat' => $alamat,
                 'noKontak' => $noKontak,
                 'biografi' => $biografi,

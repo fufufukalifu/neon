@@ -3,14 +3,13 @@
 
 class Mguru extends CI_Model
 {
-	#Start function pengaturan Profile#
+	#Start function pengaturan Profile untuk update ke db#
 	public function update_guru( $data ) {
 		$penggunaID=$this->session->userdata['id'] ;
 		$this->db->where( 'penggunaID', $penggunaID );
 		$this->db->update( 'tb_guru', $data );
 		redirect(site_url('guru/dashboard'));
 	}
-
 
 	public function update_email($data)
 	{
@@ -39,7 +38,7 @@ class Mguru extends CI_Model
 		$this->db->update('tb_guru',$data);
 		redirect(site_url('guru/dashboard'));
 	}
-	#END function pengaturan Profile#
+	#END function pengaturan Profile untuk update ke db#
 
 	public function get_single_guru( $data ) {
 		$this->db->select( '*' );
@@ -57,6 +56,9 @@ class Mguru extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	//function untuk mengambil data guru di gunakan untuk menset 
+	//data guru ke form pengaturan profil/akun guru
 	public function get_datguru()
 	{
 		$penggunaID=$this->session->userdata['id'] ;	

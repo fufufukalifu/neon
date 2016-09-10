@@ -22,6 +22,7 @@ class Siswa extends MX_Controller {
         $this->load->view( 'templating/t-navbarUser' );
         $this->load->view( 'vPengaturanProfile', $data );
         $this->load->view( 'templating/t-footer' );
+        
     }
 
     public function index() {

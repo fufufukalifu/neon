@@ -263,7 +263,6 @@ class Register extends MX_Controller
     public function resend_mail()
     {   
 
-        var_dump($sess_array);
         $this->mregister->send_verifikasi_email();
         redirect(site_url('register/verifikasi'));
 
