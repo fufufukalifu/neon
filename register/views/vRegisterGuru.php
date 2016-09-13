@@ -121,8 +121,8 @@
                                          <div class="col-md-12 form-group">
                                              <label class="control-label">Mata Pelajaran</label>
                                              <div class="has-icon pull-left">
-                                                <select class="form-control" name="mataPelajaran" >
-                                                <option >-Pilih Matapelajaragn-</option>
+                                                <select class="form-control"  name="mataPelajaran">
+                                                <option value>-Pilih Matapelajaragn-</option>
                                                     <?php 
                                                     foreach ($mataPelajaran as $row) {
                                                         $id = $row['id'];
@@ -135,7 +135,7 @@
                                                     ?> 
 
                                                 </select>
-
+                                                <span class="text-danger"> <?php echo form_error('mataPelajaran'); ?></span>
                                             </div>
 
                                         </div>

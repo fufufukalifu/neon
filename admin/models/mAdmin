@@ -1,0 +1,13 @@
+<?php
+
+
+class Madmin extends CI_Model
+{
+
+	
+	public function update_guru(  ) {
+		echo "masuk model";
+	}
+}
+
+?>

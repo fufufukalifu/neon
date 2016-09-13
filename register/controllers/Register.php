@@ -121,7 +121,7 @@ class Register extends MX_Controller {
 // function untuk menampung data dari form kemudian di lempar 
 // ke function insert_guru dan insert_pengguna di kelas model Mregister
     public function saveguru() {
-//load library n helper
+// load library n helper
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
@@ -131,11 +131,12 @@ class Register extends MX_Controller {
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
         $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
         $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|min_length[6]|matches[passconf]');
+        $this->form_validation->set_rules('mataPelajaran', 'mataPelajaran', 'required');
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|is_unique[tb_pengguna.email]');
 
 
-//pesan error atau pesan kesalahan pengisian form registrasi guru
+// //pesan error atau pesan kesalahan pengisian form registrasi guru
         $this->form_validation->set_message('namapengguna', 'is_unique', '*Nama Pengguna sudah terpakai');
         $this->form_validation->set_message('is_unique', 'email', '*Email sudah terpakai');
         $this->form_validation->set_message('is_unique', '*Nama Pengguna sudah terpakai');
@@ -145,15 +146,17 @@ class Register extends MX_Controller {
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
 
 
+        
 
         if ($this->form_validation->run() == FALSE) {
+            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
             $this->load->view('templating/t-header');
-            $this->load->view('vRegisterGuru');
+            $this->load->view('vRegisterGuru', $data);
         } else {
 //data guru
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-            $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
+            // $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
             $alamat = htmlspecialchars($this->input->post('alamat'));
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
@@ -275,9 +278,10 @@ class Register extends MX_Controller {
             $this->load->view('templating/t-footer');
         } else {
             $email = htmlspecialchars($this->input->post('email'));
-            var_dump($email);
             $this->mregister->update_email_ak($email);
             $this->mregister->send_verifikasi_email();
+            redirect(site_url('register/verifikasi'));
+
         }
     }
 
