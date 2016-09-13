@@ -123,7 +123,7 @@
                 <h3 class="font-alt text-white mt0">Ajak teman temanmu untuk ikut tes online bersama sama.</h3>
             </div>
             <div class="col-sm-3 clearfix">
-                <a href="javascript:void(0);" class="btn btn-outline btn-default text-white pull-right semibold">DAFTAR</a>
+                <a href="<?= base_url('index.php/register'); ?>" class="btn btn-outline btn-default text-white pull-right semibold">DAFTAR</a>
             </div>
         </div>
     </section>

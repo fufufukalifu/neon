@@ -31,7 +31,7 @@ class Welcome extends MX_Controller {
         $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
 
 
-        $this->load->view('templating/t-sessionKonfirm');
+        $this->load->view('templating/t-sessionkonfirm');
         $this->load->view('templating/t-sessionSiswa');
         $this->load->view('templating/t-header');
         $this->load->view('templating/t-navbarUser');
