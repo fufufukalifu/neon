@@ -153,7 +153,7 @@
                                         <div class="col-md-12 form-group">
                                             <label class="control-label">No Kontak</label>
                                             <div class="has-icon pull-left">
-                                                <input type="text" class="form-control" name="nokontak" value="<?php echo set_value('nokontak'); ?>" data-parsley-required>
+                                                <input type="number" class="form-control" name="nokontak" value="<?php echo set_value('nokontak'); ?>" data-parsley-required>
                                                 <i class="ico-phone3 form-control-icon"></i>
                                                 <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
                                                 <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
