@@ -62,9 +62,9 @@ class Register extends MX_Controller {
 //pengecekan pengisian form regitrasi siswa
         if ($this->form_validation->run() == FALSE) {
 //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-             $this->load->view('templating/t-header');
-             $this->load->view('vRegisterSiswa');
-             $this->load->view('templating/t-footer');
+            $this->load->view('templating/t-header');
+            $this->load->view('vRegisterSiswa');
+            $this->load->view('templating/t-footer');
         } else {
 
 //data siswa
@@ -113,11 +113,11 @@ class Register extends MX_Controller {
             );
 //data unutk session siswa
             $sess_array = array(
-                    'id' => $penggunaID,
-                    'USERNAME' => $namaPengguna,
-                    'HAKAKSES' => $hakAkses,
-                    'eMail'    => $email
-                );
+                'id' => $penggunaID,
+                'USERNAME' => $namaPengguna,
+                'HAKAKSES' => $hakAkses,
+                'eMail' => $email
+            );
 //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $sess_array);
             redirect(site_url('register/verifikasi'));
@@ -152,7 +152,7 @@ class Register extends MX_Controller {
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
 
 
-        
+
 
         if ($this->form_validation->run() == FALSE) {
             $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
@@ -200,14 +200,14 @@ class Register extends MX_Controller {
             );
 //data unutk session guru
             $sess_array = array(
-                    'id' => $penggunaID,
-                    'USERNAME' => $namaPengguna,
-                    'HAKAKSES' => $hakAkses,
-                    'eMail'    => $email
-                );
+                'id' => $penggunaID,
+                'USERNAME' => $namaPengguna,
+                'HAKAKSES' => $hakAkses,
+                'eMail' => $email
+            );
 
 //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_guru($data_guru, $sess_array );
+            $data['mregister'] = $this->mregister->insert_guru($data_guru, $sess_array);
             redirect(site_url('register/verifikasi'));
         }
     }
@@ -245,12 +245,12 @@ class Register extends MX_Controller {
                 } elseif ($hakAkses == 'siswa') {
                     redirect(site_url('welcome'));
                 } else {
-                    echo 'tidak ada hak akses';
+                    redirect(site_url(''));
                 }
             }
             return TRUE;
         } else {
-            echo 'gagal login';
+            redirect(site_url(''));
             return FALSE;
         }
     }
@@ -261,7 +261,6 @@ class Register extends MX_Controller {
         $this->load->view('vVerifikasi.php');
         $this->load->view('templating/t-footer');
     }
-
 
 //function untuk mengirim urang aktivasi ke email
     public function resend_mail() {
@@ -294,7 +293,6 @@ class Register extends MX_Controller {
             $this->mregister->update_email_ak($email);
             $this->mregister->send_verifikasi_email();
             redirect(site_url('register/verifikasi'));
-
         }
     }
 
