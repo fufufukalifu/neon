@@ -111,7 +111,7 @@ class Register extends MX_Controller {
                 'alamatSekolah' => $alamatSekolah,
                 'penggunaID' => $penggunaID,
             );
-//data unutk session guru
+//data unutk session siswa
             $sess_array = array(
                     'id' => $penggunaID,
                     'USERNAME' => $namaPengguna,
