@@ -2,17 +2,16 @@
 
 class Mregister extends CI_Model {
 
-    private $verifikasiCode; //menampung code verifikasi email  
 
     //merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
 
-    public function insert_guru($data_guru, $data_akun) {
+    public function insert_guru($data_guru, $sess_array ) {
         $this->db->insert('tb_guru', $data_guru);
 
         if ($this->db->affected_rows() === 1) {
             $penggunaID = $data_guru['penggunaID'];
             $this->set_verifikasicode($penggunaID);
-            $this->session->set_userdata($data_akun);
+            $this->session->set_userdata($sess_array);
             $this->send_verifikasi_email();
         } else {
             echo"masuk else"; //for testign
@@ -26,13 +25,13 @@ class Mregister extends CI_Model {
     }
 
     //merupakan function untuk menyimpan data guru ke tabel siswa di databse netjoo  
-    public function insert_siswa($data_siswa, $data_akun) {
+    public function insert_siswa($data_siswa, $sess_array) {
         $this->db->insert('tb_siswa', $data_siswa);
 
         if ($this->db->affected_rows() === 1) {
             $penggunaID = $data_siswa['penggunaID'];
             $this->set_verifikasicode($penggunaID);
-            $this->session->set_userdata($data_akun);
+            $this->session->set_userdata($$sess_array);
             $this->send_verifikasi_email();
             // redirect(base_url('index.php/register/verifikasiemail'));
         } else {
@@ -53,14 +52,20 @@ class Mregister extends CI_Model {
         $sql = "SELECT regTime FROM tb_pengguna WHERE id= '" . $penggunaID . "'";
         $result = $this->db->query($sql);
         $row = $result->row();
-        $this->verifikasiCode = md5((string) $row->regTime);
+        $verifikasiCode = md5((string) $row->regTime);
+         $sess_array = array(
+                    'verifikasiCode' => $verifikasiCode,
+                );
+         $this->session->set_userdata($sess_array);
+
+         
     }
 
     // function untuk mengirim code verifikasi email ke email user/siswa 
     public function send_verifikasi_email() {
 
         $this->load->library('email'); // load email library
-        $verifikasiCode = $this->verifikasiCode;
+        $verifikasiCode = $this->session->userdata['verifikasiCode'];
         $address = $this->session->userdata['eMail'];
         $this->email->from('noreply@sibejooclass.com', 'Netjoo');
         $this->email->to($address);

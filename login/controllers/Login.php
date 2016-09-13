@@ -31,12 +31,14 @@ class Login extends MX_Controller {
 
                 $hakAkses = $row->hakAkses;
                 //membuat session
+                $verifikasiCode=md5($row->regTime);
                 $sess_array = array(
                     'id' => $row->id,
                     'USERNAME' => $row->namaPengguna,
                     'HAKAKSES' => $row->hakAkses,
                     'AKTIVASI' => $row->aktivasi,
-                    'eMail'    => $row->eMail
+                    'eMail'    => $row->eMail,
+                    'verifikasiCode' =>$verifikasiCode,
                 );
                 $this->session->set_userdata($sess_array);
 

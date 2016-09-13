@@ -62,9 +62,9 @@ class Register extends MX_Controller {
 //pengecekan pengisian form regitrasi siswa
         if ($this->form_validation->run() == FALSE) {
 //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-            $this->load->view('templating/t-header');
-            $this->load->view('vRegisterGuru', $data);
+             $this->load->view('templating/t-header');
+             $this->load->view('vRegisterSiswa');
+             $this->load->view('templating/t-footer');
         } else {
 
 //data siswa
@@ -111,9 +111,15 @@ class Register extends MX_Controller {
                 'alamatSekolah' => $alamatSekolah,
                 'penggunaID' => $penggunaID,
             );
-
+//data unutk session guru
+            $sess_array = array(
+                    'id' => $penggunaID,
+                    'USERNAME' => $namaPengguna,
+                    'HAKAKSES' => $hakAkses,
+                    'eMail'    => $email
+                );
 //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $data_akun);
+            $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $sess_array);
             redirect(site_url('register/verifikasi'));
         }
     }
@@ -156,7 +162,7 @@ class Register extends MX_Controller {
 //data guru
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-            // $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
+            $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
             $alamat = htmlspecialchars($this->input->post('alamat'));
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
@@ -192,9 +198,16 @@ class Register extends MX_Controller {
                 'mataPelajaranID' => $mataPelajaranID,
                 'penggunaID' => $penggunaID,
             );
+//data unutk session guru
+            $sess_array = array(
+                    'id' => $penggunaID,
+                    'USERNAME' => $namaPengguna,
+                    'HAKAKSES' => $hakAkses,
+                    'eMail'    => $email
+                );
 
 //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_guru($data_guru, $data_akun);
+            $data['mregister'] = $this->mregister->insert_guru($data_guru, $sess_array );
             redirect(site_url('register/verifikasi'));
         }
     }
