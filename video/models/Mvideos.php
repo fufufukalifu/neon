@@ -107,5 +107,16 @@ class Mvideos extends CI_Model
     $this->db->update( 'tb_video', $data );
 
   }
+
+  function get_all_videos_admin() {
+    $this->db->select( '*, video.id as videoID' );
+    $this->db->from( 'tb_video video' );
+    $this->db->join('tb_guru guru', 'guru.id=video.guruID');
+    $this->db->where('video.status', '0');
+    $query = $this->db->get();
+    return $query->result();
+
+  }
+
 }
 ?>

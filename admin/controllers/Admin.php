@@ -8,22 +8,26 @@ class Admin extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
-         // $this->load->model( 'madmin' );
-        // $this->load->model( 'guru/mguru' );
-       
-
-
-    }
-
-    public function index  ()
-    {
-        echo "masuk admin";
-         $this->load->view( 'templating/t-header' );
+        $this->load->model('video/mvideos');
         
+        }
+
+    public function index() {
+        echo "masuk admin";
+        $this->load->view( 'templating/t-header' );
         $this->load->view( 'v-left-bar-admin' );
     }
 
+    function daftarvideo() {
+        $data['videos'] = $this->mvideos->get_all_videos_admin();
+       $this->load->view( 'templating/t-header' );
 
+        $this->load->view( 'v-left-bar-admin' );
+        $this->load->view('v-daftar-video',$data);
+    }
 
+    function semuavideo(){
+        
+    }
 }
 ?>

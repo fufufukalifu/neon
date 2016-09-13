@@ -7,6 +7,7 @@ class videoBack extends MX_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->helper('session');
         $this->load->model('MvideoBack');
         $this->load->library('table');
         $this->load->model('video/mvideos');

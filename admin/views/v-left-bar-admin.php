@@ -22,22 +22,35 @@
 
     <a href="<?=base_url('index.php/register/registerguru') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-file-upload"></i></span>
-       <span class="text">register Guru</span>
+       <span class="text">Registrasi Guru</span>
    </a>
 
    <a href="<?=base_url('index.php/') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-file-upload"></i></span>
-       <span class="text">List Akun Guru</span>
+       <span class="text">Daftar Akun Guru</span>
+  
    </a>
       <a href="<?=base_url('index.php/') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-file-upload"></i></span>
-       <span class="text">List Akun Siswa</span>
+       <span class="text">Daftar Akun Siswa</span>
    </a>
 
+    </a>
+      <a href="<?=base_url('index.php/admin/daftarvideo') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-file-upload"></i></span>
+       <span class="text">Unpublished Video</span>
+   </a>
+
+   <a href="<?=base_url('index.php/admin/semuavideo') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
+       <span class="figure"><i class="ico-file-upload"></i></span>
+       <span class="text">Pengaturan Profile </span>
+   </a>
+   
     <a href="<?=base_url('index.php/guru/pengaturanProfileGuru') ?>" data-toggle="submenu" data-target="#chart" data-parent=".topmenu">
        <span class="figure"><i class="ico-file-upload"></i></span>
        <span class="text">Pengaturan Profile </span>
    </a>
+
 
 
   </li>
