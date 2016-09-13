@@ -167,7 +167,6 @@ class Login extends MX_Controller {
             return TRUE;
         }
     }
-
 }
 
 ?>

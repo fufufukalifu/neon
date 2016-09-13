@@ -126,22 +126,80 @@ class Mregister extends CI_Model {
     }
 
     //function untuk merubah aktivasi email
-    public function update_email_ak($email)
-    {   
-        $id=$this->session->userdata['id'];
-        $this->db->where('id',$id);
-        $this->db->set('eMail',$email);
+    public function update_email_ak($email) {
+        $id = $this->session->userdata['id'];
+        $this->db->where('id', $id);
+        $this->db->set('eMail', $email);
         $this->db->update('tb_pengguna');
-        $sess_array = array( 'eMail'    => $email);
+        $sess_array = array('eMail' => $email);
         $this->session->set_userdata($sess_array);
-
     }
+
     //function unutk dropdown mata pelajran
-    public function get_matapelajaran()
-    {
+    public function get_matapelajaran() {
         $this->db->select('id,aliasMataPelajaran')->from('tb_mata-pelajaran');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function send_reset_email($email) {
+        $this->set_resetcode($email);
+        $this->load->library('email'); // load email library
+        $verifikasiCode = $this->verifikasiCode;
+        $address = $email;
+        $this->email->from('noreply@sibejooclass.com', 'Netjoo');
+        $this->email->to($address);
+        $this->email->subject('Reset Password');
+        $message = '<html><meta/><head/><body>';
+        $message .='<p> Permintaan reset password telah diproses,</p>';
+        $message .='<p>Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasiPassword/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk melakukan reset password akun anda. </p>';
+        $message .= '<p>Terimakasih</p>';
+        $message .= '<p>Netjoo</p>';
+        $message .= '</body></html>';
+        $this->email->message($message);
+        if ($this->email->send())
+            echo "Mail Sent!"; //untuk testing
+        else
+            echo "There is error in sending mail!"; //untuk testing
+    }
+
+    private function set_Resetcode($email) {
+        $this->db->select('regTime');
+        $this->db->from('tb_pengguna');
+        $this->db->where('eMail', $email);
+        $this->db->limit(1);
+
+        $result = $this->db->get();
+        $row = $result->row();
+        $this->verifikasiCode = md5((string) $row->regTime);
+    }
+
+    public function verifikasi_password($address, $code) {
+        $this->db->select('regTime');
+        $this->db->from('tb_pengguna');
+        $this->db->where('eMail', $address);
+        $this->db->limit(1);
+        $result = $this->db->get();
+        $row = $result->row();
+
+        if ($result->num_rows() === 1) {
+            if (md5((string) $row->regTime) === $code) {
+                $this->session->set_userdata('reset_email', $address);
+                $this->session->set_userdata('reset_password', '1');
+                redirect(base_url('index.php/register/resetpassword'));
+            } else {
+                redirect(base_url());
+            }
+        } else {
+            redirect(base_url());
+        }
+    }
+
+    public function reset_katasandi($data) {
+        $email = $this->session->userdata['reset_email'];
+        $this->db->where('eMail', $email);
+        $this->db->set('kataSandi', $data);
+        $this->db->update('tb_pengguna');
     }
 
 }
