@@ -6,7 +6,7 @@ class Register extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('mregister');
-        $this->load->model('siswa/Msiswa');
+        $this->load->model('siswa/msiswa');
     }
 
 // function untuk menampikan halam pertama saat registrasi
