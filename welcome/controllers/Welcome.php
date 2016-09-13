@@ -29,7 +29,7 @@ class Welcome extends MX_Controller {
         $data['pelajaran_smk'] = $this->load->Mmatapelajaran->get_pelajaran_smk();
         $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
         $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
-var_dump($sess_array);
+
 
         $this->load->view('templating/t-sessionKonfirm');
         $this->load->view('templating/t-sessionSiswa');

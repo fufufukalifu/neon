@@ -7,11 +7,14 @@ class Guru extends MX_Controller {
     private $idGuru;
 
     public function __construct() {
+        $this->load->helper( 'session' );
         parent::__construct();
         $this->load->model( 'mguru' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
         $this->load->model( 'register/mregister' );
+        sessionkonfirm();
+        get_session_guru();
 
     }
 
@@ -35,8 +38,6 @@ class Guru extends MX_Controller {
     public function videobyteacher() {
         $this->setGuruId();
         $guru_id = $this->getGuruId();
-
-
         $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher( $guru_id );
         //var_dump($data);
         //untuk mengambil data guru

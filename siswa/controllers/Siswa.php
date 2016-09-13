@@ -9,15 +9,14 @@ class Siswa extends MX_Controller {
         parent::__construct();
         $this->load->model( 'msiswa' );
         $this->load->helper( 'session' );
-
+        sessionkonfirm();
+        get_session_siswa();
     }
 
     //
 
     public function profilesetting() {
         $data['siswa'] = $this->msiswa->get_datsiswa();
-        sessionkonfirm();
-        sessionsiswa();
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'templating/t-navbarUser' );
         $this->load->view( 'vPengaturanProfile', $data );
@@ -27,8 +26,6 @@ class Siswa extends MX_Controller {
 
     public function index() {
         $data['siswa'] = $this->msiswa->get_datsiswa();
-        sessionkonfirm();
-        sessionsiswa();
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'templating/t-navbarUser' );
         $this->load->view( 't-profile-siswa', $data );
@@ -39,8 +36,6 @@ class Siswa extends MX_Controller {
     //menampilkan halaman pengaturan profile
     public function PengaturanProfile() {
         $data['tb_siswa'] = $this->msiswa->get_datsiswa();
-        sessionkonfirm();
-        sessionsiswa();
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'templating/t-navbarUser' );
         $this->load->view( 'vPengaturanProfile', $data );
@@ -68,8 +63,6 @@ class Siswa extends MX_Controller {
 
         if ( $this->form_validation->run() == FALSE ) {
             $data['siswa'] = $this->msiswa->get_datsiswa();
-            sessionkonfirm();
-            sessionsiswa();
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'vPengaturanProfile', $data );
@@ -155,8 +148,6 @@ class Siswa extends MX_Controller {
 
         if ( $this->form_validation->run() == FALSE ) {
             $data['siswa'] = $this->msiswa->get_datsiswa();
-            sessionkonfirm();
-            sessionsiswa();
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'vPengaturanProfile', $data );
@@ -191,8 +182,6 @@ class Siswa extends MX_Controller {
 
             $data['error'] = array( 'error' => $this->upload->display_errors() );
             $data['siswa'] = $this->msiswa->get_datsiswa();
-            sessionkonfirm();
-            sessionsiswa();
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser' );
             $this->load->view( 'vPengaturanProfile', $data );
