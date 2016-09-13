@@ -37,24 +37,25 @@ insert  into `tb_bab`(`id`,`judulBab`,`keterangan`,`status`,`tingkatPelajaranID`
 
 CREATE TABLE `tb_guru` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(200) NOT NULL,
   `namaDepan` varchar(32) NOT NULL,
   `namaBelakang` varchar(32) DEFAULT NULL,
-  `mataPelajaran` varchar(32) NOT NULL,
   `alamat` text,
   `noKontak` varchar(15) DEFAULT NULL,
   `penggunaID` int(10) DEFAULT NULL,
   `mataPelajaranID` int(10) DEFAULT NULL,
   `biografi` text,
+  `photo` varchar(32) DEFAULT 'default.jpg',
   `status` char(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `penggunaID` (`penggunaID`),
   KEY `a` (`mataPelajaranID`),
   CONSTRAINT `tb_guru_ibfk_2` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_guru_ibfk_3` FOREIGN KEY (`mataPelajaranID`) REFERENCES `tb_mata-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_guru` */
+
+insert  into `tb_guru`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`penggunaID`,`mataPelajaranID`,`biografi`,`photo`,`status`) values (1,'guru','guru belakang',NULL,NULL,4,1,NULL,'default.png','1'),(2,'Guru 2','Belakang','bandung','0923-123',8,3,NULL,'default.png','1'),(3,'',NULL,NULL,NULL,NULL,NULL,NULL,'default.png','1');
 
 /*Table structure for table `tb_komen` */
 
@@ -69,9 +70,11 @@ CREATE TABLE `tb_komen` (
   KEY `tb_komen_ibfk_2` (`userID`),
   CONSTRAINT `tb_komen_ibfk_1` FOREIGN KEY (`videoID`) REFERENCES `tb_video` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `tb_komen_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_pengguna` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_komen` */
+
+insert  into `tb_komen`(`id`,`isiKomen`,`timestampe`,`videoID`,`userID`) values (1,'comment','2016-09-09 12:55:43',9,3);
 
 /*Table structure for table `tb_mata-pelajaran` */
 
@@ -103,11 +106,11 @@ CREATE TABLE `tb_pengguna` (
   `status` char(1) DEFAULT '1',
   `last_akses` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_pengguna` */
 
-insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','2016-08-26 13:01:29','1',NULL,NULL,NULL,'user','1','2016-09-08 21:47:20'),(3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(4,'guru','77e69c137812518e359196bb2f5e9bb9','','2016-09-05 14:18:38','1',NULL,NULL,NULL,'guru','1','2016-09-08 21:47:20'),(5,NULL,NULL,'opik.sutisna@mail.unpas.ac.id','2016-09-08 21:47:25','1',NULL,'1875070992721359','facebook','siswa','1','2016-09-08 17:06:57'),(6,'fufufukalifu','21232f297a57a5a743894a0e4a801fc3','op.sutisna@gmail.com','2016-09-08 21:57:31','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:57:31');
+insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','2016-08-26 13:01:29','1',NULL,NULL,NULL,'user','1','2016-09-08 21:47:20'),(3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(4,'guru','77e69c137812518e359196bb2f5e9bb9','','2016-09-05 14:18:38','1',NULL,NULL,NULL,'guru','1','2016-09-08 21:47:20'),(5,NULL,NULL,'opik.sutisna@mail.unpas.ac.id','2016-09-08 21:47:25','1',NULL,'1875070992721359','facebook','siswa','1','2016-09-09 08:02:58'),(6,'fufufukalifu','21232f297a57a5a743894a0e4a801fc3','op.sutisna@gmail.com','2016-09-08 21:57:31','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:57:31'),(7,'enammm','a8c71f9b5cf41a482b1185480932db3b','hersuss.sibejoo@gmail.com','2016-09-09 12:59:48','1',NULL,NULL,NULL,'siswa','1','2016-09-09 12:59:48'),(8,'guru2','77e69c137812518e359196bb2f5e9bb9','you@mail.unpas.ac.id','2016-09-09 13:46:45','1',NULL,NULL,NULL,'guru','1','2016-09-09 13:46:45');
 
 /*Table structure for table `tb_siswa` */
 
@@ -121,15 +124,17 @@ CREATE TABLE `tb_siswa` (
   `alamatSekolah` text NOT NULL,
   `noKontakSekolah` int(15) NOT NULL,
   `penggunaID` int(10) DEFAULT NULL,
-  `photo` varchar(32) DEFAULT NULL,
+  `photo` varchar(32) DEFAULT 'default.jpg',
   `biografi` text,
   `status` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `penggunaID` (`penggunaID`),
   CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_siswa` */
+
+insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`status`) values (1,'Nama Depan','Nama Belakang','','234092384','SMK MedikaCom','Jln.Cibaduyut raya 287',0,3,'default.png','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.','1'),(2,'nama depan','nama belakang','alamat saya','dfakdjafkl','s.dki','dfd',0,7,'default.png',NULL,'');
 
 /*Table structure for table `tb_subbab` */
 

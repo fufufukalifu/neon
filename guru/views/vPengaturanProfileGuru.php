@@ -13,10 +13,11 @@
 ?>           
 <!-- START Template Main -->
 <section id="main" role="main" class="mt10">
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10" style="margin:-19px">
+         <!-- START Template Container -->
 
-    <!-- START Template Container -->
-
-    <div class="container-fluid" >
         <!-- Page Header -->
         <div class="page-header page-header-block">
             <div class="page-header-section">
@@ -241,8 +242,6 @@
     </div>
     <!--/ tab-pane: email -->
 
-
-
     <!-- tab-pane: katasandi -->
     <div class="tab-pane" id="password">
         <!-- form password -->
@@ -290,12 +289,14 @@
 <!--/ Left / Bottom Side -->
 </div>
 <!--/ END row -->
-</div>
 <!--/ END Template Container -->
 
 <!-- START To Top Scroller -->
 <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
 <!--/ END To Top Scroller -->
+    </div>
+</div>
+   
 
 </section>
         <!--/ END Template Main -->
