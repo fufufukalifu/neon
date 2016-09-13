@@ -12,12 +12,11 @@
 
 ?>           
 <!-- START Template Main -->
-<section id="main" role="main" class="mt10">
+<section id="main" role="main">
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10" style="margin:-19px">
+    <div class="col-md-3" style="margin:0"></div>
+    <div class="col-md-9" style="margin-left:-100px">
          <!-- START Template Container -->
-
         <!-- Page Header -->
         <div class="page-header page-header-block">
             <div class="page-header-section">
