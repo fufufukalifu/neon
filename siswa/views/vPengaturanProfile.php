@@ -9,8 +9,13 @@
             $namaSekolah = $row['namaSekolah'];
             $alamatSekolah  = $row['alamatSekolah']; 
             $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
+            $oldphoto=$row['photo'];
         } ;
      ?>           
+
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
         <!-- START Template Main -->
         <section id="main" role="main">
 
@@ -165,7 +170,7 @@
                             <!-- tab-pane: phto -->
                             <div class="tab-pane" id="photo">
                                 <!-- form photo -->
-                                <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/siswa/upload" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                                <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/siswa/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                                     <div class="panel-body pt0 pb0">
                                         <div class="form-group header bgcolor-default">
                                             <div class="col-md-12">

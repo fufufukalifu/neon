@@ -7,10 +7,14 @@
     $noKontak = $row['noKontak'];
     $mataPelajaranID = $row['mataPelajaranID'];
     $biografi = $row['biografi'];
-    $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
+    $photo=base_url().'assets/image/photo/guru/'.$row['photo'];
+    $oldphoto=$row['photo'];
 } ;
 
 ?>           
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
 <!-- START Template Main -->
 <section id="main" role="main">
 <div class="row">
@@ -54,6 +58,7 @@
                 <ul class="list-table">
                     <li style="width:70px;">
                         <img class="img-circle img-bordered" src="<?=$photo;?>" alt="" width="65px">
+              
                     </li>
                     <li class="text-left">
                         <h5 class="semibold ellipsis mt0"><?=$this->session->userdata['USERNAME'] ;?></h5>
@@ -173,7 +178,7 @@
         <!-- tab-pane: phto -->
         <div class="tab-pane" id="photo">
             <!-- form photo -->
-            <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/guru/upload" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+            <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/guru/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                 <div class="panel-body pt0 pb0">
                     <div class="form-group header bgcolor-default">
                         <div class="col-md-12">
