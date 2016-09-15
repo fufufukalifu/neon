@@ -22,7 +22,7 @@ class Video extends MX_Controller {
         $this->load->view( 'templating/t-footer' );
     }
 
-    //halaman tampilkan sub bab dan video
+    //halaman tampilkan sub bab dan see
     public function videosub( $id_sub_bab, $id_video=null ) {
         //digunakan untuk semua video
         $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
@@ -128,7 +128,7 @@ class Video extends MX_Controller {
                     $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
             //ambil komen berdasarkan id video
                     $data['komen']=$this->load->mKomen->get_komen_byvideo( $idvideo );
-                    var_dump( $data['komen'] );
+                    //var_dump( $data['komen'] );
                     $this->load->view( 'templating/t-header' );
                     $this->load->view( 'templating/t-navbarUser' );
                     $this->load->view( 'v-banner-videoBelajar', $data );
