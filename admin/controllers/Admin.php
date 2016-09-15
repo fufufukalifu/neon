@@ -9,6 +9,7 @@ class Admin extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('video/mvideos');
+        $this->load->library('parser');
         
         }
 
@@ -26,10 +27,15 @@ class Admin extends MX_Controller {
         $this->load->view('v-daftar-video',$data);
     }
 
-    function semuavideo(){
-      $data['views']=$this->loadcontainer();
-        $this->load->view( 'v-index-admin',$data );
+    function cobatemplating(){
+        $data = array(
+        'judul_halaman' => 'Dashboard Admin'
+        );
+        $data['file'] = 'v-container.php';
+
+        $this->parser->parse('v-index-admin', $data);
     }
+
     function loadcontainer(){
         return $this->load->view( 'v-container');
     }
