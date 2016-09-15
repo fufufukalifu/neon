@@ -46,12 +46,11 @@
 							<li>
 								<!-- Alert message -->
 								<div class="alert alert-warning">
-									<span class="semibold">Info :</span>&nbsp;&nbsp;Kami sudah mengirimkan kode aktivasi. Silahkan cek email Anda. 
-									<a href="<?=base_url('index.php/register/resend_mail/');?>">Kirim ulang email ?</a>
+									<span class="semibold">Info :</span>&nbsp;&nbsp; Kode aktivasi telah dikirim ke emailmu. Silahkan cek email. 
+									<a href="<?=base_url('index.php/register/resend_mail/');?>"> Tidak terkirim? Kirim ulang email </a>
 								</div>
 								<!--/ Alert message -->
 							</li>
-							<li class="text-right" style="width:20px;"><a href="javascript:void(0);"><i class="ico-question-sign fsize16"></i></a></li>
 						</ul>
 
 
@@ -59,7 +58,7 @@
 
 						<!-- Star form konfirmasi akun by email -->
 						<div class="panel-body">
-							<p class="semibold text-muted">Jika verivikasi tidak terkirim di email anda silahkan ganti email di form di bawah ini: </p>
+							<p class="semibold text-muted">Jika email verifikasi tidak terkirim, masukan kembali emailmu dengan benar?</p>
 							<div class="form-group">
 								<label class="control-label">Email</label>
 								<div class="has-icon pull-left">

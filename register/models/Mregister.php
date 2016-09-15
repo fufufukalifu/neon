@@ -2,10 +2,9 @@
 
 class Mregister extends CI_Model {
 
-
     //merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
 
-    public function insert_guru($data_guru, $sess_array ) {
+    public function insert_guru($data_guru, $sess_array) {
         $this->db->insert('tb_guru', $data_guru);
 
         if ($this->db->affected_rows() === 1) {
@@ -14,7 +13,7 @@ class Mregister extends CI_Model {
             $this->session->set_userdata($sess_array);
             $this->send_verifikasi_email();
         } else {
-            echo"masuk else"; //for testign
+//            echo"masuk else"; //for testign
         }
     }
 
@@ -35,7 +34,7 @@ class Mregister extends CI_Model {
             $this->send_verifikasi_email();
             // redirect(base_url('index.php/register/verifikasiemail'));
         } else {
-            echo"masuk else";
+//            echo"masuk else";
         }
     }
 
@@ -53,12 +52,10 @@ class Mregister extends CI_Model {
         $result = $this->db->query($sql);
         $row = $result->row();
         $verifikasiCode = md5((string) $row->regTime);
-         $sess_array = array(
-                    'verifikasiCode' => $verifikasiCode,
-                );
-         $this->session->set_userdata($sess_array);
-
-         
+        $sess_array = array(
+            'verifikasiCode' => $verifikasiCode,
+        );
+        $this->session->set_userdata($sess_array);
     }
 
     // function untuk mengirim code verifikasi email ke email user/siswa 
@@ -71,16 +68,19 @@ class Mregister extends CI_Model {
         $this->email->to($address);
         $this->email->subject('Verifikasi Email');
         $message = '<html><meta/><head/><body>';
-        $message .='<p> Dear'.' ' . $this->session->userdata['USERNAME'] . ',</p>';
+        $message .='<p> Dear' . ' ' . $this->session->userdata['USERNAME'] . ',</p>';
         $message .='<p>Terimakasih telah mendaftar di netjoo. Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun anda. Setelah Aktifasi akun anda, anda akan bla2x</p>';
         $message .= '<p>Terimakasih</p>';
         $message .= '<p>Netjoo</p>';
         $message .= '</body></html>';
         $this->email->message($message);
-        if ($this->email->send())
-            echo "Mail Sent!"; //untuk testing
-        else
-            echo "There is error in sending mail!"; //untuk testing
+        $this->email->send();
+        
+//        if ($this->email->send())
+////            echo "Mail Sent!"; //untuk testing
+//    }else
+////            echo "There is error in sending mail!"; //untuk testing
+//    }
     }
 
     public function verifikasi_email($address, $code) {
@@ -91,11 +91,11 @@ class Mregister extends CI_Model {
         if ($result->num_rows() === 1) {
             if (md5((string) $row->regTime) === $code)
                 $result = $this->aktifasi_akun($address);
-            if ($result === true) {
-                echo "akun telah di aktifasi"; // for testing
-            } else {
-                echo "gagal di aktifasi"; //for testing
-            }
+//            if ($result === true) {
+//                echo "akun telah di aktifasi"; // for testing
+//            } else {
+//                echo "gagal di aktifasi"; //for testing
+//            }
         } else {
             //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         }
@@ -122,10 +122,10 @@ class Mregister extends CI_Model {
 
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
-            echo "ada akun";
+//            echo "ada akun";
             return $query->result(); //if data is true
         } else {
-            echo 'tidak ada akun';
+//            echo 'tidak ada akun';
             return false; //if data is wrong
         }
     }
@@ -162,10 +162,11 @@ class Mregister extends CI_Model {
         $message .= '<p>Netjoo</p>';
         $message .= '</body></html>';
         $this->email->message($message);
-        if ($this->email->send())
-            echo "Mail Sent!"; //untuk testing
-        else
-            echo "There is error in sending mail!"; //untuk testing
+        $this->email->send();
+//        if ($this->email->send())
+//            echo "Mail Sent!"; //untuk testing
+//        else
+//            echo "There is error in sending mail!"; //untuk testing
     }
 
     private function set_Resetcode($email) {

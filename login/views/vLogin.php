@@ -88,7 +88,7 @@
                                     <div class="col-xs-7 text-right">
                                         <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
                                         |
-                                        <a href="<?= base_url('index.php/register/lupaPassword'); ?>">Lupa password?</a>
+                                        <a href="<?= base_url('index.php/register/lupapassword'); ?>">Lupa password?</a>
                                     </div>
                                 </div>
                             </div>
