@@ -27,7 +27,11 @@ class Admin extends MX_Controller {
     }
 
     function semuavideo(){
-        
+      $data['views']=$this->loadcontainer();
+        $this->load->view( 'v-index-admin',$data );
+    }
+    function loadcontainer(){
+        return $this->load->view( 'v-container');
     }
 }
 ?>
