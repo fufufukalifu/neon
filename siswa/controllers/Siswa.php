@@ -168,8 +168,8 @@ class Siswa extends MX_Controller {
         }
     }
 
-    public function upload() {
-        echo "masuk upload";
+    public function upload($oldphoto) {
+       unlink( FCPATH . "./assets/image/photo/siswa/".$oldphoto );
         $config['upload_path'] = './assets/image/photo/siswa';
         $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
         $config['max_size'] = 100;

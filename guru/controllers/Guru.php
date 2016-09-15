@@ -215,8 +215,8 @@ class Guru extends MX_Controller {
         }
     }
 
-     public function upload() {
-        echo "masuk upload";
+     public function upload($oldphoto) {
+        unlink( FCPATH . "./assets/image/photo/guru/".$oldphoto );
         $config['upload_path'] = './assets/image/photo/guru';
         $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
         $config['max_size'] = 100;

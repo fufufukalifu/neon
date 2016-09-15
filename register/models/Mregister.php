@@ -31,7 +31,7 @@ class Mregister extends CI_Model {
         if ($this->db->affected_rows() === 1) {
             $penggunaID = $data_siswa['penggunaID'];
             $this->set_verifikasicode($penggunaID);
-            $this->session->set_userdata($$sess_array);
+            $this->session->set_userdata($sess_array);
             $this->send_verifikasi_email();
             // redirect(base_url('index.php/register/verifikasiemail'));
         } else {
