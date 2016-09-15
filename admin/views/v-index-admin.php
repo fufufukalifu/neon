@@ -348,22 +348,6 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="pa15">
-                            <h5 class="semibold hidden-xs hidden-sm">
-                                <p class="nm">60%</p>
-                                <small class="text-muted">Profile complete</small>
-                            </h5>
-                            <h5 class="semibold hidden-md hidden-lg">
-                                <p class="nm">Erich Reyes</p>
-                                <small class="text-muted">60% Profile complete</small>
-                            </h5>
-                            <div class="progress progress-xs nm mt10">
-                                <div class="progress-bar progress-bar-warning" style="width: 60%">
-                                    <span class="sr-only">60% Complete</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                         <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
@@ -394,38 +378,172 @@
         <!-- START Sidebar Content -->
         <section class="content slimscroll">
             <h5 class="heading">Main Menu</h5>
-            <!-- START Template Navigation/Menu -->
+            <!-- START MENU -->
             <ul class="topmenu topmenu-responsive" data-toggle="menu">
                 <li >
                     <a href="<?= base_url('assets/gh_frontend')?>">
                         <span class="figure"><i class="ico-trophy"></i></span>
-                        <span class="text">Guru</span>
+                        <span class="text">Dashboard</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" data-target="#dashboard" data-toggle="submenu" data-parent=".topmenu">
-                        <span class="figure"><i class="ico-home2"></i></span>
+                    <a href="javascript:void(0);" data-target="#guru" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-bubble-user"></i></span>
                         <span class="text">Guru</span>
                         <span class="arrow"></span>
                     </a>
-                    <!-- START 2nd Level Menu -->
-                    <ul id="dashboard" class="submenu collapse ">
+                    
+                    <ul id="guru" class="submenu collapse ">
                         <li class="submenu-header ellipsis">Guru</li>
                         <li >
                             <a href="index.html">
                                 <span class="text">Registrasi Guru</span>
-                                <span class="number"><span class="label label-danger">10</span></span>
                             </a>
                         </li>
                         <li >
-                            <a href="dashboard-v2.html">
+                            <a href="">
                                 <span class="text">Daftar Guru</span>
                             </a>
                         </li>
                     </ul>
-                    <!--/ END 2nd Level Menu -->
+
                 </li>
+
+                <li>
+                    <a href="javascript:void(0);" data-target="#siswa" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-users3"></i></span>
+                        <span class="text">Siswa</span>
+                        <span class="arrow"></span>
+                    </a>
+                    
+                    <ul id="siswa" class="submenu collapse ">
+                        <li class="submenu-header ellipsis">Siswa</li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar Siswa</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" data-target="#mapel" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-notebook"></i></span>
+                        <span class="text">Atribut</span>
+                        <span class="arrow"></span>
+                    </a>
+                    
+                    <ul id="mapel" class="submenu collapse ">
+                        <li class="submenu-header ellipsis">Atribut</li>
+
+                        <li >
+                            <a href="">
+                                <span class="text">Tingkat</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Mata Pelajaran</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Mata Bab</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Sub Bab</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-facetime-video"></i></span>
+                        <span class="text">Video</span>
+                        <span class="arrow"></span>
+                    </a>
+                    
+                    <ul id="video" class="submenu collapse ">
+                        <li class="submenu-header ellipsis">Video</li>
+
+                        <li >
+                            <a href="">
+                                <span class="text">Upload Video</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar Published Video</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar Unpublished Video</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar semua video</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-clipboard2"></i></span>
+                        <span class="text">Bank Soal</span>
+                        <span class="arrow"></span>
+                    </a>
+                    
+                    <ul id="banksoal" class="submenu collapse ">
+                        <li class="submenu-header ellipsis">Bank Soal</li>
+
+                        <li >
+                            <a href="">
+                                <span class="text">Tambahkan Bank Soal</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar Bank Soal</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
+                        <span class="figure"><i class="ico-clipboard"></i></span>
+                        <span class="text">Try Out</span>
+                        <span class="arrow"></span>
+                    </a>
+                    
+                    <ul id="tryout" class="submenu collapse ">
+                        <li class="submenu-header ellipsis">Try Out</li>
+
+                        <li >
+                            <a href="">
+                                <span class="text">Tambahkan Try Out</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="">
+                                <span class="text">Daftar Try Out</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
             </ul>
             <!--/ END Template Navigation/Menu -->
         </section>
