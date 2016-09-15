@@ -49,6 +49,11 @@ class Admin extends MX_Controller {
         $this->parser->parse('v-index-admin', $data);
     }
 
+    function showIcon() {
+        $this->load->view('templating/t-header');
+        $this->load->view('templating/t-icon');
+    }
+
 }
 
 ?>
