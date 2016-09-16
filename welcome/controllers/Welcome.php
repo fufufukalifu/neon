@@ -29,15 +29,24 @@ class Welcome extends MX_Controller {
     }
 
     public function index() {
+
+        $data = array(
+            'judul_halaman' => 'Netjoo - Welcome',
+            'judul_header' =>'Welcome'
+        );
+
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/templating/views/t-f-pagetitle.php',
+            APPPATH.'modules/welcome/views/v-welcome.php',
+            APPPATH.'modules/homepage/views/v-footer.php',
+        );
+
         $data['pelajaran_sma'] = $this->load->Mmatapelajaran->get_pelajaran_sma();
         $data['pelajaran_smk'] = $this->load->Mmatapelajaran->get_pelajaran_smk();
         $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
         $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
 
-        $data = array(
-            'judul_halaman' => 'Netjoo | Welcome'
-        );
-        $data['files'] = array('../homepage/views/v-header.php','../homepage/views/v-footer.php');
         $this->parser->parse( 'v-index-welcome', $data );
     }
 

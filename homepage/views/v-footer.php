@@ -2,20 +2,20 @@
 		<div class="grid-row">
 			<div class="grid-col-row clear-fix">
 				<section class="grid-col grid-col-4 footer-about">
-					<h2 class="corner-radius">About Us</h2>
+					<h2 class="corner-radius">Mengenai Neutron</h2>
 					<div>
 						<h3>Sed aliquet dui auctor blandit ipsum tincidunt</h3>
 						<p>Quis rhoncus lorem dolor eu sem. Aenean enim risus, convallis id ultrices eget.</p>
 					</div>
 					<address>
-						<p></p>
-						<a href="tel:123-123456789" class="phone-number">123-123456789</a>
+						<p></p>	
+						<a href="tel:(0274) 450300" class="phone-number">(0274) 450300</a>
 						<br />
-						<a href="mailto:uni@domain.com" class="email">uni@domain.com</a>
+						<a href="mailto: info@neutron-ny.com" class="email"> info@neutron-ny.com</a>
 						<br />
-						<a href="www.sample.com" class="site">www.sample.com</a>
+						<a href="www.neutron-ny.com" class="site">www.neutron-ny.com</a>
 						<br />
-						<a href="www.sample.com" class="address">250 Biscayne Blvd. (North) 11st Floor<br/>New World Tower Miami, 33148</a>
+						<a href="" class="address">Jl. Taman Siswa, Wirogunan, Mergangsan, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55151, Indonesia</a>
 					</address>
 					<div class="footer-social">
 						<a href="" class="fa fa-twitter"></a>
@@ -49,13 +49,13 @@
 							</article>
 						</section>
 						<section class="grid-col grid-col-4 footer-contact-form">
-							<h2 class="corner-radius">apply for instructor</h2>
+							<h2 class="corner-radius">Kirim Kami Pesan</h2>
 							<div class="email_server_responce"></div>
 							<form action="php/contacts-process.php" class="contact-form" method="post" novalidate="novalidate">
-								<p><span class="your-name"><input type="text" name="name" value="" size="40" placeholder="Name" aria-invalid="false" required></span>
+								<p><span class="your-name"><input type="text" name="name" value="" size="40" placeholder="Nama Lengkap" aria-invalid="false" required></span>
 								</p>
-								<p><span class="your-email"><input type="text" name="phone" value="" size="40" placeholder="Phone" aria-invalid="false" required></span> </p>
-								<p><span class="your-message"><textarea name="message" placeholder="Comments" cols="40" rows="5" aria-invalid="false" required></textarea></span> </p>
+								<p><span class="your-email"><input type="text" name="phone" value="" size="40" placeholder="Telepon" aria-invalid="false" required></span> </p>
+								<p><span class="your-message"><textarea name="message" placeholder="Pesan" cols="40" rows="5" aria-invalid="false" required></textarea></span> </p>
 								<button type="submit" class="cws-button bt-color-3 border-radius alt icon-right">Submit <i class="fa fa-angle-right"></i></button>
 							</form>
 						</section>
