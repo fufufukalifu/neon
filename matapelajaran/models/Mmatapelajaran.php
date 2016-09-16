@@ -13,6 +13,15 @@ class Mmatapelajaran extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    public function daftarMapelSD() {
+        $this->db->select('*');
+        $this->db->from('tb_mata-pelajaran');
+        $this->db->where('status', 1);
+        $this->db->where('status', 1);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     public function tambahMP($data) {
         $this->db->insert('tb_mata-pelajaran', $data);

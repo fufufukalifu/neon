@@ -26,7 +26,8 @@
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th>Nama Mata Pelajaran</th>
-                                <th>Alias</th>
+                                <th>Keterangan</th>
+                                <th>BAB</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
                                     <td><?= $mapel->aliasMataPelajaran ?></td>
+                                    <th>BAB</th>
                                     <td class="text-center">
                                         <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
                                         <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
