@@ -49,6 +49,24 @@ class Admin extends MX_Controller {
         $this->parser->parse('v-index-admin', $data);
     }
 
+    function showIcon() {
+        $this->load->view('templating/t-header');
+        $this->load->view('templating/t-icon');
+    }
+
+    function tambahMP() {
+        $data['namaMataPelajaran'] = htmlspecialchars($this->input->post('namaMP'));
+        $data['aliasMataPelajaran'] = htmlspecialchars($this->input->post('aliasMP'));
+        $this->mmatapelajaran->tambahMP($data);
+        redirect(base_url('index.php/admin/daftarmatapelajaran'));
+    }
+
+    function hapusMP() {
+        $id = $this->input->post('idMP');
+        $this->mmatapelajaran->hapusMP($id);
+        redirect(base_url('index.php/admin/daftarmatapelajaran'));
+    }
+
 }
 
 ?>
