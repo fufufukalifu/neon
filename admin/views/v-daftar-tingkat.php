@@ -32,16 +32,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($mapels as $mapel): ?>
+                            <?php foreach ($mapelsd as $mapel): ?>
                                 <tr>
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
-                                    <td><?= $mapel->aliasMataPelajaran ?></td>
+                                    <td><?= $mapel->keterangan ?></td>
                                     <th>BAB</th>
                                     <td class="text-center">
-                                        <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
-                                        <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
-                                        <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Hapus Data"><i class="ico-remove"></i></button>
+                                        <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-keterangan="<?= $mapel->keterangan ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
+                                        <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>
                                     </td>
                                     <!-- Modal -->
                                 </tr>
@@ -60,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($mapels as $mapel): ?>
+                            <?php foreach ($mapelsd as $mapel): ?>
                                 <tr>
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
@@ -88,17 +87,32 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rubah Data Mata Pelajaran</h4>
+                <h4 class="modal-title">Tambah Data Tingkat Mata Pelajaran</h4>
             </div>
             <form action="<?= base_url('index.php/admin/tambahMP') ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                        <input name="namaMP" type="text" class="form-control" placeholder="Nama Mata Pelajaran" required> <br>
+                        <select class="form-control" name="idMP">
+                            <option> Pilih Mata Pelajaran</option>
+                            <?php foreach ($mapels as $mapel): ?>
+                                <option value="<?= $mapel->id ?>"><?= $mapel->namaMataPelajaran ?></option>
+                            <?php endforeach ?>
+                        </select>
                     </div>
                     <div class="form-group input-group">
-                        <span class="input-group-addon"><i class="ico-file-upload"></i></span>
-                        <input name="aliasMP" type="text" class="form-control"  placeholder="Alias" required> <br>
+                        <span class="input-group-addon"><i class="ico-notebook"></i></span>
+                        <select class="form-control" name="idMP">
+                            <option> Pilih Tingkat Mata Pelajaran</option>
+                            <option value="1">SD</option>
+                            <option value="2">SMP</option>
+                            <option value="3">SMA</option>
+                            <option value="4">SMK</option>
+                        </select>
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="ico-notebook"></i></span>
+                        <input name="keterangan" type="text" class="form-control" placeholder="Keterangan Mata Pelajaran" required> <br>
                     </div>
                 </div>
                 <div class="modal-footer">

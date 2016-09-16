@@ -80,6 +80,7 @@ class Admin extends MX_Controller {
             'judul_halaman' => 'Tingkat Mata Pelajaran'
         );
 
+        $data['mapels'] = $this->mmatapelajaran->daftarMapel();
         $data['mapelsd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['file'] = 'v-daftar-tingkat.php';
 
