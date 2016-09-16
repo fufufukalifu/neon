@@ -75,6 +75,16 @@ class Admin extends MX_Controller {
         redirect(base_url('index.php/admin/daftarmatapelajaran'));
     }
 
+     function daftartingkatpelajaran() {
+        $data = array(
+            'judul_halaman' => 'Tingkat Mata Pelajaran'
+        );
+
+        $data['mapels'] = $this->mmatapelajaran->daftarMapel();
+        $data['file'] = 'v-daftar-tingkat.php';
+
+        $this->parser->parse('v-index-admin', $data);
+    }
 }
 
 ?>
