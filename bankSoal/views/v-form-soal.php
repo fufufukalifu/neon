@@ -1,7 +1,8 @@
  <!-- START Template Main -->
- <section id="main" role="main">
+<section id="main" role="main">
     <!-- START Template Container -->
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
+
     <div class="container-fluid">
         <!-- Page Header -->
         <div class="page-header page-header-block">
@@ -24,13 +25,16 @@
 
         <!-- START row -->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="">
+                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal/63" method="post">
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Soal</h3>
+                        <!-- untuk menampung bab id -->
+                        <input type="text" name="babID" value="<?=$babID;?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
+                      
                         <div class="form-group">
                             <label class="control-label col-sm-4">Kesulitan</label>
                             <div class="col-sm-8">
@@ -41,16 +45,16 @@
                                 </select>
                             </div>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label class="control-label col-sm-4">Sumber</label>
                             <div class="col-sm-8">
                                 <input type="text" name="sumber" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Soal</label>
+                            <label class="control-label col-sm-4">Soal2</label>
                             <div class="col-sm-8">
-                                <textarea name="soal" class="form-control">
+                                <textarea  name="editor1" class="form-control" id="">
                                     
                                 </textarea>
                             </div>
@@ -63,6 +67,19 @@
                                     <option value="1">Lima Pilihan</option>
                                 </select>
                                 <span>*Pilihan a/b/c/d/..</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Jensi Pilihan</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group" data-toggle="buttons">
+                                      <label class="btn ">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> Text
+                                      </label>
+                                      <label class="btn">
+                                        <input type="radio" name="options" id="option3" autocomplete="off"> Gambar
+                                      </label>
+                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -129,12 +146,12 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4">Jawaban Benar</label>
                             <div class="col-sm-8">
-                                <select class="form-control">
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                    <option>D</option>
-                                    <option>E</option>
+                                <select name="jawaban" class="form-control">
+                                    <option value="A" >A</option>
+                                    <option value="B" >B</option>
+                                    <option value="C" >C</option>
+                                    <option value="D" >D</option>
+                                    <option value="E">E</option>
                                 </select>
                             </div>
                         </div>
@@ -158,5 +175,11 @@
         </div>
         <!--/ END row -->
     </div>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
+
 </section>
         <!--/ END Template Main -->

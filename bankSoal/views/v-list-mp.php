@@ -30,7 +30,7 @@
                             <table class="table table-striped" id="zero-configuration">
                                 <thead>
                                     <tr>
-                                        
+                                        <th>ID</th>
                                         <th>Mata Pelajaran</th>
                                         <th>Lihat Bab</th>
                                     </tr>
@@ -38,9 +38,9 @@
                                 <tbody>
                                   <?php foreach ($pelajaran as $row): ?>
                                     <tr>
-                                        <?php //print_r($videos) ?>
+                                        <td><?= $row['id'];?></td>
                                         <td><?= $row['keterangan']; ?></td>
-                                        <td><a href="" class="label label-primary">Lihat Bab</a></td>
+                                        <td><a href="<?=base_url();?>index.php/banksoal/listbab/<?=$row['id'];?>" class="label label-primary">Lihat Bab</a></td>
                                        
 
 
@@ -62,4 +62,18 @@
         <!--/ END To Top Scroller -->
 
     </section>
-        <!--/ END Template Main -
+        <!--/ END Template Main -->
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery-migrate.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/bootstrap/js/bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/core/js/core.min.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/sparkline/js/jquery.sparkline.min.js') ?>"></script>
+
+
+
+<script type="text/javascript" src="<?= base_url('assets/javascript/app.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+<!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
