@@ -67,6 +67,14 @@ class Admin extends MX_Controller {
         redirect(base_url('index.php/admin/daftarmatapelajaran'));
     }
 
+    function rubahMP() {
+        $id = $this->input->post('idMP');
+        $data['namaMataPelajaran'] = htmlspecialchars($this->input->post('namaMP'));
+        $data['aliasMataPelajaran'] = htmlspecialchars($this->input->post('aliasMP'));
+        $this->mmatapelajaran->rubahMP($id,$data);
+        redirect(base_url('index.php/admin/daftarmatapelajaran'));
+    }
+
 }
 
 ?>

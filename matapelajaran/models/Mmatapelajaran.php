@@ -24,6 +24,11 @@ class Mmatapelajaran extends CI_Model {
         $this->db->update('tb_mata-pelajaran');
     }
 
+    function rubahMP($id, $data) {
+        $this->db->where('id', $id);
+        $this->db->update('tb_mata-pelajaran', $data);
+    }
+
 }
 
 ?>

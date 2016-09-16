@@ -438,12 +438,6 @@
 
                         <ul id="mapel" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Atribut</li>
-
-                            <li >
-                                <a href="">
-                                    <span class="text">Tingkat</span>
-                                </a>
-                            </li>
                             <li >
                                 <a href="">
                                     <span class="text">Mata Pelajaran</span>
@@ -451,15 +445,9 @@
                             </li>
                             <li >
                                 <a href="">
-                                    <span class="text">Mata Bab</span>
+                                    <span class="text">Tingkat</span>
                                 </a>
                             </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Sub Bab</span>
-                                </a>
-                            </li>
-
                         </ul>
                     </li>
 
