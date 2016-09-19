@@ -112,8 +112,44 @@ class Admin extends MX_Controller {
         $this->mmatapelajaran->rubahtingkatMP($id, $data);
         redirect(base_url('index.php/admin/daftartingkatpelajaran'));
     }
-    
-    
+
+    function daftarbab() {
+        $data = array(
+            'judul_halaman' => 'BAB Mata Pelajaran'
+        );
+        $id = $this->uri->segment(4);
+        $data['babs'] = $this->mmatapelajaran->daftarBab($id);
+        $data['file'] = 'v-bab.php';
+
+        $this->parser->parse('v-index-admin', $data);
+    }
+
+    function tambahbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $data['tingkatPelajaranID'] = htmlspecialchars($this->input->post('idtmp'));
+        $data['judulBab'] = htmlspecialchars($this->input->post('judulBab'));
+        $data['keterangan'] = htmlspecialchars($this->input->post('deskbab'));
+        $this->mmatapelajaran->tambahbabMP($data);
+        redirect(base_url('index.php/admin/daftarbab/' . $nmmp . '/' . $data['tingkatPelajaranID']));
+    }
+
+    function rubahbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $id = htmlspecialchars($this->input->post('idrubah'));
+        $data['tingkatPelajaranID'] = htmlspecialchars($this->input->post('idtmp'));
+        $data['judulBab'] = htmlspecialchars($this->input->post('judulBab'));
+        $data['keterangan'] = htmlspecialchars($this->input->post('deskbab'));
+        $this->mmatapelajaran->rubahbabMP($id, $data);
+        redirect(base_url('index.php/admin/daftarbab/' . $nmmp . '/' . $data['tingkatPelajaranID']));
+    }
+
+    function hapusbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $id = htmlspecialchars($this->input->post('id'));
+        $data['tingkatPelajaranID'] = htmlspecialchars($this->input->post('idtmp'));
+        $this->mmatapelajaran->hapusbabMP($id, $data);
+        redirect(base_url('index.php/admin/daftarbab/' . $nmmp . '/' . $data['tingkatPelajaranID']));
+    }
 
 }
 

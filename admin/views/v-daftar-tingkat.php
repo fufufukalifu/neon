@@ -37,7 +37,7 @@
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
                                     <td><?= $mapel->keterangan ?></td>
-                                    <th>BAB</th>
+                                    <td><a href="<?= base_url('index.php/admin/daftarbab/' . $mapel->namaMataPelajaran . '/' . $mapel->id); ?>" class="btn btn-default">Lihat</a></td>
                                     <td class="text-center">
                                         <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-target="#modalRubah<?= $mapel->id ?>" title="Rubah Data"><i class="ico-file5"></i></button>
                                         <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>
@@ -124,7 +124,7 @@
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
                                     <td><?= $mapel->keterangan ?></td>
-                                    <th>BAB</th>
+                                    <td><a href="<?= base_url('index.php/admin/daftarbab/' . $mapel->namaMataPelajaran . '/' . $mapel->id); ?>" class="btn btn-default">Lihat</a></td>
                                     <td class="text-center">
                                         <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-target="#modalRubah<?= $mapel->id ?>" title="Rubah Data"><i class="ico-file5"></i></button>
                                         <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>
@@ -211,7 +211,7 @@
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
                                     <td><?= $mapel->keterangan ?></td>
-                                    <th>BAB</th>
+                                    <td><a href="<?= base_url('index.php/admin/daftarbab/' . $mapel->namaMataPelajaran . '/' . $mapel->id); ?>" class="btn btn-default">Lihat</a></td>
                                     <td class="text-center">
                                         <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-target="#modalRubah<?= $mapel->id ?>" title="Rubah Data"><i class="ico-file5"></i></button>
                                         <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>
@@ -298,7 +298,7 @@
                                     <td class="text-center"><?= $mapel->id ?></td>
                                     <td><?= $mapel->namaMataPelajaran ?></td>
                                     <td><?= $mapel->keterangan ?></td>
-                                    <th>BAB</th>
+                                    <td><a href="<?= base_url('index.php/admin/daftarbab/' . $mapel->namaMataPelajaran . '/' . $mapel->id); ?>" class="btn btn-default">Lihat</a></td>
                                     <td class="text-center">
                                         <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-target="#modalRubah<?= $mapel->id ?>" title="Rubah Data"><i class="ico-file5"></i></button>
                                         <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>

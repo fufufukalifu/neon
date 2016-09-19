@@ -96,6 +96,30 @@ class Mmatapelajaran extends CI_Model {
         $this->db->update('tb_tingkat-pelajaran', $data);
     }
 
+    public function daftarBab($id) {
+        $this->db->select('*');
+        $this->db->from('tb_bab');
+        $this->db->where('tingkatPelajaranID', $id);
+        $this->db->where('status', 1);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function tambahbabMP($data) {
+        $this->db->insert('tb_bab', $data);
+    }
+
+    function rubahbabMP($id, $data) {
+        $this->db->where('id', $id);
+        $this->db->update('tb_bab', $data);
+    }
+
+    function hapusbabMP($id, $data) {
+        $this->db->set('status', 0);
+        $this->db->where('id', $id);
+        $this->db->update('tb_bab');
+    }
+
 }
 
 ?>
