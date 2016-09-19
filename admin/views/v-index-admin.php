@@ -438,12 +438,6 @@
 
                         <ul id="mapel" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Atribut</li>
-
-                            <li >
-                                <a href="">
-                                    <span class="text">Tingkat</span>
-                                </a>
-                            </li>
                             <li >
                                 <a href="">
                                     <span class="text">Mata Pelajaran</span>
@@ -451,15 +445,9 @@
                             </li>
                             <li >
                                 <a href="">
-                                    <span class="text">Mata Bab</span>
+                                    <span class="text">Tingkat</span>
                                 </a>
                             </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Sub Bab</span>
-                                </a>
-                            </li>
-
                         </ul>
                     </li>
 
@@ -980,6 +968,12 @@
         <script type="text/javascript" src="<?= base_url('assets/plugins/sparkline/js/jquery.sparkline.min.js') ?>"></script><!-- will be use globaly as a summary on sidebar menu -->
         <script type="text/javascript" src="<?= base_url('assets/javascript/app.min.js') ?>"></script>
 
+        <!--datatable-->
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+        <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
         <!--/ App and page level script -->
         <!--/ END JAVASCRIPT SECTION -->

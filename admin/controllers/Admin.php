@@ -67,6 +67,24 @@ class Admin extends MX_Controller {
         redirect(base_url('index.php/admin/daftarmatapelajaran'));
     }
 
+    function rubahMP() {
+        $id = $this->input->post('idMP');
+        $data['namaMataPelajaran'] = htmlspecialchars($this->input->post('namaMP'));
+        $data['aliasMataPelajaran'] = htmlspecialchars($this->input->post('aliasMP'));
+        $this->mmatapelajaran->rubahMP($id,$data);
+        redirect(base_url('index.php/admin/daftarmatapelajaran'));
+    }
+
+     function daftartingkatpelajaran() {
+        $data = array(
+            'judul_halaman' => 'Tingkat Mata Pelajaran'
+        );
+
+        $data['mapelsd'] = $this->mmatapelajaran->daftarMapelSD();
+        $data['file'] = 'v-daftar-tingkat.php';
+
+        $this->parser->parse('v-index-admin', $data);
+    }
 }
 
 ?>

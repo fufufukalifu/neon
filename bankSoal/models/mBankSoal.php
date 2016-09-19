@@ -6,11 +6,26 @@
 class MbankSoal extends CI_Model
 {
 	
-
-	public function insert_soal($data)
+	# Start Function untuk form soal#
+	public function insert_soal($dataSoal)
 	{
-		# code...
+		 $this->db->insert('tb_banksoal', $dataSoal);
 	}
+
+	public function insert_jawaban($dataJawaban)
+	{
+		$this->db->insert_batch('tb_piljawaban', $dataJawaban);
+	}
+
+		public function get_soalID($UUID)
+	{
+		$this->db->where('UUID',$UUID);
+		$this->db->select('id_soal')->from('tb_banksoal');
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	# END Function untuk form soal#
 
 	public function get_pelajaran($tingkatID)
 	{	
@@ -27,6 +42,28 @@ class MbankSoal extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function get_soal($babID)
+	{	
+		$this->db->where('id_bab',$babID);
+		$this->db->select('*')->from('tb_banksoal');
+		// $this->db->select('*,soal.jawaban as soal_jawab');
+		// $this->db->from('tb_banksoal soal');
+		// $this->db->join('tb_piljawaban jawaban', ' jawaban.id_soal= soal.id_soal');
+		// $this->db->where('id_bab',$babID);
+
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_jawaban($id_soal)
+	{
+		# code...
+	}
+
+
+
 
 }
  ?>

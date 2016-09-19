@@ -5,41 +5,81 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="panel-title">Daftar Mata Pelajaran</h5>
+                <h5 class="panel-title">Daftar Tingkat Mata Pelajaran</h5>
                 <!-- Trigger the modal with a button -->
                 <button title="Tambah Data" type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal" style="margin-top:-30px;" ><i class="ico-plus"></i></button>
                 <br>
                 <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
             </div>
-            <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
-                <thead>
-                    <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nama Mata Pelajaran</th>
-                        <th>Alias</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($mapels as $mapel): ?>
-                        <tr>
-                            <td class="text-center"><?= $mapel->id ?></td>
-                            <td><?= $mapel->namaMataPelajaran ?></td>
-                            <td><?= $mapel->aliasMataPelajaran ?></td>
-                            <td class="text-center">
-                                <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
-                                <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
-                                <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Hapus Data"><i class="ico-remove"></i></button>
-                            </td>
-                            <!-- Modal -->
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#popular" data-toggle="tab">SD</a></li>
+                <li><a href="#comments" data-toggle="tab">SMP</a></li>
+                <li><a href="#comments" data-toggle="tab">SMA</a></li>
+                <li><a href="#comments" data-toggle="tab">SMK</a></li>
+            </ul>
+            <!--/ tab -->
+            <!-- tab content -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="popular">
+                    <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th>Nama Mata Pelajaran</th>
+                                <th>Keterangan</th>
+                                <th>BAB</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($mapels as $mapel): ?>
+                                <tr>
+                                    <td class="text-center"><?= $mapel->id ?></td>
+                                    <td><?= $mapel->namaMataPelajaran ?></td>
+                                    <td><?= $mapel->aliasMataPelajaran ?></td>
+                                    <th>BAB</th>
+                                    <td class="text-center">
+                                        <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
+                                        <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
+                                        <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Hapus Data"><i class="ico-remove"></i></button>
+                                    </td>
+                                    <!-- Modal -->
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="comments">
+                    <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th>Nama Mata Pelajaran</th>
+                                <th>Alias</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($mapels as $mapel): ?>
+                                <tr>
+                                    <td class="text-center"><?= $mapel->id ?></td>
+                                    <td><?= $mapel->namaMataPelajaran ?></td>
+                                    <td><?= $mapel->aliasMataPelajaran ?></td>
+                                    <td class="text-center">
+                                        <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
+                                        <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
+                                        <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Hapus Data"><i class="ico-remove"></i></button>
+                                    </td>
+                                    <!-- Modal -->
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -103,7 +143,7 @@
 
 <div id="modalHapus" class="modal fade" role="dialog">
     <div class="modal-dialog">
-         Modal content
+        Modal content
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -124,6 +164,8 @@
         </div>
     </div>
 </div>
+
+<!--/ END row -->
 <script type="text/javascript">
     $(document).on("click", "#rubahBtn", function () {
         var Id = $(this).data('id');
