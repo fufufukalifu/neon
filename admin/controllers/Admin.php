@@ -71,21 +71,50 @@ class Admin extends MX_Controller {
         $id = $this->input->post('idMP');
         $data['namaMataPelajaran'] = htmlspecialchars($this->input->post('namaMP'));
         $data['aliasMataPelajaran'] = htmlspecialchars($this->input->post('aliasMP'));
-        $this->mmatapelajaran->rubahMP($id,$data);
+        $this->mmatapelajaran->rubahMP($id, $data);
         redirect(base_url('index.php/admin/daftarmatapelajaran'));
     }
 
-     function daftartingkatpelajaran() {
+    function daftartingkatpelajaran() {
         $data = array(
             'judul_halaman' => 'Tingkat Mata Pelajaran'
         );
 
         $data['mapels'] = $this->mmatapelajaran->daftarMapel();
         $data['mapelsd'] = $this->mmatapelajaran->daftarMapelSD();
+        $data['mapelsmp'] = $this->mmatapelajaran->daftarMapelSMP();
+        $data['mapelsma'] = $this->mmatapelajaran->daftarMapelSMA();
+        $data['mapelsmk'] = $this->mmatapelajaran->daftarMapelSMK();
         $data['file'] = 'v-daftar-tingkat.php';
 
         $this->parser->parse('v-index-admin', $data);
     }
+
+    function tambahtingkatMP() {
+        $data['tingkatID'] = htmlspecialchars($this->input->post('idTingkatMP'));
+        $data['mataPelajaranID'] = htmlspecialchars($this->input->post('idMP'));
+        $data['keterangan'] = htmlspecialchars($this->input->post('keterangan'));
+        $this->mmatapelajaran->tambahtingkatMP($data);
+        redirect(base_url('index.php/admin/daftartingkatpelajaran'));
+    }
+
+    function hapustingkatMP() {
+        $id = $this->input->post('tingkatMP');
+        $this->mmatapelajaran->hapustingkatMP($id);
+        redirect(base_url('index.php/admin/daftartingkatpelajaran'));
+    }
+
+    function rubahtingkatMP() {
+        $id = $this->input->post('idtingkatMP');
+        $data['keterangan'] = htmlspecialchars($this->input->post('keterangan'));
+        $data['tingkatID'] = htmlspecialchars($this->input->post('tingkatMP'));
+        $data['mataPelajaranID'] = htmlspecialchars($this->input->post('idMP'));
+        $this->mmatapelajaran->rubahtingkatMP($id, $data);
+        redirect(base_url('index.php/admin/daftartingkatpelajaran'));
+    }
+    
+    
+
 }
 
 ?>
