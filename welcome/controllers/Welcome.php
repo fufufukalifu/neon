@@ -47,7 +47,7 @@ class Welcome extends MX_Controller {
         $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
         $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
 
-        $this->parser->parse( 'v-index-welcome', $data );
+        $this->parser->parse( 'templating/index', $data );
     }
 
 }

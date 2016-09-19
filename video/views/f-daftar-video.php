@@ -1,52 +1,45 @@
+<?php  ?>
 <div class="page-content grid-row">
+    <div class="row">
+        <h1>Materi {mapel}</h1>
+        <h4>Silahkan pilih materi yang akan kamu pelajar...</h4>
+    </div>
+    <br>
+    <hr class="divider-color">
     <main>
+
+     <?php
+       //print_r($bab_video);
+     $cekjudulbab=null;
+     $i="0"; 
+     ?>
+     <?php foreach ($bab_video as $bab_video_items) {
+        $judulbab=$bab_video_items->judulBab;
+        $subbab=$bab_video_items->judulSubBab;
+        if ($cekjudulbab != $judulbab) { 
+            if($i==1){
+
+            }
+        }
+        ?>
+        <a href="<?=base_url('index.php/video/lihatvideo') ?>/<?=$bab_video_items->babid ?>" 
+            title="Lihat Semua Video">
+            <?=$bab_video_items->judulBab  ?> <i class="ico ico-eye-open"></i></a> 
+        <?php }   ?>
 
         <div class="grid-col-row clear-fix" >
             <div class="grid-col grid-col-3">
                 <div class="hover-effect"></div>
                 <h5><strong>Sekolah Dasar<br></strong></h5>
                 <ol>
-                    <?php foreach ($pelajaran_sd as $pelajaran_items): ?>
-                    <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-                <?php endforeach ?>
-            </ol>
+                </ol>
+            </div>
+
+
         </div>
-
-        <div class="grid-col grid-col-3">
-            <div class="hover-effect"></div>
-            <h5><strong>Sekolah Menengah Pertama<br></strong></h5>
-            <ol>
-                <?php foreach ($pelajaran_smp as $pelajaran_items): ?>
-                <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-            <?php endforeach ?>
-        </ol>
-    </div>
-
-    <div class="grid-col grid-col-3">
-        <div class="hover-effect"></div>
-        <h5><strong>Sekolah Menengah Kejuruan<br></strong></h5>
-        <ol>
-            <?php foreach ($pelajaran_smk as $pelajaran_items): ?>
-            <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-        <?php endforeach ?>
-    </ol>
+    </main>
 </div>
 
-<div class="grid-col grid-col-3">
-    <div class="hover-effect"></div>
-    <h5><strong>Sekolah Menengah Atas<br></strong></h5>
-    <ol>
-        <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
-        <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-        
-    <?php endforeach ?>
-</ol>
-</div>
-
-</div>
-</main>
-</div>
-<hr class="divider-color">
 
 
 <!-- ucapan selamat datang -->
