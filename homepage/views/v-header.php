@@ -4,8 +4,8 @@
 		<div class="page-header-top">
 			<div class="grid-row clear-fix">
 				<address>
-					<a href="tel:123-123456789" class="phone-number"><i class="fa fa-phone"></i>123-123456789</a>
-					<a href="mailto:uni@domain.com" class="email"><i class="fa fa-envelope-o"></i>uni@domain.com</a>
+					<a href="tel:(0274) 450300 " class="phone-number"><i class="fa fa-phone"></i>(0274) 450300 </a>
+					<a href="mailto:info@neutron-ny.com " class="email"><i class="fa fa-envelope-o"></i>info@neutron-ny.com </a>
 				</address>
 				<div class="header-top-panel">
 					<a href="" class="fa fa-shopping-cart"></a>

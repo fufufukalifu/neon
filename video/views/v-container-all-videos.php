@@ -1,95 +1,31 @@
-<section role="main" style="padding-top:10px;background:white" >
-            <!-- START Portfolio Content -->
-            <section class="section bgcolor-white pt0">
-                <div class="container">
-                    <!-- START row -->
-                    <div class="row" id="shuffle-grid">
-                        <?php foreach ( $judulbab as $video_item ): ?>
-                        <div class="col-sm-3 shuffle mb15" data-groups='["creative", "people"]'>
-                            <!-- thumbnail -->
-                            <div class="thumbnail nm">
-                                <!-- media -->
-                                <div class="media">
-                                    <!-- indicator -->
-                                    <div class="indicator"><span class="spinner"></span></div>
-                                    <!--/ indicator -->
-                                    <!-- toolbar overlay -->
-                                    <div class="overlay">
-                                        <div class="toolbar">
-                                            <a href="<?php echo base_url( '/index.php/video/seevideo' );?>/<?php echo $video_item->id ?>" class="btn btn-default" title="<?php echo $video_item->judulVideo ?>"><i class="ico-play"></i></a>
-                                            <p style="text-align:left;padding:3px"><?php echo $video_item->deskripsi ?></p>
-                                        </div>
-                                    </div>
-                                    <!--/ toolbar overlay -->
-                                    <img data-toggle="unveil" src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" data-src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" alt="Photo" width="100%" />
-                                </div>
-                                <!--/ media -->
-                            </div>
-                            <!--/ thumbnail -->
-                            <!-- Meta -->
-                            <h4 class="font-alt ellipsis text-center mb10"><?php echo $video_item->judulVideo ?></h4>
-
-                            <!--/ Meta -->
+    <div class="page-content grid-row">
+        <main>
+            <div class="grid-col-row clear-fix">
+                <?php foreach ($semuavideo as $semuavideos): ?>
+                <div class="grid-col grid-col-3">
+                    <!-- course item -->
+                    
+                    <div class="course-item">
+                        <div class="course-hover">
+                            <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
+                            <div class="hover-bg bg-color-3"></div>
+                            <a href="<?=base_url('index.php/video/seevideo') ?>/<?=$semuavideos->id ?>">Pelajari</a>
                         </div>
-                        <?php endforeach ?>
-                    </div>
-
-                    <!--/ END row -->
-                </div>
-            </section>
-            <!--/ END Portfolio Content -->
-
-            <!-- START Featured Portfolio -->
-            <section class="section">
-                <div class="container">
-                    <!-- Header -->
-                    <div class="section-header section-header-bordered mb15">
-                        <h4 class="section-title">
-                            <p class="font-alt nm">Materi Terkait</p>
-                        </h4>
-                    </div>
-                    <!--/ Header -->
-
-                    <!-- carousel -->
-                    <div class="owl-carousel" id="lovely-client">
-                        <?php foreach ($materisubab as $materisubab_items): ?>
-                        <!-- portfolio #1 -->
-                        <div class="item text-center">
-                            <!-- thumbnail -->
-                            <div class="thumbnail nm">
-                                <!-- media -->
-                                <div class="media">
-                                    <!-- indicator -->
-                                    <div class="indicator"><span class="spinner"></span></div>
-                                    <!--/ indicator -->
-                                    <!-- toolbar overlay -->
-                                    <div class="overlay">
-                                        <div class="toolbar">
-                                            <a href="<?php echo base_url( '/index.php/video/seevideo' );?>/<?php echo $video_item->id ?>" class="btn btn-success"><i class="ico-play"></i></a>
-                                            <p style="padding:3px;text-align:left;font-weight:bold"><?=$materisubab_items->keterangan ?></p>
-                                        </div>
-                                    </div>
-                                    <!--/ toolbar overlay -->
-                                    <img data-toggle="unveil" src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" data-src="<?php echo base_url( 'assets/image/portfolio/placeholder-grey.jpg' );?>" alt="Photo" width="100%" />
-                                </div>
-                                <!--/ media -->
-                            </div>
-                            <!--/ thumbnail -->
-                            <!-- Meta -->
-                            <h5 class="font-alt text-center mb5"><?=$materisubab_items->judulSubBab ?></h5>
-                            <!--/ Meta -->
+                        <div class="course-name clear-fix">
+                            <center><h3 style="text-align:center"><a href="<?=base_url('index.php/video/seevideo') ?>/<?=$semuavideos->id ?>"><?=$semuavideos->judulVideo ?></a></h3></center>
                         </div>
-                        <?php endforeach ?>
-                        <!--/ portfolio #1 -->
+                        <div class="course-date bg-color-3 clear-fix">
+                            <div class="day"><i class="fa fa-calendar"></i><?=date('M : Y',strtotime($semuavideos->date_created));?></div>
+                            <div class="divider"></div>
+                            <div class="description"> <?=substr($semuavideos->deskripsi, 0, 90); ?> <span style="color:black;bold:bolder">Selengkapnya<span></div>
+                        </div>
                     </div>
-                    <!--/ carousel -->
-
-
+                    
+                    <!-- / course item -->
                 </div>
-            </section>
-            <!--/ END Featured Portfolio -->
+                <?php endforeach ?>
 
-            <!-- START To Top Scroller -->
-            <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-            <!--/ END To Top Scroller -->
-        </section>
+
+            </div>
+        </main>
+    </div>
