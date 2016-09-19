@@ -5,9 +5,10 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="panel-title">Daftar Mata Pelajaran</h5>
+                <h5 class="panel-title">Daftar BAB Mata Pelajaran</h5>
                 <!-- Trigger the modal with a button -->
                 <button title="Tambah Data" type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal" style="margin-top:-30px;" ><i class="ico-plus"></i></button>
+                <a href="<?= base_url('index.php/admin/daftartingkatpelajaran') ?>" class="btn btn-default pull-right" style="margin-top:-30px;">Kembali</a>
                 <br>
                 <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
             </div>
@@ -15,21 +16,22 @@
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th>Nama Mata Pelajaran</th>
-                        <th>Alias</th>
+                        <th>Judul BAB</th>
+                        <th>Deskripsi BAB</th>
+                        <th>SUB BAB</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($mapels as $mapel): ?>
+                    <?php foreach ($babs as $bab): ?>
                         <tr>
-                            <td class="text-center"><?= $mapel->id ?></td>
-                            <td><?= $mapel->namaMataPelajaran ?></td>
-                            <td><?= $mapel->aliasMataPelajaran ?></td>
+                            <td class="text-center"><?= $bab->id ?></td>
+                            <td><?= $bab->judulBab ?></td>
+                            <td><?= $bab->keterangan ?></td>
+                            <td>link sub bab</td>
                             <td class="text-center">
-                                <!--<button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-namaMP="<?= $mapel->namaMataPelajaran ?>" data-aliasMP="<?= $mapel->aliasMataPelajaran ?>" title="RubahData"><i class="ico-file5"></i></button>-->
-                                <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-alias="<?= $mapel->aliasMataPelajaran ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Rubah Data"><i class="ico-file5"></i></button>
-                                <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" data-nama="<?= $mapel->namaMataPelajaran ?>" title="Hapus Data"><i class="ico-remove"></i></button>
+                                <button type="button" id="rubahBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $bab->id ?>" data-judul="<?= $bab->judulBab ?>" data-ket="<?= $bab->keterangan ?>" title="Rubah Data"><i class="ico-file5"></i></button>
+                                <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $bab->id ?>" data-nama="<?= $bab->judulBab ?>" title="Hapus Data"><i class="ico-remove"></i></button>
                             </td>
                             <!-- Modal -->
                         </tr>
@@ -48,17 +50,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Tambah Data Mata Pelajaran</h4>
+                <h4 class="modal-title">Tambah Data BAB Mata Pelajaran</h4>
             </div>
-            <form action="<?= base_url('index.php/admin/tambahMP') ?>" method="post">
+            <form action="<?= base_url('index.php/admin/tambahbabMP') ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                        <input name="namaMP" type="text" class="form-control" placeholder="Nama Mata Pelajaran" required> <br>
+                        <input name="idtmp" value="<?= $this->uri->segment(4); ?>" type="hidden">
+                        <input name="nmmp" value="<?= $this->uri->segment(3); ?>" type="hidden">
+                        <input name="judulBab" type="text" class="form-control" placeholder="Judul BAB" required> <br>
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-file-upload"></i></span>
-                        <input name="aliasMP" type="text" class="form-control"  placeholder="Alias" required> <br>
+                        <textarea class="form-control" name="deskbab" value=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -76,20 +80,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rubah Data Mata Pelajaran</h4>
+                <h4 class="modal-title">Rubah Data BAB Pelajaran</h4>
             </div>
-            <form action="<?= base_url('index.php/admin/rubahMP') ?>" method="post">
+            <form action="<?= base_url('index.php/admin/rubahbabMP') ?>" method="post">
                 <div class="modal-body rubah">
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                        <input name="namaMP" id="namaMP" type="text" class="form-control" placeholder="Nama Mata Pelajaran" required> <br>
+                        <input name="idtmp" value="<?= $this->uri->segment(4); ?>" type="hidden">
+                        <input name="nmmp" value="<?= $this->uri->segment(3); ?>" type="hidden">
+                        <input id='idrubah' name="idrubah" type="hidden">
+                        <input id="judulBab" name="judulBab" type="text" class="form-control" placeholder="Judul BAB" required> <br>
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-file-upload"></i></span>
-                        <input name="aliasMP" id="aliasMP" type="text" class="form-control"  placeholder="Alias" required> <br>
-                    </div>
-                    <div class="form-group input-group">
-                        <input type="text" hidden="true" name="idMP" id="idMP" value=""/>
+                        <textarea id="desk" class="form-control" name="deskbab" required>
+                        </textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -103,17 +108,19 @@
 
 <div id="modalHapus" class="modal fade" role="dialog">
     <div class="modal-dialog">
-         Modal content
+        Modal content
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Hapus Data </h4>
+                <h4 class="modal-title">Hapus Data Bab Pelajaran </h4>
             </div>
-            <form action="<?= base_url('index.php/admin/hapusMP') ?>" method="post">
+            <form action="<?= base_url('index.php/admin/hapusbabMP') ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group input-group">
                         <span><h4 class="text-center">Yakin akan menghapus data mata pelajaran</h4></span>  
-                        <input type="text" hidden="true" name="idMP" id="idMP" value=""/>
+                        <input type="text" hidden="true" name="id" id="idMP" value=""/>
+                        <input name="idtmp" value="<?= $this->uri->segment(4); ?>" type="hidden">
+                        <input name="nmmp" value="<?= $this->uri->segment(3); ?>" type="hidden">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -126,12 +133,14 @@
 </div>
 <script type="text/javascript">
     $(document).on("click", "#rubahBtn", function () {
-        var Id = $(this).data('id');
-        var alias = $(this).data('alias');
-        var nama = $(this).data('nama');
-        $(".rubah #idMP").val(Id);
-        $(".rubah #namaMP").val(nama);
-        $(".rubah #aliasMP").val(alias);
+        var id = $(this).data('id');
+        var judul = $(this).data('judul');
+        var ket = $(this).data('ket');
+        $(".rubah #idrubah").val(id);
+        $(".rubah #judulBab").val(judul);
+        document.getElementById("desk").value = ket;
+//        document.getElementById("deskbab").value = ket;
+//        $(".rubah #desk").val(ket);
         // As pointed out in comments, 
         // it is superfluous to have to manually call the modal.
         $('#modalRubah').modal('show');
