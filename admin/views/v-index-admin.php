@@ -974,6 +974,8 @@
         <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+
 
         <!--/ App and page level script -->
         <!--/ END JAVASCRIPT SECTION -->

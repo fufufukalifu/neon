@@ -16,31 +16,32 @@ class Paketsoal extends MX_Controller
 
 	}
 
-	function tambahbanksoal() {
-		$data = array(
-			'asd' => 'Buat Paket Soal'
-			);
-
-		$data['judul_halaman'] = "Buat Bank Soal";
-
+	function tambahpaketsoal() {
+		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-create-bank-soal.php',
 			);
-
-		//print_r($data);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
 	function addpaketsoal() {
 		echo "<script>alert('masuk');</script>";
 		$data = array(
-			'nm_paket' => $this->input->post('nama_paket') ,
-			'jumlah_soal' => $this->input->post('jumlah_soal'),
-			'durasi' =>$this->input->post('durasi')
+			'nm_paket' => $this->input->post( 'nama_paket' ) ,
+			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+			'durasi' =>$this->input->post( 'durasi' )
 			);
 		$this->MPaketsoal->insertpaketsoal( $data );
 
-
+	}
+	function coba(){
+		$this->load->view('coba');
+	}
+	function ambil_paket_soal(){
+		$data = $this->output
+		->set_content_type( "application/json" )
+		->set_output( json_encode( $this->load->MPaketsoal->getpaketsoal() ) ) ;
 	}
 }
 ?>
