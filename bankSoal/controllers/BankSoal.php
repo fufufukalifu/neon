@@ -35,6 +35,7 @@ class  BankSoal extends MX_Controller
 	public function listsoal($babID)
 	{
 		$data['soal'] =$this->mbanksoal->get_soal($babID);
+		// var_dump($data);
 		$data ['babID']= $babID;	
 
 		$this->load->view('templating/t-footer-back');
@@ -51,8 +52,9 @@ class  BankSoal extends MX_Controller
 		$this->load->view('v-form-soal',$data);
 	}
 
-	public function uploadsoal($babID)
+	public function uploadsoal()
 	{
+		$options = htmlspecialchars($this->input->post('options'));
 		$UUID=uniqid();
 		$soal=($this->input->post('editor1'));
 		$babID	= htmlspecialchars($this->input->post('babID'));
@@ -68,7 +70,7 @@ class  BankSoal extends MX_Controller
 		$create_by =  $this->session->userdata['id'];
 		//kesulitan indks 1-3
 		$dataSoal = array(
-			
+				
                 'soal' => $soal,
                 'jawaban' => $jawaban,
                 'sumber'=> $sumber,
@@ -86,37 +88,91 @@ class  BankSoal extends MX_Controller
 		$data['tb_banksoal'] = $this->mbanksoal->get_soalID($UUID)[0];
 		$soalID = $data['tb_banksoal']['id_soal'];
 
-		//data untuk pilahan jawaban
-		$dataJawaban = array(
-			array(
-				'pilihan' => 'A' ,
-				'jawaban' => $a,
-				'id_soal' => $soalID
-				),
-			array(
-				'pilihan' => 'B' ,
-				'jawaban' => $b,
-				'id_soal' => $soalID
-				),
-			array(
-				'pilihan' => 'C' ,
-				'jawaban' => $c,
-				'id_soal' => $soalID
-				),
-			array(
-				'pilihan' => 'D' ,
-				'jawaban' => $e,
-				'id_soal' => $soalID
-				),
-			array(
-				'pilihan' => 'E' ,
-				'jawaban' => $e,
-				'id_soal' => $soalID
-				)
-			);
+
+		#Start pengecekan jenis inputan jawaban#
+		//pengkondisian untuk jenis inputan text atau gambar
+		if ($options == 'text') {
+			#jika inputan text
+			//data untuk pilahan jawaban
+			$dataJawaban = array(
+				array(
+					'pilihan' => 'A' ,
+					'jawaban' => $a,
+					'id_soal' => $soalID
+					),
+				array(
+					'pilihan' => 'B' ,
+					'jawaban' => $b,
+					'id_soal' => $soalID
+					),
+				array(
+					'pilihan' => 'C' ,
+					'jawaban' => $c,
+					'id_soal' => $soalID
+					),
+				array(
+					'pilihan' => 'D' ,
+					'jawaban' => $e,
+					'id_soal' => $soalID
+					),
+				array(
+					'pilihan' => 'E' ,
+					'jawaban' => $e,
+					'id_soal' => $soalID
+					)
+				);
+
+				//call function insert jawaban tet
+				$this->mbanksoal->insert_jawaban($dataJawaban);
+		} else {
+			#jika inputan gambar
+			//call functiom upload gamabar
+			$this->uploadgambar($soalID);
+		}
+		#END pengecekan jenis inputan jawaban#
+
+	}
 
 
-			$this->mbanksoal->insert_jawaban($dataJawaban);
+
+	public function uploadgambar($soalID)
+	{
+		$config['upload_path'] = './assets/image/jawaban/';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->load->library( 'upload', $config );
+
+        $n='1';
+        $dat_gambar=array();
+     	for ($x = 1; $x <= 5; $x++) {
+       		$gambar="gambar".$n;
+       		$this->upload->do_upload($gambar);
+       		
+
+       		$file_data = $this->upload->data();
+         	$file_name = $file_data['file_name'];
+         	if ($n=='1') {
+         		$pilihan = "A";
+         	} else if($n=='2') {
+         		$pilihan ="B";
+         	}else if($n=='3') {
+         		$pilihan = "C";
+         	}else if($n=='4'){
+         		$pilihan = 'D';
+         	}else{
+         		$pilihan = 'E';
+         	}
+         	
+         	$datagambar[]=array('pilihan'=>$pilihan,
+         				 		'gambar'=>$file_name,
+         				 		'id_soal'=>$soalID);
+         	
+         	$n++;
+       	}
+       	
+       	$this->mbanksoal->insert_gambar($datagambar);
 
 
 	}

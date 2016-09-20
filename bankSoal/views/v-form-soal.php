@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-8">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal/63" method="post">
+                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Soal</h3>
                         <!-- untuk menampung bab id -->
@@ -62,86 +62,215 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4">Jumlah Pilihan</label>
                             <div class="col-sm-8">
-                                <select name="color" class="form-control">
-                                    <option value="">Empat Pilihan</option>
-                                    <option value="1">Lima Pilihan</option>
-                                </select>
-                                <span>*Pilihan a/b/c/d/..</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4">Jensi Pilihan</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group" data-toggle="buttons">
-                                      <label class="btn ">
-                                        <input type="radio" name="options" id="option2" autocomplete="off"> Text
+                                <div class="btn-group" data-toggle="buttons" >
+                                      <label class="btn active " id="empatpil">
+                                        <input type="radio" name="opjumlah" value="" autocomplete="off" > 4 Pilihan
                                       </label>
-                                      <label class="btn">
-                                        <input type="radio" name="options" id="option3" autocomplete="off"> Gambar
+                                      <label class="btn" id="limapil">
+                                        <input type="radio" name="opjumlah"  value="" autocomplete="off" checked="true"> 5 Pilihan
                                       </label>
                                  </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan A</label>
-                            <div class="col-sm-5">
-                               <textarea name="a" class="form-control"> </textarea>
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="file" class="btn btn-success">
-                                Pilih Gambar
-                                 </label>
-                                 <input style="display:none;" type="file" id="file" name="gambar"/>
+                            <label class="control-label col-sm-4">Jensi Pilihan</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group" data-toggle="buttons" >
+                                      <label class="btn active " id="text">
+                                        <input type="radio" name="options" value="text" autocomplete="off" checked="true"> Text
+                                      </label>
+                                      <label class="btn" id="gambar">
+                                        <input type="radio" name="options"  value="gambar" autocomplete="off"> Gambar
+                                      </label>
+                                 </div>
                             </div>
                         </div>
+                        <!-- Start input jawaban A -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Pilihan A</label>
+                            <!-- Start input text A -->
+                            <div class="col-sm-8 piltext">
+                               <textarea name="a"  class="form-control"> </textarea>
+                            </div>
+                            <!-- END input text A -->
+                            <!-- Start input gambar A -->
+                            <div class="col-sm-8 pilgambar" hidden="true">
+                                <div class="col-sm-12">
+                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameA"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeA"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeA"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileA" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileA" name="gambar1"/>
+                                </div>
+                            </div>
+                            <!-- END input Gambar A -->
+                        </div>
+                        <!-- END input jawaban A -->
+
+                        <!-- Start input jawaban B -->
                         <div class="form-group">
                             <label class="control-label col-sm-4">Pilihan B</label>
-                            <div class="col-sm-5">
+                            <!-- Start input text B -->
+                            <div class="col-sm-8 piltext">
                                <textarea name="b" class="form-control"> </textarea>
                             </div>
-                            <div class="col-sm-3">
-                                <label for="file" class="btn btn-success">
-                                Pilih Gambar
-                                 </label>
-                                 <input style="display:none;" type="file" id="file" name="gambar"/>
+                            <!-- END input text B -->
+                            <div class="col-sm-8 pilgambar" hidden="true">
+                                <div class="col-sm-12">
+                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameB"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeB"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeB"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileB" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileB" name="gambar2"/>
+                                </div>
                             </div>
                         </div>
+                        <!-- END input jawaban  -->
+
+                        <!-- Start input jawaban C -->
                         <div class="form-group">
                             <label class="control-label col-sm-4">Pilihan C</label>
-                            <div class="col-sm-5">
+                            <!-- Start input text C -->
+                            <div class="col-sm-8 piltext" >
                                <textarea name="c" class="form-control"> </textarea>
                             </div>
-                            <div class="col-sm-3">
-                                <label for="file" class="btn btn-success">
-                                Pilih Gambar
-                                 </label>
-                                 <input style="display:none;" type="file" id="file" name="gambar"/>
+                            <!-- END input text C -->
+                            <!-- Start input gambar C -->
+                            <div class="col-sm-8 pilgambar" hidden="true">
+                                <div class="col-sm-12">
+                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameC"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeC"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeC"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileC" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileC" name="gambar3"/>
+                                </div>
                             </div>
+                            <!-- END input Gambar C -->                       
                         </div>
+                        <!-- END input Jawaban C -->
+
+                        <!-- Start input jawaban D -->
                         <div class="form-group">
                             <label class="control-label col-sm-4">Pilihan D</label>
-                            <div class="col-sm-5">
+                            <!-- Start input text D -->
+                            <div class="col-sm-8 piltext" >
                                <textarea name="d" class="form-control"> </textarea>
                             </div>
-                            <div class="col-sm-3">
-                                <label for="file" class="btn btn-success">
-                                Pilih Gambar
-                                 </label>
-                                 <input style="display:none;" type="file" id="file" name="gambar"/>
+                            <!-- END input text D -->
+                            <!-- Start input gambar D -->
+                            <div class="col-sm-8 pilgambar" hidden="true">
+                                <div class="col-sm-12">
+                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameD"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeD"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeD"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileD" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileD" name="gambar4"/>
+                                </div>
                             </div>
+                            <!-- END input Gambar D -->                       
                         </div>
-                        <div class="form-group">
+                        <!-- END input Jawaban D -->
+                        
+                        <!-- Start input jawaban E -->
+                        <div class="form-group" id="pilihan">
                             <label class="control-label col-sm-4">Pilihan E</label>
-                            <div class="col-sm-5">
+                            <!-- Start input text E -->
+                            <div class="col-sm-8 piltext" >
                                <textarea name="e" class="form-control"> </textarea>
                             </div>
-                            <div class="col-sm-3">
-                                <label for="file" class="btn btn-success">
-                                Pilih Gambar
-                                 </label>
-                                 <input style="display:none;" type="file" id="file" name="gambar"/>
+                            <!-- END input text E -->
+                            <!-- Start input gambar E -->
+                            <div class="col-sm-8 pilgambar" hidden="true">
+                                <div class="col-sm-12">
+                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameE"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeE"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeE"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileE" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileE" name="gambar5"/>
+                                </div>
                             </div>
+                            <!-- END input Gambar C -->                       
                         </div>
+                        <!-- END input Jawaban E -->
+
+
+                  
+                       
 
                         <div class="form-group">
                             <label class="control-label col-sm-4">Jawaban Benar</label>
@@ -175,11 +304,158 @@
         </div>
         <!--/ END row -->
     </div>
-            <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' );
-            </script>
+
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace( 'editor1' );
+    </script>
+
+    <!-- script untuk option hide and show -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // Strat  event untuk pilihan jenis input  
+            $("#text").click(function(){
+                $(".piltext").show();
+                 $(".pilgambar").hide();
+            });
+            $("#gambar").click(function(){
+                $(".pilgambar").show();
+                $(".piltext").hide();     
+            });
+            //END  event untuk pilihan jenis input  
+            // Strat  event untuk jumlah pilihan  
+            $("#empatpil").click(function(){   
+                 $("#pilihan").hide();
+            });
+            $("#limapil").click(function(){
+                $("#pilihan").show();
+            });
+            // END  event untuk jumlah pilihan
+
+        });
+    </script>
+
+    <!-- Start script untuk priview gambar soal -->
+    <script type="text/javascript">
+        $(function () {
+
+            // Start event priview gambar pilihan A
+            $('#fileA').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerA.load;
+                reader.readAsDataURL(file);
+                viewerA.setProperties(file);
+            });
+            var viewerA = {
+                load : function(e){
+                    $('#previewA').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameA').text(file.name);
+                    $('#filetypeA').text(file.type);
+                    $('#filesizeA').text(Math.round(file.size/1024));
+                },
+            }
+            // End event priview gambar pilihan A
+
+            // Start event priview gambar pilihan B
+            $('#fileB').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerB.load;
+                reader.readAsDataURL(file);
+                viewerB.setProperties(file);
+            });
+            var viewerB = {
+                load : function(e){
+                    $('#previewB').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameB').text(file.name);
+                    $('#filetypeB').text(file.type);
+                    $('#filesizeB').text(Math.round(file.size/1024));
+                },
+            }
+
+            // End event priview gambar pilihan B
+
+            // Start event priview gambar pilihan C
+            $('#fileC').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerC.load;
+                reader.readAsDataURL(file);
+                viewerC.setProperties(file);
+            });
+            var viewerC = {
+                load : function(e){
+                    $('#previewC').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameC').text(file.name);
+                    $('#filetypeC').text(file.type);
+                    $('#filesizeC').text(Math.round(file.size/1024));
+                },
+            }
+
+            // End event priview gambar pilihan C
+
+            // Start event priview gambar pilihan D
+            $('#fileD').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerD.load;
+                reader.readAsDataURL(file);
+                viewerD.setProperties(file);
+            });
+            var viewerD = {
+                load : function(e){
+                    $('#previewD').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameD').text(file.name);
+                    $('#filetypeD').text(file.type);
+                    $('#filesizeD').text(Math.round(file.size/1024));
+                },
+            }
+
+            // End event priview gambar pilihan D
+
+            // Start event priview gambar pilihan E
+            $('#fileE').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerE.load;
+                reader.readAsDataURL(file);
+                viewerE.setProperties(file);
+            });
+            var viewerE = {
+                load : function(e){
+                    $('#previewE').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameE').text(file.name);
+                    $('#filetypeE').text(file.type);
+                    $('#filesizeE').text(Math.round(file.size/1024));
+                },
+            }
+
+            // End event priview gambar pilihan E
+
+        });
+    </script>
+     <!-- End script untuk priview gambar soal -->
+
+   
+    
+
 
 </section>
         <!--/ END Template Main -->
