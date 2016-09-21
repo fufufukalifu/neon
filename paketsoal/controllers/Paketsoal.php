@@ -26,19 +26,34 @@ class Paketsoal extends MX_Controller
 	}
 
 	function addpaketsoal() {
-		echo "<script>alert('masuk');</script>";
 		$data = array(
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' )
 			);
-		$this->MPaketsoal->insertpaketsoal( $data );
 
+		$this->MPaketsoal->insertpaketsoal( $data );
 	}
-	function coba(){
-		$this->load->view('coba');
+
+	function droppaketsoal($id){
+		$this->MPaketsoal->droppaket( $id );
 	}
-	function ambil_paket_soal(){
+	function updatepaket($id){
+		$data = array(
+			'nm_paket' => $this->input->post( 'nm_paket' ) ,
+			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+			'deskripsi' => $this->input->post( 'deskripsi' ),
+			'durasi' => $this->input->post( 'durasi' )
+			);
+		$this->MPaketsoal->rubahpaket($id, $data );
+	}
+
+	function coba() {
+		$this->load->view( 'coba' );
+	}
+
+	function ambil_paket_soal() {
 		$data = $this->output
 		->set_content_type( "application/json" )
 		->set_output( json_encode( $this->load->MPaketsoal->getpaketsoal() ) ) ;
