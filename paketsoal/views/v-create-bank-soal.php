@@ -5,7 +5,7 @@
                 <h3 class="panel-title">Buat Paket Soal Baru</h3>
             </div>
             <div class="panel-body">
-                <div class="col-md-6">
+                <div class="col-md-5">
 
                     <div class="alert alert-dismissable alert-success hide" id="message">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -80,38 +80,46 @@
                     </form>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <form class="panel panel-default" action="" data-parsley-validate>
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="ico-books"></i>Daftar Paket Soal</h3>
                         </div>               
                         <div class="panel-body">
-                            <table class="table table-striped" style="font-size: 13px" id="zero-configuration">
+                            <table class="table table-striped" style="font-size: 13px" id="datatable">
+                                <button class="refresh">refresh</button>
                                 <thead>
                                     <tr>
                                         <th class="text-center">ID</th>
                                         <th>Nama Paket Soal</th>
                                         <th>Jumlah soal</th>
                                         <th class="text-center">Durasi</th>
+                                        <th>Aksi</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($paket_soal as $paket_soals): ?>
                                     <tr>
-                                        
-                                            <td><?=$paket_soals['id_paket'] ?></td>
-                                            <td><?=$paket_soals['nm_paket'] ?></td>
-                                            <td><?=$paket_soals['jumlah_soal'] ?></td>
-                                            <td><?=$paket_soals['durasi'] ?></td>
-                                        <?php endforeach ?>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
-                </div>
-
+                                        <td><?=$paket_soals['id_paket'] ?></td>
+                                        <td><?=$paket_soals['nm_paket'] ?></td>
+                                        <td><?=$paket_soals['jumlah_soal'] ?></td>
+                                        <td><?=$paket_soals['durasi'] ?></td>
+                                        <td> 
+                                            <button type="button" id="rubahBtn" class="btn btn-default" 
+                                            data-toggle="modal" data-target="#modalRubah<?= $paket_soals['id_paket'] ?>" title="Rubah Data"><i class="ico-file5"></i></button>
+                                            <button type="button" id="hapusBtn" class="btn btn-default" 
+                                            data-toggle="modal" data-id="<?= $paket_soals['id_paket'] ?>" title="Hapus Data"><i class="ico-remove"></i></button>
+                                        </td>
+                                    <?php endforeach ?>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
+</div>
 </div>
