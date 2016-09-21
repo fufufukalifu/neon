@@ -118,9 +118,9 @@ class Admin extends MX_Controller {
             'judul_halaman' => 'BAB Mata Pelajaran'
         );
         $id = $this->uri->segment(4);
+        ;
         $data['babs'] = $this->mmatapelajaran->daftarBab($id);
         $data['file'] = 'v-bab.php';
-
         $this->parser->parse('v-index-admin', $data);
     }
 
@@ -149,6 +149,52 @@ class Admin extends MX_Controller {
         $data['tingkatPelajaranID'] = htmlspecialchars($this->input->post('idtmp'));
         $this->mmatapelajaran->hapusbabMP($id, $data);
         redirect(base_url('index.php/admin/daftarbab/' . $nmmp . '/' . $data['tingkatPelajaranID']));
+    }
+
+    function daftarsubbab() {
+        $data = array(
+            'judul_halaman' => 'SUB BAB Mata Pelajaran'
+        );
+        $id = $this->uri->segment(5);
+        $data['babs'] = $this->mmatapelajaran->daftarsubBab($id);
+        $data['file'] = 'v-subbab.php';
+
+        $this->parser->parse('v-index-admin', $data);
+    }
+
+    function tambahsubbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $jdlbab = htmlspecialchars($this->input->post('jdlbab'));
+
+        $data['babID'] = htmlspecialchars($this->input->post('idbab'));
+        $data['judulsubBab'] = htmlspecialchars($this->input->post('judulsubBab'));
+        $data['keterangan'] = htmlspecialchars($this->input->post('desksubbab'));
+        $this->mmatapelajaran->tambahsubbabMP($data);
+        redirect(base_url('index.php/admin/daftarsubbab/' . $nmmp . '/' . $jdlbab . '/' . $data['babID']));
+    }
+
+    function rubahsubbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $jdlbab = htmlspecialchars($this->input->post('jdlbab'));
+
+        $id = htmlspecialchars($this->input->post('idsubBab'));
+        $data['babID'] = htmlspecialchars($this->input->post('idbab'));
+        $data['judulsubBab'] = htmlspecialchars($this->input->post('judulsubBab'));
+        $data['keterangan'] = htmlspecialchars($this->input->post('desksubBab'));
+
+        $this->mmatapelajaran->rubahsubbabMP($id, $data);
+        redirect(base_url('index.php/admin/daftarsubbab/' . $nmmp . '/' . $jdlbab . '/' . $data['babID']));
+    }
+
+    function hapussubbabMP() {
+        $nmmp = htmlspecialchars($this->input->post('nmmp'));
+        $jdlbab = htmlspecialchars($this->input->post('jdlbab'));
+        $id = htmlspecialchars($this->input->post('idsubBab'));
+
+        $data['babID'] = htmlspecialchars($this->input->post('idbab'));
+        
+        $this->mmatapelajaran->hapussubbabMP($id, $data);
+        redirect(base_url('index.php/admin/daftarsubbab/' . $nmmp . '/' . $jdlbab . '/' . $data['babID']));
     }
 
 }
