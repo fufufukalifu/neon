@@ -73,7 +73,7 @@
                             </div>
                             <div class="panel-footer">
                                 <a class="btn btn-primary" id="updateTable">Update</a>
-                                <a class="btn btn-inverse" id="UpdateCancel">Cancel</a>
+                                <a class="btn btn-inverse" id="UpdateCancel">Done</a>
 
                             </div>
                         </div>
@@ -174,7 +174,7 @@
                                             data-deskripsi="<?= $paket_soals['deskripsi'] ?>" 
                                             data-target="#modalRubah<?= $paket_soals['id_paket'] ?>" title="Rubah Data"><i class="ico-file5"></i></button>
                                             
-                                            <button type="button" id="hapusBtn" class="btn btn-default" 
+                                            <button type="button" id="hapusBtn" class="btn btn-default"  data-id="<?= $paket_soals['id_paket'] ?>" 
                                             data-toggle="modal" 
                                             title="Hapus Data">
                                             <i class="ico-remove"></i></button>

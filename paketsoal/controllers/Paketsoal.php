@@ -40,12 +40,23 @@ class Paketsoal extends MX_Controller
 		$this->MPaketsoal->droppaket( $id );
 	}
 	function updatepaket($id){
+
+
 		$data = array(
-			'nm_paket' => $this->input->post( 'nm_paket' ) ,
-			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
-			'deskripsi' => $this->input->post( 'deskripsi' ),
-			'durasi' => $this->input->post( 'durasi' )
+			'nm_paket' =>  $this->input->post( 'nm_paket' ) ,
+			'deskripsi' => $this->input->post('jumlah_soal'),
+			'jumlah_soal' => $this->input->post('durasi'),
+			'durasi' => $this->input->post('deskripsi')
 			);
+
+
+		// $data = array(
+		// 	'nm_paket' => $this->input->post( 'nm_paket' ) ,
+		// 	'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+		// 	'deskripsi' => $this->input->post( 'deskripsi' ),
+		// 	'durasi' => $this->input->post( 'durasi' )
+		// 	);
+
 		$this->MPaketsoal->rubahpaket($id, $data );
 	}
 
