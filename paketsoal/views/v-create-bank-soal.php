@@ -166,7 +166,8 @@
                                         <td><?=$paket_soals['jumlah_soal'] ?></td>
                                         <td><?=$paket_soals['durasi'] ?></td>
                                         <td> 
-                                            <button type="button" id="rubahBtn" class="btn btn-default" 
+                                            <button type="button" id="rubahBtn" 
+                                            class="btn btn-default" 
                                             data-id="<?= $paket_soals['id_paket'] ?>" 
                                             data-nm_paket="<?= $paket_soals['nm_paket'] ?>" 
                                             data-jumlah_soal="<?= $paket_soals['jumlah_soal'] ?>" 
