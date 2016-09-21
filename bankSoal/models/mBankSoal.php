@@ -6,12 +6,11 @@
 class MbankSoal extends CI_Model
 {
 	
-	# Start Function untuk form soal#
+	# Start Function untuk form soal#	
 	public function insert_soal($dataSoal)
 	{
 		 $this->db->insert('tb_banksoal', $dataSoal);
 	}
-
 
 
 	public function get_soalID($UUID)
@@ -65,11 +64,67 @@ class MbankSoal extends CI_Model
 		return $query->result_array();
 	}
 
-	public function get_jawaban($id_soal)
-	{
-		# code...
+
+	# Start Function untuk form update soal#
+	public function ch_soal($data)
+	{	
+		$this->db->set($data['dataSoal']);
+		$this->db->where('UUID',$data['UUID']);
+		$this->db->update('tb_banksoal');
+		
+
+	
 	}
 
+	public function get_onesoal($UUID)
+	{	
+		$this->db->where('UUID',$UUID);
+		$this->db->select('*')->from('tb_banksoal');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_piljawaban($id_soal)
+	{
+		$this->db->where('id_soal',$id_soal);
+		$this->db->select('*')->from('tb_piljawaban');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_oldgambar($soalID)
+	{
+		$this->db->where('id_soal');
+		$this->db->select('id_pilihan,gambar')->from('tb_piljawaban');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	//function untuk update pilihan jawaban text
+	public function ch_jawaban($data)
+	{
+		$this->db->update_batch('tb_piljawaban',$data['dataJawaban'],'id_pilihan');
+	}
+
+	public function ch_gambar($datagambar)
+	{
+		// $this->db->update_batch('tb_piljawaban',$datagambar,'id_pilihan');
+		var_dump($datagambar);
+	}
+
+
+	# END Function untuk form update soal#
+
+
+	# Start Function untuk form delete bank soal#
+	public function delete_banksoal($data)
+	{
+		$this->db->where('id_soal',$data);
+		$this->db->set('status','0');
+		$this->db->update('tb_banksoal');
+	}
+
+	# END Function untuk form delete bank soal#
 
 
 
