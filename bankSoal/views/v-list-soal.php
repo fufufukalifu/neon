@@ -45,14 +45,24 @@
                                         <th>Pilahan D</th>
                                         <th>Pilahan E</th>
                                         <th>Jawaban</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                   <?php foreach ($soal as $row): ?>
                                     <tr>
-                                        <td><?= $row['id_soal']; ?></td>
+                                        <td ><?= $row['id_soal']; ?></td>
                                         <td><?= $row['sumber']; ?></td>
-                                        <td><?= $row['kesulitan']; ?></td>
+                                        <td><?php
+                                                    $kesulitan=$row['kesulitan'];
+                                                    if ($kesulitan=='1') {
+                                                         echo "Mudah";
+                                                     } else if($kesulitan=='2'){
+                                                         echo "Sedang";
+                                                     }else{
+                                                        echo "Sulit";
+                                                     }
+                                                      ?></td>
                                         <td><?= $row['soal']; ?></td>
                                         <td></td>
                                         <td></td>
@@ -60,6 +70,20 @@
                                         <td></td>
                                         <td></td>
                                         <td><?= $row['jawaban']; ?></td>
+                                        <td >
+                                            <div>
+                                                <form action="<?=base_url();?>index.php/banksoal/formUpdate" method="post">
+
+                                                    <input type="text" name="UUID" value="<?=$row['UUID']?>"  hidden="true">
+                                                    <input type="text" name="babID" value="<?=$babID;?>" hidden="true">
+                                                    <button type="submit" class="btn btn-default"><i class="ico-file5"></i></button>
+                                                    
+                                                </form>
+                                            </div>
+                                            
+                                         
+                                            <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="1" data-nama="Ilmu Pengetahuan Alam" title="Hapus Data"><i class="ico-remove"></i></button>
+                                        </td>
 
                                     </tr>
                                 <?php endforeach ?>

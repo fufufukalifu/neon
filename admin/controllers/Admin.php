@@ -9,6 +9,7 @@ class Admin extends MX_Controller {
         parent::__construct();
         $this->load->model('video/mvideos');
         $this->load->model('matapelajaran/mmatapelajaran');
+        $this->load->model('banksoal/mbanksoal');
         $this->load->library('parser');
     }
 
@@ -33,6 +34,7 @@ class Admin extends MX_Controller {
 
         $this->parser->parse('v-index-admin', $data);
     }
+
 
     function loadcontainer() {
         return $this->load->view('v-container');
@@ -196,6 +198,21 @@ class Admin extends MX_Controller {
         $this->mmatapelajaran->hapussubbabMP($id, $data);
         redirect(base_url('index.php/admin/daftarsubbab/' . $nmmp . '/' . $jdlbab . '/' . $data['babID']));
     }
+
+    #START FUNCTION UNTUK BANK SOAL#
+
+    // function listmp($tingkatID) 
+    // {
+    //     $data = array(
+    //         'judul_halaman' => 'Dashboard Admin'
+    //     );
+    //     $data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
+    //     $data['file'] =  APPPATH.'modules/banksoal/views/v-list-mp.php';
+
+    //     $this->parser->parse('v-index-admin', $data);
+    // }
+
+    #END FUNCTION UNTUK BANK SOAL#
 
 }
 
