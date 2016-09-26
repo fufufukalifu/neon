@@ -34,7 +34,12 @@
                                     <tr>
                                         <td><?= $row['id'];?></td>
                                         <td><?= $row['keterangan']; ?></td>
-                                        <td><a href="<?=base_url();?>index.php/banksoal/listbab/<?=$row['id'];?>" class="label label-primary">Lihat Bab</a></td>
+                                        <td>
+                                        <form action="<?=base_url();?>index.php/banksoal/listbab" method="post">
+                                            <input type="text" name="mpID" value="<?=$row['id'];?>" hidden="true" >
+                                            <button type="submit" class="btn btn-primary">Lihat Bab</button>
+                                        </form>
+                                        </td>
                                        
 
 

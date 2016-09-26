@@ -14,86 +14,81 @@ class  BankSoal extends MX_Controller
 
 
 
-		public function listmp($tingkatID)
+		public function listmp()
 		{	
-			$data['tingkat']  = $this->mtemplating->get_tingkat();
-			$data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
-			$data['tingkatID'] = $tingkatID;
+			$tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+			if ($tingkatID==null) {
+				echo "redirect dashboard guru";
+			} else {
+				$data['tingkat']  = $this->mtemplating->get_tingkat();
+				$data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
+				$data['tingkatID'] = $tingkatID;
+
+				$data['files'] = array(
+					APPPATH.'modules/banksoal/views/v-list-mp.php',
+					);
+
+				$data['judul_halaman'] = "List  Mata Pelajaran";
+
+				$this->load->view( 'templating/index-b-guru', $data );
+			}
+		}
+
+		public function listbab()
+		{
+			$mpID=htmlspecialchars($this->input->post('mpID'));
 			
-			$data['files'] = array(
-				APPPATH.'modules/banksoal/views/v-list-mp.php',
-				);
+			if ($mpID==null) {
+				echo "redirect ke dashboard guru";
+			} else {
+				$data['tingkat']  = $this->mtemplating->get_tingkat();
 
-			$data['judul_halaman'] = "List  Mata Pelajaran";
-
-			$this->load->view( 'templating/index-b-guru', $data );
-
-
-			// $data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
-			// // var_dump($data['pelajaran']); //for testing
-			// $this->load->view('templating/t-footer-back');
-	  //       $this->load->view('templating/t-header');
-			// $this->load->view('v-list-mp',$data);
+				$data['bab'] =$this->mbanksoal->get_bab($mpID);
+				$data['judul_halaman'] = "List Bab";
+				$data['files'] = array(
+					APPPATH.'modules/banksoal/views/v-list-bab.php',
+					);
+				$this->load->view( 'templating/index-b-guru', $data );
+			}
+			
 		}
 
-		public function listbab($tingkatPelajaranID)
+		public function listsoal()
 		{
-			$data['tingkat']  = $this->mtemplating->get_tingkat();
+			$babID = htmlspecialchars($this->input->post('babID'));
+			if ($babID==null) {
+			    echo "redirect dashboard guru";
+			} else {
+				$data['tingkat']  = $this->mtemplating->get_tingkat();
+				$data['soal'] =$this->mbanksoal->get_soal($babID);
+				$data ['babID']= $babID;	
+				$data['judul_halaman'] = "List  Soal";
+				$data['files'] = array(
+					APPPATH.'modules/banksoal/views/v-list-soal.php',
+					);
+				$this->load->view( 'templating/index-b-guru', $data );
+			}
 
-			$data['bab'] =$this->mbanksoal->get_bab($tingkatPelajaranID);
-			$data['judul_halaman'] = "List Bab";
-			$data['files'] = array(
-				APPPATH.'modules/banksoal/views/v-list-bab.php',
-				);
-			$this->load->view( 'templating/index-b-guru', $data );
-
-
-
-
-			// $data['bab'] =$this->mbanksoal->get_bab($tingkatPelajaranID);
-			// // var_dump($data['pelajaran']); //for testing
-			// $this->load->view('templating/t-footer-back');
-	  //       $this->load->view('templating/t-header');
-			// $this->load->view('v-list-bab',$data);
-		}
-
-		public function listsoal($babID)
-		{
-			$data['tingkat']  = $this->mtemplating->get_tingkat();
-			$data['soal'] =$this->mbanksoal->get_soal($babID);
-			$data ['babID']= $babID;	
-			$data['judul_halaman'] = "List  Soal";
-			$data['files'] = array(
-				APPPATH.'modules/banksoal/views/v-list-soal.php',
-				);
-			$this->load->view( 'templating/index-b-guru', $data );
-
-
-			// $data['soal'] =$this->mbanksoal->get_soal($babID);
-			// // var_dump($data);
-			// $data ['babID']= $babID;	
-
-			// $this->load->view('templating/t-footer-back');
-	  //       $this->load->view('templating/t-header');
-			// $this->load->view('v-list-soal',$data);
 		}
 
 	#Start Function untuk form upload bank soal#
 		public function formsoal()
 		{	
-			$data['tingkat']  = $this->mtemplating->get_tingkat();
 			$data['babID']=htmlspecialchars($this->input->post('babID'));
-			$data['judul_halaman'] = "Form Input Soal";
-			$data['files'] = array(
-				APPPATH.'modules/banksoal/views/v-form-soal.php',
-				);
-			$this->load->view( 'templating/index-b-guru', $data );
+			if ($data['babID']==null) {
+				echo "redirect ke dashboard";
+			} else {
+				$data['tingkat']  = $this->mtemplating->get_tingkat();
+				
+				$data['judul_halaman'] = "Form Input Soal";
+				$data['files'] = array(
+					APPPATH.'modules/banksoal/views/v-form-soal.php',
+					);
+				$this->load->view( 'templating/index-b-guru', $data );
 
-			// $data['babID']=htmlspecialchars($this->input->post('babID'));
+			}
+			
 
-			// $this->load->view('templating/t-footer-back');
-	  //       $this->load->view('templating/t-header');
-			// $this->load->view('v-form-soal',$data);
 		}
 
 		public function uploadsoal()
