@@ -349,17 +349,13 @@
 
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {
-                var filenameA = document.getElementByID('fileA').value;
+                // var filenameA = document.getElementByID('fileA').value;
                 var file = this.files[0];
                 var reader = new FileReader();
                 reader.onload = viewerA.load;
                 reader.readAsDataURL(file);
                 viewerA.setProperties(file);
-
-                console.log('test');
-                console.log('file');
-                console.log('filenameA');
-             
+            
             });
             var viewerA = {
                 load : function(e){
@@ -368,8 +364,6 @@
                 setProperties : function(file){
                     $('#filenameA').text(file.name);
                     $('#filetypeA').text(file.type);
-                    console.log('masuk console');
-                    console.log(file.type);
                     $('#filesizeA').text(Math.round(file.size/1024));
                 },
             }
