@@ -24,7 +24,12 @@
                                     <tr>
                                         <td><?= $row['id']; ?></td>
                                         <td><?= $row['judulBab']; ?></td>
-                                        <td><a href="<?=base_url();?>index.php/banksoal/listsoal/<?= $row['id'];?>" class="label label-primary">Lihat Bab</a></td>
+                                        <td>
+                                            <form action="<?=base_url();?>index.php/banksoal/listsoal" method="post">
+                                                <input type="text" name="babID" value="<?= $row['id'];?>" hidden="true">
+                                                <button class="btn btn-primary">Lihat Bab</button>
+                                            </form>
+                                        </td>
                                        
 
 
