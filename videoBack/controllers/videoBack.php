@@ -12,8 +12,8 @@ class videoBack extends MX_Controller {
         $this->load->library('table');
         $this->load->model('video/mvideos');
         $this->load->model('guru/mguru');
-        sessionkonfirm();
-        get_session_guru();
+        // sessionkonfirm();
+        // get_session_guru();
     }
 
     function get_video_manager() {

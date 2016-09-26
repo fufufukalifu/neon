@@ -9,29 +9,28 @@ class Paketsoal extends MX_Controller
 	public function __construct() {
 		$this->load->library( 'parser' );
 		$this->load->model( 'MPaketsoal' );
-		$this->load->model('BankSoal/mBankSoal');
+		$this->load->model( 'BankSoal/mBankSoal' );
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
 		parent::__construct();
 	}
 
-	public function ajax_update()
-	{
+	public function ajax_update() {
 		$data = array(
-			'idpaket' => $this->input->post('idpaket'),
+			'idpaket' => $this->input->post( 'idpaket' ),
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' )
 			);
 
-		$this->mpaketsoal->rubahpaket(array('id' => $this->input->post('id')), $data);
-		echo json_encode(array("status" => TRUE));
+		$this->mpaketsoal->rubahpaket( array( 'id' => $this->input->post( 'id' ) ), $data );
+		echo json_encode( array( "status" => TRUE ) );
 	}
 
-	public function ajax_edit($id){
-		$data = $this->MPaketsoal->get_by_id($id);
-		echo json_encode($data);
+	public function ajax_edit( $id ) {
+		$data = $this->MPaketsoal->get_by_id( $id );
+		echo json_encode( $data );
 	}
 
 	function ajax_list() {
@@ -42,33 +41,34 @@ class Paketsoal extends MX_Controller
 		//print_r($list);
 
 		//mengambil nilai list
+		$baseurl = base_url();
 		foreach ( $list as $paket_soal ) {
-		//	$no++;
+			// $no++;
 			$row = array();
 			$row[] = $paket_soal['id_paket'];
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
 			$row[] = '<a class="btn btn-sm btn-primary"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-file5"></i></a>
-			<a class="btn btn-sm btn-success"  title="Add Soal" onclick="add_soal('."'".$paket_soal['id_paket']."'".')"><i class="ico-file-plus2"></i></a>
-			         <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
-			
+			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
+
 			$data[] = $row;
 
 		}
 		//print_r($data);
 		$output = array(
-			"draw" => $_POST['draw']	,
+			"draw" => $_POST['draw'] ,
 			"recordsTotal"=>$this->MPaketsoal->hitung_semua(),
 			"recordsFiltered"=>$this->MPaketsoal->hitung_filter(),
 			"data"=>$data,
 			);
 
-		echo json_encode($output);
+		echo json_encode( $output );
 	}
 
 	function index() {
-
+		$this->tambahpaketsoal();
 	}
 
 	function tambahpaketsoal() {
@@ -80,12 +80,22 @@ class Paketsoal extends MX_Controller
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
+	function add_soal() {
+		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+		$data['judul_halaman'] = "Tambahkan Paket Soal";
+		$data['files'] = array(
+			APPPATH.'modules/Paketsoal/views/v-create-paket-soal.php',
+			);
+		$this->load->view( 'templating/index-b-guru', $data );
+	}
+
+
 
 
 
 	function addpaketsoal() {
 		$this->form_validation->set_rules( 'nama_paket', "Error Nama Paket", 'required' );
-		//$this->form_validation->set_message('required',"You can't allowed empty");
+	//$this->form_validation->set_message('required',"You can't allowed empty");
 
 		$data = array(
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
@@ -101,8 +111,7 @@ class Paketsoal extends MX_Controller
 		$this->MPaketsoal->droppaket( $id );
 	}
 	function updatepaketsoal() {
-
-		$id=$this->input->post('id_paket');
+		$id=$this->input->post( 'id_paket' );
 		$data = array(
 			'nm_paket' =>  $this->input->post( 'nama_paket' ) ,
 			'deskripsi' => $this->input->post( 'jumlah_soal' ),
@@ -113,19 +122,55 @@ class Paketsoal extends MX_Controller
 		$this->MPaketsoal->rubahpaket( $id, $data );
 	}
 
-	function coba() {
-		$this->load->view( 'coba' );
-	}
-
 	function ambil_paket_soal() {
 		$data = $this->output
 		->set_content_type( "application/json" )
 		->set_output( json_encode( $this->load->MPaketsoal->getpaketsoal() ) ) ;
 	}
 
-	//paket soal relasi bank soal
-	function set_banksoal($idpaket){
-
+	function addbanksoal($idpaket){
+		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
+		//var_dump($data['paket_soal']);
+		$data['judul_halaman'] = "Tambahkan Bank Soal";
+		$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
+		
+		$data['files'] = array(
+			APPPATH.'modules/Paketsoal/views/v-add-soal.php',
+			);
+		$this->load->view( 'templating/index-b-guru', $data );
 	}
+
+	function ajax_get_soal_by_bab($babID){
+
+		$list = $soal=$this->mBankSoal->get_soal($babID);
+		$data = array();
+		//$no = $_POST['start'];
+		//$no = 1;
+		//print_r($list);
+
+		//mengambil nilai list
+		//print_r($list);
+		$baseurl = base_url();
+		foreach ( $list as $soal ) {
+			// $no++;
+			$row = array();
+			$row[] = $soal['id_soal'];
+			$row[] = $soal['soal'];
+
+			$data[] = $row;
+
+		}
+		//print_r($data);
+		$output = array(
+			"data"=>$data,
+			);
+
+		echo json_encode( $output );
+		// $data = $this->output
+		// ->set_content_type( "application/json" )
+		// ->set_output( json_encode( $soal ) ) ;
+		// var_dump($data);
+	}
+//paket soal relasi bank soal
 }
 ?>
