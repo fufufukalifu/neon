@@ -94,7 +94,7 @@ class MbankSoal extends CI_Model
 
 	public function get_oldgambar($soalID)
 	{
-		$this->db->where('id_soal');
+		$this->db->where('id_soal',$soalID);
 		$this->db->select('id_pilihan,gambar')->from('tb_piljawaban');
 		$query = $this->db->get();
 		return $query->result_array();
@@ -108,8 +108,8 @@ class MbankSoal extends CI_Model
 
 	public function ch_gambar($datagambar)
 	{
-		// $this->db->update_batch('tb_piljawaban',$datagambar,'id_pilihan');
-		var_dump($datagambar);
+		$this->db->update_batch('tb_piljawaban',$datagambar,'id_pilihan');
+		// var_dump($datagambar);
 	}
 
 
@@ -117,7 +117,8 @@ class MbankSoal extends CI_Model
 
 
 	# Start Function untuk form delete bank soal#
-	public function delete_banksoal($data)
+	//dalam pengahapusan data bank soal tidak benar2 di hapus tetapi status di rubah dari 1 -> 0
+	public function del_banksoal($data)
 	{
 		$this->db->where('id_soal',$data);
 		$this->db->set('status','0');

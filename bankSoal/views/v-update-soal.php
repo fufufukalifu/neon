@@ -99,7 +99,7 @@
                             <!-- Start input gambar A -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['0']['gambar'];?>" alt="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -118,7 +118,7 @@
                                     <label for="fileA" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileA" name="gambar1"/>
+                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1"/>
                                 </div>
                             </div>
                             <!-- END input Gambar A -->
@@ -136,7 +136,7 @@
                             <!-- END input text B -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['1']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -155,7 +155,7 @@
                                     <label for="fileB" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileB" name="gambar2"/>
+                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2"/>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                             <!-- Start input gambar C -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['2']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -192,7 +192,7 @@
                                     <label for="fileC" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileC" name="gambar3"/>
+                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -211,7 +211,7 @@
                             <!-- Start input gambar D -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['3']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -230,7 +230,7 @@
                                     <label for="fileD" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileD" name="gambar4"/>
+                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4"/>
                                 </div>
                             </div>
                             <!-- END input Gambar D -->                       
@@ -249,7 +249,7 @@
                             <!-- Start input gambar E -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['4']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -268,7 +268,7 @@
                                     <label for="fileE" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileE" name="gambar5"/>
+                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -349,12 +349,17 @@
 
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {
-                console.log('test');
+                var filenameA = document.getElementByID('fileA').value;
                 var file = this.files[0];
                 var reader = new FileReader();
                 reader.onload = viewerA.load;
                 reader.readAsDataURL(file);
                 viewerA.setProperties(file);
+
+                console.log('test');
+                console.log('file');
+                console.log('filenameA');
+             
             });
             var viewerA = {
                 load : function(e){
@@ -363,6 +368,8 @@
                 setProperties : function(file){
                     $('#filenameA').text(file.name);
                     $('#filetypeA').text(file.type);
+                    console.log('masuk console');
+                    console.log(file.type);
                     $('#filesizeA').text(Math.round(file.size/1024));
                 },
             }

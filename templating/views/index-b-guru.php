@@ -503,9 +503,30 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
                                     <span class="text">Daftar Bank Soal</span>
+                                    <span class="arrow"></span>
                                 </a>
+                                <ul id="subbanksoal" class="submenu collapse ">
+                                    <li class="submenu-header ellipsis">Sub Bank Soal</li>
+                                    <!-- get data Tingkat dari db -->
+                                    <!-- Start pengulangan u/ tingkat -->
+                                    <?php
+                                        foreach ($tingkat as $row ) {
+                                    ?>
+
+                                    <li>
+                                        <a href="<?=base_url();?>index.php/banksoal/listmp/<?=$row['id'];?>">
+                                            <span class="text"><?=$row['aliasTingkat']?></span>
+                                        </a>
+                                    </li>
+
+                                    <?php
+                                        }
+                                    ?>
+                                    <!-- END pengulangan u/ tingkat -->
+                                      
+                                </ul>
                             </li>
 
                         </ul>

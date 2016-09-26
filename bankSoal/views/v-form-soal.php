@@ -4,28 +4,12 @@
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-        <!-- Page Header -->
-        <div class="page-header page-header-block">
-            <div class="page-header-section">
-                <h4 class="title semibold">Form Layout</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <ol class="breadcrumb breadcrumb-transparent nm">
-                        <li><a href="javascript:void(0);">Form</a></li>
-                        <li class="active">Layout</li>
-                    </ol>
-                </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-        <!-- Page Header -->
+       
 
 
         <!-- START row -->
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
                 <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
