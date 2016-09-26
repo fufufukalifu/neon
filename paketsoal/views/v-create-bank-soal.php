@@ -13,9 +13,15 @@
                     </div>
 
                     <div class="alert alert-dismissable alert-danger hide" id="messageerror">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        
                         <span>Data ada yang <strong>Kosong</strong></span>
                     </div>
+                    
+                    <div class="alert alert-dismissable alert-success hide" id="messagesucces">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <span>Data Berhasil <strong>disimpan</strong></span>
+                    </div>
+                    
 
                     <!-- UNTUK UPDATE -->
                     <form class="panel panel-default hide" method="post" id="update">
@@ -80,6 +86,7 @@
                     </form>
 
                     <!-- UNTUK SIMPAN -->
+                    <?php validation_errors() ?>
                     <form class="panel panel-default" method="post" id="insert">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="ico-package"></i>Form Paket Soal</h3>
@@ -88,11 +95,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        
                                         <label class="control-label">Nama Paket <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-7">
+                                        <span class="text-danger"><?php echo form_error('nama_paket'); ?></span>
                                         <input type="text" name="nama_paket" class="form-control" placeholder="First" id="namaPaket">
                                     </div>
                                 </div>

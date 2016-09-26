@@ -343,7 +343,7 @@ class  BankSoal extends MX_Controller
 	#END Function untuk delete bank soal #
 		public function deleteBanksoal()
 		{
-			$this->mbanksoal->del_banksoal
+			$this->mbanksoal->del_banksoal;
 		}
 	#END Function untuk delete update bank soal #
 

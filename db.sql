@@ -19,19 +19,33 @@ USE `db_netjoo`;
 /*Table structure for table `tb_bab` */
 
 CREATE TABLE `tb_bab` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL,
   `judulBab` varchar(75) NOT NULL,
   `keterangan` text NOT NULL,
   `status` char(1) DEFAULT '1',
-  `tingkatPelajaranID` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tinkatPelajaranID` (`tingkatPelajaranID`),
-  CONSTRAINT `tb_bab_ibfk_1` FOREIGN KEY (`tingkatPelajaranID`) REFERENCES `tb_tingkat-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+  `tingkatPelajaranID` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_bab` */
 
 insert  into `tb_bab`(`id`,`judulBab`,`keterangan`,`status`,`tingkatPelajaranID`) values (62,'Ciri-ciri mahluk hidup','','1',13),(63,'Perkembangan mahluk hidup','','1',13),(64,'Keseimbangan ekosistem','','1',13),(65,'Greetings','','1',14),(66,'Text','','1',14),(67,'Tenses','','1',14),(68,'Salam','','1',15),(69,'Jenis Teks','','1',15),(70,'Pola Kalimat','','1',15),(71,'Sejarah','','1',16),(72,'Perang Dunia II','','1',16),(73,'Perang Dunia I','','1',16),(74,'4','','1',16);
+
+/*Table structure for table `tb_banksoal` */
+
+CREATE TABLE `tb_banksoal` (
+  `id_soal` int(11) NOT NULL AUTO_INCREMENT,
+  `soal` text NOT NULL,
+  `jawaban` char(1) NOT NULL,
+  `kesulitan` char(1) NOT NULL,
+  `id_bab` int(11) NOT NULL,
+  `id_tingkat-pelajaran` int(11) NOT NULL,
+  `sumber` varchar(100) NOT NULL,
+  `create_by` varchar(100) NOT NULL,
+  `publish` char(1) NOT NULL,
+  PRIMARY KEY (`id_soal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_banksoal` */
 
 /*Table structure for table `tb_guru` */
 
@@ -51,11 +65,11 @@ CREATE TABLE `tb_guru` (
   KEY `a` (`mataPelajaranID`),
   CONSTRAINT `tb_guru_ibfk_2` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_guru_ibfk_3` FOREIGN KEY (`mataPelajaranID`) REFERENCES `tb_mata-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_guru` */
 
-insert  into `tb_guru`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`penggunaID`,`mataPelajaranID`,`biografi`,`photo`,`status`) values (1,'guru','guru belakang',NULL,NULL,4,1,NULL,'default.png','1'),(2,'Guru 2','Belakang','bandung','0923-123',8,3,NULL,'default.png','1'),(3,'',NULL,NULL,NULL,NULL,NULL,NULL,'default.png','1');
+insert  into `tb_guru`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`penggunaID`,`mataPelajaranID`,`biografi`,`photo`,`status`) values (21,'sasda','asd','qqwe','45',NULL,NULL,'Sed aliquet dui auctor blandit ipsum tincidunt\r\nQuis rhoncus lorem dolor eu sem. Aenean enim risus, convallis id ultrices eget.','default.png','1'),(34,'Johny','Subejo','Deep','089656469669',42,2,NULL,'default.png','1');
 
 /*Table structure for table `tb_komen` */
 
@@ -76,6 +90,18 @@ CREATE TABLE `tb_komen` (
 
 insert  into `tb_komen`(`id`,`isiKomen`,`timestampe`,`videoID`,`userID`) values (1,'comment','2016-09-09 12:55:43',9,3);
 
+/*Table structure for table `tb_latihan` */
+
+CREATE TABLE `tb_latihan` (
+  `id_latihan` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_latihan` varchar(75) NOT NULL,
+  `create_by` varchar(75) NOT NULL,
+  `id_paket` int(11) NOT NULL,
+  PRIMARY KEY (`id_latihan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_latihan` */
+
 /*Table structure for table `tb_mata-pelajaran` */
 
 CREATE TABLE `tb_mata-pelajaran` (
@@ -89,6 +115,44 @@ CREATE TABLE `tb_mata-pelajaran` (
 /*Data for the table `tb_mata-pelajaran` */
 
 insert  into `tb_mata-pelajaran`(`id`,`aliasMataPelajaran`,`namaMataPelajaran`,`status`) values (1,'IPA','Ilmu Pengetahuan Alam',1),(2,'IPS','Ilmu Pengetahuan Sosial',1),(3,'ING','Bahasa Inggris',1),(4,'IND','Bahasa Indonesia',1);
+
+/*Table structure for table `tb_mm-paketbank` */
+
+CREATE TABLE `tb_mm-paketbank` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_paket` int(11) NOT NULL,
+  `id_soal` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_mm-paketbank` */
+
+/*Table structure for table `tb_mm-tryoutpaket` */
+
+CREATE TABLE `tb_mm-tryoutpaket` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tryout` int(11) NOT NULL,
+  `id_paket` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_mm-tryoutpaket` */
+
+/*Table structure for table `tb_paket` */
+
+CREATE TABLE `tb_paket` (
+  `id_paket` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_paket` varchar(75) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `jumlah_soal` int(11) NOT NULL,
+  `durasi` int(11) NOT NULL,
+  PRIMARY KEY (`id_paket`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_paket` */
+
+insert  into `tb_paket`(`id_paket`,`nm_paket`,`deskripsi`,`status`,`jumlah_soal`,`durasi`) values (99,'nama_pakettt','deskripsitt',0,55,60);
 
 /*Table structure for table `tb_pengguna` */
 
@@ -106,11 +170,55 @@ CREATE TABLE `tb_pengguna` (
   `status` char(1) DEFAULT '1',
   `last_akses` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_pengguna` */
 
-insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','2016-08-26 13:01:29','1',NULL,NULL,NULL,'user','1','2016-09-08 21:47:20'),(3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(4,'guru','77e69c137812518e359196bb2f5e9bb9','','2016-09-05 14:18:38','1',NULL,NULL,NULL,'guru','1','2016-09-08 21:47:20'),(5,NULL,NULL,'opik.sutisna@mail.unpas.ac.id','2016-09-08 21:47:25','1',NULL,'1875070992721359','facebook','siswa','1','2016-09-09 08:02:58'),(6,'fufufukalifu','21232f297a57a5a743894a0e4a801fc3','op.sutisna@gmail.com','2016-09-08 21:57:31','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:57:31'),(7,'enammm','a8c71f9b5cf41a482b1185480932db3b','hersuss.sibejoo@gmail.com','2016-09-09 12:59:48','1',NULL,NULL,NULL,'siswa','1','2016-09-09 12:59:48'),(8,'guru2','77e69c137812518e359196bb2f5e9bb9','you@mail.unpas.ac.id','2016-09-09 13:46:45','1',NULL,NULL,NULL,'guru','1','2016-09-09 13:46:45');
+insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(41,'siswabageur','efe6398127928f1b2e9ef3207fb82663','goichissnime@gmail.com','2016-09-13 14:18:15','1',NULL,NULL,NULL,'siswa','1','2016-09-13 14:18:15'),(42,'guru','77e69c137812518e359196bb2f5e9bb9','goichinime@gmail.com','2016-09-13 14:21:13','1',NULL,NULL,NULL,'guru','1','2016-09-13 14:21:13');
+
+/*Table structure for table `tb_piljawaban` */
+
+CREATE TABLE `tb_piljawaban` (
+  `id_pilihan` int(11) NOT NULL AUTO_INCREMENT,
+  `pilihan` char(1) NOT NULL,
+  `jawaban` text NOT NULL,
+  `id_soal` int(11) NOT NULL,
+  PRIMARY KEY (`id_pilihan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_piljawaban` */
+
+/*Table structure for table `tb_report-latihan` */
+
+CREATE TABLE `tb_report-latihan` (
+  `id_report-latihan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pengguna` int(11) NOT NULL,
+  `id_latihan` int(11) NOT NULL,
+  `jmlh_kosong` int(11) NOT NULL,
+  `jmlh_benar` int(11) NOT NULL,
+  `jmlh_salah` int(11) NOT NULL,
+  `total_nilai` int(11) NOT NULL,
+  `tgl_pengerjaan` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_report-latihan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_report-latihan` */
+
+/*Table structure for table `tb_report-tryout` */
+
+CREATE TABLE `tb_report-tryout` (
+  `id_report` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pengguna` int(11) NOT NULL,
+  `id_mm-tryout-paket` int(11) NOT NULL,
+  `jmlh_kosong` int(11) NOT NULL,
+  `jmlh_benar` int(11) NOT NULL,
+  `jmlh_salah` int(11) NOT NULL,
+  `total_nilai` int(11) NOT NULL,
+  `tgl_pengerjaan` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_report`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_report-tryout` */
 
 /*Table structure for table `tb_siswa` */
 
@@ -130,11 +238,11 @@ CREATE TABLE `tb_siswa` (
   PRIMARY KEY (`id`),
   KEY `penggunaID` (`penggunaID`),
   CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_siswa` */
 
-insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`status`) values (1,'Nama Depan','Nama Belakang','','234092384','SMK MedikaCom','Jln.Cibaduyut raya 287',0,3,'default.png','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.','1'),(2,'nama depan','nama belakang','alamat saya','dfakdjafkl','s.dki','dfd',0,7,'default.png',NULL,'');
+insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`status`) values (2,'nama depan','nama belakang','alamat saya','dfakdjafkl','s.dki','dfd',0,NULL,'default.png',NULL,''),(3,'qw','qw','qwqw','4324234','Sma Panjalu','ss',0,NULL,'default.jpg',NULL,''),(6,'siswa','bageur','Cikapundung','345345345','Sma Panjalu','Jalan Pasuruan',0,41,'smailll.jpg',NULL,'');
 
 /*Table structure for table `tb_subbab` */
 
@@ -142,16 +250,16 @@ CREATE TABLE `tb_subbab` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `judulSubBab` varchar(75) NOT NULL,
   `babID` int(10) DEFAULT NULL,
+  `date_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `keterangan` text,
   `status` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `babID` (`babID`),
-  CONSTRAINT `tb_subbab_ibfk_1` FOREIGN KEY (`babID`) REFERENCES `tb_bab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+  KEY `babID` (`babID`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_subbab` */
 
-insert  into `tb_subbab`(`id`,`judulSubBab`,`babID`,`keterangan`,`status`) values (31,'Hewan',62,NULL,'1'),(32,'Melestarikan Jenis',63,NULL,'1'),(33,'Berkembang Biak',63,NULL,'1'),(34,'Kegiatan Manusia',64,NULL,'1'),(35,'Greetings 1',65,NULL,'1'),(36,'Narative Text',66,NULL,'1'),(37,'Present Tense',67,NULL,'1'),(38,'Perfect Tense',67,NULL,'1'),(39,'Salam 1',68,NULL,'1'),(40,'Gaya Salam',68,NULL,'1'),(41,'Jenis Teks',69,NULL,'1'),(42,'Laporan',69,NULL,'1'),(43,'Pola Kalimat 1',70,NULL,'1'),(44,'Polat Kalimat 2',70,NULL,'1'),(45,'Sejarah',71,NULL,'1'),(46,'Tujuan Belajar Sejarah',71,NULL,'1'),(47,'Deskripsi Singkat',72,NULL,'1'),(48,'Penyebab',72,NULL,'1'),(49,'Deskripsi Singkat',73,NULL,'1'),(50,'Penyebab',73,NULL,'1');
+insert  into `tb_subbab`(`id`,`judulSubBab`,`babID`,`date_created`,`keterangan`,`status`) values (31,'Hewan',62,NULL,'onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(32,'Melestarikan Jenis',63,'2016-09-19 10:55:35','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(33,'Berkembang Biak',63,'2016-09-19 10:55:37','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(34,'Kegiatan Manusia',64,'2016-09-19 10:55:37','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(35,'Greetings 1',65,'2016-09-19 10:55:38','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(36,'Narative Text',66,'2016-09-19 10:55:38','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(37,'Present Tense',67,'2016-09-19 10:55:39','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(38,'Perfect Tense',67,'2016-09-19 10:55:39','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(39,'Salam 1',68,'2016-09-19 10:55:39','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(40,'Gaya Salam',68,'2016-09-19 10:55:40','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(41,'Jenis Teks',69,'2016-09-19 10:55:40','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(42,'Laporan',69,'2016-09-19 10:55:40','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(43,'Pola Kalimat 1',70,'2016-09-19 10:55:41','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(44,'Polat Kalimat 2',70,'2016-09-19 10:55:41','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(45,'Sejarah',71,'2016-09-19 10:55:43','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(46,'Tujuan Belajar Sejarah',71,'2016-09-19 10:55:44','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(47,'Deskripsi Singkat',72,'2016-09-19 10:55:44','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(48,'Penyebab',72,'2016-09-19 10:55:45','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(49,'Deskripsi Singkat',73,'2016-09-19 10:55:45','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(50,'Penyebab',73,'2016-09-19 10:55:46','onec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis','1'),(51,'',NULL,'2016-09-19 10:55:33',NULL,NULL);
 
 /*Table structure for table `tb_tingkat` */
 
@@ -165,7 +273,7 @@ CREATE TABLE `tb_tingkat` (
 
 /*Data for the table `tb_tingkat` */
 
-insert  into `tb_tingkat`(`id`,`aliasTingkat`,`namaTingkat`,`status`) values (1,'SMA','Sekolah Menengah Atas',1),(2,'SD','Sekolah Dasar',1),(3,'SMP','Sekolah Menengah Pertama',1),(4,'SMK','Sekolah Menengah Kejuruan',1);
+insert  into `tb_tingkat`(`id`,`aliasTingkat`,`namaTingkat`,`status`) values (1,'SD','Sekolah Dasar',1),(2,'SMP','Sekolah Menengah Pertama',1),(3,'SMK','Sekolah Menengah Kejuruan',1),(4,'SMA','Sekolah Menengah Atas',1);
 
 /*Table structure for table `tb_tingkat-pelajaran` */
 
@@ -180,11 +288,24 @@ CREATE TABLE `tb_tingkat-pelajaran` (
   KEY `mataPelajaranID` (`mataPelajaranID`),
   CONSTRAINT `tb_tingkat-pelajaran_ibfk_1` FOREIGN KEY (`tingkatID`) REFERENCES `tb_tingkat` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_tingkat-pelajaran_ibfk_2` FOREIGN KEY (`mataPelajaranID`) REFERENCES `tb_mata-pelajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_tingkat-pelajaran` */
 
-insert  into `tb_tingkat-pelajaran`(`id`,`tingkatID`,`mataPelajaranID`,`keterangan`,`status`) values (13,2,1,'IPA-SD','1'),(14,1,3,'INGGRIS-SMA','1'),(15,3,4,'INDONESIA-SMP','1'),(16,4,2,'SMK-IPS','1');
+insert  into `tb_tingkat-pelajaran`(`id`,`tingkatID`,`mataPelajaranID`,`keterangan`,`status`) values (13,1,1,'IPA-SD','1'),(14,4,3,'INGGRIS-SMA','1'),(15,2,4,'INDONESIA-SMP','1'),(16,3,2,'SMK-IPS','1'),(17,2,1,'untuk SMP IPA','1');
+
+/*Table structure for table `tb_tryout` */
+
+CREATE TABLE `tb_tryout` (
+  `id_tryout` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_tryout` varchar(75) NOT NULL,
+  `tgl_mulai` date NOT NULL,
+  `tgl_berhenti` date NOT NULL,
+  `publish` char(1) NOT NULL,
+  PRIMARY KEY (`id_tryout`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_tryout` */
 
 /*Table structure for table `tb_video` */
 
@@ -203,11 +324,11 @@ CREATE TABLE `tb_video` (
   KEY `tb_video_ibfk_2` (`guruID`),
   CONSTRAINT `tb_video_ibfk_1` FOREIGN KEY (`subBabID`) REFERENCES `tb_subbab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tb_video_ibfk_2` FOREIGN KEY (`guruID`) REFERENCES `tb_guru` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_video` */
 
-insert  into `tb_video`(`id`,`judulVideo`,`namaFile`,`deskripsi`,`path`,`guruID`,`published`,`subBabID`,`status`) values (9,'Cicak','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n',NULL,1,'Y',31,'1'),(10,'Penebangan','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,1,'T',34,'0'),(11,'Perburuan Liar','algoritma.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,1,'Y',34,'1');
+insert  into `tb_video`(`id`,`judulVideo`,`namaFile`,`deskripsi`,`path`,`guruID`,`published`,`subBabID`,`status`) values (9,'Cicak','algoritma1.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n',NULL,34,NULL,34,'1'),(10,'Penebangan','algoritma1.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,34,NULL,34,'1'),(11,'Perburuan Liar','algoritma1.mp4','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NULL,34,NULL,34,'1'),(12,NULL,NULL,NULL,NULL,34,NULL,34,'1');
 
 /*Table structure for table `view_pelajaran_sd` */
 
