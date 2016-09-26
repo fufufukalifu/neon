@@ -2,31 +2,25 @@
         <section id="main" role="main">
             <!-- START Template Container -->
             <div class="container-fluid">
-                <!-- Page Header -->
-                <div class="page-header page-header-block">
-                    <div class="page-header-section">
-                        <h4 class="title semibold">Table datatable</h4>
-                    </div>
-                    <div class="page-header-section">
-                        <!-- Toolbar -->
-                        <div class="toolbar">
-                            <ol class="breadcrumb breadcrumb-transparent nm">
-                                <li><a href="#">Table</a></li>
-                                <li class="active">Datatable</li>
-                            </ol>
-                        </div>
-                        <!--/ Toolbar -->
-                    </div>
-                </div>
-                <!-- Page Header -->
 
                 <!-- START row -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
+                        <!--Start untuk menampilkan nama tabel -->
                             <div class="panel-heading">
-                                <h3 class="panel-title">Zero configuration</h3>
+                                <?php foreach ($tingkat as $row): 
+                                    $id=$row['id'];
+                                    if($tingkatID==$id){
+                                ?>
+
+                                <h3 class="panel-title">Silahkan pilih mata pelajaran pada List Mata Pelajaran <?=$row['aliasTingkat'];?> di bawah ini! </h3>
+                                <?php
+                                    } 
+                                endforeach ?>
                             </div>
+                        <!--END untuk menampilkan nama tabel -->
+
                             <table class="table table-striped" id="zero-configuration">
                                 <thead>
                                     <tr>

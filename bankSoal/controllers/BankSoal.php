@@ -9,48 +9,91 @@ class  BankSoal extends MX_Controller
 		{
 			 parent::__construct();
 	        $this->load->model( 'mbanksoal' );
+	        $this->load->model('Templating/mtemplating');
 		}
 
 
 
 		public function listmp($tingkatID)
 		{	
+			$data['tingkat']  = $this->mtemplating->get_tingkat();
 			$data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
-			// var_dump($data['pelajaran']); //for testing
-			$this->load->view('templating/t-footer-back');
-	        $this->load->view('templating/t-header');
-			$this->load->view('v-list-mp',$data);
+			$data['tingkatID'] = $tingkatID;
+			
+			$data['files'] = array(
+				APPPATH.'modules/banksoal/views/v-list-mp.php',
+				);
+
+			$data['judul_halaman'] = "List  Mata Pelajaran";
+
+			$this->load->view( 'templating/index-b-guru', $data );
+
+
+			// $data['pelajaran'] =$this->mbanksoal->get_pelajaran($tingkatID);
+			// // var_dump($data['pelajaran']); //for testing
+			// $this->load->view('templating/t-footer-back');
+	  //       $this->load->view('templating/t-header');
+			// $this->load->view('v-list-mp',$data);
 		}
 
 		public function listbab($tingkatPelajaranID)
 		{
+			$data['tingkat']  = $this->mtemplating->get_tingkat();
 
 			$data['bab'] =$this->mbanksoal->get_bab($tingkatPelajaranID);
-			// var_dump($data['pelajaran']); //for testing
-			$this->load->view('templating/t-footer-back');
-	        $this->load->view('templating/t-header');
-			$this->load->view('v-list-bab',$data);
+			$data['judul_halaman'] = "List Bab";
+			$data['files'] = array(
+				APPPATH.'modules/banksoal/views/v-list-bab.php',
+				);
+			$this->load->view( 'templating/index-b-guru', $data );
+
+
+
+
+			// $data['bab'] =$this->mbanksoal->get_bab($tingkatPelajaranID);
+			// // var_dump($data['pelajaran']); //for testing
+			// $this->load->view('templating/t-footer-back');
+	  //       $this->load->view('templating/t-header');
+			// $this->load->view('v-list-bab',$data);
 		}
 
 		public function listsoal($babID)
 		{
+			$data['tingkat']  = $this->mtemplating->get_tingkat();
 			$data['soal'] =$this->mbanksoal->get_soal($babID);
-			// var_dump($data);
 			$data ['babID']= $babID;	
+			$data['judul_halaman'] = "List  Soal";
+			$data['files'] = array(
+				APPPATH.'modules/banksoal/views/v-list-soal.php',
+				);
+			$this->load->view( 'templating/index-b-guru', $data );
 
-			$this->load->view('templating/t-footer-back');
-	        $this->load->view('templating/t-header');
-			$this->load->view('v-list-soal',$data);
+
+			// $data['soal'] =$this->mbanksoal->get_soal($babID);
+			// // var_dump($data);
+			// $data ['babID']= $babID;	
+
+			// $this->load->view('templating/t-footer-back');
+	  //       $this->load->view('templating/t-header');
+			// $this->load->view('v-list-soal',$data);
 		}
 
 	#Start Function untuk form upload bank soal#
 		public function formsoal()
 		{	
+			$data['tingkat']  = $this->mtemplating->get_tingkat();
 			$data['babID']=htmlspecialchars($this->input->post('babID'));
+			$data['judul_halaman'] = "Form Input Soal";
+			$data['files'] = array(
+				APPPATH.'modules/banksoal/views/v-form-soal.php',
+				);
+			$this->load->view( 'templating/index-b-guru', $data );
 
-			$this->load->view('templating/t-footer-back');
-	        $this->load->view('templating/t-header');
-			$this->load->view('v-form-soal',$data);
+			// $data['babID']=htmlspecialchars($this->input->post('babID'));
+
+			// $this->load->view('templating/t-footer-back');
+	  //       $this->load->view('templating/t-header');
+			// $this->load->view('v-form-soal',$data);
 		}
 
 		public function uploadsoal()
@@ -131,6 +174,7 @@ class  BankSoal extends MX_Controller
 				$this->uploadgambar($soalID);
 			}
 			#END pengecekan jenis inputan jawaban#
+			redirect(site_url('banksoal/listsoal/'.$babID));
 
 		}
 
@@ -283,12 +327,13 @@ class  BankSoal extends MX_Controller
 				$this->updategambar($soalID);
 			}
 			#END pengecekan jenis inputan jawaban#
-			// redirect(site_url('banksoal/listsoal/'.$babID));
+			redirect(site_url('banksoal/listsoal/'.$babID));
 
 		}
 
 		public function updategambar($soalID)
 		{
+
 			// unlink( FCPATH . "./assets/image/jawaban/".$xxxx );
 			$config['upload_path'] = './assets/image/jawaban/';
 	        $config['allowed_types'] = 'jpeg|gif|jpg|png';
@@ -305,47 +350,48 @@ class  BankSoal extends MX_Controller
 	        $n='1';
 	        $datagambar=array();
 	     	foreach ($oldgambar as $rows ) {
-	     		//remove old gambar
-	     		// unlink( FCPATH . "./assets/image/jawaban/".$rows['gambar'] );
-
+	     		// remove old gambar   		
+	     		
 	       		$gambar="gambar".$n;
-	       		$this->upload->do_upload($gambar);
 	       		
-
-	       		$file_data = $this->upload->data();
-	         	$file_name = $file_data['file_name'];
-	         	if ($n=='1') {
-	         		$pilihan = "A";
-	         	} else if($n=='2') {
-	         		$pilihan ="B";
-	         	}else if($n=='3') {
-	         		$pilihan = "C";
-	         	}else if($n=='4'){
-	         		$pilihan = 'D';
-	         	}else{
-	         		$pilihan = 'E';
-	         	}
-	         	
-	         	$datagambar[]=array('pilihan'=>$pilihan,
-	         				 		'gambar'=>$file_name,
-	         				 		'id_soal'=>$soalID,
-	         				 		'id_pilihan'=>$rows['id_pilihan']);
-	         	
+	       		if ($this->upload->do_upload($gambar)) {
+	       			unlink( FCPATH . "./assets/image/jawaban/".$rows['gambar'] );
+	       			$file_data = $this->upload->data();
+		         	$file_name = $file_data['file_name'];
+		         	if ($n=='1') {
+		         		$pilihan = "A";
+		         	} else if($n=='2') {
+		         		$pilihan ="B";
+		         	}else if($n=='3') {
+		         		$pilihan = "C";
+		         	}else if($n=='4'){
+		         		$pilihan = 'D';
+		         	}else{
+		         		$pilihan = 'E';
+		         	}
+		         	
+		         	$datagambar[]=array('pilihan'=>$pilihan,
+		         				 		'gambar'=>$file_name,
+		         				 		'id_soal'=>$soalID,
+		         				 		'id_pilihan'=>$rows['id_pilihan']);
+		         	echo "masuk".$n;
+	       		} 
+        	
 	         	$n++;
 	       	}
 	       	
 	       	$this->mbanksoal->ch_gambar($datagambar);
+	       	// var_dump($oldgambar);
 
 
 		}
 	#END Function untuk form update bank soal #
 
 	#END Function untuk delete bank soal #
-		public function deleteBanksoal()
+		public function deleteBanksoal($data)
 		{
-			$this->mbanksoal->del_banksoal;
+			$this->mbanksoal->del_banksoal($data);
 		}
-	#END Function untuk delete update bank soal #
 
 
 }
