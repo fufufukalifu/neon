@@ -26,7 +26,7 @@
                                         <td><?= $row['judulBab']; ?></td>
                                         <td>
                                             <form action="<?=base_url();?>index.php/banksoal/listsoal" method="post">
-                                                <input type="text" name="babID" value="<?= $row['id'];?>" hidden="true">
+                                                <input type="text" name="bab" value="<?= $row['id'];?>" hidden="true">
                                                 <button class="btn btn-primary">Lihat Bab</button>
                                             </form>
                                         </td>
