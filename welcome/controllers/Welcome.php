@@ -23,7 +23,6 @@ class Welcome extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'Mmatapelajaran' );
-        parent::__construct();
         $this->load->library( 'parser' );
 
     }
