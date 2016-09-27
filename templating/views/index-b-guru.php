@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+
 <html class="backend">
     <!-- START Head -->
     <head>
         <!-- START META SECTION -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{judul_halaman}</title>
+        <title><?=$judul_halaman ?></title>
         <meta name="author" content="pampersdry.info">
         <meta name="description" content="Adminre is a clean and flat backend and frontend theme build with twitter bootstrap 3.1.1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -15,7 +15,9 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url('assets/image/touch/apple-touch-icon-72x72-precomposed.png') ?>">
         <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
+        <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
         <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+        <script>var base_url = '<?php echo base_url() ?>';</script>
 
         <!--/ END META SECTION -->
 
@@ -40,6 +42,56 @@
 
     <!-- START Body -->
     <body>
+        <!-- START Modal ADD BANK SOAL -->
+            <div class="modal fade" id="xs" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                  </div>
+                  <!-- Start Body modal -->
+                  <div class="modal-body">
+                      
+                        <form  class="panel panel-default form-horizontal form-bordered" action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                            <div  class="form-group">
+                                <label class="col-sm-3 control-label">Tingkat</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="tingkat" id="tingkat">
+                                        <option>-Pilih Tingkat-</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div  class="form-group">
+                                <label class="col-sm-3 control-label">Mata Pelajaran</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="mataPelajaran" id="pelajaran">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                             <div  class="form-group">
+                                <label class="col-sm-3 control-label">Bab</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="bab" id="bab">
+
+                                    </select>
+                                </div>
+                             </div>
+
+                        </form>
+                  </div>
+                  <!-- END BODY modla-->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        <!-- END MODAL ADD BANK SOAL -->
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
@@ -496,14 +548,33 @@
                             <li class="submenu-header ellipsis">Bank Soal</li>
 
                             <li >
-                                <a href="">
-                                    <span class="text">Tambahkan Bank Soal</span>
+                                <a href="javascript:void(0);" onclick="add_soal()">
+                                   <span class="text">Tambahkan Bank Soal</span> 
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
                                     <span class="text">Daftar Bank Soal</span>
+                                    <span class="arrow"></span>
                                 </a>
+                                <ul id="subbanksoal" class="submenu collapse ">
+                                    <li class="submenu-header ellipsis">Sub Bank Soal</li>
+                                    <!-- get data Tingkat dari db -->
+                                    <!-- Start pengulangan u/ tingkat -->
+                                  <?php foreach ($tingkat as $row): ?>
+                                      
+
+                                    <li>
+                                        <form action="<?=base_url();?>index.php/banksoal/listmp/" method="post">
+                                            <input type="text" name="tingkatID" value="<?=$row['id']?>" hidden="true">
+                                            <button class="" type="submit"><?=$row['aliasTingkat']?></button>
+                                        </form>
+                                    </li>
+
+                                   <?php endforeach ?>
+                                    <!-- END pengulangan u/ tingkat -->
+                                      
+                                </ul>
                             </li>
 
                         </ul>
@@ -548,7 +619,7 @@
                 <!-- Page Header -->
                 <div class="page-header page-header-block">
                     <div class="page-header-section">
-                        <h4 class="title semibold">{judul_halaman}</h4>
+                        <h4 class="title semibold"><?=$judul_halaman ?></h4>
                     </div>
                     <div class="page-header-section">
                         <!-- Toolbar -->
@@ -562,7 +633,13 @@
                     </div>
                 </div>
 
-                <?php include $file; ?>
+                <?php 
+                foreach ($files as $file) {
+                    include $file;
+
+                }
+                    
+                 ?>
 
                 <!-- Page Header -->
             </div>
@@ -971,10 +1048,121 @@
         <!--datatable-->
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
-        <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
-        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+<!--         <script type="text/javascript">
+            //panggil modal
+            function add_soal(){     
+                $('#xs').modal('show'); // show bootstrap modal
+            }
+
+        </script> -->
+<!--         <script type="text/javascript">
+            // Script for getting the dynamic values from database using jQuery and AJAX
+            $(document).ready(function() {
+                $('#eTingkat').change(function() {
+
+                    var form_data = {
+                        name: $('#eTingkat').val()
+                    };
+
+                    $.ajax({
+                        url: "<?php echo site_url('videoback/getPelajaran'); ?>",
+                        type: 'POST',
+                        data: form_data,
+                        success: function(msg) {
+                            var sc='';
+                            $.each(msg, function(key, val) {
+                                sc+='<option value="'+val.id+'">'+val.keterangan+'</option>';
+                            });
+                            $("#ePelajaran option").remove();
+                            $("#ePelajaran").append(sc);
+                        }
+                    });
+                });
+            });
+
+
+            // function loadmatapelajaran(){
+
+            // }
+
+            //buat load tingkat
+            function loadTingkat(){
+                jQuery(document).ready(function(){
+                    var tingkat_id = {"tingkat_id" : $('#tingkat').val()};
+                    var idTingkat;
+
+                    $.ajax({
+                        type: "POST",
+                        data: tingkat_id,
+                        url: "<?= base_url() ?>index.php/videoback/getTingkat",
+
+                        success: function(data){
+                            console.log("Data"+data); 
+                            $('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
+                            $.each(data, function(i, data){
+                                $('#tingkat').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
+                                return idTingkat=data.id;
+                            });
+                        }
+                    });
+                    
+                    $('#tingkat').change(function(){
+                        tingkat_id={"tingkat_id" : $('#tingkat').val()};
+                        loadPelajaran($('#tingkat').val());
+                    })
+
+                    $('#pelajaran').change(function(){
+                        pelajaran_id = {"pelajaran_id":$('#pelajaran').val()};
+                        load_bab($('#pelajaran').val());
+                    })
+
+                    $('#bab').change(function(){
+                        load_sub_bab($('#bab').val());
+                        loadPelajaran(idTingkat);
+                    })
+                })};
+
+                //buat load pelajaran
+                function loadPelajaran(tingkatID){
+                    $.ajax({
+                        type: "POST",
+                        data: tingkatID.tingkat_id,
+
+                        url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
+                        success: function(data){
+                            $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+                            $.each(data, function(i, data){
+                                $('#pelajaran').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
+                            });
+                        }
+                    });
+                }
+                //buat load bab
+                function load_bab(mapelID){
+                    $.ajax({
+                        type: "POST",
+                        data: mapelID.mapel_id,
+                        url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
+                        success: function(data){
+
+                            $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+                            //console.log(data);
+                            $.each(data, function(i, data){
+                                $('#bab').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
+                            });
+                        }
+
+                    });
+                }
+
+
+
+                loadTingkat();
+</script> -->
 
 
         <!--/ App and page level script -->

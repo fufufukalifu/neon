@@ -4,18 +4,36 @@
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-       
+        <!-- Page Header -->
+        <div class="page-header page-header-block">
+            <div class="page-header-section">
+                <h4 class="title semibold">Form Layout</h4>
+            </div>
+            <div class="page-header-section">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <ol class="breadcrumb breadcrumb-transparent nm">
+                        <li><a href="javascript:void(0);">Form</a></li>
+                        <li class="active">Layout</li>
+                    </ol>
+                </div>
+                <!--/ Toolbar -->
+            </div>
+        </div>
+        <!-- Page Header -->
 
 
         <!-- START row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updateBanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
-                        <h3 class="panel-title">Form Soal</h3>
+                        <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->
                         <input type="text" name="babID" value="<?=$babID;?>"  hidden="true">
+                        <input type="text" name="soalID" value="<?=$bankSoal['id_soal'];?>" hidden="true">
+                        <input type="text" name="UUID" value="<?=$bankSoal['UUID'];?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
                       
@@ -23,23 +41,23 @@
                             <label class="control-label col-sm-4">Kesulitan</label>
                             <div class="col-sm-8">
                                 <select name="kesulitan" class="form-control">
-                                    <option value="">Mudah</option>
-                                    <option value="1">Sedang</option>
-                                    <option value="2">Sulit</option>
+                                    <option value="1">Mudah</option>
+                                    <option value="2">Sedang</option>
+                                    <option value="3">Sulit</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-4">Sumber</label>
                             <div class="col-sm-8">
-                                <input type="text" name="sumber" class="form-control">
+                                <input type="text" name="sumber" value="<?=$bankSoal['sumber'];?>" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Soal2</label>
+                            <label class="control-label col-sm-4">Soal</label>
                             <div class="col-sm-8">
                                 <textarea  name="editor1" class="form-control" id="">
-                                    
+                                    <?=$bankSoal['soal'];?>
                                 </textarea>
                             </div>
                         </div>
@@ -74,13 +92,14 @@
                             <label class="control-label col-sm-4">Pilihan A</label>
                             <!-- Start input text A -->
                             <div class="col-sm-8 piltext">
-                               <textarea name="a"  class="form-control"> </textarea>
+                                <input type="text" name="idpilA" value="<?=$piljawaban['0']['id_pilihan'];?>" hidden="true">
+                               <textarea name="a"  class="form-control"> <?=$piljawaban['0']['jawaban'];?> </textarea>
                             </div>
                             <!-- END input text A -->
                             <!-- Start input gambar A -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['0']['gambar'];?>" alt="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -99,7 +118,7 @@
                                     <label for="fileA" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileA" name="gambar1"/>
+                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1"/>
                                 </div>
                             </div>
                             <!-- END input Gambar A -->
@@ -111,12 +130,13 @@
                             <label class="control-label col-sm-4">Pilihan B</label>
                             <!-- Start input text B -->
                             <div class="col-sm-8 piltext">
-                               <textarea name="b" class="form-control"> </textarea>
+                                <input type="text" name="idpilB" value="<?=$piljawaban['1']['id_pilihan'];?>" hidden="true">
+                               <textarea name="b" class="form-control"> <?=$piljawaban['1']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text B -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['1']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -135,7 +155,7 @@
                                     <label for="fileB" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileB" name="gambar2"/>
+                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2"/>
                                 </div>
                             </div>
                         </div>
@@ -146,13 +166,14 @@
                             <label class="control-label col-sm-4">Pilihan C</label>
                             <!-- Start input text C -->
                             <div class="col-sm-8 piltext" >
-                               <textarea name="c" class="form-control"> </textarea>
+                                <input type="text" value="<?=$piljawaban['2']['id_pilihan'];?>" name="idpilC" hidden="true">
+                               <textarea name="c" class="form-control"> <?=$piljawaban['2']['jawaban'];?> </textarea>
                             </div>
                             <!-- END input text C -->
                             <!-- Start input gambar C -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['2']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -171,7 +192,7 @@
                                     <label for="fileC" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileC" name="gambar3"/>
+                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -183,13 +204,14 @@
                             <label class="control-label col-sm-4">Pilihan D</label>
                             <!-- Start input text D -->
                             <div class="col-sm-8 piltext" >
-                               <textarea name="d" class="form-control"> </textarea>
+                                <input type="text" name="idpilD" value="<?=$piljawaban['3']['id_pilihan'];?>" hidden="true">
+                               <textarea name="d" class="form-control"> <?=$piljawaban['3']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text D -->
                             <!-- Start input gambar D -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['3']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -208,7 +230,7 @@
                                     <label for="fileD" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileD" name="gambar4"/>
+                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4"/>
                                 </div>
                             </div>
                             <!-- END input Gambar D -->                       
@@ -220,13 +242,14 @@
                             <label class="control-label col-sm-4">Pilihan E</label>
                             <!-- Start input text E -->
                             <div class="col-sm-8 piltext" >
-                               <textarea name="e" class="form-control"> </textarea>
+                                <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true">
+                               <textarea name="e" class="form-control"> <?=$piljawaban['4']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text E -->
                             <!-- Start input gambar E -->
                             <div class="col-sm-8 pilgambar" hidden="true">
                                 <div class="col-sm-12">
-                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['4']['gambar'];?>" alt="" width="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -245,7 +268,7 @@
                                     <label for="fileE" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileE" name="gambar5"/>
+                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -326,12 +349,13 @@
 
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {
-                console.log('test');
+                // var filenameA = document.getElementByID('fileA').value;
                 var file = this.files[0];
                 var reader = new FileReader();
                 reader.onload = viewerA.load;
                 reader.readAsDataURL(file);
                 viewerA.setProperties(file);
+            
             });
             var viewerA = {
                 load : function(e){

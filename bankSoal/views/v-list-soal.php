@@ -2,23 +2,7 @@
         <section id="main" role="main">
             <!-- START Template Container -->
             <div class="container-fluid">
-                <!-- Page Header -->
-                <div class="page-header page-header-block">
-                    <div class="page-header-section">
-                        <h4 class="title semibold">Table datatable</h4>
-                    </div>
-                    <div class="page-header-section">
-                        <!-- Toolbar -->
-                        <div class="toolbar">
-                            <ol class="breadcrumb breadcrumb-transparent nm">
-                                <li><a href="#">Table</a></li>
-                                <li class="active">Datatable</li>
-                            </ol>
-                        </div>
-                        <!--/ Toolbar -->
-                    </div>
-                </div>
-                <!-- Page Header -->
+               
 
                 <!-- START row -->
                 <div class="row">
@@ -32,7 +16,7 @@
                                 </form>
                                  
                             </div>
-                            <table class="table table-striped" id="zero-configuration">
+                            <table class="table table-striped" id="datatable">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -45,14 +29,24 @@
                                         <th>Pilahan D</th>
                                         <th>Pilahan E</th>
                                         <th>Jawaban</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                   <?php foreach ($soal as $row): ?>
                                     <tr>
-                                        <td><?= $row['id_soal']; ?></td>
+                                        <td ><?= $row['id_soal']; ?></td>
                                         <td><?= $row['sumber']; ?></td>
-                                        <td><?= $row['kesulitan']; ?></td>
+                                        <td><?php
+                                                    $kesulitan=$row['kesulitan'];
+                                                    if ($kesulitan=='1') {
+                                                         echo "Mudah";
+                                                     } else if($kesulitan=='2'){
+                                                         echo "Sedang";
+                                                     }else{
+                                                        echo "Sulit";
+                                                     }
+                                                      ?></td>
                                         <td><?= $row['soal']; ?></td>
                                         <td></td>
                                         <td></td>
@@ -60,6 +54,23 @@
                                         <td></td>
                                         <td></td>
                                         <td><?= $row['jawaban']; ?></td>
+                                        <td >
+                                            <div>
+                                                <form action="<?=base_url();?>index.php/banksoal/formUpdate" method="post">
+
+                                                    <input type="text" name="UUID" value="<?=$row['UUID']?>"  hidden="true">
+                                                    <input type="text" name="babID" value="<?=$babID;?>" hidden="true">
+                                                    <button type="submit" class="btn btn-default"><i class="ico-file5"></i></button>
+                                                    
+                                                </form>
+                                            </div>
+                                            
+                                         
+                                             <!-- <button type="button" id="hapusBtn" class="btn btn-default"  data-id="<?= $row['id_soal'] ?>" 
+                                            data-toggle="modal" 
+                                            title="Hapus Data">
+                                            <i class="ico-remove"></i></button> -->
+                                        </td>
 
                                     </tr>
                                 <?php endforeach ?>
@@ -93,3 +104,30 @@
 <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+
+<script type="text/javascript">
+    var table = $('#datatable').DataTable();
+//fungsi untuk hapus
+  $('#datatable tbody').on( 'click', 'button#hapusBtn', function () {
+    table
+    .row( $(this).parents('tr') )
+    .remove()
+    .draw();
+    console.log('masuk');
+
+    var id_soal = $(this).data("id");
+    var url = base_url + "index.php/banksoal/deleteBanksoal/"+id_soal; 
+
+    $.ajax({
+      type: "POST",
+      url: url, 
+      dataType: "json",  
+      cache:false,
+      success: 
+      function(data){
+               // alert(data);
+             }
+           });
+
+  } );
+</script>
