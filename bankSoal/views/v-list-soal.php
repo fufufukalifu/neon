@@ -16,7 +16,7 @@
                                 </form>
                                  
                             </div>
-                            <table class="table table-striped" id="datatable">
+                            <table class="table table-striped" id="datatablea">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

@@ -43,7 +43,7 @@
     <!-- START Body -->
     <body>
         <!-- START Modal ADD BANK SOAL -->
-            <div class="modal fade" id="xs" tabindex="-1" role="dialog">
+            <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -53,7 +53,7 @@
                   <!-- Start Body modal -->
                   <div class="modal-body">
                       
-                        <form  class="panel panel-default form-horizontal form-bordered" action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                        <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data">
                             <div  class="form-group">
                                 <label class="col-sm-3 control-label">Tingkat</label>
                                 <div class="col-sm-8">
@@ -86,7 +86,7 @@
                   <!-- END BODY modla-->
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Proses</button>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
@@ -1053,10 +1053,10 @@
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
 
+
         <script type="text/javascript">
-            panggil modal
             function add_soal(){     
-                $('#xs').modal('show'); // show bootstrap modal
+                $('#modalsoal').modal('show'); // show bootstrap modal
             }
         </script>
 
@@ -1180,6 +1180,7 @@ function loadTingkat(){
 
     loadTingkat();
     </script>
+
 
 
 

@@ -22,7 +22,7 @@ class Paketsoal extends MX_Controller
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' )
-			);
+		);
 
 		$this->mpaketsoal->rubahpaket( array( 'id' => $this->input->post( 'id' ) ), $data );
 		echo json_encode( array( "status" => TRUE ) );
@@ -62,7 +62,7 @@ class Paketsoal extends MX_Controller
 			"recordsTotal"=>$this->MPaketsoal->hitung_semua(),
 			"recordsFiltered"=>$this->MPaketsoal->hitung_filter(),
 			"data"=>$data,
-			);
+		);
 
 		echo json_encode( $output );
 	}
@@ -76,7 +76,7 @@ class Paketsoal extends MX_Controller
 		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-create-paket-soal.php',
-			);
+		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
@@ -85,7 +85,7 @@ class Paketsoal extends MX_Controller
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-create-paket-soal.php',
-			);
+		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
@@ -95,14 +95,14 @@ class Paketsoal extends MX_Controller
 
 	function addpaketsoal() {
 		$this->form_validation->set_rules( 'nama_paket', "Error Nama Paket", 'required' );
-	//$this->form_validation->set_message('required',"You can't allowed empty");
+		//$this->form_validation->set_message('required',"You can't allowed empty");
 
 		$data = array(
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' )
-			);
+		);
 
 		$this->MPaketsoal->insertpaketsoal( $data );
 	}
@@ -117,7 +117,7 @@ class Paketsoal extends MX_Controller
 			'deskripsi' => $this->input->post( 'jumlah_soal' ),
 			'jumlah_soal' => $this->input->post( 'durasi' ),
 			'durasi' => $this->input->post( 'deskripsi' )
-			);
+		);
 
 		$this->MPaketsoal->rubahpaket( $id, $data );
 	}
@@ -128,35 +128,60 @@ class Paketsoal extends MX_Controller
 		->set_output( json_encode( $this->load->MPaketsoal->getpaketsoal() ) ) ;
 	}
 
-	function addbanksoal($idpaket){
+	function addbanksoal( $idpaket ) {
 		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
 		//var_dump($data['paket_soal']);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
-		
+
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-add-soal.php',
-			);
+		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
-	function ajax_get_soal_by_bab($babID){
+	function ajax_get_soal_by_bab( $babID ) {
+		$list = $soal=$this->mBankSoal->get_soal( $babID );
 
-		$list = $soal=$this->mBankSoal->get_soal($babID);
-		$data = array();
-		
-		$baseurl = base_url();
-		foreach ( $list as $soal ) {
-			// $no++;
-			$row = array();
-			$row[] = $soal['id_soal'];
-			$row[] = $soal['soal'];
 
-			$data[] = $row;
+		if ( $list==array() ) {
+			$row = array( 'link'=>"<span class='text-danger'>Soal Belum Tersedia</span>" );
+			$datas[] = $row;
+		}else {
+			$datas = array();
+			foreach ( $list as $soal ) {
+				// $no++;
+				$row = array();
+				$row = array( 'link'=>
+					"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+				<input type='checkbox' name="."soal".$soal['id_soal']." id="."soal".$soal['id_soal']." value=".$soal['soal'].">
+				<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".$soal['soal']."</label>
+				</span><br>"
+				);
+
+				$datas[] = $row;
+			}
+
 
 		}
-		return $data;
+		$data = $this->output
+		->set_content_type( "application/json" )
+		->set_output( json_encode( $datas ) ) ;
+
+		// return $data;
+
+		// var_dump($datas);
 	}
-//paket soal relasi bank soal
+	function addsoaltopaket(){
+		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
+		//$id_paket = $id_paket;
+		print_r($paket_soal);
+		// $data = array(
+		// 	'id_paket' => $this->input->post( 'nama_paket' ) ,
+		// );
+
+		// $this->MPaketsoal->insertpaketsoal( $data );
+	}
+	//paket soal relasi bank soal
 }
 ?>
