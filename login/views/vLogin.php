@@ -1,111 +1,65 @@
-<!-- START Template Main -->
-<section id="main" role="main">
-    <!-- START page header -->
-    <section class="page-header page-header-block nm">
-        <!-- pattern -->
-        <div class="pattern pattern9"></div>
-        <!--/ pattern -->
-        <div class="container pt15 pb15">
-            <div class="page-header-section">
-                <h4 class="title font-alt">Login Akun User</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <ol class="breadcrumb breadcrumb-transparent nm">
-                        <li><a href="<?= base_url(); ?>">Beranda</a></li>
-                        <li class="active">Login Akun User</li>
-                    </ol>
+<main>
+    <section class="fullwidth-background bg-2">
+        <div class="grid-row">
+            <div class="login-block" style="min-width: 35%">
+                <div class="logo">
+                    <img src="<?= base_url('assets/back/img/logo.png') ?>" data-at2x='img/logo@2x.png' alt>
+                    <!--<h4>Login</h4>-->
                 </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-    </section>
-    <!--/ END page header -->
-
-    <!-- START Register Content -->
-    <section class="section bgcolor-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Header -->
-                    <div class="section-header section-header-bordered text-center">
-                        <h2 class="section-title">
-                            <p class="font-alt nm">Login To Joonet Account</p>
-                        </h2>
-                    </div>
-                    <!--/ Header -->
+                <?php
+//                if (!empty($authUrl)) {
+//                    echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';                  
+//                }
+                ?>
+                <div class="clear-both"></div>
+                <div class="login-or">
+                    <hr class="hr-or">
+                    <span class="span-or">or</span>
                 </div>
-
-                <div class="col-md-6 col-md-offset-3">
-                    <?php
-                    if (!empty($authUrl)) {
-                        echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';
-                    }
+                <?php if ($this->session->flashdata('notif') != '') {
                     ?>
+                    <div class="alert alert-warning">
+                        <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
+                    </div>
+                <?php } else { ?>
+                    <div class="alert alert-warning">
+                        Siap berpetualang? Isi form, tekan Login!
+                    </div>
+                <?php }; ?>
+                <form class="login-form" action = "<?= base_url('index.php/login/validasiLogin'); ?>" method = "post">
+                    <div class="form-group">
+                        <input type="text" class="login-input" placeholder="Username / email" required>
+                        <span class="input-icon">
+                            <i class="fa fa-user"></i>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input name="password" type="password" class="login-input" placeholder="Password" required>
+                        <span class="input-icon">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
 
-                    <hr><!--horizontal line -->
-
-                    <!--Login form -->
-                    <form class = "panel" name = "form-login" action = "<?= base_url('index.php/login/validasiLogin'); ?>" method = "post">
-                        <div class = "panel-body">
-                            <!--Alert message -->
-                            <?php if ($this->session->flashdata('notif') != '') {
-                                ?>
-                                <div class="alert alert-warning">
-                                    <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
-                                </div>
-                            <?php } else { ?>
-                                <div class="alert alert-warning">
-                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Siap untuk menjelajahi angkasa? Isi form, tekan Login!
-                                </div>
-                            <?php }; ?>
-
-                            <!--/ Alert message -->
-                            <div class="form-group">
-                                <div class="form-stack has-icon pull-left">
-                                    <input name="username" type="text" class="form-control input-lg" placeholder="Username / email" data-parsley-errors-container="#error-container" data-parsley-error-message="Please fill in your username / email" required>
-                                    <i class="ico-user2 form-control-icon"></i>
-                                </div>
-                                <div class="form-stack has-icon pull-left">
-                                    <input name="password" type="password" class="form-control input-lg" placeholder="Password" data-parsley-errors-container="#error-container" data-parsley-error-message="Please fill in your password" required>
-                                    <i class="ico-lock2 form-control-icon"></i>
-                                </div>
-                            </div>
-
-                            <!-- Error container -->
-                            <div id="error-container"class="mb15"></div>
-                            <!--/ Error container -->
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="remember" id="remember" value="1">  
-                                            <label for="remember">&nbsp;&nbsp;Ingat?</label>   
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-7 text-right">
-                                        <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
-                                        |
-                                        <a href="<?= base_url('index.php/register/lupapassword'); ?>">Lupa password?</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group nm">
-                                <button type="submit" class="btn btn-block btn-primary"><span class="semibold">Login</span></button>
-                            </div>
+                    <div class="form-group">
+                        <div class="" style="float: left;">
+                            <p class="small">
+                                <a href="<?= base_url('index.php/register/lupapassword'); ?>">Lupa Password?</a>
+                            </p>
                         </div>
-                    </form>
-                    <!-- Login form -->
-                </div>
+                        <div class="text-right">
+                            <p class="small">
+                                <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
+                            </p><!--
+                        --></div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="form-group nm">
+                        <button type="submit" class="button-fullwidth cws-button bt-color-3 alt"><span class="semibold">Login</span></button>
+                    </div>
+                </form>
+                
             </div>
         </div>
+        <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
     </section>
-    <!--/ END Register Content -->
-
-    <!-- START To Top Scroller -->
-    <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-    <!--/ END To Top Scroller -->
-</section>
-<!--/ END Template Main -->
+</main>

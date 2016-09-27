@@ -1,97 +1,53 @@
-<!-- START Template Main -->
-<section id="main" role="main">
-    <!-- START page header -->
-    <section class="page-header page-header-block nm">
-        <!-- pattern -->
-        <div class="pattern pattern9"></div>
-        <!--/ pattern -->
-        <div class="container pt15 pb15">
-            <div class="page-header-section">
-                <h4 class="title font-alt">Lupa Password</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <div class="toolbar">
-                        <ol class="breadcrumb breadcrumb-transparent nm">
-                            <li><a href="<?= base_url(); ?>">Beranda</a></li>
-                            <li class="active">Lupa Password</li>
-                        </ol>
-                    </div>
+<main>
+    <section class="fullwidth-background bg-2">
+        <div class="grid-row">
+            <div class="login-block" style="min-width: 50%">
+                <div class="logo">
+                    <img src="<?= base_url('assets/back/img/logo.png') ?>" data-at2x='img/logo@2x.png' alt>
+                    <!--<h4>Login</h4>-->
                 </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-    </section>
-    <!--/ END page header -->
+                <form class="panel nm" name="form-register" action="<?= base_url() ?>index.php/register/ch_sent_reset" method="post">
 
-    <!-- START Register Content -->
-    <section class="section bgcolor-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Header -->
-                    <div class="section-header section-header-bordered text-center">
-                        <h2 class="section-title">
-                            <p class="font-alt nm">Reset Password</p>
-                        </h2>
-                    </div>
-                    <!--/ Header -->
-                </div>
-
-                <div class="col-md-6 col-md-offset-3">
+                    <!-- Alert message -->
+                    <!--                                <div class="alert alert-warning">
+                                                        <span class="semibold">Info :</span>&nbsp;&nbsp;Kami akan kirimkan kode reset password ke email akun mu.
+                                                    </div>-->
+                    <!--/ Alert message -->
+                    <?php if ($this->session->flashdata('notif') != '') {
+                        ?>
+                        <div class="alert alert-warning">
+                            <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="alert alert-warning">
+                            <span class="semibold">Note :</span>&nbsp;&nbsp;Kami akan kirimkan kode reset password ke email akun mu.
+                        </div>
+                    <?php }; ?>
 
 
-                    <form class="panel nm" name="form-register" action="<?= base_url() ?>index.php/register/ch_sent_reset" method="post">
-                        <ul class="list-table pa15">
-                            <li>
-                                <!-- Alert message -->
-                                <!--                                <div class="alert alert-warning">
-                                                                    <span class="semibold">Info :</span>&nbsp;&nbsp;Kami akan kirimkan kode reset password ke email akun mu.
-                                                                </div>-->
-                                <!--/ Alert message -->
-                                <?php if ($this->session->flashdata('notif') != '') {
-                                    ?>
-                                    <div class="alert alert-warning">
-                                        <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="alert alert-warning">
-                                        <span class="semibold">Note :</span>&nbsp;&nbsp;Kami akan kirimkan kode reset password ke email akun mu.
-                                    </div>
-                                <?php }; ?>
-                            </li>
-                        </ul>
 
+                    <hr class="nm">
 
-                        <hr class="nm">
-
-                        <!-- Star form konfirmasi akun by email -->
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="control-label">Email</label>
-                                <div class="has-icon pull-left">
-                                    <input type="email" class="form-control" name="email" placeholder="xxx@mail.com" required>
-                                    <i class="ico-envelop form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                                </div>
+                    <!-- Star form konfirmasi akun by email -->
+                    <div class="panel-body" >
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <div class="has-icon">
+                                <input type="email" class="form-control" name="email" placeholder="xxx@mail.com" required>
+                                <i class="ico-envelop form-control-icon"></i>
+                                <!-- untuk menampilkan pesan kesalahan penginputan email -->
                             </div>
-
                         </div>
-                        <!-- end form konfirmasi akun by email -->
-                        <div class="panel-footer">
-                            <button type="submit" class="btn btn-block btn-success"><span class="semibold">Submit</span></button>
-                        </div>
-                    </form>
 
-                </div>
+                    </div>
+                    <!-- end form konfirmasi akun by email -->
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-block btn-success"><span class="semibold">Submit</span></button>
+                    </div>
+                </form>
+
             </div>
         </div>
+        <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
     </section>
-    <!--/ END Register Content -->
-
-    <!-- START To Top Scroller -->
-    <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-    <!--/ END To Top Scroller -->
-</section>
-<!--/ END Template Main -->
+</main>
