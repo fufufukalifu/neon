@@ -1051,15 +1051,15 @@
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
-        <!-- <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script> -->
-        <script type="text/javascript">
+        <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+<!--         <script type="text/javascript">
             //panggil modal
             function add_soal(){     
                 $('#xs').modal('show'); // show bootstrap modal
             }
 
-        </script>
-        <script type="text/javascript">
+        </script> -->
+<!--         <script type="text/javascript">
             // Script for getting the dynamic values from database using jQuery and AJAX
             $(document).ready(function() {
                 $('#eTingkat').change(function() {
@@ -1162,7 +1162,7 @@
 
 
                 loadTingkat();
-</script>
+</script> -->
 
 
         <!--/ App and page level script -->

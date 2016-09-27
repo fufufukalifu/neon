@@ -12,7 +12,15 @@ class  BankSoal extends MX_Controller
 	        $this->load->model('Templating/mtemplating');
 		}
 
-
+		public function index()
+		{
+			$data['tingkat']  = $this->mtemplating->get_tingkat();
+			$data['files'] = array(
+					APPPATH.'modules/banksoal/views/test.php',
+					);
+			$data['judul_halaman'] = "test";
+			$this->load->view( 'templating/index-b-guru', $data );
+		}
 
 		public function listmp()
 		{	
