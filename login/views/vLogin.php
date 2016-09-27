@@ -28,7 +28,7 @@
                 <?php }; ?>
                 <form class="login-form" action = "<?= base_url('index.php/login/validasiLogin'); ?>" method = "post">
                     <div class="form-group">
-                        <input type="text" class="login-input" placeholder="Username / email" required>
+                        <input type="text" name="username" class="login-input" placeholder="Username / email" required>
                         <span class="input-icon">
                             <i class="fa fa-user"></i>
                         </span>
