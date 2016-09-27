@@ -36,7 +36,7 @@
 					<nav class="main-nav">
 						<ul class="clear-fix">
 							<li>
-								<a href="index.html">Latihan</a>
+								<a href="">Latihan</a>
 							</li>
 							<li>
 								<a href="index.html">Logout</a>

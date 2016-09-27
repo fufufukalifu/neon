@@ -36,6 +36,7 @@ class BankSoal extends MX_Controller {
             $data['judul_halaman'] = "List  Mata Pelajaran";
 
             $this->load->view('templating/index-b-guru', $data);
+             // redirect($_SERVER["REQUEST_URI"]);
         }
     }
 
@@ -61,7 +62,6 @@ class BankSoal extends MX_Controller {
         if ($babID == null) {
             echo "redirect dashboard guru";
         } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
             $data['soal'] = $this->mbanksoal->get_soal($babID);
             $data['pilihan'] = $this->mbanksoal->get_pilihan($babID);
             $data ['babID'] = $babID;

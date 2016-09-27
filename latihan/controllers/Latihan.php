@@ -16,10 +16,17 @@ class Latihan extends MX_Controller
 	public function index()
 	{
 		$data['banksoal']=$this->mlatihan->get_banksoal();
-		var_dump($data);
-		// foreach ($variable as $key => $value) {
-		// 	# code...
-		// }
+		$id_soal=array();
+		foreach ($data['banksoal'] as $row) {
+			$id_soal[]= array('id_soal'=> $row['id_soal']);
+		}
+		var_dump($id_soal);
+
+		$data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
+		$this->load->library('table');
+		echo $this->table->generate($data['pilihan']);
+		// var_dump($data);
+		
 		// $data['piljawaban']=$this->mlatihan->get_piljawaban();
 	}
 

@@ -20,8 +20,20 @@ class Mlatihan extends CI_Model
 		return $query->result_array();
 	}
 
-	public function get_piljawaban()
-	{
+	public function get_piljawaban($data)
+	{	
+		$this->db->order_by('rand()');
+		$n='1';
+		foreach ($data as $row) {
+			$id_soal=$row['id_soal'];
+			if ($n=='1') {
+				$this->db->where('id_soal',$id_soal);
+			} else {
+				$this->db->or_where('id_soal',$id_soal);
+			}
+			
+		$n++;
+		}		
 		$this->db->select('*');
 		$this->db->from('tb_piljawaban');
 		$query = $this->db->get();
