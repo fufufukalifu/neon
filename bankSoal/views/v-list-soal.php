@@ -48,11 +48,16 @@
                                             echo "Sulit";
                                         }
                                         ?></td>
-                                    <td><?= $row['pilid']; ?></td>
-                                    <td><?= $row['soalid']; ?></td>
+                                    <td><?= $row['soal']; ?></td>
+                                    <td><?= $row['jawaban']; ?></td>
                                     <?php foreach ($soal as $row): ?>
-
+                                        <?php
+                                            if ($row['pilid'] == $row['soalid']) {
+                                                
+                                            }
+                                        ?>
                                     <?php endforeach ?>
+                                    
                                     <td></td>
                                     <td></td>
                                     <td></td>
