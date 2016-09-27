@@ -63,6 +63,7 @@ class BankSoal extends MX_Controller {
         } else {
             $data['tingkat'] = $this->mtemplating->get_tingkat();
             $data['soal'] = $this->mbanksoal->get_soal($babID);
+            $data['pilihan'] = $this->mbanksoal->get_pilihan($babID);
             $data ['babID'] = $babID;
             $data['judul_halaman'] = "List  Soal";
             $data['files'] = array(

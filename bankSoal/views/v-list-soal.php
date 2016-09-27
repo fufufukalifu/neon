@@ -49,21 +49,23 @@
                                         }
                                         ?></td>
                                     <td><?= $row['soal']; ?></td>
-                                    <td><?= $row['jawaban']; ?></td>
-                                    <?php foreach ($soal as $row): ?>
+                                    <td><?=
+                                        $row['jawaban'];
+
+                                        $i = $row['id_soal'];
+                                        ?></td>
+                                    <?php foreach ($pilihan as $row): ?>
                                         <?php
-                                            if ($row['pilid'] == $row['soalid']) {
-                                                
-                                            }
+                                        if ($row['pilid'] == $i) {
+                                            ?>
+                                            <td><?= $row['piljawaban']; ?></td>
+                                            <?php
+                                        } else {
+                                            
+                                        }
                                         ?>
                                     <?php endforeach ?>
-                                    
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td >
+                                    <td>
                                         <div>
                                             <form action="<?= base_url(); ?>index.php/banksoal/formUpdate" method="post">
 
@@ -75,10 +77,10 @@
                                         </div>
 
 
-                                <!-- <button type="button" id="hapusBtn" class="btn btn-default"  data-id="<?= $row['id_soal'] ?>" 
-                               data-toggle="modal" 
-                               title="Hapus Data">
-                               <i class="ico-remove"></i></button> -->
+                                                    <!-- <button type="button" id="hapusBtn" class="btn btn-default"  data-id="<?= $row['id_soal'] ?>" 
+                                                   data-toggle="modal" 
+                                                   title="Hapus Data">
+                                                   <i class="ico-remove"></i></button> -->
                                     </td>
 
                                 </tr>
