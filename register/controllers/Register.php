@@ -5,6 +5,7 @@ class Register extends MX_Controller {
 //put your code here
     public function __construct() {
         parent::__construct();
+        $this->load->library('parser');
         $this->load->model('mregister');
         $this->load->model('siswa/msiswa');
     }
@@ -297,9 +298,17 @@ class Register extends MX_Controller {
     }
 
     public function lupaPassword() {
-        $this->load->view('templating/t-header');
-        $this->load->view('vLupapassword.php');
-        $this->load->view('templating/t-footer');
+        $data = array(
+            'judul_halaman' => 'Lupa Password - Neon'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/homepage/views/v-header.php',
+            APPPATH . 'modules/register/views/vLupapassword.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+
+        $this->parser->parse('templating/index', $data);
     }
 
     public function resetpassword() {
