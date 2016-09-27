@@ -144,12 +144,7 @@ class Paketsoal extends MX_Controller
 
 		$list = $soal=$this->mBankSoal->get_soal($babID);
 		$data = array();
-		//$no = $_POST['start'];
-		//$no = 1;
-		//print_r($list);
-
-		//mengambil nilai list
-		//print_r($list);
+		
 		$baseurl = base_url();
 		foreach ( $list as $soal ) {
 			// $no++;
@@ -160,16 +155,7 @@ class Paketsoal extends MX_Controller
 			$data[] = $row;
 
 		}
-		//print_r($data);
-		$output = array(
-			"data"=>$data,
-			);
-
-		echo json_encode( $output );
-		// $data = $this->output
-		// ->set_content_type( "application/json" )
-		// ->set_output( json_encode( $soal ) ) ;
-		// var_dump($data);
+		return $data;
 	}
 //paket soal relasi bank soal
 }
