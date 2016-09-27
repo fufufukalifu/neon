@@ -34,7 +34,7 @@ class Welcome extends MX_Controller {
         );
 
         $data['files'] = array( 
-            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/welcome/views/v-welcome.php',
             APPPATH.'modules/homepage/views/v-footer.php',
