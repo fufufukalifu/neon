@@ -63,7 +63,7 @@ class  BankSoal extends MX_Controller
 
 		public function listsoal()
 		{
-			$babID = htmlspecialchars($this->input->post('babID'));
+			$babID = htmlspecialchars($this->input->post('bab'));
 			if ($babID==null) {
 			    echo "redirect dashboard guru";
 			} else {
