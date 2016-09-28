@@ -15,12 +15,12 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Soal</h3>
                         <!-- untuk menampung bab id -->
-                        <input type="text" name="babID" value="<?=$babID;?>"  hidden="true">
+                        <input type="text" name="subBabID" value="<?=$subBab;?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
                       
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Kesulitan</label>
+                            <label class="control-label col-sm-2 ">Kesulitan</label>
                             <div class="col-sm-8">
                                 <select name="kesulitan" class="form-control">
                                     <option value="">Mudah</option>
@@ -30,13 +30,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Sumber</label>
+                            <label class="control-label col-sm-2">Sumber</label>
                             <div class="col-sm-8">
                                 <input type="text" name="sumber" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Soal2</label>
+                            <label class="control-label col-sm-2">Soal</label>
                             <div class="col-sm-8">
                                 <textarea  name="editor1" class="form-control" id="">
                                     
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jumlah Pilihan</label>
+                            <label class="control-label col-sm-2">Jumlah Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn active " id="empatpil">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jensi Pilihan</label>
+                            <label class="control-label col-sm-2">Jensi Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn active " id="text">
@@ -71,7 +71,7 @@
                         </div>
                         <!-- Start input jawaban A -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan A</label>
+                            <label class="control-label col-sm-2">Pilihan A</label>
                             <!-- Start input text A -->
                             <div class="col-sm-8 piltext">
                                <textarea name="a"  class="form-control"> </textarea>
@@ -108,7 +108,7 @@
 
                         <!-- Start input jawaban B -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan B</label>
+                            <label class="control-label col-sm-2">Pilihan B</label>
                             <!-- Start input text B -->
                             <div class="col-sm-8 piltext">
                                <textarea name="b" class="form-control"> </textarea>
@@ -143,7 +143,7 @@
 
                         <!-- Start input jawaban C -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan C</label>
+                            <label class="control-label col-sm-2">Pilihan C</label>
                             <!-- Start input text C -->
                             <div class="col-sm-8 piltext" >
                                <textarea name="c" class="form-control"> </textarea>
@@ -180,7 +180,7 @@
 
                         <!-- Start input jawaban D -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan D</label>
+                            <label class="control-label col-sm-2">Pilihan D</label>
                             <!-- Start input text D -->
                             <div class="col-sm-8 piltext" >
                                <textarea name="d" class="form-control"> </textarea>
@@ -217,7 +217,7 @@
                         
                         <!-- Start input jawaban E -->
                         <div class="form-group" id="pilihan">
-                            <label class="control-label col-sm-4">Pilihan E</label>
+                            <label class="control-label col-sm-2">Pilihan E</label>
                             <!-- Start input text E -->
                             <div class="col-sm-8 piltext" >
                                <textarea name="e" class="form-control"> </textarea>
@@ -257,29 +257,38 @@
                        
 
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jawaban Benar</label>
+                            <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
                                 <select name="jawaban" class="form-control">
                                     <option value="A" >A</option>
                                     <option value="B" >B</option>
                                     <option value="C" >C</option>
                                     <option value="D" >D</option>
-                                    <option value="E">E</option>
+                                    <option value="E" id="pilihanop">E</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-4">
+                            <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="gift" id="giftcheckbox" value="1">  
+                                    <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
                                     <label for="giftcheckbox">&nbsp;&nbsp;Publish?</label>   
                                 </div>
                             </div>
+                            <div class="col-sm-4 col-sm-offset-1">
+                                <div class="checkbox custom-checkbox">  
+                                    <input type="checkbox" name="random" id="idrand" value="1">  
+                                    <label for="idrand">Random?</label>   
+                                </div>
+                            </div>
                         </div>
+                       
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                       
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                        
                     </div>
                 </form>
                 <!--/ Form horizontal layout bordered -->
@@ -311,9 +320,11 @@
             // Strat  event untuk jumlah pilihan  
             $("#empatpil").click(function(){   
                  $("#pilihan").hide();
+                  $("#pilihanop").hide();
             });
             $("#limapil").click(function(){
                 $("#pilihan").show();
+                 $("#pilihanop").show();
             });
             // END  event untuk jumlah pilihan
 

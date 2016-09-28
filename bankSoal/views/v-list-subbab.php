@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
-<!-- konten -->
 <!-- START Template Main -->
 <section id="main" role="main">
     <!-- START Template Container -->
@@ -9,40 +8,35 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <!--Start untuk menampilkan nama tabel -->
                     <div class="panel-heading">
-                        <?php
-                        foreach ($tingkat as $rosw):
-                            $id = $row['id'];
-                            if ($tingkatID == $id) {
-                                ?>
+                        <h3 class="panel-title">Zero configuration</h3>
 
-                                <h3 class="panel-title">Silahkan pilih mata pelajaran pada List Mata Pelajaran <?= $row['aliasTingkat']; ?> di bawah ini! </h3>
-                                <?php
-                            }
-                        endforeach
-                        ?>
                     </div>
-                    <!--END untuk menampilkan nama tabel -->
                     <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Mata Pelajaran</th>
-                                <th>Lihat Bab</th>
+                                <th>Judul Sub Bab</th>
+                                <th>Keterangan</th>
+                                <th>Lihat Soal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($pelajaran as $row): ?>
+                            <?php foreach ($subbab as $row): ?>
                                 <tr>
                                     <td><?= $row['id']; ?></td>
-                                    <td><?= $row['keterangan']; ?></td>
+                                    <td><?= $row['judulSubBab']; ?></td>
+                                     <td><?= $row['keterangan']; ?></td>
                                     <td>
-                                        <form action="<?= base_url(); ?>index.php/banksoal/listbab" method="get">
-                                            <input type="text" name="mpID" value="<?= $row['id']; ?>" hidden="true" >
-                                            <button type="submit" class="btn btn-primary">Lihat Bab</button>
+                                        <form action="<?= base_url(); ?>index.php/banksoal/listsoal" method="get">
+                                            <input type="text" name="subbab" value="<?= $row['id']; ?>" hidden="true">
+                                            <button class="btn btn-primary">Lihat Soal</button>
                                         </form>
                                     </td>
+
+
+
+
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -60,3 +54,4 @@
     <!--/ END To Top Scroller -->
 
 </section>
+<!--/ END Template Main -->

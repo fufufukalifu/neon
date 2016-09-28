@@ -21,7 +21,7 @@ class BankSoal extends MX_Controller {
     }
 
     public function listmp() {
-        $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+        $tingkatID = htmlspecialchars($this->input->get('tingkatID'));
         if ($tingkatID == null) {
             echo "redirect dashboard guru";
         } else {
@@ -41,7 +41,7 @@ class BankSoal extends MX_Controller {
     }
 
     public function listbab() {
-        $mpID = htmlspecialchars($this->input->post('mpID'));
+        $mpID = htmlspecialchars($this->input->get('mpID'));
 
         if ($mpID == null) {
             echo "redirect ke dashboard guru";
@@ -57,14 +57,33 @@ class BankSoal extends MX_Controller {
         }
     }
 
-    public function listsoal() {
-        $babID = htmlspecialchars($this->input->post('bab'));
+        public function listsubbab() {
+        $babID = htmlspecialchars($this->input->get('bab'));
+
         if ($babID == null) {
+            echo "redirect ke dashboard guru";
+        } else {
+            $data['tingkat'] = $this->mtemplating->get_tingkat();
+
+            $data['subbab'] = $this->mbanksoal->get_subbab($babID);
+            $data['judul_halaman'] = "List Sub Bab";
+            $data['files'] = array(
+                APPPATH . 'modules/banksoal/views/v-list-subbab.php',
+            );
+            $this->load->view('templating/index-b-guru', $data);
+        }
+    }
+
+    public function listsoal() {
+      
+        $subBab = htmlspecialchars($this->input->get('subbab'));
+
+        if ($subBab == null) {
             echo "redirect dashboard guru";
         } else {
-            $data['soal'] = $this->mbanksoal->get_soal($babID);
-            $data['pilihan'] = $this->mbanksoal->get_pilihan($babID);
-            $data ['babID'] = $babID;
+            $data['soal'] = $this->mbanksoal->get_soal($subBab);
+            $data['pilihan'] = $this->mbanksoal->get_pilihan($subBab);
+            $data ['subBab'] = $subBab;
             $data['judul_halaman'] = "List  Soal";
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-list-soal.php',
@@ -76,8 +95,8 @@ class BankSoal extends MX_Controller {
     #Start Function untuk form upload bank soal#
 
     public function formsoal() {
-        $data['babID'] = htmlspecialchars($this->input->post('babID'));
-        if ($data['babID'] == null) {
+        $data['subBab'] = htmlspecialchars($this->input->get('subBab'));
+        if ($data['subBab'] == null) {
             echo "redirect ke dashboard";
         } else {
             $data['tingkat'] = $this->mtemplating->get_tingkat();
@@ -94,11 +113,12 @@ class BankSoal extends MX_Controller {
         $options = htmlspecialchars($this->input->post('options'));
         $UUID = uniqid();
         $soal = ($this->input->post('editor1'));
-        $babID = htmlspecialchars($this->input->post('babID'));
+        $subBabID = htmlspecialchars($this->input->post('subBabID'));
         $jawaban = htmlspecialchars($this->input->post('jawaban'));
         $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
         $sumber = htmlspecialchars($this->input->post('sumber'));
-        $publish = htmlspecialchars($this->input->post('gift'));
+        $publish = htmlspecialchars($this->input->post('publish'));
+        $random = htmlspecialchars($this->input->post('random'));
         $a = htmlspecialchars($this->input->post('a'));
         $b = htmlspecialchars($this->input->post('b'));
         $c = htmlspecialchars($this->input->post('c'));
@@ -113,8 +133,9 @@ class BankSoal extends MX_Controller {
             'kesulitan' => $kesulitan,
             'publish' => $publish,
             'create_by' => $create_by,
-            'id_bab' => $babID,
-            'UUID' => $UUID
+            'id_subbab' => $subBabID,
+            'UUID' => $UUID,
+            'random' => $random
         );
 
         //call fungsi insert soal
@@ -166,7 +187,7 @@ class BankSoal extends MX_Controller {
             $this->uploadgambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal/' . $babID));
+        redirect(site_url('banksoal/listsoal?subBab=' . $subBabID));
     }
 
     public function uploadgambar($soalID) {
@@ -212,31 +233,46 @@ class BankSoal extends MX_Controller {
     #START Function untuk form update bank soal #
 
     public function formUpdate() {
-        $this->load->view('templating/t-footer-back');
-        $this->load->view('templating/t-header');
-        $data['babID'] = htmlspecialchars($this->input->post('babID'));
-        $UUID = htmlspecialchars($this->input->post('UUID'));
-        //get data soan where==UUID
-        $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
-        $id_soal = $data['bankSoal']['id_soal'];
-        //get piljawaban == id soal
-        $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
-        $this->load->view('v-update-soal', $data);
+
+        $data['subBabID'] = htmlspecialchars($this->input->get('subBab'));
+        
+        $UUID = htmlspecialchars($this->input->get('UUID'));
+        
+
+
+        if ($data['subBabID'] == null) {
+            echo "redirect ke dashboard";
+        } else {
+            $data['tingkat'] = $this->mtemplating->get_tingkat();
+            //get data soan where==UUID
+            $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
+            $id_soal = $data['bankSoal']['id_soal'];
+            //get piljawaban == id soal
+            $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
+            $data['judul_halaman'] = "Form Update Soal";
+            $data['files'] = array(
+                APPPATH . 'modules/banksoal/views/v-update-soal.php',
+            );
+            $this->load->view('templating/index-b-guru', $data);
+        }
     }
 
     public function updateBanksoal() {
+       
         #Start post data soal#
         $options = htmlspecialchars($this->input->post('options'));
         $soal = ($this->input->post('editor1'));
         $soalID = htmlspecialchars($this->input->post('soalID'));
         $UUID = htmlspecialchars($this->input->post('UUID'));
-        $babID = htmlspecialchars($this->input->post('babID'));
+        $subBabID = htmlspecialchars($this->input->post('subBabID'));
         $jawaban = htmlspecialchars($this->input->post('jawaban'));
         $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
         $sumber = htmlspecialchars($this->input->post('sumber'));
-        $publish = htmlspecialchars($this->input->post('gift'));
+        $publish = htmlspecialchars($this->input->post('publish'));
+         $random = htmlspecialchars($this->input->post('random'));
         $create_by = $this->session->userdata['id'];
         #END post data soal#
+
         #Start post data pilihan jawaban#
         $idA = htmlspecialchars($this->input->post('idpilA'));
         $idB = htmlspecialchars($this->input->post('idpilB'));
@@ -260,6 +296,7 @@ class BankSoal extends MX_Controller {
             'kesulitan' => $kesulitan,
             'publish' => $publish,
             'create_by' => $create_by,
+            'random' => $random
         );
 
         //call fungsi insert soal
@@ -299,15 +336,16 @@ class BankSoal extends MX_Controller {
                 )
             );
 
-            // 		//call function insert jawaban tet
+            //call function insert jawaban tet
             $this->mbanksoal->ch_jawaban($data);
         } else {
             #jika inputan gambar
+
             // call functiom upload gamabar
             $this->updategambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal/' . $babID));
+        redirect(site_url('banksoal/listsoal?subBab=' . $subBabID));
     }
 
     public function updategambar($soalID) {

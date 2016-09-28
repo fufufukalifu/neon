@@ -45,19 +45,26 @@ class MbankSoal extends CI_Model {
         return $query->result_array();
     }
 
-    public function get_soal($babID) {
-        $this->db->select('*');
-        $this->db->from('tb_banksoal soal');
-        $this->db->where('id_bab', $babID);
+    public function get_subbab($babID) {
+        $this->db->where('babID', $babID);
+        $this->db->select('*')->from('tb_subbab');
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function get_pilihan($babID) {
+    public function get_soal($subbID) {
+        $this->db->select('*');
+        $this->db->from('tb_banksoal soal');
+        $this->db->where('id_subbab', $subbID);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    //get pilihan berdasarkan subbab MP
+    public function get_pilihan($subbID) {
         $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');
         $this->db->from('tb_banksoal soal');
         $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
-        $this->db->where('id_bab', $babID);
+        $this->db->where('id_subbab', $subbID);
         $query = $this->db->get();
         return $query->result_array();
     }
