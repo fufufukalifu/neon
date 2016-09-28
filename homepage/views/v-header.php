@@ -35,10 +35,10 @@
 					<nav class="main-nav">
 						<ul class="clear-fix">
 							<li>
-								<a href="index.html">Daftar</a>
+								<a href="<?=base_url('index.php/register')?>">Daftar</a>
 							</li>
 							<li>
-								<a href="index.html">Masuk</a>
+								<a href="<?=base_url('index.php/login')?>">Masuk</a>
 							</li>
 						</ul>
 					</nav>

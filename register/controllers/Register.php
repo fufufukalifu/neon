@@ -12,9 +12,22 @@ class Register extends MX_Controller {
 
 // function untuk menampikan halam pertama saat registrasi
     public function index() {
-        $this->load->view('templating/t-header');
-        $this->load->view('vRegisterSiswa');
-        $this->load->view('templating/t-footer');
+//        $this->load->view('templating/t-header');
+//        $this->load->view('vRegisterSiswa');
+//        $this->load->view('templating/t-footer');
+
+        $data = array(
+            'judul_halaman' => 'Registrasi - Neon',
+            'judul_header' => 'Welcome'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/templating/views/v-navbarlogin.php',
+            APPPATH . 'modules/register/views/vRegisterSiswa.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+
+        $this->parser->parse('templating/index', $data);
     }
 
 // function untuk menampilkan halaman untuk pendaftaran user siswa

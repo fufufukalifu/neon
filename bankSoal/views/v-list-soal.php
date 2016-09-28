@@ -11,8 +11,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Zero configuration</h3>
-                        <form action="<?= base_url(); ?>index.php/banksoal/formsoal" method="post">
-                            <input type="text" name="babID" value="<?= $babID; ?>" hidden="true" >
+                        <form action="<?= base_url(); ?>index.php/banksoal/formsoal" method="get">
+                            <input type="text" name="subBab" value="<?= $subBab; ?>" hidden="true" >
+                           
                             <button title="Tambah Data" type="submit" class="btn btn-default pull-right"  style="margin-top:-30px;"><i class="ico-plus"></i></button>
                         </form>
 
@@ -34,7 +35,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($soal as $row): ?>
+                            <?php foreach ($soal as $row): 
+                                $UUID=$row['UUID'];
+                            ?>
                                 <tr>
                                     <td ><?= $row['id_soal']; ?></td>
                                     <td><?= $row['sumber']; ?></td>
@@ -67,10 +70,10 @@
                                     <?php endforeach ?>
                                     <td>
                                         <div>
-                                            <form action="<?= base_url(); ?>index.php/banksoal/formUpdate" method="post">
+                                            <form action="<?= base_url(); ?>index.php/banksoal/formUpdate" method="get">
 
-                                                <input type="text" name="UUID" value="<?= $row['UUID'] ?>"  hidden="true">
-                                                <input type="text" name="babID" value="<?= $babID; ?>" hidden="true">
+                                                <input type="text" name="UUID" value="<?= $UUID; ?>"  hidden="true">
+                                                <input type="text" name="subBab" value="<?= $subBab; ?>" hidden="true">
                                                 <button type="submit" class="btn btn-default"><i class="ico-file5"></i></button>
 
                                             </form>

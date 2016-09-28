@@ -14,20 +14,42 @@ class Latihan extends MX_Controller
 	}
 
 	public function index()
-	{
+	{	
+		// get soal randoom
 		$data['banksoal']=$this->mlatihan->get_banksoal();
-		$id_soal=array();
+
+		$id_soal=array();//untuk menampung id
 		foreach ($data['banksoal'] as $row) {
 			$id_soal[]= array('id_soal'=> $row['id_soal']);
 		}
-		var_dump($id_soal);
-
+		// var_dump($id_soal);
+		// get pilihan jawaban sesuai dgn soal
 		$data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
 		$this->load->library('table');
+		echo $this->table->generate($data['banksoal']);
+		echo "==================================";
 		echo $this->table->generate($data['pilihan']);
 		// var_dump($data);
+		//soal + jawaban
+		$tamp1=array();
+		$tamp2=array();
+
+
+		foreach ($data['banksoal'] as $row) {
+			$tamp1 [] =array(
+							'id_soal'=>$row['id_soal'],
+							'jawab'=>'1');
+			// $tamp2 [] =array(
+			// 				'soal'=>$row['soal']);
+			// $soal=array_push($tamp1,$tamp2);
+			
+		}
+		$tamp1 ["soal"] = "test";
 		
-		// $data['piljawaban']=$this->mlatihan->get_piljawaban();
+		 // print_r($soal);
+		echo $this->table->generate($tamp1);
+		// var_dump($soal);
+
 	}
 
 	public function formlatihan()

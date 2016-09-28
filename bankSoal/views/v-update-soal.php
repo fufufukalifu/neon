@@ -4,41 +4,23 @@
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-        <!-- Page Header -->
-        <div class="page-header page-header-block">
-            <div class="page-header-section">
-                <h4 class="title semibold">Form Layout</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <ol class="breadcrumb breadcrumb-transparent nm">
-                        <li><a href="javascript:void(0);">Form</a></li>
-                        <li class="active">Layout</li>
-                    </ol>
-                </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-        <!-- Page Header -->
-
-
+      
         <!-- START row -->
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
                 <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updateBanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->
-                        <input type="text" name="babID" value="<?=$babID;?>"  hidden="true">
+                        <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
                         <input type="text" name="soalID" value="<?=$bankSoal['id_soal'];?>" hidden="true">
                         <input type="text" name="UUID" value="<?=$bankSoal['UUID'];?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
                       
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Kesulitan</label>
+                            <label class="control-label col-sm-2">Kesulitan</label>
                             <div class="col-sm-8">
                                 <select name="kesulitan" class="form-control">
                                     <option value="1">Mudah</option>
@@ -48,13 +30,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Sumber</label>
+                            <label class="control-label col-sm-2">Sumber</label>
                             <div class="col-sm-8">
                                 <input type="text" name="sumber" value="<?=$bankSoal['sumber'];?>" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Soal</label>
+                            <label class="control-label col-sm-2">Soal</label>
                             <div class="col-sm-8">
                                 <textarea  name="editor1" class="form-control" id="">
                                     <?=$bankSoal['soal'];?>
@@ -62,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jumlah Pilihan</label>
+                            <label class="control-label col-sm-2">Jumlah Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn active " id="empatpil">
@@ -75,7 +57,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jensi Pilihan</label>
+                            <label class="control-label col-sm-2">Jensi Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn active " id="text">
@@ -89,7 +71,7 @@
                         </div>
                         <!-- Start input jawaban A -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan A</label>
+                            <label class="control-label col-sm-2">Pilihan A</label>
                             <!-- Start input text A -->
                             <div class="col-sm-8 piltext">
                                 <input type="text" name="idpilA" value="<?=$piljawaban['0']['id_pilihan'];?>" hidden="true">
@@ -127,7 +109,7 @@
 
                         <!-- Start input jawaban B -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan B</label>
+                            <label class="control-label col-sm-2">Pilihan B</label>
                             <!-- Start input text B -->
                             <div class="col-sm-8 piltext">
                                 <input type="text" name="idpilB" value="<?=$piljawaban['1']['id_pilihan'];?>" hidden="true">
@@ -163,7 +145,7 @@
 
                         <!-- Start input jawaban C -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan C</label>
+                            <label class="control-label col-sm-2">Pilihan C</label>
                             <!-- Start input text C -->
                             <div class="col-sm-8 piltext" >
                                 <input type="text" value="<?=$piljawaban['2']['id_pilihan'];?>" name="idpilC" hidden="true">
@@ -201,7 +183,7 @@
 
                         <!-- Start input jawaban D -->
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Pilihan D</label>
+                            <label class="control-label col-sm-2">Pilihan D</label>
                             <!-- Start input text D -->
                             <div class="col-sm-8 piltext" >
                                 <input type="text" name="idpilD" value="<?=$piljawaban['3']['id_pilihan'];?>" hidden="true">
@@ -239,7 +221,7 @@
                         
                         <!-- Start input jawaban E -->
                         <div class="form-group" id="pilihan">
-                            <label class="control-label col-sm-4">Pilihan E</label>
+                            <label class="control-label col-sm-2">Pilihan E</label>
                             <!-- Start input text E -->
                             <div class="col-sm-8 piltext" >
                                 <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true">
@@ -280,22 +262,28 @@
                        
 
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Jawaban Benar</label>
+                            <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
                                 <select name="jawaban" class="form-control">
                                     <option value="A" >A</option>
                                     <option value="B" >B</option>
                                     <option value="C" >C</option>
                                     <option value="D" >D</option>
-                                    <option value="E">E</option>
+                                    <option value="E" id="pilihanop">E</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-4">
+                            <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="gift" id="giftcheckbox" value="1">  
+                                    <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
                                     <label for="giftcheckbox">&nbsp;&nbsp;Publish?</label>   
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-sm-offset-1">
+                                <div class="checkbox custom-checkbox">  
+                                    <input type="checkbox" name="random" id="idrand" value="1">  
+                                    <label for="idrand">Random?</label>   
                                 </div>
                             </div>
                         </div>
@@ -332,11 +320,13 @@
             });
             //END  event untuk pilihan jenis input  
             // Strat  event untuk jumlah pilihan  
-            $("#empatpil").click(function(){   
+           $("#empatpil").click(function(){   
                  $("#pilihan").hide();
+                  $("#pilihanop").hide();
             });
             $("#limapil").click(function(){
                 $("#pilihan").show();
+                 $("#pilihanop").show();
             });
             // END  event untuk jumlah pilihan
 

@@ -17,6 +17,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Bab</th>
+                                <th>Keterangan</th>
                                 <th>Lihat Soal</th>
                             </tr>
                         </thead>
@@ -25,10 +26,11 @@
                                 <tr>
                                     <td><?= $row['id']; ?></td>
                                     <td><?= $row['judulBab']; ?></td>
+                                    <th><?= $row['keterangan']; ?></th>
                                     <td>
-                                        <form action="<?= base_url(); ?>index.php/banksoal/listsoal" method="post">
+                                        <form action="<?= base_url(); ?>index.php/banksoal/listsubbab" method="get">
                                             <input type="text" name="bab" value="<?= $row['id']; ?>" hidden="true">
-                                            <button class="btn btn-primary">Lihat Bab</button>
+                                            <button class="btn btn-primary">Lihat Sub Bab</button>
                                         </form>
                                     </td>
 
