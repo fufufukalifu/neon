@@ -1,247 +1,134 @@
-<!-- START Template Main -->
-<section id="main" role="main">
-    <!-- START page header -->
-    <section class="page-header page-header-block nm">
-        <!-- pattern -->
-        <div class="pattern pattern9"></div>
-        <!--/ pattern -->
-        <div class="container pt15 pb15">
-            <div class="page-header-section">
-                <h4 class="title font-alt"> Register Akun User</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <ol class="breadcrumb breadcrumb-transparent nm">
-                        <li><a href="<?= base_url(); ?>">Beranda</a></li>
-                        <li class="active"> Register Akun User</li>
-                    </ol>
+<main>
+    <section class="fullwidth-background bg-2">
+        <div class="grid-row">
+            <div class="login-block" style="min-width: 45%">
+                <div class="logo">
+                    <img src="<?= base_url('assets/back/img/logo.png') ?>" data-at2x='img/logo@2x.png' alt>
+                    <!--<h4>Login</h4>-->
                 </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-    </section>
-    <!--/ END page header -->
+                <?php
+//                if (!empty($authUrl)) {
+//                    echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';                  
+//                }
+                ?>
+                <div class="clear-both"></div>
 
-    <!-- START Register Content -->
-    <section class="section bgcolor-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Header -->
-                    <div class="section-header section-header-bordered text-center">
-                        <h2 class="section-title">
-                            <p class="font-alt nm">Create your NetJoo Account</p>
-                        </h2>
-                    </div>
-                    <!--/ Header -->
+                <!-- Alert message -->
+                <div class="alert alert-warning">
+                    <span class="semibold">Catatan :</span>&nbsp;&nbsp;Silahkan diisi Semua.
                 </div>
+                <!--/ Alert message -->
 
-                <div class="col-md-6">
-                    <!-- features #1 -->
-                    <div class="table-layout">
-                        <div class="col-xs-2 valign-top"><img src="<?= base_url('assets/image/icons/brandprotection.png') ?>" width="100%"></div>
-                        <div class="col-xs-10 valign-top pl15">
-                            <h4 class="font-alt mt0">Serious security</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non
-                                proident.</p>
-                        </div>
+                <form class="login-form" name="form-register" action="<?= base_url() ?>index.php/register/savesiswa" method="post">
+                    <div class="form-group">
+                        <input type="text" class="login-input" name="namadepan" value="<?php echo set_value('namadepan'); ?>" placeholder="Nama Depan" required data-parsley-required>
+<!--                        <span class="input-icon">
+                            <i class="fa fa-user"></i>
+                        </span>-->
+                        <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
+                        <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                     </div>
-                    <!-- features #1 -->
-                    <div class="visible-md visible-lg" style="margin-bottom:50px;"></div><!-- spacer -->
-                    <!-- features #2 -->
-                    <div class="table-layout">
-                        <div class="col-xs-2 valign-top"><img src="<?= base_url('assets/image/icons/seoperfomance.png') ?>" width="100%"></div>
-                        <div class="col-xs-10 valign-top pl15">
-                            <h4 class="font-alt mt0">Powerful integrations</h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
-                        </div>
+
+                    <div class="form-group">
+                        <input type="text" class="login-input" name="namabelakang" value="<?php echo set_value('namabelakang'); ?>" placeholder="Nama Belakang" required>
+                        <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
+                        <span class="text-danger"> <?php echo form_error('namabelakang'); ?></span>
                     </div>
-                    <!-- features #2 -->
-                    <div class="visible-md visible-lg" style="margin-bottom:50px;"></div><!-- spacer -->
-                    <!-- features #3 -->
-                    <div class="table-layout">
-                        <div class="col-xs-2 valign-top"><img src="<?= base_url('assets/image/icons/responsivewebdesign.png') ?>" width="100%"></div>
-                        <div class="col-xs-10 valign-top pl15">
-                            <h4 class="font-alt mt0">Browse With Any Device</h4>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia.</p>
-                        </div>
+
+                    <div class="form-group">
+                        <input type="text" class="login-input" placeholder="Alamat" name="alamat" value="<?php echo set_value('alamat'); ?>" data-parsley-required required>
+                        <i class="ico-home10 form-control-icon"></i>
+                        <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
+                        <span class="text-danger"> <?php echo form_error('alamat'); ?></span> 
                     </div>
-                    <!-- features #3 -->
-                    <div class="visible-md visible-lg" style="margin-bottom:50px;"></div><!-- spacer -->
-                    <!-- features #4 -->
-                    <div class="table-layout">
-                        <div class="col-xs-2 valign-top"><img src="<?= base_url('assets/image/icons/supportservices.png') ?>" width="100%"></div>
-                        <div class="col-xs-10 valign-top pl15">
-                            <h4 class="font-alt mt0">24 Hour Support</h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
-                        </div>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="No Kontak" name="nokontak" value="<?php echo set_value('nokontak'); ?>" data-parsley-required required>
+                        <i class="ico-phone3 form-control-icon"></i>
+                        <!-- untuk menampilkan pesan kesalahan penginputan no kontak -->
+                        <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
                     </div>
-                    <!-- features #4 -->
-                </div>
 
-                <div class="col-md-6">
-                    <!-- Register form -->
-                    <form class="panel nm" name="form-register" action="<?= base_url() ?>index.php/register/savesiswa" method="post">
-                        <ul class="list-table pa15">
-                            <li>
-                                <!-- Alert message -->
-                                <div class="alert alert-warning nm">
-                                    <span class="semibold">Catatan :</span>&nbsp;&nbsp;Silahkan diisi Semua.
-                                </div>
-                                <!--/ Alert message -->
-                            </li>
-                            <li class="text-right" style="width:20px;"><a href="javascript:void(0);"><i class="ico-question-sign fsize16"></i></a></li>
-                        </ul>
+                    <!-- end form data siswa -->
 
+                    <hr>
+                    <br>
+                    <!-- start form data sekolah -->
+                    <div class="form-group">
+                        <input type="text" placeholder="Nama Sekolah" class="login-input" name="namasekolah" value="<?php echo set_value('namasekolah'); ?>"data-parsley-required required>
+                        <i class="ico-home form-control-icon"></i>
+                    </div>
 
-                        <hr class="nm">
-                        <!-- start form data siswa -->
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-md-12 control-label">Nama</label>
-                                <div class="col-md-6">
-                                    <div class="has-icon pull-left">
-                                        <input type="text" class="form-control" name="namadepan" value="<?php echo set_value('namadepan'); ?>" placeholder="Nama Depan" required data-parsley-required>
-                                        <i class="ico-user2 form-control-icon"></i>
-                                        <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
-                                        <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="namabelakang" value="<?php echo set_value('namabelakang'); ?>" placeholder="Nama Belakang" required>
-                                </div>
-
-                            </div>
+                    <div class="form-group">
+                        <input placeholder="Alamat Sekolah" type="text" class="login-input" name="alamatsekolah" value="<?php echo set_value('alamatsekolah'); ?>"data-parsley-required required>
+                        <i class="ico-home form-control-icon"></i>
+                    </div>
+                    <!-- end form data siswa -->
 
 
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">Alamat</label>
-                                <div class="has-icon pull-left">
-                                    <input type="text" class="form-control" name="alamat" value="<?php echo set_value('alamat'); ?>" data-parsley-required required>
-                                    <i class="ico-home10 form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
-                                    <span class="text-danger"> <?php echo form_error('alamat'); ?></span>
-                                </div>
-                            </div>
+                    <hr class="nm">
+                    <!-- star form akun -->
+                    <br>
+                    <div class="form-group">
+                        <input placeholder="Username" type="text" class="login-input" name="namapengguna" value="<?php echo set_value('namapengguna'); ?>"  data-parsley-required required>
+                        <i class="ico-tag9 form-control-icon"></i>
+                        <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
+                        <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
 
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">No Kontak</label>
-                                <div class="has-icon pull-left">
-                                    <input type="number" class="form-control" name="nokontak" value="<?php echo set_value('nokontak'); ?>" data-parsley-required required>
-                                    <i class="ico-phone3 form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalahan penginputan no kontak -->
-                                    <span class="text-danger"> <?php echo form_error('nokontak'); ?></span>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Password" type="password" class="login-input" name="katasandi" maxlength="20" required>
+                        <i class="ico-key2 form-control-icon"></i>
+                        <!-- untuk menampilkan pesan kesalahan penginputan kata sandi -->
+                        <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Confirm Password" type="password" class="login-input" name="passconf" data-parsley-equalto="input[name=password]" maxlength="20" required>
+                        <i class="ico-asterisk form-control-icon"></i>
+                        <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
+                    </div>
+                    <!-- end form akun -->
 
-                        </div>
-                        <!-- end form data siswa -->
-
-                        <hr class="nm">
-                        <!-- start form data sekolah -->
-                        <div class="panel-body">
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">Nama Sekolah</label>
-                                <div class="has-icon pull-left">
-                                    <input type="text" class="form-control" name="namasekolah" value="<?php echo set_value('namasekolah'); ?>"data-parsley-required required>
-                                    <i class="ico-home form-control-icon"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">Alamat Sekolah</label>
-                                <div class="has-icon pull-left">
-                                    <input type="text" class="form-control" name="alamatsekolah" value="<?php echo set_value('alamatsekolah'); ?>"data-parsley-required required>
-                                    <i class="ico-home form-control-icon"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end form data siswa -->
-
-
-                        <hr class="nm">
-                        <!-- star form akun -->
-                        <div class="panel-body">
-                            <div class="col-md-12 form-group">
-                                <label class="control-label" for="namapengguna">Nama Pengguna</label>
-                                <div class="has-icon pull-left">
-                                    <input type="text" class="form-control" name="namapengguna" value="<?php echo set_value('namapengguna'); ?>"  data-parsley-required required>
-                                    <i class="ico-tag9 form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
-                                    <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">Kata Sandi</label>
-                                <div class="has-icon pull-left">
-                                    <input type="password" class="form-control" name="katasandi" maxlength="20" required>
-                                    <i class="ico-key2 form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalahan penginputan kata sandi -->
-                                    <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label class="control-label">Ulangi kata sandi</label>
-                                <div class="has-icon pull-left">
-                                    <input type="password" class="form-control" name="passconf" data-parsley-equalto="input[name=password]" maxlength="20" required>
-                                    <i class="ico-asterisk form-control-icon"></i>
-                                    <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end form akun -->
-
-                        <hr class="nm">
-                        <!-- Star form konfirmasi akun by email -->
-                        <div class="panel-body">
-                            <p class="semibold text-muted">Untuk konfirmasi dan pengaktifan akun baru anda, kita akan mengirim aktivasi code ke email anda.</p>
-                            <div class="form-group">
-                                <label class="control-label">Email</label>
-                                <div class="has-icon pull-left">
-                                    <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required>
-                                    <i class="ico-envelop form-control-icon"></i>
-                                    <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                                    <span class="text-danger"><?php echo form_error('email'); ?></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="agree" id="agree" value="1" required>  
-                                            <label for="agree">&nbsp;&nbsp;Saya setuju dengan <a class="semibold" href="javascript:void(0);">Ketentuan Pelayanan</a></label>     
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 text-right">
-                                        <a href="<?= base_url('index.php/login'); ?>">Ada akun?</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- end form konfirmasi akun by email -->
-                        <div class="panel-footer">
-                            <button type="submit" class="btn btn-block btn-success" id="kirimdata" disabled><span class="semibold">Sign up</span></button>
-                        </div>
-                    </form>
-                    <!-- Register form -->
-                </div>
+                    <hr class="nm">
+                    <!-- Star form konfirmasi akun by email -->
+                    <p class="small">Untuk konfirmasi dan pengaktifan akun baru anda, kita akan mengirim aktivasi code ke email anda.</p>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required>
+                        <i class="ico-envelop form-control-icon"></i>
+                        <!-- untuk menampilkan pesan kesalahan penginputan email -->
+                        <span class="text-danger"><?php echo form_error('email'); ?></span> 
+                    </div>
+                    <!--                    <div class="form-group">
+                                            <div class="" style="float: left;background: black;">
+                                                <div class="checkbox custom-checkbox">  
+                                                    <input type="checkbox" name="agree" id="agree" value="1" required>  
+                                                    <label for="agree"> </label>
+                                                </div>
+                                                <p class="small">
+                                                    &nbsp;&nbsp;Saya setuju dengan <a class="semibold" href="javascript:void(0);">Ketentuan Pelayanan</a>
+                                                </p>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="small">
+                                                    <a href="<?= base_url('index.php/login'); ?>">Ada akun?</a>
+                                                </p>
+                                                </div>
+                                            <div class="clear-both"></div>
+                                        </div>-->
+                    <!-- end form konfirmasi akun by email -->
+                    <div class="form-group nm">
+                        <button type="submit" class="button-fullwidth cws-button bt-color-3 alt"><span class="semibold">Daftar</span></button>
+                    </div>
+<!--                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-block btn-success" id="kirimdata" disabled><span class="semibold">Sign up</span></button>
+                    </div>-->
+                </form>
+                <!-- Register form -->
             </div>
         </div>
+        <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
     </section>
-    <!--/ END Register Content -->
-
-    <!-- START To Top Scroller -->
-    <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
-    <!--/ END To Top Scroller -->
-</section>
-<!--/ END Template Main -->
+</main>
 
 <script type="text/javascript">
     function enable() {

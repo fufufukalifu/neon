@@ -25,7 +25,7 @@ class Login extends MX_Controller {
         );
 
         $data['files'] = array(
-            APPPATH . 'modules/homepage/views/v-header.php',
+            APPPATH . 'modules/templating/views/v-navbarlogin.php',
             APPPATH . 'modules/login/views/vLogin.php',
             APPPATH . 'modules/homepage/views/v-footer.php',
         );

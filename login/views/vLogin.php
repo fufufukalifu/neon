@@ -50,14 +50,14 @@
                             <p class="small">
                                 <a href="<?= base_url('index.php/register'); ?>">Belum punya akun?</a>
                             </p><!--
-                        --></div>
+                            --></div>
                         <div class="clear-both"></div>
                     </div>
                     <div class="form-group nm">
                         <button type="submit" class="button-fullwidth cws-button bt-color-3 alt"><span class="semibold">Login</span></button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
         <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>

@@ -116,8 +116,9 @@ class Admin extends MX_Controller {
     }
 
     function daftarbab() {
+//        $judul = $this->uri->segment(3);
         $data = array(
-            'judul_halaman' => 'BAB Mata Pelajaran'
+            'judul_halaman' => 'BAB Mata Pelajaran '
         );
         $id = $this->uri->segment(4);
         ;
