@@ -12,8 +12,6 @@
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/font-awesome.css') ?>">
 	<link rel="stylesheet" href="<?=base_url('assets/back/fi/flaticon.css') ?>">
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/main.css') ?>">
-	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/tuner/css/colorpicker.css') ?>" />
-	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/tuner/css/styles.css') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/css/jquery.fancybox.css') ?>" />
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/owl.carousel.css') ?>"/>
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
@@ -38,7 +36,7 @@
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.slideanims.min.js') ?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.actions.min.js') ?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js') ?>"></script>
-	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/ex tensions/revolution.extension.kenburn.min.js') ?>"></script>
+	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.kenburn.min.js') ?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.navigation.min.js') ?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.migration.min.js') ?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/back/rs-plugin/js/extensions/revolution.extension.parallax.min.js') ?>"></script>		
@@ -48,8 +46,6 @@
 	<script src="<?=base_url('assets/back/js/jquery-ui.min.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jflickrfeed.min.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jquery.tweet.js') ?>"></script>
-	<script type='text/javascript' src="<?=base_url('assets/back/tuner/js/colorpicker.js') ?>"></script>
-	<script type='text/javascript' src="<?=base_url('assets/back/tuner/js/scripts.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jquery.fancybox.pack.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jquery.fancybox-media.js') ?>"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

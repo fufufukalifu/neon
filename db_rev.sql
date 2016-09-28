@@ -41,13 +41,15 @@ CREATE TABLE `tb_banksoal` (
   `id_tingkat-pelajaran` int(11) NOT NULL,
   `sumber` varchar(100) NOT NULL,
   `create_by` varchar(100) NOT NULL,
+  `random` char(1) DEFAULT NULL,
   `publish` char(1) NOT NULL,
+  `UUID` varchar(15) NOT NULL,
   PRIMARY KEY (`id_soal`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_banksoal` */
 
-insert  into `tb_banksoal`(`id_soal`,`soal`,`jawaban`,`kesulitan`,`id_bab`,`id_tingkat-pelajaran`,`sumber`,`create_by`,`publish`) values (1,'1','','',62,0,'','',''),(2,'2','','',62,0,'','',''),(3,'3','','',62,0,'','',''),(4,'4','','',63,0,'','',''),(5,'5','','',63,0,'','','');
+insert  into `tb_banksoal`(`id_soal`,`soal`,`jawaban`,`kesulitan`,`id_bab`,`id_tingkat-pelajaran`,`sumber`,`create_by`,`random`,`publish`,`UUID`) values (3,'<p>Ubah</p>\r\n','D','1',68,0,'UAN 1290m Revisi','41',NULL,'','57e243e13e88d'),(4,'<p>1+1+X</p>\r\n','A','1',68,0,'SNMPTN','41',NULL,'','57e88fc9c1946'),(5,'<p>asd</p>\r\n','C','',62,0,'UAN SMP','41',NULL,'1','57e89f35906fe'),(6,'<p>aS</p>\r\n','C','',65,0,'UAN 1290','41',NULL,'1','57e8aa083024c'),(7,'<p>asjdina</p>\r\n','E','2',65,0,'UAN 3000','41',NULL,'1','57e8aa321c808'),(8,'<p>as</p>\r\n','A','1',0,0,'asd','42',NULL,'','57e8c96d40517'),(9,'<p>as</p>\r\n','A','1',0,0,'asd','42',NULL,'','57e8c9dba07a9');
 
 /*Table structure for table `tb_guru` */
 
@@ -140,6 +142,16 @@ CREATE TABLE `tb_mm-tryoutpaket` (
 
 /*Data for the table `tb_mm-tryoutpaket` */
 
+/*Table structure for table `tb_mm_sol_lat` */
+
+CREATE TABLE `tb_mm_sol_lat` (
+  `id` int(11) DEFAULT NULL,
+  `id_paket` int(11) DEFAULT NULL,
+  `id_soal` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_mm_sol_lat` */
+
 /*Table structure for table `tb_paket` */
 
 CREATE TABLE `tb_paket` (
@@ -150,11 +162,11 @@ CREATE TABLE `tb_paket` (
   `jumlah_soal` int(11) NOT NULL,
   `durasi` int(11) NOT NULL,
   PRIMARY KEY (`id_paket`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_paket` */
 
-insert  into `tb_paket`(`id_paket`,`nm_paket`,`deskripsi`,`status`,`jumlah_soal`,`durasi`) values (1,'nama','des',0,1,1),(130,'1','1',0,10,1),(131,'opik','opik',0,10,12),(132,'132','15',0,321,32),(133,'lakjd','lkjd',0,10,123),(134,'qwe','qwe',0,10,123),(135,'opik','opik',0,10,10),(136,'2','2',0,20,2),(137,'12','20',0,12,0),(138,'judul','10',0,0,0),(139,'','',0,0,0),(140,'12','12',0,10,123),(141,'dasd','asd',0,10,123),(142,'1','1',0,10,1),(143,'1','1',0,10,1),(144,'5','5',1,10,5),(145,'111','111',0,10,111),(146,'Buat Ilham','buat ilham',0,10,10);
+insert  into `tb_paket`(`id_paket`,`nm_paket`,`deskripsi`,`status`,`jumlah_soal`,`durasi`) values (99,'nama_pakettt','deskripsitt',0,55,60),(100,'a','a',0,50,89),(101,'kj','klj',0,10,90),(102,'123','dsa',0,10,90),(103,'asd','dask',0,20,78),(104,'baru','tam[pil',1,10,67),(105,'gg','ferari',0,20,88),(106,'gg','ferari',1,20,88),(107,'ff','aziz',1,20,87),(108,'hh','tt',1,10,67);
 
 /*Table structure for table `tb_pengguna` */
 
@@ -176,7 +188,7 @@ CREATE TABLE `tb_pengguna` (
 
 /*Data for the table `tb_pengguna` */
 
-insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(41,'siswabageur','efe6398127928f1b2e9ef3207fb82663','goichissnime@gmail.com','2016-09-13 14:18:15','1',NULL,NULL,NULL,'siswa','1','2016-09-13 14:18:15'),(42,'guru','77e69c137812518e359196bb2f5e9bb9','goichinime@gmail.com','2016-09-13 14:21:13','1',NULL,NULL,NULL,'guru','1','2016-09-13 14:21:13');
+insert  into `tb_pengguna`(`id`,`namaPengguna`,`kataSandi`,`eMail`,`regTime`,`aktivasi`,`avatar`,`oauth_uid`,`oauth_provider`,`hakAkses`,`status`,`last_akses`) values (3,'siswa','bcd724d15cde8c47650fda962968f102','','2016-09-05 14:18:08','1',NULL,NULL,NULL,'siswa','1','2016-09-08 21:47:20'),(41,'siswabageur','efe6398127928f1b2e9ef3207fb82663','goichissnime@gmail.com','2016-09-13 14:18:15','1',NULL,NULL,NULL,'siswa','1','2016-09-13 14:18:15'),(42,'guru','efe6398127928f1b2e9ef3207fb82663','goichinime@gmail.com','2016-09-13 14:21:13','1',NULL,NULL,NULL,'guru','1','2016-09-13 14:21:13');
 
 /*Table structure for table `tb_piljawaban` */
 
@@ -185,10 +197,13 @@ CREATE TABLE `tb_piljawaban` (
   `pilihan` char(1) NOT NULL,
   `jawaban` text NOT NULL,
   `id_soal` int(11) NOT NULL,
+  `gambar` varchar(32) NOT NULL,
   PRIMARY KEY (`id_pilihan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_piljawaban` */
+
+insert  into `tb_piljawaban`(`id_pilihan`,`pilihan`,`jawaban`,`id_soal`,`gambar`) values (6,'A','   baju   ',3,'download1.png'),(7,'B',' baru',3,'smailll.jpg'),(8,'C','      sa    ',3,'smailll1.jpg'),(9,'D','     sada',3,'Image_e856aa1.jpg'),(10,'E','     sad',3,'download2.png'),(11,'A','1',4,'download4.png'),(12,'B',' 2',4,'smailll4.jpg'),(13,'C',' 3',4,'download.png'),(14,'D',' 4',4,'download3.png'),(15,'E',' 4',4,'smailll2.jpg'),(16,'A','',5,'download5.png'),(17,'B','',5,'smailll3.jpg'),(18,'C','',5,'Image_e856aa11.jpg'),(19,'D','',5,'download6.png'),(20,'E','',5,'smailll5.jpg'),(21,'A',' as',6,''),(22,'B','  as',6,''),(23,'C','  as',6,''),(24,'D','  as',6,''),(25,'E','  as',6,''),(26,'A','',7,'download7.png'),(27,'B','',7,'smailll6.jpg'),(28,'C','',7,'download8.png'),(29,'D','',7,'smailll7.jpg'),(30,'E','',7,'Image_e856aa12.jpg'),(31,'A',' ',8,''),(32,'B',' ',8,''),(33,'C',' ',8,''),(34,'D',' ',8,''),(35,'E',' ',8,''),(36,'A',' ',9,''),(37,'B',' ',9,''),(38,'C',' ',9,''),(39,'D',' ',9,''),(40,'E',' ',9,'');
 
 /*Table structure for table `tb_report-latihan` */
 
@@ -236,15 +251,19 @@ CREATE TABLE `tb_siswa` (
   `penggunaID` int(10) DEFAULT NULL,
   `photo` varchar(32) DEFAULT 'default.jpg',
   `biografi` text,
+  `kelas` int(1) DEFAULT NULL,
+  `tingkatID` int(10) DEFAULT NULL,
   `status` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `penggunaID` (`penggunaID`),
-  CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `tingkatID` (`tingkatID`),
+  CONSTRAINT `tb_siswa_ibfk_1` FOREIGN KEY (`penggunaID`) REFERENCES `tb_pengguna` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tb_siswa_ibfk_2` FOREIGN KEY (`tingkatID`) REFERENCES `tb_tingkat` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_siswa` */
 
-insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`status`) values (2,'nama depan','nama belakang','alamat saya','dfakdjafkl','s.dki','dfd',0,NULL,'default.png',NULL,''),(3,'qw','qw','qwqw','4324234','Sma Panjalu','ss',0,NULL,'default.jpg',NULL,''),(6,'siswa','bageur','Cikapundung','345345345','Sma Panjalu','Jalan Pasuruan',0,41,'smailll.jpg',NULL,'');
+insert  into `tb_siswa`(`id`,`namaDepan`,`namaBelakang`,`alamat`,`noKontak`,`namaSekolah`,`alamatSekolah`,`noKontakSekolah`,`penggunaID`,`photo`,`biografi`,`kelas`,`tingkatID`,`status`) values (2,'nama depan','nama belakang','alamat saya','dfakdjafkl','s.dki','dfd',0,NULL,'default.png',NULL,NULL,NULL,''),(3,'qw','qw','qwqw','4324234','Sma Panjalu','ss',0,NULL,'default.jpg',NULL,NULL,NULL,''),(6,'siswa','bageur','Cikapundung','345345345','Sma Panjalu','Jalan Pasuruan',0,41,'smailll.jpg',NULL,NULL,NULL,'');
 
 /*Table structure for table `tb_subbab` */
 
@@ -275,7 +294,7 @@ CREATE TABLE `tb_tingkat` (
 
 /*Data for the table `tb_tingkat` */
 
-insert  into `tb_tingkat`(`id`,`aliasTingkat`,`namaTingkat`,`status`) values (1,'SD','Sekolah Dasar',1),(2,'SMP','Sekolah Menengah Pertama',1),(3,'SMK','Sekolah Menengah Kejuruan',1),(4,'SMA','Sekolah Menengah Atas',1);
+insert  into `tb_tingkat`(`id`,`aliasTingkat`,`namaTingkat`,`status`) values (1,'SD','Sekolah Dasar',1),(2,'SMP','Sekolah Menengah Pertama',1),(3,'SMK','Sekolah Menengah Kejuruan',0),(4,'SMA','Sekolah Menengah Atas',1);
 
 /*Table structure for table `tb_tingkat-pelajaran` */
 

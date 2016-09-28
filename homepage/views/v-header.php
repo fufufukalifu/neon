@@ -8,7 +8,6 @@
 					<a href="mailto:info@neutron-ny.com " class="email"><i class="fa fa-envelope-o"></i>info@neutron-ny.com </a>
 				</address>
 				<div class="header-top-panel">
-					<a href="" class="fa fa-shopping-cart"></a>
 					<a href="page-login.html" class="fa fa-user login-icon"></a>
 					<div id="top_social_links_wrapper">
 					    <div class="share-toggle-button"><i class="share-icon fa fa-share-alt"></i></div>

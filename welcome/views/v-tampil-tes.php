@@ -2,29 +2,41 @@
         <main>
             <div class="grid-col-row clear-fix">
                 <div class="row">
-                    <div class="container"><h1 class="text-center">Pilih tingkatanmu untuk memulai latihan tes atau try out!</h1><br></div>
+                    <div class="container"><h1 class="text-center">Untuk melatih pemahamanmu, ayo lakukan tes online!</h1><br></div>
                 </div>
-                <?php foreach ($tingkat as $tingkats): ?>
-                <div class="grid-col grid-col-3">
+                <div class="grid-col grid-col-6">
                     <div class="course-item">
                         <div class="course-hover">
                             <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
-                            <div class="hover-bg bg-color-3"></div>
-                            <a href="">Mulai Tes</a>
+                            <div class="hover-bg bg-color3"></div>
+                            <a href="<?=base_url() ?>index.php/tesonline">Mulai Tes</a>
                         </div>
                         <div class="course-name clear-fix">
                             <center><h3 style="text-align:center"><a href=""></a></h3></center>
                         </div>
                         <div class="course-date bg-color-3 clear-fix">
-                            
-                            <div class="description"><?=$tingkats['aliasTingkat'] ?><br></div>
+                            <div class="description">Tes Online<br></div>
                             <div class="divider"></div>
                         </div>
                     </div>
-                    
-                    <!-- / course item -->
                 </div>
-                <?php endforeach ?>
+
+                <div class="grid-col grid-col-6">
+                    <div class="course-item">
+                        <div class="course-hover">
+                            <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
+                            <div class="hover-bg bg-color2"></div>
+                            <a href="<?=base_url() ?>index.php/tryout">Mulai Tes</a>
+                        </div>
+                        <div class="course-name clear-fix">
+                            <center><h3 style="text-align:center"><a href=""></a></h3></center>
+                        </div>
+                        <div class="course-date bg-color-2 clear-fix">
+                            <div class="description">Try out online<br></div>
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>

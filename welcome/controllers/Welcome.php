@@ -39,7 +39,7 @@ class Welcome extends MX_Controller {
             APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/welcome/views/v-welcome.php',
-            APPPATH.'modules/welcome/views/v-tampil-tingkat.php',
+            APPPATH.'modules/welcome/views/v-tampil-tes.php',
             APPPATH.'modules/homepage/views/v-footer.php',
         );
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
