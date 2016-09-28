@@ -6,17 +6,31 @@ class Login extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('parser');
         $this->load->helper('url');
         $this->load->model('Mlogin');
         $this->load->library('session');
     }
 
     public function index() {
-        $this->load->view('templating/t-header');
-        $this->facebookIdentity();
+//        $this->load->view('templating/t-header');
+//        $this->facebookIdentity();
 //        $this->load->view('vLogin.php');
-        $this->load->view('templating/t-sessionlogin');
-        $this->load->view('templating/t-footer');
+//        $this->load->view('templating/t-sessionlogin');
+//        $this->load->view('templating/t-footer');
+
+        $data = array(
+            'judul_halaman' => 'Login - Neon',
+            'judul_header' => 'Welcome'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/homepage/views/v-header.php',
+            APPPATH . 'modules/login/views/vLogin.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+        
+        $this->parser->parse('templating/index', $data);
     }
 
     //Fungsi untuk login, mengecek username dan password
@@ -31,14 +45,14 @@ class Login extends MX_Controller {
 
                 $hakAkses = $row->hakAkses;
                 //membuat session
-                $verifikasiCode=md5($row->regTime);
+                $verifikasiCode = md5($row->regTime);
                 $sess_array = array(
                     'id' => $row->id,
                     'USERNAME' => $row->namaPengguna,
                     'HAKAKSES' => $row->hakAkses,
                     'AKTIVASI' => $row->aktivasi,
-                    'eMail'    => $row->eMail,
-                    'verifikasiCode' =>$verifikasiCode,
+                    'eMail' => $row->eMail,
+                    'verifikasiCode' => $verifikasiCode,
                 );
                 $this->session->set_userdata($sess_array);
 
@@ -169,6 +183,7 @@ class Login extends MX_Controller {
             return TRUE;
         }
     }
+
 }
 
 ?>

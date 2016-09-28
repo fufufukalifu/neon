@@ -23,25 +23,27 @@ class Welcome extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'Mmatapelajaran' );
-        parent::__construct();
+        $this->load->model( 'tingkat/MTingkat' );
+
         $this->load->library( 'parser' );
 
     }
 
     public function index() {
-
         $data = array(
             'judul_halaman' => 'Netjoo - Welcome',
             'judul_header' =>'Welcome'
         );
 
         $data['files'] = array( 
-            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/welcome/views/v-welcome.php',
+            APPPATH.'modules/welcome/views/v-tampil-tingkat.php',
             APPPATH.'modules/homepage/views/v-footer.php',
         );
-
+        $data['tingkat'] = $this->load->MTingkat->gettingkat();
+        // print_r($data['tingkat']);
         $data['pelajaran_sma'] = $this->load->Mmatapelajaran->get_pelajaran_sma();
         $data['pelajaran_smk'] = $this->load->Mmatapelajaran->get_pelajaran_smk();
         $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();

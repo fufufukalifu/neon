@@ -1,133 +1,117 @@
-<?php 
+<?php
 
 /**
-* 
-*/
-class MbankSoal extends CI_Model
-{
-	
-	# Start Function untuk form soal#	
-	public function insert_soal($dataSoal)
-	{
-		 $this->db->insert('tb_banksoal', $dataSoal);
-	}
+ * 
+ */
+class MbankSoal extends CI_Model {
+    # Start Function untuk form soal#	
 
+    public function insert_soal($dataSoal) {
+        $this->db->insert('tb_banksoal', $dataSoal);
+    }
 
-	public function get_soalID($UUID)
-	{
-		$this->db->where('UUID',$UUID);
-		$this->db->select('id_soal')->from('tb_banksoal');
-		$query = $this->db->get();
+    public function get_soalID($UUID) {
+        $this->db->where('UUID', $UUID);
+        $this->db->select('id_soal')->from('tb_banksoal');
+        $query = $this->db->get();
         return $query->result_array();
-	}
-	//insert pilihan jawaban berupa text
-	public function insert_jawaban($dataJawaban)
-	{
-		$this->db->insert_batch('tb_piljawaban', $dataJawaban);
-	}
-	//insert pilihan jawaban berupa gambar
-	public function insert_gambar($datagambar)
-	{
-		$this->db->insert_batch('tb_piljawaban', $datagambar);
-		echo "masuk insert gambar";
-		var_dump($datagambar);
-	}
-	# END Function untuk form soal#
+    }
 
-	public function get_pelajaran($tingkatID)
-	{	
-		$this->db->where('tingkatID',$tingkatID);
-		$this->db->select('*')->from('tb_tingkat-pelajaran');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    //insert pilihan jawaban berupa text
+    public function insert_jawaban($dataJawaban) {
+        $this->db->insert_batch('tb_piljawaban', $dataJawaban);
+    }
 
-	public function get_bab($tingkatPelajaranID)
-	{	
-		$this->db->where('tingkatPelajaranID',$tingkatPelajaranID);
-		$this->db->select('*')->from('tb_bab');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    //insert pilihan jawaban berupa gambar
+    public function insert_gambar($datagambar) {
+        $this->db->insert_batch('tb_piljawaban', $datagambar);
+        echo "masuk insert gambar";
+        var_dump($datagambar);
+    }
 
-	public function get_soal($babID)
-	{	
-		$this->db->where('id_bab',$babID);
-		$this->db->select('*')->from('tb_banksoal');
-		// $this->db->select('*,soal.jawaban as soal_jawab');
-		// $this->db->from('tb_banksoal soal');
-		// $this->db->join('tb_piljawaban jawaban', ' jawaban.id_soal= soal.id_soal');
-		// $this->db->where('id_bab',$babID);
+    # END Function untuk form soal#
 
+    public function get_pelajaran($tingkatID) {
+        $this->db->where('tingkatID', $tingkatID);
+        $this->db->select('*')->from('tb_tingkat-pelajaran');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    public function get_bab($tingkatPelajaranID) {
+        $this->db->where('tingkatPelajaranID', $tingkatPelajaranID);
+        $this->db->select('*')->from('tb_bab');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
+    public function get_soal($babID) {
+        $this->db->select('*');
+        $this->db->from('tb_banksoal soal');
+        $this->db->where('id_bab', $babID);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-	# Start Function untuk form update soal#
-	public function ch_soal($data)
-	{	
-		$this->db->set($data['dataSoal']);
-		$this->db->where('UUID',$data['UUID']);
-		$this->db->update('tb_banksoal');
-		
+    public function get_pilihan($babID) {
+        $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');
+        $this->db->from('tb_banksoal soal');
+        $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
+        $this->db->where('id_bab', $babID);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-	
-	}
+    # Start Function untuk form update soal#
 
-	public function get_onesoal($UUID)
-	{	
-		$this->db->where('UUID',$UUID);
-		$this->db->select('*')->from('tb_banksoal');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    public function ch_soal($data) {
+        $this->db->set($data['dataSoal']);
+        $this->db->where('UUID', $data['UUID']);
+        $this->db->update('tb_banksoal');
+    }
 
-	public function get_piljawaban($id_soal)
-	{
-		$this->db->where('id_soal',$id_soal);
-		$this->db->select('*')->from('tb_piljawaban');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    public function get_onesoal($UUID) {
+        $this->db->where('UUID', $UUID);
+        $this->db->select('*')->from('tb_banksoal');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-	public function get_oldgambar($soalID)
-	{
-		$this->db->where('id_soal',$soalID);
-		$this->db->select('id_pilihan,gambar')->from('tb_piljawaban');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+    public function get_piljawaban($id_soal) {
+        $this->db->where('id_soal', $id_soal);
+        $this->db->select('*')->from('tb_piljawaban');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-	//function untuk update pilihan jawaban text
-	public function ch_jawaban($data)
-	{
-		$this->db->update_batch('tb_piljawaban',$data['dataJawaban'],'id_pilihan');
-	}
+    public function get_oldgambar($soalID) {
+        $this->db->where('id_soal', $soalID);
+        $this->db->select('id_pilihan,gambar')->from('tb_piljawaban');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-	public function ch_gambar($datagambar)
-	{
-		$this->db->update_batch('tb_piljawaban',$datagambar,'id_pilihan');
-		// var_dump($datagambar);
-	}
+    //function untuk update pilihan jawaban text
+    public function ch_jawaban($data) {
+        $this->db->update_batch('tb_piljawaban', $data['dataJawaban'], 'id_pilihan');
+    }
 
+    public function ch_gambar($datagambar) {
+        $this->db->update_batch('tb_piljawaban', $datagambar, 'id_pilihan');
+        // var_dump($datagambar);
+    }
 
-	# END Function untuk form update soal#
+    # END Function untuk form update soal#
+    # Start Function untuk form delete bank soal#
+    //dalam pengahapusan data bank soal tidak benar2 di hapus tetapi status di rubah dari 1 -> 0
 
+    public function del_banksoal($data) {
+        $this->db->where('id_soal', $data);
+        $this->db->set('status', '0');
+        $this->db->update('tb_banksoal');
+    }
 
-	# Start Function untuk form delete bank soal#
-	//dalam pengahapusan data bank soal tidak benar2 di hapus tetapi status di rubah dari 1 -> 0
-	public function del_banksoal($data)
-	{
-		$this->db->where('id_soal',$data);
-		$this->db->set('status','0');
-		$this->db->update('tb_banksoal');
-	}
-
-	# END Function untuk form delete bank soal#
-
-
-
+    # END Function untuk form delete bank soal#
 }
- ?>
+
+?>
