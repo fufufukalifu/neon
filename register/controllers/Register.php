@@ -17,7 +17,7 @@ class Register extends MX_Controller {
 //        $this->load->view('templating/t-footer');
 
         $data = array(
-            'judul_halaman' => 'Login - Neon',
+            'judul_halaman' => 'Registrasi - Neon',
             'judul_header' => 'Welcome'
         );
 
