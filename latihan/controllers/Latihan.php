@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Latihan extends MX_Controller
+class Latihan extends MX_Controller 
 {
 	
 	function __construct()
@@ -22,33 +22,34 @@ class Latihan extends MX_Controller
 		foreach ($data['banksoal'] as $row) {
 			$id_soal[]= array('id_soal'=> $row['id_soal']);
 		}
-		// var_dump($id_soal);
+	
 		// get pilihan jawaban sesuai dgn soal
 		$data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
-		$this->load->library('table');
-		echo $this->table->generate($data['banksoal']);
-		echo "==================================";
-		echo $this->table->generate($data['pilihan']);
-		// var_dump($data);
-		//soal + jawaban
-		$tamp1=array();
-		$tamp2=array();
 
-
-		foreach ($data['banksoal'] as $row) {
-			$tamp1 [] =array(
-							'id_soal'=>$row['id_soal'],
-							'jawab'=>'1');
-			// $tamp2 [] =array(
-			// 				'soal'=>$row['soal']);
-			// $soal=array_push($tamp1,$tamp2);
-			
-		}
-		$tamp1 ["soal"] = "test";
 		
-		 // print_r($soal);
-		echo $this->table->generate($tamp1);
-		// var_dump($soal);
+		// for testing
+		// $this->load->library('table');
+		// echo $this->table->generate($data['banksoal']);
+		// echo "==================================";
+		// echo $this->table->generate($data['pilihan']);
+
+		// var_dump($data['banksoal']);
+		  $data = array(
+            'judul_halaman' => 'Latihan - Neon',
+            'judul_header' => 'Latihan'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/templating/views/v-navbarregister.php',
+            APPPATH . 'modules/latihan/views/v-latihan.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+
+
+
+       
+
+        $this->parser->parse('templating/index', $data);
 
 	}
 

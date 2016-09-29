@@ -26,7 +26,7 @@
                                 <tr>
                                     <td><?= $row['id']; ?></td>
                                     <td><?= $row['judulBab']; ?></td>
-                                    <th><?= $row['keterangan']; ?></th>
+                                    <td><?= $row['keterangan']; ?></td>
                                     <td>
                                         <form action="<?= base_url(); ?>index.php/banksoal/listsubbab" method="get">
                                             <input type="text" name="bab" value="<?= $row['id']; ?>" hidden="true">

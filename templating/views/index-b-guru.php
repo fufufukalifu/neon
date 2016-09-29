@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Subab</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" name="subBab" id="subb">
+                                    <select class="form-control" name="subbab" id="subb">
 
                                     </select>
                                 </div>

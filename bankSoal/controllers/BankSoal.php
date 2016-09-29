@@ -239,7 +239,6 @@ class BankSoal extends MX_Controller {
         $UUID = htmlspecialchars($this->input->get('UUID'));
         
 
-
         if ($data['subBabID'] == null) {
             echo "redirect ke dashboard";
         } else {
