@@ -6,6 +6,11 @@
                     <img src="<?= base_url('assets/back/img/logo.png') ?>" alt>
                     <!--<h4>Login</h4>-->
                 </div>
+                <div class="">
+                    <div class="page-header-section">
+                        <h4 class="title font-alt text-center">LOGIN AKUN</h4>
+                    </div>
+                </div>
                 <?php
 //                if (!empty($authUrl)) {
 //                    echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';                  

@@ -6,7 +6,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<!-- style -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+	<link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.min.css') ?>"/>
 	
 	<link rel="shortcut icon" href="<?=base_url('assets/back/img/favicon.png') ?>">
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/font-awesome.css') ?>">

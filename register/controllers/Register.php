@@ -274,9 +274,9 @@ class Register extends MX_Controller {
 
 //halam untulk memnberitahu link aktivassi ke email atau untuk meresen email
     public function verifikasi() {
-    //        $this->load->view('templating/t-header');
-    //        $this->load->view('vVerifikasi.php');
-    //        $this->load->view('templating/t-footer');
+        //        $this->load->view('templating/t-header');
+        //        $this->load->view('vVerifikasi.php');
+        //        $this->load->view('templating/t-footer');
 
         $data = array(
             'judul_halaman' => 'Verifikasi Email - Neon',
@@ -342,9 +342,22 @@ class Register extends MX_Controller {
 
     public function resetpassword() {
         if (!empty($this->session->userdata['reset_email']) && $this->session->userdata['reset_password'] == '1') {
-            $this->load->view('templating/t-header');
-            $this->load->view('vResetPassword.php');
-            $this->load->view('templating/t-footer');
+//            $this->load->view('templating/t-header');
+//            $this->load->view('vResetPassword.php');
+//            $this->load->view('templating/t-footer');
+           
+            $data = array(
+                'judul_halaman' => 'Reset Password - Neon'
+            );
+
+            $data['files'] = array(
+                APPPATH . 'modules/homepage/views/v-header.php',
+                APPPATH . 'modules/register/views/vResetPassword.php',
+                APPPATH . 'modules/homepage/views/v-footer.php',
+            );
+
+            $this->parser->parse('templating/index', $data);
+            
         } else {
             redirect(base_url('index.php/login'));
         }

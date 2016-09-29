@@ -6,6 +6,11 @@
                     <img src="<?= base_url('assets/back/img/logo.png') ?>" alt>
                     <!--<h4>Login</h4>-->
                 </div>
+                <div class="">
+                    <div class="page-header-section">
+                        <h4 class="title font-alt text-center">REGISTRASI</h4>
+                    </div>
+                </div>
                 <?php
 //                if (!empty($authUrl)) {
 //                    echo '<a href="' . $authUrl . '" class="btn btn-block btn-facebook">Connect with <i class="ico-facebook2 ml5"></i></a>';                  
@@ -18,6 +23,8 @@
                     <div class="alert alert-warning">
                         <span class="semibold">Catatan :</span>&nbsp;&nbsp;Silahkan diisi semua.
                     </div>
+                    <hr>
+                    <br>
                 </div>
 
                 <!--/ Alert message -->
@@ -166,7 +173,7 @@
                         <hr class="nm">
                         <br>
 
-                        <p class="small">Untuk konfirmasi dan pengaktifan akun baru, kita akan mengirim aktivasi code ke email kamu.</p>
+                        <p class="small">Untuk konfirmasi dan pengaktifan akun baru, kita akan mengirim kode aktivasi ke email kamu.</p>
                         <!-- Star form konfirmasi akun by email -->
                         <div class="form-group">
                             <input type="email" class="form-control input-sm" name="email" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required>
