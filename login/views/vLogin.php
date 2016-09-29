@@ -3,7 +3,7 @@
         <div class="grid-row">
             <div class="login-block" style="min-width: 35%">
                 <div class="logo">
-                    <img src="<?= base_url('assets/back/img/logo.png') ?>" data-at2x='img/logo@2x.png' alt>
+                    <img src="<?= base_url('assets/back/img/logo.png') ?>" alt>
                     <!--<h4>Login</h4>-->
                 </div>
                 <?php
@@ -12,10 +12,10 @@
 //                }
                 ?>
                 <div class="clear-both"></div>
-                <div class="login-or">
-                    <hr class="hr-or">
-                    <span class="span-or">or</span>
-                </div>
+                <!--                <div class="login-or">
+                                    <hr class="hr-or">
+                                    <span class="span-or">or</span>
+                                </div>-->
                 <?php if ($this->session->flashdata('notif') != '') {
                     ?>
                     <div class="alert alert-warning">
@@ -26,6 +26,8 @@
                         Siap berpetualang? Isi form, tekan Login!
                     </div>
                 <?php }; ?>
+                <hr>
+                <br>
                 <form class="login-form" action = "<?= base_url('index.php/login/validasiLogin'); ?>" method = "post">
                     <div class="form-group">
                         <input type="text" name="username" class="login-input" placeholder="Username / email" required>

@@ -42,7 +42,7 @@
                 <div class="col-md-6 col-md-offset-3">
 
 
-                    <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/resetdatapassword" method="post">
+                    <form class="login-form" name="form-register" action="<?= base_url() ?>index.php/register/resetdatapassword" method="post">
                         <ul class="list-table pa15">
                             <li>
                                 <!-- Alert message -->
@@ -82,7 +82,7 @@
                         </div>
                         <!-- end form konfirmasi akun by email -->
                         <div class="panel-footer">
-                            <button type="submit" class="btn btn-block btn-success"><span class="semibold">Submit</span></button>
+                            <button disabled="true" type="submit" class="button-fullwidth cws-button bt-color-3 alt"><span class="semibold">Submit</span></button>
                         </div>
                     </form>
 

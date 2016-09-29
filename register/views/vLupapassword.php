@@ -3,10 +3,10 @@
         <div class="grid-row">
             <div class="login-block" style="min-width: 50%">
                 <div class="logo">
-                    <img src="<?= base_url('assets/back/img/logo.png') ?>" data-at2x='img/logo@2x.png' alt>
+                    <img src="<?= base_url('assets/back/img/logo.png') ?>" alt>
                     <!--<h4>Login</h4>-->
                 </div>
-                <form class="panel nm" name="form-register" action="<?= base_url() ?>index.php/register/ch_sent_reset" method="post">
+                <form class="login-form" name="form-register" action="<?= base_url() ?>index.php/register/ch_sent_reset" method="post">
 
                     <!-- Alert message -->
                     <!--                                <div class="alert alert-warning">
@@ -41,8 +41,8 @@
 
                     </div>
                     <!-- end form konfirmasi akun by email -->
-                    <div class="panel-footer">
-                        <button type="submit" class="btn btn-block btn-success"><span class="semibold">Submit</span></button>
+                    <div class="">
+                        <button type="submit" class="button-fullwidth cws-button bt-color-3 alt"><span class="semibold">Submit</span></button>
                     </div>
                 </form>
 

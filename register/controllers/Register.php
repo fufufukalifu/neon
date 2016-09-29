@@ -22,7 +22,7 @@ class Register extends MX_Controller {
         );
 
         $data['files'] = array(
-            APPPATH . 'modules/templating/views/v-navbarlogin.php',
+            APPPATH . 'modules/templating/views/v-navbarregister.php',
             APPPATH . 'modules/register/views/vRegisterSiswa.php',
             APPPATH . 'modules/homepage/views/v-footer.php',
         );
@@ -76,9 +76,7 @@ class Register extends MX_Controller {
 //pengecekan pengisian form regitrasi siswa
         if ($this->form_validation->run() == FALSE) {
 //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-            $this->load->view('templating/t-header');
-            $this->load->view('vRegisterSiswa');
-            $this->load->view('templating/t-footer');
+            $this->index();
         } else {
 
 //data siswa
@@ -86,6 +84,10 @@ class Register extends MX_Controller {
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
             $alamat = htmlspecialchars($this->input->post('alamat'));
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
+
+
+            $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+            $kelas = htmlspecialchars($this->input->post('kelas'));
             $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
             $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
 
@@ -124,13 +126,16 @@ class Register extends MX_Controller {
                 'namaSekolah' => $namaSekolah,
                 'alamatSekolah' => $alamatSekolah,
                 'penggunaID' => $penggunaID,
+                'tingkatID' => $tingkatID,
+                'kelas' => $kelas,
             );
 //data unutk session siswa
             $sess_array = array(
                 'id' => $penggunaID,
                 'USERNAME' => $namaPengguna,
                 'HAKAKSES' => $hakAkses,
-                'eMail' => $email
+                'eMail' => $email,
+                'tingkatID' => $tingkatID
             );
 //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $sess_array);
@@ -193,8 +198,6 @@ class Register extends MX_Controller {
                 'eMail' => $email,
                 'hakAkses' => $hakAkses,
             );
-
-
 
 //melempar data guru ke function insert_pengguna di kelas model
             $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
@@ -271,9 +274,22 @@ class Register extends MX_Controller {
 
 //halam untulk memnberitahu link aktivassi ke email atau untuk meresen email
     public function verifikasi() {
-        $this->load->view('templating/t-header');
-        $this->load->view('vVerifikasi.php');
-        $this->load->view('templating/t-footer');
+    //        $this->load->view('templating/t-header');
+    //        $this->load->view('vVerifikasi.php');
+    //        $this->load->view('templating/t-footer');
+
+        $data = array(
+            'judul_halaman' => 'Verifikasi Email - Neon',
+            'judul_header' => 'Welcome'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/templating/views/v-navbarregister.php',
+            APPPATH . 'modules/register/views/vVerifikasi.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+
+        $this->parser->parse('templating/index', $data);
     }
 
 //function untuk mengirim urang aktivasi ke email
