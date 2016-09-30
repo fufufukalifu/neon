@@ -97,7 +97,6 @@ class Register extends MX_Controller {
 
 
             $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
-            $kelas = htmlspecialchars($this->input->post('kelas'));
             $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
             $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
 

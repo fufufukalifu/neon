@@ -86,32 +86,28 @@
                     <br>
 
                     <!-- start form data sekolah -->
-                    <div class="grid-col grid-col-4">
+                    <div class="grid-col grid-col-8">
                         <div class="form-group">
                             <select class="form-control" name="tingkatID" id="tingkatID" required>
                                 <option value="">-Pilih Tingkat Sekolah-</option>
-                                <option value="1">SD</option>
-                                <option value="2">SMP</option>
-                                <option value="3">SMA IPA</option>
-                                <option value="4">SMA IPS</option>    
+                                <option value="4">Kelas 1 - SD</option>
+                                <option value="5">Kelas 2 - SD</option>
+                                <option value="6">Kelas 3 - SD</option>
+                                <option value="7">Kelas 4 - SD</option>
+                                <option value="8">Kelas 5 - SD</option>
+                                <option value="9">Kelas 6 - SD</option>
+                                <option value="10">Kelas 7 - SMP</option>
+                                <option value="11">Kelas 8 - SMP</option>
+                                <option value="12">Kelas 9 - SMP</option>
+                                <option value="13">Kelas 10 - SMA IPA</option>
+                                <option value="14">Kelas 11 - SMA IPA</option>
+                                <option value="15">Kelas 12 - SMA IPA</option>
+                                <option value="16">Kelas 10 - SMA IPS</option>
+                                <option value="17">Kelas 11 - SMA IPS</option>
+                                <option value="18">Kelas 12 - SMA IPS</option>  
                             </select>
                         </div>
                     </div>
-
-                    <div class="grid-col grid-col-4">
-                        <div  class="form-group">
-                            <select class="form-control" name="kelas" id="kelas" required>
-                                <option value="">-Kelas-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                        </div>
-                    </div>
-
 
                     <div class="grid-col grid-col-8">
                         <div class="form-group">

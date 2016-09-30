@@ -20,32 +20,31 @@
 
                 <!-- containt Soal -->
                 <div>
-                	<ol>
-                	<?php 
-                		foreach ($banksoal as $row):$idbanksoal=$row['id'];
-                	?>
-                		
-                			<li> <?=$row['soal']?>
-                				<ol>
-                					<?php foreach ($pilihan as $row): $idcek=$row[];?>
-                						<?php if ($): ?>
-                							
-                						<?php endif ?>
-                					<li type="a">li</li>
-                					<?php  endforeach;?>
-                				</ol>
-                			</li>
+                    <ol>
+                        <?php
+                        foreach ($banksoal as $row):$idbanksoal = $row['id'];
+                            ?>
 
-                		
-                		
-                	<?php  
-                		endforeach;?>
-                	</ol>
+                            <li> <?= $row['soal'] ?>
+                                <ol>
+                                    <?php foreach ($pilihan as $row): $idcek = $row[]; ?>
+                                        <?php if ($): ?>
+
+                                        <?php endif ?>
+                                        <li type="a">li</li>
+                                    <?php endforeach; ?>
+                                </ol>
+                            </li>
+
+
+
+                            <?php endforeach; ?>
+                    </ol>
 
                 </div>
                 <!-- End Containt Soal -->
 
-               
+
             </div>
         </div>
         <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
@@ -55,6 +54,6 @@
 
 <!-- Script here -->
 <script type="text/javascript">
-   
+
 
 </script>
