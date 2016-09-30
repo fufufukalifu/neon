@@ -7,8 +7,9 @@ class Mlatihan extends CI_Model
 	
 	public function get_banksoal()
 	{	
+		// $this->db->where('id_subbab','31');
 		$this->db->order_by('rand()');
-   		$this->db->limit(2);
+   		// $this->db->limit(2);
 		$this->db->select('*');
 		$this->db->from('tb_banksoal');
 

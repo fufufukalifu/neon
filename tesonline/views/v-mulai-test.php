@@ -11,16 +11,15 @@
     								<!-- Header -->
     								<div class="section-header section-header-bordered mb10">
     									<h4 class="section-title">
-    										<p class="font-alt nm">Mata Pelajaran SD</p>
+    										<p class="font-alt nm">Mata Pelajaran</p>
     									</h4>
     								</div>
     								<!--/ Header -->
     								<ul class="list-unstyled">
-    									<li class="mb5"><i class="ico-angle-right text-muted mr5"></i> <a href="javascript:void(0);">Mata Pelajaran 1</a></li>
-    									<li class="mb5"><i class="ico-angle-right text-muted mr5"></i> <a href="javascript:void(0);">Mata Pelajaran 1</a></li>
-    									<li class="mb5"><i class="ico-angle-right text-muted mr5"></i> <a href="javascript:void(0);">Mata Pelajaran 1</a></li>
-    									<li class="mb5"><i class="ico-angle-right text-muted mr5"></i> <a href="javascript:void(0);">Mata Pelajaran 1</a></li>
-    								</ul>
+                                    <?php foreach ($mapeltingkat as $mapelitem): ?>
+    									<li class="mb5"><i class="ico-angle-right text-muted mr5"></i> <a href="javascript:void(0);"><?=$mapelitem['namaMataPelajaran'] ?></a></li>
+    								 <?php endforeach ?>
+                                    </ul>
     							</div>
     							<!--/ Category -->
     							<!-- Text Widget -->
@@ -44,15 +43,17 @@
 
     							<!-- START Right Section -->
     							<div class="col-md-9">
-									<?php for ($i=1;$i<7;$i++): ?>
+									<?php foreach ($paket as $paketitem): ?>
 										<div class="col-md-3">
     									<!-- START Panel pricing -->
-    									<div class="panel bg-color-2">
+    									<div class="panel bg-color-<?=rand(1, 5)?>">
     										<!-- panel heading -->
     										<div class="panel-heading text-center" style="min-height:50px;background-color:white">
-    											<h6 class="semibold">
-													Nama Bab
-    											</h6>
+                                                <span>
+													Sub Bab :<br> <?=$paketitem->JudulSub ?> <br>
+                                                     <?=$paketitem->nm_paket ?>
+    											</span>
+                                            </strong>
     										</div>
     										<!-- panel heading -->
     										<!-- panel body -->
@@ -65,7 +66,7 @@
     											<tbody>
     												<tr>
     													<td colspan="2" align="center">
-    														<a href="#" class="cws-button border-radius bt-color-6 alt">Coba Test</a>
+    														<a href="#" class="cws-button border-radius bt-color-6 alt">Coba Latihan</a>
     													</td>
     												</tr>
     											</tbody>
@@ -74,7 +75,7 @@
     									</div>
     									<!--/ END Panel pricing -->
     								</div>
-									<?php endfor ?>
+									<?php endforeach ?>
     								
 
 

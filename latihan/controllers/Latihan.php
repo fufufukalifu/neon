@@ -15,6 +15,11 @@ class Latihan extends MX_Controller
 
 	public function index()
 	{	
+		$data = array(
+            'judul_halaman' => 'Latihan - Neon',
+            'judul_header' => 'Latihan'
+        	);
+		
 		// get soal randoom
 		$data['banksoal']=$this->mlatihan->get_banksoal();
 
@@ -28,28 +33,25 @@ class Latihan extends MX_Controller
 
 		
 		// for testing
-		// $this->load->library('table');
-		// echo $this->table->generate($data['banksoal']);
-		// echo "==================================";
-		// echo $this->table->generate($data['pilihan']);
+		$this->load->library('table');
+		echo $this->table->generate($data['banksoal']);
+		echo "==================================";
+		echo $this->table->generate($data['pilihan']);
 
-		// var_dump($data['banksoal']);
-		  $data = array(
-            'judul_halaman' => 'Latihan - Neon',
-            'judul_header' => 'Latihan'
-        );
+		var_dump($data['banksoal']);
+		  
 
-        $data['files'] = array(
-            APPPATH . 'modules/templating/views/v-navbarregister.php',
-            APPPATH . 'modules/latihan/views/v-latihan.php',
-            APPPATH . 'modules/homepage/views/v-footer.php',
-        );
+        // $data['files'] = array(
+        //     APPPATH . 'modules/templating/views/v-navbarregister.php',
+        //     APPPATH . 'modules/latihan/views/v-latihan.php',
+        //     APPPATH . 'modules/homepage/views/v-footer.php',
+        // );
 
 
 
        
 
-        $this->parser->parse('templating/index', $data);
+        // $this->parser->parse('templating/index', $data);
 
 	}
 

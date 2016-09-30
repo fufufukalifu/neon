@@ -12,6 +12,8 @@ class videoBack extends MX_Controller {
         $this->load->library('table');
         $this->load->model('video/mvideos');
         $this->load->model('guru/mguru');
+        $this->load->model('Templating/mtemplating');
+         $this->load->library('parser');
         // sessionkonfirm();
         // get_session_guru();
     }
@@ -34,10 +36,30 @@ class videoBack extends MX_Controller {
 
     //menampilkan view form upload
     public function formupvideo() {
-        $this->load->view('templating/t-header');
-        $this->load->view('guru/v-left-bar');
-        $this->load->view('v-upload-video-form');
-        $this->load->view('templating/t-footer-back');
+
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['judul_halaman'] = "upload Video";
+        $data['files'] = array(
+            APPPATH . 'modules/videoBack/views/v-upload-video-form.php',
+        );
+        
+
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        // cek hakakses 
+        if ($hakAkses=='admin') {
+            // jika admin
+            $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            $this->parser->parse('templating/index-b-guru', $data);
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+
+            // jika guru untul sentara yg guru bisa di tembak URL untuk testing
+         
+    
     }
 
     public function managervideo() {

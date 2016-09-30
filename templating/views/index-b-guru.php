@@ -452,28 +452,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="javascript:void(0);" data-target="#guru" data-toggle="submenu" data-parent=".topmenu">
-                            <span class="figure"><i class="ico-bubble-user"></i></span>
-                            <span class="text">Guru</span>
-                            <span class="arrow"></span>
-                        </a>
-
-                        <ul id="guru" class="submenu collapse ">
-                            <li class="submenu-header ellipsis">Guru</li>
-                            <li >
-                                <a href="index.html">
-                                    <span class="text">Registrasi Guru</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Daftar Guru</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </li>
+                    
 
                     <li>
                         <a href="javascript:void(0);" data-target="#siswa" data-toggle="submenu" data-parent=".topmenu">

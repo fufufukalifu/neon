@@ -10,14 +10,17 @@ class Admin extends MX_Controller {
         $this->load->model('video/mvideos');
         $this->load->model('matapelajaran/mmatapelajaran');
         $this->load->model('banksoal/mbanksoal');
+        $this->load->model('Templating/mtemplating');
         $this->load->library('parser');
     }
 
     public function index() {
-        $data = array(
-            'judul_halaman' => 'Dashboard Admin'
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['judul_halaman'] = "Dashboard Admin";
+        $data['files'] = array(
+            APPPATH . 'modules/admin/views/v-container.php',
         );
-        $data['file'] = 'v-container.php';
+           
 
         $this->parser->parse('v-index-admin', $data);
     }
@@ -44,12 +47,12 @@ class Admin extends MX_Controller {
     }
 
     function daftarmatapelajaran() {
-        $data = array(
-            'judul_halaman' => 'Mata Pelajaran'
+        $data['judul_halaman'] = "Dashboard Admin";
+        $data['files'] = array(
+            APPPATH . 'modules/admin/views/v-daftar-mapel.php',
         );
 
         $data['mapels'] = $this->mmatapelajaran->daftarMapel();
-        $data['file'] = 'v-daftar-mapel.php';
 
         $this->parser->parse('v-index-admin', $data);
     }
@@ -81,8 +84,11 @@ class Admin extends MX_Controller {
     }
 
     function daftartingkatpelajaran() {
-        $data = array(
-            'judul_halaman' => 'Tingkat Mata Pelajaran'
+       
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['judul_halaman'] = "Tingkat Mata Pelajara";
+        $data['files'] = array(
+            APPPATH . 'modules/admin/views/v-daftar-tingkat.php',
         );
 
         $data['mapels'] = $this->mmatapelajaran->daftarMapel();
@@ -90,7 +96,6 @@ class Admin extends MX_Controller {
         $data['mapelsmp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['mapelsma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['mapelsmk'] = $this->mmatapelajaran->daftarMapelSMK();
-        $data['file'] = 'v-daftar-tingkat.php';
 
         $this->parser->parse('v-index-admin', $data);
     }
@@ -120,8 +125,11 @@ class Admin extends MX_Controller {
 
     function daftarbab() {
 //        $judul = $this->uri->segment(3);
-        $data = array(
-            'judul_halaman' => 'BAB Mata Pelajaran '
+
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['judul_halaman'] = "BAB Mata Pelajaran";
+        $data['files'] = array(
+            APPPATH . 'modules/admin/views/v-bab.php',
         );
         $id = $this->uri->segment(4);
         ;
@@ -158,12 +166,15 @@ class Admin extends MX_Controller {
     }
 
     function daftarsubbab() {
-        $data = array(
-            'judul_halaman' => 'SUB BAB Mata Pelajaran'
+        
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['judul_halaman'] = "SUB BAB Mata Pelajaran";
+        $data['files'] = array(
+            APPPATH . 'modules/admin/views/v-subbab.php',
         );
         $id = $this->uri->segment(5);
         $data['babs'] = $this->mmatapelajaran->daftarsubBab($id);
-        $data['file'] = 'v-subbab.php';
+        // $data['file'] = 'v-subbab.php';
 
         $this->parser->parse('v-index-admin', $data);
     }
