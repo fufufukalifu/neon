@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/owl.carousel.css') ?>"/>
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/animate.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
 
 	<!--styles -->
 </head>
@@ -49,7 +50,7 @@
 	<script src="<?=base_url('assets/back/js/jquery.tweet.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jquery.fancybox.pack.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/jquery.fancybox-media.js') ?>"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?= base_url('assets/library/bootstrap/js/bootstrap.min.js') ?>"></script>
 	<script src="<?=base_url('assets/back/js/retina.min.js') ?>"></script>
 	<script type="text/javascript">
 	$("#myCarousel").carousel();
