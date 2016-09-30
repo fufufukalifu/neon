@@ -16,7 +16,7 @@
         <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
         <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
-
+        <script>var base_url = '<?php echo base_url() ?>';</script>
         <!--/ END META SECTION -->
 
         <!-- START STYLESHEETS -->
@@ -40,6 +40,65 @@
 
     <!-- START Body -->
     <body>
+                <!-- START Modal ADD BANK SOAL -->
+        <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+
+                    
+                        <!-- Start Body modal -->
+                        <div class="modal-body">
+                        <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
+                            <div  class="form-group">
+                                <label class="col-sm-3 control-label">Tingkat</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="tingkat" id="gettkt">
+                                        <option>-Pilih Tingkat-</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div  class="form-group">
+                                <label class="col-sm-3 control-label">Mata Pelajaran</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="mataPelajaran" id="getpel">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div  class="form-group">
+                                <label class="col-sm-3 control-label">Bab</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="bab" id="getbb">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Subab</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="subbab" id="subb">
+
+                                    </select>
+                                </div>
+                            </div>
+                                
+                        </div>
+                        <!-- END BODY modla-->
+                        <div class="modal-footer">
+                            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+                        </div>
+                   </form> 
+                </div><!-- /.modal-content -->
+               
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
@@ -380,10 +439,10 @@
             <!-- START Sidebar Content -->
             <section class="content slimscroll">
                 <h5 class="heading">Main Menu</h5>
-                <!-- START MENU -->
+              <!-- START MENU -->
                 <ul class="topmenu topmenu-responsive" data-toggle="menu">
                     <li >
-                        <a href="<?= base_url('assets/gh_frontend') ?>">
+                        <a href="<?= base_url('index.php/admin') ?>">
                             <span class="figure"><i class="ico-trophy"></i></span>
                             <span class="text">Dashboard</span>
                         </a>
@@ -399,7 +458,7 @@
                         <ul id="guru" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Guru</li>
                             <li >
-                                <a href="index.html">
+                                <a href="<?=base_url('index.php/register/registerGuru')?>">
                                     <span class="text">Registrasi Guru</span>
                                 </a>
                             </li>
@@ -439,12 +498,12 @@
                         <ul id="mapel" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Atribut</li>
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('index.php/admin/daftarmatapelajaran')?>">
                                     <span class="text">Mata Pelajaran</span>
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('index.php/admin/daftartingkatpelajaran')?>">
                                     <span class="text">Tingkat</span>
                                 </a>
                             </li>
@@ -462,7 +521,7 @@
                             <li class="submenu-header ellipsis">Video</li>
 
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('index.php/videoBack/formupvideo')?>">
                                     <span class="text">Upload Video</span>
                                 </a>
                             </li>
@@ -496,14 +555,33 @@
                             <li class="submenu-header ellipsis">Bank Soal</li>
 
                             <li >
-                                <a href="">
-                                    <span class="text">Tambahkan Bank Soal</span>
+                                <a href="javascript:void(0);" onclick="add_soal()">
+                                    <span class="text">Tambahkan Bank Soal</span> 
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
                                     <span class="text">Daftar Bank Soal</span>
+                                    <span class="arrow"></span>
                                 </a>
+                                <ul id="subbanksoal" class="submenu collapse ">
+                                    <li class="submenu-header ellipsis">Sub Bank Soal</li>
+                                    <!-- get data Tingkat dari db -->
+                                    <!-- Start pengulangan u/ tingkat -->
+                                    <?php foreach ($tingkat as $row): ?>
+
+
+                                        <li>
+                                            <form action="<?= base_url(); ?>index.php/banksoal/listmp/" method="get">
+                                                <input type="text" name="tingkatID" value="<?= $row['id'] ?>" hidden="true">
+                                                <button class="" type="submit"><?= $row['aliasTingkat'] ?></button>
+                                            </form>
+                                        </li>
+
+                                    <?php endforeach ?>
+                                    <!-- END pengulangan u/ tingkat -->
+
+                                </ul>
                             </li>
 
                         </ul>
@@ -562,7 +640,11 @@
                     </div>
                 </div>
 
-                <?php include $file; ?>
+               <?php
+                foreach ($files as $file) {
+                    include $file;
+                }
+                ?>
 
                 <!-- Page Header -->
             </div>
@@ -975,7 +1057,118 @@
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+         <script type="text/javascript">
+            //panggil modal
+            function add_soal() {
+                $('#modalsoal').modal('show'); // show bootstrap modal
+            }
 
+        </script>
+       <!-- drop down dependend for get subbab -->
+        <script type="text/javascript">
+
+
+           
+            //buat load tingkat untuk modal buat soal
+            function loadTkt() {
+                console.log('load Tingkat');
+                jQuery(document).ready(function () {
+                    var tingkat_id = {"tingkat_id": $('#gettkt').val()};
+                    var idTingkat;
+
+                    $.ajax({
+                        type: "POST",
+                        data: tingkat_id,
+                        url: "<?= base_url() ?>index.php/videoback/getTingkat",
+                        success: function (data) {
+                            console.log("Data" + data);
+                            $('#gettkt').html('<option value="">-- Pilih Tingkat  --</option>');
+                            $.each(data, function (i, data) {
+                                $('#gettkt').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                                return idTingkat = data.id;
+                            });
+                        }
+                    });
+
+                    $('#gettkt').change(function () {
+                        tingkat_id = {"tingkat_id": $('#gettkt').val()};
+                        loadPel($('#gettkt').val());
+                    })
+
+                    $('#getpel').change(function () {
+                        pelajaran_id = {"pelajaran_id": $('#getpel').val()};
+                        loadBb($('#getpel').val());
+                    })
+
+                    $('#getbb').change(function () {
+                        loadSubb($('#getbb').val());
+                        loadPel(idTingkat);
+                    })
+                })
+            }
+            ;
+
+            //buat load pelajaran
+            function loadPel(tingkatID) {
+                $.ajax({
+                    type: "POST",
+                    data: tingkatID.tingkat_id,
+                    url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+                    success: function (data) {
+                        $('#getpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+                        $.each(data, function (i, data) {
+                            $('#getpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                        });
+                    }
+                });
+            }
+            //buat load bab
+            function loadBb(mapelID) {
+                $.ajax({
+                    type: "POST",
+                    data: mapelID.mapel_id,
+                    url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                    success: function (data) {
+
+                        $('#getbb').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+                        //console.log(data);
+                        $.each(data, function (i, data) {
+                            $('#getbb').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                        });
+                    }
+
+                });
+            }
+
+            //load sub bab
+            function loadSubb(babID){
+                $.ajax({
+                    type: "POST",
+                    data: babID.bab_id,
+                    url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
+                    success: function(data){
+                        $('#subb').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+                        console.log(data);
+                        $.each(data, function(i, data){
+                            $('#subb').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
+                        });
+                    }
+
+                });
+            }
+
+            // function gosoal() {
+            //     // document.Location('Google.com');
+            //     // window.Location.href(google.com');
+            //     // url = base_url+"index.php/paketsoal/addpaketsoal";
+            //     // alert('star');
+            //    
+            // }
+
+
+
+            loadTkt();
+        </script>
 
         <!--/ App and page level script -->
         <!--/ END JAVASCRIPT SECTION -->

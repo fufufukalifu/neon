@@ -33,25 +33,25 @@ class Latihan extends MX_Controller
 
 		
 		// for testing
-		// $this->load->library('table');
-		// echo $this->table->generate($data['banksoal']);
-		// echo "==================================";
-		// echo $this->table->generate($data['pilihan']);
+		$this->load->library('table');
+		echo $this->table->generate($data['banksoal']);
+		echo "==================================";
+		echo $this->table->generate($data['pilihan']);
 
-		// var_dump($data['banksoal']);
+		var_dump($data['banksoal']);
 		  
 
-        $data['files'] = array(
-            APPPATH . 'modules/templating/views/v-navbarregister.php',
-            APPPATH . 'modules/latihan/views/v-latihan.php',
-            APPPATH . 'modules/homepage/views/v-footer.php',
-        );
+        // $data['files'] = array(
+        //     APPPATH . 'modules/templating/views/v-navbarregister.php',
+        //     APPPATH . 'modules/latihan/views/v-latihan.php',
+        //     APPPATH . 'modules/homepage/views/v-footer.php',
+        // );
 
 
 
        
 
-        $this->parser->parse('templating/index', $data);
+        // $this->parser->parse('templating/index', $data);
 
 	}
 
