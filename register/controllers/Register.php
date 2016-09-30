@@ -342,10 +342,7 @@ class Register extends MX_Controller {
 
     public function resetpassword() {
         if (!empty($this->session->userdata['reset_email']) && $this->session->userdata['reset_password'] == '1') {
-//            $this->load->view('templating/t-header');
-//            $this->load->view('vResetPassword.php');
-//            $this->load->view('templating/t-footer');
-           
+
             $data = array(
                 'judul_halaman' => 'Reset Password - Neon'
             );
@@ -357,7 +354,6 @@ class Register extends MX_Controller {
             );
 
             $this->parser->parse('templating/index', $data);
-            
         } else {
             redirect(base_url('index.php/login'));
         }
