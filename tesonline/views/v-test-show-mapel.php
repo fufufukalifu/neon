@@ -9,7 +9,7 @@
                 <?php foreach ($mapel as $mapelitem): ?>
                 <div class="grid-col grid-col-4">
                     <form action="<?=base_url() ?>index.php/tesonline/mulai" method="post" class="hide">
-                        <input type="hiden" value="<?=$mapelitem['tingpelID'] ?>" class="hide" name="tingpel">
+                        <input type="hiden" value="<?=$mapelitem['tingpelID'] ?>" class="hide" name="id">
                         <button type="submit" class="kirim<?=$mapelitem['tingpelID']?>">kirim</button>
                     </form>
                     <div class="course-item">
