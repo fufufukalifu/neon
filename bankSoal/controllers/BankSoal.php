@@ -65,9 +65,8 @@ class BankSoal extends MX_Controller {
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-list-bab.php',
             );
-            // $this->load->view('templating/index-b-guru', $data);
-             $hakAkses=$this->session->userdata['HAKAKSES'];
                 #START cek hakakses#
+                    $hakAkses=$this->session->userdata['HAKAKSES'];
                     if ($hakAkses=='admin') {
                         // jika admin
                         $this->parser->parse('admin/v-index-admin', $data);
@@ -95,7 +94,19 @@ class BankSoal extends MX_Controller {
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-list-subbab.php',
             );
-            $this->load->view('templating/index-b-guru', $data);
+                #START cek hakakses#
+                    $hakAkses=$this->session->userdata['HAKAKSES'];
+                    if ($hakAkses=='admin') {
+                        // jika admin
+                        $this->parser->parse('admin/v-index-admin', $data);
+                    } elseif($hakAkses=='guru'){
+                        // jika guru
+                        $this->parser->parse('templating/index-b-guru', $data);
+                    }else{
+                        // jika siswa redirect ke welcome
+                        redirect(site_url('welcome'));
+                    }
+                #END Cek USer#
         }
     }
 
@@ -113,7 +124,19 @@ class BankSoal extends MX_Controller {
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-list-soal.php',
             );
-            $this->load->view('templating/index-b-guru', $data);
+                #START cek hakakses#
+                    $hakAkses=$this->session->userdata['HAKAKSES'];
+                    if ($hakAkses=='admin') {
+                        // jika admin
+                        $this->parser->parse('admin/v-index-admin', $data);
+                    } elseif($hakAkses=='guru'){
+                        // jika guru
+                        $this->parser->parse('templating/index-b-guru', $data);
+                    }else{
+                        // jika siswa redirect ke welcome
+                        redirect(site_url('welcome'));
+                    }
+                #END Cek USer#
         }
     }
 
@@ -130,7 +153,19 @@ class BankSoal extends MX_Controller {
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-form-soal.php',
             );
-            $this->load->view('templating/index-b-guru', $data);
+                #START cek hakakses#
+                    $hakAkses=$this->session->userdata['HAKAKSES'];
+                    if ($hakAkses=='admin') {
+                        // jika admin
+                        $this->parser->parse('admin/v-index-admin', $data);
+                    } elseif($hakAkses=='guru'){
+                        // jika guru
+                        $this->parser->parse('templating/index-b-guru', $data);
+                    }else{
+                        // jika siswa redirect ke welcome
+                        redirect(site_url('welcome'));
+                    }
+                #END Cek USer#
         }
     }
 
