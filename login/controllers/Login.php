@@ -57,9 +57,7 @@ class Login extends MX_Controller {
                 $this->session->set_userdata($sess_array);
 
                 if ($hakAkses == 'admin') {
-//                    redirect(base_url('index.php/login/user'));
-//                    echo 'admin';
-//                    redirect(site_url('peserta-free'));
+                    redirect(base_url('index.php/admin'));
                 } elseif ($hakAkses == 'guru') {
                     $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
                     foreach ($guru as $value) {
