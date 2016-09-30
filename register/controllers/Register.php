@@ -28,6 +28,9 @@ class Register extends MX_Controller {
         );
 
         $this->parser->parse('templating/index', $data);
+        // $this->load->view('templating/v-navbarregister');
+        // $this->load->view('vRegisterSiswa');
+        // $this->load->view('homepage/v-footer');
     }
 
 // function untuk menampilkan halaman untuk pendaftaran user siswa

@@ -15,6 +15,11 @@ class Latihan extends MX_Controller
 
 	public function index()
 	{	
+		$data = array(
+            'judul_halaman' => 'Latihan - Neon',
+            'judul_header' => 'Latihan'
+        	);
+		
 		// get soal randoom
 		$data['banksoal']=$this->mlatihan->get_banksoal();
 
@@ -34,10 +39,7 @@ class Latihan extends MX_Controller
 		// echo $this->table->generate($data['pilihan']);
 
 		// var_dump($data['banksoal']);
-		  $data = array(
-            'judul_halaman' => 'Latihan - Neon',
-            'judul_header' => 'Latihan'
-        );
+		  
 
         $data['files'] = array(
             APPPATH . 'modules/templating/views/v-navbarregister.php',

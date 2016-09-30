@@ -20,11 +20,27 @@
 
                 <!-- containt Soal -->
                 <div>
-                	
+                	<ol>
+                	<?php 
+                		foreach ($banksoal as $row):$idbanksoal=$row['id'];
+                	?>
+                		
+                			<li> <?=$row['soal']?>
+                				<ol>
+                					<?php foreach ($pilihan as $row): $idcek=$row[];?>
+                						<?php if ($): ?>
+                							
+                						<?php endif ?>
+                					<li type="a">li</li>
+                					<?php  endforeach;?>
+                				</ol>
+                			</li>
 
-                		<?php 
-                		var_dump($pilhan); 
-                		?>
+                		
+                		
+                	<?php  
+                		endforeach;?>
+                	</ol>
 
                 </div>
                 <!-- End Containt Soal -->
