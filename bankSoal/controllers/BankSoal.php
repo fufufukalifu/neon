@@ -9,6 +9,7 @@ class BankSoal extends MX_Controller {
         parent::__construct();
         $this->load->model('mbanksoal');
         $this->load->model('Templating/mtemplating');
+         $this->load->library('parser');
     }
 
     public function index() {
@@ -35,7 +36,18 @@ class BankSoal extends MX_Controller {
 
             $data['judul_halaman'] = "List  Mata Pelajaran";
 
-            $this->load->view('templating/index-b-guru', $data);
+                $hakAkses=$this->session->userdata['HAKAKSES'];
+                // cek hakakses 
+                if ($hakAkses=='admin') {
+                    // jika admin
+                    $this->parser->parse('admin/v-index-admin', $data);
+                } elseif($hakAkses=='guru'){
+                    // jika guru
+                    $this->parser->parse('templating/index-b-guru', $data);
+                }else{
+                    // jika siswa redirect ke welcome
+                    redirect(site_url('welcome'));
+                }
              // redirect($_SERVER["REQUEST_URI"]);
         }
     }
@@ -53,7 +65,20 @@ class BankSoal extends MX_Controller {
             $data['files'] = array(
                 APPPATH . 'modules/banksoal/views/v-list-bab.php',
             );
-            $this->load->view('templating/index-b-guru', $data);
+            // $this->load->view('templating/index-b-guru', $data);
+             $hakAkses=$this->session->userdata['HAKAKSES'];
+                #START cek hakakses#
+                    if ($hakAkses=='admin') {
+                        // jika admin
+                        $this->parser->parse('admin/v-index-admin', $data);
+                    } elseif($hakAkses=='guru'){
+                        // jika guru
+                        $this->parser->parse('templating/index-b-guru', $data);
+                    }else{
+                        // jika siswa redirect ke welcome
+                        redirect(site_url('welcome'));
+                    }
+                #END Cek USer#
         }
     }
 

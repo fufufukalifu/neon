@@ -8,6 +8,7 @@ class Register extends MX_Controller {
         $this->load->library('parser');
         $this->load->model('mregister');
         $this->load->model('siswa/msiswa');
+        $this->load->model('Templating/mtemplating');
     }
 
 // function untuk menampikan halam pertama saat registrasi
@@ -28,6 +29,9 @@ class Register extends MX_Controller {
         );
 
         $this->parser->parse('templating/index', $data);
+        // $this->load->view('templating/v-navbarregister');
+        // $this->load->view('vRegisterSiswa');
+        // $this->load->view('homepage/v-footer');
     }
 
 // function untuk menampilkan halaman untuk pendaftaran user siswa
@@ -39,9 +43,15 @@ class Register extends MX_Controller {
 
 //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
-        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        $this->load->view('templating/t-header');
-        $this->load->view('vRegisterGuru', $data);
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+
+        $data['judul_halaman'] = "Register Guru";
+        $data['files'] = array(
+            APPPATH . 'modules/register/views/vRegisterGuru.php',
+        );
+             
+
+        $this->parser->parse('admin/v-index-admin', $data);
 // var_dump( $data['mataPelajaran']); for testing
     }
 

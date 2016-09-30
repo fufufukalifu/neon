@@ -221,7 +221,7 @@
     </section>
 </main>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     function enable() {
         if (this.checked) {
             document.getElementById("kirimdata").disabled = false;
@@ -231,4 +231,4 @@
     }
     document.getElementById("agree").addEventListener("change", enable);
 
-</script>
+</script>-->
