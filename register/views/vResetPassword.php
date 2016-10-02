@@ -27,8 +27,6 @@
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                             <i class="ico-lock2 form-control-icon"></i>
 
-                            <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                            <span class="text-danger"><?php echo form_error('email'); ?></span>
                     </div>
                     <div class="form-group">
                             <input type="password" class="form-control" id="password2" name="oldpassword" placeholder="Confirm Password" required onkeyup="checkPass(); return false;">
