@@ -94,7 +94,7 @@ class Video extends MX_Controller {
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
     public function daftarvideo( $alias_pelajaran = "", $alias_tingkat = "" ) {
-        echo "string";
+        
         //tampilkan bab dan subab video
         $data['aliastingkat'] = $alias_tingkat;
         $data['aliaspelajaran'] = $alias_pelajaran;
@@ -115,6 +115,8 @@ class Video extends MX_Controller {
             APPPATH.'modules/templating/views/footer.php'
         );
         print_r( $data );
+         $this->parser->parse( 'templating/index', $data );
+      
 
     }
 

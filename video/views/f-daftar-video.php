@@ -7,36 +7,64 @@
     <br>
     <hr class="divider-color">
     <main>
-
+<!-- START TAMPIL DAFTAR -->
      <?php
        //print_r($bab_video);
      $cekjudulbab=null;
-     $i="0"; 
+     $i='0'; 
+     // echo "==================="."<br>";
      ?>
+     <!-- Awal 1 -->
+     <div class="grid-col-row clear-fix" >
+        <div class="grid-col grid-col-3">
+            <div class="hover-effect"></div>        
+
+    <!-- Awal 1 -->
      <?php foreach ($bab_video as $bab_video_items) {
         $judulbab=$bab_video_items->judulBab;
         $subbab=$bab_video_items->judulSubBab;
         if ($cekjudulbab != $judulbab) { 
-            if($i==1){
+            if($i=='1'){
+            ?>
+    <!--Akhir 1-->
+    </ol>
+    </div>
+    <!--Akhir 1-->
 
+    <!-- Awal 2 -->
+    <div class="grid-col-row clear-fix" >
+        <div class="grid-col grid-col-3">
+            <div class="hover-effect"></div>
+                
+    <!-- Awal 2 -->
+            <?php
             }
+            ?>
+            <h4><strong><?php echo $judulbab ;?><br></strong></h4>
+             <ol>
+            <li><a href="#"><?php echo $subbab ;?></a></li>
+            <?php        
+           
+        }else{
+            
+           ?>
+            <li><a href="#"><?php echo $subbab ;?></a></li>
+           <?php
         }
+        $cekjudulbab=$judulbab;
+        $i='1';
         ?>
-        <a href="<?=base_url('index.php/video/lihatvideo') ?>/<?=$bab_video_items->babid ?>" 
-            title="Lihat Semua Video">
-            <?=$bab_video_items->judulBab  ?> <i class="ico ico-eye-open"></i></a> 
-        <?php }   ?>
-
-        <div class="grid-col-row clear-fix" >
-            <div class="grid-col grid-col-3">
-                <div class="hover-effect"></div>
-                <h5><strong>Sekolah Dasar<br></strong></h5>
-                <ol>
-                </ol>
-            </div>
+        
+        <?php } 
+         
+        ?>
+    <!-- Ahir 2 -->
+    </ol>
+    </div>
+     <!-- Akhir 2 -->
+<!-- END TAMPIL DAFTAR -->
 
 
-        </div>
     </main>
 </div>
 
