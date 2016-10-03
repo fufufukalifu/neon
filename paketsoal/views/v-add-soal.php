@@ -47,7 +47,7 @@
                                                     <option value="">Bab</option>
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="col-sm-4">
                                                 <select name="" id="subBabId" class="form-control">
                                                     <option value="">Sub Bab</option>
@@ -55,7 +55,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            
+
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="col-sm-2">Soal:</div>
@@ -68,10 +68,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
                                     </div>
                                 </form>
                             </div>
@@ -151,6 +147,7 @@ function loadTingkat(){
                 });
             }
         });
+
         $('.addsoal').click(function(){
             var idBab = $('#babID').val();
             if (idBab=="") {
@@ -217,7 +214,7 @@ function loadTingkat(){
                     $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
                     babid=data.id;
                 });
-            }
+            } 
 
         });
         return 

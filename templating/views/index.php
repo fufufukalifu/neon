@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
 	<link rel="stylesheet" href="<?=base_url('assets/back/css/animate.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
-
+<script>var base_url = '<?php echo base_url() ?>';</script>
 	<!--styles -->
 </head>
 <body>

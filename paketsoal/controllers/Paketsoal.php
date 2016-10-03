@@ -5,7 +5,6 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
  */
 class Paketsoal extends MX_Controller
 {
-
 	public function __construct() {
 		$this->load->library( 'parser' );
 		$this->load->model( 'MPaketsoal' );
