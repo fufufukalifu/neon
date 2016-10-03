@@ -13,7 +13,7 @@
                                     <h3 class="panel-title">Daftar Soal</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form>
+                                    <form action="#" id="formsoal">
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <div class="col-sm-2">
@@ -84,8 +84,9 @@
                                 <h3 class="panel-title">Soal Yang Ditambahkan</h3>
                             </div>
                             <div class="panel-body soaltambah">
-                                <form action="" id="soalform">
+                                <form action="" id="">
 
+                               
                                 </form>
                             </div>
                         </div>
@@ -185,17 +186,17 @@ function loadTingkat(){
 
 
         $('#subBabId').change(function(){
-             console.log('cihuy');
-             alert('Pilih Bab Matapelajaran');
-            // $('.soal').empty();
-            // load_pelajaran(idTingkat);
-            // var idBab = $('#subBabID').val();
-            // if (idBab=="") {
-            //     alert('Pilih Bab Matapelajaran');
-            // }else{
-            //     addsoal(idBab);
+             // console.log('cihuy');
+             // alert('Pilih Bab Matapelajaran');
+            $('.soal').empty();
+            load_pelajaran(idTingkat);
+            var idSubBab = $('#subBabId').val();
+            if (idSubBab=="") {
+                alert('Pilih Bab Matapelajaran');
+            }else{
+              addsoal(idSubBab);
 
-            // };
+            };
         });
 
         $('.tambahsoal').click(function(){
@@ -240,6 +241,7 @@ function loadTingkat(){
 
     //load sub bab
     function loadsubbab(babID) {
+
         $.ajax({
             type: "POST",
             data: babID.bab_id,
@@ -256,10 +258,13 @@ function loadTingkat(){
         });
     }
 
-    function addsoal(babID){
+    function addsoal(subBabId){
+        console.log('testing');
+        console.log(subBabId);
         $.ajax({
+
             type: "POST",
-            url: "<?php echo base_url() ?>index.php/paketsoal/ajax_get_soal_by_bab/"+babID,
+            url: "<?php echo base_url() ?>index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
             success: function(data){
                 $.each(data, function(i, data){
                     $('.soal').append(data.link);
@@ -277,14 +282,15 @@ function loadTingkat(){
         var val = [];
         $(':checkbox:checked').each(function(i){
          val[i] = $(this).val();
+
      });  
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
-        console.log(url);
+        console.log(val);
         $.ajax({
             url : url,
             type: "POST",
-            data: $('#soalform').serialize(),
+            data: $('#formsoal').serialize(),
             dataType: "JSON",
             success: function(data)
             {

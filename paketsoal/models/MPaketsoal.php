@@ -92,6 +92,13 @@ class MPaketsoal extends CI_Model {
 			}
 	}
 
+	#Start function insert add soal pakert#
+	public function insert_soal_paket($data)
+	{
+		$this->db->inser_batch('tb_mm-paketbank',$data);
+	}
+	#END function insert add soal pakert#
+
 
 }
 ?>
