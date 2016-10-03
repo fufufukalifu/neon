@@ -140,7 +140,7 @@ class Paketsoal extends MX_Controller
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
-	function ajax_get_soal_by_bab( $babID ) {
+	function ajax_get_soal_by_subbabid( $babID ) {
 		$list = $soal=$this->mBankSoal->get_soal( $babID );
 
 

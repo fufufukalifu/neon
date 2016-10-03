@@ -19,60 +19,84 @@
                                                 <div class="col-sm-2">
                                                     Filter:
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    <select name="" id="tingkatID" class="form-control">
-                                                        <option value="">Tingkat</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <select name="" id="pelajaranID" class="form-control">
-                                                        <option value="">Pelajaran</option>
-                                                    </select>
-                                                    <br>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <select name="" id="babID" class="form-control">
-                                                        <option value="">Bab</option>
-                                                    </select>
-                                                    <br>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="col-sm-2">Soal:</div>
-                                                    <div class="col-sm-8 soal">
+                                                <div class="row">
+                                                    <div class="row-col-sm-12">
+                                                       <div class="col-sm-4">
+                                                        <select name="" id="tingkatID" class="form-control">
+                                                            <option value="">Tingkat</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="col-sm-12 btn">
-                                                        <div class="col-sm-2">
-                                                            <br>
-                                                            <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
-                                                        </div>
+                                                    <div class="col-sm-4">
+                                                        <select name="" id="pelajaranID" class="form-control">
+                                                            <option value="">Pelajaran</option>
+                                                        </select>
+                                                        <br>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        
+                                        <div class="col-sm-12">
+                                         <div class="col-sm-2">
+
+                                         </div>
+                                         <div class="row">
+                                            <div class="row-col-sm-12">
+                                             <div class="col-sm-4">
+                                                <select name="" id="babID" class="form-control">
+                                                    <option value="">Bab</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-sm-4">
+                                                <select name="" id="subBabId" class="form-control">
+                                                    <option value="">Sub Bab</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-2">Soal:</div>
+                                            <div class="col-sm-8 soal">
+                                            </div>
+                                            <div class="col-sm-12 btn">
+                                                <div class="col-sm-2">
+                                                    <br>
+                                                    <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </form>
                             </div>
                         </div>
-
-                        <div class="col-sm-5">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Soal Yang Ditambahkan</h3>
-                                </div>
-                                <div class="panel-body soaltambah">
-                                    <form action="" id="soalform">
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
+
+                    <div class="col-sm-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+                            </div>
+                            <div class="panel-body soaltambah">
+                                <form action="" id="soalform">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div> 
@@ -219,8 +243,8 @@ function loadTingkat(){
     function tambahkansoal(){
         var val = [];
         $(':checkbox:checked').each(function(i){
-           val[i] = $(this).val();
-       });  
+         val[i] = $(this).val();
+     });  
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
         console.log(url);
