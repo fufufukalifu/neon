@@ -106,7 +106,6 @@ class Register extends MX_Controller {
 
 
             $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
-            $kelas = htmlspecialchars($this->input->post('kelas'));
             $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
             $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
 
@@ -146,7 +145,6 @@ class Register extends MX_Controller {
                 'alamatSekolah' => $alamatSekolah,
                 'penggunaID' => $penggunaID,
                 'tingkatID' => $tingkatID,
-                'kelas' => $kelas,
             );
 //data unutk session siswa
             $sess_array = array(
