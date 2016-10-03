@@ -12,6 +12,7 @@ class Paketsoal extends MX_Controller
 		$this->load->model( 'BankSoal/mBankSoal' );
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
+		$this->load->model('Templating/mtemplating');
 		parent::__construct();
 	}
 
@@ -81,6 +82,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function add_soal() {
+		 $data['tingkat'] = $this->mtemplating->get_tingkat();
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
@@ -129,6 +131,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function addbanksoal( $idpaket ) {
+		 $data['tingkat'] = $this->mtemplating->get_tingkat();
 		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
 		//var_dump($data['paket_soal']);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";

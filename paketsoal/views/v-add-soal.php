@@ -175,14 +175,27 @@ function loadTingkat(){
         });
 
         $('#babID').change(function(){
+            bab_id = {"bab_id":$('#babID').val()};
+            loadsubbab($('#babID').val());
             $('.soal').empty();
-            load_pelajaran(idTingkat);
-            var idBab = $('#babID').val();
-            if (idBab=="") {
-                alert('Pilih Bab Matapelajaran');
-            }else{
-                addsoal(idBab);
-            };
+            // $('subbabID').empty();
+
+
+        });
+
+
+        $('#subBabId').change(function(){
+             console.log('cihuy');
+             alert('Pilih Bab Matapelajaran');
+            // $('.soal').empty();
+            // load_pelajaran(idTingkat);
+            // var idBab = $('#subBabID').val();
+            // if (idBab=="") {
+            //     alert('Pilih Bab Matapelajaran');
+            // }else{
+            //     addsoal(idBab);
+
+            // };
         });
 
         $('.tambahsoal').click(function(){
@@ -207,20 +220,40 @@ function loadTingkat(){
     }
     //buat load bab
     function loadbab(mapelID){
-        var babID;
+        // var babID;
         $.ajax({
             type: "POST",
             url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
             success: function(data){
+                
                 $('#babID').html('<option value="">Bab Pelajaran</option>');
+                console.log(data);
                 $.each(data, function(i, data){
                     $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
-                    babid=data.id;
+                    // babid=data.id;
                 });
             }
 
         });
-        return 
+        // return 
+    }
+
+    //load sub bab
+    function loadsubbab(babID) {
+        $.ajax({
+            type: "POST",
+            data: babID.bab_id,
+            url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
+            success: function (data) {
+                
+                $('#subBabId').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+                console.log(data);
+                $.each(data, function (i, data) {
+                    $('#subBabId').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
+                });
+            }
+
+        });
     }
 
     function addsoal(babID){
