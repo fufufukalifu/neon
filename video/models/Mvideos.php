@@ -118,5 +118,19 @@ class Mvideos extends CI_Model
 
   }
 
+
+   function get_pelajaran_for_paket( $id_subab ) {
+    $this->db->select( '*' );
+    $this->db->from( 'tb_mata-pelajaran mapel' );
+
+    $this->db->join( 'tb_tingkat-pelajaran tipel', 'mapel.id=tipel.mataPelajaranID' );
+    $this->db->join( 'tb_bab bab', 'bab.tingkatPelajaranID=tipel.id' );
+    $this->db->join( 'tb_subbab subab', 'bab.id=subab.babID' );
+    // $this->db->join( 'tb_video video', 'video.subBabID=subab.id' );
+    $this->db->where( 'subab.id', $id_subab );
+    $query = $this->db->get();
+    return $query->result();
+  }
+
 }
 ?>

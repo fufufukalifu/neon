@@ -1034,17 +1034,17 @@
                     $('#gettkt').change(function () {
                         tingkat_id = {"tingkat_id": $('#gettkt').val()};
                         loadPel($('#gettkt').val());
-                    })
+                    });
 
                     $('#getpel').change(function () {
                         pelajaran_id = {"pelajaran_id": $('#getpel').val()};
                         loadBb($('#getpel').val());
-                    })
+                    });
 
                     $('#getbb').change(function () {
                         loadSubb($('#getbb').val());
                         loadPel(idTingkat);
-                    })
+                    });
                 })
             }
             ;
