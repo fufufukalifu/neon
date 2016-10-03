@@ -13,6 +13,8 @@ class Guru extends MX_Controller {
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
         $this->load->model( 'register/mregister' );
+        $this->load->model('Templating/mtemplating');
+        $this->load->library('parser');
         sessionkonfirm();
         get_session_guru();
 
@@ -49,19 +51,45 @@ class Guru extends MX_Controller {
     }
 
     public function dashboard() {
-        $this->load->view( 'templating/t-header' );
-        $this->load->view( 'v-banner-guru' );
-        $this->load->view( 'v-left-bar' );
+        // Sebelum Templating#
+        // $this->load->view( 'templating/t-header' );
+        // $this->load->view( 'v-banner-guru' );
+        // $this->load->view( 'v-left-bar' );
 
+        $data = $this->videobyteacher();
+        #Sesudah Tempalting#
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
 
-        $videos = $this->videobyteacher();
-        //print_r($videos['data_guru']);
-        if ($videos==array()) {
-            $this->load->view( 'v-container-video',  $videos['data_guru']);
-        }else{
-           $this->load->view( 'v-container-video',  $videos); 
-        }
-        $this->load->view( 'templating/t-footer-back.php' );
+            $data['judul_halaman'] = "Form Input Soal";
+            $data['files'] = array(
+                APPPATH . 'modules/guru/views/v-container-video.php',
+            );
+        //         #START cek hakakses#
+                    $hakAkses=$this->session->userdata['HAKAKSES'];
+                    if ($hakAkses=='admin') {
+                        // jika admin
+                        $this->parser->parse('admin/v-index-admin', $data);
+                    } elseif($hakAkses=='guru'){
+                        // jika guru
+
+                        $this->parser->parse('templating/index-b-guru', $data);
+                    }else{
+                        // jika siswa redirect ke welcome
+                        redirect(site_url('welcome'));
+                    }
+                #END Cek USer#
+
+        
+
+        #Sebelum templating#
+        //pengecekan jika array kosong
+        // if ($data==array()) {
+
+        //     $this->load->view( 'v-container-video',  $data['data_guru']);
+        // }else{
+        //    $this->load->view( 'v-container-video',  $data); 
+        // }
+        // $this->load->view( 'templating/t-footer-back.php' );
     }
 
     //menampilkan video manager untuk user
@@ -85,11 +113,18 @@ class Guru extends MX_Controller {
     public function pengaturanProfileguru() {
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['guru'] = $this->mguru->get_datguru();
-        $this->load->view( 'templating/t-header' );
-        $this->load->view('templating/t-footer-back');
-        $this->load->view('guru/v-left-bar');
-        $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vPengaturanProfileGuru',$data );
+        // $this->load->view( 'templating/t-header' );
+        // $this->load->view('templating/t-footer-back');
+        // $this->load->view('guru/v-left-bar');
+        // $this->load->view( 'templating/t-header' );
+        // $this->load->view( 'vPengaturanProfileGuru',$data );
+
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['files'] = array(
+            APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
+        );
+        $data['judul_halaman'] = "Pengaturan Profile Guru";
+         $this->parser->parse('templating/index-b-guru', $data);
     }
 
     public function ubahprofileguru() {
@@ -115,11 +150,12 @@ class Guru extends MX_Controller {
         //pengecekan inputan / pengisian form
         if ( $this->form_validation->run() == FALSE ) {
 
-        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        $data['guru'] = $this->mguru->get_datguru();
-        $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vPengaturanProfileGuru',$data );
-        $this->load->view( 'templating/t-footer' );
+        // $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        // $data['guru'] = $this->mguru->get_datguru();
+        // $this->load->view( 'templating/t-header' );
+        // $this->load->view( 'vPengaturanProfileGuru',$data );
+        // $this->load->view( 'templating/t-footer' );
+            $this->pengaturanProfileguru();
         } else {
             $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
             $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );

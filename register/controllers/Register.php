@@ -16,7 +16,7 @@ class Register extends MX_Controller {
 //        $this->load->view('templating/t-header');
 //        $this->load->view('vRegisterSiswa');
 //        $this->load->view('templating/t-footer');
-
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data = array(
             'judul_halaman' => 'Registrasi - Neon',
             'judul_header' => 'Welcome'
@@ -36,15 +36,25 @@ class Register extends MX_Controller {
 
 // function untuk menampilkan halaman untuk pendaftaran user siswa
     public function registersiswa() {
-        $this->load->view('templating/t-header');
-        $this->load->view('vRegisterSiswa');
-        $this->load->view('templating/t-footer');
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data = array(
+            'judul_halaman' => 'Registrasi - Neon',
+            'judul_header' => 'Welcome'
+        );
+
+        $data['files'] = array(
+            APPPATH . 'modules/templating/views/v-navbarregister.php',
+            APPPATH . 'modules/register/views/vRegisterSiswa.php',
+            APPPATH . 'modules/homepage/views/v-footer.php',
+        );
+
+        $this->parser->parse('templating/index', $data);
     }
 
 //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
         $data['tingkat'] = $this->mtemplating->get_tingkat();
-
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['judul_halaman'] = "Register Guru";
         $data['files'] = array(
             APPPATH . 'modules/register/views/vRegisterGuru.php',
@@ -52,7 +62,6 @@ class Register extends MX_Controller {
              
 
         $this->parser->parse('admin/v-index-admin', $data);
-// var_dump( $data['mataPelajaran']); for testing
     }
 
     public function verifikasiemail() {
@@ -184,24 +193,23 @@ class Register extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-            $this->load->view('templating/t-header');
-            $this->load->view('vRegisterGuru', $data);
+
+             $this->registerguru();
         } else {
-//data guru
+            //data guru
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
             $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
             $alamat = htmlspecialchars($this->input->post('alamat'));
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
-//data untuk akun
+            //data untuk akun
             $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
             $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
             $email = htmlspecialchars($this->input->post('email'));
             $hakAkses = 'guru';
 
-//data array akun
+            //data array akun
             $data_akun = array(
                 'namaPengguna' => $namaPengguna,
                 'kataSandi' => $kataSandi,
@@ -209,14 +217,14 @@ class Register extends MX_Controller {
                 'hakAkses' => $hakAkses,
             );
 
-//melempar data guru ke function insert_pengguna di kelas model
+            //melempar data guru ke function insert_pengguna di kelas model
             $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
 
-//untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
+            //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
             $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
             $penggunaID = $data['tb_pengguna']['id'];
 
-//data array guru
+            //data array guru
             $data_guru = array(
                 'namaDepan' => $namaDepan,
                 'namaBelakang' => $namaBelakang,
@@ -225,7 +233,7 @@ class Register extends MX_Controller {
                 'mataPelajaranID' => $mataPelajaranID,
                 'penggunaID' => $penggunaID,
             );
-//data unutk session guru
+            //data unutk session guru
             $sess_array = array(
                 'id' => $penggunaID,
                 'USERNAME' => $namaPengguna,
@@ -233,7 +241,7 @@ class Register extends MX_Controller {
                 'eMail' => $email
             );
 
-//melempar data guru ke function insert_guru di kelas model
+            //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_guru($data_guru, $sess_array);
             redirect(site_url('register/verifikasi'));
         }

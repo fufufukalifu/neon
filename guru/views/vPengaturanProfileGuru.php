@@ -17,27 +17,6 @@
 <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
 <!-- START Template Main -->
 <section id="main" role="main">
-<div class="row">
-    <div class="col-md-3" style="margin:0"></div>
-    <div class="col-md-9" style="margin-left:-100px">
-         <!-- START Template Container -->
-        <!-- Page Header -->
-        <div class="page-header page-header-block">
-            <div class="page-header-section">
-                <h4 class="title semibold">Profile / pengaturan akun</h4>
-            </div>
-            <div class="page-header-section">
-                <!-- Toolbar -->
-                <div class="toolbar">
-                    <ol class="breadcrumb breadcrumb-transparent nm">
-                        <li><a href="#">Page</a></li>
-                        <li class="active">Profile</li>
-                    </ol>
-                </div>
-                <!--/ Toolbar -->
-            </div>
-        </div>
-        <!-- Page Header -->
 
         <!-- START row -->
         <div class="row">
@@ -150,21 +129,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group header bgcolor-default">
-                        <div class="col-md-12">
-                            <h4 class="semibold text-primary nm">Facebook</h4>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">&nbsp;</label>
-                        <div class="col-sm-9">
-                            <div class="btn-group pr5">
-                                <img class="img-circle img-bordered" src="<?=base_url('assets/image/avatar/avatar7.jpg');?>" alt="" width="34px">
-                            </div>
-                            <a href="javascript:void(0);" class="btn btn-facebook">Login to facebook</a>
-                            <p class="help-block">to manage your connection with Facebook.</p>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="panel-footer">
                     <button type="reset" class="btn btn-default">Reset</button>
@@ -298,8 +263,7 @@
 <!-- START To Top Scroller -->
 <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
 <!--/ END To Top Scroller -->
-    </div>
-</div>
+
    
 
 </section>

@@ -1,13 +1,13 @@
 
 <!-- konten -->
 <section id="main" role="main">
- <div class="container-fluid">
+ <!-- <div class="container-fluid">
 
   <div class="page-header page-header-block">
    <div class="page-header-section">
     <h4 class="title semibold">Dashboard</h4>
   </div>
-</div>
+</div> -->
 
 <!-- profile -->
 <div class="col-xs-12">

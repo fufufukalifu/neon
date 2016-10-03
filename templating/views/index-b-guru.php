@@ -1,11 +1,11 @@
-
+<!DOCTYPE html>
 <html class="backend">
     <!-- START Head -->
     <head>
         <!-- START META SECTION -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title><?= $judul_halaman ?></title>
+        <title>{judul_halaman}</title>
         <meta name="author" content="pampersdry.info">
         <meta name="description" content="Adminre is a clean and flat backend and frontend theme build with twitter bootstrap 3.1.1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -15,10 +15,8 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url('assets/image/touch/apple-touch-icon-72x72-precomposed.png') ?>">
         <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
-        <!--<link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">-->
         <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
         <script>var base_url = '<?php echo base_url() ?>';</script>
-
         <!--/ END META SECTION -->
 
         <!-- START STYLESHEETS -->
@@ -42,8 +40,7 @@
 
     <!-- START Body -->
     <body>
-
-        <!-- START Modal ADD BANK SOAL -->
+                <!-- START Modal ADD BANK SOAL -->
         <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -102,7 +99,6 @@
                
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <!-- END MODAL ADD BANK SOAL -->
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
@@ -408,16 +404,16 @@
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="meta">
                                 <span class="avatar"><img src="<?= base_url('assets/image/avatar/avatar7.jpg') ?>" class="img-circle" alt="" /></span>
-                                <span class="text hidden-xs hidden-sm pl5">Erich Reyes</span>
+                                <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['USERNAME'];?></span>
                                 <span class="caret"></span>
                             </span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
-                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
+                            <li><a href="<?=base_url('index.php/guru/pengaturanProfileguru');?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                             <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+                            <li><a href="<?=base_url('index.php/login/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
                         </ul>
                     </li>
                     <!-- Profile dropdown -->
@@ -443,55 +439,17 @@
             <!-- START Sidebar Content -->
             <section class="content slimscroll">
                 <h5 class="heading">Main Menu</h5>
-                <!-- START MENU -->
+              <!-- START MENU -->
                 <ul class="topmenu topmenu-responsive" data-toggle="menu">
                     <li >
-                        <a href="<?= base_url('assets/gh_frontend') ?>">
+                        <a href="<?= base_url('index.php/guru/dashboard/') ?>">
                             <span class="figure"><i class="ico-trophy"></i></span>
                             <span class="text">Dashboard</span>
                         </a>
                     </li>
 
-                    
 
-                    <li>
-                        <a href="javascript:void(0);" data-target="#siswa" data-toggle="submenu" data-parent=".topmenu">
-                            <span class="figure"><i class="ico-users3"></i></span>
-                            <span class="text">Siswa</span>
-                            <span class="arrow"></span>
-                        </a>
-
-                        <ul id="siswa" class="submenu collapse ">
-                            <li class="submenu-header ellipsis">Siswa</li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Daftar Siswa</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="javascript:void(0);" data-target="#mapel" data-toggle="submenu" data-parent=".topmenu">
-                            <span class="figure"><i class="ico-notebook"></i></span>
-                            <span class="text">Atribut</span>
-                            <span class="arrow"></span>
-                        </a>
-
-                        <ul id="mapel" class="submenu collapse ">
-                            <li class="submenu-header ellipsis">Atribut</li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Mata Pelajaran</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Tingkat</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                   
 
                     <li>
                         <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
@@ -504,7 +462,7 @@
                             <li class="submenu-header ellipsis">Video</li>
 
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('index.php/videoBack/formupvideo')?>">
                                     <span class="text">Upload Video</span>
                                 </a>
                             </li>
@@ -609,7 +567,7 @@
                 <!-- Page Header -->
                 <div class="page-header page-header-block">
                     <div class="page-header-section">
-                        <h4 class="title semibold"><?= $judul_halaman ?></h4>
+                        <h4 class="title semibold">{judul_halaman}</h4>
                     </div>
                     <div class="page-header-section">
                         <!-- Toolbar -->
@@ -623,7 +581,7 @@
                     </div>
                 </div>
 
-                <?php
+               <?php
                 foreach ($files as $file) {
                     include $file;
                 }
@@ -1036,11 +994,11 @@
         <!--datatable-->
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>
+        <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
-        <script type="text/javascript">
+         <script type="text/javascript">
             //panggil modal
             function add_soal() {
                 $('#modalsoal').modal('show'); // show bootstrap modal
@@ -1054,6 +1012,7 @@
            
             //buat load tingkat untuk modal buat soal
             function loadTkt() {
+                console.log('load Tingkat');
                 jQuery(document).ready(function () {
                     var tingkat_id = {"tingkat_id": $('#gettkt').val()};
                     var idTingkat;
@@ -1151,19 +1110,6 @@
 
             loadTkt();
         </script>
-<!--         <script type="text/javascript">
-                $('#myFormSubmit').click(function(e){
-                      e.preventDefault();
-                      alert($('#myField').val());
-                      /*
-                      $.post('http://path/to/post', 
-                         $('#myForm').serialize(), 
-                         function(data, status, xhr){
-                           // do something here with response;
-                         });
-                      */
-                });
-        </script> -->
 
         <!--/ App and page level script -->
         <!--/ END JAVASCRIPT SECTION -->

@@ -9,7 +9,7 @@ class BankSoal extends MX_Controller {
         parent::__construct();
         $this->load->model('mbanksoal');
         $this->load->model('Templating/mtemplating');
-         $this->load->library('parser');
+        $this->load->library('parser');
     }
 
     public function index() {
@@ -23,150 +23,188 @@ class BankSoal extends MX_Controller {
 
     public function listmp() {
         $tingkatID = htmlspecialchars($this->input->get('tingkatID'));
-        if ($tingkatID == null) {
-            echo "redirect dashboard guru";
-        } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
-            $data['pelajaran'] = $this->mbanksoal->get_pelajaran($tingkatID);
-            $data['tingkatID'] = $tingkatID;
+      
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['pelajaran'] = $this->mbanksoal->get_pelajaran($tingkatID);
+        $data['tingkatID'] = $tingkatID;
 
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-list-mp.php',
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-mp.php',
             );
 
-            $data['judul_halaman'] = "List  Mata Pelajaran";
+        $data['judul_halaman'] = "List  Mata Pelajaran";
 
-                $hakAkses=$this->session->userdata['HAKAKSES'];
+        $hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
-                if ($hakAkses=='admin') {
-                    // jika admin
-                    $this->parser->parse('admin/v-index-admin', $data);
-                } elseif($hakAkses=='guru'){
+        if ($hakAkses=='admin') {
+        // jika admin
+        //cek jika sniping url
+            if ($tingkatID==null) {
+                redirect(site_url('admin'));
+            } else {
+                 $this->parser->parse('admin/v-index-admin', $data);
+            }
+
+
+        } elseif($hakAkses=='guru'){
                     // jika guru
-                    $this->parser->parse('templating/index-b-guru', $data);
-                }else{
-                    // jika siswa redirect ke welcome
-                    redirect(site_url('welcome'));
-                }
-             // redirect($_SERVER["REQUEST_URI"]);
+            //cek jika sniping url
+            if ($tingkatID==null) {
+                redirect(site_url('guru/dashboard/'));
+            } else {
+                 $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
         }
+           
+       
     }
 
     public function listbab() {
         $mpID = htmlspecialchars($this->input->get('mpID'));
 
-        if ($mpID == null) {
-            echo "redirect ke dashboard guru";
-        } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
 
-            $data['bab'] = $this->mbanksoal->get_bab($mpID);
-            $data['judul_halaman'] = "List Bab";
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-list-bab.php',
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+
+        $data['bab'] = $this->mbanksoal->get_bab($mpID);
+        $data['judul_halaman'] = "List Bab";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-bab.php',
             );
                 #START cek hakakses#
-                    $hakAkses=$this->session->userdata['HAKAKSES'];
-                    if ($hakAkses=='admin') {
-                        // jika admin
-                        $this->parser->parse('admin/v-index-admin', $data);
-                    } elseif($hakAkses=='guru'){
-                        // jika guru
-                        $this->parser->parse('templating/index-b-guru', $data);
-                    }else{
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+            // jika admin
+            if ($mpID == null) {
+                redirect(site_url('admin'));
+            } else {
+               $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+            if ($mpID == null) {
+                 redirect(site_url('guru/dashboard/'));
+            } else {
+               $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
                         // jika siswa redirect ke welcome
-                        redirect(site_url('welcome'));
-                    }
-                #END Cek USer#
+            redirect(site_url('welcome'));
         }
+                #END Cek USer#
     }
 
-        public function listsubbab() {
+    public function listsubbab() {
         $babID = htmlspecialchars($this->input->get('bab'));
 
-        if ($babID == null) {
-            echo "redirect ke dashboard guru";
-        } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
 
-            $data['subbab'] = $this->mbanksoal->get_subbab($babID);
-            $data['judul_halaman'] = "List Sub Bab";
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-list-subbab.php',
+        $data['subbab'] = $this->mbanksoal->get_subbab($babID);
+        $data['judul_halaman'] = "List Sub Bab";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-subbab.php',
             );
-                #START cek hakakses#
-                    $hakAkses=$this->session->userdata['HAKAKSES'];
-                    if ($hakAkses=='admin') {
-                        // jika admin
-                        $this->parser->parse('admin/v-index-admin', $data);
-                    } elseif($hakAkses=='guru'){
-                        // jika guru
-                        $this->parser->parse('templating/index-b-guru', $data);
-                    }else{
+         #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+            // jika admin
+            if ($babID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+            // jika guru
+             if ($babID == null) {
+                redirect(site_url('guru/dashboard/'));
+            } else {
+                $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
                         // jika siswa redirect ke welcome
-                        redirect(site_url('welcome'));
-                    }
-                #END Cek USer#
+            redirect(site_url('welcome'));
         }
+        #END Cek USer#
     }
 
     public function listsoal() {
       
         $subBab = htmlspecialchars($this->input->get('subbab'));
 
-        if ($subBab == null) {
-            echo "redirect dashboard guru";
-        } else {
-            $data['soal'] = $this->mbanksoal->get_soal($subBab);
-            $data['pilihan'] = $this->mbanksoal->get_pilihan($subBab);
-            $data ['subBab'] = $subBab;
-            $data['judul_halaman'] = "List  Soal";
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-list-soal.php',
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['soal'] = $this->mbanksoal->get_soal($subBab);
+        $data['pilihan'] = $this->mbanksoal->get_pilihan($subBab);
+        $data ['subBab'] = $subBab;
+        $data['judul_halaman'] = "List  Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-soal.php',
             );
-                #START cek hakakses#
-                    $hakAkses=$this->session->userdata['HAKAKSES'];
-                    if ($hakAkses=='admin') {
-                        // jika admin
-                        $this->parser->parse('admin/v-index-admin', $data);
-                    } elseif($hakAkses=='guru'){
-                        // jika guru
-                        $this->parser->parse('templating/index-b-guru', $data);
-                    }else{
-                        // jika siswa redirect ke welcome
-                        redirect(site_url('welcome'));
-                    }
-                #END Cek USer#
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+            // jika admin
+            if ($subBab == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+            if ($subBab == null) {
+                 redirect(site_url('guru/dashboard/'));
+            } else {
+               $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
         }
+        #END Cek USer#
     }
 
     #Start Function untuk form upload bank soal#
 
     public function formsoal() {
         $data['subBab'] = htmlspecialchars($this->input->get('subBab'));
-        if ($data['subBab'] == null) {
-            echo "redirect ke dashboard";
-        } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
+      
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
 
-            $data['judul_halaman'] = "Form Input Soal";
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-form-soal.php',
+        $data['judul_halaman'] = "Form Input Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-form-soal.php',
             );
-                #START cek hakakses#
-                    $hakAkses=$this->session->userdata['HAKAKSES'];
-                    if ($hakAkses=='admin') {
-                        // jika admin
-                        $this->parser->parse('admin/v-index-admin', $data);
-                    } elseif($hakAkses=='guru'){
-                        // jika guru
-                        $this->parser->parse('templating/index-b-guru', $data);
-                    }else{
+         #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+            // jika admin
+            if ($data['subBab'] == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            if ($data['subBab'] == null) {
+                redirect(site_url('guru/dashboard/'));
+            } else {
+                $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
                         // jika siswa redirect ke welcome
-                        redirect(site_url('welcome'));
-                    }
-                #END Cek USer#
+            redirect(site_url('welcome'));
         }
+                #END Cek USer#
     }
 
     public function uploadsoal() {
@@ -297,23 +335,41 @@ class BankSoal extends MX_Controller {
         $data['subBabID'] = htmlspecialchars($this->input->get('subBab'));
         
         $UUID = htmlspecialchars($this->input->get('UUID'));
-        
 
-        if ($data['subBabID'] == null) {
-            echo "redirect ke dashboard";
-        } else {
-            $data['tingkat'] = $this->mtemplating->get_tingkat();
+        $data['tingkat'] = $this->mtemplating->get_tingkat();
             //get data soan where==UUID
-            $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
-            $id_soal = $data['bankSoal']['id_soal'];
+        $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
+        $id_soal = $data['bankSoal']['id_soal'];
             //get piljawaban == id soal
-            $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
-            $data['judul_halaman'] = "Form Update Soal";
-            $data['files'] = array(
-                APPPATH . 'modules/banksoal/views/v-update-soal.php',
+        $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
+        $data['judul_halaman'] = "Form Update Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-update-soal.php',
             );
-            $this->load->view('templating/index-b-guru', $data);
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+            // jika admin
+            if ($data['subBabID'] == null || $UUID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            if ($data['subBabID'] == null || $UUID == null) {
+                redirect(site_url('guru/dashboard/'));
+            } else {
+                $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+                        // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
         }
+         #END Cek USer#
+
     }
 
     public function updateBanksoal() {
