@@ -285,7 +285,7 @@ class BankSoal extends MX_Controller {
             $this->uploadgambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal?subBab=' . $subBabID));
+        redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
     }
 
     public function uploadgambar($soalID) {
@@ -460,7 +460,7 @@ class BankSoal extends MX_Controller {
             $this->updategambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal?subBab=' . $subBabID));
+        redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
     }
 
     public function updategambar($soalID) {
