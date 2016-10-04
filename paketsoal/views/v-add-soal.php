@@ -7,10 +7,11 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="container">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Daftar Soal</h3>
+                                    <input type="text" name="id" id="id_paket" value="<?=$id_paket;?>" hidden="true">
                                 </div>
                                 <div class="panel-body">
                                     <form action="#" id="formsoal">
@@ -74,16 +75,27 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-5">
+                    <div class="col-sm-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Soal Yang Ditambahkan</h3>
                             </div>
                             <div class="panel-body soaltambah">
                                 <form action="" id="">
+                                    <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Sumber</th>
+                                                <th>SOAL</th>
+                                                <th>Level</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                               
-                                </form>
+                                        </table>
+
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -277,19 +289,23 @@ function loadTingkat(){
 
     function tambahkansoal(){
         var idsoal = [];
+        var idSubBab = $('#subBabId').val();
+        var id_paket =$('#id_paket').val();
         $(':checkbox:checked').each(function(i){
          idsoal[i] = $(this).val();
 
         });  
         console.log(idsoal);
-     
+       
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
        
         $.ajax({
             url : url,
             type: "POST",
-            data: {data:idsoal},
+            data: {data:idsoal,
+                    idSubBab:idSubBab,
+                    id_paket:id_paket},
             // cache: false,
           // dataType: "JSON",
             success: function(data,respone)

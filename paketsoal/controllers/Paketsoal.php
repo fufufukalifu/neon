@@ -72,6 +72,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function tambahpaketsoal() {
+		$data['tingkat'] = $this->mtemplating->get_tingkat();
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
@@ -129,11 +130,11 @@ class Paketsoal extends MX_Controller
 
 	function addbanksoal( $idpaket ) {
 		 $data['tingkat'] = $this->mtemplating->get_tingkat();
-		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
+		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket)[0];
 		//var_dump($data['paket_soal']);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
-
+		$data['id_paket']=$paket_soal['id_paket'];
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-add-soal.php',
 		);
@@ -193,10 +194,23 @@ class Paketsoal extends MX_Controller
 	#Start Function add soal paket#
 	public function addsoaltopaket()
 	{
-		 echo "ss";
-		$a = json_decode($this->input->post('idsoal'));
+	
+		$idSoal = $this->input->post('data');
+		$idSubbab = $this->input->post('idSubBab');
+		$idpaket = $this->input->post('id_paket');
 		// ;
-		 var_dump($a);
+		 var_dump($idSubbab);
+		 var_dump($idpaket);
+		 $mmpaket=array();
+		 foreach ($idSoal as $key ) {		 
+		 	$mmpaket[] = array('id_paket' => $idpaket,
+                'id_soal' => $key,
+                'subBabID' => $idSubbab);
+		 	
+		 }
+		 
+
+		 $this->MPaketsoal->insert_soal_paket($mmpaket);
 		// var_dump($a);
 		// $playlist = $this->input->post('val');
 		// $data = $_POST['data'];

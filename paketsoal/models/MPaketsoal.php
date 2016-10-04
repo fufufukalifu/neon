@@ -26,6 +26,15 @@ class MPaketsoal extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function getpaket_by_id($idpaket) {
+		$this->db->select( '*' )->from( 'tb_paket' );
+		$this->db->where('id_paket',$idpaket);
+		$this->db->where( 'status', 1 );
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function droppaket( $id ) {
 		$this->db->set( 'status', 0 );
 		$this->db->where( 'id_paket', $id );
@@ -93,9 +102,12 @@ class MPaketsoal extends CI_Model {
 	}
 
 	#Start function insert add soal pakert#
-	public function insert_soal_paket($data)
+	public function insert_soal_paket($mmpaket)
 	{
-		$this->db->inser_batch('tb_mm-paketbank',$data);
+
+		 $this->db->insert_batch('tb_mm-paketbank',$mmpaket);
+		echo "masuk model";
+		var_dump($mmpaket);
 	}
 	#END function insert add soal pakert#
 
