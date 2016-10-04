@@ -280,15 +280,17 @@ function loadTingkat(){
         $(':checkbox:checked').each(function(i){
          val[i] = $(this).val();
 
-     });  
+        });  
+        
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
-        console.log(val);
+       
         $.ajax({
             url : url,
             type: "POST",
-            data: $('#formsoal').serialize(),
-            dataType: "JSON",
+            data: val,
+             cache: false,
+         
             success: function(data)
             {
                 console.log(data);
