@@ -14,30 +14,35 @@ class Latihan extends MX_Controller
 	}
 
 	public function tambah_latihan_ajax() {
+
 		//uuid untuk soal
 
 		$uuid_latihan = uniqid();
-		$idsub = 32;
-		$jumlah_soal = 5;
-		$kesulitan = 1;
+		var_dump($uuid_latihan);
+		$idsub =  $_POST['subab'];
+		$jumlah_soal =  $_POST['jumlahsoal'];
+		$kesulitan =  $_POST['kesulitan'];
 
+		// $idsub =  32;
+		// $jumlah_soal =  3;
+		// $kesulitan =  "mudah";
 		//untuk halaman
 		$data = array(
 			'judul_halaman' => 'Latihan - Neon',
 			'judul_header' => 'Latihan'
 			);
 		//get nama mata pelajaran untuk nama paket
-		$nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket( 31 )[0]->namaMataPelajaran;
+		$nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket( $idsub )[0]->namaMataPelajaran;
 		//get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
 		$nama_subab = $this->Mmatapelajaran->sc_sub_by_subid( $idsub )[0]['judulSubBab'];
 		$data['post'] =
 		array(
-			"id_latihan"=>"",
 			"jumlahSoal"=> $jumlah_soal,
 			"tingkatKesulitan"=>$kesulitan,
 			"nm_latihan"=>$nama_matapelajaran."-".$nama_subab,
-			"create_by"=>1,
-			"uuid_latihan" => $uuid_latihan
+			"create_by"=>$this->session->userdata['USERNAME'],
+			"uuid_latihan" => $uuid_latihan,
+			"id_subbab"=>$idsub
 			);
 
 		$param = array(
@@ -50,7 +55,7 @@ class Latihan extends MX_Controller
 		$id_latihan = $this->mlatihan->get_latihan_by_uuid( $uuid_latihan )[0]['id_latihan'];
 		// get soal randoom
 		$data['soal_random']=$this->mlatihan->get_random_for_latihan( $param );
-		// print_r( $data['soal_random'] );
+		print_r( $data['soal_random'] );
 		// $data['mm_sol']=array();
 		//ngecacah teru dimasukin ke relasi
 		foreach ( $data['soal_random'] as $row ) {

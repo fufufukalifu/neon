@@ -7,7 +7,7 @@ class Mlatihan extends CI_Model
 
 	public function get_random_for_latihan( $param ) {
 		$this->db->where( 'subBabID', $param['id_subab'] );
-		$this->db->where( 'kesulitan', $param['kesulitan'] );
+		// $this->db->where( 'kesulitan', $param['kesulitan'] );
 
 		$this->db->order_by( 'rand()' );
 		$this->db->limit( $param['jumlah_soal'] );
