@@ -276,27 +276,32 @@ function loadTingkat(){
     }
 
     function tambahkansoal(){
-        var val = [];
+        var idsoal = [];
         $(':checkbox:checked').each(function(i){
-         val[i] = $(this).val();
+         idsoal[i] = $(this).val();
 
         });  
-        
+        console.log(idsoal);
+     
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
        
         $.ajax({
             url : url,
             type: "POST",
-            data: val,
-             cache: false,
-         
-            success: function(data)
-            {
+            data: {data:idsoal},
+            // cache: false,
+          // dataType: "JSON",
+            success: function(data,respone)
+            {   console.log(respone);
                 console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+             
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
                 alert('Error adding / update data');
             }
         });

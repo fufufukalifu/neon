@@ -194,8 +194,10 @@ class Paketsoal extends MX_Controller
 	public function addsoaltopaket()
 	{
 		 echo "ss";
-		$a = $this->input->post('val');
+		$a = json_decode($this->input->post('idsoal'));
+		// ;
 		 var_dump($a);
+		// var_dump($a);
 		// $playlist = $this->input->post('val');
 		// $data = $_POST['data'];
 		// $addsoal=array();//untuk menampung id
