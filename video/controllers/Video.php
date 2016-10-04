@@ -114,7 +114,7 @@ class Video extends MX_Controller {
             APPPATH.'modules/video/views/f-daftar-video.php',
             APPPATH.'modules/templating/views/footer.php'
         );
-        print_r( $data );
+        // print_r( $data );
          $this->parser->parse( 'templating/index', $data );
       
 
