@@ -13,66 +13,87 @@
                                     <h3 class="panel-title">Daftar Soal</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form>
+                                    <form action="#" id="formsoal">
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <div class="col-sm-2">
                                                     Filter:
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    <select name="" id="tingkatID" class="form-control">
-                                                        <option value="">Tingkat</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <select name="" id="pelajaranID" class="form-control">
-                                                        <option value="">Pelajaran</option>
-                                                    </select>
-                                                    <br>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <select name="" id="babID" class="form-control">
-                                                        <option value="">Bab</option>
-                                                    </select>
-                                                    <br>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="col-sm-2">Soal:</div>
-                                                    <div class="col-sm-8 soal">
+                                                <div class="row">
+                                                    <div class="row-col-sm-12">
+                                                       <div class="col-sm-4">
+                                                        <select name="" id="tingkatID" class="form-control">
+                                                            <option value="">Tingkat</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="col-sm-12 btn">
-                                                        <div class="col-sm-2">
-                                                            <br>
-                                                            <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
-                                                        </div>
+                                                    <div class="col-sm-4">
+                                                        <select name="" id="pelajaranID" class="form-control">
+                                                            <option value="">Pelajaran</option>
+                                                        </select>
+                                                        <br>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        
+                                        <div class="col-sm-12">
+                                         <div class="col-sm-2">
+
+                                         </div>
+                                         <div class="row">
+                                            <div class="row-col-sm-12">
+                                             <div class="col-sm-4">
+                                                <select name="" id="babID" class="form-control">
+                                                    <option value="">Bab</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <select name="" id="subBabId" class="form-control">
+                                                    <option value="">Sub Bab</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-2">Soal:</div>
+                                            <div class="col-sm-8 soal">
+                                            </div>
+                                            <div class="col-sm-12 btn">
+                                                <div class="col-sm-2">
+                                                    <br>
+                                                    <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-
-                        <div class="col-sm-5">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Soal Yang Ditambahkan</h3>
-                                </div>
-                                <div class="panel-body soaltambah">
-                                    <form action="" id="soalform">
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
+
+                    <div class="col-sm-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+                            </div>
+                            <div class="panel-body soaltambah">
+                                <form action="" id="">
+
+                               
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div> 
@@ -127,6 +148,7 @@ function loadTingkat(){
                 });
             }
         });
+
         $('.addsoal').click(function(){
             var idBab = $('#babID').val();
             if (idBab=="") {
@@ -151,13 +173,26 @@ function loadTingkat(){
         });
 
         $('#babID').change(function(){
+            bab_id = {"bab_id":$('#babID').val()};
+            loadsubbab($('#babID').val());
+            $('.soal').empty();
+            // $('subbabID').empty();
+
+
+        });
+
+
+        $('#subBabId').change(function(){
+             // console.log('cihuy');
+             // alert('Pilih Bab Matapelajaran');
             $('.soal').empty();
             load_pelajaran(idTingkat);
-            var idBab = $('#babID').val();
-            if (idBab=="") {
+            var idSubBab = $('#subBabId').val();
+            if (idSubBab=="") {
                 alert('Pilih Bab Matapelajaran');
             }else{
-                addsoal(idBab);
+              addsoal(idSubBab);
+
             };
         });
 
@@ -183,26 +218,50 @@ function loadTingkat(){
     }
     //buat load bab
     function loadbab(mapelID){
-        var babID;
+        // var babID;
         $.ajax({
             type: "POST",
             url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
             success: function(data){
+                
                 $('#babID').html('<option value="">Bab Pelajaran</option>');
+                console.log(data);
                 $.each(data, function(i, data){
                     $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
-                    babid=data.id;
+                    // babid=data.id;
+                });
+            } 
+
+        });
+        // return 
+    }
+
+    //load sub bab
+    function loadsubbab(babID) {
+
+        $.ajax({
+            type: "POST",
+            data: babID.bab_id,
+            url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
+            success: function (data) {
+                
+                $('#subBabId').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+                console.log(data);
+                $.each(data, function (i, data) {
+                    $('#subBabId').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
                 });
             }
 
         });
-        return 
     }
 
-    function addsoal(babID){
+    function addsoal(subBabId){
+        console.log('testing');
+        console.log(subBabId);
         $.ajax({
+
             type: "POST",
-            url: "<?php echo base_url() ?>index.php/paketsoal/ajax_get_soal_by_bab/"+babID,
+            url: "<?php echo base_url() ?>index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
             success: function(data){
                 $.each(data, function(i, data){
                     $('.soal').append(data.link);
@@ -219,15 +278,16 @@ function loadTingkat(){
     function tambahkansoal(){
         var val = [];
         $(':checkbox:checked').each(function(i){
-           val[i] = $(this).val();
-       });  
+         val[i] = $(this).val();
+
+     });  
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
-        console.log(url);
+        console.log(val);
         $.ajax({
             url : url,
             type: "POST",
-            data: $('#soalform').serialize(),
+            data: $('#formsoal').serialize(),
             dataType: "JSON",
             success: function(data)
             {

@@ -5,13 +5,13 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
  */
 class Paketsoal extends MX_Controller
 {
-
 	public function __construct() {
 		$this->load->library( 'parser' );
 		$this->load->model( 'MPaketsoal' );
 		$this->load->model( 'BankSoal/mBankSoal' );
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
+		$this->load->model('Templating/mtemplating');
 		parent::__construct();
 	}
 
@@ -50,7 +50,7 @@ class Paketsoal extends MX_Controller
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
 			$row[] = '<a class="btn btn-sm btn-primary"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-file5"></i></a>
-			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
+			<a class="btn btn-sm btn-success"  title="Add Soal" href="paketsoal/addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -81,6 +81,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function add_soal() {
+		 $data['tingkat'] = $this->mtemplating->get_tingkat();
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
@@ -88,8 +89,6 @@ class Paketsoal extends MX_Controller
 		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
-
-
 
 
 
@@ -129,6 +128,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function addbanksoal( $idpaket ) {
+		 $data['tingkat'] = $this->mtemplating->get_tingkat();
 		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
 		//var_dump($data['paket_soal']);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
@@ -140,8 +140,11 @@ class Paketsoal extends MX_Controller
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
-	function ajax_get_soal_by_bab( $babID ) {
-		$list = $soal=$this->mBankSoal->get_soal( $babID );
+	function ajax_get_soal_by_subbabid( $subBabID ) {
+		// var_dump("hai");
+
+		$list = $soal=$this->mBankSoal->get_soal( $subBabID );
+		// var_dump($list);
 
 
 		if ( $list==array() ) {
@@ -149,17 +152,20 @@ class Paketsoal extends MX_Controller
 			$datas[] = $row;
 		}else {
 			$datas = array();
+			$n='1';
 			foreach ( $list as $soal ) {
 				// $no++;
 				$row = array();
 				$row = array( 'link'=>
 					"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-				<input type='checkbox' name="."soal".$soal['id_soal']." id="."soal".$soal['id_soal']." value=".$soal['soal'].">
-				<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".$soal['soal']."</label>
+				<input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
+				<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".htmlspecialchars($soal['soal'])."</label>
+				<button>add</button>
 				</span><br>"
 				);
 
 				$datas[] = $row;
+				$n++;
 			}
 
 
@@ -168,20 +174,39 @@ class Paketsoal extends MX_Controller
 		->set_content_type( "application/json" )
 		->set_output( json_encode( $datas ) ) ;
 
-		// return $data;
+		return $data;
 
 		// var_dump($datas);
 	}
-	function addsoaltopaket(){
-		$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
-		//$id_paket = $id_paket;
-		print_r($paket_soal);
-		// $data = array(
-		// 	'id_paket' => $this->input->post( 'nama_paket' ) ,
-		// );
+	// function addsoaltopaket(){
+	// 	$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
+	// 	//$id_paket = $id_paket;
+	// 	print_r($paket_soal);
+	// 	// $data = array(
+	// 	// 	'id_paket' => $this->input->post( 'nama_paket' ) ,
+	// 	// );
 
-		// $this->MPaketsoal->insertpaketsoal( $data );
-	}
+	// 	// $this->MPaketsoal->insertpaketsoal( $data );
+	// }
 	//paket soal relasi bank soal
+
+	#Start Function add soal paket#
+	public function addsoaltopaket()
+	{
+		 echo "ss";
+		$playlist = $this->input->post('val');
+		$data = $_POST['data'];
+		$addsoal=array();//untuk menampung id
+		foreach ($val as $row) {
+			$addsoal[]= array('idpaket'=> $??,
+							  'idsoal'=>$??,
+							  'subBabID'=>$??,	);
+		}
+		$this->mpaketsoal->insert_soal_paket($addsoal);
+		
+
+	}
+	#END Function add soal paket#
+
 }
 ?>

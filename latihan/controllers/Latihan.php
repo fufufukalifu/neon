@@ -1,77 +1,88 @@
-<?php 
+<?php
 /**
-* 
-*/
-class Latihan extends MX_Controller 
+ *
+ */
+class Latihan extends MX_Controller
 {
-	
-	function __construct()
-	{
+
+	function __construct() {
 		parent::__construct();
-        $this->load->model( 'mlatihan' );
-
-        $this->load->library( 'parser' );
+		$this->load->model( 'mlatihan' );
+		$this->load->library( 'parser' );
+		$this->load->model( 'video/mvideos' );
+		$this->load->model( 'matapelajaran/Mmatapelajaran' );
 	}
 
-	public function index()
-	{	
+	public function tambah_latihan_ajax() {
+		//uuid untuk soal
+
+		$uuid_latihan = uniqid();
+		$idsub = 32;
+		$jumlah_soal = 5;
+		$kesulitan = 1;
+
+		//untuk halaman
 		$data = array(
-            'judul_halaman' => 'Latihan - Neon',
-            'judul_header' => 'Latihan'
-        	);
-		
+			'judul_halaman' => 'Latihan - Neon',
+			'judul_header' => 'Latihan'
+			);
+		//get nama mata pelajaran untuk nama paket
+		$nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket( 31 )[0]->namaMataPelajaran;
+		//get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
+		$nama_subab = $this->Mmatapelajaran->sc_sub_by_subid( $idsub )[0]['judulSubBab'];
+		$data['post'] =
+		array(
+			"id_latihan"=>"",
+			"jumlahSoal"=> $jumlah_soal,
+			"tingkatKesulitan"=>$kesulitan,
+			"nm_latihan"=>$nama_matapelajaran."-".$nama_subab,
+			"create_by"=>1,
+			"uuid_latihan" => $uuid_latihan
+			);
+
+		$param = array(
+			"id_subab"=>$idsub,
+			"jumlah_soal"=>$jumlah_soal,
+			"kesulitan" =>$kesulitan
+			);
+		// insert ke soal
+		$this->mlatihan->insert( $data['post'] );
+		$id_latihan = $this->mlatihan->get_latihan_by_uuid( $uuid_latihan )[0]['id_latihan'];
 		// get soal randoom
-		$data['banksoal']=$this->mlatihan->get_banksoal();
+		$data['soal_random']=$this->mlatihan->get_random_for_latihan( $param );
+		// print_r( $data['soal_random'] );
+		// $data['mm_sol']=array();
+		//ngecacah teru dimasukin ke relasi
+		foreach ( $data['soal_random'] as $row ) {
+			$data['mm_sol'] = array(
+				"id_latihan"=>$id_latihan,
+				"id_soal"=>$row['id_soal']
+				);
+			// print_r($data['mm_sol']); echo "<br>";
+			$this->mlatihan->insert_tb_mm_sol_lat( $data['mm_sol'] );
+		};
+		// print_r($data['mm_sol']);
 
-		$id_soal=array();//untuk menampung id
-		foreach ($data['banksoal'] as $row) {
-			$id_soal[]= array('id_soal'=> $row['id_soal']);
-		}
-	
-		// get pilihan jawaban sesuai dgn soal
-		$data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
-
-		
-		// for testing
-		$this->load->library('table');
-		echo $this->table->generate($data['banksoal']);
-		echo "==================================";
-		echo $this->table->generate($data['pilihan']);
-
-		var_dump($data['banksoal']);
-		  
-
-        // $data['files'] = array(
-        //     APPPATH . 'modules/templating/views/v-navbarregister.php',
-        //     APPPATH . 'modules/latihan/views/v-latihan.php',
-        //     APPPATH . 'modules/homepage/views/v-footer.php',
-        // );
-
-
-
-       
-
-        // $this->parser->parse('templating/index', $data);
-
+		// $data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
+		// print_r($data['banksoal']);
 	}
 
-	public function formlatihan()
-	{
-		
-        $data = array(
-            'judul_halaman' => 'Netjoo - Welcome',
-            'judul_header' =>'Welcome'
-        );
+	public function formlatihan() {
 
-        $data['files'] = array( 
-            APPPATH.'modules/homepage/views/v-header-login.php',
-            APPPATH.'modules/templating/views/t-f-pagetitle.php',
-            APPPATH.'modules/homepage/views/v-footer.php',
-        );
+		$data = array(
+			'judul_halaman' => 'Netjoo - Welcome',
+			'judul_header' =>'Welcome'
+			);
 
-       
+		$data['files'] = array(
+			APPPATH.'modules/homepage/views/v-header-login.php',
+			APPPATH.'modules/templating/views/t-f-pagetitle.php',
+			APPPATH.'modules/homepage/views/v-footer.php',
+			);
 
-        $this->parser->parse( 'templating/index', $data );
+
+
+		$this->parser->parse( 'templating/index', $data );
 	}
 }
- ?>
+?>

@@ -145,6 +145,21 @@ class Mmatapelajaran extends CI_Model {
         $this->db->update('tb_subbab');
     }
 
+    public function sc_bab_by_tingpel_id($tingpelID)
+    {
+        $this->db->where('tingkatPelajaranID', $tingpelID);
+        $this->db->select('id, keterangan, judulBab')->from('tb_bab');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function sc_sub_by_subid($subid){
+        $this->db->where('id', $subid);
+        $this->db->select('judulSubBab')->from('tb_subbab');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }
 
 ?>
