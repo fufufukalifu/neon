@@ -59,6 +59,7 @@ class MbankSoal extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+    
     //get pilihan berdasarkan subbab MP
     public function get_pilihan($subbID) {
         $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');
