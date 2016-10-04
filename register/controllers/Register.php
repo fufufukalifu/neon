@@ -59,7 +59,7 @@ class Register extends MX_Controller {
         $data['files'] = array(
             APPPATH . 'modules/register/views/vRegisterGuru.php',
         );
-             
+
 
         $this->parser->parse('admin/v-index-admin', $data);
     }
@@ -192,7 +192,7 @@ class Register extends MX_Controller {
 
         if ($this->form_validation->run() == FALSE) {
 
-             $this->registerguru();
+            $this->registerguru();
         } else {
             //data guru
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
@@ -266,9 +266,7 @@ class Register extends MX_Controller {
                 $this->session->set_userdata($sess_array);
 
                 if ($hakAkses == 'admin') {
-//                    redirect(base_url('index.php/login/user'));
-//                    echo 'admin';
-//                    redirect(site_url('peserta-free'));
+                    redirect(base_url('index.php/admin'));
                 } elseif ($hakAkses == 'guru') {
                     $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
                     foreach ($guru as $value) {
@@ -321,9 +319,6 @@ class Register extends MX_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
-        echo "masuk function ch_mail_aktifasi";
-
-
         //set rule untuk inputan email agar email yg dinputkan uniq
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
         //set pesan untuk inputan kesalahan email telah digunkan
@@ -331,9 +326,10 @@ class Register extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templating/t-header');
-            $this->load->view('vVerifikasi.php');
-            $this->load->view('templating/t-footer');
+//            $this->load->view('templating/t-header');
+//            $this->load->view('vVerifikasi.php');
+//            $this->load->view('templating/t-footer');
+            $this->verifikasi();
         } else {
             $email = htmlspecialchars($this->input->post('email'));
             $this->mregister->update_email_ak($email);
