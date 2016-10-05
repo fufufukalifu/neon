@@ -1,17 +1,26 @@
+ <!-- START ROW -->
  <div class="row">
+
     <div class="col-md-12">
+        <!--START Panel  -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><?=$panelheading ?></h3>
             </div>
+            <!-- Start Panel Body -->
             <div class="panel-body">
                 <div class="row">
+                    <!--Start Container  -->
                     <div class="container">
-                        <div class="col-sm-6">
+                        <!-- Strat -->
+                        <div class="col-sm-5">
+                            <!-- start -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Daftar Soal</h3>
+                                    <input type="text" name="id" id="id_paket" value="<?=$id_paket;?>" hidden="true">
                                 </div>
+                                <!-- Start -->
                                 <div class="panel-body">
                                     <form action="#" id="formsoal">
                                         <div class="form-group">
@@ -25,81 +34,134 @@
                                                         <select name="" id="tingkatID" class="form-control">
                                                             <option value="">Tingkat</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="col-sm-4">
+                                                        </div>
+                                                        <div class="col-sm-4">
                                                         <select name="" id="pelajaranID" class="form-control">
                                                             <option value="">Pelajaran</option>
                                                         </select>
                                                         <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-2">
+
+                                                         </div>
+                                                     
+                                                         <div class="row">
+                                                           <div class="row-col-sm-12">
+                                                                <div class="col-sm-4">
+                                                                    <select name="" id="babID" class="form-control">
+                                                                    <option value="">Bab</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-sm-4">
+                                                                    <select name="" id="subBabId" class="form-control">
+                                                                    <option value="">Sub Bab</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                         </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <br><br><br>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">Soal:</div>
+                                                <div class="col-sm-8">
+                                                    <form >
+                                                        <table class="table table-striped" id="zero-configuration"  style="font-size: 13px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>/</th>
+
+                                                                    <th>Judul Soal</th>
+                                                                    <th>Sumber</th>
+                                                                    <th>SOAL</th>
+                                                                    <th>Level</th>
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody class="soal">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                                <div class="col-sm-12 btn">
+                                                    <div class="col-sm-2">
+                                                        <br>
+                                                        <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-sm-12">
-                                         <div class="col-sm-2">
+                                    </form>
+                                </div>
 
-                                         </div>
-                                         <div class="row">
-                                            <div class="row-col-sm-12">
-                                             <div class="col-sm-4">
-                                                <select name="" id="babID" class="form-control">
-                                                    <option value="">Bab</option>
-                                                </select>
-                                            </div>
+                            <!-- END -->
 
-                                            <div class="col-sm-4">
-                                                <select name="" id="subBabId" class="form-control">
-                                                    <option value="">Sub Bab</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div>
+                            </div>
+                            
+                            <!-- END -->
+                        </div>
+                        <!-- ENd -->
 
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="col-sm-2">Soal:</div>
-                                            <div class="col-sm-8 soal">
-                                            </div>
-                                            <div class="col-sm-12 btn">
-                                                <div class="col-sm-2">
-                                                    <br>
-                                                    <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                        <!-- Strat -->
+                         <div class="col-sm-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+                                </div>
+                                <div class="panel-body soaltambah">
+                                    <form action="" id="">
+                                        <table class="table table-striped" id="tblist" style="font-size: 13px">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Judul Soal</th>
+                                                    <th>Sumber</th>
+                                                    <th>SOAL</th>
+                                                    <th>Level</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                           
+                                            </tbody>
+                                        </table>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        <!-- END -->
+
                     </div>
-
-                    <div class="col-sm-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Soal Yang Ditambahkan</h3>
-                            </div>
-                            <div class="panel-body soaltambah">
-                                <form action="" id="">
-
-                               
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    <!-- END container -->
                 </div>
             </div>
-        </div>
+            <!-- END Panel Body -->
+        </div>    
+        <!--END Panel  -->
     </div>
+
 </div>
-</div>
-</div>
-</div> 
+ <!-- END ROW --> 
+
+
 <script>
+    var tblist_soal;
     // Script for getting the dynamic values from database using jQuery and AJAX
     $(document).ready(function() {
+        
+        var id_paket =$('#id_paket').val();
+        // get tingkat drop down
         $('#TingkatID').change(function() {
 
             var form_data = {
@@ -120,7 +182,29 @@
                 }
             });
         });
+        // get list soal 
+        tblist_soal = $('#tblist').DataTable({ 
+            "bSearchable":true,
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [],
+            "ordering": true,
+            "info":     false, //Initial no order.
 
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": base_url+"index.php/paketsoal/ajax_listsoal/"+id_paket,
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [
+            { 
+                "targets": [ -1 ], //last column
+                "orderable": true, //set not orderable
+            },
+            ],
+        });
 
     });
 
@@ -149,16 +233,16 @@ function loadTingkat(){
             }
         });
 
-        $('.addsoal').click(function(){
-            var idBab = $('#babID').val();
-            if (idBab=="") {
-                alert('Pilih Bab Matapelajaran');
-            }else{
-                addsoal(idBab);
-            };
+        // $('.addsoal').click(function(){
+        //     var idBab = $('#babID').val();
+        //     if (idBab=="") {
+        //         alert('Pilih Bab Matapelajaran');
+        //     }else{
+        //         addsoal(idBab);
+        //     };
             
             
-        });
+        // });
         $('#tingkatID').change(function(){
             tingkat_id={"tingkat_id" : $('#tingkat').val()};
             load_pelajaran($('#tingkatID').val());
@@ -276,30 +360,70 @@ function loadTingkat(){
     }
 
     function tambahkansoal(){
-        var val = [];
+        var idsoal = [];
+        var idSubBab = $('#subBabId').val();
+        var id_paket =$('#id_paket').val();
         $(':checkbox:checked').each(function(i){
-         val[i] = $(this).val();
+         idsoal[i] = $(this).val();
 
         });  
-        
+        console.log(idsoal);
+       
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
        
         $.ajax({
             url : url,
             type: "POST",
-            data: val,
-             cache: false,
-         
-            success: function(data)
-            {
-                console.log(data);
+            data: {data:idsoal,
+                    idSubBab:idSubBab,
+                    id_paket:id_paket},
+            // cache: false,
+          // dataType: "JSON",
+            success: function(data,respone)
+            {   
+                // console.log(respone); for testing
+                // console.log(data);
+                reload_tblist();
+
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+             
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
                 alert('Error adding / update data');
             }
         });
     }
+    function reload_tblist(){
+        tblist_soal.ajax.reload(null,false); //reload datatable ajax 
+    }
+
+    function drop_soal(id)
+    {
+        if(confirm('Are you sure delete this data?'))
+        {
+            // ajax delete data to database
+            $.ajax({
+                url : base_url+"index.php/paketsoal/dropsoalpaket/"+id,
+                type: "POST",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    //if success reload ajax table
+                    // $('#modal_form').modal('hide');
+                    reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error deleting data');
+                }
+            });
+
+        }
+    }
+    
     loadTingkat();
     </script>
