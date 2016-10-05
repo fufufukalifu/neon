@@ -20,8 +20,7 @@ class Admin extends MX_Controller {
         $data['files'] = array(
             APPPATH . 'modules/admin/views/v-container.php',
         );
-           
-
+          
         $this->parser->parse('v-index-admin', $data);
     }
 
