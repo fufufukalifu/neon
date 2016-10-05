@@ -601,7 +601,7 @@
                             <li class="submenu-header ellipsis">Try Out</li>
 
                             <li >
-                                <a href="<?= base_url('index.php/paketsoal/paketsoal/');?>">
+                                <a href="<?= base_url('index.php/paketsoal//tambahpaketsoal');?>">
                                     <span class="text">Paket Soal</span>
                                 </a>
                             </li>
