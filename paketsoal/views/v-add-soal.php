@@ -1,6 +1,6 @@
  <!-- START ROW -->
  <div class="row">
-    
+
     <div class="col-md-12">
         <!--START Panel  -->
         <div class="panel panel-default">
@@ -12,13 +12,15 @@
                 <div class="row">
                     <!--Start Container  -->
                     <div class="container">
-                        <!--  -->
+                        <!-- Strat -->
                         <div class="col-sm-5">
+                            <!-- start -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Daftar Soal</h3>
                                     <input type="text" name="id" id="id_paket" value="<?=$id_paket;?>" hidden="true">
                                 </div>
+                                <!-- Start -->
                                 <div class="panel-body">
                                     <form action="#" id="formsoal">
                                         <div class="form-group">
@@ -32,91 +34,121 @@
                                                         <select name="" id="tingkatID" class="form-control">
                                                             <option value="">Tingkat</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="col-sm-4">
+                                                        </div>
+                                                        <div class="col-sm-4">
                                                         <select name="" id="pelajaranID" class="form-control">
                                                             <option value="">Pelajaran</option>
                                                         </select>
                                                         <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-2">
+
+                                                         </div>
+                                                     
+                                                         <div class="row">
+                                                           <div class="row-col-sm-12">
+                                                                <div class="col-sm-4">
+                                                                    <select name="" id="babID" class="form-control">
+                                                                    <option value="">Bab</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-sm-4">
+                                                                    <select name="" id="subBabId" class="form-control">
+                                                                    <option value="">Sub Bab</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                         </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <br><br><br>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">Soal:</div>
+                                                <div class="col-sm-8">
+                                                    <form >
+                                                        <table class="table table-striped" id="zero-configuration"  style="font-size: 13px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>/</th>
+
+                                                                    <th>Judul Soal</th>
+                                                                    <th>Sumber</th>
+                                                                    <th>SOAL</th>
+                                                                    <th>Level</th>
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody class="soal">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                                <div class="col-sm-12 btn">
+                                                    <div class="col-sm-2">
+                                                        <br>
+                                                        <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-sm-12">
-                                         <div class="col-sm-2">
+                                    </form>
+                                </div>
 
-                                         </div>
-                                         <div class="row">
-                                            <div class="row-col-sm-12">
-                                             <div class="col-sm-4">
-                                                <select name="" id="babID" class="form-control">
-                                                    <option value="">Bab</option>
-                                                </select>
-                                            </div>
+                            <!-- END -->
 
-                                            <div class="col-sm-4">
-                                                <select name="" id="subBabId" class="form-control">
-                                                    <option value="">Sub Bab</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div>
+                            </div>
+                            
+                            <!-- END -->
+                        </div>
+                        <!-- ENd -->
 
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="col-sm-2">Soal:</div>
-                                            <div class="col-sm-8 soal">
-                                            </div>
-                                            <div class="col-sm-12 btn">
-                                                <div class="col-sm-2">
-                                                    <br>
-                                                    <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                        <!-- Strat -->
+                         <div class="col-sm-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+                                </div>
+                                <div class="panel-body soaltambah">
+                                    <form action="" id="">
+                                        <table class="table table-striped" id="tblist" style="font-size: 13px">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Judul Soal</th>
+                                                    <th>Sumber</th>
+                                                    <th>SOAL</th>
+                                                    <th>Level</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                           
+                                            </tbody>
+                                        </table>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        <!-- END -->
+
                     </div>
-
-                    <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Soal Yang Ditambahkan</h3>
-                            </div>
-                            <div class="panel-body soaltambah">
-                                <form action="" id="">
-                                    <table class="table table-striped" id="tblist" style="font-size: 13px">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Judul Soal</th>
-                                                <th>Sumber</th>
-                                                <th>SOAL</th>
-                                                <th>Level</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                       
-                                        </tbody>
-                                    </table>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                  </div>
+                    <!-- END container -->
+                </div>
             </div>
-            <!--START Panel Body -->
-            </div>
-     <!--START Panel  -->
+            <!-- END Panel Body -->
+        </div>    
+        <!--END Panel  -->
     </div>
 
 </div>
@@ -172,7 +204,7 @@
                 "orderable": true, //set not orderable
             },
             ],
-      });
+        });
 
     });
 
@@ -201,16 +233,16 @@ function loadTingkat(){
             }
         });
 
-        $('.addsoal').click(function(){
-            var idBab = $('#babID').val();
-            if (idBab=="") {
-                alert('Pilih Bab Matapelajaran');
-            }else{
-                addsoal(idBab);
-            };
+        // $('.addsoal').click(function(){
+        //     var idBab = $('#babID').val();
+        //     if (idBab=="") {
+        //         alert('Pilih Bab Matapelajaran');
+        //     }else{
+        //         addsoal(idBab);
+        //     };
             
             
-        });
+        // });
         $('#tingkatID').change(function(){
             tingkat_id={"tingkat_id" : $('#tingkat').val()};
             load_pelajaran($('#tingkatID').val());

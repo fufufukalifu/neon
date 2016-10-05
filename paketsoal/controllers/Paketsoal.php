@@ -191,16 +191,43 @@ class Paketsoal extends MX_Controller
 			foreach ( $list as $soal ) {
 				// $no++;
 				$row = array();
-				$row = array( 'link'=>
-					"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-				<input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
-				<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".htmlspecialchars($soal['soal'])."</label>
+				// $row = array( 'link'=>
+				// 	"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+				// <input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
+				// <label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".htmlspecialchars($soal['soal'])."</label>
 				
-				</span><br>"
+				// </span><br>"
+				// );
+				$row = array( 'link'=>
+					"<tr>
+						<td>
+							<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+								<input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
+								<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;</label>
+							</span>
+						</td>
+						
+						<td>".$soal['judul_soal']."</td>
+						<td>".$soal['sumber']."</td>
+						<td>".$soal['soal']."</td>
+						<td>".$soal['kesulitan']."</td>
+						
+					</tr>"
 				);
 
 				$datas[] = $row;
 				$n++;
+				##
+				// $row = array();
+				// $row[] = $soal['id_soal'];
+				// $row[] = $soal['judul_soal'];
+				// $row[] = $soal['sumber'];
+				// $row[] = $soal['soal'];
+				// $row[] = $soal['kesulitan'];
+
+				// $datas[] = $row;
+				##
+				
 			}
 
 
