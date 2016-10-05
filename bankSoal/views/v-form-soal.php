@@ -18,7 +18,13 @@
                         <input type="text" name="subBabID" value="<?=$subBab;?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
-                      
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Judul Soal</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="judul" class="form-control">
+                            </div>
+                            
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2 ">Kesulitan</label>
                             <div class="col-sm-8">

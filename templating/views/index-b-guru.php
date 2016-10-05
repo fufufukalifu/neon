@@ -5,7 +5,7 @@
         <!-- START META SECTION -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{judul_halaman}</title>
+        <title><?=$judul_halaman;?></title>
         <meta name="author" content="pampersdry.info">
         <meta name="description" content="Adminre is a clean and flat backend and frontend theme build with twitter bootstrap 3.1.1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -40,7 +40,7 @@
 
     <!-- START Body -->
     <body>
-                <!-- START Modal ADD BANK SOAL -->
+        <!-- START Modal ADD BANK SOAL -->
         <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -99,6 +99,68 @@
                
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <!-- END  Modal ADD BANK SOAL-->
+
+        <!-- START Modal ADD TO -->
+        <div class="modal fade" id="modalto" tabindex="-1" role="dialog">
+            <!--START modal dialog  -->
+            <div class="modal-dialog" role="document">
+                <!-- STRAT MOdal Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Buat TO</h4>
+                    </div>
+                   
+                        <!-- START Modal Body -->
+                        <div class="modal-body">
+                             <form class="panel panel-default form-horizontal form-bordered" action="<?=base_url('index.php/toback/buatTo');?>" method="post">
+                                <div  class="form-group">
+                                    <label class="col-sm-3 control-label">Nama Paket</label>
+                                    <div class="col-sm-8">
+                                      <input type="text" class="form-control" name="nmpaket">
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <label class="col-sm-3 control-label">Tanggal Mulai</label>
+                                    <div class="col-sm-8">
+                                      <input type="date" class="form-control" name="tglmulai">
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <label class="col-sm-3 control-label">Tanggal Berakhir</label>
+                                    <div class="col-sm-8">
+                                      <input type="date" class="form-control" name="tglakhir">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Publish?</label>
+                                    <div class="col-sm-8">
+                                        <div class="checkbox custom-checkbox">  
+                                            <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
+                                            <label for="giftcheckbox">&nbsp;&nbsp;</label>   
+                                        </div>
+                                    </div>
+                                </div> 
+                              
+                        </div>
+                        <!-- END Modal Body -->
+                        <!-- START Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>
+                        </div>
+                        </form>
+                        <!-- START Modal Footer -->
+                    
+                </div>
+                <!-- END MOdal Content -->
+
+            </div>
+            <!--END modal dialog  -->
+        </div>
+        <!-- END Modal ADD TO -->
+
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
@@ -539,7 +601,13 @@
                             <li class="submenu-header ellipsis">Try Out</li>
 
                             <li >
-                                <a href="">
+                                <a href="<?= base_url('index.php/paketsoal/paketsoal/');?>">
+                                    <span class="text">Paket Soal</span>
+                                </a>
+                            </li>
+
+                            <li >
+                                <a href="javascript:void(0);" onclick="add_to()">
                                     <span class="text">Tambahkan Try Out</span>
                                 </a>
                             </li>
@@ -567,7 +635,7 @@
                 <!-- Page Header -->
                 <div class="page-header page-header-block">
                     <div class="page-header-section">
-                        <h4 class="title semibold">{judul_halaman}</h4>
+                        <h4 class="title semibold"><?=$judul_halaman;?></h4>
                     </div>
                     <div class="page-header-section">
                         <!-- Toolbar -->
@@ -1002,6 +1070,9 @@
             //panggil modal
             function add_soal() {
                 $('#modalsoal').modal('show'); // show bootstrap modal
+            }
+            function add_to() {
+                $('#modalto').modal('show'); // show bootstrap modal
             }
 
         </script>

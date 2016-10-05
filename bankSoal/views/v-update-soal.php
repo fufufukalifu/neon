@@ -18,7 +18,12 @@
                         <input type="text" name="UUID" value="<?=$bankSoal['UUID'];?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
-                      
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Judul Soal</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="judul" value="<?=$bankSoal['judul_soal'];?>" class="form-control">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Kesulitan</label>
                             <div class="col-sm-8">

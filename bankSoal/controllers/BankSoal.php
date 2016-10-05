@@ -211,6 +211,7 @@ class BankSoal extends MX_Controller {
         $options = htmlspecialchars($this->input->post('options'));
         $UUID = uniqid();
         $soal = ($this->input->post('editor1'));
+        $judul_soal = htmlspecialchars($this->input->post('judul'));
         $subBabID = htmlspecialchars($this->input->post('subBabID'));
         $jawaban = htmlspecialchars($this->input->post('jawaban'));
         $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
@@ -225,6 +226,7 @@ class BankSoal extends MX_Controller {
         $create_by = $this->session->userdata['id'];
         //kesulitan indks 1-3
         $dataSoal = array(
+            'judul_soal' => $judul_soal,
             'soal' => $soal,
             'jawaban' => $jawaban,
             'sumber' => $sumber,
@@ -375,6 +377,7 @@ class BankSoal extends MX_Controller {
     public function updateBanksoal() {
        
         #Start post data soal#
+        $judul_soal = htmlspecialchars($this->input->post('judul'));
         $options = htmlspecialchars($this->input->post('options'));
         $soal = ($this->input->post('editor1'));
         $soalID = htmlspecialchars($this->input->post('soalID'));
@@ -405,6 +408,7 @@ class BankSoal extends MX_Controller {
 
         $data['UUID'] = $UUID;
         $data['dataSoal'] = array(
+            'judul_soal' => $judul_soal,
             'soal' => $soal,
             'jawaban' => $jawaban,
             'sumber' => $sumber,
