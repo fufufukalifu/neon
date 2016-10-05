@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Judul Soal</th>
                                 <th>Sumber</th>
                                 <th>Tingkat Kesulitan</th>
                                 <th>Soal</th>
@@ -40,6 +41,7 @@
                             ?>
                                 <tr>
                                     <td ><?= $row['id_soal']; ?></td>
+                                    <td><?=$row['judul_soal'];?></td>
                                     <td><?= $row['sumber']; ?></td>
                                     <td><?php
                                         $kesulitan = $row['kesulitan'];

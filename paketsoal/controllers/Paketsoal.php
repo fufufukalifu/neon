@@ -66,6 +66,39 @@ class Paketsoal extends MX_Controller
 
 		echo json_encode( $output );
 	}
+	function ajax_listsoal($idpaket) {
+		$list = $this->load->MPaketsoal->soal_by_paketID($idpaket);
+		$data = array();
+		//$no = $_POST['start'];
+		//$no = 1;
+		//print_r($list);
+
+		//mengambil nilai list
+		$baseurl = base_url();
+		foreach ( $list as $list_soal ) {
+			// $no++;
+			$row = array();
+			$row[] = $list_soal['id_soal'];
+			$row[] = $list_soal['judul_soal'];
+			$row[] = $list_soal['sumber'];
+			$row[] = $list_soal['soal'];
+			$row[] = $list_soal['kesulitan'];
+			$row[] = '
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_soal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
+
+			$data[] = $row;
+
+		}
+		//print_r($data);
+		$output = array(
+			"draw" => $_POST['draw'] ,
+			"recordsTotal"=>$this->MPaketsoal->hitung_semuasoal(),
+			"recordsFiltered"=>$this->MPaketsoal->hitung_filtersoal(),
+			"data"=>$data,
+		);
+
+		echo json_encode( $output );
+	}
 
 	function index() {
 		$this->tambahpaketsoal();
@@ -131,10 +164,11 @@ class Paketsoal extends MX_Controller
 	function addbanksoal( $idpaket ) {
 		 $data['tingkat'] = $this->mtemplating->get_tingkat();
 		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket)[0];
+		$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
 		//var_dump($data['paket_soal']);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
-		$data['id_paket']=$paket_soal['id_paket'];
+		$data['id_paket']=$idpaket;
 		$data['files'] = array(
 			APPPATH.'modules/Paketsoal/views/v-add-soal.php',
 		);
@@ -161,7 +195,7 @@ class Paketsoal extends MX_Controller
 					"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
 				<input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
 				<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".htmlspecialchars($soal['soal'])."</label>
-				<button>add</button>
+				
 				</span><br>"
 				);
 
@@ -222,6 +256,12 @@ class Paketsoal extends MX_Controller
 		// }
 		// $this->mpaketsoal->insert_soal_paket($addsoal);
 		
+
+	}
+	public function dropsoalpaket($id)
+	{
+		$this->MPaketsoal->drop_soal_paket($id);
+
 
 	}
 	#END Function add soal paket#
