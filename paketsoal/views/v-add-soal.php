@@ -157,6 +157,7 @@ function loadTingkat(){
                 $.each(data, function(i, data){
                     $('#tingkatID').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
                     return idTingkat=data.id;
+                    alert("asd");
                 });
             }
         });
@@ -237,7 +238,7 @@ function loadTingkat(){
             success: function(data){
                 
                 $('#babID').html('<option value="">Bab Pelajaran</option>');
-                console.log(data);
+                //console.log(data);
                 $.each(data, function(i, data){
                     $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
                     // babid=data.id;
@@ -258,7 +259,7 @@ function loadTingkat(){
             success: function (data) {
                 
                 $('#subBabId').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-                console.log(data);
+               // console.log(data);
                 $.each(data, function (i, data) {
                     $('#subBabId').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
                 });
@@ -268,8 +269,8 @@ function loadTingkat(){
     }
 
     function addsoal(subBabId){
-        console.log('testing');
-        console.log(subBabId);
+        //console.log('testing');
+        //console.log(subBabId);
         $.ajax({
 
             type: "POST",
