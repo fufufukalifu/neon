@@ -183,7 +183,7 @@
   $('.mulai-btn').click(function(){
     mulai('mulai');
     //alihkan ke halaman ilham
-//    window.location.href = "http://www.mulai.com";
+     window.location.href = "http://www.mulai.com";
   });
 
   $('.latihan-nnti-btn').click(function(){
