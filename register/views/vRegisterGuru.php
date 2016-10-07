@@ -13,7 +13,7 @@
                     <div class="text-center" style="margin-bottom:20px;">
                             <span class="logo-figure inverse"></span>
                             <span class="logo-text inverse"></span>
-                            <h5 class="semibold text-muted mt-5">Create your NetJoo Accountreate a new account.</h5>
+                            <h5 class="semibold text-muted mt-5">Create your Neon Accountreate a new account.</h5>
                     </div>
                     <!-- Register form -->
                     <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/saveguru" method="post">

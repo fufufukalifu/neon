@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>{judul_halaman}</title>
+        <script>var base_url = '<?php echo base_url() ?>';</script>
         <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -18,7 +19,7 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
         <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
-        <script>var base_url = '<?php echo base_url() ?>';</script>
+        
         <!--styles -->
     </head>
     <body>

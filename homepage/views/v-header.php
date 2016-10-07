@@ -5,7 +5,7 @@
 			<div class="grid-row clear-fix">
 				<address>
 					<a href="tel:(0274) 450300 " class="phone-number"><i class="fa fa-phone"></i>(0274) 450300 </a>
-					<a href="mailto:info@neutron-ny.com " class="email"><i class="fa fa-envelope-o"></i>info@neutron-ny.com </a>
+					<a href="mailto:info@Neon-ny.com " class="email"><i class="fa fa-envelope-o"></i>info@Neon-ny.com </a>
 				</address>
 				<div class="header-top-panel">
 					<a href="page-login.html" class="fa fa-user login-icon"></a>
@@ -27,9 +27,9 @@
 			<div class="sticky-menu">
 				<div class="grid-row clear-fix">
 					<!-- logo -->
-					<a href="index.html" class="logo">
+					<a href="<?=base_url() ?>" class="logo">
 						<img src="<?=base_url('assets/back/img/logo.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt>
-						<h1>joNet</h1>
+						<h1>Neon</h1>
 					</a>
 					<!-- / logo -->
 					<nav class="main-nav">

@@ -12,18 +12,18 @@ class Tesonline_model extends CI_Model {
         $this->db->join('tb_tingkat-pelajaran tingpel', 'mapel.id = tingpel.mataPelajaranID');
         $this->db->join('tb_bab bab', 'bab.tingkatPelajaranID=tingpel.id');
         $this->db->join('tb_subbab subab', 'subab.babID = bab.id');
-        $this->db->join('tb_paket paket', 'paket.subBabID = subab.id');
+        $this->db->join('tb_paket paket', 'paket.id_subbab = subab.id');
 
         $this->db->where('tingpel.id', $tingpelID);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function get_soal() {
+    public function get_soal($id_latihan) {
         $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
-        $this->db->where('sollat.id_latihan', 1);
+        $this->db->where('sollat.id_latihan', $id_latihan);
         $query = $this->db->get();
         $soal = $query->result_array();
 
@@ -31,7 +31,7 @@ class Tesonline_model extends CI_Model {
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
         $this->db->join('tb_piljawaban as pil', 'soal.id_soal = pil.id_soal');
-        $this->db->where('sollat.id_latihan', 1);
+        $this->db->where('sollat.id_latihan', $id_latihan);
         $query = $this->db->get();
         $pil = $query->result_array();
 
@@ -39,10 +39,6 @@ class Tesonline_model extends CI_Model {
             'soal' => $soal,
             'pil' => $pil,
         );
-    }
-
-    public function soal() {
-        
     }
 
     //get pilihan berdasarkan subbab MP
@@ -55,6 +51,18 @@ class Tesonline_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function jawabansoal() {
+        $this->db->select('soal.id_soal as soalid, soal.jawaban as jawaban');
+        $this->db->from('tb_mm_sol_lat as sollat');
+        $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
+        $this->db->where('sollat.id_latihan', 1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function inputreport($data) {
+        $this->db->insert('tb_report-latihan', $data);
+    }
 }
 
 ?>

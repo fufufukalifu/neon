@@ -2,7 +2,7 @@
 
 class Mregister extends CI_Model {
 
-    //merupakan function untuk menyimpan data guru ke tabel guru di databse netjoo  
+    //merupakan function untuk menyimpan data guru ke tabel guru di databse Neon  
 
     public function insert_guru($data_guru, $sess_array) {
         $this->db->insert('tb_guru', $data_guru);
@@ -17,13 +17,13 @@ class Mregister extends CI_Model {
         }
     }
 
-    //merupakan function untuk menyimpan data guru ke tabel penggunas di databse netjoo  
+    //merupakan function untuk menyimpan data guru ke tabel penggunas di databse Neon  
     public function insert_pengguna($data) {
 
         $this->db->insert('tb_pengguna', $data);
     }
 
-    //merupakan function untuk menyimpan data guru ke tabel siswa di databse netjoo  
+    //merupakan function untuk menyimpan data guru ke tabel siswa di databse Neon  
     public function insert_siswa($data_siswa, $sess_array) {
         $this->db->insert('tb_siswa', $data_siswa);
 
@@ -64,14 +64,14 @@ class Mregister extends CI_Model {
         $this->load->library('email'); // load email library
         $verifikasiCode = $this->session->userdata['verifikasiCode'];
         $address = $this->session->userdata['eMail'];
-        $this->email->from('noreply@sibejooclass.com', 'Netjoo');
+        $this->email->from('noreply@sibejooclass.com', 'Neon');
         $this->email->to($address);
         $this->email->subject('Verifikasi Email');
         $message = '<html><meta/><head/><body>';
         $message .='<p> Dear' . ' ' . $this->session->userdata['USERNAME'] . ',</p>';
-        $message .='<p>Terimakasih telah mendaftar di netjoo. Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun anda. Setelah Aktifasi akun anda, anda akan bla2x</p>';
+        $message .='<p>Terimakasih telah mendaftar di Neon. Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun anda. Setelah Aktifasi akun anda, anda akan bla2x</p>';
         $message .= '<p>Terimakasih</p>';
-        $message .= '<p>Netjoo</p>';
+        $message .= '<p>Neon</p>';
         $message .= '</body></html>';
         $this->email->message($message);
         $this->email->send();
@@ -152,14 +152,14 @@ class Mregister extends CI_Model {
         $this->load->library('email'); // load email library
         $verifikasiCode = $this->verifikasiCode;
         $address = $email;
-        $this->email->from('noreply@sibejooclass.com', 'Netjoo');
+        $this->email->from('noreply@sibejooclass.com', 'Neon');
         $this->email->to($address);
         $this->email->subject('Reset Password');
         $message = '<html><meta/><head/><body>';
         $message .='<p> Permintaan reset password telah diproses,</p>';
         $message .='<p>Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasiPassword/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk melakukan reset password akun anda. </p>';
         $message .= '<p>Terimakasih</p>';
-        $message .= '<p>Netjoo</p>';
+        $message .= '<p>Neon</p>';
         $message .= '</body></html>';
         $this->email->message($message);
         $this->email->send();

@@ -6,7 +6,7 @@ class Mlatihan extends CI_Model
 {
 
 	public function get_random_for_latihan( $param ) {
-		$this->db->where( 'subBabID', $param['id_subab'] );
+		$this->db->where( 'id_subbab', $param['id_subab'] );
 		// $this->db->where( 'kesulitan', $param['kesulitan'] );
 
 		$this->db->order_by( 'rand()' );
@@ -75,5 +75,23 @@ class Mlatihan extends CI_Model
 	public function insert_tb_mm_sol_lat( $data ) {
 		$this->db->insert( 'tb_mm_sol_lat', $data );
 	}
+	 //get daftar latihan by created by
+    public function get_latihan($createdby){
+        $this->db->select('*');
+        $this->db->from('tb_latihan latihan');
+        $this->db->join('tb_report-latihan report','latihan.id_latihan=report.id_latihan');
+         $this->db->where('create_by', $createdby);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    //get hasil latihan
+    public function get_report_latihan($idlatihan){
+    	$this->db->select("*");
+    	$this->db->from('tb_report-latihan');
+    	$this->db->where('id_latihan',$idlatihan);
+    	$query = $this->db->get();
+    	return $query->result_array();
+    }
 }
 ?>

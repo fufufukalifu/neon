@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <!-- copyright -->
-                            <p class="nm text-muted">&copy; Copyright 2014 by <a href="javascript:void(0);" class="text-white">Netjoo</a>. All Rights Reserved.</p>
+                            <p class="nm text-muted">&copy; Copyright 2014 by <a href="javascript:void(0);" class="text-white">Neon</a>. All Rights Reserved.</p>
                             <!--/ copyright -->
                         </div>
                         <div class="col-sm-6 text-right">

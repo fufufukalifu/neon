@@ -31,7 +31,7 @@ class Welcome extends MX_Controller {
 
     public function index() {
         $data = array(
-            'judul_halaman' => 'Netjoo - Welcome',
+            'judul_halaman' => 'Neon - Welcome',
             'judul_header' =>'Welcome'
         );
 
