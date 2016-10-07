@@ -79,6 +79,7 @@ class Mlatihan extends CI_Model
     public function get_latihan($createdby){
         $this->db->select('*');
         $this->db->from('tb_latihan latihan');
+        $this->db->join('tb_report-latihan report','latihan.id_latihan=report.id_latihan');
          $this->db->where('create_by', $createdby);
         $query = $this->db->get();
         return $query->result_array();

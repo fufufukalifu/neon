@@ -7,7 +7,7 @@
             <a class="navbar-brand" href="javascript:void(0);">
                 <span class="logo-figure" style="margin-left:-4px;"></span>
                 <!-- <span class="logo-text"></span> -->
-                <span>JOONET</span>
+                <span>Neon</span>
             </a>
             <!--/ Brand -->
         </div>
