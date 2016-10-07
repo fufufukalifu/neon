@@ -75,7 +75,7 @@ class Latihan extends MX_Controller
 	public function formlatihan() {
 
 		$data = array(
-			'judul_halaman' => 'Netjoo - Welcome',
+			'judul_halaman' => 'Neon - Welcome',
 			'judul_header' =>'Welcome'
 			);
 

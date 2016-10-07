@@ -61,7 +61,7 @@
                                             </tr>
                                             <tr>
                                                 <td><b>Sumber Soal</b></td>
-                                                <td>Netjoo</td>
+                                                <td>Neon</td>
                                             </tr>
                                             <tr>
                                                 <td></td>

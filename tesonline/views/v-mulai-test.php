@@ -29,26 +29,42 @@
       <!-- Header -->
       <div class="section-header section-header-bordered mb10">
        <h4 class="section-title">
-        <p class="font-alt nm">Filter By</p>
+       <p class="font-alt nm">Menu</p>
       </h4>
     </div>
     <!--/ Header -->
-    <ul class="list-unstyled">
-     <li class="mb5"><i class="ico-angle-right text-muted mr5"></i> 
-      <form>
-       <p class="has-succes">
-        <select>
-         <option>- Pilih Filter-</option>
-         <option>Pelajaran</option>
-         <option>Status</option>
-       </select>
-     </p>
-
-   </form>
- </li>
+    <a href="" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
+    <a href="" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
 </ul>
 </div>
 <!--/ Category -->
+
+<!-- Category -->
+<div class="mb15">
+  <!-- Header -->
+  <div class="section-header section-header-bordered mb10">
+   <h4 class="section-title">
+    <p class="font-alt nm">Filter By</p>
+  </h4>
+</div>
+<!--/ Header -->
+<ul class="list-unstyled">
+ <li class="mb5"><i class="ico-angle-right text-muted mr5"></i> 
+  <form>
+   <p class="has-succes">
+    <select>
+     <option>- Pilih Filter-</option>
+     <option>Pelajaran</option>
+     <option>Status</option>
+   </select>
+ </p>
+
+</form>
+</li>
+</ul>
+</div>
+<!--/ Category -->
+
 <!-- Text Widget -->
 <div class="mb15">
   <!-- Header -->
@@ -98,10 +114,10 @@
      </td>
    <?php else: ?>
     <td colspan="2" align="center">
-          <a onclick="lihat_grafik(<?=$latihanitem['id_latihan'] ?>)" 
-     class="cws-button border-radius bt-color-<?=$latihanitem['status_pengerjaan']?> modal-on<?=$latihanitem['id_latihan']?>"
-     data-todo='<?=json_encode($latihanitem)?>'>Lihat Score</a>
-   </td>
+      <a onclick="lihat_grafik(<?=$latihanitem['id_latihan'] ?>)" 
+       class="cws-button border-radius bt-color-<?=$latihanitem['status_pengerjaan']?> modal-on<?=$latihanitem['id_latihan']?>"
+       data-todo='<?=json_encode($latihanitem)?>'>Lihat Score</a>
+     </td>
    </tr>
  <?php endif ?>
 
@@ -126,55 +142,55 @@
 </section>
 <!--/ END Template Main -->
 <script type="text/javascript"> 
-function load_grafik(data) {
- var report = {durasi:0,
-               level:0,
-               poin:0,
-               konstanta:0,
-               score:0};
+  function load_grafik(data) {
+   var report = {durasi:0,
+     level:0,
+     poin:0,
+     konstanta:0,
+     score:0};
 
- report.durasi = 10;
- report.jumlah_soal = parseInt(data.jumlahSoal);
- report.level = parseInt(data.tingkatKesulitan);
- report.poin = parseInt(data.jmlh_benar);
- report.konstanta =  report.durasi * report.jumlah_soal;
- report.score = (report.poin) * report.level * (report.konstanta/report.durasi);
+     report.durasi = 10;
+     report.jumlah_soal = parseInt(data.jumlahSoal);
+     report.level = parseInt(data.tingkatKesulitan);
+     report.poin = parseInt(data.jmlh_benar);
+     report.konstanta =  report.durasi * report.jumlah_soal;
+     report.score = (report.poin) * report.level * (report.konstanta/report.durasi);
 
 
-  var chart = new CanvasJS.Chart("chartContainer", {
-   title: {
-    text: "nama latihan : "+data.nm_latihan+" - Score : "+report.score
-  },
-  animationEnabled: true,
-  theme: "theme1",
-  data: [
-  {
-    type: "doughnut",
-    indexLabelFontFamily: "Garamond",
-    indexLabelFontSize: 20,
-    startAngle: 0,
-    indexLabelFontColor: "dimgrey",
-    indexLabelLineColor: "darkgrey",
-    toolTipContent: "Jumlah : {y} ",
+     var chart = new CanvasJS.Chart("chartContainer", {
+       title: {
+        text: "nama latihan : "+data.nm_latihan+" - Score : "+report.score
+      },
+      animationEnabled: true,
+      theme: "theme1",
+      data: [
+      {
+        type: "doughnut",
+        indexLabelFontFamily: "Garamond",
+        indexLabelFontSize: 20,
+        startAngle: 0,
+        indexLabelFontColor: "dimgrey",
+        indexLabelLineColor: "darkgrey",
+        toolTipContent: "Jumlah : {y} ",
 
-    dataPoints: [
-    { y : data.jmlh_benar, indexLabel:"Poin {y}"},
-    { y: data.jmlh_salah, indexLabel: "Salah {y}" },
-    { y: data.jmlh_kosong, indexLabel: "Kosong {y}" }
-    ]
+        dataPoints: [
+        { y : data.jmlh_benar, indexLabel:"Poin {y}"},
+        { y: data.jmlh_salah, indexLabel: "Salah {y}" },
+        { y: data.jmlh_kosong, indexLabel: "Kosong {y}" }
+        ]
+      }
+      ]
+    });
+     chart.render();
+   }
+
+   function lihat_grafik(id){
+    var kelas = ".modal-on"+id;
+    var data = $(kelas).data('todo');
+
+    $('.modal-title').text('Grafik Latihan ');
+    $('#myModal').modal('show');
+    load_grafik(data);
   }
-  ]
-});
-  chart.render();
-}
-
-function lihat_grafik(id){
-  var kelas = ".modal-on"+id;
-  var data = $(kelas).data('todo');
-  
-  $('.modal-title').text('Grafik Latihan ');
-  $('#myModal').modal('show');
-  load_grafik(data);
-}
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>

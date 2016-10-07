@@ -75,7 +75,7 @@ class Video extends MX_Controller {
             $babId = $data['judulbab'][0]->babID;
             
             $data = array(
-                'judul_halaman' => 'Netjoo - Sub : '.$judul_halaman,
+                'judul_halaman' => 'Neon - Sub : '.$judul_halaman,
                 'judul_header' => $judul_halaman
             );
 
@@ -101,7 +101,7 @@ class Video extends MX_Controller {
         $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk tingkat ".$data['aliastingkat'];
         //data untuk templating
         $data = array(
-            'judul_halaman' => 'Netjoo - Video Pelajaran '. $data['aliaspelajaran'],
+            'judul_halaman' => 'Neon - Video Pelajaran '. $data['aliaspelajaran'],
             'judul_header' => $data['title'],
             'mapel' => $alias_pelajaran
         );
@@ -139,7 +139,7 @@ class Video extends MX_Controller {
             $guruID = $onevideo[0]->guruID;
             $penulis = $this->load->Mguru->get_penulis( $guruID )[0];
             $data = array(
-                'judul_halaman' => 'Netjoo - Video : '.$onevideo[0]->judulVideo,
+                'judul_halaman' => 'Neon - Video : '.$onevideo[0]->judulVideo,
                 'judul_header' => 'Video berjudul '.$onevideo[0]->judulVideo,
                 'judul_video' => $onevideo[0]->judulVideo,
                 'deskripsi'=> $onevideo[0]->deskripsi,

@@ -11,7 +11,7 @@ class Homepage extends MX_Controller {
 
     public function index() {
         $data = array(
-        'judul_halaman' => 'Neutron Homepage'
+        'judul_halaman' => 'Neon Homepage'
         );
         $data['file'] = 'v-container.php';
 
