@@ -66,6 +66,15 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_allsiswa()
+    {
+        $this->db->select('namaDepan,namaBelakang,kelas,aliasTingkat, siswa.id as id, tingkat.id as id_tingkat');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('tb_tingkat tingkat','tingkat.id = siswa.tingkatID');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }
 
 ?>

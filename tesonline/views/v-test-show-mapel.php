@@ -1,8 +1,8 @@
 
 
-    <div class="page-content grid-row">
-      <main>
-          <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
+<div class="page-content grid-row">
+  <main>
+    <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -10,7 +10,7 @@
             <h4 class="modal-title">Modal title</h4>
           </div>
           <div class="modal-body">
-            <form class="form-group" id="formlatihan" method="post" action="<?=base_url() ?>/index.php/latihan/tambah_latihan_ajax">
+            <form class="form-group" id="formlatihan" method="post">
               <p class="has-success">
                 <label>Bab</label>
                 <select class="form-control" name="tingkat" id="babSelect"><option>-Pilih Bab-</option></select>
@@ -32,14 +32,16 @@
                 <label>Jumlah Soal</label>
                 <select class="form-control" name="jumlahsoal">
                   <option value="">-Pilih Jumlah Soal-</option>
+                  <option value="5">5</option>
                   <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
+                  <option value="15">15</option>
                 </select>                       
               </p>
               <div class="modal-footer bg-color-3">
                 <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
                 <button type="submit" class="cws-button bt-color-2 border-radius alt small mulai-btn">Mulai Latihan</button>
+                <button type="submit" class="cws-button bt-color-5 border-radius alt small latihan-nnti-btn">Latihan nanti</button>
+
               </div>
             </form>
 
@@ -47,61 +49,61 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div>
-        <div class="grid-col-row clear-fix">
-          <div class="row">
-            <div class="container"><h1 class="text-center">Sekarang pilih Matapelajaran untuk memulai!</h1><br></div>
+    <div class="grid-col-row clear-fix">
+      <div class="row">
+        <div class="container"><h1 class="text-center">Sekarang pilih Matapelajaran untuk memulai!</h1><br></div>
 
-          </div>
-          <?php $no=1 ?>
-          <?php foreach ($mapel as $mapelitem): ?>
-            <div class="grid-col grid-col-4">
-              <form action="<?=base_url() ?>index.php/tesonline/mulai" method="post" class="hide">
-                <input type="hiden" value="<?=$mapelitem['tingpelID'] ?>" class="hide" name="id">
-                <button type="submit" class="kirim<?=$mapelitem['tingpelID']?>" 
-                 data-todo='{"id":"<?=$mapelitem['tingpelID'] ?>","namapelajaran":"<?=$mapelitem['namaMataPelajaran'] ?>"}'
-                 >kirim</button>
-               </form>
-               <div class="course-item">
-                <div class="course-hover">
-                  <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
-                  <div class="hover-bg bg-color<?=$no?>"></div>
-                  <a href="javascript:submit(<?=$mapelitem['tingpelID'] ?>);">mulai tesonline!</a>
-                </div>
-
-
-                <div class="course-name clear-fix">
-                  <center><h3 style="text-align:center"><a href=""></a></h3></center>
-                </div>
-                <div class="course-date bg-color-<?=$no?> clear-fix">
-                  <div class="description"><?=$mapelitem['namaMataPelajaran'] ?><br></div>
-
-                  <div class="divider"></div>
-                  <p><?=$mapelitem['keterangan'] ?></p>
-                </div>
-              </div>
+      </div>
+      <?php $no=1 ?>
+      <?php foreach ($mapel as $mapelitem): ?>
+        <div class="grid-col grid-col-4">
+          <form action="<?=base_url() ?>index.php/tesonline/mulai" method="post" class="hide">
+            <input type="hiden" value="<?=$mapelitem['tingpelID'] ?>" class="hide" name="id">
+            <button type="submit" class="kirim<?=$mapelitem['tingpelID']?>" 
+             data-todo='{"id":"<?=$mapelitem['tingpelID'] ?>","namapelajaran":"<?=$mapelitem['namaMataPelajaran'] ?>"}'
+             >kirim</button>
+           </form>
+           <div class="course-item">
+            <div class="course-hover">
+              <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
+              <div class="hover-bg bg-color<?=$no?>"></div>
+              <a href="javascript:submit(<?=$mapelitem['tingpelID'] ?>);">mulai tesonline!</a>
             </div>
-            <?php $no++; ?>
-          <?php endforeach ?>
-        </div>
-      </main>
-      <br>
-      <hr class="divider-color">
-    </div>
-    <script type="text/javascript">
-      $('#babSelect').change(function () {
-        load_sub($('#babSelect').val());
-  // loadPel(idTingkat);
-});
 
-      function submit(id){
-   //passing data to modals.
-   var tingPelID = $('.kirim'+id).data('todo').id;
-   //untuk ditampilkan di modal
-   var namaPelajaran =  $('.kirim'+id).data('todo').namapelajaran;
-   $('#myModal').modal('show');
-   $('.modal-title').text('Mulai Latihan untuk pelajaran '+namaPelajaran);
-   load_bab(tingPelID);
- }
+
+            <div class="course-name clear-fix">
+              <center><h3 style="text-align:center"><a href=""></a></h3></center>
+            </div>
+            <div class="course-date bg-color-<?=$no?> clear-fix">
+              <div class="description"><?=$mapelitem['namaMataPelajaran'] ?><br></div>
+
+              <div class="divider"></div>
+              <p><?=$mapelitem['keterangan'] ?></p>
+            </div>
+          </div>
+        </div>
+        <?php $no++; ?>
+      <?php endforeach ?>
+    </div>
+  </main>
+  <br>
+  <hr class="divider-color">
+</div>
+<script type="text/javascript">
+
+  $('#babSelect').change(function () {
+    load_sub($('#babSelect').val());
+  });
+
+    function submit(id){
+     //passing data to modals.
+     var tingPelID = $('.kirim'+id).data('todo').id;
+     //untuk ditampilkan di modal
+     var namaPelajaran =  $('.kirim'+id).data('todo').namapelajaran;
+     $('#myModal').modal('show');
+     $('.modal-title').text('Mulai Latihan untuk pelajaran '+namaPelajaran);
+     load_bab(tingPelID);
+   }
 
     //fungsi untuk ngeload bab berdasarkan tingkat-pelajaran id
     function load_bab(tingPel){
@@ -115,11 +117,11 @@
           $.each(data, function(i, data){
             $('#babSelect').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
             babid=data.id;
+
           });
         }
 
       });
-      return 
     }
 
     function load_sub(babID){
@@ -139,7 +141,7 @@
     }
 
     function mulai(){
-      var sub_bab_id = $('#subSelect').val();
+    var sub_bab_id = $('#subSelect').val();
     $('.mulai-btn').text('saving...'); //change button text
     $('.mulai-btn').attr('disabled',true); //set button disable 
     url = "<?php echo base_url() ?>index.php/latihan/tambah_latihan_ajax";
@@ -167,7 +169,6 @@
               },
               error: function (jqXHR)
               {
-
                $('#myModal').modal('hide');
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled',false); //set button enable 
@@ -176,10 +177,21 @@
 
               }
             });
-      }
+    }
+  
 
-      $('.mulai-btn').click(function(){
-        mulai();
-      });
+  $('.mulai-btn').click(function(){
+    mulai('mulai');
+    //alihkan ke halaman ilham
+    window.location.href = "http://www.mulai.com";
+  });
 
-    </script>
+  $('.latihan-nnti-btn').click(function(){
+    mulai('nanti');
+    //alihkan ke histori
+    window.location.href = base_url+"index.php/tesonline/daftarlatihan";
+    console.log(base_url+"tesonline/daftarlatihan")
+  });
+
+
+</script>

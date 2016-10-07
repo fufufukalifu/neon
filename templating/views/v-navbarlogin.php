@@ -28,9 +28,9 @@
         <div class="sticky-menu">
             <div class="grid-row clear-fix">
                 <!-- logo -->
-                <a href="index.html" class="logo">
+                <a href="<?=base_url() ?>" class="logo">
                     <img src="<?= base_url('assets/back/img/logo.png') ?>"  data-at2x="<?= base_url('assets/back/img/logo@2x.png') ?>" alt>
-                    <h1>joNet</h1>
+                    <h1>Neon</h1>
                 </a>
                 <!-- / logo -->
                 <nav class="main-nav">

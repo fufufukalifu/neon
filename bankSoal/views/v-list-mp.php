@@ -15,13 +15,12 @@
                         foreach ($tingkat as $rosw):
                             $id = $row['id'];
                             if ($tingkatID == $id) {
-                                ?>
-
-                                <h3 class="panel-title">Silahkan pilih mata pelajaran pada List Mata Pelajaran <?= $row['aliasTingkat']; ?> di bawah ini! </h3>
-                                <?php
+                           
                             }
                         endforeach
                         ?>
+                        
+                                <h3 class="panel-title">Silahkan pilih mata pelajaran pada List Mata Pelajaran <?= $row['aliasTingkat']; ?> di bawah ini! </h3>
                     </div>
                     <!--END untuk menampilkan nama tabel -->
                     <table class="table table-striped" id="zero-configuration" style="font-size: 13px">

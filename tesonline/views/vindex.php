@@ -14,14 +14,14 @@
 
             <!-- Layer #2 -->
             <h1 class="ls-l font-alt" style="top:110px;left:150px;" data-ls="offsetxin:0;durationin:2000;delayin:1500;easingin:easeOutElastic;rotatexin:-90;transformoriginin:50% top 0;offsetxout:-200;durationout:1000;">
-                Selamat Datang di <span class="text-primary">JOONET</span> 
+                Selamat Datang di <span class="text-primary">Neonb</span> 
             </h1>
             <!--/ Layer #2 -->
 
             <!-- Layer #3 -->
             <h5 class="ls-l font-alt thin text-default" style="top:170px;left:150px;width:550px;" data-ls="offsetxin:0; durationin:2000; delayin:2000; easingin:easeOutElastic; rotatexin:90; transformoriginin:50% top 0; offsetxout:-400;">
                 Masih belajar dengan cara gitu-gitu aja? Bingung cari tempat belajar yang kualitasnya terjamin?
-                Temukan cara belajar masa kini bersama <b>Joonet</b>!
+                Temukan cara belajar masa kini bersama <b>Neon</b>!
             </h5>
             <!--/ Layer #3 -->
 

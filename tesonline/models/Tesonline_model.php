@@ -63,7 +63,6 @@ class Tesonline_model extends CI_Model {
     public function inputreport($data) {
         $this->db->insert('tb_report-latihan', $data);
     }
-
 }
 
 ?>

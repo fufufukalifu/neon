@@ -9,6 +9,7 @@ class ToBack extends MX_Controller
 		$this->load->library( 'parser' );
 		$this->load->model('mToBack');
 		$this->load->model( 'paketsoal/MPaketsoal' );
+		$this->load->model('siswa/msiswa');
 		$this->load->model('Templating/mtemplating');
 		parent::__construct();
 	}
@@ -39,6 +40,7 @@ class ToBack extends MX_Controller
 	public function addPaketTo()
 	{
 		$data['tingkat'] = $this->mtemplating->get_tingkat();
+		$data['siswa'] = $this->msiswa->get_allsiswa();
 		$data['paket']= $this->MPaketsoal->getpaketsoal();
         $data['files'] = array(
             APPPATH . 'modules/toback/views/v-bundlepaket.php',
