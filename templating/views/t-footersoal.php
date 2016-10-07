@@ -19,9 +19,9 @@
 <!-- App and page level script -->
 
 <!-- ini footer -->
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-checkbox-radio-switch.js"></script>
-<script src="<?php echo base_url();?>assets/js/demo.js"></script>
-<script src="<?php echo base_url();?>assets/js/sweetalert.min.js"></script>
+<!--<script src="<?php echo base_url(); ?>assets/js/bootstrap-checkbox-radio-switch.js"></script>-->
+<!--<script src="<?php echo base_url();?>assets/js/demo.js"></script>-->
+<!--<script src="<?php echo base_url();?>assets/js/sweetalert.min.js"></script>-->
 <script src="<?php echo base_url();?>assets/js/paginga.jquery.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/soal_to.js"></script>
 
