@@ -108,12 +108,14 @@
     //fungsi untuk ngeload bab berdasarkan tingkat-pelajaran id
     function load_bab(tingPel){
       // console.log('masduk')
+      $('#babSelect').find('option').remove();
+      $('#babSelect').append('<option value="">Bab Pelajaran</option>');
       var babID;
       $.ajax({
         type: "POST",
         url: "<?php echo base_url() ?>index.php/matapelajaran/get_bab_by_tingpel_id/"+tingPel,
         success: function(data){
-          $('#babID').html('<option value="">Bab Pelajaran</option>');
+          
           $.each(data, function(i, data){
             $('#babSelect').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
             babid=data.id;
