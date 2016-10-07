@@ -41,10 +41,6 @@ class Tesonline_model extends CI_Model {
         );
     }
 
-    public function soal() {
-        
-    }
-
     //get pilihan berdasarkan subbab MP
     public function get_pilihan($subbID) {
         $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');
@@ -53,6 +49,19 @@ class Tesonline_model extends CI_Model {
         $this->db->where('id_subbab', $subbID);
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function jawabansoal() {
+        $this->db->select('soal.id_soal as soalid, soal.jawaban as jawaban');
+        $this->db->from('tb_mm_sol_lat as sollat');
+        $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
+        $this->db->where('sollat.id_latihan', 1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function inputreport($data) {
+        $this->db->insert('tb_report-latihan', $data);
     }
 
 }

@@ -33,11 +33,11 @@
     </head>
     <body bg="black">
 
-        <!--  CSS for Demo Purpose, don't include it in your project     -->
+<!--          CSS for Demo Purpose, don't include it in your project     
         <link href="<?php echo base_url(); ?>assets/peserta/css/demo.css" rel="stylesheet" />
         <link href="<?php echo base_url(); ?>assets/peserta/css/soal.css" rel="stylesheet" />
         <link href="<?php echo base_url(); ?>assets/peserta/css/soal2.css" rel="stylesheet" />
-        <link href="<?php echo base_url(); ?>assets/peserta/css/sweetalert.css" rel="stylesheet" />
+        <link href="<?php echo base_url(); ?>assets/peserta/css/sweetalert.css" rel="stylesheet" />-->
 
 
         <!--     Fonts and icons     -->
