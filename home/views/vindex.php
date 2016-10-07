@@ -513,7 +513,7 @@
                         <!-- review #2 -->
                         <div class="item text-center pt5">
                             <blockquote class="nm">
-                                <p>Sejak anak Saya pake Joonet.com buat persiapan ujian, pengeluaran buat beli buku soal jadi jauh berkurang. Semuanya gratis tersedia di Netjoo.</p>
+                                <p>Sejak anak Saya pake Joonet.com buat persiapan ujian, pengeluaran buat beli buku soal jadi jauh berkurang. Semuanya gratis tersedia di Neon.</p>
                                 <footer class="text-white">Jacko120</footer>
                             </blockquote>
                         </div>

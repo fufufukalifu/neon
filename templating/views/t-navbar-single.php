@@ -9,7 +9,7 @@
                     <div class="navbar-header">
                         <!-- Brand -->
                         <a href="#" class="mt4">
-                            <span>NETJOO</span>
+                            <span>Neon</span>
                         </a>
                         <!--/ Brand -->
                     </div>

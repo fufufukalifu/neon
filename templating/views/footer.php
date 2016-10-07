@@ -2,7 +2,7 @@
 		<div class="grid-row">
 			<div class="grid-col-row clear-fix">
 				<section class="grid-col grid-col-4 footer-about">
-					<h2 class="corner-radius">Mengenai Neutron</h2>
+					<h2 class="corner-radius">Mengenai Neon</h2>
 					<div>
 						<h3>Sed aliquet dui auctor blandit ipsum tincidunt</h3>
 						<p>Quis rhoncus lorem dolor eu sem. Aenean enim risus, convallis id ultrices eget.</p>
@@ -11,9 +11,9 @@
 						<p></p>	
 						<a href="tel:(0274) 450300" class="phone-number">(0274) 450300</a>
 						<br />
-						<a href="mailto: info@neutron-ny.com" class="email"> info@neutron-ny.com</a>
+						<a href="mailto: info@Neon-ny.com" class="email"> info@Neon-ny.com</a>
 						<br />
-						<a href="www.neutron-ny.com" class="site">www.neutron-ny.com</a>
+						<a href="www.Neon-ny.com" class="site">www.Neon-ny.com</a>
 						<br />
 						<a href="" class="address">Jl. Taman Siswa, Wirogunan, Mergangsan, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55151, Indonesia</a>
 					</address>

@@ -36,12 +36,12 @@ class Latihan extends MX_Controller {
         //get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
         $nama_subab = $this->Mmatapelajaran->sc_sub_by_subid($idsub)[0]['judulSubBab'];
         $data['post'] = array(
-                    "jumlahSoal" => $jumlah_soal,
-                    "tingkatKesulitan" => $kesulitan,
-                    "nm_latihan" => $nama_matapelajaran . "-" . $nama_subab,
-                    "create_by" => $this->session->userdata['USERNAME'],
-                    "uuid_latihan" => $uuid_latihan,
-                    "id_subbab" => $idsub
+            "jumlahSoal" => $jumlah_soal,
+            "tingkatKesulitan" => $kesulitan,
+            "nm_latihan" => $nama_matapelajaran . "-" . $nama_subab,
+            "create_by" => $this->session->userdata['USERNAME'],
+            "uuid_latihan" => $uuid_latihan,
+            "id_subbab" => $idsub
         );
 
         $param = array(
@@ -82,7 +82,6 @@ class Latihan extends MX_Controller {
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             APPPATH . 'modules/homepage/views/v-footer.php',
         );
-
 
 
         $this->parser->parse('templating/index', $data);
