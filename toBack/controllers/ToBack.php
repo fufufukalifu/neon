@@ -28,15 +28,17 @@ class ToBack extends MX_Controller
 			'nm_tryout'=>$nmpaket,
 			'tgl_mulai'=>$tglMulai,
 			'tgl_berhenti'=>$tglAkhir,
-			'publish'=>$publish
+			'publish'=>$publish,
+			'UUID' =>$UUID
 			);
 
 		$this->mToBack->insert_to($dat_To);
-		 redirect(site_url('toback/addPaketTo'));
+		 redirect(site_url('toback/addPaketTo/'.$UUID));
 	}
 	#END Function buat TO#
 
 	#START Function add pakket to Try Out#
+	// menampilkan halaman add to
 	public function addPaketTo()
 	{
 		$data['tingkat'] = $this->mtemplating->get_tingkat();
@@ -48,7 +50,31 @@ class ToBack extends MX_Controller
         $data['judul_halaman'] = "Bundle Paket";
         $this->load->view('templating/index-b-guru', $data);
 	}
+	//add paket ke TO
+	public function addPaketToTO()
+	{
+		$id_paket=$this->input->post('idpaket');
+		// $id_paket=$this->input->post('test');
+		// $this->mToBack->inseert_addPaket();
+		var_dump("asdas");
+		var_dump($id_paket);
+		// var_dump(expression)
+	}
+
 	#END Function add pakket to Try Out#
 
+	#START Function di halaman daftar TO#
+	//menampilkan list TO
+	public function listTO()
+	{
+		$data['tingkat'] = $this->mtemplating->get_tingkat();
+		$data['listTO'] =$this->mToBack->get_To();
+        $data['files'] = array(
+            APPPATH . 'modules/toback/views/v-list-to.php',
+        );
+        $data['judul_halaman'] = "List Try Out";
+        $this->load->view('templating/index-b-guru', $data);
+	}
+	#END Function di halaman daftar TO#
 }
 ?>

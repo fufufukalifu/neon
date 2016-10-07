@@ -601,7 +601,7 @@
                             <li class="submenu-header ellipsis">Try Out</li>
 
                             <li >
-                                <a href="<?= base_url('index.php/paketsoal//tambahpaketsoal');?>">
+                                <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
                                     <span class="text">Paket Soal</span>
                                 </a>
                             </li>
@@ -612,7 +612,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="<?= base_url('index.php/toback/listTo');?>">
                                     <span class="text">Daftar Try Out</span>
                                 </a>
                             </li>

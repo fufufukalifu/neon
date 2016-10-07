@@ -366,7 +366,8 @@ function loadTingkat(){
         $(':checkbox:checked').each(function(i){
          idsoal[i] = $(this).val();
 
-        });  
+        }); 
+
         console.log(idsoal);
        
 
@@ -385,14 +386,13 @@ function loadTingkat(){
                 // console.log(respone); for testing
                 // console.log(data);
                 reload_tblist();
+                 $(':checkbox').attr('checked',false);
 
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
              
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+
                 alert('Error adding / update data');
             }
         });
