@@ -18,14 +18,14 @@ class Latihan extends MX_Controller {
 
         $uuid_latihan = uniqid();
         var_dump($uuid_latihan);
-        $idsub = $_POST['subab'];
-        $jumlah_soal = $_POST['jumlahsoal'];
-        $kesulitan = $_POST['kesulitan'];
+//        $idsub = $_POST['subab'];
+//        $jumlah_soal = 2;
+//        $kesulitan = $_POST['kesulitan'];
 
-        // $idsub =  32;
-        // $jumlah_soal =  3;
-        // $kesulitan =  "mudah";
-        //untuk halaman
+         $idsub =  54;
+         $jumlah_soal =  2;
+         $kesulitan =  "mudah";
+//        untuk halaman
         $data = array(
             'judul_halaman' => 'Latihan - Neon',
             'judul_header' => 'Latihan'
@@ -51,7 +51,7 @@ class Latihan extends MX_Controller {
         // insert ke soal
         $this->mlatihan->insert($data['post']);
         $id_latihan = $this->mlatihan->get_latihan_by_uuid($uuid_latihan)[0]['id_latihan'];
-        $this->session->set_userdata('id_latihan', $idlatihan);
+        $this->session->set_userdata('id_latihan', $id_latihan);
         // get soal randoom
         $data['soal_random'] = $this->mlatihan->get_random_for_latihan($param);
         // $data['mm_sol']=array();
