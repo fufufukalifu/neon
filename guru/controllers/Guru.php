@@ -58,7 +58,6 @@ class Guru extends MX_Controller {
 
         $data = $this->videobyteacher();
         #Sesudah Tempalting#
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
 
             $data['judul_halaman'] = "Form Input Soal";
             $data['files'] = array(
@@ -113,13 +112,6 @@ class Guru extends MX_Controller {
     public function pengaturanProfileguru() {
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['guru'] = $this->mguru->get_datguru();
-        // $this->load->view( 'templating/t-header' );
-        // $this->load->view('templating/t-footer-back');
-        // $this->load->view('guru/v-left-bar');
-        // $this->load->view( 'templating/t-header' );
-        // $this->load->view( 'vPengaturanProfileGuru',$data );
-
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['files'] = array(
             APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
         );

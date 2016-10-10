@@ -53,10 +53,10 @@
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
-                                      <label class="btn active " id="empatpil">
+                                      <label class="btn " id="empatpil">
                                         <input type="radio" name="opjumlah" value="" autocomplete="off" > 4 Pilihan
                                       </label>
-                                      <label class="btn" id="limapil">
+                                      <label class="btn active" id="limapil">
                                         <input type="radio" name="opjumlah"  value="" autocomplete="off" checked="true"> 5 Pilihan
                                       </label>
                                  </div>
@@ -277,8 +277,8 @@
                         <div class="form-group">
                             <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
-                                    <label for="giftcheckbox">&nbsp;&nbsp;Publish?</label>   
+                                    <input type="checkbox" name="publish" id="gift" value="1">  
+                                    <label for="gift">&nbsp;&nbsp;Publish?</label>   
                                 </div>
                             </div>
                             <div class="col-sm-4 col-sm-offset-1">

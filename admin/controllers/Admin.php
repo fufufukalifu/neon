@@ -15,13 +15,26 @@ class Admin extends MX_Controller {
     }
 
     public function index() {
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['judul_halaman'] = "Dashboard Admin";
         $data['files'] = array(
             APPPATH . 'modules/admin/views/v-container.php',
         );
           
-        $this->parser->parse('v-index-admin', $data);
+        
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        
+        if ($hakAkses=='admin') {
+            // jika admin
+           $this->parser->parse('v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            redirect(site_url('guru/dashboard/'));
+        } elseif($hakAkses=='siswa'){
+            redirect(site_url('welcome'));
+        }else{
+            // jika siswa redirect ke homepage
+            redirect(site_url('login'));
+        }
     }
 
     function daftarvideo() {
@@ -53,7 +66,22 @@ class Admin extends MX_Controller {
 
         $data['mapels'] = $this->mmatapelajaran->daftarMapel();
 
-        $this->parser->parse('v-index-admin', $data);
+         $hakAkses=$this->session->userdata['HAKAKSES'];
+        
+        if ($hakAkses=='admin') {
+            // jika admin
+            $this->parser->parse('v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            redirect(site_url('guru/dashboard/'));
+        }elseif($hakAkses=='siswa'){
+            // jika siswa redirect ke siswa
+            redirect(site_url('welcome'));
+        }else{
+            //jika belum login
+            redirect(site_url('login'));
+        }
+
     }
 
     function showIcon() {
@@ -84,7 +112,6 @@ class Admin extends MX_Controller {
 
     function daftartingkatpelajaran() {
        
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['judul_halaman'] = "Tingkat Mata Pelajara";
         $data['files'] = array(
             APPPATH . 'modules/admin/views/v-daftar-tingkat.php',
@@ -97,6 +124,24 @@ class Admin extends MX_Controller {
         $data['mapelsmk'] = $this->mmatapelajaran->daftarMapelSMK();
 
         $this->parser->parse('v-index-admin', $data);
+
+         $hakAkses=$this->session->userdata['HAKAKSES'];
+        
+        if ($hakAkses=='admin') {
+            // jika admin
+           $this->parser->parse('v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            redirect(site_url('guru/dashboard/'));
+        }elseif($hakAkses=='siswa'){
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }else{
+            
+            redirect(site_url('login'));
+        }
+
+
     }
 
     function tambahtingkatMP() {

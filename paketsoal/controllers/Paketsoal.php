@@ -56,11 +56,9 @@ class Paketsoal extends MX_Controller
 			$data[] = $row;
 
 		}
-		//print_r($data);
+		
+
 		$output = array(
-			"draw" => $_POST['draw'] ,
-			"recordsTotal"=>$this->MPaketsoal->hitung_semua(),
-			"recordsFiltered"=>$this->MPaketsoal->hitung_filter(),
 			"data"=>$data,
 		);
 
@@ -105,7 +103,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function tambahpaketsoal() {
-		$data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
@@ -115,7 +113,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function add_soal() {
-		 $data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
@@ -162,7 +160,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function addbanksoal( $idpaket ) {
-		 $data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket)[0];
 		$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
 		//var_dump($data['paket_soal']);
@@ -259,14 +257,15 @@ class Paketsoal extends MX_Controller
 		$idSoal = $this->input->post('data');
 		$idSubbab = $this->input->post('idSubBab');
 		$idpaket = $this->input->post('id_paket');
-		// ;
-		 var_dump($idSubbab);
-		 var_dump($idpaket);
+		var_dump($idSubbab);
+		var_dump('masuk');
+		echo "haiiiiiiiiiiiiii";
 		 $mmpaket=array();
 		 foreach ($idSoal as $key ) {		 
-		 	$mmpaket[] = array('id_paket' => $idpaket,
+		 	$mmpaket[] = array(
+		 		'id_paket' => $idpaket,
                 'id_soal' => $key,
-                'subBabID' => $idSubbab);
+                'id_subbab' => $idSubbab);
 		 	
 		 }
 		 

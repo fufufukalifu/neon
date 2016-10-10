@@ -10,12 +10,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Daftar Soal Berdasarkan Subbab</h3>
-                        <form action="<?= base_url(); ?>index.php/banksoal/formsoal" method="get">
-                            <input type="text" name="subBab" value="<?= $subBab; ?>" hidden="true" >
-                           
-                            <button title="Tambah Data" type="submit" class="btn btn-default pull-right"  style="margin-top:-30px;"><i class="ico-plus"></i></button>
-                        </form>
+                        <h3 class="panel-title">Daftar Soal</h3>
 
                     </div>
                     <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
@@ -24,6 +19,7 @@
                                 <th>ID</th>
                                 <th>Judul Soal</th>
                                 <th>Sumber</th>
+                                <th>Mata Pelajaran</th>
                                 <th>Tingkat Kesulitan</th>
                                 <th>Soal</th>
                                 <th>Jawaban</th>
@@ -38,11 +34,13 @@
                         <tbody>
                             <?php foreach ($soal as $row): 
                                 $UUID=$row['UUID'];
+                                $id_subbab=$row['id_subbab'];
                             ?>
                                 <tr>
                                     <td ><?= $row['id_soal']; ?></td>
                                     <td><?=$row['judul_soal'];?></td>
                                     <td><?= $row['sumber']; ?></td>
+                                    <td><?= $row['keterangan']; ?></td>
                                     <td><?php
                                         $kesulitan = $row['kesulitan'];
                                         if ($kesulitan == '1') {
@@ -71,21 +69,17 @@
                                         ?>
                                     <?php endforeach ?>
                                     <td>
-                                        <div>
+
                                             <form action="<?= base_url(); ?>index.php/banksoal/formUpdate" method="get">
 
-                                                <input type="text" name="UUID" value="<?= $UUID; ?>"  hidden="true">
-                                                <input type="text" name="subBab" value="<?= $subBab; ?>" hidden="true">
+                                                <input type="text" name="UUID" value="<?= $UUID ?>"  hidden="true">
+                                                <input type="text" name="subBab" value="<?= $id_subbab  ?>" hidden="true">
                                                 <button type="submit" class="btn btn-default"><i class="ico-file5"></i></button>
 
                                             </form>
                                         </div>
 
-
-                                                    <!-- <button type="button" id="hapusBtn" class="btn btn-default"  data-id="<?= $row['id_soal'] ?>" 
-                                                   data-toggle="modal" 
-                                                   title="Hapus Data">
-                                                   <i class="ico-remove"></i></button> -->
+                                        
                                     </td>
 
                                 </tr>

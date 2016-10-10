@@ -13,7 +13,7 @@ class BankSoal extends MX_Controller {
     }
 
     public function index() {
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
+       
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/test.php',
         );
@@ -24,7 +24,7 @@ class BankSoal extends MX_Controller {
     public function listmp() {
         $tingkatID = htmlspecialchars($this->input->get('tingkatID'));
       
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
+       
         $data['pelajaran'] = $this->mbanksoal->get_pelajaran($tingkatID);
         $data['tingkatID'] = $tingkatID;
 
@@ -67,7 +67,7 @@ class BankSoal extends MX_Controller {
         $mpID = htmlspecialchars($this->input->get('mpID'));
 
 
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
+  
 
         $data['bab'] = $this->mbanksoal->get_bab($mpID);
         $data['judul_halaman'] = "List Bab";
@@ -102,8 +102,6 @@ class BankSoal extends MX_Controller {
     public function listsubbab() {
         $babID = htmlspecialchars($this->input->get('bab'));
 
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
-
         $data['subbab'] = $this->mbanksoal->get_subbab($babID);
         $data['judul_halaman'] = "List Sub Bab";
         $data['files'] = array(
@@ -137,12 +135,10 @@ class BankSoal extends MX_Controller {
     public function listsoal() {
       
         $subBab = htmlspecialchars($this->input->get('subbab'));
-
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['soal'] = $this->mbanksoal->get_soal($subBab);
         $data['pilihan'] = $this->mbanksoal->get_pilihan($subBab);
         $data ['subBab'] = $subBab;
-        $data['judul_halaman'] = "List  Soal";
+        $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-list-soal.php',
             );
@@ -171,14 +167,41 @@ class BankSoal extends MX_Controller {
         #END Cek USer#
     }
 
+    public function allsoal()
+    {
+        $data['soal'] = $this->mbanksoal->get_allsoal();
+        $data['pilihan'] = $this->mbanksoal->get_allpilihan();
+       
+        $data['judul_halaman'] = "Bank Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-allsoal.php',
+            );
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+
+                $this->parser->parse('admin/v-index-admin', $data);
+           
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+
+               $this->parser->parse('templating/index-b-guru', $data);
+
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+    }
+
     #Start Function untuk form upload bank soal#
 
     public function formsoal() {
         $data['subBab'] = htmlspecialchars($this->input->get('subBab'));
-      
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
 
-        $data['judul_halaman'] = "Form Input Soal";
+        $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-form-soal.php',
             );
@@ -338,13 +361,13 @@ class BankSoal extends MX_Controller {
         
         $UUID = htmlspecialchars($this->input->get('UUID'));
 
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
+        
             //get data soan where==UUID
         $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
         $id_soal = $data['bankSoal']['id_soal'];
             //get piljawaban == id soal
         $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
-        $data['judul_halaman'] = "Form Update Soal";
+        $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-update-soal.php',
             );
@@ -464,7 +487,7 @@ class BankSoal extends MX_Controller {
             $this->updategambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
+        redirect(site_url('banksoal/allsoal'));
     }
 
     public function updategambar($soalID) {
