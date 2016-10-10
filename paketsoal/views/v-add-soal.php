@@ -382,6 +382,7 @@ function loadTingkat(){
         $.ajax({
             url : url,
             type: "POST",
+            dataType:'text',
             data: {data:idsoal,
                     idSubBab:idSubBab,
                     id_paket:id_paket},
