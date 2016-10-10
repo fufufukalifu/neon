@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -15,25 +16,25 @@ class Latihan extends MX_Controller {
     public function tambah_latihan_ajax() {
 
         //uuid untuk soal
-
         $uuid_latihan = uniqid();
         var_dump($uuid_latihan);
-//        $idsub = $_POST['subab'];
-//        $jumlah_soal = 2;
-//        $kesulitan = $_POST['kesulitan'];
+        $idsub = $_POST['subab'];
+        $jumlah_soal = $_POST['jumlahsoal'];
+        $kesulitan = $_POST['kesulitan'];
 
-         $idsub =  54;
-         $jumlah_soal =  2;
-         $kesulitan =  "mudah";
+        // $idsub =  32;
+        // $jumlah_soal =  2;
+        // $kesulitan =  "mudah";
 //        untuk halaman
         $data = array(
             'judul_halaman' => 'Latihan - Neon',
             'judul_header' => 'Latihan'
         );
         //get nama mata pelajaran untuk nama paket
-        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->namaMataPelajaran;
+        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajarans;
         //get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
         $nama_subab = $this->Mmatapelajaran->sc_sub_by_subid($idsub)[0]['judulSubBab'];
+
         $data['post'] = array(
             "jumlahSoal" => $jumlah_soal,
             "tingkatKesulitan" => $kesulitan,
@@ -42,6 +43,7 @@ class Latihan extends MX_Controller {
             "uuid_latihan" => $uuid_latihan,
             "id_subbab" => $idsub
         );
+
 
         $param = array(
             "id_subab" => $idsub,
@@ -84,6 +86,11 @@ class Latihan extends MX_Controller {
 
 
         $this->parser->parse('templating/index', $data);
+    }
+
+    public function create_session_id_latihan($id_latihan){
+        $this->session->set_userdata('id_latihan',$id_latihan);
+        redirect('/tesonline/mulaitest', 'refresh');
     }
 
 }

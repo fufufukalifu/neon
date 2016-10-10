@@ -9,7 +9,7 @@
         <!-- style -->
         <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
         <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>"/>
-
+        <link rel="stylesheet" href="<?= base_url('assets/plugins/owl/css/owl.carousel.min.css'); ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/back/img/favicon.png') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/back/css/font-awesome.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/back/fi/flaticon.css') ?>">
@@ -53,6 +53,8 @@
         <script src="<?= base_url('assets/back/js/jquery.fancybox.pack.js') ?>"></script>
         <script src="<?= base_url('assets/back/js/jquery.fancybox-media.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/library/bootstrap/js/bootstrap.min.js') ?>"></script>
+        <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
+        
         <script src="<?= base_url('assets/back/js/retina.min.js') ?>"></script>
         <script type="text/javascript">
             $("#myCarousel").carousel();
