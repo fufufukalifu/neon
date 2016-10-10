@@ -17,14 +17,14 @@ class Latihan extends MX_Controller {
         //uuid untuk soal
 
         $uuid_latihan = uniqid();
-        var_dump($uuid_latihan);
-//        $idsub = $_POST['subab'];
-//        $jumlah_soal = 2;
-//        $kesulitan = $_POST['kesulitan'];
+//        var_dump($uuid_latihan);
+        $idsub = $_POST['subab'];
+        $jumlah_soal = 3;
+        $kesulitan = $_POST['kesulitan'];
 
-         $idsub =  54;
-         $jumlah_soal =  2;
-         $kesulitan =  "mudah";
+//         $idsub =  54;
+//         $jumlah_soal =  2;
+//         $kesulitan =  "mudah";
 //        untuk halaman
         $data = array(
             'judul_halaman' => 'Latihan - Neon',
