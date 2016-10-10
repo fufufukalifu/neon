@@ -51,11 +51,11 @@ class Tesonline_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function jawabansoal() {
+    public function jawabansoal($id) {
         $this->db->select('soal.id_soal as soalid, soal.jawaban as jawaban');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
-        $this->db->where('sollat.id_latihan', 1);
+        $this->db->where('sollat.id_latihan', $id);
         $query = $this->db->get();
         return $query->result_array();
     }
