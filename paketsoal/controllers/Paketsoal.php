@@ -105,7 +105,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function tambahpaketsoal() {
-		$data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
@@ -115,7 +115,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function add_soal() {
-		 $data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
@@ -162,7 +162,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	function addbanksoal( $idpaket ) {
-		 $data['tingkat'] = $this->mtemplating->get_tingkat();
+		
 		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket)[0];
 		$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
 		//var_dump($data['paket_soal']);

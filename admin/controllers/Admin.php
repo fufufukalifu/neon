@@ -15,7 +15,6 @@ class Admin extends MX_Controller {
     }
 
     public function index() {
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['judul_halaman'] = "Dashboard Admin";
         $data['files'] = array(
             APPPATH . 'modules/admin/views/v-container.php',
@@ -84,7 +83,6 @@ class Admin extends MX_Controller {
 
     function daftartingkatpelajaran() {
        
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['judul_halaman'] = "Tingkat Mata Pelajara";
         $data['files'] = array(
             APPPATH . 'modules/admin/views/v-daftar-tingkat.php',

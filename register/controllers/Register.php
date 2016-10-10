@@ -53,7 +53,6 @@ class Register extends MX_Controller {
 
 //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['judul_halaman'] = "Register Guru";
         $data['files'] = array(
