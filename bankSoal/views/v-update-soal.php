@@ -281,8 +281,8 @@
                         <div class="form-group">
                             <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
-                                    <label for="giftcheckbox">&nbsp;&nbsp;Publish?</label>   
+                                    <input type="checkbox" name="publish" id="gift" value="1">  
+                                    <label for="gift"> Publish?</label>   
                                 </div>
                             </div>
                             <div class="col-sm-4 col-sm-offset-1">

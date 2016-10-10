@@ -122,7 +122,7 @@
                                         <table class="table table-striped" id="tblist" style="font-size: 13px">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
+                                                    <th>IDs</th>
                                                     <th>Judul Soal</th>
                                                     <th>Sumber</th>
                                                     <th>SOAL</th>
@@ -172,6 +172,7 @@
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
                 type: 'POST',
                 data: form_data,
+                dataType:'text',
                 success: function(msg) {
                     var sc='';
                     $.each(msg, function(key, val) {
@@ -184,12 +185,13 @@
         });
         // get list soal 
         tblist_soal = $('#tblist').DataTable({ 
-            "bSearchable":true,
+            // "bSearchable":true,
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
             "order": [],
-            "ordering": true,
-            "info":     false, //Initial no order.
+            // "ordering": true,
+            // "info":     false, //Initial no order.
+
 
             // Load data for the table's content from an Ajax source
             "ajax": {
@@ -364,11 +366,15 @@ function loadTingkat(){
         var idsoal = [];
         var idSubBab = $('#subBabId').val();
         var id_paket =$('#id_paket').val();
+       
         $(':checkbox:checked').each(function(i){
          idsoal[i] = $(this).val();
 
-        });  
+        }); 
+
         console.log(idsoal);
+         console.log(idSubBab);
+          console.log(id_paket);
        
 
         var url = base_url+"index.php/paketsoal/addsoaltopaket";
@@ -379,21 +385,23 @@ function loadTingkat(){
             data: {data:idsoal,
                     idSubBab:idSubBab,
                     id_paket:id_paket},
+        
             // cache: false,
           // dataType: "JSON",
             success: function(data,respone)
             {   
-                // console.log(respone); for testing
+                console.log(respone);// for testing
                 // console.log(data);
                 reload_tblist();
+                 // $(':checkbox').attr('checked',false);
 
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
              
-                console.log(jqXHR);
-                console.log(textStatus);
                 console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR);
                 alert('Error adding / update data');
             }
         });

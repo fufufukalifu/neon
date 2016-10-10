@@ -142,7 +142,7 @@ class BankSoal extends MX_Controller {
         $data['soal'] = $this->mbanksoal->get_soal($subBab);
         $data['pilihan'] = $this->mbanksoal->get_pilihan($subBab);
         $data ['subBab'] = $subBab;
-        $data['judul_halaman'] = "List  Soal";
+        $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-list-soal.php',
             );
@@ -163,6 +163,35 @@ class BankSoal extends MX_Controller {
             } else {
                $this->parser->parse('templating/index-b-guru', $data);
             }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+    }
+
+    public function allsoal()
+    {
+        $data['soal'] = $this->mbanksoal->get_allsoal();
+        $data['pilihan'] = $this->mbanksoal->get_allpilihan();
+       
+        $data['judul_halaman'] = "Bank Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-list-allsoal.php',
+            );
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+
+                $this->parser->parse('admin/v-index-admin', $data);
+           
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+
+               $this->parser->parse('templating/index-b-guru', $data);
+
             
         }else{
             // jika siswa redirect ke welcome
@@ -464,7 +493,7 @@ class BankSoal extends MX_Controller {
             $this->updategambar($soalID);
         }
         #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
+        redirect(site_url('banksoal/allsoal'));
     }
 
     public function updategambar($soalID) {
