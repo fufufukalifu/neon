@@ -50,6 +50,10 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div>
+
+
+
+
     <div class="grid-col-row clear-fix">
       <div class="row">
         <div class="container"><h1 class="text-center">Sekarang pilih Matapelajaran untuk memulai!</h1><br></div>
@@ -96,7 +100,7 @@
     load_sub($('#babSelect').val());
   });
 
-    function submit(id){
+  function submit(id){
      //passing data to modals.
      var tingPelID = $('.kirim'+id).data('todo').id;
      //untuk ditampilkan di modal
@@ -116,7 +120,7 @@
         type: "POST",
         url: "<?php echo base_url() ?>index.php/matapelajaran/get_bab_by_tingpel_id/"+tingPel,
         success: function(data){
-          
+
           $.each(data, function(i, data){
             $('#babSelect').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
             babid=data.id;
@@ -144,7 +148,7 @@
     }
 
     function mulai(){
-    var sub_bab_id = $('#subSelect').val();
+      var sub_bab_id = $('#subSelect').val();
     $('.mulai-btn').text('saving...'); //change button text
     $('.mulai-btn').attr('disabled',true); //set button disable 
     url = "<?php echo base_url() ?>index.php/latihan/tambah_latihan_ajax";
@@ -164,11 +168,11 @@
       dataType: "JSON",
       success: function(data, respone)
       {
-               $('#myModal').modal('hide');
+       $('#myModal').modal('hide');
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled',false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
-    
+
               },
               error: function (jqXHR)
               {
@@ -176,17 +180,17 @@
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled',false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
-    
+
 
               }
             });
-    }
+  }
   
 
   $('.mulai-btn').click(function(){
     mulai('mulai');
     //alihkan ke halaman ilham
-     window.location.href = "http://www.mulai.com";
+    window.location.href = "http://www.mulai.com";
   });
 
   $('.latihan-nnti-btn').click(function(){
@@ -195,6 +199,7 @@
     window.location.href = base_url+"index.php/tesonline/daftarlatihan";
     console.log(base_url+"tesonline/daftarlatihan")
   });
+
 
 
 </script>

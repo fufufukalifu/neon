@@ -18,13 +18,13 @@ class Latihan extends MX_Controller {
 
         $uuid_latihan = uniqid();
         var_dump($uuid_latihan);
-//        $idsub = $_POST['subab'];
-//        $jumlah_soal = 2;
-//        $kesulitan = $_POST['kesulitan'];
+       $idsub = $_POST['subab'];
+       $jumlah_soal = $_POST['jumlahsoal'];
+       $kesulitan = $_POST['kesulitan'];
 
-         $idsub =  54;
-         $jumlah_soal =  2;
-         $kesulitan =  "mudah";
+         // $idsub =  32;
+         // $jumlah_soal =  2;
+         // $kesulitan =  "mudah";
 //        untuk halaman
         $data = array(
             'judul_halaman' => 'Latihan - Neon',
@@ -34,7 +34,8 @@ class Latihan extends MX_Controller {
         $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->namaMataPelajaran;
         //get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
         $nama_subab = $this->Mmatapelajaran->sc_sub_by_subid($idsub)[0]['judulSubBab'];
-        $data['post'] = array(
+        
+            $data['post'] = array(
             "jumlahSoal" => $jumlah_soal,
             "tingkatKesulitan" => $kesulitan,
             "nm_latihan" => $nama_matapelajaran . "-" . $nama_subab,
@@ -43,6 +44,7 @@ class Latihan extends MX_Controller {
             "id_subbab" => $idsub
         );
 
+        
         $param = array(
             "id_subab" => $idsub,
             "jumlah_soal" => $jumlah_soal,
@@ -51,6 +53,7 @@ class Latihan extends MX_Controller {
         // insert ke soal
         $this->mlatihan->insert($data['post']);
         $id_latihan = $this->mlatihan->get_latihan_by_uuid($uuid_latihan)[0]['id_latihan'];
+        var_dump($data['post']);
         $this->session->set_userdata('id_latihan', $id_latihan);
         // get soal randoom
         $data['soal_random'] = $this->mlatihan->get_random_for_latihan($param);

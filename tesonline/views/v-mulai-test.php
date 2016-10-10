@@ -15,7 +15,24 @@
     </div>
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
-</div>    
+</div>
+
+
+    <div class="modal fade " tabindex="-1" role="dialog" id="myModal2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+
+
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <!-- START Blog Content -->
 <section class="section bgcolor-white">
@@ -33,8 +50,8 @@
       </h4>
     </div>
     <!--/ Header -->
-    <a href="" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
-    <a href="" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
+    <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
+    <a onclick="show_report();" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
 </ul>
 </div>
 <!--/ Category -->
@@ -192,5 +209,11 @@
     $('#myModal').modal('show');
     load_grafik(data);
   }
+
+   function show_report(){
+    $('#myModal2').modal('show');
+    $('#myModal2 modal-title').text('Report Latihan');
+  }
+    
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>
