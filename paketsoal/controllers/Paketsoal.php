@@ -56,11 +56,9 @@ class Paketsoal extends MX_Controller
 			$data[] = $row;
 
 		}
-		//print_r($data);
+		
+
 		$output = array(
-			"draw" => $_POST['draw'] ,
-			"recordsTotal"=>$this->MPaketsoal->hitung_semua(),
-			"recordsFiltered"=>$this->MPaketsoal->hitung_filter(),
 			"data"=>$data,
 		);
 

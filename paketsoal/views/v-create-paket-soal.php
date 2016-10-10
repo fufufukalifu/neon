@@ -146,3 +146,130 @@
                 </div>
             </div>
         </div>
+        <script type="">
+    var save_method; //for save method string
+    var table;
+    $(document).ready(function() {
+        table = $('#datatable').DataTable({ 
+           "ajax": {
+            "url": base_url+"index.php/paketsoal/ajax_list",
+            "type": "POST"
+        },
+        "processing": true,
+    });
+    });
+//panggil modal
+function add_paket(){
+    save_method = 'add';
+    $('#form')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+    $('#modal_form').modal('show'); // show bootstrap modal
+    $('.modal-title').text('Tambah Paket Baru'); // Set Title to Bootstrap modal title
+}
+//fungsi simpan
+function save(){
+    $('#btnSave').text('saving...'); //change button text
+    $('#btnSave').attr('disabled',true); //set button disable 
+    var url;
+
+    if(save_method == 'add') {
+        url = base_url+"index.php/paketsoal/addpaketsoal";
+    } else {
+        url = base_url+"index.php/paketsoal/updatepaketsoal";
+    }
+
+    // ajax adding data to database
+    $.ajax({
+        url : url,
+        type: "POST",
+        data: $('#form').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+         $('#modal_form').modal('hide');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable
+            reload_table(); 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+
+        }
+    });
+
+}
+function reload_table(){
+    table.ajax.reload(null,false); //reload datatable ajax 
+}
+
+function delete_paket(id)
+{
+    if(confirm('Are you sure delete this data?'))
+    {
+        // ajax delete data to database
+        $.ajax({
+            url : base_url+"index.php/paketsoal/droppaketsoal/"+id,
+            type: "POST",
+            dataType: "JSON",
+            success: function(data)
+            {
+                //if success reload ajax table
+                $('#modal_form').modal('hide');
+                reload_table();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });
+
+    }
+}
+
+function edit_paket(id)
+{
+
+    save_method = 'update';
+    $('#form')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+
+    //Ajax Load data from ajax
+    $.ajax({
+        url : base_url+"index.php/paketsoal/ajax_edit/" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('[name="id_paket"]').val(data.id_paket);
+            $('[name="nama_paket"]').val(data.nm_paket);
+            $('[name="deskripsi"]').val(data.deskripsi);
+            //$('[name="jumlah_soal"]').val(data.jumlahsoal);
+            $('[name="durasi"]').val(data.durasi);
+
+
+            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Paket Soal'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+function add_soal(id){
+    $('#form')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+    $('#modal_addsoal').modal('show'); // show bootstrap modal
+    $('.modal-title').text('Tambah Bank Soal'); // Set Title to Bootstrap modal title
+}
+
+
+</script>
