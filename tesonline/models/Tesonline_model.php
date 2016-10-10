@@ -63,6 +63,13 @@ class Tesonline_model extends CI_Model {
     public function inputreport($data) {
         $this->db->insert('tb_report-latihan', $data);
     }
+
+    public function updateLatihan($id) {
+        $this->db->set('status_pengerjaan', 2);
+        $this->db->where('id_latihan', $id);
+        $this->db->update('tb_latihan');
+    }
+
 }
 
 ?>
