@@ -554,7 +554,7 @@
                         <ul id="banksoal" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Bank Soal</li>
 
-                            <li >
+                             <li >
                                 <a href="javascript:void(0);" onclick="add_soal()">
                                     <span class="text">Tambahkan Bank Soal</span> 
                                 </a>
@@ -566,20 +566,11 @@
                                 </a>
                                 <ul id="subbanksoal" class="submenu collapse ">
                                     <li class="submenu-header ellipsis">Sub Bank Soal</li>
-                                    <!-- get data Tingkat dari db -->
-                                    <!-- Start pengulangan u/ tingkat -->
-                                    <?php foreach ($tingkat as $row): ?>
-
-
-                                        <li>
-                                            <form action="<?= base_url(); ?>index.php/banksoal/listmp/" method="get">
-                                                <input type="text" name="tingkatID" value="<?= $row['id'] ?>" hidden="true">
-                                                <button class="" type="submit"><?= $row['aliasTingkat'] ?></button>
-                                            </form>
-                                        </li>
-
-                                    <?php endforeach ?>
-                                    <!-- END pengulangan u/ tingkat -->
+                                    <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semual Soal</span>
+                                    </a></li>
+                                     <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
+                                    </a></li>
+                                    
 
                                 </ul>
                             </li>
