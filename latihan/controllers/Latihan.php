@@ -31,7 +31,7 @@ class Latihan extends MX_Controller {
             'judul_header' => 'Latihan'
         );
         //get nama mata pelajaran untuk nama paket
-        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->namaMataPelajaran;
+        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajarans;
         //get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
         $nama_subab = $this->Mmatapelajaran->sc_sub_by_subid($idsub)[0]['judulSubBab'];
         
@@ -53,7 +53,6 @@ class Latihan extends MX_Controller {
         // insert ke soal
         $this->mlatihan->insert($data['post']);
         $id_latihan = $this->mlatihan->get_latihan_by_uuid($uuid_latihan)[0]['id_latihan'];
-        var_dump($data['post']);
         $this->session->set_userdata('id_latihan', $id_latihan);
         // get soal randoom
         $data['soal_random'] = $this->mlatihan->get_random_for_latihan($param);

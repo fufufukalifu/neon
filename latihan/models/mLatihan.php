@@ -51,7 +51,7 @@ class Mlatihan extends CI_Model
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' )
-		);
+			);
 
 		$this->MPaketsoal->insertpaketsoal( $data );
 	}
@@ -72,22 +72,34 @@ class Mlatihan extends CI_Model
 		$this->db->insert( 'tb_mm_sol_lat', $data );
 	}
 	 //get daftar latihan by created by
-    public function get_latihan($createdby){
-        $this->db->select('*');
-        $this->db->from('tb_latihan latihan');
-        $this->db->join('tb_report-latihan report','latihan.id_latihan=report.id_latihan');
-         $this->db->where('create_by', $createdby);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
+	public function get_report($createdby){
+		$this->db->select('*');
+		$this->db->from('tb_latihan latihan');
+
+		$this->db->join('tb_report-latihan report',
+						'latihan.id_latihan=report.id_latihan');
+		$this->db->where('create_by', $createdby);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_latihan($createdby){
+		$this->db->select('*');
+		$this->db->from('tb_latihan latihan');
+		$this->db->where('create_by', $createdby);
+		$this->db->where('status_pengerjaan', '1');
+		
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
     //get hasil latihan
-    public function get_report_latihan($idlatihan){
-    	$this->db->select("*");
-    	$this->db->from('tb_report-latihan');
-    	$this->db->where('id_latihan',$idlatihan);
-    	$query = $this->db->get();
-    	return $query->result_array();
-    }
+	public function get_report_latihan($idlatihan){
+		$this->db->select("*");
+		$this->db->from('tb_report-latihan');
+		$this->db->where('id_latihan',$idlatihan);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
 ?>

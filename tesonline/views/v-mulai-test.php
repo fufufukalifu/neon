@@ -1,41 +1,43 @@
-    <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
-     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><br>
-      </div>
-      <div class="modal-body">
-        <div id="chartContainer" style="height: 400px; width: 100%;">
-        </div>
-        <div class="modal-footer bg-color-3">
 
-        </div>
-      </form>
+
+<div class="modal fade " tabindex="-1" role="dialog" id="myModal">
+ <div class="modal-dialog" role="document">
+  <div class="modal-content">
+   <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><br>
+  </div>
+  <div class="modal-body">
+    <div id="chartContainer" style="height: 400px; width: 100%;">
+    </div>
+    <div class="modal-footer bg-color-3">
 
     </div>
-  </div><!-- /.modal-content -->
+  </form>
+
+</div>
+</div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div>
 
 
-    <div class="modal fade " tabindex="-1" role="dialog" id="myModal2">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Modal title</h4>
-          </div>
-          <div class="modal-body">
+<div class="modal fade " tabindex="-1" role="dialog" id="myModal2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
 
 
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 
 <!-- START Blog Content -->
-<section class="section bgcolor-white">
+<section class="section bgcolor-white"> 
   <div class="container">
    <!-- START Row -->
    <div class="row">
@@ -46,18 +48,18 @@
       <!-- Header -->
       <div class="section-header section-header-bordered mb10">
        <h4 class="section-title">
-       <p class="font-alt nm">Menu</p>
-      </h4>
-    </div>
-    <!--/ Header -->
-    <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
-    <a onclick="show_report();" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
-</ul>
-</div>
-<!--/ Category -->
+         <p class="font-alt nm">Menu</p>
+       </h4>
+     </div>
+     <!--/ Header -->
+     <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
+     <a onclick="show_report();" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
+   </ul>
+ </div>
+ <!--/ Category -->
 
-<!-- Category -->
-<div class="mb15">
+ <!-- Category -->
+ <div class="mb15">
   <!-- Header -->
   <div class="section-header section-header-bordered mb10">
    <h4 class="section-title">
@@ -83,7 +85,7 @@
 <!--/ Category -->
 
 <!-- Text Widget -->
-<div class="mb15">
+<div class="mb15" >
   <!-- Header -->
   <div class="section-header section-header-bordered mb10">
    <h4 class="section-title">
@@ -101,54 +103,72 @@
 <!--/ END Left Section -->
 
 
-<!-- START Right Section -->
+<!-- top -->
+<div class="col-md-9"><h1>Daftar Latihan</h1></div>
 <div class="col-md-9">
-  <?php foreach ($latihan as $latihanitem): ?>
-   <?php// print_r($latihanitem) ?>
-   <div class="col-md-3">
-    <!-- START Panel pricing -->
+  <div id="owl1">
+    <?php foreach ($latihan as $latihanitem): ?>
+     <?php// print_r($latihanitem) ?>
+     <div class="col-md-6">
+      <div class="panel bg-color-1">
+       <div class="panel-heading text-center" style="min-height:50px;background-color:white">
+        <p>
+         <?=$latihanitem['nm_latihan'] ?>
+       </p>
+     </strong>
+   </div>
+   <div class="panel-body text-center">
+     <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+   </div>
+   <table class="table">
+     <tbody>
+      <tr>
+        <td colspan="2" align="center">
+          <a onclick="" 
+           class="cws-button border-radius bt-color-1 modal-on<?=$latihanitem['id_latihan']?>"
+           data-todo='<?=json_encode($latihanitem)?>'>Kerjakan</a>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+</div>
+<?php endforeach ?>
+</div>
+<div class="col-md-9"><h1>Daftar Laporan</h1></div>
+<div id="owl2">
+  <?php foreach ($report as $reportitem): ?>
+    
+   <div class="col-md-6">
     <div class="panel bg-color-1">
-     <!-- panel heading -->
      <div class="panel-heading text-center" style="min-height:50px;background-color:white">
       <p>
-       <?=$latihanitem['nm_latihan'] ?>
+       <?=$reportitem['nm_latihan'] ?>
      </p>
    </strong>
  </div>
- <!-- panel heading -->
- <!-- panel body -->
  <div class="panel-body text-center">
-   <img class="img-circle img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="100%">
+   <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
  </div>
- <!--/ panel body -->
- <!-- table -->
  <table class="table">
    <tbody>
     <tr>
-     <?php if ($latihanitem['status_pengerjaan']=='1'): ?>
       <td colspan="2" align="center">
-       <a href="#" class="cws-button border-radius bt-color-<?=$latihanitem['status_pengerjaan']?>">Coba Latihan</a>
-     </td>
-   <?php else: ?>
-    <td colspan="2" align="center">
-      <a onclick="lihat_grafik(<?=$latihanitem['id_latihan'] ?>)" 
-       class="cws-button border-radius bt-color-<?=$latihanitem['status_pengerjaan']?> modal-on<?=$latihanitem['id_latihan']?>"
-       data-todo='<?=json_encode($latihanitem)?>'>Lihat Score</a>
-     </td>
-   </tr>
- <?php endif ?>
-
-</tbody>
-</table>
-<!--/ table -->
+        <a onclick="lihat_grafik(<?=$reportitem['id_latihan'] ?>)" 
+         class="cws-button border-radius bt-color-2 modal-on<?=$reportitem['id_latihan']?>"
+         data-todo='<?=json_encode($reportitem)?>'>Lihat Score</a>
+       </td>
+     </tr>
+   </tbody>
+ </table>
 </div>
-<!--/ END Panel pricing -->
 </div>
 <?php endforeach ?>
-
-
-
 </div>
+</div>
+<!-- top -->
+
+
 </section>
 <!--/ END Blog Content -->
 
@@ -160,7 +180,9 @@
 <!--/ END Template Main -->
 <script type="text/javascript"> 
   function load_grafik(data) {
-   var report = {durasi:0,
+    console.log(data);
+   var report = {
+     durasi:0,
      level:0,
      poin:0,
      konstanta:0,
@@ -204,16 +226,21 @@
    function lihat_grafik(id){
     var kelas = ".modal-on"+id;
     var data = $(kelas).data('todo');
-
     $('.modal-title').text('Grafik Latihan ');
     $('#myModal').modal('show');
     load_grafik(data);
   }
 
-   function show_report(){
+  function show_report(){
     $('#myModal2').modal('show');
     $('#myModal2 modal-title').text('Report Latihan');
   }
+  $(document).ready(function() {
+
+    $("#owl1").owlCarousel();
+    $("#owl2").owlCarousel();
     
+
+  });
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>
