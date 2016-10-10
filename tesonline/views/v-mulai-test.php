@@ -96,7 +96,12 @@
 <p class="nm text-default">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
- consequat.</p>
+ consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+ tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+ quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+ consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 </div>
 <!--/ Text Widget -->
 </div>
@@ -104,69 +109,81 @@
 
 
 <!-- top -->
-<div class="col-md-9"><h1>Daftar Latihan</h1></div>
 <div class="col-md-9">
-  <div id="owl1">
-    <?php foreach ($latihan as $latihanitem): ?>
-     <?php// print_r($latihanitem) ?>
-     <div class="col-md-6">
-      <div class="panel bg-color-1">
-       <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-        <p>
-         <?=$latihanitem['nm_latihan'] ?>
-       </p>
-     </strong>
+  <h3>Daftar Latihan</h3>
+  <div class="col-md-12" id="owl1">
+    <?php if ($latihan==array()): ?>
+      <h4>Tidak ada latihan.</h4>
+    <?php else: ?>
+      <?php foreach ($latihan as $latihanitem): ?>
+       <div class="col-md-6">
+        <div class="panel bg-color-1">
+         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
+          <p>
+           <?=$latihanitem['nm_latihan'] ?>
+         </p>
+       </strong>
+     </div>
+
+     <div class="panel-body text-center">
+       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+     </div>
+     <table class="table">
+       <tbody>
+        <tr>
+          <td colspan="2" align="center">
+            <a onclick="mulai_test(<?=$latihanitem['id_latihan']?>)" 
+             class="cws-button border-radius bt-color-1 modal-on<?=$latihanitem['id_latihan']?>"
+             data-todo='<?=json_encode($latihanitem)?>'>Kerjakan</a>
+           </td>
+         </tr>
+       </tbody>
+     </table>
    </div>
-   <div class="panel-body text-center">
-     <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+ </div>
+<?php endforeach ?>
+<?php endif ?>
+</div>
+
+</div>
+
+<div class="col-md-9">
+  <h3>Daftar Report</h3>
+  <div class="col-md-12" id="owl2">
+    <?php if ($report==array()): ?>
+      <h4>Tidak ada Report Latihan.</h4>
+    <?php else: ?>
+      <?php foreach ($report as $reportitem): ?> 
+       <div class="col-md-6">
+        <div class="panel bg-color-1">
+         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
+          <p>
+           <?=$reportitem['nm_latihan'] ?>
+         </p>
+       </strong>
+     </div>
+     <div class="panel-body text-center">
+       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+     </div>
+     <table class="table">
+       <tbody>
+        <tr>
+          <td colspan="2" align="center">
+            <a onclick="lihat_grafik(<?=$reportitem['id_latihan'] ?>)" 
+             class="cws-button border-radius bt-color-2 modal-on<?=$reportitem['id_latihan']?>"
+             data-todo='<?=json_encode($reportitem)?>'>Lihat Score</a>
+           </td>
+         </tr>
+       </tbody>
+     </table>
    </div>
-   <table class="table">
-     <tbody>
-      <tr>
-        <td colspan="2" align="center">
-          <a onclick="mulai_test(<?=$latihanitem['id_latihan']?>)" 
-           class="cws-button border-radius bt-color-1 modal-on<?=$latihanitem['id_latihan']?>"
-           data-todo='<?=json_encode($latihanitem)?>'>Kerjakan</a>
-         </td>
-       </tr>
-     </tbody>
-   </table>
  </div>
-</div>
 <?php endforeach ?>
-</div>
-<div class="col-md-9"><h1>Daftar Laporan</h1></div>
-<div id="owl2">
-  <?php foreach ($report as $reportitem): ?>
-    
-   <div class="col-md-6">
-    <div class="panel bg-color-1">
-     <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-      <p>
-       <?=$reportitem['nm_latihan'] ?>
-     </p>
-   </strong>
- </div>
- <div class="panel-body text-center">
-   <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
- </div>
- <table class="table">
-   <tbody>
-    <tr>
-      <td colspan="2" align="center">
-        <a onclick="lihat_grafik(<?=$reportitem['id_latihan'] ?>)" 
-         class="cws-button border-radius bt-color-2 modal-on<?=$reportitem['id_latihan']?>"
-         data-todo='<?=json_encode($reportitem)?>'>Lihat Score</a>
-       </td>
-     </tr>
-   </tbody>
- </table>
+<?php endif ?>
 </div>
 </div>
-<?php endforeach ?>
-</div>
-</div>
-<!-- top -->
+
+
 
 
 </section>
@@ -180,7 +197,7 @@
 <!--/ END Template Main -->
 <script type="text/javascript"> 
   function load_grafik(data) {
-    console.log(data);
+
    var report = {
      durasi:0,
      level:0,
@@ -188,12 +205,12 @@
      konstanta:0,
      score:0};
 
-     report.durasi = 10;
+     //report.durasi = 10;
      report.jumlah_soal = parseInt(data.jumlahSoal);
      report.level = parseInt(data.tingkatKesulitan);
      report.poin = parseInt(data.jmlh_benar);
-     report.konstanta =  report.durasi * report.jumlah_soal;
-     report.score = (report.poin) * report.level * (report.konstanta/report.durasi);
+     //report.konstanta =  report.durasi * report.jumlah_soal;
+     report.score = data.jmlh_benar;
 
 
      var chart = new CanvasJS.Chart("chartContainer", {
@@ -237,16 +254,13 @@
   }
 
   function mulai_test(id_latihan){
-  //  alert(id_latihan);
-  window.location.href = base_url + "index.php/latihan/create_session_id_latihan/"+id_latihan;
+    window.location.href = base_url + "index.php/latihan/create_session_id_latihan/"+id_latihan;
   }
 
   $(document).ready(function() {
-
     $("#owl1").owlCarousel();
     $("#owl2").owlCarousel();
-    
-
   });
+
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>
