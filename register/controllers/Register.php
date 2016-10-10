@@ -60,7 +60,24 @@ class Register extends MX_Controller {
         );
 
 
-        $this->parser->parse('admin/v-index-admin', $data);
+   
+
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        
+        if ($hakAkses=='admin') {
+            // jika admin
+               $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            redirect(site_url('guru/dashboard/'));
+        }elseif($hakAkses=='siswa'){
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }else{
+            
+            redirect(site_url('login'));
+        }
+
     }
 
     public function verifikasiemail() {
