@@ -125,7 +125,7 @@ class MPaketsoal extends CI_Model {
 		$this->db->from('tb_banksoal soal');
 		$this->db->join('tb_mm-paketbank mpaket','mpaket.id_soal = soal.id_soal');
 		$this->db->where('id_paket',$idpaket);
-		 $query = $this->db->get();
+		$query = $this->db->get();
         return $query->result_array();
 	}
 
@@ -184,6 +184,29 @@ class MPaketsoal extends CI_Model {
 
 	#END function insert add soal pakert#
 
+	#Untuk halaman  addPaketTo#
+	//get id Paket
+	public function get_id_by_UUID($UUID)
+	{
+		$this->db->select('id_tryout');
+		$this->db->from('tb_tryout');
+		$this->db->where('UUID',$UUID);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	public function soal_by_paketUUID($id_to)
+	{
+		$this->db->select('id,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
+		$this->db->from('tb_paket paket');
+		$this->db->join('tb_mm-tryoutpaket mto','mto.id_paket = paket.id_paket');
+		$this->db->where('mto.id_tryout',$id_to);
+		$query = $this->db->get();
+        return $query->result_array();
+
+	}
+
+	##########################
 
 
 

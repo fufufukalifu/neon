@@ -1,11 +1,11 @@
 <?php 
 
 echo "masuk v bundle <br>";
-var_dump($paket);
+// var_dump($paket);
 echo "<h1>TEST</h1>";
 var_dump($siswa);
 
- ?>
+?>
 <div>
     <!-- Strt ROW -->
     <div class="row">
@@ -22,6 +22,8 @@ var_dump($siswa);
                              <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h3 class="panel-title">Daftar Soal</h3>
+                                        <input type="text" name="id" id="id_to" value="<?=$id_to;?>" >
+                                        <input type="text" name="UUID" id="UUID_to" value="57fb0c09897a7">
                                 </div>
                                     <!-- Start Panel Body -->
                                 <div class="panel-body">
@@ -80,7 +82,7 @@ var_dump($siswa);
                                                         <th>ID</th>
                                                         <th>Nama</th>
                                                         <th>Tingkat</th>
-                                                        <th>Kelas</th>
+                                                    
                                                         
                                                     </tr>
                                                 </thead>
@@ -89,14 +91,14 @@ var_dump($siswa);
                                                     <tr>
                                                         <td>
                                                             <span class='checkbox custom-checkbox custom-checkbox-inverse'>
-                                                            <input type='checkbox'  name="<?=$key['namaDepan'].$n;?>" id="<?=$key['namaDepan'].$key['id'];?>">
+                                                            <input type='checkbox'  name="<?=$key['namaDepan'].$n;?>" id="<?=$key['namaDepan'].$key['id'];?>" value="<?= $key['id'];?>">
                                                             <label for="<?=$key['namaDepan'].$key['id'];?>">&nbsp;&nbsp;</label>
                                                             </span>
                                                         </td>
                                                         <td><?=$key['id'];?></td>
                                                         <td><?=$key['namaDepan']." ".$key['namaBelakang'];?></td>
                                                         <td><?=$key['aliasTingkat'];?></td>
-                                                        <td><?=$key['kelas'];?></td>
+                                                        
                                                     </tr>
                                                     <?php endforeach ?>
                                                 </tbody>
@@ -137,7 +139,30 @@ var_dump($siswa);
                                     <div class="tab-content">
                                         <!-- START LIST Paket yang sudah di ADD -->
                                         <div class="tab-pane active" id="paketadd">
-                                           <h1>paket</h1>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+                                                </div>
+                                                <div class="panel-body soaltambah">
+                                                    <form action="" id="">
+                                                        <table class="table table-striped" id="listaddpaket" style="font-size: 13px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Nama Paket</th>
+                                                                    <th>Sumber</th>
+                                                                    <th>Aksi</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- END LIST Paket yang sudah di ADD  -->
 
@@ -164,6 +189,45 @@ var_dump($siswa);
 
 
 <script type="text/javascript">
+   
+     var tblist_soal;
+     var UUID =$('#UUID_to').val();
+     console.log(UUID);
+    // Script for getting the dynamic values from database using jQuery and AJAX
+    $(document).ready(function() {
+        // get list soal 
+        tblist_soal = $('#listaddpaket').DataTable({ 
+            "bSearchable":true,
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [],
+            "ordering": true,
+            "info":     false, //Initial no order.
+            
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": base_url+"index.php/toback/ajax_listpaket/"+UUID,
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [
+            { 
+                "targets": [ -1 ], //last column
+                "orderable": true, //set not orderable
+            },
+            ],
+        });
+        console.log('hhhhhhhhhh');
+        console.log(tblist_soal);
+        console.log('hhhhhhhhhh');
+
+    });
+
+    function reload_tblist(){
+        tblist_soal.ajax.reload(null,false); //reload datatable ajax 
+    }
     function adda() {
          
         $('.add').click(function(){    
@@ -175,27 +239,33 @@ var_dump($siswa);
 
     function addPaket(){
         var idpaket = [];
+        var id_to =$('#id_to').val();
         var test ='test';
         $('#tbpaket input:checked').each(function(i){
             idpaket[i] = $(this).val();
         });
         $('#tbpaket input').attr('checked',false);
 
+        // if (!idpaket) {
+        //     console.log('null');
+        // }
+
         var url = base_url+"index.php/toBack/addPaketToTO";
 
          $.ajax({
             url : url,
             type: "POST",
-            data: {data:test, 
+            data: {idpaket:idpaket,
+                   id_to:id_to 
                     },
             // cache: false,
           // dataType: "JSON",
             success: function(data,respone)
             {   
                 console.log(respone); 
-                // console.log(data);
-                // reload_tblist();
-                 // $(':checkbox').attr('checked',false);
+                console.log(data);
+                reload_tblist();
+                 $(':checkbox').attr('checked',false);
 
             },
             error: function (jqXHR, textStatus, errorThrown)
@@ -208,14 +278,43 @@ var_dump($siswa);
 
 
         // console.log(idpaket);
-        // id_paket=null;
+        id_paket=null;
     }
     function addSiswa(){
         var idsiswa = [];
+        var id_to =$('#id_to').val();
         $('#tbsiswa input:checked').each(function(i){
             idsiswa[i] = $(this).val();
         });
-           $('#tbsiswa input').attr('checked',false);
+        $('#tbsiswa input').attr('checked',false);
+
+         var url = base_url+"index.php/toBack/addsiswaToTO";
+
+         $.ajax({
+            url : url,
+            type: "POST",
+            data: {idsiswa : idsiswa,
+                   id_to:id_to 
+                    },
+            // cache: false,
+          // dataType: "JSON",
+            success: function(data,respone)
+            {   
+                console.log(respone); 
+                console.log(data);
+                reload_tblist();
+                 $(':checkbox').attr('checked',false);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+             
+
+                alert('Error adding / update data');
+            }
+        });
+
+        
          console.log(idsiswa);
          idsiswa=null;
 

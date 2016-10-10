@@ -101,6 +101,8 @@
         </div><!-- /.modal -->
         <!-- END  Modal ADD BANK SOAL-->
 
+
+
         <!-- START Modal ADD TO -->
         <div class="modal fade" id="modalto" tabindex="-1" role="dialog">
             <!--START modal dialog  -->
@@ -569,10 +571,13 @@
                                 </a>
                                 <ul id="subbanksoal" class="submenu collapse ">
                                     <li class="submenu-header ellipsis">Sub Bank Soal</li>
+                                    <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semual Soal</span>
+                                    </a></li>
+                                     <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
+                                    </a></li>
                                     <!-- get data Tingkat dari db -->
                                     <!-- Start pengulangan u/ tingkat -->
-                                    <?php foreach ($tingkat as $row): ?>
-
+                                    <!-- <?php foreach ($tingkat as $row): ?>
 
                                         <li>
                                             <form action="<?= base_url(); ?>index.php/banksoal/listmp/" method="get">
@@ -581,7 +586,7 @@
                                             </form>
                                         </li>
 
-                                    <?php endforeach ?>
+                                    <?php endforeach ?> -->
                                     <!-- END pengulangan u/ tingkat -->
 
                                 </ul>

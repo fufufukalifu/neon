@@ -259,14 +259,15 @@ class Paketsoal extends MX_Controller
 		$idSoal = $this->input->post('data');
 		$idSubbab = $this->input->post('idSubBab');
 		$idpaket = $this->input->post('id_paket');
-		// ;
-		 var_dump($idSubbab);
-		 var_dump($idpaket);
+		var_dump($idSubbab);
+		var_dump('masuk');
+		echo "haiiiiiiiiiiiiii";
 		 $mmpaket=array();
 		 foreach ($idSoal as $key ) {		 
-		 	$mmpaket[] = array('id_paket' => $idpaket,
+		 	$mmpaket[] = array(
+		 		'id_paket' => $idpaket,
                 'id_soal' => $key,
-                'subBabID' => $idSubbab);
+                'id_subbab' => $idSubbab);
 		 	
 		 }
 		 
