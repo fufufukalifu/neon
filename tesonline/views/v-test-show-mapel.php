@@ -8,7 +8,7 @@
                         <h4 class="modal-title">Modal title</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-group" id="formlatihan" method="post">
+                        <form class="form-group" id="formlatihan" method="post" onsubmit="return false;">
                             <p class="has-success">
                                 <label>Bab</label>
                                 <select class="form-control" name="tingkat" id="babSelect"><option>-Pilih Bab-</option></select>
@@ -37,8 +37,8 @@
                             </p>
                             <div class="modal-footer bg-color-3">
                                 <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
-                                <button type="submit" class="cws-button bt-color-2 border-radius alt small mulai-btn">Mulai Latihan</button>
-                                <button type="submit" class="cws-button bt-color-5 border-radius alt small latihan-nnti-btn">Latihan nanti</button>
+                                <button type="button" class="cws-button bt-color-2 border-radius alt small mulai-btn">Mulai Latihan</button>
+                                <button type="button" class="cws-button bt-color-5 border-radius alt small latihan-nnti-btn">Latihan nanti</button>
 
                             </div>
                         </form>
@@ -149,33 +149,34 @@
         var kesulitan = $("select[name=kesulitan]").val();
         var jumlahsoal = $("select[name=jumlahsoal]").val();
         var subabid = $("select[name=subab]").val();
+
         var data = {
-            kesulitan: kesulitan,
-            jumlahsoal: jumlahsoal,
-            subab: subabid
+            "kesulitan": kesulitan,
+            "jumlahsoal": jumlahsoal,
+            "subab": subabid
         };
+        console.log(data);
 
         $.ajax({
             url: url,
             type: "POST",
+            dataType:"TEXT",
             data: data,
-            dataType: "JSON",
-            success: function (data, respone)
+            success: function (data)
             {
+                alert("Sukses");
                 $('#myModal').modal('hide');
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled', false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
 
             },
-            error: function (jqXHR)
+            error: function (jqXHR, textStatus, errorThrown)
             {
-                $('#myModal').modal('hide');
-                $('.mulai-btn').text('save'); //change button text
-                $('.mulai-btn').attr('disabled', false); //set button enable 
-                $('#formlatihan')[0].reset(); // reset form on modals
-
-
+                alert("Error inserting data");
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
             }
         });
     }
@@ -183,14 +184,14 @@
 
     $('.mulai-btn').click(function () {
         mulai('mulai');
-        window.location.href = base_url + "index.php/tesonline/mulaitest";
+        // window.location.href = base_url + "index.php/tesonline/mulaitest";
     });
 
     $('.latihan-nnti-btn').click(function () {
         mulai('nanti');
         //alihkan ke histori
-        window.location.href = base_url + "index.php/tesonline/daftarlatihan";
-        console.log(base_url + "tesonline/daftarlatihan")
+        // window.location.href = base_url + "index.php/tesonline/daftarlatihan";
+        // console.log(base_url + "tesonline/daftarlatihan")
     });
 
 

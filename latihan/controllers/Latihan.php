@@ -16,6 +16,7 @@ class Latihan extends MX_Controller {
     public function tambah_latihan_ajax() {
 
         //uuid untuk soal
+        
         $uuid_latihan = uniqid();
         var_dump($uuid_latihan);
         $idsub = $_POST['subab'];
