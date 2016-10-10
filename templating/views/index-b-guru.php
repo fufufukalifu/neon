@@ -575,19 +575,7 @@
                                     </a></li>
                                      <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
                                     </a></li>
-                                    <!-- get data Tingkat dari db -->
-                                    <!-- Start pengulangan u/ tingkat -->
-                                    <!-- <?php foreach ($tingkat as $row): ?>
-
-                                        <li>
-                                            <form action="<?= base_url(); ?>index.php/banksoal/listmp/" method="get">
-                                                <input type="text" name="tingkatID" value="<?= $row['id'] ?>" hidden="true">
-                                                <button class="" type="submit"><?= $row['aliasTingkat'] ?></button>
-                                            </form>
-                                        </li>
-
-                                    <?php endforeach ?> -->
-                                    <!-- END pengulangan u/ tingkat -->
+                                    
 
                                 </ul>
                             </li>
@@ -1070,7 +1058,7 @@
         <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+     
          <script type="text/javascript">
             //panggil modal
             function add_soal() {
@@ -1088,7 +1076,6 @@
            
             //buat load tingkat untuk modal buat soal
             function loadTkt() {
-                console.log('load Tingkat');
                 jQuery(document).ready(function () {
                     var tingkat_id = {"tingkat_id": $('#gettkt').val()};
                     var idTingkat;
@@ -1098,7 +1085,7 @@
                         data: tingkat_id,
                         url: "<?= base_url() ?>index.php/videoback/getTingkat",
                         success: function (data) {
-                            console.log("Data" + data);
+                           
                             $('#gettkt').html('<option value="">-- Pilih Tingkat  --</option>');
                             $.each(data, function (i, data) {
                                 $('#gettkt').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
@@ -1148,7 +1135,7 @@
                     success: function (data) {
 
                         $('#getbb').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-                        //console.log(data);
+                       
                         $.each(data, function (i, data) {
                             $('#getbb').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
                         });
@@ -1165,7 +1152,7 @@
                     url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
                     success: function(data){
                         $('#subb').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-                        console.log(data);
+                     
                         $.each(data, function(i, data){
                             $('#subb').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
                         });

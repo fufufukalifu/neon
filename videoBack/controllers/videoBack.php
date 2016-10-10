@@ -37,7 +37,6 @@ class videoBack extends MX_Controller {
     //menampilkan view form upload
     public function formupvideo() {
 
-        $data['tingkat'] = $this->mtemplating->get_tingkat();
         $data['judul_halaman'] = "upload Video";
         $data['files'] = array(
             APPPATH . 'modules/videoBack/views/v-upload-video-form.php',
@@ -52,9 +51,12 @@ class videoBack extends MX_Controller {
         } elseif($hakAkses=='guru'){
             // jika guru
             $this->parser->parse('templating/index-b-guru', $data);
-        }else{
+        }elseif($hakAkses=='siswa'){
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
+        }else{
+            
+            redirect(site_url('login'));
         }
 
             // jika guru untul sentara yg guru bisa di tembak URL untuk testing
