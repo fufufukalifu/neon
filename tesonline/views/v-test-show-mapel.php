@@ -151,32 +151,27 @@
         var subabid = $("select[name=subab]").val();
 
         var data = {
-            "kesulitan": kesulitan,
-            "jumlahsoal": jumlahsoal,
-            "subab": subabid
+            kesulitan: kesulitan,
+            jumlahsoal: jumlahsoal,
+            subab: subabid
         };
         console.log(data);
-
         $.ajax({
-            url: url,
+            url : url,
             type: "POST",
-            dataType:"TEXT",
+            dataType:'text',
             data: data,
-            success: function (data)
-            {
-                alert("Sukses");
+            success: function(data,respone)
+            {   
                 $('#myModal').modal('hide');
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled', false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
-
+                alert("Latihan Sudah Tersimpan");
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-                alert("Error inserting data");
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+                alert('Error adding / update data');
             }
         });
     }
@@ -184,14 +179,12 @@
 
     $('.mulai-btn').click(function () {
         mulai('mulai');
-        // window.location.href = base_url + "index.php/tesonline/mulaitest";
+        window.location.href = base_url + "index.php/tesonline/mulaitest";
     });
 
     $('.latihan-nnti-btn').click(function () {
         mulai('nanti');
-        //alihkan ke histori
-        // window.location.href = base_url + "index.php/tesonline/daftarlatihan";
-        // console.log(base_url + "tesonline/daftarlatihan")
+        window.location.href = base_url + "index.php/tesonline/daftarlatihan";
     });
 
 
