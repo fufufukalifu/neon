@@ -67,9 +67,7 @@ class Paketsoal extends MX_Controller
 	function ajax_listsoal($idpaket) {
 		$list = $this->load->MPaketsoal->soal_by_paketID($idpaket);
 		$data = array();
-		//$no = $_POST['start'];
-		//$no = 1;
-		//print_r($list);
+
 
 		//mengambil nilai list
 		$baseurl = base_url();
@@ -89,12 +87,8 @@ class Paketsoal extends MX_Controller
 		}
 		//print_r($data);
 		$output = array(
-			"draw" => $_POST['draw'] ,
-			"recordsTotal"=>$this->MPaketsoal->hitung_semuasoal(),
-			"recordsFiltered"=>$this->MPaketsoal->hitung_filtersoal(),
 			"data"=>$data,
 		);
-
 		echo json_encode( $output );
 	}
 
