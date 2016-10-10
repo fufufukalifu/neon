@@ -124,7 +124,7 @@
      <tbody>
       <tr>
         <td colspan="2" align="center">
-          <a onclick="" 
+          <a onclick="mulai_test(<?=$latihanitem['id_latihan']?>)" 
            class="cws-button border-radius bt-color-1 modal-on<?=$latihanitem['id_latihan']?>"
            data-todo='<?=json_encode($latihanitem)?>'>Kerjakan</a>
          </td>
@@ -235,6 +235,12 @@
     $('#myModal2').modal('show');
     $('#myModal2 modal-title').text('Report Latihan');
   }
+
+  function mulai_test(id_latihan){
+  //  alert(id_latihan);
+  window.location.href = base_url + "index.php/latihan/create_session_id_latihan/"+id_latihan;
+  }
+
   $(document).ready(function() {
 
     $("#owl1").owlCarousel();

@@ -88,6 +88,11 @@ class Latihan extends MX_Controller {
         $this->parser->parse('templating/index', $data);
     }
 
+    public function create_session_id_latihan($id_latihan){
+        $this->session->set_userdata('id_latihan',$id_latihan);
+        redirect('/tesonline/mulaitest', 'refresh');
+    }
+
 }
 
 ?>
