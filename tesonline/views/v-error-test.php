@@ -26,7 +26,10 @@
                             <!--panel heading/header--> 
                             <div class="panel-heading">
                                 <div class="row">
-                                    <div class="text-center"><h4>Latihan tidak dapat diakses !</h4></div>
+                                    <div class="text-center">
+                                        <h4>Latihan tidak dapat diakses ! <a href="<?=  base_url('index.php/tesonline')?>" class="text-primary">Kembali?</a></h4>
+                                       
+                                    </div>
                                 </div>
                             </div>
                             <!--/ panel heading/header--> 
