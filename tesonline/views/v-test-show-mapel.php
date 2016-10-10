@@ -185,11 +185,7 @@
     $('.mulai-btn').click(function () {
         mulai('mulai');
                 //alihkan ke halaman ilham
-                << << << < HEAD
                 window.location.href = base_url + "index.php/tesonline/mulaitest";
-        === === =
-                window.location.href = "http://www.mulai.com";
-        >>> >>> > 1e5e98f57f546540102d3e70638fa51da999fb63
     });
 
     $('.latihan-nnti-btn').click(function () {
