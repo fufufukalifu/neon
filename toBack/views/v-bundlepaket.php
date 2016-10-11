@@ -15,7 +15,6 @@
                                 <div class="panel-heading">
                                         <h3 class="panel-title">Daftar Soal</h3>
                                         <input type="text" name="id" id="id_to" value="<?=$id_to;?>" >
-                                        <input type="text" name="UUID" id="UUID_to" value="57f750fdb64ba">
                                 </div>
                                     <!-- Start Panel Body -->
                                 <div class="panel-body">
@@ -142,7 +141,7 @@
                                                                 <tr>
                                                                     <th>ID</th>
                                                                     <th>Nama Paket</th>
-                                                                    <th>Sumber</th>
+                                                                    <th>Deskripsi</th>
                                                                     <th>Aksi</th>
                                                                 </tr>
                                                             </thead>
@@ -183,19 +182,22 @@
 <script type="text/javascript">
    
      var tblist_soal;
-     var UUID =$('#UUID_to').val();
-     console.log(UUID);
+     var tblist_siswa;
+     var idTo =$('#id_to').val();
+    
     // Script for getting the dynamic values from database using jQuery and AJAX
 
 
      $(document).ready(function() {
         tblist_soal = $('#listaddpaket').DataTable({ 
            "ajax": {
-            "url": base_url+"index.php/toback/ajax_listpaket/"+UUID,
+            "url": base_url+"index.php/toback/ajax_listpaket/"+idTo,
             "type": "POST"
         },
         "processing": true,
         });
+
+
     });
 
     function reload_tblist(){
