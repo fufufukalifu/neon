@@ -43,7 +43,6 @@ class ToBack extends MX_Controller
 	{	
 		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID)[0];
 		$data['id_to']=$data['tryout']['id_tryout'];
- 		$data['tingkat'] = $this->mtemplating->get_tingkat();
 		$data['siswa'] = $this->msiswa->get_allsiswa();
 		$data['paket']= $this->MPaketsoal->getpaketsoal();
         $data['files'] = array(
@@ -111,9 +110,7 @@ class ToBack extends MX_Controller
 		}
 	
 		$output = array(
-			"draw" => $_POST['draw'] ,
-			"recordsTotal"=>$this->mToBack->hitung_semuapaket(),
-			"recordsFiltered"=>$this->mToBack->hitung_filterpaket(),
+			
 			"data"=>$data,
 		);
 
@@ -126,7 +123,6 @@ class ToBack extends MX_Controller
 	//menampilkan list TO
 	public function listTO()
 	{
-		$data['tingkat'] = $this->mtemplating->get_tingkat();
 		$data['listTO'] =$this->mToBack->get_To();
         $data['files'] = array(
             APPPATH . 'modules/toback/views/v-list-to.php',

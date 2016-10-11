@@ -1,11 +1,3 @@
-<?php 
-
-echo "masuk v bundle <br>";
-// var_dump($paket);
-echo "<h1>TEST</h1>";
-var_dump($siswa);
-
-?>
 <div>
     <!-- Strt ROW -->
     <div class="row">
@@ -23,7 +15,7 @@ var_dump($siswa);
                                 <div class="panel-heading">
                                         <h3 class="panel-title">Daftar Soal</h3>
                                         <input type="text" name="id" id="id_to" value="<?=$id_to;?>" >
-                                        <input type="text" name="UUID" id="UUID_to" value="57fb0c09897a7">
+                                        <input type="text" name="UUID" id="UUID_to" value="57f750fdb64ba">
                                 </div>
                                     <!-- Start Panel Body -->
                                 <div class="panel-body">
@@ -194,35 +186,16 @@ var_dump($siswa);
      var UUID =$('#UUID_to').val();
      console.log(UUID);
     // Script for getting the dynamic values from database using jQuery and AJAX
-    $(document).ready(function() {
-        // get list soal 
+
+
+     $(document).ready(function() {
         tblist_soal = $('#listaddpaket').DataTable({ 
-            "bSearchable":true,
-            "processing": true, //Feature control the processing indicator.
-            "serverSide": true, //Feature control DataTables' server-side processing mode.
-            "order": [],
-            "ordering": true,
-            "info":     false, //Initial no order.
-            
-
-            // Load data for the table's content from an Ajax source
-            "ajax": {
-                "url": base_url+"index.php/toback/ajax_listpaket/"+UUID,
-                "type": "POST"
-            },
-
-            //Set column definition initialisation properties.
-            "columnDefs": [
-            { 
-                "targets": [ -1 ], //last column
-                "orderable": true, //set not orderable
-            },
-            ],
+           "ajax": {
+            "url": base_url+"index.php/toback/ajax_listpaket/"+UUID,
+            "type": "POST"
+        },
+        "processing": true,
         });
-        console.log('hhhhhhhhhh');
-        console.log(tblist_soal);
-        console.log('hhhhhhhhhh');
-
     });
 
     function reload_tblist(){
