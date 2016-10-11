@@ -18,7 +18,7 @@ class Latihan extends MX_Controller {
         //uuid untuk soal
         
         $uuid_latihan = uniqid();
-        var_dump($uuid_latihan);
+        //var_dump($uuid_latihan);
         $idsub = $_POST['subab'];
         $jumlah_soal = $_POST['jumlahsoal'];
         $kesulitan = $_POST['kesulitan'];
@@ -32,7 +32,7 @@ class Latihan extends MX_Controller {
             'judul_header' => 'Latihan'
         );
         //get nama mata pelajaran untuk nama paket
-        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajarans;
+        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajaran;
         //get nama sub bab untuk digabungkan jadi Nama Matapelajaran - Nama Subab
         $nama_subab = $this->Mmatapelajaran->sc_sub_by_subid($idsub)[0]['judulSubBab'];
 
