@@ -141,7 +141,8 @@
         });
     }
 
-    function mulai() {
+    function mulai(test) {
+
         var sub_bab_id = $('#subSelect').val();
         $('.mulai-btn').text('saving...'); //change button text
         $('.mulai-btn').attr('disabled', true); //set button disable 
@@ -167,11 +168,15 @@
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled', false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
-                alert("Latihan Sudah Tersimpan");
+                if(test=='mulai'){
+                    window.location.href = base_url + "index.php/tesonline/mulaitest";
+                }else{
+                    window.location.href = base_url + "index.php/tesonline/daftarlatihan";
+                }
             },
-            error: function (jqXHR, textStatus, errorThrown)
+            error: function (respone,jqXHR, textStatus, errorThrown)
             {
-                alert('Error adding / update data');
+                alert('Error adding / update data');    
             }
         });
     }
@@ -179,12 +184,12 @@
 
     $('.mulai-btn').click(function () {
         mulai('mulai');
-        window.location.href = base_url + "index.php/tesonline/mulaitest";
+        // window.location.href = base_url + "index.php/tesonline/mulaitest";
     });
 
     $('.latihan-nnti-btn').click(function () {
         mulai('nanti');
-        window.location.href = base_url + "index.php/tesonline/daftarlatihan";
+        // window.location.href = base_url + "index.php/tesonline/daftarlatihan";
     });
 
 
