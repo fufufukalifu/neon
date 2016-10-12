@@ -110,7 +110,7 @@ class Tryout extends MX_Controller
 
 			$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
 
-		$this->parser->parse('templating/index', $data);
+			$this->parser->parse('templating/index', $data);
 			
 			
 		}else{
@@ -120,13 +120,15 @@ class Tryout extends MX_Controller
 	}
 	//# fungsi indeks
 
-	function test(){
+	function buatto(){
 		$data = array("id_paket"=>$this->input->post('id_paket'),
-					  "id_tryout"=>$this->input->post('id_tryout')
+			"id_tryout"=>$this->input->post('id_tryout'),
+			"id_mm_tryoutpaket"=>$this->input->post('id_mm_tryoutpaket'),
 			);
 
 		$this->session->set_userdata('id_paket', $data['id_paket']);
 		$this->session->set_userdata('id_tryout', $data['id_tryout']);
+		$this->session->set_userdata('id_mm_tryoutpaket', $data['id_mm_tryoutpaket']);
 
 	}
 

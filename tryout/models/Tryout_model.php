@@ -56,5 +56,7 @@ class Tryout_model extends MX_Controller
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	
 }
 ?>

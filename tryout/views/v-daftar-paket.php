@@ -154,11 +154,13 @@
   function detail_paket(id_to){
     var kelas = ".modal-on"+id_to;
     var data_to = $(kelas).data('todo');
-    url = base_url+"index.php/tryout/test";
+    url = base_url+"index.php/tryout/buatto";
     console.log(data_to);
     var datas = {
           id_paket:data_to.id_paket,
-          id_tryout:data_to.id_tryout}
+          id_tryout:data_to.id_tryout,
+          id_mm_tryoutpaket:data_to.id
+        }
     //$('#myModal').modal('show');
     console.log(datas);
     $.ajax({
@@ -168,13 +170,15 @@
       dataType: "TEXT",
       success: function(data)
       {
-        window.location.href = base_url + "index.php/tryout/mulaitest";
+       // window.location.href = base_url + "index.php/tryout/mulaitest";
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
             console.log("gagal")
           }
         });
+
+
 
   }
   $(document).ready(function() {
