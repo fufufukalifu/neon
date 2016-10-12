@@ -14,8 +14,7 @@
                              <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h3 class="panel-title">Daftar Soal</h3>
-                                        <input type="text" name="id" id="id_to" value="<?=$id_to;?>" >
-                                        <input type="text" name="UUID" id="UUID_to" value="57f750fdb64ba">
+                                        <input type="text" name="id" id="id_to" value="<?=$id_to;?>" hidden='true' >
                                 </div>
                                     <!-- Start Panel Body -->
                                 <div class="panel-body">
@@ -142,7 +141,7 @@
                                                                 <tr>
                                                                     <th>ID</th>
                                                                     <th>Nama Paket</th>
-                                                                    <th>Sumber</th>
+                                                                    <th>Deskripsi</th>
                                                                     <th>Aksi</th>
                                                                 </tr>
                                                             </thead>
@@ -160,7 +159,32 @@
 
                                         <!-- START LIST SISWA yang sudah di ADD -->
                                         <div class="tab-pane" id="siswaadd">
-                                             <h1>Siswa</h1>
+                                            <!-- Start tabel siswa add to -->
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Siswa yang akan mengikuti TO</h3>
+                                                </div>
+                                                <div class="panel-body soaltambah">
+                                                    <form action="" id="">
+                                                        <table class="table table-striped" id="tblist_siswa" style="font-size: 13px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Nama</th>
+                                                                    <th>Tingkat</th>
+                                                                    <th>Aksi</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- END tabel siswa add to -->
                                         </div>
                                         <!-- LIST Siswa yang sudah di ADD -->
                                     </div>
@@ -183,27 +207,44 @@
 <script type="text/javascript">
    
      var tblist_soal;
-     var UUID =$('#UUID_to').val();
-     console.log(UUID);
+     var tblist_siswa;
+     var idTo =$('#id_to').val();
+    
     // Script for getting the dynamic values from database using jQuery and AJAX
 
 
      $(document).ready(function() {
         tblist_soal = $('#listaddpaket').DataTable({ 
            "ajax": {
-            "url": base_url+"index.php/toback/ajax_listpaket/"+UUID,
+            "url": base_url+"index.php/toback/ajax_listpaket/"+idTo,
             "type": "POST"
         },
         "processing": true,
         });
+
+        tblist_siswa = $('#tblist_siswa').DataTable({ 
+           "ajax": {
+            "url": base_url+"index.php/toback/ajax_listsiswa/"+idTo,
+            "type": "POST"
+        },
+        "processing": true,
+        });
+
     });
 
     function reload_tblist(){
+         tblist_siswa.ajax.reload(null,false);
         tblist_soal.ajax.reload(null,false); //reload datatable ajax 
+       // 
     }
+
+    // function reload_listsiswa(){
+    //     tblist_siswa.reload(null,false);
+    // }
     function adda() {
          
-        $('.add').click(function(){    
+        $('.add').click(function(){ 
+
             addPaket();
             addSiswa();
         });
@@ -275,7 +316,7 @@
             {   
                 console.log(respone); 
                 console.log(data);
-                reload_tblist();
+                 reload_tblist();
                  $(':checkbox').attr('checked',false);
 
             },
@@ -291,6 +332,60 @@
          console.log(idsiswa);
          idsiswa=null;
 
+    }
+
+    // function delete paket to to
+    function dropPaket(idKey) {
+        var id_to =$('#id_to').val();
+        if (confirm('Apakah Anda yakin akan menghapus data paket? ')) {
+               // ajax delete data to database
+            $.ajax({
+                 url : base_url+"index.php/toBack/dropPaketTo/"+idKey,
+                 type: "POST",
+                 dataType: "TEXT",
+                 success: function(data,respone)
+                 {  
+                        console.log(data);
+                        console.log(respone);
+                        //if success reload ajax table
+                        // $('#modal_form').modal('hide');
+                        reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                        alert('Error deleting data');
+                        // console.log(jqXHR);
+                        // console.log(textStatus);
+                        console.log(errorThrown);
+                }
+            });
+        }
+    }
+    function dropSiswa(idKey) {
+        var id_to =$('#id_to').val();
+        if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+               // ajax delete data to database
+            $.ajax({
+                 url : base_url+"index.php/toBack/dropSiswaTo/"+idKey,
+                 type: "POST",
+                 dataType: "TEXT",
+                 success: function(data,respone)
+                 {  
+                        console.log(data);
+                        console.log(respone);
+                        //if success reload ajax table
+                        // $('#modal_form').modal('hide');
+                        reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                        alert('Error deleting data');
+                        // console.log(jqXHR);
+                        // console.log(textStatus);
+                        console.log(errorThrown);
+                }
+            });
+        }
     }
     adda();
 
