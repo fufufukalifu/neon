@@ -65,8 +65,25 @@
     //        tick();
     //    }
 
-    function countup(hour, min, stat) {
-        var seconds = 57;
+    function disableF5(e) {
+        if ((e.which || e.keyCode) == 116)
+            e.preventDefault();
+    }
+    ;
+    $(document).on("keydown", disableF5);
+
+// simply visual, let's you know when the correct iframe is selected
+    $(window).on("focus", function (e) {
+        $("html, body").css({background: "#FFF", color: "#000"})
+                .find("h2").html("THIS BOX NOW HAS FOCUS<br />F5 should not work.");
+    })
+            .on("blur", function (e) {
+                $("html, body").css({background: "", color: ""})
+                        .find("h2").html("CLICK HERE TO GIVE THIS BOX FOCUS BEFORE PRESSING F5");
+            });
+
+    function countup(hour, min, second, stat) {
+        var seconds = second;
         var mins = min;
         var hours = hour;
 
@@ -88,19 +105,20 @@
 
             seconds++;
 
-            counter.innerHTML = String(hours) + ":" + String(mins) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+            counter.innerHTML = (hours < 10 ? "0" : "") + String(hours) + ":" + (mins < 10 ? "0" : "") + String(mins) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+            document.getElementById("durasi").value = (hours * 60 * 60) + (mins * 60) + seconds;
 
             //save the time in cookie
-            if (seconds < 60) {
+            if (seconds < 59) {
                 setTimeout(tick, 1000);
             } else {
-                if (seconds == 60 && mins == 60) {
+                if (seconds == 59 && mins == 59) {
                     setTimeout(function () {
-                         countup(parseInt(hours)+1, parseInt(mins) + 1, false);
+                        countup(parseInt(hours) + 1, 0, false);
                     }, 1000);
-                }else if(seconds == 60){
+                } else if (seconds == 59) {
                     setTimeout(function () {
-                         countup(parseInt(hours), parseInt(mins) + 1, false);
+                        countup(parseInt(hours), parseInt(mins) + 1, -1, false);
                     }, 1000);
                 }
 //                if (mins > 1) {
@@ -120,10 +138,10 @@
     }
 
     function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
+//        var d = new Date();
+//        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+//        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + exdays;
     }
     function getCookie(cname) {
         var name = cname + "=";
@@ -139,10 +157,10 @@
         return "";
     }
 
-     deleteAllCookies('hours','seconds', 'minutes');
+//     deleteAllCookies('hours','seconds', 'minutes');
 //        deleteAllCookies();
 //    countdown(0, true);
-    countup(0,58,true);
+    countup(0, 0, 0, true);
 
 
     function deleteAllCookies(seconds, mins) {
