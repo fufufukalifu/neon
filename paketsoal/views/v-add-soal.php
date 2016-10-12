@@ -71,6 +71,9 @@
             </div>
             <div class="col-sm-12">
              <div class="col-sm-12">Soal:</div>
+                <div class="col-md-12">
+                  
+                </div>
              <div class="col-sm-12">
               <form >
                <table class="table table-striped" id="oplistsoal"  style="font-size: 13px">
@@ -91,6 +94,12 @@
                 </tbody>
                </table>
               </form>
+              <!-- START PESAN ERROR EMPTY INPUT -->
+                  <div class="alert alert-dismissable alert-danger" id="emptyinput_op" hidden="true">
+                    <button type="button" class="close" onclick="hide_msg_empty()" >×</button>
+                    <strong>O.M.G.!</strong> Silahkan pilih soal yang akan ditambahkan ke paket.
+                  </div>
+                  <!-- END PESAN ERROR EMPTY INPUT -->
              </div>
              <div class="col-sm-12 btn">
               <div class="col-sm-2">
@@ -98,9 +107,11 @@
                <input class="btn btn-primary tambahsoal" type="button" value="tambahkan soal"/>
               </div>
              </div>
+
             </div>
            </div>
           </form>
+
          </div>
 
          <!-- END -->
@@ -187,7 +198,7 @@
          });
         });
         // get list soal 
-        tblist_soal = null;
+
         tblist_soal = $('#tblist').DataTable({ 
 
          "processing": true,
@@ -199,13 +210,14 @@
 
         });
 
+        //hide pesan error empty input
+         
+
 
        });
 
+//hide pesan error empty input
 
-// function loadmatapelajaran(){
-
-// }
 
 //buat load tingkat
 function loadTingkat(){
@@ -326,14 +338,16 @@ function loadTingkat(){
 
     function addsoal(subBabId){
 
-
-
         list_soal = $('#oplistsoal').DataTable({ 
+           "bServerSide": true,
+
            "ajax": {
             "url": base_url+"index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
             "type": "POST"
         },
-        "processing": true,
+           "processing": true,
+           
+           "bDestroy": true,
         });
         
 
@@ -350,42 +364,45 @@ function loadTingkat(){
          idsoal[i] = $(this).val();
 
         }); 
-        
         console.log(idsoal);
-        console.log(idSubBab);
-        console.log(id_paket);
+        if (idsoal.length > 0) {
+            var url = base_url+"index.php/paketsoal/addsoaltopaket";
 
+          $.ajax({
+           url : url,
+           type: "POST",
+           dataType:'text',
+           data: {data:idsoal,
+            idSubBab:idSubBab,
+            id_paket:id_paket},
 
-        var url = base_url+"index.php/paketsoal/addsoaltopaket";
+              // cache: false,
+            // dataType: "JSON",
+            success: function(data,respone)
+            {   
+                  console.log(respone);// for testing
+                  // console.log(data);
+                  reload_tblist();
+                   $(':checkbox').attr('checked',false);
 
-        $.ajax({
-         url : url,
-         type: "POST",
-         dataType:'text',
-         data: {data:idsoal,
-          idSubBab:idSubBab,
-          id_paket:id_paket},
+                  },
+                  error: function (jqXHR, textStatus, errorThrown)
+                  {
 
-            // cache: false,
-          // dataType: "JSON",
-          success: function(data,respone)
-          {   
-                console.log(respone);// for testing
-                // console.log(data);
-                reload_tblist();
-                 $(':checkbox').attr('checked',false);
-
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-
-                 console.log(errorThrown);
-                 console.log(textStatus);
-                 console.log(jqXHR);
-                 alert('Error adding / update data');
-                }
-               });
+                   console.log(errorThrown);
+                   console.log(textStatus);
+                   console.log(jqXHR);
+                   alert('Error adding / update data');
+                  }
+                 });
+        } else {
+          $("#emptyinput_op").show();
+        }
+  
        }
+       function hide_msg_empty() {
+           $("#emptyinput_op").hide();
+        }
        function reload_tblist(){
         tblist_soal.ajax.reload(null,false); //reload datatable ajax 
        }
