@@ -12,7 +12,13 @@ class Tryout extends MX_Controller
 		$this->load->model('Tryout_model');
 		parent::__construct();
 	}
+	public function ajax_get_paket($id_tryout){
+		$data = $this->Tryout_model->get_paket_by_id_to($id_tryout);
+		
+		$output = array('data' => $data );
+		echo json_encode($output);
 
+	}
 	public function ajax_get_tryout(){
 		$datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
 		$datas['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
@@ -21,24 +27,21 @@ class Tryout extends MX_Controller
 
 		$data = array();
 
+		//mengamb
+	}
+
+	public function ajax_get_tryout_single($id_tryout){
+		$datas['id_tryout'] = $id_tryout;
+		$datas['tryout'] = $this->Tryout_model->get_tryout_by_id($datas);
+
+		$list = $datas['tryout'];
+
+		$data = array();
+
 		//mengambil nilai list
 		$baseurl = base_url();
 		foreach ( $list as $tryout_item ) {
-			// $no++;
-			$row = array();
-			$row[] = $tryout_item['id_tryout'];
-			$row[] = str_replace('-', ':', $tryout_item['nm_tryout']);
 
-			$row[] = '
-			<a id="btn-'.$tryout_item['id_tryout'].'" class="btn btn-primary btn-'.$tryout_item['id_tryout'].'"  title="Kerjakan TO" 
-			onclick="kerjakan_to('.$tryout_item['id_tryout'].')"  data-todo="'.json_encode($tryout_item).'">
-			<i class="glyphicon glyphicon-pencil"></i></a>
-
-			<a class="btn btn-success"  title="Hapus" 
-			onclick="lihat_detail('."'".$tryout_item['id_tryout']."'".')">
-			<i class="glyphicon glyphicon-list-alt"></i></a>';
-
-			$data[] = $row;
 
 		}
 		
@@ -70,12 +73,65 @@ class Tryout extends MX_Controller
 			);
 
 		
-		
+		$datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
+		$data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
 
 		$this->parser->parse('templating/index', $data);
 	}
+
+	public function create_seassoin_idto($id_to){
+		$this->session->set_userdata('id_tryout', $id_to);
+		redirect("tryout/daftarpaket");
+	}
+
+	public function create_session($id_paket){
+		//$this->session->userdata('id_paket',$id_paket);
+	}
+
+	public function daftarpaket(){
+		$data['id_to'] = $this->session->userdata('id_tryout');
+		$id_to = $data['id_to'];
+
+		if(!isset($id_to['id_to'])){
+			$data = array(
+				'judul_halaman' => 'Neon - Daftar Paket',
+				'judul_header' => 'Daftar Paket',
+				'judul_tingkat' => '',
+				);
+
+			$konten = 'modules/tryout/views/v-daftar-paket.php';
+
+			$data['files'] = array(
+				APPPATH . 'modules/homepage/views/v-header-login.php',
+				APPPATH . 'modules/templating/views/t-f-pagetitle.php',
+				APPPATH . $konten,
+				APPPATH . 'modules/homepage/views/v-footer.php',
+				);
+
+			$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
+
+		$this->parser->parse('templating/index', $data);
+			
+			
+		}else{
+			//kalo gak ada session
+			redirect('tryout');
+		}
+	}
 	//# fungsi indeks
 
+	function test(){
+		$data = array("id_paket"=>$this->input->post('id_paket'),
+					  "id_tryout"=>$this->input->post('id_tryout')
+			);
 
+		$this->session->set_userdata('id_paket', $data['id_paket']);
+		$this->session->set_userdata('id_tryout', $data['id_tryout']);
+
+	}
+
+	function test2(){
+		var_dump($this->session->userdata());
+	}
 }
 ?>
