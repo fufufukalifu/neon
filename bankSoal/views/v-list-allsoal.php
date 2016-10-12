@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
+
 <!-- START Template Main -->
 <section id="main" role="main">
     <!-- START Template Container -->

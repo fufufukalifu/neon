@@ -15,6 +15,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url('assets/image/touch/apple-touch-icon-72x72-precomposed.png') ?>">
         <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
+        <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
         <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
         <script>var base_url = '<?php echo base_url() ?>';</script>
         <!--/ END META SECTION -->
@@ -118,7 +119,7 @@
                         <div class="modal-body">
                              <form class="panel panel-default form-horizontal form-bordered" action="<?=base_url('index.php/toback/buatTo');?>" method="post">
                                 <div  class="form-group">
-                                    <label class="col-sm-3 control-label">Nama Paket</label>
+                                    <label class="col-sm-3 control-label">Nama Tryout</label>
                                     <div class="col-sm-8">
                                       <input type="text" class="form-control" name="nmpaket">
                                     </div>

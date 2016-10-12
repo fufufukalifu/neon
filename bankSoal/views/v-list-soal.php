@@ -10,12 +10,13 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
+
                         <h3 class="panel-title">Daftar Soal Berdasarkan Subbab</h3>
                         <form action="<?= base_url(); ?>index.php/banksoal/formsoal" method="get">
                             <input type="text" name="subBab" value="<?= $subBab; ?>" hidden="true" >
-                           
-                            <button title="Tambah Data" type="submit" class="btn btn-default pull-right"  style="margin-top:-30px;"><i class="ico-plus"></i></button>
+                            <button title="Tambah Data" type="submit" class="btn btn-default pull-right"  style="margin-top:-30px;"><i class="ico-plus"></i></button>    
                         </form>
+                        <hr>
 
                     </div>
                     <table class="table table-striped" id="zero-configuration" style="font-size: 13px">
