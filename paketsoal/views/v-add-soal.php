@@ -13,7 +13,7 @@
       <!--Start Container  -->
       <div class="container">
        <!-- Strat -->
-       <div class="col-sm-5">
+       <div class="col-sm-11">
         <!-- start -->
         <div class="panel panel-default">
          <div class="panel-heading">
@@ -70,10 +70,10 @@
              <br><br><br>
             </div>
             <div class="col-sm-12">
-             <div class="col-sm-2">Soal:</div>
-             <div class="col-sm-8">
+             <div class="col-sm-12">Soal:</div>
+             <div class="col-sm-12">
               <form >
-               <table class="table table-striped" id="zero-configuration"  style="font-size: 13px">
+               <table class="table table-striped" id="oplistsoal"  style="font-size: 13px">
                 <thead>
                  <tr>
                   <th>/</th>
@@ -112,7 +112,7 @@
        <!-- ENd -->
 
        <!-- Strat -->
-       <div class="col-sm-6">
+       <div class="col-sm-11">
         <div class="panel panel-default">
          <div class="panel-heading">
           <h3 class="panel-title">Soal Yang Ditambahkan</h3>
@@ -156,7 +156,10 @@
 
 
  <script>
+  //var untuk list soal yg sudah di add ke paket
   var tblist_soal;
+  //var untuk list soal 
+  var list_soal;
     // Script for getting the dynamic values from database using jQuery and AJAX
     $(document).ready(function() {
 
@@ -184,6 +187,7 @@
          });
         });
         // get list soal 
+        tblist_soal = null;
         tblist_soal = $('#tblist').DataTable({ 
 
          "processing": true,
@@ -194,6 +198,7 @@
          },
 
         });
+
 
        });
 
@@ -320,24 +325,21 @@ function loadTingkat(){
     }
 
     function addsoal(subBabId){
-        //console.log('testing');
-        //console.log(subBabId);
-        $.ajax({
 
-         type: "POST",
-         url: "<?php echo base_url() ?>index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
-         success: function(data){
-          $.each(data, function(i, data){
-           $('.soal').append(data.link);
-          });
-         }
 
+
+        list_soal = $('#oplistsoal').DataTable({ 
+           "ajax": {
+            "url": base_url+"index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
+            "type": "POST"
+        },
+        "processing": true,
         });
-       }
+        
 
-       function pusharray(data){
-        return 
-       }
+    }
+
+
 
        function tambahkansoal(){
         var idsoal = [];
@@ -348,7 +350,7 @@ function loadTingkat(){
          idsoal[i] = $(this).val();
 
         }); 
-
+        
         console.log(idsoal);
         console.log(idSubBab);
         console.log(id_paket);
@@ -371,7 +373,7 @@ function loadTingkat(){
                 console.log(respone);// for testing
                 // console.log(data);
                 reload_tblist();
-                 // $(':checkbox').attr('checked',false);
+                 $(':checkbox').attr('checked',false);
 
                 },
                 error: function (jqXHR, textStatus, errorThrown)

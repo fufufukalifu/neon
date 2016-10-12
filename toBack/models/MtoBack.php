@@ -36,7 +36,7 @@ class MTOBack extends CI_Model {
 	
 	public function siswa_by_totID ($id_to)
 	{
-		$this->db->select('siswa.id as siswaID,namaDepan,namaBelakang,aliasTingkat');
+		$this->db->select('ht.id as idKey,siswa.id as siswaID,namaDepan,namaBelakang,aliasTingkat');
 		$this->db->from('tb_tingkat tkt');
 		$this->db->join('tb_siswa siswa','siswa.tingkatID=tkt.id');
 		$this->db->join('tb_hakakses-to ht','ht.id_siswa=siswa.id');
@@ -49,7 +49,7 @@ class MTOBack extends CI_Model {
 
 	public function paket_by_toID($id_to)
 	{
-		$this->db->select('id,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
+		$this->db->select('mto.id as idKey ,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
 		$this->db->from('tb_paket paket');
 		$this->db->join('tb_mm-tryoutpaket mto','mto.id_paket = paket.id_paket');
 		$this->db->where('mto.id_tryout',$id_to);
@@ -58,8 +58,43 @@ class MTOBack extends CI_Model {
 
 	}
 
+	//drop relasi paket to
+	public function drop_paket_toTO($idKey)
+	{
+		$this->db->where('id',$idKey);
+		$this->db->delete('tb_mm-tryoutpaket');
+	}
 
+	//drop relasi siswa to
+	public function drop_siswa_toTO($idKey)
+	{
+		$this->db->where('id',$idKey);
+		$this->db->delete('tb_hakakses-to');
+	}
 
+	//drop  to
+	public function drop_TO($id_tryout)
+	{
+		$this->db->where('id_tryout',$id_tryout);
+		$this->db->delete('tb_tryout');
+	}
+
+	public function get_TO_by_id($id_tryout){
+		$this->db->select('*');
+		$this->db->from('tb_tryout');
+		$this->db->where('id_tryout',$id_tryout);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+	//edit data TO
+	public function ch_To($data)
+	{
+		$this->db->set($data['tryout']);
+        $this->db->where('id_tryout', $data['id_tryout']);
+        $this->db->update('tb_tryout');
+	}
 }
 ?>
 

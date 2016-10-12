@@ -50,7 +50,7 @@ class Paketsoal extends MX_Controller
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
 			$row[] = '<a class="btn btn-sm btn-primary"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-file5"></i></a>
-			<a class="btn btn-sm btn-success"  title="Add Soal" href="paketsoal/addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
+			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -168,69 +168,39 @@ class Paketsoal extends MX_Controller
 	}
 
 	function ajax_get_soal_by_subbabid( $subBabID ) {
-		// var_dump("hai");
 
 		$list = $soal=$this->mBankSoal->get_soal( $subBabID );
-		// var_dump($list);
+
+		$data = array();
 
 
-		if ( $list==array() ) {
-			$row = array( 'link'=>"<span class='text-danger'>Soal Belum Tersedia</span>" );
-			$datas[] = $row;
-		}else {
-			$datas = array();
+		//mengambil nilai list
+		$baseurl = base_url();
+		foreach ( $list as $list_soal ) {
 			$n='1';
-			foreach ( $list as $soal ) {
-				// $no++;
-				$row = array();
-				// $row = array( 'link'=>
-				// 	"<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-				// <input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
-				// <label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;".htmlspecialchars($soal['soal'])."</label>
-				
-				// </span><br>"
-				// );
-				$row = array( 'link'=>
-					"<tr>
-						<td>
-							<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-								<input type='checkbox' name="."soal".$n." id="."soal".$soal['id_soal']." value=".$soal['id_soal'].">
-								<label for="."soal".$soal['id_soal'].">&nbsp;&nbsp;</label>
-							</span>
-						</td>
-						
-						<td>".$soal['judul_soal']."</td>
-						<td>".$soal['sumber']."</td>
-						<td>".$soal['soal']."</td>
-						<td>".$soal['kesulitan']."</td>
-						
-					</tr>"
-				);
+			$row = array();
 
-				$datas[] = $row;
-				$n++;
-				##
-				// $row = array();
-				// $row[] = $soal['id_soal'];
-				// $row[] = $soal['judul_soal'];
-				// $row[] = $soal['sumber'];
-				// $row[] = $soal['soal'];
-				// $row[] = $soal['kesulitan'];
+			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+								<input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
+								<label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
+							</span>";
+			$row[] = $list_soal['judul_soal'];
+			$row[] = $list_soal['sumber'];
+			$row[] = $list_soal['soal'];
+			$row[] = $list_soal['kesulitan'];
+			// $row[] = '
+			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_soal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 
-				// $datas[] = $row;
-				##
-				
-			}
-
+			$data[] = $row;
+			$n++;
 
 		}
-		$data = $this->output
-		->set_content_type( "application/json" )
-		->set_output( json_encode( $datas ) ) ;
-
-		return $data;
-
-		// var_dump($datas);
+		//print_r($data);
+		$output = array(
+			"data"=>$data,
+		);
+		echo json_encode( $output );
+		
 	}
 	// function addsoaltopaket(){
 	// 	$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];

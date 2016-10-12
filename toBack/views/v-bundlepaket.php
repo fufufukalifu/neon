@@ -14,7 +14,7 @@
                              <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h3 class="panel-title">Daftar Soal</h3>
-                                        <input type="text" name="id" id="id_to" value="<?=$id_to;?>" >
+                                        <input type="text" name="id" id="id_to" value="<?=$id_to;?>" hidden='true' >
                                 </div>
                                     <!-- Start Panel Body -->
                                 <div class="panel-body">
@@ -233,16 +233,18 @@
     });
 
     function reload_tblist(){
+         tblist_siswa.ajax.reload(null,false);
         tblist_soal.ajax.reload(null,false); //reload datatable ajax 
-       
+       // 
     }
 
-    function reload_listsiswa(){
-        tblist_siswa.reload(null,false);
-    }
+    // function reload_listsiswa(){
+    //     tblist_siswa.reload(null,false);
+    // }
     function adda() {
          
-        $('.add').click(function(){    
+        $('.add').click(function(){ 
+
             addPaket();
             addSiswa();
         });
@@ -314,7 +316,7 @@
             {   
                 console.log(respone); 
                 console.log(data);
-                reload_listsiswa();
+                 reload_tblist();
                  $(':checkbox').attr('checked',false);
 
             },
@@ -330,6 +332,60 @@
          console.log(idsiswa);
          idsiswa=null;
 
+    }
+
+    // function delete paket to to
+    function dropPaket(idKey) {
+        var id_to =$('#id_to').val();
+        if (confirm('Apakah Anda yakin akan menghapus data paket? ')) {
+               // ajax delete data to database
+            $.ajax({
+                 url : base_url+"index.php/toBack/dropPaketTo/"+idKey,
+                 type: "POST",
+                 dataType: "TEXT",
+                 success: function(data,respone)
+                 {  
+                        console.log(data);
+                        console.log(respone);
+                        //if success reload ajax table
+                        // $('#modal_form').modal('hide');
+                        reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                        alert('Error deleting data');
+                        // console.log(jqXHR);
+                        // console.log(textStatus);
+                        console.log(errorThrown);
+                }
+            });
+        }
+    }
+    function dropSiswa(idKey) {
+        var id_to =$('#id_to').val();
+        if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+               // ajax delete data to database
+            $.ajax({
+                 url : base_url+"index.php/toBack/dropSiswaTo/"+idKey,
+                 type: "POST",
+                 dataType: "TEXT",
+                 success: function(data,respone)
+                 {  
+                        console.log(data);
+                        console.log(respone);
+                        //if success reload ajax table
+                        // $('#modal_form').modal('hide');
+                        reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                        alert('Error deleting data');
+                        // console.log(jqXHR);
+                        // console.log(textStatus);
+                        console.log(errorThrown);
+                }
+            });
+        }
     }
     adda();
 

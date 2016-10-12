@@ -103,7 +103,7 @@ class ToBack extends MX_Controller
 			$row[] = $list_paket['nm_paket'];
 			$row[] = $list_paket['deskripsi'];
 			$row[] = '
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick=""><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
 
@@ -131,7 +131,7 @@ class ToBack extends MX_Controller
 			$row[] = $list_siswa ['namaDepan'];
 			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick=""><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
 
@@ -148,18 +148,94 @@ class ToBack extends MX_Controller
 	#END Function add pakket to Try Out#
 
 	#START Function di halaman daftar TO#
-	//menampilkan list TO
+	//menampilkan halaman list TO
 	public function listTO()
 	{
-		$data['listTO'] =$this->mToBack->get_To();
         $data['files'] = array(
             APPPATH . 'modules/toback/views/v-list-to.php',
         );
         $data['judul_halaman'] = "List Try Out";
         $this->load->view('templating/index-b-guru', $data);
 	}
+	// menampilkan list to
+	public function ajax_listsTO()
+	{
+		$list =$this->mToBack->get_To();
+		$data = array();
+
+		$baseurl = base_url();
+		foreach ( $list as $list_to ) {
+			// $no++;
+			if ($list_to['publish']=='1') {
+				$publish='Publish';
+			} else {
+				$publish='Tidak Publish';
+			}
+			
+			$row = array();
+			$row[] = $list_to ['id_tryout'];
+			$row[] = $list_to ['nm_tryout'];
+			$row[] = $list_to['tgl_mulai'];
+			$row[] = $list_to['tgl_berhenti'];
+			$row[] = $publish;
+			$row[] = '
+			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')"><i class="ico-file5"></i></a>
+			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' ><i class="ico-file-plus2"></i></a>
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')"><i class="ico-remove"></i></a>';
+
+			$data[] = $row;
+
+		}
+	
+		$output = array(
+			
+			"data"=>$data,
+		);
+
+		echo json_encode( $output );
+
+	}
+	public function dropTO($id_tryout)
+	{
+		$this->mToBack->drop_TO($id_tryout);
+	}
+
+	public function ajax_edit( $id_tryout) {
+		$data = $this->mToBack->get_TO_by_id( $id_tryout );
+		echo json_encode( $data );
+	}
 	#END Function di halaman daftar TO#
 
+	// Drop paketb to TO
+	public function dropPaketTo($idKey)
+	{
+		$this->mToBack->drop_paket_toTO($idKey);
+	}
+
+	// Drop siswa to to
+	public function dropSiswaTo($idKey)
+	{
+		$this->mToBack->drop_siswa_toTO($idKey);
+	}
+
+
+	public function editTryout()
+	{
+		$data['id_tryout']=htmlspecialchars($this->input->post('id_tryout'));
+		$nm_tryout=htmlspecialchars($this->input->post('nama_tryout'));
+		$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
+		$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
+		$publish=htmlspecialchars($this->input->post('publish'));
+
+		$data['tryout']=array(
+			'nm_tryout'=>$nm_tryout,
+			'tgl_mulai'=>$tglMulai,
+			'tgl_berhenti'=>$tglAkhir,
+			'publish'=>$publish,
+			);
+
+		$this->mToBack->ch_To($data);
+	}
 
 }
 ?>

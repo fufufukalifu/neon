@@ -1,10 +1,9 @@
-<!DOCTYPE HTML>
 <html>
     <head>
         <title>{judul_halaman}</title>
         <script>var base_url = '<?php echo base_url() ?>';</script>
         <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
-        <meta charset="utf-8">
+        <meta charse="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         <!-- style -->
         <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
@@ -56,8 +55,12 @@
         <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
         
         <script src="<?= base_url('assets/back/js/retina.min.js') ?>"></script>
-        <script type="text/javascript">
-            $("#myCarousel").carousel();
-        </script>
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+        <!--datatable-->
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+        
+        <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
     </body>
 </html>
