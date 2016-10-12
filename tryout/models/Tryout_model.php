@@ -13,6 +13,17 @@ class Tryout_model extends MX_Controller
 		$this->db->insert( 'tb_report-paket', $data );
 	}
 
+	public function get_paket_undo(){
+		$query = "SELECT to.id_tryout,paket.id_paket,paket.nm_paket 
+		FROM `tb_tryout` `to` 
+		JOIN `tb_mm-tryoutpaket` `topaket` ON `to`.`id_tryout` = `topaket`.`id_tryout` 
+		JOIN `tb_paket` `paket` ON `topaket`.`id_paket` = `paket`.`id_paket` 
+		LEFT OUTER JOIN `tb_report-paket` repa ON `repa`.`id_mm-tryout-paket` = `topaket`.`id` 
+		WHERE `repa`.`id_report` IS NULL";
+
+		
+	}
+
 	public function get_paket_by_id_to($id_to){
 		$this->db->select('*');
 		$this->db->from('tb_tryout to');

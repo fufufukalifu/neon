@@ -1,5 +1,4 @@
 
-<?php print_r($paket_dikerjakan) ?>
 <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
  <div class="modal-dialog" role="document">
   <div class="modal-content">
@@ -95,37 +94,40 @@
 
 <!-- top -->
 <div class="col-md-9">
-  <h3>Daftar Paket Latihan</h3>
+  <h3>Daftar Paket Tryout</h3>
   <div class="col-md-12" id="owl1">
     <?php if ($paket==array()): ?>
-      <h4>Tidak ada latihan.</h4>
+      <h4>Belum ada paket Try Out.</h4>
     <?php else: ?>
       <?php foreach ($paket as $paketitem): ?>
-       <div class="col-md-6">
-        <div class="panel bg-color-1">
-         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-          <p>
-           <?=$paketitem['nm_paket'] ?>
-         </p>
-       </strong>
-     </div>
+         <div class="col-md-6">
+          <div class="panel bg-color-1">
+           <div class="panel-heading text-left">
+            <p style="width: 130px">
+             <strong><?=$paketitem['nm_paket'] ?></strong>
+           </p>
+         </strong>
+       </div>
 
-     <div class="panel-body text-center">
-       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+       <div class="panel-body text-center">
+         <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">
+       </div>
+       <table class="table" >
+         <tbody>
+          <tr>
+            <td colspan="2" align="center">
+              <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+               class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
+               data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
+
+
+
+             </td>
+           </tr>
+         </tbody>
+       </table>
      </div>
-     <table class="table">
-       <tbody>
-        <tr>
-          <td colspan="2" align="center">
-            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-             class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
-             data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
-           </td>
-         </tr>
-       </tbody>
-     </table>
    </div>
- </div>
 <?php endforeach ?>
 <?php endif ?>
 </div>
@@ -136,34 +138,45 @@
   <h3>Daftar History TO</h3>
   <div class="col-md-12" id="owl2">
     <?php if ($paket_dikerjakan==array()): ?>
-      <h4>Tidak ada latihan.</h4>
+      <h4>Tidak ada paket soal.</h4>
     <?php else: ?>
       <?php foreach ($paket_dikerjakan as $paketitem): ?>
        <div class="col-md-6">
         <div class="panel bg-color-1">
-         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-          <p>
-           <?=$paketitem['nm_paket'] ?>
-         </p>
-       </strong>
-     </div>
+         <div class="panel-heading text-left">
+          <p style="width:130px">
+           <strong> <?=$paketitem['nm_paket'] ?> </strong>
+           <?php if ($paketitem['status_pengerjaan']==2): ?>
+            <span><strong>status</strong>:Belum/Tidak selesai</span>
+          <?php elseif($paketitem['status_pengerjaan']==3): ?>
+            <span><strong>status</strong>:Selesai<br><br></span>
+          <?php endif ?>
+        </p>
+      </strong>
+    </div>
 
-     <div class="panel-body text-center">
-       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
-     </div>
-     <table class="table">
-       <tbody>
-        <tr>
-          <td colspan="2" align="center">
-            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-             class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
-             data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
-           </td>
-         </tr>
-       </tbody>
-     </table>
+    <div class="panel-body text-center">
+     <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">    
    </div>
+   <table class="table">
+     <tbody>
+      <tr>
+        <td colspan="2" align="center">
+          <?php if ($paketitem['status_pengerjaan']==2): ?>
+           <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+             class="cws-button border-radius bt-color-3 modal-on<?=$paketitem['id_paket']?>"
+             data-todo='<?=json_encode($paketitem)?>'>Lanjut</a>
+           <?php elseif($paketitem['status_pengerjaan']==3): ?>
+            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+             class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
+             data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
+           <?php endif ?>
+         </td>
+       </tr>
+     </tbody>
+   </table>
  </div>
+</div>
 <?php endforeach ?>
 <?php endif ?>
 </div>
@@ -187,12 +200,12 @@
     var kelas = ".modal-on"+id_to;
     var data_to = $(kelas).data('todo');
     url = base_url+"index.php/tryout/buatto";
-    console.log(data_to);
+
     var datas = {
-          id_paket:data_to.id_paket,
-          id_tryout:data_to.id_tryout,
-          id_mm_tryoutpaket:data_to.id
-        }
+      id_paket:data_to.id_paket,
+      id_tryout:data_to.id_tryout,
+      id_mm_tryoutpaket:data_to.id
+    }
     $.ajax({
       url : url,
       type: "POST",
@@ -201,12 +214,12 @@
       success: function(data)
       {
        window.location.href = base_url + "index.php/tryout/mulaitest";
-          },
-          error: function (jqXHR, textStatus, errorThrown)
-          {
-            console.log("gagal")
-          }
-        });
+     },
+     error: function (jqXHR, textStatus, errorThrown)
+     {
+      console.log("gagal")
+    }
+  });
 
 
 
