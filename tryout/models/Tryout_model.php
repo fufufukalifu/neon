@@ -9,6 +9,9 @@ class Tryout_model extends MX_Controller
 
 
 	}
+	public function insert_report_sementara($data){
+		$this->db->insert( 'tb_report-paket', $data );
+	}
 
 	public function get_paket_by_id_to($id_to){
 		$this->db->select('*');
@@ -56,5 +59,7 @@ class Tryout_model extends MX_Controller
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	
 }
 ?>
