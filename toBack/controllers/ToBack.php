@@ -89,19 +89,47 @@ class ToBack extends MX_Controller
 	}
 
 	//menampikan paket yg sudah di add
-	function ajax_listpaket($UUID) {
-		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID)[0];
-		$id_to=$data['tryout']['id_tryout'];
-		$list = $this->load->MPaketsoal->soal_by_paketUUID($id_to);
+	function ajax_listpaket($idTO) {
+		
+
+		$list = $this->load->mToBack->paket_by_toID($idTO);
 		$data = array();
 
 		$baseurl = base_url();
 		foreach ( $list as $list_paket ) {
 			// $no++;
 			$row = array();
-			$row[] = $list_paket['id_paket'];
+			$row[] = $list_paket['paketID'];
 			$row[] = $list_paket['nm_paket'];
 			$row[] = $list_paket['deskripsi'];
+			$row[] = '
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick=""><i class="ico-remove"></i></a>';
+
+			$data[] = $row;
+
+		}
+	
+		$output = array(
+			
+			"data"=>$data,
+		);
+
+		echo json_encode( $output );
+	}
+
+	function ajax_listsiswa($idTO) {
+		
+
+		$list = $this->load->mToBack->siswa_by_totID($idTO);
+		$data = array();
+
+		$baseurl = base_url();
+		foreach ( $list as $list_siswa ) {
+			// $no++;
+			$row = array();
+			$row[] = $list_siswa ['siswaID'];
+			$row[] = $list_siswa ['namaDepan'];
+			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick=""><i class="ico-remove"></i></a>';
 

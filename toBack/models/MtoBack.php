@@ -33,55 +33,31 @@ class MTOBack extends CI_Model {
 		$this->db->insert_batch('tb_hakakses-to',$dat_siswa);
 	}
 
-	#Function untuk tampil data list yg baru di add#
-
-	function hitung_semuapaket() {
-		$this->db->from( $this->table );
-		return $this->db->count_all_results();
-	}
-
-	function hitung_filterpaket() {
-		$this->_get_datatables_query();
+	
+	public function siswa_by_totID ($id_to)
+	{
+		$this->db->select('siswa.id as siswaID,namaDepan,namaBelakang,aliasTingkat');
+		$this->db->from('tb_tingkat tkt');
+		$this->db->join('tb_siswa siswa','siswa.tingkatID=tkt.id');
+		$this->db->join('tb_hakakses-to ht','ht.id_siswa=siswa.id');
+		$this->db->where('ht.id_tryout',$id_to);
 		$query = $this->db->get();
-		return $query->num_rows();
+        return $query->result_array();
+
 	}
 
-	private function _get_datatables_query() {
 
-		$this->db->from( $this->table );
+	public function paket_by_toID($id_to)
+	{
+		$this->db->select('id,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
+		$this->db->from('tb_paket paket');
+		$this->db->join('tb_mm-tryoutpaket mto','mto.id_paket = paket.id_paket');
+		$this->db->where('mto.id_tryout',$id_to);
+		$query = $this->db->get();
+        return $query->result_array();
 
-		$i = 0;
-
-		foreach ( $this->column_search as $item ) // loop column
-			{
-			if ( $_POST['search']['value'] ) // if datatable send POST for search
-				{
-
-				if ( $i===0 ) // first loop
-					{
-					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-					$this->db->like( $item, $_POST['search']['value'] );
-				}
-				else {
-					$this->db->or_like( $item, $_POST['search']['value'] );
-				}
-
-				if ( count( $this->column_search ) - 1 == $i ) //last loop
-					$this->db->group_end(); //close bracket
-			}
-			$i++;
-		}
-
-		if ( isset( $_POST['order'] ) ) // here order processing
-			{
-			$this->db->order_by( $this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir'] );
-		}
-		else if ( isset( $this->order ) ) {
-				$order = $this->order;
-				$this->db->order_by( key( $order ), $order[key( $order )] );
-			}
 	}
-	##################################################
+
 
 
 }

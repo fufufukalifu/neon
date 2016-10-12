@@ -195,7 +195,7 @@ class MPaketsoal extends CI_Model {
         return $query->result_array();
 	}
 
-	public function soal_by_paketUUID($id_to)
+	public function paket_by_paketUUID($id_to)
 	{
 		$this->db->select('id,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
 		$this->db->from('tb_paket paket');
