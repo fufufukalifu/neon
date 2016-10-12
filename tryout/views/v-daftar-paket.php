@@ -1,5 +1,5 @@
 
-
+<?php print_r($paket_dikerjakan) ?>
 <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
  <div class="modal-dialog" role="document">
   <div class="modal-content">
@@ -133,7 +133,39 @@
 </div>
 
 <div class="col-md-9">
-  <h3>Histori Try Out</h3>
+  <h3>Daftar History TO</h3>
+  <div class="col-md-12" id="owl2">
+    <?php if ($paket_dikerjakan==array()): ?>
+      <h4>Tidak ada latihan.</h4>
+    <?php else: ?>
+      <?php foreach ($paket_dikerjakan as $paketitem): ?>
+       <div class="col-md-6">
+        <div class="panel bg-color-1">
+         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
+          <p>
+           <?=$paketitem['nm_paket'] ?>
+         </p>
+       </strong>
+     </div>
+
+     <div class="panel-body text-center">
+       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
+     </div>
+     <table class="table">
+       <tbody>
+        <tr>
+          <td colspan="2" align="center">
+            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+             class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
+             data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+ </div>
+<?php endforeach ?>
+<?php endif ?>
 </div>
 </div>
 

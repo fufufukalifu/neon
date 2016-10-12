@@ -20,9 +20,29 @@ class Tryout_model extends MX_Controller
 		$this->db->join('tb_paket paket','topaket.id_paket = paket.id_paket');
 		$query = $this->db->get();
 		return $query->result_array();
-
 	}
 
+		public function get_paket_actioned_by_id_to($id_to){
+		$this->db->select('*');
+		$this->db->from('tb_tryout to');
+		$this->db->join('tb_mm-tryoutpaket topaket', 'to.id_tryout = topaket.id_tryout');
+		$this->db->join('tb_paket paket','topaket.id_paket = paket.id_paket');
+		$this->db->join('tb_report-paket repot_paket','repot_paket.id_mm-tryout-paket=topaket.id');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	public function get_paket($id_to){
+				$this->db->select('id_paket');
+		$this->db->from('tb_tryout to');
+		$this->db->join('tb_mm-tryoutpaket topaket', 'to.id_tryout = topaket.id_tryout');
+		$this->db->join('tb_paket paket','topaket.id_paket = paket.id_paket');
+		$this->db->intersect();
+		$this->db->select('id_paket');
+		$this->db->from('tb_tryout to');
+		$this->db->join('tb_mm-tryoutpaket topaket', 'to.id_tryout = topaket.id_tryout');
+		$this->db->join('tb_paket paket','topaket.id_paket = paket.id_paket');
+		$this->db->join('tb_report-paket repot_paket','repot_paket.id_mm-tryout-paket=topaket.id');
+	}
 	public function get_id_siswa(){
 		$this->db->select('siswa.penggunaID');
 		$this->db->from('tb_siswa siswa');

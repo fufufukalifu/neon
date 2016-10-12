@@ -108,9 +108,17 @@ class Tryout extends MX_Controller
 				APPPATH . 'modules/homepage/views/v-footer.php',
 				);
 
-			$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
+			$data['paket'] = $this->Tryout_model->get_paket($id_to);
 
-			$this->parser->parse('templating/index', $data);
+			$data['paket_dikerjakan'] = $this->Tryout_model->get_paket_actioned_by_id_to($id_to);
+
+			
+
+			print_r($data['paket']);
+			echo "<br><br>";
+			//print_r($data['paket_dikerjakan']);
+
+			// $this->parser->parse('templating/index', $data);
 			
 			
 		}else{
