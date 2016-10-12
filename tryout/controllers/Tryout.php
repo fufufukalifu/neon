@@ -1,17 +1,20 @@
 <?php
-defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
+
+defined('BASEPATH') or exit('No direct script access allowed');
+
 /**
  *
  */
-class Tryout extends MX_Controller
-{
-	public function __construct() {
-		$this->load->library( 'parser' );
-		parent::__construct();
-	}
+class Tryout extends MX_Controller {
 
-	//# fungsi indeks
-	public function index(){
+    public function __construct() {
+        $this->load->library('parser');
+        $this->load->model('Tesonline/Tesonline_model');
+        parent::__construct();
+    }
+
+    //# fungsi indeks
+    public function index() {
         $data = array(
             'judul_halaman' => 'Neon - Tryout',
             'judul_header' => 'Daftar Tryout',
@@ -29,9 +32,9 @@ class Tryout extends MX_Controller
 
 
         $this->parser->parse('templating/index', $data);
-	}
-	//# fungsi indeks
+    }
 
-
+    //# fungsi indeks
 }
+
 ?>
