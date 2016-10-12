@@ -161,8 +161,6 @@
           id_tryout:data_to.id_tryout,
           id_mm_tryoutpaket:data_to.id
         }
-    //$('#myModal').modal('show');
-    console.log(datas);
     $.ajax({
       url : url,
       type: "POST",
@@ -170,7 +168,7 @@
       dataType: "TEXT",
       success: function(data)
       {
-       // window.location.href = base_url + "index.php/tryout/mulaitest";
+       window.location.href = base_url + "index.php/tryout/mulaitest";
           },
           error: function (jqXHR, textStatus, errorThrown)
           {

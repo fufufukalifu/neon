@@ -121,15 +121,21 @@ class Tryout extends MX_Controller
 	//# fungsi indeks
 
 	function buatto(){
+
 		$data = array("id_paket"=>$this->input->post('id_paket'),
 			"id_tryout"=>$this->input->post('id_tryout'),
-			"id_mm_tryoutpaket"=>$this->input->post('id_mm_tryoutpaket'),
+			"id_mm-tryoutpaket"=>$this->input->post('id_mm_tryoutpaket'),
 			);
 
 		$this->session->set_userdata('id_paket', $data['id_paket']);
 		$this->session->set_userdata('id_tryout', $data['id_tryout']);
-		$this->session->set_userdata('id_mm_tryoutpaket', $data['id_mm_tryoutpaket']);
-
+		$this->session->set_userdata('id_mm-tryoutpaket', $data['id_mm-tryoutpaket']);
+		$insert = array("id_pengguna"=>$this->session->userdata('id'),
+						"id_mm-tryout-paket"=>$this->session->userdata('id_mm-tryoutpaket'),
+						"status_pengerjaan"=>'2'
+			);
+		
+		$this->Tryout_model->insert_report_sementara($insert);
 	}
 
 	function test2(){
