@@ -126,7 +126,7 @@
        <div class="col-sm-11">
         <div class="panel panel-default">
          <div class="panel-heading">
-          <h3 class="panel-title">Soal Yang Ditambahkan</h3>
+          <h3 class="panel-title">Daftar Soal yang Telah di Tambahkan</h3>
          </div>
          <div class="panel-body soaltambah">
           <form action="" id="">

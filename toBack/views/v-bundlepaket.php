@@ -30,42 +30,56 @@
                                         
                                         <div class="tab-pane active"  id="paket">
 
-                                                    <table class="table table-bordered" id="zero-configuration" style="font-size: 13px">
-                                                        <thead>
-                                                            <tr>
-                                                                <th >Aksi</th>
-                                                                <th >ID</th>
-                                                                <th>Nama paket</th>
-                                                                <th>Deskripsi</th>
-                                                                <th>Lihat</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <form>
-                                                            <tbody id="tbpaket">
-                                                                <?php
-                                                                $n='1'; 
-                                                                foreach ($paket as $row):
-                                                                   ?>
-                                                               <tr>
-                                                                <td>
-                                                                    <span class='checkbox custom-checkbox custom-checkbox-inverse'>
-                                                                        <input type='checkbox' name="<?=$row['nm_paket'].$n;?>" id="<?=$row['nm_paket'].$row['id_paket'];?>" value="<?= $row['id_paket'];?>">
-                                                                        <label for="<?=$row['nm_paket'].$row['id_paket'];?>">&nbsp;&nbsp;</label>
-                                                                    </span>
-                                                                </td>
-                                                                <td><?=$row['id_paket'];?></td>
-                                                                <td><?=$row['nm_paket'];?></td>
-                                                                <td><?=$row['deskripsi'];?></td>
-                                                                <td><button class="btn-primary">Lihat</button></td>
-                                                            </tr>
-                                                            <?php  $n++; endforeach; ?>
-                                                            </tbody>                                   
-                                                        </form>
-                                                </table>
+                                            <table class="table table-bordered" id="zero-configuration" style="font-size: 13px">
+                                                <thead>
+                                                    <tr>
+                                                        <th >Aksi</th>
+                                                        <th >ID</th>
+                                                        <th>Nama paket</th>
+                                                        <th>Deskripsi</th>
+                                                        <th>Lihat</th>
+                                                    </tr>
+                                                </thead>
+                                                <form>
+                                                    <tbody id="tbpaket">
+                                                        <?php
+                                                        $n='1'; 
+                                                        foreach ($paket as $row):
+                                                         ?>
+                                                     <tr>
+                                                        <td>
+                                                            <span class='checkbox custom-checkbox custom-checkbox-inverse'>
+                                                                <input type='checkbox' name="<?=$row['nm_paket'].$n;?>" id="<?=$row['nm_paket'].$row['id_paket'];?>" value="<?= $row['id_paket'];?>">
+                                                                <label for="<?=$row['nm_paket'].$row['id_paket'];?>">&nbsp;&nbsp;</label>
+                                                            </span>
+                                                        </td>
+                                                        <td><?=$row['id_paket'];?></td>
+                                                        <td><?=$row['nm_paket'];?></td>
+                                                        <td><?=$row['deskripsi'];?></td>
+                                                        <td><button class="btn-primary">Lihat</button></td>
+                                                    </tr>
+                                                    <?php  $n++; endforeach; ?>
+                                                    </tbody>                                   
+                                                </form>
+                                            </table>
+                                            <!-- end -->
+                                            <!-- START PESAN ERROR EMPTY INPUT -->
+                                                <div class="alert alert-dismissable alert-danger" id="msg_e_paket" hidden="true">
+                                                    <button type="button" class="close" onclick="hide_msg_e_paket()" >×</button>
+                                                    <strong>O.M.G.!</strong> Silahkan pilih Paket yang akan di UJIANKAN.
+                                                </div>
+                                            <!-- END PESAN ERROR EMPTY INPUT -->
+                                            <!--START PESAN BERHASIL PAKET DI ADD KE TO -->
+                                                <div class="alert alert-dismissable alert-success" id="msg_s_paket" hidden="true" >
+                                                    <button type="button" class="close" onclick="hide_msg_s_paket()" >×</button>
+                                                    <strong>Well done!</strong> Paket telah di tambahkan ke Try Out.
+                                                </div>
+                                            <!--END PESAN BERHASIL PAKET DI ADD KE TO  -->
                                         </div>
                                        <!-- End Tab pane Paket -->
                                        <!-- Start Tab pane Siswa -->
                                        <div class="tab-pane" id="siswa">
+                                            <!-- START TABEL SISWA -->
                                             <table class="table table-striped" id="column-filtering" style="font-size: 13px">
                                                 <thead>
                                                     <tr>
@@ -94,6 +108,19 @@
                                                     <?php endforeach ?>
                                                 </tbody>
                                             </table>
+                                            <!-- END TABEL SISWA -->
+                                            <!-- START PESAN ERROR EMPTY INPUT -->
+                                                <div class="alert alert-dismissable alert-danger" id="msg_e_siswa" hidden="true">
+                                                    <button type="button" class="close" onclick="hide_msg_e_siswa()" >×</button>
+                                                    <strong>O.M.G.!</strong> Silahkan pilih siswa yang akan mengikuti UJIAN.
+                                                </div>
+                                            <!-- END PESAN ERROR EMPTY INPUT -->
+                                            <!--START PESAN BERHASIL SISWA DI ADD KE TO -->
+                                                <div class="alert alert-dismissable alert-success" id="msg_s_siswa" hidden="true" >
+                                                    <button type="button" class="close" onclick="hide_msg_s_siswa()" >×</button>
+                                                    <strong>Well done!</strong> SISWA telah di tambahkan ke Try Out.
+                                                </div>
+                                            <!--END PESAN BERHASIL SISWA DI ADD KE TO  -->
 
                                         </div>
                                        <!-- Start Tab pane Paket -->
@@ -165,6 +192,7 @@
                                                     <h3 class="panel-title">Siswa yang akan mengikuti TO</h3>
                                                 </div>
                                                 <div class="panel-body soaltambah">
+                                                    <!-- START TABEL SISWA YG SUDAH DI ADD -->
                                                     <form action="" id="">
                                                         <table class="table table-striped" id="tblist_siswa" style="font-size: 13px">
                                                             <thead>
@@ -182,6 +210,8 @@
                                                         </table>
 
                                                     </form>
+                                                    <!-- END TABEL SISWA YG SUDAH DI ADD  -->
+                                                   
                                                 </div>
                                             </div>
                                             <!-- END tabel siswa add to -->
@@ -244,13 +274,27 @@
     function adda() {
          
         $('.add').click(function(){ 
-
             addPaket();
             addSiswa();
         });
        
     }
-
+    function hide_msg_e_siswa() 
+    {
+         $("#msg_e_siswa").hide();
+    }
+    function hide_msg_e_paket() 
+    {
+         $("#msg_e_paket").hide();
+    }
+    function hide_msg_s_paket()
+    {
+        $("#msg_s_paket").hide();
+    }
+    function hide_msg_s_siswa()
+    {
+        $("#msg_s_siswa").hide();
+    }
     function addPaket(){
         var idpaket = [];
         var id_to =$('#id_to').val();
@@ -260,35 +304,39 @@
         });
         $('#tbpaket input').attr('checked',false);
 
-        // if (!idpaket) {
-        //     console.log('null');
-        // }
+        if (idpaket.length > 0) {
+             var url = base_url+"index.php/toBack/addPaketToTO";
 
-        var url = base_url+"index.php/toBack/addPaketToTO";
+             $.ajax({
+                url : url,
+                type: "POST",
+                data: {idpaket:idpaket,
+                       id_to:id_to 
+                        },
+                // cache: false,
+              // dataType: "JSON",
+                success: function(data,respone)
+                {   
+                   
+                    reload_tblist();
+                    $("#msg_e_paket").hide();
+                    $("#msg_s_paket").show();
+                    $(':checkbox').attr('checked',false);
 
-         $.ajax({
-            url : url,
-            type: "POST",
-            data: {idpaket:idpaket,
-                   id_to:id_to 
-                    },
-            // cache: false,
-          // dataType: "JSON",
-            success: function(data,respone)
-            {   
-                console.log(respone); 
-                console.log(data);
-                reload_tblist();
-                 $(':checkbox').attr('checked',false);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                 
 
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-             
+                    alert('Error adding / update data');
+                }
+            });
+        }else{
+            $("#msg_s_paket").hide();
+            $("#msg_e_paket").show();
+        }
 
-                alert('Error adding / update data');
-            }
-        });
+        
 
 
         // console.log(idpaket);
@@ -302,31 +350,38 @@
         });
         $('#tbsiswa input').attr('checked',false);
 
-         var url = base_url+"index.php/toBack/addsiswaToTO";
+        if (idsiswa.length > 0) {
+                 var url = base_url+"index.php/toBack/addsiswaToTO";
 
-         $.ajax({
-            url : url,
-            type: "POST",
-            data: {idsiswa : idsiswa,
-                   id_to:id_to 
-                    },
-            // cache: false,
-          // dataType: "JSON",
-            success: function(data,respone)
-            {   
-                console.log(respone); 
-                console.log(data);
-                 reload_tblist();
-                 $(':checkbox').attr('checked',false);
+             $.ajax({
+                url : url,
+                type: "POST",
+                data: {idsiswa : idsiswa,
+                       id_to:id_to 
+                        },
+                // cache: false,
+              // dataType: "JSON",
+                success: function(data,respone)
+                {   
+                    reload_tblist();
+                    $(':checkbox').attr('checked',false);
+                    $("#msg_s_siswa").show();
+                    $("#msg_e_siswa").hide();
 
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-             
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                 
 
-                alert('Error adding / update data');
-            }
-        });
+                    alert('Error adding / update data');
+                }
+            });
+        } else {
+            $("#msg_s_siswa").hide();
+            $("#msg_e_siswa").show();
+        }
+
+        
 
         
          console.log(idsiswa);
