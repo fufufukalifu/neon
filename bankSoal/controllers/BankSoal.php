@@ -166,11 +166,12 @@ class BankSoal extends MX_Controller {
         }
         #END Cek USer#
     }
-
+    // START FUNCTION UNTUK HALAMAN ALL SOAL
+    //function untuk menampilkan halaman all soal
     public function allsoal()
     {
-        $data['soal'] = $this->mbanksoal->get_allsoal();
-        $data['pilihan'] = $this->mbanksoal->get_allpilihan();
+        // $data['soal'] = $this->mbanksoal->get_allsoal();
+        // $data['pilihan'] = $this->mbanksoal->get_allpilihan();
        
         $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
@@ -195,6 +196,86 @@ class BankSoal extends MX_Controller {
         }
         #END Cek USer#
     }
+
+    // function untuk mengambil data soal
+    function ajax_listAllSoal() {
+         $list = $this->mbanksoal->get_allsoal();
+        $pilihan = $this->mbanksoal->get_allpilihan();
+
+        // $list = $this->load->mToBack->paket_by_toID($idTO);
+        $data = array();
+
+        $baseurl = base_url();
+        foreach ( $list as $list_soal ) {
+           
+            $jawaban=$list_soal['jawaban'];
+            $tingkat=$list_soal['kesulitan'];
+            $id_soal=$list_soal['id_soal'];
+             // menentukan tingkat kesulitan dengan indeks 1 - 3
+            if ($tingkat == '3') {
+                $kesulitan = 'Sulit';
+            } elseif ($tingkat == '2') {
+                $kesulitan = 'Sedang';
+            }else {
+               $kesulitan = 'Mudah';
+            }
+            // menentukan jawaban benar
+            foreach ( $pilihan as $piljawaban ) {
+                $id_soal_fk=$piljawaban['id_soal'];
+                $op=$piljawaban['pilihan'];
+                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
+                    $jawabanBenar=$piljawaban['jawabanBenar'];
+                } 
+                
+            }
+            // menentukan random
+            if (condition) {
+                # code...
+            } 
+            
+            //mnentukan publish
+            $checked="";
+            $row = array();
+            $row[] = $id_soal;
+            $row[] = $list_soal['judul_soal'];
+            $row[] = $list_soal['sumber'];
+            $row[] = $list_soal['keterangan'];
+            $row[] = $kesulitan;
+            $row[] =  $list_soal['soal'];
+            $row[] =   $jawabanBenar;
+            $row[] =  $list_soal['publish'];
+            // $row[] =  $list_soal['random'];
+
+            $row[] ='
+                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
+                                <input type="checkbox" name="checkbox"'.$checked.'>
+                                <label for="checkbox" >&nbsp;&nbsp;</label>
+                            </span>';
+            $row[] = '
+            <div class="col-md-4">
+           <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+
+                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
+                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                <button type="submit" class="btn btn-sm btn-default"><i class="ico-file5"></i></button>
+
+            </form>
+            </div>
+            <div class="col-md-4">
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>
+            </div>';
+
+            $data[] = $row;
+
+        }
+    
+        $output = array(
+            
+            "data"=>$data,
+        );
+
+        echo json_encode( $output );
+    } 
 
     #Start Function untuk form upload bank soal#
 

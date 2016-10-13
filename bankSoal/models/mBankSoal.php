@@ -124,7 +124,7 @@ class MbankSoal extends CI_Model {
     //
     public function get_allsoal()
     {
-        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,soal,tp.keterangan,soal.id_subbab');
+        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab');
         $this->db->from('tb_tingkat-pelajaran tp');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -137,7 +137,7 @@ class MbankSoal extends CI_Model {
 
     public function get_allpilihan()
     {
-         $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');
+         $this->db->select('*,pil.id_soal as pilID, soal.id_soal as soalID, pil.jawaban as jawabanBenar');
         $this->db->from('tb_banksoal soal');
         $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
         $query = $this->db->get();
