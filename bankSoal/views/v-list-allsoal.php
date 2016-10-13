@@ -13,7 +13,7 @@
                         <h3 class="panel-title">Daftar Soal</h3>
 
                     </div>
-                    <table class="table table-striped" id="tb_allSoal" style="font-size: 13px">
+                    <table class="table table-striped table-bordered" id="tb_allSoal" style="font-size: 13px">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -24,8 +24,10 @@
                                 <th>Soal</th>
                                 <th>Jawaban</th>
                                 <th>Publish</th>
-                                <th>Random</th>
-                                <th>Aksi</th>
+                                <!-- <th>Random</th> -->
+                                <th></th>
+                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -49,30 +51,6 @@
 
 
 <script type="text/javascript">
-//     var table = $('#datatable').DataTable();
-// //fungsi untuk hapus
-//     $('#datatable tbody').on('click', 'button#hapusBtn', function () {
-//         table
-//                 .row($(this).parents('tr'))
-//                 .remove()
-//                 .draw();
-//         console.log('masuk');
-
-//         var id_soal = $(this).data("id");
-//         var url = base_url + "index.php/banksoal/deleteBanksoal/" + id_soal;
-
-//         $.ajax({
-//             type: "POST",
-//             url: url,
-//             dataType: "json",
-//             cache: false,
-//             success:
-//                     function (data) {
-//                         // alert(data);
-//                     }
-//         });
-
-//     });
 
     var tb_allSoal;
     $(document).ready(function() {
@@ -85,7 +63,32 @@
         });
     });
 
-    function dropSoal() {
-        alert('masuk drop soal');
+    function dropSoal(id_soal) {
+        if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
+               // ajax delete data to database
+                $.ajax({
+                     url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
+                     type: "POST",
+                     dataType: "TEXT",
+                     success: function(data,respone)
+                     {  
+                            console.log(data);
+                            console.log(respone);
+                            reload_tblist();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                            alert('Error deleting data');
+                            // console.log(jqXHR);
+                            // console.log(textStatus);
+                            console.log(errorThrown);
+                    }
+                });
+             }
     }
+
+    function reload_tblist(){
+       tb_allSoal.ajax.reload(null,false); 
+    }
+
 </script>
