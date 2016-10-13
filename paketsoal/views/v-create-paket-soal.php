@@ -9,6 +9,12 @@
             <div class="modal-body form">
                 <form action="#" id="form" class="form-horizontal">
                     <div class="panel-body">
+                         <!-- START PESAN ERROR EMPTY INPUT -->
+                          <div class="form-group alert alert-dismissable alert-danger" id="e_paket" hidden="true" >
+                            <button type="button" class="close" onclick="hide_e_paket()" >×</button>
+                            <strong>O.M.G.!</strong> Silahkan Diisi Semua.
+                          </div>
+                          <!-- END PESAN ERROR EMPTY INPUT -->
                         <div class="form-group">
                             <div class="row">
                                 <input type="hidden" value="" name="id_paket"/>
@@ -56,11 +62,13 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Durasi <span class="text-danger">*</span></label>
-                                    <input name="durasi" type="text" class="form-control" id="durasi">
+                                    <input type="text" name="durasi"  class="form-control" id="durasi">
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel-footer">
+
                             <button type="submit" class="btn btn-primary" name="proses" id="btnSave" onclick="save()" >Proses</button>
                             <button type="reset" class="btn btn-inverse" id="btnReset">reset</button>
                         </div>
@@ -159,6 +167,9 @@
     });
     });
 //panggil modal
+function hide_e_paket() {
+    $("#e_paket").hide();
+}
 function add_paket(){
     save_method = 'add';
     $('#form')[0].reset(); // reset form on modals
@@ -169,8 +180,12 @@ function add_paket(){
 }
 //fungsi simpan
 function save(){
-    $('#btnSave').text('saving...'); //change button text
-    $('#btnSave').attr('disabled',true); //set button disable 
+   
+    
+    var nama_paket= $('[name="nama_paket"]').val();
+    var jumlah_soal  = $('[name="jumlah_soal"]').val();
+    var durasi = $('[name="durasi"]').val();
+    
     var url;
 
     if(save_method == 'add') {
@@ -178,28 +193,37 @@ function save(){
     } else {
         url = base_url+"index.php/paketsoal/updatepaketsoal";
     }
+   
+    if (nama_paket.length <= 0 || jumlah_soal.length <= 0) {
+       $("#e_paket").show();
+    } else {
+         $('#btnSave').text('saving...'); //change button text
+         $('#btnSave').attr('disabled',true); //set button disable 
+             // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+             $('#modal_form').modal('hide');
+                $('#btnSave').text('save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable
+                reload_table(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+                $('#btnSave').text('save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
 
-    // ajax adding data to database
-    $.ajax({
-        url : url,
-        type: "POST",
-        data: $('#form').serialize(),
-        dataType: "JSON",
-        success: function(data)
-        {
-         $('#modal_form').modal('hide');
-            $('#btnSave').text('save'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable
-            reload_table(); 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error adding / update data');
-            $('#btnSave').text('save'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable 
+            }
+        });
+    }
+    
 
-        }
-    });
+   
 
 }
 function reload_table(){
@@ -248,7 +272,6 @@ function edit_paket(id)
             $('[name="id_paket"]').val(data.id_paket);
             $('[name="nama_paket"]').val(data.nm_paket);
             $('[name="deskripsi"]').val(data.deskripsi);
-            //$('[name="jumlah_soal"]').val(data.jumlahsoal);
             $('[name="durasi"]').val(data.durasi);
 
 

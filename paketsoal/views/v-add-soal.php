@@ -100,6 +100,12 @@
                     <strong>O.M.G.!</strong> Silahkan pilih soal yang akan ditambahkan ke paket.
                   </div>
                   <!-- END PESAN ERROR EMPTY INPUT -->
+                  <!--START PESAN BERHASIL PAKET DI ADD KE TO -->
+                  <div class="alert alert-dismissable alert-success" id="msg_s_soal" hidden="true" >
+                  <button type="button" class="close" onclick="hide_msg_s_soal()" >×</button>
+                    <strong>Well done!</strong> Soal telah di tambahkan ke Paket.
+                  </div>
+                  <!--END PESAN BERHASIL PAKET DI ADD KE TO  -->
              </div>
              <div class="col-sm-12 btn">
               <div class="col-sm-2">
@@ -380,28 +386,31 @@ function loadTingkat(){
             // dataType: "JSON",
             success: function(data,respone)
             {   
-                  console.log(respone);// for testing
-                  // console.log(data);
+               
                   reload_tblist();
                    $(':checkbox').attr('checked',false);
+                   $("#emptyinput_op").hide();
+                   $("#msg_s_soal").show();
 
                   },
                   error: function (jqXHR, textStatus, errorThrown)
                   {
 
-                   console.log(errorThrown);
-                   console.log(textStatus);
-                   console.log(jqXHR);
+
                    alert('Error adding / update data');
                   }
-                 });
+          });
         } else {
+          $("#msg_s_soal").hide();
           $("#emptyinput_op").show();
         }
   
        }
        function hide_msg_empty() {
            $("#emptyinput_op").hide();
+        }
+        function hide_msg_s_soal() {
+          $("#msg_s_soal").hide();
         }
        function reload_tblist(){
         tblist_soal.ajax.reload(null,false); //reload datatable ajax 

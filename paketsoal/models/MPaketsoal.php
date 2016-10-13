@@ -192,7 +192,15 @@ class MPaketsoal extends CI_Model {
 		$this->db->from('tb_tryout');
 		$this->db->where('UUID',$UUID);
 		$query = $this->db->get();
-        return $query->result_array();
+        // return $query->result_array();
+        $result = $query->result_array();
+		  // You should use $q->num_rows() to detect the number of returned rows
+		  if($query->num_rows() == 1) {
+		   // Return the first row:
+		   return $result[0];
+		  }
+		  return $result;
+		 
 	}
 
 	public function paket_by_paketUUID($id_to)
