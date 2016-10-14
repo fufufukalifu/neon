@@ -74,8 +74,9 @@ class Tryout extends MX_Controller
 
 		
 		$datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
+		// print_r($datas['id_siswa']);
 		$data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
-
+		// print_r($data);
 		$this->parser->parse('templating/index', $data);	
 	}
 
