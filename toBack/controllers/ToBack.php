@@ -199,9 +199,19 @@ class ToBack extends MX_Controller
 			$row[] = $list_to['tgl_berhenti'];
 			$row[] = $publish;
 			$row[] = '
-			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')"><i class="ico-file5"></i></a>
-			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' ><i class="ico-file-plus2"></i></a>
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')"><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-file5"></i></a>
+			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
+			<i class="ico-file-plus2"></i></a>
+			
+			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="dropTO('."'".$list_to['UUID']."'".')">
+			<i class="ico-user"></i></a>
+
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="show_peserta('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-remove"></i></a>
+			'
+
+			;
 
 			$data[] = $row;
 
@@ -258,6 +268,35 @@ class ToBack extends MX_Controller
 	}
 
 	#####OPIK#########################################
+
+public function reportto($uuid){
+	if (!isset($uuid)) {
+		echo "string";
+	}else{
+		echo "string2";
+	}
+	// $data['tryout'] = $this->MPaketsoal->get_id_by_UUID($uuid);
+	// 	// 
+	// 	if (!$data['tryout']==array()) {
+
+			$data['id_to']=$data['tryout']['id_tryout'];
+			$data['siswa'] = $this->msiswa->get_allsiswa();
+			$data['paket']= $this->MPaketsoal->getpaketsoal();
+	        $data['files'] = array(
+	            APPPATH . 'modules/toback/views/v-list-peserta.php',
+	        );
+	        $data['judul_halaman'] = "Daftar Peserta";
+	        
+	// 	} else {
+	// 		$data['files'] = array(
+	//             APPPATH . 'modules/templating/views/v-data-notfound.php',
+	//         );
+	//         $data['judul_halaman'] = "Bundle Paket";
+	// 		 // $this->load->view('templating/v-data-notfound');
+	// 	}
+		
+		$this->load->view('templating/index-b-guru', $data);
+}
 
 
 
