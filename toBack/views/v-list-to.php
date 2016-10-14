@@ -192,5 +192,9 @@
 
         }
 
+        // ##opik##
+    function show_peserta(uuid){
+        alert(uuid);
+    }
     </script>
 </section>

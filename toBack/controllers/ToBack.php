@@ -204,10 +204,10 @@ class ToBack extends MX_Controller
 			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
 			<i class="ico-file-plus2"></i></a>
 			
-			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="dropTO('."'".$list_to['UUID']."'".')">
+			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
 			<i class="ico-user"></i></a>
 
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="show_peserta('."'".$list_to['id_tryout']."'".')">
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')">
 			<i class="ico-remove"></i></a>
 			'
 
