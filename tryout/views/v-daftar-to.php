@@ -59,6 +59,7 @@
 
     <tbody>
       <?php foreach ($tryout as $tryout_item): ?>
+        <tr>
         <td><?=$tryout_item['id_tryout'] ?></td>
         <td><?=$tryout_item['nm_tryout'] ?></td>
         <td><?=$tryout_item['tgl_mulai'] ?></td>
@@ -73,6 +74,7 @@
             ><i class="glyphicon glyphicon-list-alt"></i></a>
 
           </td>
+          </tr>
         <?php endforeach ?>
       </tbody>
     </table>
