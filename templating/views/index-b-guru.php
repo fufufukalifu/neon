@@ -151,7 +151,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Publish?</label>
+                                    <label class="col-sm-3 control-label">Publish</label>
                                     <div class="col-sm-8">
                                         <div class="checkbox custom-checkbox">  
                                             <input type="checkbox" name="publish" id="to_publish" value="1">  
@@ -1096,7 +1096,9 @@
                 var tgl_mulai  =   $('#to_tglmulai').val();
                 var tgl_akhir  =   $('#to_tglakhir').val();
                 var wkt_mulai  =   $('#to_wktakhir').val();
-                var wkt_akhir  =   $('#to_wktmulai').val();  
+                var wkt_akhir  =   $('#to_wktmulai').val(); 
+                var publish  =   $('#to_publish').val(); 
+                console.log(publish);
 
                 if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
                    
@@ -1109,6 +1111,7 @@
                                 tglakhir:tgl_akhir,
                                 wktmulai:wkt_mulai,
                                 wktakhir:wkt_akhir,
+                                publish :publish 
                                
                               },
                         // cache: false,
