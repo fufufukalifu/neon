@@ -76,7 +76,7 @@ class Tryout extends MX_Controller
 		$datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
 		$data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
 
-		$this->parser->parse('templating/index', $data);
+		$this->parser->parse('templating/index', $data);	
 	}
 
 	public function create_seassoin_idto($id_to){
@@ -108,13 +108,14 @@ class Tryout extends MX_Controller
 				APPPATH . 'modules/homepage/views/v-footer.php',
 				);
 
-			$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
+			//$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
 
 			$data['paket_dikerjakan'] = $this->Tryout_model->get_paket_actioned_by_id_to($id_to);
-			// print_r($data['paket']);
+			$data['paket'] = $this->Tryout_model->get_paket_undo($id_to);	
+			// print_r($data['paket_dikerjakan2']);
 			// echo "<br><br>";
 			// print_r($data['paket_dikerjakan']);
-			$this->parser->parse('templating/index', $data);
+				$this->parser->parse('templating/index', $data);
 			
 			
 		}else{
