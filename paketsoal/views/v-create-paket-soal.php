@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Durasi <span class="text-danger">*</span></label>
-                                    <input type="text" name="durasi"  class="form-control" id="durasi">
+                                    <input type="text" name="durasi"  class="form-control" id="durasi" required>
                                 </div>
                             </div>
                         </div>
@@ -194,9 +194,7 @@ function save(){
         url = base_url+"index.php/paketsoal/updatepaketsoal";
     }
    
-    if (nama_paket.length <= 0 || jumlah_soal.length <= 0) {
-       $("#e_paket").show();
-    } else {
+    if (nama_paket != "" && jumlah_soal != ""  && durasi != ""  ) {
          $('#btnSave').text('saving...'); //change button text
          $('#btnSave').attr('disabled',true); //set button disable 
              // ajax adding data to database
@@ -220,6 +218,9 @@ function save(){
 
             }
         });
+      
+    } else {
+         $("#e_paket").show();
     }
     
 

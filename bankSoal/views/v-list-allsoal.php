@@ -49,12 +49,12 @@
 </section>
 <!--/ END Template Main -->
 
-
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 
     var tb_allSoal;
     $(document).ready(function() {
-        tblist_TO = $('#tb_allSoal').DataTable({ 
+        tb_allSoal = $('#tb_allSoal').DataTable({ 
            "ajax": {
                     "url": base_url+"index.php/bankSoal/ajax_listAllSoal/",
                     "type": "POST"
@@ -66,14 +66,14 @@
     function dropSoal(id_soal) {
         if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
                // ajax delete data to database
-                $.ajax({
+               
+               $.ajax({
                      url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)
                      {  
-                            console.log(data);
-                            console.log(respone);
+                       
                             reload_tblist();
                     },
                     error: function (jqXHR, textStatus, errorThrown)
@@ -88,7 +88,7 @@
     }
 
     function reload_tblist(){
-       tb_allSoal.ajax.reload(null,false); 
+      tb_allSoal.ajax.reload(null,false); 
     }
 
 </script>

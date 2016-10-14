@@ -117,23 +117,36 @@
                    
                         <!-- START Modal Body -->
                         <div class="modal-body">
-                             <form class="panel panel-default form-horizontal form-bordered" action="<?=base_url('index.php/toback/buatTo');?>" method="post">
+
+                            <!-- START PESAN ERROR EMPTY INPUT -->
+                            <div class="alert alert-dismissable alert-danger" id="e_crtTo" hidden="true" >
+                                <button type="button" class="close" onclick="hide_e_crtTo()" >×</button>
+                                <strong>O.M.G.!</strong> Tolong di ISI semua.
+                            </div>
+                            <!-- END PESAN ERROR EMPTY INPUT -->
+                             <form class="panel panel-default form-horizontal form-bordered" action="javascript:void(0);" method="post" id="form_to">
                                 <div  class="form-group">
                                     <label class="col-sm-3 control-label">Nama Tryout</label>
                                     <div class="col-sm-8">
-                                      <input type="text" class="form-control" name="nmpaket">
+                                      <input type="text" class="form-control" name="nmpaket" id="to_nm">
                                     </div>
                                 </div>
                                 <div  class="form-group">
                                     <label class="col-sm-3 control-label">Tanggal Mulai</label>
-                                    <div class="col-sm-8">
-                                      <input type="date" class="form-control" name="tglmulai">
+                                    <div class="col-sm-4">
+                                      <input type="date" class="form-control" name="tglmulai" id="to_tglmulai">
+                                    </div >
+                                    <div class="col-sm-4">
+                                        <input type="time" class="form-control" name="wktmulai" id="to_wktmulai" >
                                     </div>
                                 </div>
                                 <div  class="form-group">
                                     <label class="col-sm-3 control-label">Tanggal Berakhir</label>
-                                    <div class="col-sm-8">
-                                      <input type="date" class="form-control" name="tglakhir">
+                                    <div class="col-sm-4">
+                                      <input type="date" class="form-control" name="tglakhir" id="to_tglakhir">
+                                    </div>
+                                     <div class="col-sm-4">
+                                        <input type="time" class="form-control" name="wktakhir" id="to_wktakhir" >
                                     </div>
                                 </div>
 
@@ -141,8 +154,8 @@
                                     <label class="col-sm-3 control-label">Publish?</label>
                                     <div class="col-sm-8">
                                         <div class="checkbox custom-checkbox">  
-                                            <input type="checkbox" name="publish" id="giftcheckbox" value="1">  
-                                            <label for="giftcheckbox">&nbsp;&nbsp;</label>   
+                                            <input type="checkbox" name="publish" id="to_publish" value="1">  
+                                            <label for="to_publish" >&nbsp;&nbsp;</label>   
                                         </div>
                                     </div>
                                 </div> 
@@ -151,7 +164,7 @@
                         <!-- END Modal Body -->
                         <!-- START Modal Footer -->
                         <div class="modal-footer">
-                            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>
+                            <button type="submit" id="myFormSubmit" class="btn btn-primary" onclick="crtTo()"  >Proses</button>
                         </div>
                         </form>
                         <!-- START Modal Footer -->
@@ -1074,6 +1087,54 @@
         <script type="text/javascript">
 
 
+            function hide_e_crtTo() {
+                $("#e_crtTo").hide();
+            }
+
+            function crtTo() {
+                var nm_paket   =   $('#to_nm').val();
+                var tgl_mulai  =   $('#to_tglmulai').val();
+                var tgl_akhir  =   $('#to_tglakhir').val();
+                var wkt_mulai  =   $('#to_wktakhir').val();
+                var wkt_akhir  =   $('#to_wktmulai').val();  
+
+                if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
+                   
+                     var url = base_url+"index.php/toback/buatTo";
+                    $.ajax({
+                        url : url,
+                        type: "POST",
+                        data: { nmpaket : nm_paket,
+                                tglmulai:tgl_mulai,
+                                tglakhir:tgl_akhir,
+                               
+                              },
+                        // cache: false,
+                      // dataType: "JSON",
+                        success: function(data,respone)
+                        {   
+                            reload_tblist();  
+                            $("#e_crtTo").hide(); 
+                            $('#modalto').modal('hide'); 
+                            $('#form_to')[0].reset(); // reset form on modals
+                            $('#modalto').removeClass('has-error'); // clear error class  
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+
+                            // $("#e_crtTo").show();
+                                    alert('Error adding / update data');
+                        }
+                    });
+                }else{
+                    
+                    $("#e_crtTo").show();
+                }
+               
+               
+                
+            }
            
             //buat load tingkat untuk modal buat soal
             function loadTkt() {
@@ -1161,16 +1222,6 @@
 
                 });
             }
-
-            // function gosoal() {
-            //     // document.Location('Google.com');
-            //     // window.Location.href(google.com');
-            //     // url = base_url+"index.php/paketsoal/addpaketsoal";
-            //     // alert('star');
-            //    
-            // }
-
-
 
             loadTkt();
         </script>
