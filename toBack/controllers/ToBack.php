@@ -21,13 +21,18 @@ class ToBack extends MX_Controller
 		$nmpaket=htmlspecialchars($this->input->post('nmpaket'));
 		$tglMulai=htmlspecialchars($this->input->post('tglmulai'));
 		$tglAkhir=htmlspecialchars($this->input->post('tglakhir'));
+		$wktMulai=htmlspecialchars($this->input->post('wktmulai'));
+		$wktAkhir=htmlspecialchars($this->input->post('wktakhir'));
 		$publish=htmlspecialchars($this->input->post('publish'));
+
 		$UUID = uniqid();
 
 		$dat_To=array(
 			'nm_tryout'=>$nmpaket,
 			'tgl_mulai'=>$tglMulai,
 			'tgl_berhenti'=>$tglAkhir,
+			'wkt_mulai'=>$wktMulai,
+			'wkt_berakhir'=>$wktAkhir,
 			'publish'=>$publish,
 			'UUID' =>$UUID
 			);

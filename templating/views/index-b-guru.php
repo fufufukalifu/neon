@@ -1098,7 +1098,7 @@
                 var wkt_mulai  =   $('#to_wktakhir').val();
                 var wkt_akhir  =   $('#to_wktmulai').val();  
 
-                if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
+                // if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
                    
                      var url = base_url+"index.php/toback/buatTo";
                     $.ajax({
@@ -1107,7 +1107,8 @@
                         data: { nmpaket : nm_paket,
                                 tglmulai:tgl_mulai,
                                 tglakhir:tgl_akhir,
-                               
+                                wktmulai:wkt_mulai,
+                                wktakhir:wkt_akhir,
                               },
                         // cache: false,
                       // dataType: "JSON",
@@ -1127,10 +1128,10 @@
                                     alert('Error adding / update data');
                         }
                     });
-                }else{
+                // }else{
                     
-                    $("#e_crtTo").show();
-                }
+                //     $("#e_crtTo").show();
+                // }
                
                
                 
