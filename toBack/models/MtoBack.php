@@ -11,6 +11,13 @@ class MTOBack extends CI_Model {
 	public function insert_to($dat_to)
 	{
 		$this->db->insert('tb_tryout',$dat_to);
+
+
+
+
+
+
+		
 	}
 
 	public function get_To()
