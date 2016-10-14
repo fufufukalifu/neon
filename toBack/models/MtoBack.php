@@ -102,6 +102,38 @@ class MTOBack extends CI_Model {
         $this->db->where('id_tryout', $data['id_tryout']);
         $this->db->update('tb_tryout');
 	}
+
+	##opik##
+	//ambil data to by uuid
+	function get_to_byuuid($uuid){
+		$this->db->select("id_tryout, nm_tryout");
+		$this->db->from('tb_tryout');
+		$this->db->where('UUID', $uuid);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	//ambli data mahasiswa to by idto
+	function get_perserta_by_idto2($id_to){
+		$this->db->select("*");
+		$this->db->from('tb_hakakses-to hakakses');
+		$this->db->join('tb_siswa siswa','hakakses.id_siswa=siswa.id');
+		$this->db->where('id_tryout', $id_to);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	function get_all_report($id_tryout){
+		$this->db->select("rtryout.id_report as idReport, namaDepan, namaBelakang, jmlh_kosong, jmlh_benar, tgl_pengerjaan,jmlh_salah, total_nilai");
+		$this->db->from('tb_report-tryout rtryout');
+		$this->db->join('tb_pengguna pengguna','pengguna.id=rtryout.id_pengguna');
+		$this->db->join('tb_siswa siswa', 'siswa.penggunaID = pengguna.id');
+		$this->db->join('tb_hakakses-to hto','hto.id_siswa=siswa.id');
+		$this->db->where('hto.id_tryout',$id_tryout);
+		$query = $this->db->get();
+        return $query->result_array();
+
+	}
 }
 ?>
 

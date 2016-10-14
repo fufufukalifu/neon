@@ -270,30 +270,24 @@ class ToBack extends MX_Controller
 	#####OPIK#########################################
 
 public function reportto($uuid){
-	if (!isset($uuid)) {
-		echo "string";
-	}else{
-		echo "string2";
-	}
-	// $data['tryout'] = $this->MPaketsoal->get_id_by_UUID($uuid);
-	// 	// 
-	// 	if (!$data['tryout']==array()) {
+		$data['tryout'] = $this->mToBack->get_to_byuuid($uuid);
 
-			$data['id_to']=$data['tryout']['id_tryout'];
-			$data['siswa'] = $this->msiswa->get_allsiswa();
-			$data['paket']= $this->MPaketsoal->getpaketsoal();
+		if (!$data['tryout']==array()) {
+			$id_to  = $data['tryout'][0]['id_tryout'];
+			$data['daftar_peserta'] =$this->mToBack->get_all_report($id_to);
+
 	        $data['files'] = array(
 	            APPPATH . 'modules/toback/views/v-list-peserta.php',
 	        );
-	        $data['judul_halaman'] = "Daftar Peserta";
+	        $data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
 	        
-	// 	} else {
-	// 		$data['files'] = array(
-	//             APPPATH . 'modules/templating/views/v-data-notfound.php',
-	//         );
-	//         $data['judul_halaman'] = "Bundle Paket";
-	// 		 // $this->load->view('templating/v-data-notfound');
-	// 	}
+		} else {
+			$data['files'] = array(
+	            APPPATH . 'modules/templating/views/v-data-notfound.php',
+	        );
+	        $data['judul_halaman'] = "Daftar Peserta";
+			 $this->load->view('templating/v-data-notfound');
+		}
 		
 		$this->load->view('templating/index-b-guru', $data);
 }
