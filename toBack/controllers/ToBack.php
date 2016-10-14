@@ -23,10 +23,8 @@ class ToBack extends MX_Controller
 		$tglAkhir=htmlspecialchars($this->input->post('tglakhir'));
 		$publish=htmlspecialchars($this->input->post('publish'));
 		$UUID = uniqid();
-
-
-
-
+		$wktMulai=htmlspecialchars($this->input->post('wktmulai'));
+		$wktAkhir=htmlspecialchars($this->input->post('wktakhir'));
 
 
 
@@ -34,8 +32,10 @@ class ToBack extends MX_Controller
 
 		$dat_To=array(
 			'nm_tryout'=>$nmpaket,
-			'tgl_mulai'=>$tglMulai,
-			'tgl_berhenti'=>$tglAkhir,
+			'tgl_mulai'=>$tglMulai,	
+			'tgl_berhenti'=>$tglAkhir,	
+			'wkt_mulai'=>$wktMulai,	
+			'wkt_berakhir'=>$wktAkhir,	
 			'publish'=>$publish,
 			'UUID' =>$UUID
 			);
