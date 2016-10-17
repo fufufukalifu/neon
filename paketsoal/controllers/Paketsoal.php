@@ -87,7 +87,10 @@ class Paketsoal extends MX_Controller
 		}
 		//print_r($data);
 		$output = array(
-			"data"=>$data,
+					"sEcho"=> 1,
+					"iTotalRecords"=> 9,
+    				"iTotalDisplayRecords"=> 9,
+					"data"=>$data,
 		);
 		echo json_encode( $output );
 	}
