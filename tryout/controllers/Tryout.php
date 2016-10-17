@@ -72,11 +72,11 @@ class Tryout extends MX_Controller
 			APPPATH . 'modules/homepage/views/v-footer.php',
 			);
 
-		
+		//buat dapetin id siswanya.
 		$datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
-		// print_r($datas['id_siswa']);
+		
 		$data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
-		// print_r($data);
+		
 		$this->parser->parse('templating/index', $data);	
 	}
 

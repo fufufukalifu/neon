@@ -1,5 +1,5 @@
 <section id="main" role="main">
-	<div class="modal fade " tabindex="-1" role="dialog" id="myModal" style="background: white">
+	<div class="modal fade " tabindex="-1" role="dialog" id="myModal">
 		<div class="modal-dialog" role="document" style="background: white">
 			<div class="modal-content">
 				<div class="modal-header">

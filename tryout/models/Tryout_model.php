@@ -24,9 +24,7 @@ class Tryout_model extends MX_Controller
 				LEFT OUTER JOIN `tb_report-paket` repa 
 				ON `repa`.`id_mm-tryout-paket` = `topaket`.`id` 
 				WHERE `repa`.`id_report` IS NULL 
-				AND topaket.id_tryout = $id_to" 
-				
-				;
+				AND topaket.id_tryout = $id_to";
 
 		$result = $this->db->query($query);
 		return $result->result_array();
