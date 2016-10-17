@@ -115,33 +115,33 @@ class ToBack extends MX_Controller
 		// var_dump(expression)
 	}
 
-	// function ajax_listpaket() {
+	function ajax_listpaket($id_to) {
 		
 
-	// 	$list = $this->load->mToBack->paket_by_toID($idTO);
-	// 	$data = array();
+		$list = $this->load->mToBack->paket_by_Nullto();
+		$data = array();
 
-	// 	$baseurl = base_url();
-	// 	foreach ( $list as $list_paket ) {
-	// 		// $no++;
-	// 		$row = array();
-	// 		$row[] = $list_paket['paketID'];
-	// 		$row[] = $list_paket['nm_paket'];
-	// 		$row[] = $list_paket['deskripsi'];
-	// 		$row[] = '
-	// 		<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>';
+		$baseurl = base_url();
+		foreach ( $list as $list_paket ) {
+			// $no++;
+			$row = array();
+			$row[] = $list_paket['paketID'];
+			$row[] = $list_paket['nm_paket'];
+			$row[] = $list_paket['deskripsi'];
+			$row[] = '
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>';
 
-	// 		$data[] = $row;
+			$data[] = $row;
 
-	// 	}
+		}
 	
-	// 	$output = array(
+		$output = array(
 			
-	// 		"data"=>$data,
-	// 	);
+			"data"=>$data,
+		);
 
-	// 	echo json_encode( $output );
-	// }
+		echo json_encode( $output );
+	}
 
 	//menampikan paket yg sudah di add
 	function ajax_listpaket_by_To($idTO) {
