@@ -65,10 +65,6 @@ class BankSoal extends MX_Controller {
 
     public function listbab() {
         $mpID = htmlspecialchars($this->input->get('mpID'));
-
-
-  
-
         $data['bab'] = $this->mbanksoal->get_bab($mpID);
         $data['judul_halaman'] = "List Bab";
         $data['files'] = array(
@@ -239,7 +235,7 @@ class BankSoal extends MX_Controller {
 
             </form>';
 
-            $row[]=' 
+             $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
