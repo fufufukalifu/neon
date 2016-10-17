@@ -1103,7 +1103,7 @@
                 } else{
                     publish = 0;
                 }
-                alert(publish);
+                
 
                 if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
                    
