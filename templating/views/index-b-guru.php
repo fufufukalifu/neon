@@ -1096,9 +1096,14 @@
                 var tgl_mulai  =   $('#to_tglmulai').val();
                 var tgl_akhir  =   $('#to_tglakhir').val();
                 var wkt_mulai  =   $('#to_wktakhir').val();
-                var wkt_akhir  =   $('#to_wktmulai').val(); 
-                var publish  =   $('#to_publish').val(); 
-                console.log(publish);
+                var wkt_akhir  =   $('#to_wktmulai').val();
+                var publish;
+                if ($('#to_publish:checked')==true) {
+                    publish = 1;
+                } else{
+                    publish = 0;
+                }
+                alert(publish);
 
                 if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
                    

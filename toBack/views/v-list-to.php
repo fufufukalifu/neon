@@ -166,13 +166,14 @@
             $('#btneditTo').text('saving...'); //change button text
             $('#btneditTo').attr('disabled',true); //set button disable 
             var url;
-
+            var datas = $('#formeditTO').serialize();
+            console.log("asd"+datas);
             url = base_url+"index.php/toback/editTryout/";
             // ajax adding data to database
             $.ajax({
                 url : url,
                 type: "POST",
-                data: $('#formeditTO').serialize(),
+                data: datas,
                 dataType: "TEXT",
                 success: function(data)
                 {
