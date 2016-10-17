@@ -158,15 +158,23 @@ class Paketsoal extends MX_Controller
 
 	function addbanksoal( $idpaket ) {
 		
-		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket)[0];
-		$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
-		//var_dump($data['paket_soal']);
+		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
-		$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
-		$data['id_paket']=$idpaket;
-		$data['files'] = array(
-			APPPATH.'modules/Paketsoal/views/v-add-soal.php',
-		);
+		if (!$paket_soal==array()) {
+			$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
+			//var_dump($data['paket_soal']);	
+			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
+			$data['id_paket']=$idpaket;
+			$data['files'] = array(
+				APPPATH.'modules/Paketsoal/views/v-add-soal.php',
+			);
+			
+		} else {
+			$data['files'] = array(
+	            APPPATH . 'modules/templating/views/v-data-notfound.php',
+	        );
+		}
+		
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
 
