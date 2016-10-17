@@ -10,6 +10,8 @@ class Tryout extends MX_Controller {
     public function __construct() {
         $this->load->library('parser');
         $this->load->model('Tryout_model');
+//        $this->load->model('Tesonline_model');
+        $this->load->model('tesonline/Tesonline_model');
         parent::__construct();
     }
 
@@ -120,6 +122,40 @@ class Tryout extends MX_Controller {
         var_dump($this->session->userdata());
     }
 
+    //# fungsi indeks
+    //fungsi ilham
+    public function mulaitest() {
+//        if (!empty($this->session->userdata['id_latihan'])) {
+//            $id = $this->session->userdata['id_latihan'];
+//        $id = this->session->userdata('id_mm-tryoutpaket');
+        $id = $this->session->userdata['id_mm-tryoutpaket'];
+
+//        echo $id;
+
+
+        $id_paket = $this->Tryout_model->getpaket($id)[0]->id_paket;
+//        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajaran;
+
+//        echo $id_paket;
+
+        $this->load->view('templating/t-headerto');
+        $query = $this->load->Tryout_model->get_soal($id);
+        $data['soal'] = $query['soal'];
+        $data['pil'] = $query['pil'];
+//        var_dump($data);
+        $this->load->view('vHalamanTo.php', $data);
+        $this->load->view('templating/t-footerto');
+//        } else {
+//            $this->errorTest();
+//        }
+    }
+
+    public function errorTest() {
+        $this->load->view('templating/t-headerto');
+        $this->load->view('v-error-test.php');
+    }
+
+    //end fungsi ilham
 }
 
 ?>
