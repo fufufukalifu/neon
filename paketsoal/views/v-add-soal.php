@@ -345,15 +345,10 @@ function loadTingkat(){
     function addsoal(subBabId){
 
         list_soal = $('#oplistsoal').DataTable({ 
-           "bServerSide": true,
-
            "ajax": {
             "url": base_url+"index.php/paketsoal/ajax_get_soal_by_subbabid/"+subBabId,
             "type": "POST"
         },
-           "processing": true,
-           
-           "bDestroy": true,
         });
         
 
