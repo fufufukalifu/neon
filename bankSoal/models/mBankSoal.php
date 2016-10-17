@@ -22,6 +22,7 @@ class MbankSoal extends CI_Model {
         $this->db->insert_batch('tb_piljawaban', $dataJawaban);
     }
 
+
     //insert pilihan jawaban berupa gambar
     public function insert_gambar($datagambar) {
         $this->db->insert_batch('tb_piljawaban', $datagambar);
@@ -60,7 +61,6 @@ class MbankSoal extends CI_Model {
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
         $this->db->where('id_subbab', $subbID);
         $this->db->where('soal.status','1');
-         // $this->db->where('soal.status','1');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -97,6 +97,17 @@ class MbankSoal extends CI_Model {
         return $query->result_array();
     }
 
+    //get old gambar soal
+
+    public function get_oldgambar_soal($UUID)
+    {
+        $this->db->where('UUID', $UUID);
+        $this->db->select('id_soal,gambar_soal')->from('tb_banksoal');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    //get old gambar pilihan jawaban
     public function get_oldgambar($soalID) {
         $this->db->where('id_soal', $soalID);
         $this->db->select('id_pilihan,gambar')->from('tb_piljawaban');

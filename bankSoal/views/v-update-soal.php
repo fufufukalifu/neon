@@ -40,6 +40,33 @@
                                 <input type="text" name="sumber" value="<?=$bankSoal['sumber'];?>" class="form-control">
                             </div>
                         </div>
+                         <div class="form-group">
+                            <label class="control-label col-sm-2">Gambar Soal</label>
+                             <div class="col-sm-8 " >
+                                <div class="col-sm-12">
+                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$bankSoal['gambar_soal'];?>" alt="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameSoal"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeSoal"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileSoal" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal"/>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Soal</label>
                             <div class="col-sm-8">
@@ -341,7 +368,26 @@
     <!-- Start script untuk priview gambar soal -->
     <script type="text/javascript">
         $(function () {
-
+            // Start event priview gambar Soal
+            $('#fileSoal').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerSoal.load;
+                reader.readAsDataURL(file);
+                viewerSoal.setProperties(file);
+            });
+            var viewerSoal = {
+                load : function(e){
+                    $('#previewSoal').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameSoal').text(file.name);
+                    $('#filetypeSoal').text(file.type);
+                    $('#filesizeSoal').text(Math.round(file.size/1024));
+                },
+            }
+            // End event priview gambar soal
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {
                 // var filenameA = document.getElementByID('fileA').value;
