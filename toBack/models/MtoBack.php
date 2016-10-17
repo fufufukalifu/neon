@@ -124,7 +124,7 @@ class MTOBack extends CI_Model {
 	}
 
 	function get_all_report($id_tryout){
-		$this->db->select("rtryout.id_report as idReport, namaDepan, namaBelakang, jmlh_kosong, jmlh_benar, tgl_pengerjaan,jmlh_salah, total_nilai");
+		$this->db->select("rtryout.id_report as idReport, namaDepan, namaBelakang, total_nilai");
 		$this->db->from('tb_report-tryout rtryout');
 		$this->db->join('tb_pengguna pengguna','pengguna.id=rtryout.id_pengguna');
 		$this->db->join('tb_siswa siswa', 'siswa.penggunaID = pengguna.id');
