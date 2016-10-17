@@ -30,7 +30,7 @@ class Tryout extends MX_Controller {
 
         $data = array();
 
-//mengamb
+        //mengamb
     }
 
     public function ajax_get_tryout_single($id_tryout) {
@@ -57,8 +57,6 @@ class Tryout extends MX_Controller {
 
     //# fungsi indeks
     public function index() {
-
-
         $data = array(
             'judul_halaman' => 'Neon - Tryout',
             'judul_header' => 'Daftar Tryout',
@@ -94,23 +92,33 @@ class Tryout extends MX_Controller {
     public function daftarpaket() {
         $data['id_to'] = $this->session->userdata('id_tryout');
         $id_to = $data['id_to'];
+
         if (!isset($id_to['id_to'])) {
             $data = array(
                 'judul_halaman' => 'Neon - Daftar Paket',
                 'judul_header' => 'Daftar Paket',
                 'judul_tingkat' => '',
             );
+
             $konten = 'modules/tryout/views/v-daftar-paket.php';
+
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 APPPATH . 'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . $konten,
                 APPPATH . 'modules/homepage/views/v-footer.php',
             );
-            $data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
+
+            //$data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
+
+            $data['paket_dikerjakan'] = $this->Tryout_model->get_paket_actioned_by_id_to($id_to);
+            $data['paket'] = $this->Tryout_model->get_paket_undo($id_to);
+            // print_r($data['paket_dikerjakan2']);
+            // echo "<br><br>";
+            // print_r($data['paket_dikerjakan']);
             $this->parser->parse('templating/index', $data);
         } else {
-//kalo gak ada session
+            //kalo gak ada session
             redirect('tryout');
         }
     }
@@ -131,6 +139,8 @@ class Tryout extends MX_Controller {
 
         $this->Tryout_model->insert_report_sementara($insert);
     }
+
+    //# fungsi indeks
 
     function test2() {
         var_dump($this->session->userdata());
@@ -167,6 +177,6 @@ class Tryout extends MX_Controller {
         $this->load->view('templating/t-headerto');
         $this->load->view('v-error-test.php');
     }
-
 }
+
 ?>

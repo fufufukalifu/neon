@@ -2,6 +2,7 @@
 </style>
 <section id="main" role="main">
     <!-- START MODAL EDIT TRYOUT -->
+    <script type="text/javascript">var halaman = true;</script>
     <div class="modal fade" id="modal_editTO" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -166,13 +167,14 @@
             $('#btneditTo').text('saving...'); //change button text
             $('#btneditTo').attr('disabled',true); //set button disable 
             var url;
-
+            var datas = $('#formeditTO').serialize();
+            console.log("asd"+datas);
             url = base_url+"index.php/toback/editTryout/";
             // ajax adding data to database
             $.ajax({
                 url : url,
                 type: "POST",
-                data: $('#formeditTO').serialize(),
+                data: datas,
                 dataType: "TEXT",
                 success: function(data)
                 {

@@ -56,10 +56,11 @@
 <
 
 <script type="text/javascript">
-    var tb_soalsub;
+
+    var tblist_TO;
     var subBab =$('#subBabID').val();
     // var idTo =$('#id_to').val();
-    console.log(subBab );
+  
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
@@ -70,7 +71,33 @@
         });
     });
 
+
     function dropSoal(id_soal) {
-        alert('masuk drop soal');
+
+        if (confirm('Apakah Anda yakin akan menghapus data inis? ')) {
+               // ajax delete data to database
+               console.log(id_soal);
+               $.ajax({
+                     url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
+                     type: "POST",
+                     dataType: "TEXT",
+                     success: function(data,respone)
+                     {  
+                       
+                            reload_tblist();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                            alert('Error deleting data');
+                            // console.log(jqXHR);
+                            // console.log(textStatus);
+                            console.log(errorThrown);
+                    }
+                });
+             }
     }
+    function reload_tblist(){
+      tblist_TO.ajax.reload(null,false); 
+    }
+
 </script>

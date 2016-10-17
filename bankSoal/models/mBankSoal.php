@@ -59,6 +59,7 @@ class MbankSoal extends CI_Model {
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
         $this->db->where('id_subbab', $subbID);
+        $this->db->where('soal.status','1');
          // $this->db->where('soal.status','1');
         $query = $this->db->get();
         return $query->result_array();

@@ -64,6 +64,17 @@ class MTOBack extends CI_Model {
         return $query->result_array();
 
 	}
+	//get data paket yg belum di add ke TO
+	public function paket_by_Nullto()
+	{
+		$this->db->select('mto.id as idKey ,mto.id_paket as id_paket_fk,paket.id_paket as paketID,nm_paket,deskripsi');
+		$this->db->from('tb_paket paket');
+		$this->db->join('tb_mm-tryoutpaket mto','mto.id_paket = paket.id_paket');
+		$this->db->where('mto.id_tryout',$id_to);
+		$query = $this->db->get();
+        return $query->result_array();
+
+	}
 
 	//drop relasi paket to
 	public function drop_paket_toTO($idKey)
@@ -124,7 +135,7 @@ class MTOBack extends CI_Model {
 	}
 
 	function get_all_report($id_tryout){
-		$this->db->select("rtryout.id_report as idReport, namaDepan, namaBelakang, jmlh_kosong, jmlh_benar, tgl_pengerjaan,jmlh_salah, total_nilai");
+		$this->db->select("rtryout.id_report as idReport, namaDepan, namaBelakang, total_nilai");
 		$this->db->from('tb_report-tryout rtryout');
 		$this->db->join('tb_pengguna pengguna','pengguna.id=rtryout.id_pengguna');
 		$this->db->join('tb_siswa siswa', 'siswa.penggunaID = pengguna.id');
