@@ -25,37 +25,48 @@ class Tryout extends MX_Controller {
     public function ajax_get_tryout() {
         $datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
         $datas['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
+
         $list = $datas['tryout'];
+
         $data = array();
-        //mengamb
+
+//mengamb
     }
 
     public function ajax_get_tryout_single($id_tryout) {
         $datas['id_tryout'] = $id_tryout;
         $datas['tryout'] = $this->Tryout_model->get_tryout_by_id($datas);
+
         $list = $datas['tryout'];
+
         $data = array();
-        //mengambil nilai list
+
+//mengambil nilai list
         $baseurl = base_url();
         foreach ($list as $tryout_item) {
             
         }
 
+
         $output = array(
             "data" => $data
         );
+
         echo json_encode($output);
     }
 
     //# fungsi indeks
     public function index() {
 
+
         $data = array(
             'judul_halaman' => 'Neon - Tryout',
             'judul_header' => 'Daftar Tryout',
             'judul_tingkat' => '',
         );
+
         $konten = 'modules/tryout/views/v-daftar-to.php';
+
         $data['files'] = array(
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -63,8 +74,11 @@ class Tryout extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-footer.php',
         );
 
+
         $datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
+// print_r($datas['id_siswa']);
         $data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
+// print_r($data);
         $this->parser->parse('templating/index', $data);
     }
 
@@ -74,7 +88,7 @@ class Tryout extends MX_Controller {
     }
 
     public function create_session($id_paket) {
-        //$this->session->userdata('id_paket',$id_paket);
+//$this->session->userdata('id_paket',$id_paket);
     }
 
     public function daftarpaket() {
@@ -96,12 +110,12 @@ class Tryout extends MX_Controller {
             $data['paket'] = $this->Tryout_model->get_paket_by_id_to($id_to);
             $this->parser->parse('templating/index', $data);
         } else {
-            //kalo gak ada session
+//kalo gak ada session
             redirect('tryout');
         }
     }
 
-    //# fungsi indeks
+//# fungsi indeks
     function buatto() {
         $data = array("id_paket" => $this->input->post('id_paket'),
             "id_tryout" => $this->input->post('id_tryout'),
@@ -122,8 +136,8 @@ class Tryout extends MX_Controller {
         var_dump($this->session->userdata());
     }
 
-    //# fungsi indeks
-    //fungsi ilham
+//# fungsi indeks
+//fungsi ilham
     public function mulaitest() {
 //        if (!empty($this->session->userdata['id_latihan'])) {
 //            $id = $this->session->userdata['id_latihan'];
@@ -135,7 +149,6 @@ class Tryout extends MX_Controller {
 
         $id_paket = $this->Tryout_model->getpaket($id)[0]->id_paket;
 //        $nama_matapelajaran = $this->mvideos->get_pelajaran_for_paket($idsub)[0]->aliasMataPelajaran;
-
 //        echo $id_paket;
 
         $this->load->view('templating/t-headerto');
@@ -155,7 +168,5 @@ class Tryout extends MX_Controller {
         $this->load->view('v-error-test.php');
     }
 
-    //end fungsi ilham
 }
-
 ?>

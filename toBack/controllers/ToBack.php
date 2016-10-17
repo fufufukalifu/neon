@@ -23,11 +23,19 @@ class ToBack extends MX_Controller
 		$tglAkhir=htmlspecialchars($this->input->post('tglakhir'));
 		$publish=htmlspecialchars($this->input->post('publish'));
 		$UUID = uniqid();
+		$wktMulai=htmlspecialchars($this->input->post('wktmulai'));
+		$wktAkhir=htmlspecialchars($this->input->post('wktakhir'));
+
+
+
+
 
 		$dat_To=array(
 			'nm_tryout'=>$nmpaket,
-			'tgl_mulai'=>$tglMulai,
-			'tgl_berhenti'=>$tglAkhir,
+			'tgl_mulai'=>$tglMulai,	
+			'tgl_berhenti'=>$tglAkhir,	
+			'wkt_mulai'=>$wktMulai,	
+			'wkt_berakhir'=>$wktAkhir,	
 			'publish'=>$publish,
 			'UUID' =>$UUID
 			);
@@ -41,15 +49,27 @@ class ToBack extends MX_Controller
 	// menampilkan halaman add to
 	public function addPaketTo($UUID)
 	{	
-		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID)[0];
-		$data['id_to']=$data['tryout']['id_tryout'];
-		$data['siswa'] = $this->msiswa->get_allsiswa();
-		$data['paket']= $this->MPaketsoal->getpaketsoal();
-        $data['files'] = array(
-            APPPATH . 'modules/toback/views/v-bundlepaket.php',
-        );
-        $data['judul_halaman'] = "Bundle Paket";
-        $this->load->view('templating/index-b-guru', $data);
+		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID);
+		// 
+		if (!$data['tryout']==array()) {
+
+			$data['id_to']=$data['tryout']['id_tryout'];
+			$data['siswa'] = $this->msiswa->get_allsiswa();
+			$data['paket']= $this->MPaketsoal->getpaketsoal();
+	        $data['files'] = array(
+	            APPPATH . 'modules/toback/views/v-bundlepaket.php',
+	        );
+	        $data['judul_halaman'] = "Bundle Paket";
+	        
+		} else {
+			$data['files'] = array(
+	            APPPATH . 'modules/templating/views/v-data-notfound.php',
+	        );
+	        $data['judul_halaman'] = "Bundle Paket";
+			 // $this->load->view('templating/v-data-notfound');
+		}
+		
+		$this->load->view('templating/index-b-guru', $data);
 	}
 	//add paket ke TO
 	public function addPaketToTO()
@@ -179,9 +199,19 @@ class ToBack extends MX_Controller
 			$row[] = $list_to['tgl_berhenti'];
 			$row[] = $publish;
 			$row[] = '
-			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')"><i class="ico-file5"></i></a>
-			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' ><i class="ico-file-plus2"></i></a>
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')"><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-file5"></i></a>
+			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
+			<i class="ico-file-plus2"></i></a>
+			
+			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
+			<i class="ico-user"></i></a>
+
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-remove"></i></a>
+			'
+
+			;
 
 			$data[] = $row;
 
@@ -236,6 +266,213 @@ class ToBack extends MX_Controller
 
 		$this->mToBack->ch_To($data);
 	}
+
+	#####OPIK#########################################
+
+public function reportto($uuid){
+		$data['tryout'] = $this->mToBack->get_to_byuuid($uuid);
+
+		if (!$data['tryout']==array()) {
+			$id_to  = $data['tryout'][0]['id_tryout'];
+			$data['daftar_peserta'] =$this->mToBack->get_all_report($id_to);
+
+	        $data['files'] = array(
+	            APPPATH . 'modules/toback/views/v-list-peserta.php',
+	        );
+	        $data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
+	        
+		} else {
+			$data['files'] = array(
+	            APPPATH . 'modules/templating/views/v-data-notfound.php',
+	        );
+	        $data['judul_halaman'] = "Daftar Peserta";
+			 $this->load->view('templating/v-data-notfound');
+		}
+		
+		$this->load->view('templating/index-b-guru', $data);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	########################################################
 
 }
 ?>

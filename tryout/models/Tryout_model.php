@@ -15,6 +15,24 @@ class Tryout_model extends MX_Controller {
         $this->db->insert('tb_report-paket', $data);
     }
 
+    public function get_paket_undo($id_to) {
+        $query = "SELECT *
+				FROM `tb_tryout` `to` 
+				JOIN `tb_mm-tryoutpaket` `topaket` 
+				ON `to`.`id_tryout` = `topaket`.`id_tryout` 
+				JOIN `tb_paket` `paket` 
+				ON `topaket`.`id_paket` = `paket`.`id_paket` 
+				LEFT OUTER JOIN `tb_report-paket` repa 
+				ON `repa`.`id_mm-tryout-paket` = `topaket`.`id` 
+				WHERE `repa`.`id_report` IS NULL 
+				AND topaket.id_tryout = $id_to"
+
+        ;
+
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
     public function get_paket_by_id_to($id_to) {
         $this->db->select('*');
         $this->db->from('tb_tryout to');
@@ -23,16 +41,28 @@ class Tryout_model extends MX_Controller {
         $query = $this->db->get();
         return $query->result_array();
     }
+    
+    public function get_paket_actioned_by_id_to($id_to) {
+        $this->db->select('*');
+        $this->db->from('tb_tryout to');
+        $this->db->join('tb_mm-tryoutpaket topaket', 'to.id_tryout = topaket.id_tryout');
+        $this->db->join('tb_paket paket', 'topaket.id_paket = paket.id_paket');
+        $this->db->join('tb_report-paket repot_paket', 'repot_paket.id_mm-tryout-paket=topaket.id');
+        $this->db->where('repot_paket.id_pengguna', $this->session->userdata('id'));
+        $this->db->where('to.id_tryout', $id_to);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
     public function get_id_siswa() {
-        $this->db->select('siswa.penggunaID');
+        $this->db->select('siswa.id');
         $this->db->from('tb_siswa siswa');
         $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
 
         $this->db->where('pengguna.id', $this->session->userdata('id'));
 
         $query = $this->db->get();
-        return $query->result()[0]->penggunaID;
+        return $query->result()[0]->id;
     }
 
     //# fungsi get data tryout yang hakaksesnya true
@@ -110,7 +140,6 @@ class Tryout_model extends MX_Controller {
         $query = $this->db->get();
         return $query->result_array();
     }
-
 }
 
 ?>

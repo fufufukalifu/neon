@@ -188,9 +188,6 @@ class Paketsoal extends MX_Controller
 			$row[] = $list_soal['sumber'];
 			$row[] = $list_soal['soal'];
 			$row[] = $list_soal['kesulitan'];
-			// $row[] = '
-			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_soal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
-
 			$data[] = $row;
 			$n++;
 
@@ -202,17 +199,7 @@ class Paketsoal extends MX_Controller
 		echo json_encode( $output );
 		
 	}
-	// function addsoaltopaket(){
-	// 	$paket_soal = $this->load->MPaketsoal->getpaketsoal()[0];
-	// 	//$id_paket = $id_paket;
-	// 	print_r($paket_soal);
-	// 	// $data = array(
-	// 	// 	'id_paket' => $this->input->post( 'nama_paket' ) ,
-	// 	// );
 
-	// 	// $this->MPaketsoal->insertpaketsoal( $data );
-	// }
-	//paket soal relasi bank soal
 
 	#Start Function add soal paket#
 	public function addsoaltopaket()

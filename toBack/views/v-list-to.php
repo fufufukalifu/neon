@@ -192,5 +192,9 @@
 
         }
 
+    // ##opik##
+    function show_peserta(uuid){
+        window.location = 'reportto/'+uuid;
+    }
     </script>
 </section>
