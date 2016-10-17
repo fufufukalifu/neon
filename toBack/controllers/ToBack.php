@@ -26,10 +26,6 @@ class ToBack extends MX_Controller
 		$wktMulai=htmlspecialchars($this->input->post('wktmulai'));
 		$wktAkhir=htmlspecialchars($this->input->post('wktakhir'));
 
-
-
-
-
 		$dat_To=array(
 			'nm_tryout'=>$nmpaket,
 			'tgl_mulai'=>$tglMulai,	
@@ -49,26 +45,37 @@ class ToBack extends MX_Controller
 	// menampilkan halaman add to
 	public function addPaketTo($UUID)
 	{	
-		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID);
-		// 
-		if (!$data['tryout']==array()) {
-
-			$data['id_to']=$data['tryout']['id_tryout'];
-			$data['siswa'] = $this->msiswa->get_allsiswa();
-			$data['paket']= $this->MPaketsoal->getpaketsoal();
-	        $data['files'] = array(
-	            APPPATH . 'modules/toback/views/v-bundlepaket.php',
-	        );
-	        $data['judul_halaman'] = "Bundle Paket";
-	        
+		if ($UUID!=null) {
+			$this->cek_PaketTo($UUID);
 		} else {
 			$data['files'] = array(
 	            APPPATH . 'modules/templating/views/v-data-notfound.php',
 	        );
 	        $data['judul_halaman'] = "Bundle Paket";
-			 // $this->load->view('templating/v-data-notfound');
+	        $this->load->view('templating/index-b-guru', $data);
 		}
 		
+	}
+
+	public function cek_PaketTo($UUID)
+	{
+		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID);
+		if (!$data['tryout']==array()) {		
+				$data['id_to']=$data['tryout']['id_tryout'];
+				$data['siswa'] = $this->msiswa->get_allsiswa();
+				$data['paket']= $this->MPaketsoal->getpaketsoal();
+		        $data['files'] = array(
+		            APPPATH . 'modules/toback/views/v-bundlepaket.php',
+		        );
+		        $data['judul_halaman'] = "Bundle Paket";
+		        
+			} else {
+				$data['files'] = array(
+		            APPPATH . 'modules/templating/views/v-data-notfound.php',
+		        );
+		        $data['judul_halaman'] = "Bundle Paket";
+				 // $this->load->view('templating/v-data-notfound');
+			}
 		$this->load->view('templating/index-b-guru', $data);
 	}
 	//add paket ke TO
@@ -108,8 +115,36 @@ class ToBack extends MX_Controller
 		// var_dump(expression)
 	}
 
+	// function ajax_listpaket() {
+		
+
+	// 	$list = $this->load->mToBack->paket_by_toID($idTO);
+	// 	$data = array();
+
+	// 	$baseurl = base_url();
+	// 	foreach ( $list as $list_paket ) {
+	// 		// $no++;
+	// 		$row = array();
+	// 		$row[] = $list_paket['paketID'];
+	// 		$row[] = $list_paket['nm_paket'];
+	// 		$row[] = $list_paket['deskripsi'];
+	// 		$row[] = '
+	// 		<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>';
+
+	// 		$data[] = $row;
+
+	// 	}
+	
+	// 	$output = array(
+			
+	// 		"data"=>$data,
+	// 	);
+
+	// 	echo json_encode( $output );
+	// }
+
 	//menampikan paket yg sudah di add
-	function ajax_listpaket($idTO) {
+	function ajax_listpaket_by_To($idTO) {
 		
 
 		$list = $this->load->mToBack->paket_by_toID($idTO);
@@ -137,7 +172,7 @@ class ToBack extends MX_Controller
 		echo json_encode( $output );
 	}
 
-	function ajax_listsiswa($idTO) {
+	function ajax_listsiswa_by_To($idTO) {
 		
 
 		$list = $this->load->mToBack->siswa_by_totID($idTO);

@@ -60,9 +60,21 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <label class="control-label">Durasi <span class="text-danger">*</span></label>
-                                    <input type="text" name="durasi"  class="form-control" id="durasi" required>
+                                    <!-- <input type="text" name="durasi"  class="form-control" id="durasi" required> -->
+                                    <select name="durasi"  class="form-control" id="durasi" required="true">
+                                      <option value="">-Pilih Durasi-</option>
+                                      <option value="15">15</option>
+                                      <option value="30">30</option>
+                                      <option value="45">45</option>
+                                      <option value="60">60</option>
+                                      <option value="75">75</option>
+                                      <option value="90">90</option>
+                                      <option value="105">105</option>
+                                      <option value="120">120</option>
+                                      <option value="135">135</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

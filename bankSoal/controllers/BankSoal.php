@@ -420,11 +420,11 @@ class BankSoal extends MX_Controller {
         $sumber = htmlspecialchars($this->input->post('sumber'));
         $publish = htmlspecialchars($this->input->post('publish'));
         $random = htmlspecialchars($this->input->post('random'));
-        $a = htmlspecialchars($this->input->post('a'));
-        $b = htmlspecialchars($this->input->post('b'));
-        $c = htmlspecialchars($this->input->post('c'));
-        $d = htmlspecialchars($this->input->post('d'));
-        $e = htmlspecialchars($this->input->post('e'));
+        $a = $this->input->post('a');
+        $b = $this->input->post('b');
+        $c = $this->input->post('c');
+        $d = $this->input->post('d');
+        $e = $this->input->post('e');
         $create_by = $this->session->userdata['id'];
         //kesulitan indks 1-3
         $dataSoal = array(
@@ -599,11 +599,11 @@ class BankSoal extends MX_Controller {
         $idC = htmlspecialchars($this->input->post('idpilC'));
         $idD = htmlspecialchars($this->input->post('idpilD'));
         $idE = htmlspecialchars($this->input->post('idpilE'));
-        $a = htmlspecialchars($this->input->post('a'));
-        $b = htmlspecialchars($this->input->post('b'));
-        $c = htmlspecialchars($this->input->post('c'));
-        $d = htmlspecialchars($this->input->post('d'));
-        $e = htmlspecialchars($this->input->post('e'));
+        $a = $this->input->post('a');
+        $b = $this->input->post('b');
+        $c = $this->input->post('c');
+        $d = $this->input->post('d');
+        $e = $this->input->post('e');
         #END post data pilihan jawaban#
         //keterangan *kesulitan index 1-3
 

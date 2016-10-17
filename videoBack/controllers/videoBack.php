@@ -69,6 +69,25 @@ class videoBack extends MX_Controller {
         $this->load->view('guru/v-left-bar');
         $this->load->view('v-video-manager', $this->get_video_manager());
         $this->load->view('templating/t-footer-back');
+
+
+        // $guru_id = $this->session->userdata['id_guru'];
+        // $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
+        //         $data['jumlah_video'] = count($this->load->mvideos->get_video_by_teacher($guru_id));
+        // $data['files'] = array(
+        //     APPPATH . 'modules/videoBack/views/v-video-manager.php',
+        //     );
+
+        // $data['judul_halaman'] = "List  Mata Pelajaran";
+        // $hakAkses=$this->session->userdata['HAKAKSES'];
+        // if ($hakAkses=='admin') {
+        //     $this->parser->parse('admin/v-index-admin', $data);
+        // } elseif($hakAkses=='guru'){
+        //     $this->parser->parse('templating/index-b-guru', $data);
+        // }else{
+        //     redirect(site_url('welcome'));
+        // }
+
     }
 
     // fungsi untuk upload video

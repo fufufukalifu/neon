@@ -39,8 +39,12 @@ class MPaketsoal extends CI_Model {
 		$this->db->where('id_paket',$idpaket);
 		$this->db->where( 'status', 1 );
 		$query = $this->db->get();
-
-		return $query->result_array();
+        $result = $query->result_array();
+		  // You should use $q->num_rows() to detect the number of returned rows
+		  if($query->num_rows() == 1) {
+		   return $result[0];
+		  }
+		  return $result;
 	}
 
 	public function droppaket( $id ) {

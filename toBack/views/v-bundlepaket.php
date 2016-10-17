@@ -5,7 +5,7 @@
             <!--START LIST PAKET dan SISWA -->
             <div class="panel panel-default">
                     <div class="panel-heading">
-                            <h3 class="panel-title">Daftar Soal</h3>
+                            <h3 class="panel-title">NAMA TO</h3>
                     </div>
                     <!-- Start Panel Body ALL -->
                     <div class="panel-body">
@@ -13,7 +13,7 @@
                         <div class="col-md-6">
                              <div class="panel panel-default">
                                 <div class="panel-heading">
-                                        <h3 class="panel-title">Daftar Soal</h3>
+                                        <h3 class="panel-title">Daftar Yang Akan DI Tambahkan Ke Try</h3>
                                         <input type="text" name="id" id="id_to" value="<?=$id_to;?>" hidden='true' >
                                 </div>
                                     <!-- Start Panel Body -->
@@ -236,35 +236,42 @@
 
 <script type="text/javascript">
    
-     var tblist_soal;
-     var tblist_siswa;
+     var tblist_paketAdd ;
+     var tblist_siswaAdd ;
      var idTo =$('#id_to').val();
     
     // Script for getting the dynamic values from database using jQuery and AJAX
 
 
      $(document).ready(function() {
-        tblist_soal = $('#listaddpaket').DataTable({ 
+
+        // tabel paket
+
+
+        // tabel paket yang sudah di add ke to
+        tblist_paketAdd = $('#listaddpaket').DataTable({ 
            "ajax": {
-            "url": base_url+"index.php/toback/ajax_listpaket/"+idTo,
+            "url": base_url+"index.php/toback/ajax_listpaket_by_To/"+idTo,
+            "type": "POST"
+        },
+        "processing": true,
+        });
+        // tabel siswa yang akan mengokuti ujian
+        tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
+           "ajax": {
+            "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
             "type": "POST"
         },
         "processing": true,
         });
 
-        tblist_siswa = $('#tblist_siswa').DataTable({ 
-           "ajax": {
-            "url": base_url+"index.php/toback/ajax_listsiswa/"+idTo,
-            "type": "POST"
-        },
-        "processing": true,
-        });
+
 
     });
 
     function reload_tblist(){
-         tblist_siswa.ajax.reload(null,false);
-        tblist_soal.ajax.reload(null,false); //reload datatable ajax 
+         tblist_siswaAdd.ajax.reload(null,false);
+        tblist_paketAdd.ajax.reload(null,false); //reload datatable ajax 
        // 
     }
 
