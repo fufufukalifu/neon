@@ -1,3 +1,8 @@
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
+<!-- START Template Main -->
+<section id="main" role="main">
   <!-- get data siswa unutk di tampilkan di form -->
   <?php 
   foreach ($guru as $row) {
@@ -11,13 +16,7 @@
     $oldphoto=$row['photo'];
 } ;
 
-?>           
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
-<!-- START Template Main -->
-<section id="main" role="main">
-
+?> 
         <!-- START row -->
         <div class="row">
             <!-- Left / Top Side -->
@@ -182,7 +181,7 @@
     <!-- tab-pane: email -->
     <div class="tab-pane" id="email">
         <!-- form email -->
-        <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/siswa/ubahemailsiswa" method="POST" >
+        <form class="panel form-horizontal form-bordered" name="form-account" action="<?=base_url()?>index.php/guru/ubahemailGuru" method="POST" >
             <div class="panel-body pt0 pb0">
                 <div class="form-group header bgcolor-default">
                     <div class="col-md-12">
@@ -194,7 +193,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-5">
-                        <input type="email" class="form-control" name="email" value="" required="true">
+                        <input type="email" class="form-control" name="email" value="<?=$eMail;?>" required="true">
                         <span class="text-danger"> <?php echo form_error('email'); ?></span>
 
                     </div>

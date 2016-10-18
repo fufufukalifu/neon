@@ -43,9 +43,9 @@ class ToBack extends MX_Controller
 
 	#START Function add pakket to Try Out#
 	// menampilkan halaman add to
-	public function addPaketTo($UUID)
+	public function addPaketTo($UUID='')
 	{	
-		if ($UUID!=null || isset($UUID)) {
+		if ($UUID!=null) {
 			$this->cek_PaketTo($UUID);
 		} else {
 			$data['files'] = array(
@@ -60,9 +60,8 @@ class ToBack extends MX_Controller
 	public function cek_PaketTo($UUID)
 	{
 		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID);
-		$id_to = $data['tryout']['id_tryout'];
-		
 		if (!$data['tryout']==array()) {		
+			$id_to = $data['tryout']['id_tryout'];
 			$data['id_to']=$data['tryout']['id_tryout'];
 			$data['siswa'] = $this->msiswa->get_siswa_blm_ikutan_to($id_to);
 			$data['files'] = array(
@@ -75,9 +74,7 @@ class ToBack extends MX_Controller
 				APPPATH . 'modules/templating/views/v-data-notfound.php',
 				);
 			$data['judul_halaman'] = "Bundle Paket";
-				 $this->load->view('templating/v-data-notfound');
 		}
-		print_r($data['siswa']);
 		$this->load->view('templating/index-b-guru', $data);
 	}
 	//add paket ke TO

@@ -14,6 +14,7 @@ class MPaketsoal extends CI_Model {
 	var $order1 = array('id'=>'desc');
 	// #End var buat list soal by paket#
 
+	
 	public function get_by_id($id){
 		$this->db->from($this->table);
 		$this->db->where('id_paket',$id);

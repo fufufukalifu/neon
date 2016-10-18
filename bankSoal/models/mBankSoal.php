@@ -12,6 +12,9 @@ class MbankSoal extends CI_Model {
 
     public function get_soalID($UUID) {
         $this->db->where('UUID', $UUID);
+        $this->db->where('publish', 1);
+        $this->db->where('status', 1);
+        
         $this->db->select('id_soal')->from('tb_banksoal');
         $query = $this->db->get();
         return $query->result_array();
@@ -157,6 +160,33 @@ class MbankSoal extends CI_Model {
         $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    #ambil soal yang belum terdaftar dalam paket soal.
+    public function get_soal_terdaftar($data){
+       $sub =  $data['id_subab'];
+       $paket = $data['id_paket'];
+        
+        $myquery ="SELECT * FROM `tb_banksoal` bank
+            WHERE bank.publish = 1
+            AND bank.status = 1
+            AND bank.id_soal NOT IN
+            (
+             SELECT pb.`id_soal`
+             FROM `tb_banksoal` b
+             JOIN `tb_mm-paketbank` pb 
+             ON pb.`id_soal`= b.`id_soal`
+             JOIN `tb_paket` p ON
+             p.`id_paket` = pb.`id_paket`
+             JOIN `tb_subbab` sub ON
+             sub.`id` = p.`id_subbab`
+             WHERE pb.`id_subbab` = $sub
+            AND p.`id_paket` = $paket
+            )
+            ";
+
+    $result = $this->db->query($myquery);
+    return $result->result_array();
     }
 }
 

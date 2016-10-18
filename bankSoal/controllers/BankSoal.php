@@ -171,7 +171,7 @@ class BankSoal extends MX_Controller {
 
         $baseurl = base_url();
         foreach ( $list as $list_soal ) {
-           
+            $jawabanBenar= "";
             $jawaban=$list_soal['jawaban'];
             $tingkat=$list_soal['kesulitan'];
             $id_soal=$list_soal['id_soal'];
@@ -213,8 +213,8 @@ class BankSoal extends MX_Controller {
             $row[] = $list_soal['sumber'];
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
-            $row[] =  $list_soal['soal'];
-            $row[] =   $jawabanBenar;
+            $row[] = $list_soal['soal'];
+            $row[] = $jawabanBenar;
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -292,7 +292,7 @@ class BankSoal extends MX_Controller {
 
         $baseurl = base_url();
         foreach ( $list as $list_soal ) {
-           
+             $jawabanBenar= "";
             $jawaban=$list_soal['jawaban'];
             $tingkat=$list_soal['kesulitan'];
             $id_soal=$list_soal['id_soal'];
@@ -316,7 +316,9 @@ class BankSoal extends MX_Controller {
                 $op=$piljawaban['pilihan'];
                 if ($id_soal==$id_soal_fk && $jawaban == $op ) {
                     $jawabanBenar=$piljawaban['jawabanBenar'];
+
                 } 
+
                 
             }
             // menentukan checked random
@@ -335,7 +337,7 @@ class BankSoal extends MX_Controller {
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
             $row[] =  $list_soal['soal'];
-            $row[] =   $jawabanBenar;
+            $row[] = $jawabanBenar;
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -406,87 +408,102 @@ class BankSoal extends MX_Controller {
     }
 
     public function uploadsoal() {
-        $options = htmlspecialchars($this->input->post('options'));
-        $UUID = uniqid();
-        $soal = ($this->input->post('editor1'));
-        $gambarSoal = $this->input->post('gambarSoal');
-        $judul_soal = htmlspecialchars($this->input->post('judul'));
+        //load library n helper
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
         $subBabID = htmlspecialchars($this->input->post('subBabID'));
-        $jawaban = htmlspecialchars($this->input->post('jawaban'));
-        $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
-        $sumber = htmlspecialchars($this->input->post('sumber'));
-        $publish = htmlspecialchars($this->input->post('publish'));
-        $random = htmlspecialchars($this->input->post('random'));
-        $a = $this->input->post('a');
-        $b = $this->input->post('b');
-        $c = $this->input->post('c');
-        $d = $this->input->post('d');
-        $e = $this->input->post('e');
-        $create_by = $this->session->userdata['id'];
-        //kesulitan indks 1-3
-        $dataSoal = array(
-            'judul_soal' => $judul_soal,
-            'soal' => $soal,
-            'jawaban' => $jawaban,
-            'sumber' => $sumber,
-            'kesulitan' => $kesulitan,
-            'publish' => $publish,
-            'create_by' => $create_by,
-            'id_subbab' => $subBabID,
-            'UUID' => $UUID,
-            'random' => $random
-        );
+        //syarat pengisian form upload soal
+        $this->form_validation->set_rules('judul', 'Judul Soal', 'trim|required|is_unique[tb_banksoal.judul_soal]');
+        //pengecekan pengisian form regitrasi siswa
+        // if ($this->form_validation->run() == FALSE) {##
+        //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
+            // redirect(site_url('banksoal/formsoal?subBab='.$subBabID));
+        // } else {##
+         // START SINTX UPLOAD SOAL
+            $options = htmlspecialchars($this->input->post('options'));
+           $UUID = uniqid();
+           $soal = ($this->input->post('editor1'));
+           $gambarSoal = $this->input->post('gambarSoal');
+           $judul_soal = htmlspecialchars($this->input->post('judul'));
+           $jawaban = htmlspecialchars($this->input->post('jawaban'));
+           $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
+           $sumber = htmlspecialchars($this->input->post('sumber'));
+           $publish = htmlspecialchars($this->input->post('publish'));
+           $random = htmlspecialchars($this->input->post('random'));
+           $a = $this->input->post('a');
+           $b = $this->input->post('b');
+           $c = $this->input->post('c');
+           $d = $this->input->post('d');
+           $e = $this->input->post('e');
+           $create_by = $this->session->userdata['id'];
+           //kesulitan indks 1-3
+           $dataSoal = array(
+               'judul_soal' => $judul_soal,
+               'soal' => $soal,
+               'jawaban' => $jawaban,
+               'sumber' => $sumber,
+               'kesulitan' => $kesulitan,
+               'publish' => $publish,
+               'create_by' => $create_by,
+               'id_subbab' => $subBabID,
+               'UUID' => $UUID,
+               'random' => $random
+           );
 
-        //call fungsi insert soal
-        $this->mbanksoal->insert_soal($dataSoal);
-         $this->up_img_soal($UUID);
-        // mengambil id soal untuk fk di tb_piljawaban
-        $data['tb_banksoal'] = $this->mbanksoal->get_soalID($UUID)[0];
-        $soalID = $data['tb_banksoal']['id_soal'];
+           //call fungsi insert soal
+           $this->mbanksoal->insert_soal($dataSoal);
+            $this->up_img_soal($UUID);
+           // mengambil id soal untuk fk di tb_piljawaban
+           $data['tb_banksoal'] = $this->mbanksoal->get_soalID($UUID)[0];
+           $soalID = $data['tb_banksoal']['id_soal'];
 
 
-        #Start pengecekan jenis inputan jawaban#
-        //pengkondisian untuk jenis inputan text atau gambar
-        if ($options == 'text') {
-            #jika inputan text
-            //data untuk pilahan jawaban
-            $dataJawaban = array(
-                array(
-                    'pilihan' => 'A',
-                    'jawaban' => $a,
-                    'id_soal' => $soalID
-                ),
-                array(
-                    'pilihan' => 'B',
-                    'jawaban' => $b,
-                    'id_soal' => $soalID
-                ),
-                array(
-                    'pilihan' => 'C',
-                    'jawaban' => $c,
-                    'id_soal' => $soalID
-                ),
-                array(
-                    'pilihan' => 'D',
-                    'jawaban' => $d,
-                    'id_soal' => $soalID
-                ),
-                array(
-                    'pilihan' => 'E',
-                    'jawaban' => $e,
-                    'id_soal' => $soalID
-                )
-            );
+           #Start pengecekan jenis inputan jawaban#
+           //pengkondisian untuk jenis inputan text atau gambar
+           if ($options == 'text') {
+               #jika inputan text
+               //data untuk pilahan jawaban
+               $dataJawaban = array(
+                   array(
+                       'pilihan' => 'A',
+                       'jawaban' => $a,
+                       'id_soal' => $soalID
+                   ),
+                   array(
+                       'pilihan' => 'B',
+                       'jawaban' => $b,
+                       'id_soal' => $soalID
+                   ),
+                   array(
+                       'pilihan' => 'C',
+                       'jawaban' => $c,
+                       'id_soal' => $soalID
+                   ),
+                   array(
+                       'pilihan' => 'D',
+                       'jawaban' => $d,
+                       'id_soal' => $soalID
+                   ),
+                   array(
+                       'pilihan' => 'E',
+                       'jawaban' => $e,
+                       'id_soal' => $soalID
+                   )
+               );
 
-            //call function insert jawaban tet
-            $this->mbanksoal->insert_jawaban($dataJawaban);
-        } else {
-            #jika inputan gambar
-            //call functiom upload gamabar
-            $this->up_img_jawaban($soalID);
-        }
-        #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
+               //call function insert jawaban tet
+               $this->mbanksoal->insert_jawaban($dataJawaban);
+           } else {
+               #jika inputan gambar
+               //call functiom upload gamabar
+               $this->up_img_jawaban($soalID);
+           }
+           #END pengecekan jenis inputan jawaban#
+           redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
+         // END SINTX UPLOAD SOAL
+        // }##
+
+        
     }
 
     //function upload gambar soal
