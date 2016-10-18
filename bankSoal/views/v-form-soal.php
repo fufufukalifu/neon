@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2">Judul Soal</label>
                             <div class="col-sm-8">
-                                <input type="text" name="judul" class="form-control">
+                                <input type="text" name="judul" class="form-control" required="true">
                             </div>
                             
                         </div>
@@ -29,7 +29,8 @@
                             <label class="control-label col-sm-2 ">Kesulitan</label>
                             <div class="col-sm-8">
                                 <select name="kesulitan" class="form-control">
-                                    <option value="">Mudah</option>
+                                    <option>--Silahkan Pilih Tingkat Kesulitan--</option>
+                                    <option value="0">Mudah</option>
                                     <option value="1">Sedang</option>
                                     <option value="2">Sulit</option>
                                 </select>
@@ -41,6 +42,33 @@
                                 <input type="text" name="sumber" class="form-control">
                             </div>
                         </div>
+                         <div class="form-group">
+                            <label class="control-label col-sm-2">Gambar Soal</label>
+                             <div class="col-sm-8 " >
+                                <div class="col-sm-12">
+                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+                                 </div>
+                                         
+                                <div class="col-sm-12">
+                                    <div class="col-md-5 left"> 
+                                            <h6>Name: <span id="filenameSoal"></span></h6> 
+                                    </div> 
+                                    <div class="col-md-4 left"> 
+                                            <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
+                                    </div> 
+                                    <div class="col-md-3 bottom"> 
+                                            <h6>Type: <span id="filetypeSoal"></span></h6> 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="fileSoal" class="btn btn-success">
+                                        Pilih Gambar
+                                    </label>
+                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal"/>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Soal</label>
                             <div class="col-sm-8">
@@ -49,6 +77,7 @@
                                 </textarea>
                             </div>
                         </div>
+                       
                         <div class="form-group">
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
                             <div class="col-sm-8">
@@ -266,6 +295,7 @@
                             <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
                                 <select name="jawaban" class="form-control">
+                                    <option>--Silahkan Pilih Jawaban Benar--</option>
                                     <option value="A" >A</option>
                                     <option value="B" >B</option>
                                     <option value="C" >C</option>
@@ -340,6 +370,28 @@
     <!-- Start script untuk priview gambar soal -->
     <script type="text/javascript">
         $(function () {
+
+            // Start event priview gambar Soal
+            $('#fileSoal').on('change',function () {
+                console.log('test');
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerSoal.load;
+                reader.readAsDataURL(file);
+                viewerSoal.setProperties(file);
+            });
+            var viewerSoal = {
+                load : function(e){
+                    $('#previewSoal').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameSoal').text(file.name);
+                    $('#filetypeSoal').text(file.type);
+                    $('#filesizeSoal').text(Math.round(file.size/1024));
+                },
+            }
+            // End event priview gambar pilihan A
+
 
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {

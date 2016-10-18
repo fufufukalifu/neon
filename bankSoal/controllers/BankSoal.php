@@ -65,10 +65,6 @@ class BankSoal extends MX_Controller {
 
     public function listbab() {
         $mpID = htmlspecialchars($this->input->get('mpID'));
-
-
-  
-
         $data['bab'] = $this->mbanksoal->get_bab($mpID);
         $data['judul_halaman'] = "List Bab";
         $data['files'] = array(
@@ -239,7 +235,7 @@ class BankSoal extends MX_Controller {
 
             </form>';
 
-            $row[]=' 
+             $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
@@ -413,6 +409,7 @@ class BankSoal extends MX_Controller {
         $options = htmlspecialchars($this->input->post('options'));
         $UUID = uniqid();
         $soal = ($this->input->post('editor1'));
+        $gambarSoal = $this->input->post('gambarSoal');
         $judul_soal = htmlspecialchars($this->input->post('judul'));
         $subBabID = htmlspecialchars($this->input->post('subBabID'));
         $jawaban = htmlspecialchars($this->input->post('jawaban'));
@@ -442,7 +439,7 @@ class BankSoal extends MX_Controller {
 
         //call fungsi insert soal
         $this->mbanksoal->insert_soal($dataSoal);
-
+         $this->up_img_soal($UUID);
         // mengambil id soal untuk fk di tb_piljawaban
         $data['tb_banksoal'] = $this->mbanksoal->get_soalID($UUID)[0];
         $soalID = $data['tb_banksoal']['id_soal'];
@@ -486,13 +483,58 @@ class BankSoal extends MX_Controller {
         } else {
             #jika inputan gambar
             //call functiom upload gamabar
-            $this->uploadgambar($soalID);
+            $this->up_img_jawaban($soalID);
         }
         #END pengecekan jenis inputan jawaban#
         redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
     }
 
-    public function uploadgambar($soalID) {
+    //function upload gambar soal
+     public function up_img_soal($UUID) {
+        $config['upload_path'] = './assets/image/soal/';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->load->library('upload', $config);
+        $gambar = "gambarSoal";
+        $this->upload->do_upload($gambar);
+        $file_data = $this->upload->data();
+        $file_name = $file_data['file_name'];
+        $data['UUID']=$UUID;
+        $data['dataSoal']=  array(
+            'gambar_soal' => $file_name);
+
+            $this->mbanksoal->ch_soal($data);
+    }
+    public function ch_img_soal($UUID) {
+        $config['upload_path'] = './assets/image/soal/';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->load->library('upload', $config);
+        $gambar = "gambarSoal";
+        $oldgambar = $this->mbanksoal->get_oldgambar_soal($UUID);
+        if ($this->upload->do_upload($gambar)) {
+         foreach ($oldgambar as $rows) {
+            unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
+         }
+         $file_data = $this->upload->data();
+         $file_name = $file_data['file_name'];
+         $data['UUID']=$UUID;
+         $data['dataSoal']=  array(
+          'gambar_soal' => $file_name);
+         $this->mbanksoal->ch_soal($data);
+        }
+        
+       
+       
+
+        // $this->mbanksoal->insert_gambar($datagambar);
+    }
+    //function untuk mengupload gambar pilihan jawaban
+    public function up_img_jawaban($soalID) {
         $config['upload_path'] = './assets/image/jawaban/';
         $config['allowed_types'] = 'jpeg|gif|jpg|png';
         $config['max_size'] = 100;
@@ -540,8 +582,7 @@ class BankSoal extends MX_Controller {
         
         $UUID = htmlspecialchars($this->input->get('UUID'));
 
-        
-            //get data soan where==UUID
+        //get data soan where==UUID
         $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
         $id_soal = $data['bankSoal']['id_soal'];
             //get piljawaban == id soal
@@ -622,7 +663,7 @@ class BankSoal extends MX_Controller {
 
         //call fungsi insert soal
         $this->mbanksoal->ch_soal($data);
-
+        $this->ch_img_soal($UUID);
         #Start pengecekan jenis inputan jawaban#
         //pengkondisian untuk jenis inputan text atau gambar
         if ($options == 'text') {
@@ -663,13 +704,13 @@ class BankSoal extends MX_Controller {
             #jika inputan gambar
 
             // call functiom upload gamabar
-            $this->updategambar($soalID);
+            $this->ch_img_jawaban($soalID);
         }
         #END pengecekan jenis inputan jawaban#
         redirect(site_url('banksoal/allsoal'));
     }
 
-    public function updategambar($soalID) {
+    public function ch_img_jawaban($soalID) {
 
         // unlink( FCPATH . "./assets/image/jawaban/".$xxxx );
         $config['upload_path'] = './assets/image/jawaban/';
@@ -680,9 +721,6 @@ class BankSoal extends MX_Controller {
         $this->load->library('upload', $config);
 
         $oldgambar = $this->mbanksoal->get_oldgambar($soalID);
-
-
-
 
         $n = '1';
         $datagambar = array();

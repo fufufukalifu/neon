@@ -101,7 +101,8 @@
 
 //     deleteAllCookies('hours','seconds', 'minutes');
 //        deleteAllCookies();
-    countdown(5, true);
+//    countdown(5, true);
+    
 //    countup(0, 0, 0, true);
 
 
