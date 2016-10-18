@@ -2,7 +2,7 @@
 </style>
 <section id="main" role="main">
     <!-- START MODAL EDIT TRYOUT -->
-    <script type="text/javascript">var halaman = true;</script>
+    <script type="text/javascript">halaman = true;</script>
     <div class="modal fade" id="modal_editTO" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
