@@ -43,9 +43,10 @@ class ToBack extends MX_Controller
 
 	#START Function add pakket to Try Out#
 	// menampilkan halaman add to
-	public function addPaketTo($UUID)
+	public function addPaketTo($UUID="")
 	{	
-		if ($UUID!=null || isset($UUID)) {
+		// print_r(isset($UUID));
+		if ($UUID!=null && $UUID="") {
 			$this->cek_PaketTo($UUID);
 		} else {
 			$data['files'] = array(
