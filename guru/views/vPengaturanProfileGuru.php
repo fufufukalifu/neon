@@ -1,3 +1,8 @@
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
+<!-- START Template Main -->
+<section id="main" role="main">
   <!-- get data siswa unutk di tampilkan di form -->
   <?php 
   foreach ($guru as $row) {
@@ -11,13 +16,7 @@
     $oldphoto=$row['photo'];
 } ;
 
-?>           
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/upbar.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jequery.form.js') ?>"></script>
-<!-- START Template Main -->
-<section id="main" role="main">
-
+?> 
         <!-- START row -->
         <div class="row">
             <!-- Left / Top Side -->
