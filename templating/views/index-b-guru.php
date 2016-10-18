@@ -124,6 +124,12 @@
       <strong>O.M.G.!</strong> Tolong di ISI semua.
      </div>
      <!-- END PESAN ERROR EMPTY INPUT -->
+     <!-- START PESAN ERROR EMPTY INPUT -->
+     <div class="alert alert-dismissable alert-danger" id="e_tglTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_tglTo()" >×</button>
+      <strong>Silahkan cek kembali!</strong> Tanggal mulai dan tanggal akhir tidak sesuai.
+     </div>
+     <!-- END PESAN ERROR EMPTY INPUT -->
      <form class="panel panel-default form-horizontal form-bordered" action="javascript:void(0);" method="post" id="form_to">
       <div  class="form-group">
        <label class="col-sm-3 control-label">Nama Tryout</label>
@@ -1099,7 +1105,9 @@ function add_to() {
  function hide_e_crtTo() {
   $("#e_crtTo").hide();
  }
-
+ function hide_e_tglTo() {
+  $("#e_tglTo").hide();
+ }
  function crtTo() {
   var nm_paket   =   $('#to_nm').val();
   var tgl_mulai  =   $('#to_tglmulai').val();
@@ -1115,19 +1123,19 @@ function add_to() {
 
 
   if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
+    if (tgl_mulai<tgl_akhir) {
+     var url = base_url+"index.php/toback/buatTo";
+     $.ajax({
+      url : url,
+      type: "POST",
+      data: { nmpaket : nm_paket,
+       tglmulai:tgl_mulai,
+       tglakhir:tgl_akhir,
+       wktmulai:wkt_mulai,
+       wktakhir:wkt_akhir,
+       publish :publish 
 
-   var url = base_url+"index.php/toback/buatTo";
-   $.ajax({
-    url : url,
-    type: "POST",
-    data: { nmpaket : nm_paket,
-     tglmulai:tgl_mulai,
-     tglakhir:tgl_akhir,
-     wktmulai:wkt_mulai,
-     wktakhir:wkt_akhir,
-     publish :publish 
-
-    },
+      },
                         // cache: false,
                       // dataType: "JSON",
                       success: function(data,respone)
@@ -1146,6 +1154,10 @@ function add_to() {
                             alert('Error adding / update data');
                            }
                           });
+    } else {
+     $("#e_tglTo").show();
+    }
+   
   }else{
 
    $("#e_crtTo").show();
