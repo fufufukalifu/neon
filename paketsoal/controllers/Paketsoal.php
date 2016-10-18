@@ -172,9 +172,9 @@ class Paketsoal extends MX_Controller
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		if (!$paket_soal==array()) {
 			$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
-	
 			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
 			$data['id_paket']=$idpaket;
+			
 			$data['files'] = array(
 				APPPATH.'modules/Paketsoal/views/v-add-soal.php',
 			);
@@ -262,33 +262,27 @@ class Paketsoal extends MX_Controller
 		$param['id_subab'] = $id_subab;
 
 		$list = $soal=$this->mBankSoal->get_soal_terdaftar($param);
-		var_dump($list);
-		// $data = array();
 
+		//mengambil nilai list
+		$baseurl = base_url();
+		foreach ( $list as $list_soal ) {
+			$n='1';
+			$row = array();
 
-		// //mengambil nilai list
-		// $baseurl = base_url();
-		// foreach ( $list as $list_soal ) {
-		// 	$n='1';
-		// 	$row = array();
+			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'><input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal']."><label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label></span>";
+			$row[] = $list_soal['judul_soal'];
+			$row[] = $list_soal['sumber'];
+			$row[] = $list_soal['soal'];
+			$row[] = $list_soal['kesulitan'];
+			$data[] = $row;
+			$n++;
 
-		// 	$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-		// 						<input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
-		// 						<label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
-		// 					</span>";
-		// 	$row[] = $list_soal['judul_soal'];
-		// 	$row[] = $list_soal['sumber'];
-		// 	$row[] = $list_soal['soal'];
-		// 	$row[] = $list_soal['kesulitan'];
-		// 	$data[] = $row;
-		// 	$n++;
-
-		// }
-		// //print_r($data);
-		// $output = array(
-		// 	"data"=>$data,
-		// );
-		// echo json_encode( $output );
+		}
+		//print_r($data);
+		$output = array(
+			"data"=>$data,
+		);
+		echo json_encode( $output );
 		
 	}
 
