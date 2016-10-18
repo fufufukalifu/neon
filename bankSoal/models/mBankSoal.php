@@ -164,8 +164,7 @@ class MbankSoal extends CI_Model {
 
     #ambil soal yang belum terdaftar dalam paket soal.
     public function get_soal_terdaftar($data){
-        $myquery = 
-        "SELECT * FROM `tb_banksoal` bank
+        $myquery ="SELECT * FROM `tb_banksoal` bank
             WHERE bank.publish = 1
             AND bank.status = 1
             AND bank.id_soal NOT IN
