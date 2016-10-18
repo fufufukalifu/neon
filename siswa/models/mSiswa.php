@@ -15,6 +15,11 @@ class Msiswa extends CI_Model {
         $id = $this->session->userdata['id'];
         $this->db->where('id', $id);
         $this->db->update('tb_pengguna', $data);
+        $sess_array = array(
+    
+                    'eMail' => $data['eMail'],
+                );
+        $this->session->set_userdata($sess_array);
     }
 
     public function update_katasandi($data) {
