@@ -14,6 +14,7 @@ class Guru extends MX_Controller {
         $this->load->model( 'komen/mkomen' );
         $this->load->model( 'register/mregister' );
         $this->load->model('Templating/mtemplating');
+        $this->load->model('siswa/msiswa');
         $this->load->library('parser');
         sessionkonfirm();
         get_session_guru();
@@ -51,10 +52,6 @@ class Guru extends MX_Controller {
     }
 
     public function dashboard() {
-        // Sebelum Templating#
-        // $this->load->view( 'templating/t-header' );
-        // $this->load->view( 'v-banner-guru' );
-        // $this->load->view( 'v-left-bar' );
 
         $data = $this->videobyteacher();
         #Sesudah Tempalting#
@@ -80,15 +77,7 @@ class Guru extends MX_Controller {
 
         
 
-        #Sebelum templating#
-        //pengecekan jika array kosong
-        // if ($data==array()) {
-
-        //     $this->load->view( 'v-container-video',  $data['data_guru']);
-        // }else{
-        //    $this->load->view( 'v-container-video',  $data); 
-        // }
-        // $this->load->view( 'templating/t-footer-back.php' );
+       
     }
 
     //menampilkan video manager untuk user
@@ -112,6 +101,7 @@ class Guru extends MX_Controller {
     public function pengaturanProfileguru() {
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['guru'] = $this->mguru->get_datguru();
+        $data['eMail']=$this->session->userdata['eMail'];
         $data['files'] = array(
             APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
         );
@@ -141,12 +131,6 @@ class Guru extends MX_Controller {
 
         //pengecekan inputan / pengisian form
         if ( $this->form_validation->run() == FALSE ) {
-
-        // $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        // $data['guru'] = $this->mguru->get_datguru();
-        // $this->load->view( 'templating/t-header' );
-        // $this->load->view( 'vPengaturanProfileGuru',$data );
-        // $this->load->view( 'templating/t-footer' );
             $this->pengaturanProfileguru();
         } else {
             $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
@@ -246,7 +230,7 @@ class Guru extends MX_Controller {
      public function upload($oldphoto) {
         unlink( FCPATH . "./assets/image/photo/guru/".$oldphoto );
         $config['upload_path'] = './assets/image/photo/guru';
-        $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
@@ -256,23 +240,54 @@ class Guru extends MX_Controller {
 
 
             $data['error'] = array('error' => $this->upload->display_errors());
-            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-            $data['guru'] = $this->mguru->get_datguru();
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'vPengaturanProfileGuru',$data );
-            $this->load->view( 'templating/t-footer' );
-            
-
-            // $this->load->view('beranda/main_view',$error);, 
+            var_dump($data['error'])  ;
+            // $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+            // $data['guru'] = $this->mguru->get_datguru();
+            // $data['files'] = array(
+            // APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php');
+            // $data['judul_halaman'] = "Pengaturan Profile Guru";
+            //  $this->parser->parse('templating/index-b-guru', $data);
 
         } else {
             $file_data = $this->upload->data();
             $photo = $file_data['file_name'];
             $this->mguru->update_photo($photo);
-            echo "berhasil upload"; //for testing
-            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
-            // $this->load->view('beranda/success_msg',$data);
         }
+    }
+
+    // ubah email guru
+    public function ubahemailGuru() {
+
+        //load library n helper
+      $this->load->helper( array( 'form', 'url' ) );
+      $this->load->library( 'form_validation' );
+
+
+        //load library n helper
+      $this->load->helper( array( 'form', 'url' ) );
+      $this->load->library( 'form_validation' );
+
+        //syarat pengisian form perubahan nama pengguna dan email
+
+      $this->form_validation->set_rules( 'email', 'email', 'required|is_unique[tb_pengguna.eMail]' );
+
+        //pesan error atau pesan kesalahan pengisian form
+      $this->form_validation->set_message( 'is_unique', '*Email sudah terpakai' );
+      $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
+
+
+      if ( $this->form_validation->run() == FALSE ) {
+          $this->pengaturanProfileguru();
+      } else {
+        $email = htmlspecialchars( $this->input->post( 'email' ) );
+
+        $data_post = array(
+          'eMail' => $email,
+          );
+        $this->msiswa->update_email( $data_post );
+        redirect(site_url('guru/dashboard'));
+      }
+      
     }
 
 }
