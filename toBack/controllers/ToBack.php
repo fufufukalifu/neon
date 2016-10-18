@@ -74,7 +74,6 @@ class ToBack extends MX_Controller
 				APPPATH . 'modules/templating/views/v-data-notfound.php',
 				);
 			$data['judul_halaman'] = "Bundle Paket";
-				 $this->load->view('templating/v-data-notfound');
 		}
 		$this->load->view('templating/index-b-guru', $data);
 	}
