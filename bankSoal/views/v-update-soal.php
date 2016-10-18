@@ -28,6 +28,7 @@
                             <label class="control-label col-sm-2">Kesulitan</label>
                             <div class="col-sm-8">
                                 <select name="kesulitan" class="form-control">
+                                    <option value="">--Silahkan Pilih Tingkat Kesulitan--</option>
                                     <option value="1">Mudah</option>
                                     <option value="2">Sedang</option>
                                     <option value="3">Sulit</option>
@@ -297,6 +298,7 @@
                             <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
                                 <select name="jawaban" class="form-control">
+                                     <option value="">--Silahkan Pilih Jawaban Benar--</option>
                                     <option value="A" >A</option>
                                     <option value="B" >B</option>
                                     <option value="C" >C</option>
