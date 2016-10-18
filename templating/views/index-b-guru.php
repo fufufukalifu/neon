@@ -1199,7 +1199,7 @@ function add_to() {
 
               $('#getbb').change(function () {
                loadSubb($('#getbb').val());
-               loadPel(idTingkat);
+               // loadPel(idTingkat);
               });
              })
             }
