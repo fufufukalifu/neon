@@ -102,7 +102,7 @@ class Tryout_model extends MX_Controller {
         $this->db->join('tb_report-paket repot_paket', 'repot_paket.id_mm-tryout-paket=topaket.id');
     }
 
-    public function dataPaket() {
+    public function dataPaket($id) {
         $this->db->select('id_paket');
         $this->db->from('tb_mm-tryoutpaket');
         $this->db->where('id', $id);
@@ -112,7 +112,7 @@ class Tryout_model extends MX_Controller {
 
     public function get_soal($id_paket) {
         $this->db->order_by('rand()');
-        $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid');
+        $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul');
         $this->db->from('tb_mm-paketbank as paban');
         $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
         $this->db->where('paban.id_paket', $id_paket);
@@ -149,6 +149,14 @@ class Tryout_model extends MX_Controller {
         $this->db->from('tb_mm-paketbank as paban');
         $this->db->join('tb_banksoal as soal', 'soal.id_soal = paban.id_soal');
         $this->db->where('paban.id_paket', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function durasipaket($id_paket) {
+        $this->db->select('durasi');
+        $this->db->from('tb_paket');
+        $this->db->where('id_paket', $id_paket);
         $query = $this->db->get();
         return $query->result_array();
     }

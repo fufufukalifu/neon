@@ -33,16 +33,6 @@
     ;
     $(document).on("keydown", disableF5);
 
-// simply visual, let's you know when the correct iframe is selected
-    $(window).on("focus", function (e) {
-        $("html, body").css({background: "#FFF", color: "#000"})
-                .find("h2").html("THIS BOX NOW HAS FOCUS<br />F5 should not work.");
-    })
-            .on("blur", function (e) {
-                $("html, body").css({background: "", color: ""})
-                        .find("h2").html("CLICK HERE TO GIVE THIS BOX FOCUS BEFORE PRESSING F5");
-            });
-
     function countup(hour, min, second, stat) {
         var seconds = second;
         var mins = min;
@@ -133,7 +123,7 @@
         var id = status;
         var x = document.getElementById(id);
 //        x.classList.remove("btn-danger");
-        x.className += " btn-info";
+        x.className += " btn-primary";
     }
 </script>
 <script>
