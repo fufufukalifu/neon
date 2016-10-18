@@ -26,7 +26,18 @@ class MPaketsoal extends CI_Model {
 		$this->db->insert( 'tb_paket', $data );
 	}
 
-	public function getpaketsoal($id_to) {
+	#ambil semua paket soal yang berstatus 1
+	public function getpaketsoal() { 
+	  $this->db->select( '*' )->from( 'tb_paket' ); 
+	  $this->db->where( 'status', 1 ); 
+	  $query = $this->db->get(); 
+
+	  return $query->result_array(); 
+	 }
+	 ##
+
+	#ambil paket soal yang belum terdaftar di to tertentu 
+	public function get_paket_unregistered($id_to) {
 		$query = "SELECT p.deskripsi,p.id_paket, p.nm_paket FROM tb_paket p 
 		WHERE p.id_paket NOT IN
 		(
@@ -37,6 +48,8 @@ class MPaketsoal extends CI_Model {
 		$result = $this->db->query($query);
 		return $result->result_array();
 	}
+	##
+
 
 	public function getpaket_by_id($idpaket) {
 		$this->db->select( '*' )->from( 'tb_paket' );

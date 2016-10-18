@@ -45,7 +45,7 @@ class ToBack extends MX_Controller
 	// menampilkan halaman add to
 	public function addPaketTo($UUID)
 	{	
-		if ($UUID!=null) {
+		if ($UUID!=null || isset($UUID)) {
 			$this->cek_PaketTo($UUID);
 		} else {
 			$data['files'] = array(
@@ -300,7 +300,7 @@ class ToBack extends MX_Controller
 
 		##menampilkan paket yang belum ada di TO.
 					function ajax_list_all_paket($id_to){
-						$list = $this->MPaketsoal->getpaketsoal($id_to);
+						$list = $this->MPaketsoal->get_paket_unregistered($id_to);
 						$data = array();
 						$baseurl = base_url();
 						$n = 1;
