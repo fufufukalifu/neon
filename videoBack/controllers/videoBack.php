@@ -18,6 +18,7 @@ class videoBack extends MX_Controller {
         // get_session_guru();
     }
 
+    # Mengambil video berdasarkan id guru
     function get_video_manager() {
         $guru_id = $this->session->userdata['id_guru'];
         $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
@@ -25,6 +26,51 @@ class videoBack extends MX_Controller {
         //untuk menghitung berapa banyak video yang sudah diupload
         $data['jumlah_video'] = count($this->load->mvideos->get_video_by_teacher($guru_id));
         return $data;
+    }
+    ##
+
+    # ajax mengambil video by id guru
+    function ajax_get_video_by_id_guru(){
+        $guru_id = $this->session->userdata['id_guru'];
+        $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
+       // var_dump($data['videos_uploaded']);
+        $list = $data['videos_uploaded'];
+        $data = array();
+
+        //var_dump($list);
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ( $list as $list_video ) {
+            $n='1';
+            $row = array();
+
+            // $row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+            //                     <input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
+            //                     <label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
+            //                 </span>";
+            $row[] = $list_video['videoID'];
+            $row[] = $list_video['judulVideo'];
+            $row[] = $list_video['namaFile'];
+            $row[] = substr($list_video['deskripsi'], 0, 100)." <a href=''>Read More</a>";
+            $row[] = '<a class="btn btn-sm btn-danger"  
+            title="Hapus" onclick="drop_soal('."'".$list_video['videoID']."'".')">
+            <i class="ico-remove"></i></a>  
+
+            <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Detail Video"
+                data-id='.json_encode($list_video).'
+                onclick="detail('."'".$list_video['videoID']."'".')"
+                >
+                    <i class="ico-file5"></i>
+                        </a>  ';
+            $data[] = $row;
+            $n++;
+
+        }
+        //print_r($data);
+        $output = array(
+            "data"=>$data,
+        );
+        echo json_encode( $output );
     }
 
     public function index() {
@@ -65,10 +111,18 @@ class videoBack extends MX_Controller {
     }
 
     public function managervideo() {
-        $this->load->view('templating/t-header');
-        $this->load->view('guru/v-left-bar');
-        $this->load->view('v-video-manager', $this->get_video_manager());
-        $this->load->view('templating/t-footer-back');
+        // $data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+        $data['judul_halaman'] = "Video manager";
+        $data['files'] = array(
+            APPPATH.'modules/videoBack/views/v-container-video.php',
+        );
+        $this->load->view( 'templating/index-b-guru', $data );
+
+
+        // $this->load->view('templating/t-header');
+        // $this->load->view('guru/v-left-bar');
+        // $this->load->view('v-video-manager', $this->get_video_manager());
+        // $this->load->view('templating/t-footer-back');
 
 
         // $guru_id = $this->session->userdata['id_guru'];

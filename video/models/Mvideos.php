@@ -46,7 +46,7 @@ class Mvideos extends CI_Model
     $this->db->where('video.status', '1');
     $query = $this->db->get();
 
-    return $query->result();
+    return $query->result_array();
 
   }
 
