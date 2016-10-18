@@ -22,49 +22,10 @@
 <!--<script src="<?php echo base_url(); ?>assets/js/bootstrap-checkbox-radio-switch.js"></script>-->
 <!--<script src="<?php echo base_url(); ?>assets/js/demo.js"></script>-->
 <!--<script src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>-->
-<script src="<?php echo base_url(); ?>assets/js/paginga.jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/paginga1.jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/soal_to.js"></script>
 
 <script>
-    //    function countdown(minutes, stat) {
-    //        var seconds = 60;
-    //        var mins = minutes;
-    //        var hour = minutes;
-    //
-    //        if (getCookie("minutes") && getCookie("seconds") && stat)
-    //        {
-    //            var seconds = getCookie("seconds");
-    //            var mins = getCookie("minutes");
-    //        }
-    //
-    //        function tick() {
-    //            var counter = document.getElementById("timer");
-    //            setCookie("minutes", mins, 10)
-    //            setCookie("seconds", seconds, 10)
-    //            var current_minutes = mins - 1
-    //            seconds--;
-    //            counter.innerHTML =
-    //                    current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-    //            //save the time in cookie
-    //            if (seconds > 0) {
-    //                setTimeout(tick, 1000);
-    //            } else {
-    //                if (mins > 1) {
-    //                    // countdown(mins-1);   never reach “00″ issue solved:Contributed by Victor Streithorst
-    //                    setTimeout(function () {
-    //                        countdown(parseInt(mins) - 1, false);
-    //                    }, 1000);
-    //                } else {
-    //                    alert('Waktu Habis!');
-    //                    document.getElementById("hasil").submit();
-    //                    deleteAllCookies('seconds', 'minutes');
-    //                }
-    //
-    //            }
-    //        }
-    //        tick();
-    //    }
-
     function disableF5(e) {
         if ((e.which || e.keyCode) == 116)
             e.preventDefault();
@@ -121,16 +82,6 @@
                         countup(parseInt(hours), parseInt(mins) + 1, -1, false);
                     }, 1000);
                 }
-//                if (mins > 1) {
-//                    // countdown(mins-1);   never reach “00″ issue solved:Contributed by Victor Streithorst
-//                    setTimeout(function () {
-//                        countup(false);
-//                    }, 1000);
-//                } else {
-//                    alert('Waktu Habis!');
-//                    document.getElementById("hasil").submit();
-//                    deleteAllCookies('seconds', 'minutes');
-//                }
             }
 
         }
@@ -163,16 +114,35 @@
     countup(0, 0, 0, true);
 
 
-    function deleteAllCookies(seconds, mins) {
+    function deleteAllCookies(seconds, mins,hours) {
         document.cookie = seconds + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
         document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+        document.cookie = hours + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
     }
 </script>
 <script type="text/javascript">
     function deleteAllCookies() {
         setCookie('minutes', '', -1);
         setCookie('seconds', '', -1);
+        setCookie('hours', '', -1);
     }
+</script>
+
+<script>
+    function statusPengisian(status) {
+        var id = status;
+        var x = document.getElementById(id);
+//        x.classList.remove("btn-danger");
+        x.className += " btn-info";
+    }
+</script>
+<script>
+//$(document).ready(function(){
+//  $("#lihatStatus").hide();
+//    $("#lihat").click(function(){
+//        $("#lihatStatus").slideToggle();
+//    });
+//});
 </script>
 
 

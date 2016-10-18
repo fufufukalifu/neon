@@ -27,7 +27,7 @@ class Msiswa extends CI_Model {
     public function update_photo($photo) {
         $data = array(
             'photo' => $photo
-        );
+            );
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
@@ -74,6 +74,22 @@ class Msiswa extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+    #query get siswa belum to
+    public function get_siswa_blm_ikutan_to($id){
+        $query = 
+        "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang` FROM tb_siswa s 
+        WHERE s.id NOT IN
+        (
+        SELECT ss.`id` FROM tb_siswa ss
+        JOIN `tb_hakakses-to` ho ON
+        ho.`id_siswa` = ss.`id`
+        WHERE ho.`id_tryout` = $id
+
+    )";
+    $result = $this->db->query($query);
+    return $result->result_array();
+}
+    ##query get siswa belum to.
 
 }
 

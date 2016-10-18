@@ -25,26 +25,43 @@ class MPaketsoal extends CI_Model {
 	public function insertpaketsoal( $data ) {
 		$this->db->insert( 'tb_paket', $data );
 	}
- 
-	public function getpaketsoal() {
-		$this->db->select( '*' )->from( 'tb_paket' );
-		$this->db->where( 'status', 1 );
-		$query = $this->db->get();
 
-		return $query->result_array();
+	#ambil semua paket soal yang berstatus 1
+	public function getpaketsoal() { 
+	  $this->db->select( '*' )->from( 'tb_paket' ); 
+	  $this->db->where( 'status', 1 ); 
+	  $query = $this->db->get(); 
+
+	  return $query->result_array(); 
+	 }
+	 ##
+
+	#ambil paket soal yang belum terdaftar di to tertentu 
+	public function get_paket_unregistered($id_to) {
+		$query = "SELECT p.deskripsi,p.id_paket, p.nm_paket FROM tb_paket p 
+		WHERE p.id_paket NOT IN
+		(
+		SELECT paket.id_paket FROM tb_paket paket
+		JOIN `tb_mm-tryoutpaket` mm ON mm.`id_paket` = paket.`id_paket`
+		WHERE id_tryout = $id_to AND paket.id_paket 
+		)";
+		$result = $this->db->query($query);
+		return $result->result_array();
 	}
+	##
+
 
 	public function getpaket_by_id($idpaket) {
 		$this->db->select( '*' )->from( 'tb_paket' );
 		$this->db->where('id_paket',$idpaket);
 		$this->db->where( 'status', 1 );
 		$query = $this->db->get();
-        $result = $query->result_array();
+		$result = $query->result_array();
 		  // You should use $q->num_rows() to detect the number of returned rows
-		  if($query->num_rows() == 1) {
-		   return $result[0];
-		  }
-		  return $result;
+		if($query->num_rows() == 1) {
+			return $result[0];
+		}
+		return $result;
 	}
 
 	public function droppaket( $id ) {
@@ -72,7 +89,7 @@ class MPaketsoal extends CI_Model {
 	function get_datatables() {
 		$this->_get_datatables_query();
 		if ( $_POST['length'] != -1 )
-		$this->db->limit( $_POST['length'], $_POST['start'] );
+			$this->db->limit( $_POST['length'], $_POST['start'] );
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -84,12 +101,12 @@ class MPaketsoal extends CI_Model {
 		$i = 0;
 
 		foreach ( $this->column_search as $item ) // loop column
-			{
+		{
 			if ( $_POST['search']['value'] ) // if datatable send POST for search
-				{
+			{
 
 				if ( $i===0 ) // first loop
-					{
+				{
 					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
 					$this->db->like( $item, $_POST['search']['value'] );
 				}
@@ -99,38 +116,38 @@ class MPaketsoal extends CI_Model {
 
 				if ( count( $this->column_search ) - 1 == $i ) //last loop
 					$this->db->group_end(); //close bracket
+				}
+				$i++;
 			}
-			$i++;
-		}
 
 		if ( isset( $_POST['order'] ) ) // here order processing
-			{
+		{
 			$this->db->order_by( $this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir'] );
 		}
 		else if ( isset( $this->order ) ) {
-				$order = $this->order;
-				$this->db->order_by( key( $order ), $order[key( $order )] );
-			}
+			$order = $this->order;
+			$this->db->order_by( key( $order ), $order[key( $order )] );
+		}
 	}
 
 	#Start function insert add soal pakert#
 	public function insert_soal_paket($mmpaket)
 	{
 
-		 $this->db->insert_batch('tb_mm-paketbank',$mmpaket);
+		$this->db->insert_batch('tb_mm-paketbank',$mmpaket);
 		echo "masuk model";
 		var_dump($mmpaket);
 	}
 	//menampilkan list soal paket by paker
 	public function soal_by_paketID($idpaket)
 	{
-	
+
 		$this->db->select('*,mpaket.id_soal as id_soal_fk, soal.id_soal as id_soal ');
 		$this->db->from('tb_banksoal soal');
 		$this->db->join('tb_mm-paketbank mpaket','mpaket.id_soal = soal.id_soal');
 		$this->db->where('id_paket',$idpaket);
 		$query = $this->db->get();
-        return $query->result_array();
+		return $query->result_array();
 	}
 
 	function hitung_semuasoal() {
@@ -151,12 +168,12 @@ class MPaketsoal extends CI_Model {
 		$i = 0;
 
 		foreach ( $this->column_search1 as $item ) // loop column
-			{
+		{
 			if ( $_POST['search']['value'] ) // if datatable send POST for search
-				{
+			{
 
 				if ( $i===0 ) // first loop
-					{
+				{
 					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
 					$this->db->like( $item, $_POST['search']['value'] );
 				}
@@ -166,18 +183,18 @@ class MPaketsoal extends CI_Model {
 
 				if ( count( $this->column_search1 ) - 1 == $i ) //last loop
 					$this->db->group_end(); //close bracket
+				}
+				$i++;
 			}
-			$i++;
-		}
 
 		if ( isset( $_POST['order'] ) ) // here order processing
-			{
+		{
 			$this->db->order_by( $this->column_order1[$_POST['order']['0']['column']], $_POST['order']['0']['dir'] );
 		}
 		else if ( isset( $this->order ) ) {
-				$order = $this->order;
-				$this->db->order_by( key( $order ), $order[key( $order )] );
-			}
+			$order = $this->order;
+			$this->db->order_by( key( $order ), $order[key( $order )] );
+		}
 	}
 
 	public function drop_soal_paket($id)
@@ -197,14 +214,14 @@ class MPaketsoal extends CI_Model {
 		$this->db->where('UUID',$UUID);
 		$query = $this->db->get();
         // return $query->result_array();
-        $result = $query->result_array();
+		$result = $query->result_array();
 		  // You should use $q->num_rows() to detect the number of returned rows
-		  if($query->num_rows() == 1) {
+		if($query->num_rows() == 1) {
 		   // Return the first row:
-		   return $result[0];
-		  }
-		  return $result;
-		 
+			return $result[0];
+		}
+		return $result;
+
 	}
 
 	public function paket_by_paketUUID($id_to)
@@ -214,7 +231,7 @@ class MPaketsoal extends CI_Model {
 		$this->db->join('tb_mm-tryoutpaket mto','mto.id_paket = paket.id_paket');
 		$this->db->where('mto.id_tryout',$id_to);
 		$query = $this->db->get();
-        return $query->result_array();
+		return $query->result_array();
 
 	}
 
