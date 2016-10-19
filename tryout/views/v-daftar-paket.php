@@ -100,34 +100,31 @@
       <h4>Belum ada paket Try Out.</h4>
     <?php else: ?>
       <?php foreach ($paket as $paketitem): ?>
-         <div class="col-md-6">
-          <div class="panel bg-color-1">
-           <div class="panel-heading text-left">
-            <p style="width: 130px">
-             <strong><?=$paketitem['nm_paket'] ?></strong>
-           </p>
-         </strong>
-       </div>
-
-       <div class="panel-body text-center">
-         <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">
-       </div>
-       <table class="table" >
-         <tbody>
-          <tr>
-            <td colspan="2" align="center">
-              <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-               class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
-               data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
-
-
-
-             </td>
-           </tr>
-         </tbody>
-       </table>
+       <div class="col-md-6">
+        <div class="panel bg-color-1">
+         <div class="panel-heading text-left">
+          <p style="width: 130px">
+           <strong><?=$paketitem['nm_paket'] ?></strong>
+         </p>
+       </strong>
      </div>
+
+     <div class="panel-body text-center">
+       <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">
+     </div>
+     <table class="table" >
+       <tbody>
+        <tr>
+          <td colspan="2" align="center">
+            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+             class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
+             data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
+           </td>
+         </tr>
+       </tbody>
+     </table>
    </div>
+ </div>
 <?php endforeach ?>
 <?php endif ?>
 </div>
@@ -217,7 +214,7 @@
      },
      error: function (jqXHR, textStatus, errorThrown)
      {
-      console.log("gagal")
+      console.log("gagal");
     }
   });
 

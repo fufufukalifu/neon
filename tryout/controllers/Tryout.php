@@ -137,7 +137,7 @@ class Tryout extends MX_Controller {
             "status_pengerjaan" => '2'
         );
 
-        $this->Tryout_model->insert_report_sementara($insert);
+//        $this->Tryout_model->insert_report_sementara($insert);
     }
 
     //# fungsi indeks
@@ -151,16 +151,20 @@ class Tryout extends MX_Controller {
     public function mulaitest() {
 //        if (!empty($this->session->userdata['id_latihan'])) {
         $id = $this->session->userdata['id_mm-tryoutpaket'];
-
+//        echo $id;
         $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
 
+//        echo $id_paket; 
+        $data['paket'] = $this->Tryout_model->durasipaket($id_paket);
+//        var_dump($data);
+
         $this->load->view('templating/t-headerto');
-        $query = $this->load->Tryout_model->get_soal($id);
+        $query = $this->load->Tryout_model->get_soal($id_paket);
         $data['soal'] = $query['soal'];
         $data['pil'] = $query['pil'];
-//        var_dump($data);
+////        var_dump($data);
         $this->load->view('vHalamanTo.php', $data);
-        $this->load->view('templating/t-footerto');
+        $this->load->view('templating/t-footerto', $data);
 //        } else {
 //            $this->errorTest();
 //        }
@@ -201,18 +205,17 @@ class Tryout extends MX_Controller {
             }
         }
 //////
-        echo 'kosong = ' . $kosong;
-        echo 'Salah = ' . $salah;
-        echo 'benar = ' . $benar;
-
-//
-//        $hasil['id_latihan'] = $id_latihan;
-//        $hasil['id_pengguna'] = $this->session->userdata['id'];
-//        $hasil['jmlh_kosong'] = $kosong;
-//        $hasil['jmlh_benar'] = $benar;
-//        $hasil['jmlh_salah'] = $salah;
-//        $hasil['total_nilai'] = $benar;
-//        $hasil['durasi_pengerjaan'] = $this->input->post('durasi');
+            echo 'kosong = ' . $kosong;
+            echo 'Salah = ' . $salah;
+            echo 'benar = ' . $benar;
+        //
+        $hasil['id_pengguna'] = $this->session->userdata['id'];
+        $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];;
+        $hasil['jmlh_kosong'] = $kosong;
+        $hasil['jmlh_benar'] = $benar;
+        $hasil['jmlh_salah'] = $salah;
+        $hasil['total_nilai'] = $benar;
+        $hasil['durasi_pengerjaan'] = $this->input->post('durasi');
 //
 //        $result = $this->load->Tesonline_model->inputreport($hasil);
 //        $this->load->Tesonline_model->updateLatihan($id_latihan);
