@@ -29,7 +29,13 @@
     }
     ;
     $(document).on("keydown", disableF5);
-
+</script>
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
+    };
+</script>
+<script>
     function countdown(minutes, stat) {
         var seconds = 60;
         var mins = minutes;
@@ -41,14 +47,15 @@
         }
 
         function tick() {
-
             var counter = document.getElementById("timer");
-            setCookie("minutes", mins, 10)
-            setCookie("seconds", seconds, 10)
+            setCookie("minutes", mins, 10);
+            setCookie("seconds", seconds, 10);
             var current_minutes = mins - 1
+
             seconds--;
-            counter.innerHTML =
-                    current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+
+            counter.innerHTML = current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+
             //save the time in cookie
             if (seconds > 0) {
                 setTimeout(tick, 1000);
@@ -63,28 +70,44 @@
 //                    document.getElementById("hasil").submit();
                     deleteAllCookies('seconds', 'minutes');
                 }
-
             }
         }
         tick();
     }
 
-   
-//    deleteAllCookies();
-    deleteAllCookies('seconds', 'minutes');
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1);
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+//     deleteAllCookies('seconds', 'minutes');
+//        deleteAllCookies();
     countdown(<?php foreach ($paket as $row) { echo $row['durasi'];} ?>, true);
-    
+//    countup(0, 0, 0, true);
+
+
     function deleteAllCookies(seconds, mins) {
         document.cookie = seconds + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
         document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-        document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
     }
 </script>
-<script type="text/javascript">
-    window.onbeforeunload = function () {
-        return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
-    };
 
+<script type="text/javascript">
     function deleteAllCookies() {
         setCookie('minutes', '', -1);
         setCookie('seconds', '', -1);

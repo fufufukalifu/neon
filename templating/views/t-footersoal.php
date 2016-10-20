@@ -19,10 +19,7 @@
 <!-- App and page level script -->
 
 <!-- ini footer -->
-<!--<script src="<?php echo base_url(); ?>assets/js/bootstrap-checkbox-radio-switch.js"></script>-->
-<!--<script src="<?php echo base_url(); ?>assets/js/demo.js"></script>-->
-<!--<script src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>-->
-<script src="<?php echo base_url(); ?>assets/js/paginga1.jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/paginga.jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/soal_to.js"></script>
 
 <script>
@@ -50,9 +47,6 @@
             setCookie("minutes", mins, 10);
             setCookie("seconds", seconds, 10);
             setCookie("hours", hours, 10);
-
-//            var current_minutes = mins + 1;
-//            var current_hours = hours + 1;
 
             seconds++;
 
@@ -118,6 +112,17 @@
     }
 </script>
 
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
+    };
+
+    function deleteAllCookies() {
+        setCookie('minutes', '', -1);
+        setCookie('seconds', '', -1);
+    }
+</script>
+
 <script>
     function statusPengisian(status) {
         var id = status;
@@ -125,14 +130,6 @@
 //        x.classList.remove("btn-danger");
         x.className += " btn-primary";
     }
-</script>
-<script>
-//$(document).ready(function(){
-//  $("#lihatStatus").hide();
-//    $("#lihat").click(function(){
-//        $("#lihatStatus").slideToggle();
-//    });
-//});
 </script>
 
 
