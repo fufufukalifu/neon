@@ -149,7 +149,7 @@ class Tryout extends MX_Controller {
 //# fungsi indeks
 //fungsi ilham
     public function mulaitest() {
-//        if (!empty($this->session->userdata['id_latihan'])) {
+        if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
         $id = $this->session->userdata['id_mm-tryoutpaket'];
 //        echo $id;
         $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
@@ -165,9 +165,9 @@ class Tryout extends MX_Controller {
 ////        var_dump($data);
         $this->load->view('vHalamanTo.php', $data);
         $this->load->view('templating/t-footerto', $data);
-//        } else {
-//            $this->errorTest();
-//        }
+        } else {
+            $this->errorTest();
+        }
     }
 
     public function errorTest() {
@@ -205,9 +205,9 @@ class Tryout extends MX_Controller {
             }
         }
 //////
-            echo 'kosong = ' . $kosong;
-            echo 'Salah = ' . $salah;
-            echo 'benar = ' . $benar;
+//            echo 'kosong = ' . $kosong;
+//            echo 'Salah = ' . $salah;
+//            echo 'benar = ' . $benar;
         //
         $hasil['id_pengguna'] = $this->session->userdata['id'];
         $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];;
@@ -215,12 +215,12 @@ class Tryout extends MX_Controller {
         $hasil['jmlh_benar'] = $benar;
         $hasil['jmlh_salah'] = $salah;
         $hasil['total_nilai'] = $benar;
-        $hasil['durasi_pengerjaan'] = $this->input->post('durasi');
-//
-//        $result = $this->load->Tesonline_model->inputreport($hasil);
-//        $this->load->Tesonline_model->updateLatihan($id_latihan);
-//        $this->session->unset_userdata('id_latihan');
-//        redirect(base_url('index.php/tesonline/daftarlatihan'));
+        $hasil['poin'] = $benar;
+        $hasil['status_pengerjaan'] = 1;
+        
+        $result = $this->load->Tryout_model->inputreport($hasil);
+        $this->session->unset_userdata('id_mm-tryoutpaket');
+        redirect(base_url('index.php/tryout'));
     }
 
     //end fungsi ilham

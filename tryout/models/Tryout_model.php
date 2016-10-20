@@ -161,6 +161,10 @@ class Tryout_model extends MX_Controller {
         return $query->result_array();
     }
 
+    public function inputreport($data) {
+        $this->db->insert('tb_report-paket', $data);
+    }
+
 }
 
 ?>

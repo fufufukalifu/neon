@@ -69,77 +69,11 @@
         tick();
     }
 
-    function countup(jam, menit, detik, stat) {
-        var detiks = detik;
-        var menits = menit;
-        var jams = jam;
-
-        if (getCookie("menits") && getCookie("detiks") && getCookie("jams") && stat)
-        {
-            var detiks = getCookie("detiks");
-            var menits = getCookie("menits");
-            var jams = getCookie("jams");
-        }
-
-        function tick() {
-//            var counter = document.getElementById("timer");
-            setCookie("menits", menits, 10);
-            setCookie("detiks", detiks, 10);
-            setCookie("jams", jams, 10);
-
-//            var current_minutes = mins + 1;
-//            var current_hours = hours + 1;
-
-            detiks++;
-
-//            counter.innerHTML = (hours < 10 ? "0" : "") + String(hours) + ":" + (mins < 10 ? "0" : "") + String(mins) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-            document.getElementById("durasi").value = (jams * 60 * 60) + (menits * 60) + detiks;
-
-            //save the time in cookie
-            if (detiks < 59) {
-                setTimeout(tick, 1000);
-            } else {
-                if (detiks == 59 && menits == 59) {
-                    setTimeout(function () {
-                        countup(parseInt(jams) + 1, 0, false);
-                    }, 1000);
-                } else if (seconds == 59) {
-                    setTimeout(function () {
-                        countup(parseInt(jams), parseInt(menits) + 1, -1, false);
-                    }, 1000);
-                }
-            }
-
-        }
-        tick();
-    }
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
-    }
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ')
-                c = c.substring(1);
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
+   
 //    deleteAllCookies();
-//    deleteAllCookies('seconds', 'minutes');
-    countdown(<?php foreach ($paket as $row) {
-    echo $row['durasi'];
-} ?>, true);
-
-
+    deleteAllCookies('seconds', 'minutes');
+    countdown(<?php foreach ($paket as $row) { echo $row['durasi'];} ?>, true);
+    
     function deleteAllCookies(seconds, mins) {
         document.cookie = seconds + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
         document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
