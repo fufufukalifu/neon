@@ -17,11 +17,11 @@
         <!-- Application stylesheet : mandatory -->
         <!--/ Application stylesheet -->
 
-
+<!--
         <link href="<?php echo base_url(); ?>assets/css/demo.css" rel="stylesheet" />
         <link href="<?php echo base_url(); ?>assets/css/soal.css" rel="stylesheet" />
         <link href="<?php echo base_url(); ?>assets/css/soal2.css" rel="stylesheet" />
-        <link href="<?php echo base_url(); ?>assets/css/sweetalert.css" rel="stylesheet" />
+        <link href="<?php echo base_url(); ?>assets/css/sweetalert.css" rel="stylesheet" />-->
 
         <!-- END STYLESHEETS -->
 

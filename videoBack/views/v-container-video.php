@@ -44,7 +44,7 @@ $(document).ready(function() {
 //##
 
 //# fungsi menghapus video
-	function dropvideo(id){
+	function dropvideo(gid){
 
 	}
 </script>

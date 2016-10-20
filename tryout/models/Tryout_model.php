@@ -112,7 +112,7 @@ class Tryout_model extends MX_Controller {
 
     public function get_soal($id_paket) {
         $this->db->order_by('rand()');
-        $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul');
+        $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar');
         $this->db->from('tb_mm-paketbank as paban');
         $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
         $this->db->where('paban.id_paket', $id_paket);
@@ -120,7 +120,7 @@ class Tryout_model extends MX_Controller {
         $soal = $query->result_array();
 
         $this->db->order_by('rand()');
-        $this->db->select('*,id_paket as idpak, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw');
+        $this->db->select('*,id_paket as idpak, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw, pil.gambar as pilgam');
         $this->db->from('tb_mm-paketbank as paban');
         $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
         $this->db->join('tb_piljawaban as pil', 'soal.id_soal = pil.id_soal');
@@ -161,6 +161,19 @@ class Tryout_model extends MX_Controller {
         return $query->result_array();
     }
 
+    public function inputreport($data) {
+        $this->db->insert('tb_report-paket', $data);
+    }
+    
+    public function datatopaket($id) {
+        $this->db->select('try.nm_tryout as namato, p.nm_paket as namapa');
+        $this->db->from('tb_mm-tryoutpaket as tp');
+        $this->db->join('tb_tryout as try','tp.id_tryout = try.id_tryout');
+        $this->db->join('tb_paket as p','tp.id_paket = p.id_paket');
+        $this->db->where('tp.id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
 
 ?>
