@@ -164,7 +164,16 @@ class Tryout_model extends MX_Controller {
     public function inputreport($data) {
         $this->db->insert('tb_report-paket', $data);
     }
-
+    
+    public function datatopaket($id) {
+        $this->db->select('try.nm_tryout as namato, p.nm_paket as namapa');
+        $this->db->from('tb_mm-tryoutpaket as tp');
+        $this->db->join('tb_tryout as try','tp.id_tryout = try.id_tryout');
+        $this->db->join('tb_paket as p','tp.id_paket = p.id_paket');
+        $this->db->where('tp.id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
 
 ?>

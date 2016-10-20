@@ -151,6 +151,7 @@ class Tryout extends MX_Controller {
     public function mulaitest() {
         if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
         $id = $this->session->userdata['id_mm-tryoutpaket'];
+        $data['topaket']= $this->Tryout_model->datatopaket($id);
 //        echo $id;
         $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
 
