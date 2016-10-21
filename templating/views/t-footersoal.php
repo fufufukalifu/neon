@@ -116,11 +116,6 @@
     window.onbeforeunload = function () {
         return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
     };
-
-    function deleteAllCookies() {
-        setCookie('minutes', '', -1);
-        setCookie('seconds', '', -1);
-    }
 </script>
 
 <script>
