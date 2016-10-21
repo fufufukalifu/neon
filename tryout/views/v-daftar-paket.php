@@ -1,4 +1,3 @@
-
 <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
  <div class="modal-dialog" role="document">
   <div class="modal-content">
@@ -94,46 +93,45 @@
 
 <!-- top -->
 <div class="col-md-9">
-  <h3>Daftar Paket Tryout</h3>
-  <div class="col-md-12" id="owl1">
+  <h3>Daftar Paket TO yang Belum Dikerjakan</h3>
+  <div class="col-md-12">
     <?php if ($paket==array()): ?>
       <h4>Belum ada paket Try Out.</h4>
     <?php else: ?>
-      <?php foreach ($paket as $paketitem): ?>
-       <div class="col-md-6">
-        <div class="panel bg-color-1">
-         <div class="panel-heading text-left">
-          <p style="width: 130px">
-           <strong><?=$paketitem['nm_paket'] ?></strong>
-         </p>
-       </strong>
-     </div>
+      <table class="table" style="font-size: 13px">
+        <thead>
+         <tr>
+          <th>ID Paket</th>
+          <th>Nama Paket Soal</th>
+          <th>Status</th>
+          <th width="10%">Aksi</th>
+        </tr>
+      </thead>
 
-     <div class="panel-body text-center">
-       <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">
-     </div>
-     <table class="table" >
-       <tbody>
-        <tr>
-          <td colspan="2" align="center">
-            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-             class="cws-button border-radius bt-color-1 modal-on<?=$paketitem['id_paket']?>"
-             data-todo='<?=json_encode($paketitem)?>'>Kerjakan</a>
-           </td>
-         </tr>
+      <tbody>
+        <?php foreach ($paket as $paketitem):?>
+          <tr>
+            <td><?=$paketitem['id_paket'] ?></td>
+            <td><?=$paketitem['nm_paket'] ?></td>
+            <td>Belum Dikerjakan</td>
+            <td>
+                <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+                 class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
+                 data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
+
+             </td>
+           </tr>
+         <?php endforeach ?>
        </tbody>
      </table>
-   </div>
+   <?php endif ?>
  </div>
-<?php endforeach ?>
-<?php endif ?>
-</div>
 
 </div>
 
 <div class="col-md-9">
   <h3>Daftar History TO</h3>
-  <div class="col-md-12" id="owl2">
+  <div class="col-md-12">
     <?php if ($paket_dikerjakan==array()): ?>
       <h4>Tidak ada paket soal.</h4>
     <?php else: ?>
@@ -222,7 +220,7 @@
 
   }
   $(document).ready(function() {
-    $("#owl1").owlCarousel();
+    $(".table").dataTable();
     $("#owl2").owlCarousel();
   });
 

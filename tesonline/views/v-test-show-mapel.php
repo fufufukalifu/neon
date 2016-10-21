@@ -9,58 +9,64 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-group" id="formlatihan" method="post" onsubmit="return false;">
-                            <p class="has-success">
-                                <label>Bab</label>
-                                <select class="form-control" name="tingkat" id="babSelect"><option>-Pilih Bab-</option></select>
-                            </p>
-                            <p class="has-success">
-                                <label >Sub Bab</label>
-                                <select class="form-control" name="subab" id="subSelect"><option>-Pilih Sub-</option></select>                       
-                            </p>
-                            <p class="has-success">
-                                <label>Tingkat Kesulitan</label>
-                                <select class="form-control" name="kesulitan" id="kesulitan">
-                                    <option>-Pilih Tingkat Kesulitan-</option>
-                                    <option value="mudah">Mudah</option>
-                                    <option value="sedang">Sedang</option>
-                                    <option value="sulit">Sulit</option>
-                                </select>                       
-                            </p>
-                            <p class="has-success">
-                                <label>Jumlah Soal</label>
-                                <select class="form-control" name="jumlahsoal">
-                                    <option value="">-Pilih Jumlah Soal-</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                </select>                       
-                            </p>
-                            <div class="modal-footer bg-color-3">
-                                <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
-                                <button type="button" class="cws-button bt-color-2 border-radius alt small mulai-btn">Mulai Latihan</button>
-                                <button type="button" class="cws-button bt-color-5 border-radius alt small latihan-nnti-btn">Latihan nanti</button>
 
-                            </div>
-                        </form>
+                            <div class="alert alert-dismissable alert-danger" id="info" hidden="true" >
+                              <button type="button" class="close" onclick="hideme()" >×</button>
+                              <strong>Terjadi Kesalahan</strong> <br>Silahkan Lengkapi Data.
+                          </div>
 
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                          <p class="has-success">
+                            <label>Bab</label>
+                            <select class="form-control" name="tingkat" id="babSelect"  ><option value=0>-Pilih Bab-</option></select>
+                        </p>
+                        <p class="has-success">
+                            <label >Sub Bab</label>
+                            <select class="form-control" name="subab" id="subSelect"  ><option value=0>-Pilih Sub-</option></select>                       
+                        </p>
+                        <p class="has-success">
+                            <label>Tingkat Kesulitan</label>
+                            <select class="form-control" name="kesulitan" id="kesulitan">
+                                <option value=0>-Pilih Tingkat Kesulitan-</option>
+                                <option value="mudah">Mudah</option>
+                                <option value="sedang">Sedang</option>
+                                <option value="sulit">Sulit</option>
+                            </select>                       
+                        </p>
+                        <p class="has-success">
+                            <label>Jumlah Soal</label>
+                            <select class="form-control" name="jumlahsoal">
+                                <option value=0>-Pilih Jumlah Soal-</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>                       
+                        </p>
+                        <div class="modal-footer bg-color-3">
+                            <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
+                            <button type="button" class="cws-button bt-color-2 border-radius alt small mulai-btn">Mulai Latihan</button>
+                            <button type="button" class="cws-button bt-color-5 border-radius alt small latihan-nnti-btn">Latihan nanti</button>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div class="grid-col-row clear-fix">
+        <div class="row">
+            <div class="container"><h1 class="text-center">Sekarang pilih Matapelajaran untuk memulai!</h1><br></div>
+
         </div>
-
-        <div class="grid-col-row clear-fix">
-            <div class="row">
-                <div class="container"><h1 class="text-center">Sekarang pilih Matapelajaran untuk memulai!</h1><br></div>
-
-            </div>
-            <?php $no = 1 ?>
-            <?php foreach ($mapel as $mapelitem): ?>
-                <div class="grid-col grid-col-4">
-                    <form action="<?= base_url() ?>index.php/tesonline/mulai" method="post" class="hide">
-                        <input type="hiden" value="<?= $mapelitem['tingpelID'] ?>" class="hide" name="id">
-                        <button type="submit" class="kirim<?= $mapelitem['tingpelID'] ?>" 
-                                data-todo='{"id":"<?= $mapelitem['tingpelID'] ?>","namapelajaran":"<?= $mapelitem['namaMataPelajaran'] ?>"}'
-                                >kirim</button>
+        <?php $no = 1 ?>
+        <?php foreach ($mapel as $mapelitem): ?>
+            <div class="grid-col grid-col-4">
+                <form action="<?= base_url() ?>index.php/tesonline/mulai" method="post" class="hide">
+                    <input type="hiden" value="<?= $mapelitem['tingpelID'] ?>" class="hide" name="id">
+                    <button type="submit" class="kirim<?= $mapelitem['tingpelID'] ?>" 
+                        data-todo='{"id":"<?= $mapelitem['tingpelID'] ?>","namapelajaran":"<?= $mapelitem['namaMataPelajaran'] ?>"}'
+                        >kirim</button>
                     </form>
                     <div class="course-item">
                         <div class="course-hover">
@@ -108,7 +114,7 @@
     function load_bab(tingPel) {
         // console.log('masduk')
         $('#babSelect').find('option').remove();
-        $('#babSelect').append('<option value="">Bab Pelajaran</option>');
+        $('#babSelect').append('<option value=1>Bab Pelajaran</option>');
         var babID;
         $.ajax({
             type: "POST",
@@ -131,7 +137,7 @@
             data: babID.bab_id,
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
             success: function (data) {
-                $('#subSelect').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+                $('#subSelect').html('<option value=1>-- Pilih Sub Bab Pelajaran  --</option>');
                 // console.log(data);
                 $.each(data, function (i, data) {
                     $('#subSelect').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
@@ -142,11 +148,7 @@
     }
 
     function mulai(test) {
-
         var sub_bab_id = $('#subSelect').val();
-        $('.mulai-btn').text('saving...'); //change button text
-        $('.mulai-btn').attr('disabled', true); //set button disable 
-        url = "<?php echo base_url() ?>index.php/latihan/tambah_latihan_ajax";
         var kesulitan = $("select[name=kesulitan]").val();
         var jumlahsoal = $("select[name=jumlahsoal]").val();
         var subabid = $("select[name=subab]").val();
@@ -156,15 +158,22 @@
             jumlahsoal: jumlahsoal,
             subab: subabid
         };
-        console.log(data);
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: 'text',
-            data: data,
-            success: function (data, respone)
-            {
-                $('#myModal').modal('hide');
+
+        if (data.kesulitan == 0 || data.jumlahsoal == 0 || data.subab == 0) {
+
+            $('#info').show();
+        }else{
+            $('.mulai-btn').text('saving...'); //change button text
+            $('.mulai-btn').attr('disabled', true); //set button disable 
+            url = "<?php echo base_url() ?>index.php/latihan/tambah_latihan_ajax";
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'text',
+                data: data,
+                success: function (data, respone)
+                {
+                    $('#myModal').modal('hide');
                 $('.mulai-btn').text('save'); //change button text
                 $('.mulai-btn').attr('disabled', false); //set button enable 
                 $('#formlatihan')[0].reset(); // reset form on modals
@@ -179,8 +188,15 @@
                 alert('Error adding / update data');
             }
         });
+        }
     }
 
+    function hideme(){
+        $('#info').hide();
+    }
+    // $('.close-button').click(function(){
+    //     $('#info').hide();
+    // });
 
     $('.mulai-btn').click(function () {
         mulai('mulai');
