@@ -37,7 +37,6 @@
     border: #f27c66 2px solid;
   }
 
-
 </style>
 <!-- START Blog Content -->
 <section class="section bgcolor-white"> 
@@ -46,7 +45,9 @@
    <div class="row">
     <h3>Daftar Tryout</h3>
     <form action="" id="">
-     <table class="table" id="zero-configuration" style="font-size: 13px">
+    <div class="row">
+  
+    <table class="table" style="font-size: 13px">
       <thead>
        <tr>
         <th>ID Tryout</th>
@@ -66,20 +67,18 @@
         <td><?=$tryout_item['tgl_berhenti'] ?></td>
 
         <td>
-          <a class="btn btn-primary" title="Kerjakan"><i class="glyphicon glyphicon-pencil"></i></a>
           <a class="btn btn-primary detail-<?=$tryout_item['id_tryout']?>" 
             title="Lihat Detail" 
             data-todo='<?=json_encode($tryout_item) ?>'
             onclick="lihat_detail(<?=$tryout_item['id_tryout'] ?>)"
             ><i class="glyphicon glyphicon-list-alt"></i></a>
-
           </td>
           </tr>
         <?php endforeach ?>
       </tbody>
     </table>
 
-  </form>
+    </div>
 </div>
 </div>
 
@@ -99,7 +98,7 @@
   }
 
   $(document).ready(function() {
-
+    $('.table').DataTable();
 
 
   });

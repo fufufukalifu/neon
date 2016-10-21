@@ -74,20 +74,28 @@
   <div class="page-header-section">
     <h5 class="title semibold">Video Baru Saja Di Upload</h5>
   </div>
-  <div class="owl-carousel" id="stats">
+  <div class="container-fluid" id="stats""  style="background: white">
+   
+   <div class="item panel no-border" >
    <?php foreach ( $videos_uploaded as $video ): ?>
-   <div class="item panel no-border">
+    <div class="col-md-4">
+
     <div class="panel-body">
-      <a href=""><h6 class="semibold nm"><i class="ico ico-bubble-video-chat"></i><?php echo $video->judulVideo ?></h6></a>
+      <a href=""><h6 class="semibold nm">
+      <i class="ico ico-bubble-video-chat"></i><?php echo " ".$video['judulVideo'] ?></h6></a>
       <div class="media">
        <a href=""><img class="unveiled" data-toggle="unveil" src="<?php echo base_url( 'assets/image/video/video.PNG' );?>" data-src="<?php echo base_url( 'assets/image/video/video.PNG' );?>" alt="Photo" height="140px"></a>
      </div>
    </div>
+</div>
+   <?php endforeach ?>
  </div>
-<?php endforeach ?>
+
 <?php endif ?>
 </div>
 </div>
 </div>
 </div>
 </section>
+<script type="text/javascript">
+</script>

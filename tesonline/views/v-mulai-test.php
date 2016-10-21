@@ -107,78 +107,93 @@
 </div>
 <!--/ END Left Section -->
 
-
+<style type="text/css">
+  .table th:hover{
+    cursor: hand;
+  }
+</style>
 <!-- top -->
 <div class="col-md-9">
   <h3>Daftar Latihan</h3>
-  <div class="col-md-12" id="owl1">
+  <div class="col-md-12">
     <?php if ($latihan==array()): ?>
       <h4>Tidak ada latihan.</h4>
     <?php else: ?>
-      <?php foreach ($latihan as $latihanitem): ?>
-       <div class="col-md-6">
-        <div class="panel bg-color-1">
-         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-          <p>
-           <?=$latihanitem['nm_latihan'] ?>
-         </p>
-       </strong>
-     </div>
+      <table class="table" style="font-size: 13px" id="zero-configuration">
+        <thead>
+         <tr>
+          <th>Id</th>
+          <th>Nama Latihan</th>
+          <th>Tingkat Kesulitan</th>
+          <th>Status Pengerjaan</th>
+          <th>Jumlah Soal</th>
+          <th>Tanggal Dibuat</th>
+          <th width="2%">Aksi</th>
+        </tr>
+      </thead>
 
-     <div class="panel-body text-center">
-       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
-     </div>
-     <table class="table">
-       <tbody>
-        <tr>
-          <td colspan="2" align="center">
-            <a onclick="mulai_test(<?=$latihanitem['id_latihan']?>)" 
-             class="cws-button border-radius bt-color-1 modal-on<?=$latihanitem['id_latihan']?>"
-             data-todo='<?=json_encode($latihanitem)?>'>Kerjakan</a>
-           </td>
-         </tr>
-       </tbody>
-     </table>
-   </div>
- </div>
-<?php endforeach ?>
-<?php endif ?>
-</div>
+      <tbody>
+        <?php foreach ($latihan as $latihanitem): ?>
+          <tr>
+            <td><?=$latihanitem['id_latihan'] ?></td>
+            <td><?=$latihanitem['nm_latihan'] ?></td>
+            <td><?=$latihanitem['tingkatKesulitan'] ?></td>
+            <td><?=$latihanitem['status_pengerjaan'] ?></td>
+            <td><?=$latihanitem['jumlahSoal'] ?></td>
+            <td><?=$latihanitem['date_created'] ?></td>
+
+            <td>
+              <a class="btn btn-success detail-<?=$latihanitem['id_latihan']?>" 
+                title="Kerjakan" 
+                onclick="mulai_test(<?=$latihanitem['id_latihan'] ?>)"
+                ><i class="glyphicon glyphicon-pencil"></i></a>
+              </td>
+            </tr>
+          <?php endforeach ?>
+        </tbody>
+      </table>
+
+    <?php endif ?>
+  </div>
 
 </div>
 
 <div class="col-md-9">
   <h3>Daftar Report</h3>
-  <div class="col-md-12" id="owl2">
+  <div class="col-md-12">
     <?php if ($report==array()): ?>
       <h4>Tidak ada Report Latihan.</h4>
     <?php else: ?>
-      <?php foreach ($report as $reportitem): ?> 
-       <div class="col-md-6">
-        <div class="panel bg-color-1">
-         <div class="panel-heading text-center" style="min-height:50px;background-color:white">
-          <p>
-           <?=$reportitem['nm_latihan'] ?>
-         </p>
-       </strong>
-     </div>
-     <div class="panel-body text-center">
-       <img class="img-bordered" src="<?=base_url('assets/image/portfolio/portfolio1.jpg');?>" alt="" width="130px">
-     </div>
-     <table class="table">
-       <tbody>
-        <tr>
-          <td colspan="2" align="center">
-            <a onclick="lihat_grafik(<?=$reportitem['id_latihan'] ?>)" 
-             class="cws-button border-radius bt-color-2 modal-on<?=$reportitem['id_latihan']?>"
-             data-todo='<?=json_encode($reportitem)?>'>Lihat Score</a>
-           </td>
-         </tr>
-       </tbody>
-     </table>
-   </div>
- </div>
-<?php endforeach ?>
+      <table class="table 2" style="font-size: 13px">
+        <thead>
+         <tr>
+          <th>Id</th>
+          <th>Nama Latihan</th>
+          <th>Tingkat Kesulitan</th>
+          <th>Tanggal Dibuat</th>
+          <th width="2%">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php foreach ($report as $reportitem): ?>
+          <tr>
+            <td><?=$reportitem['id_latihan'] ?></td>
+            <td><?=$reportitem['nm_latihan'] ?></td>
+            <td><?=$reportitem['tingkatKesulitan'] ?></td>
+            <td><?=$reportitem['tgl_pengerjaan'] ?></td>
+            
+            <td>
+              <a class="btn btn-primary modal-on<?=$reportitem['id_latihan']?>" 
+                title="Lihat score" 
+                onclick="lihat_grafik(<?=$reportitem['id_latihan'] ?>)" 
+                data-todo='<?=json_encode($reportitem)?>'
+                ><i class="glyphicon glyphicon-list-alt"></i></a>
+              </td>
+            </tr>
+          <?php endforeach ?>
+        </tbody>
+      </table>
 <?php endif ?>
 </div>
 </div>
@@ -197,7 +212,6 @@
 <!--/ END Template Main -->
 <script type="text/javascript"> 
   function load_grafik(data) {
-
    var report = {
      durasi:0,
      level:0,
@@ -257,10 +271,12 @@
     window.location.href = base_url + "index.php/latihan/create_session_id_latihan/"+id_latihan;
   }
 
-  $(document).ready(function() {
-    $("#owl1").owlCarousel();
-    $("#owl2").owlCarousel();
-  });
 
+  $(document).ready(function(){
+    $('.table').DataTable();
+    $('.table 2').DataTable();
+
+  })
+  
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>

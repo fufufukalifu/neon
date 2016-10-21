@@ -328,6 +328,7 @@ function loadsubbab(babID) {
 //# Load soal ke tabel yang belum ada
 function addsoal(subBabId){
     var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
+    console.log(url);
     list_soal = $('#oplistsoal').DataTable({ 
      "ajax": {
       "url": url,

@@ -15,6 +15,8 @@ class Tryout_model extends MX_Controller {
         $this->db->insert('tb_report-paket', $data);
     }
 
+
+    #get paket yang belum dikerjakan.
     public function get_paket_undo($id_to) {
         $query = "SELECT *
 				FROM `tb_tryout` `to` 
@@ -29,6 +31,27 @@ class Tryout_model extends MX_Controller {
         $result = $this->db->query($query);
         return $result->result_array();
     }
+    //##
+
+    #get data paket yang sudah dikerjakan
+    function get_paket_reported($datas){
+        $id = $datas['id_tryout'];
+        $id_pengguna = $datas['id_pengguna'];
+            $query = "
+                SELECT * FROM `tb_report-paket` report
+                JOIN `tb_mm-tryoutpaket` mm ON
+                report.`id_mm-tryout-paket` = mm.`id_paket` 
+                JOIN `tb_tryout` tryout ON
+                tryout.`id_tryout` = mm.`id_tryout`
+                JOIN `tb_paket` pkt ON
+                pkt.`id_paket` = mm.`id_paket`
+                WHERE tryout.`id_tryout` = $id
+                AND `report`.`id_pengguna` = $id_pengguna
+            ";
+        $result = $this->db->query($query);
+        return $result->result_array();        
+    }
+    ##
 
     public function get_paket_by_id_to($id_to) {
         $this->db->select('*');
@@ -43,7 +66,7 @@ class Tryout_model extends MX_Controller {
         $this->db->select('*');
         $this->db->from('tb_tryout to');
         $this->db->join('tb_mm-tryoutpaket topaket', 'to.id_tryout = topaket.id_tryout');
-        $this->db->join('tb_paket paket', 'topaket.id_paket = paket.id_paket');
+        $this->db->join('tb_paket paet', 'topaket.id_paket = paket.id_paket');
         $this->db->join('tb_report-paket repot_paket', 'repot_paket.id_mm-tryout-paket=topaket.id');
         $this->db->where('repot_paket.id_pengguna', $this->session->userdata('id'));
         $this->db->where('to.id_tryout', $id_to);

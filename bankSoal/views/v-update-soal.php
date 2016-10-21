@@ -1,4 +1,15 @@
- <!-- START Template Main -->
+<!-- Start pengecekan jika pilihan 5 atau 4 pilihan -->
+<?php 
+
+if (!isset($piljawaban['4']['id_pilihan'])) {
+    $piljawaban['4']['id_pilihan']="";
+    $piljawaban['4']['jawaban']="";
+    $piljawaban['4']['gambar']="";
+} 
+
+?>
+<!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
+<!-- START Template Main -->
 <section id="main" role="main">
     <!-- START Template Container -->
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
@@ -45,7 +56,7 @@
                             <label class="control-label col-sm-2">Gambar Soal</label>
                              <div class="col-sm-8 " >
                                 <div class="col-sm-12">
-                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$bankSoal['gambar_soal'];?>" alt="" />
+                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$bankSoal['gambar_soal'];?>" alt="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -81,10 +92,10 @@
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn  " id="empatpil">
-                                        <input type="radio" name="opjumlah" value="" autocomplete="off" > 4 Pilihan
+                                        <input type="radio" name="opjumlah" value="4" autocomplete="off" > 4 Pilihan
                                       </label>
                                       <label class="btn active" id="limapil">
-                                        <input type="radio" name="opjumlah"  value="" autocomplete="off" checked="true"> 5 Pilihan
+                                        <input type="radio" name="opjumlah"  value="5" autocomplete="off" checked="true"> 5 Pilihan
                                       </label>
                                  </div>
                             </div>
@@ -257,6 +268,7 @@
                             <label class="control-label col-sm-2">Pilihan E</label>
                             <!-- Start input text E -->
                             <div class="col-sm-8 piltext" >
+
                                 <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true">
                                <textarea name="e" class="form-control"> <?=$piljawaban['4']['jawaban'];?></textarea>
                             </div>
