@@ -11,6 +11,23 @@ class Register extends MX_Controller {
         $this->load->model('Templating/mtemplating');
     }
 
+    function cekSession() {
+        $status=false;
+        $hakAkses = $this->session->userdata['HAKAKSES'];
+        if ($hakAkses == 'admin') {
+            $status= true;
+        } elseif ($hakAkses == 'guru') {
+            // jika guru
+            redirect(site_url('guru/dashboard/'));
+        } elseif ($hakAkses == 'siswa') {
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        } else {
+            redirect(site_url('login'));
+        }
+        return $status;
+    }
+
 // function untuk menampikan halam pertama saat registrasi
     public function index() {
 //        $this->load->view('templating/t-header');
@@ -53,31 +70,15 @@ class Register extends MX_Controller {
 
 //function untuk menampilkan halaman pendaftaran Guru
     public function registerguru() {
-        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        $data['judul_halaman'] = "Register Guru";
-        $data['files'] = array(
-            APPPATH . 'modules/register/views/vRegisterGuru.php',
-        );
-
-
-   
-
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        
-        if ($hakAkses=='admin') {
+        if ($this->cekSession()) {
+            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+            $data['judul_halaman'] = "Register Guru";
+            $data['files'] = array(
+                APPPATH . 'modules/register/views/vRegisterGuru.php',
+            );
             // jika admin
-               $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
-            // jika guru
-            redirect(site_url('guru/dashboard/'));
-        }elseif($hakAkses=='siswa'){
-            // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }else{
-            
-            redirect(site_url('login'));
-        }
-
+            $this->parser->parse('admin/v-index-admin', $data);
+        } 
     }
 
     public function verifikasiemail() {

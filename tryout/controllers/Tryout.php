@@ -58,6 +58,8 @@ class Tryout extends MX_Controller {
   $datas['id_tryout'] = $id_to;
   $datas['id_pengguna'] = $this->session->userdata('id');
 
+
+
   if (isset($id_to)) {
    $data = array(
     'judul_halaman' => 'Neon - Daftar Paket',
@@ -99,7 +101,6 @@ class Tryout extends MX_Controller {
    "status_pengerjaan" => '2'
    );
 
-//        $this->Tryout_model->insert_report_sementara($insert);
  }
 
     //# fungsi indeks

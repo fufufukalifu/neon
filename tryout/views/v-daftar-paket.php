@@ -7,17 +7,12 @@
   <div class="modal-body">
     <div id="chartContainer" style="height: 400px; width: 100%;">
     </div>
-    <div class="modal-footer bg-color-3">
-
-    </div>
   </form>
 
 </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div>
-
-
 
 <!-- START Blog Content -->
 <section class="section bgcolor-white"> 
@@ -35,37 +30,12 @@
        </h4>
      </div>
      <!--/ Header -->
-     <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
-     <a onclick="show_report();" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
+     <a href="<?=base_url('index.php/tryout') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar TO</a>
    </ul>
  </div>
  <!--/ Category -->
 
- <!-- Category -->
- <div class="mb15">
-  <!-- Header -->
-  <div class="section-header section-header-bordered mb10">
-   <h4 class="section-title">
-    <p class="font-alt nm">Filter By</p>
-  </h4>
-</div>
-<!--/ Header -->
-<ul class="list-unstyled">
- <li class="mb5"><i class="ico-angle-right text-muted mr5"></i> 
-  <form>
-   <p class="has-succes">
-    <select>
-     <option>- Pilih Filter-</option>
-     <option>Pelajaran</option>
-     <option>Status</option>
-   </select>
- </p>
 
-</form>
-</li>
-</ul>
-</div>
-<!--/ Category -->
 
 <!-- Text Widget -->
 <div class="mb15" >
@@ -76,15 +46,7 @@
   </h4>
 </div>
 <!--/ Header -->
-<p class="nm text-default">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
- quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
- consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
- quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
- consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
- cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
- proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p class="nm text-default">Disamping ini adalah daftar paket yang harus kamu kerjakan! dan dibawahnya merupakan laporan dari paket soal yang sudah kamu kerjakan.<hr><br><br><br><br><br><br><br><br><br></p>
 </div>
 <!--/ Text Widget -->
 </div>
@@ -115,9 +77,9 @@
             <td><?=$paketitem['nm_paket'] ?></td>
             <td>Belum Dikerjakan</td>
             <td>
-                <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-                 class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
-                 data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
+              <a onclick="kerjakan(<?=$paketitem['id_paket']?>)" 
+               class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
+               data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
 
              </td>
            </tr>
@@ -128,10 +90,14 @@
  </div>
 
 </div>
-
+<style type="text/css">
+  tbody tr td{
+    border: 5px solid white;
+  }
+</style>
 <div class="col-md-9">
   <h3>Daftar History TO</h3>
-  <div class="col-md-12">
+  <div class="col-md-12" id="owl2">
     <?php if ($paket_dikerjakan==array()): ?>
       <h4>Tidak ada paket soal.</h4>
     <?php else: ?>
@@ -139,40 +105,32 @@
        <div class="col-md-6">
         <div class="panel bg-color-1">
          <div class="panel-heading text-left">
-          <p style="width:130px">
            <strong> <?=$paketitem['nm_paket'] ?> </strong>
            <?php if ($paketitem['status_pengerjaan']==2): ?>
             <span><strong>status</strong>:Belum/Tidak selesai</span>
           <?php elseif($paketitem['status_pengerjaan']==3): ?>
             <span><strong>status</strong>:Selesai<br><br></span>
           <?php endif ?>
-        </p>
-      </strong>
-    </div>
+        </strong>
+      </div>
 
-    <div class="panel-body text-center">
-     <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">    
+      <div class="panel-body text-center">
+       <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">    
+     </div>
+     <div class="panel-body">
+       <?php if ($paketitem['status_pengerjaan']==2): ?>
+         <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+           class="cws-button border-radius bt-color-3 modal-on<?=$paketitem['id_paket']?>"
+           data-todo='<?=json_encode($paketitem)?>'>Lanjut</a>
+         <?php elseif($paketitem['status_pengerjaan']==1): ?>
+          <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+           class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
+           data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
+         <?php endif ?>    
+         </div>
+     </div>
    </div>
-   <table class="table">
-     <tbody>
-      <tr>
-        <td colspan="2" align="center">
-          <?php if ($paketitem['status_pengerjaan']==2): ?>
-           <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-             class="cws-button border-radius bt-color-3 modal-on<?=$paketitem['id_paket']?>"
-             data-todo='<?=json_encode($paketitem)?>'>Lanjut</a>
-           <?php elseif($paketitem['status_pengerjaan']==3): ?>
-            <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-             class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
-             data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
-           <?php endif ?>
-         </td>
-       </tr>
-     </tbody>
-   </table>
- </div>
-</div>
-<?php endforeach ?>
+ <?php endforeach ?>
 <?php endif ?>
 </div>
 </div>
@@ -191,16 +149,18 @@
 <!--/ END Template Main -->
 <script type="text/javascript"> 
 
-  function detail_paket(id_to){
+  function kerjakan(id_to){
     var kelas = ".modal-on"+id_to;
     var data_to = $(kelas).data('todo');
     url = base_url+"index.php/tryout/buatto";
 
+    
     var datas = {
       id_paket:data_to.id_paket,
       id_tryout:data_to.id_tryout,
       id_mm_tryoutpaket:data_to.id
     }
+
     $.ajax({
       url : url,
       type: "POST",
@@ -219,10 +179,62 @@
 
 
   }
-  $(document).ready(function() {
-    $(".table").dataTable();
-    $("#owl2").owlCarousel();
+  function detail_paket(id_to){
+    var kelas = ".modal-on"+id_to;
+    var data_to = $(kelas).data('todo');
+    console.log(data_to);
+    $('.modal-title').text('Grafik Paket Soal Tryout');
+    $('#myModal').modal('show');
+    load_grafik(data_to);
+  }
+  function load_grafik(data) {
+
+   var chart = new CanvasJS.Chart("chartContainer", {
+     title: {
+      text: "Nama Paket : "+data.nm_paket
+    },
+    animationEnabled: true,
+    theme: "theme1",
+    data: [
+    {
+      type: "doughnut",
+      indexLabelFontFamily: "Garamond",
+      indexLabelFontSize: 20,
+      startAngle: 0,
+      indexLabelFontColor: "dimgrey",
+      indexLabelLineColor: "darkgrey",
+      toolTipContent: "Jumlah : {y} ",
+
+      dataPoints: [
+      { y : data.total_nilai, indexLabel:"Poin {y}"},
+      { y: data.jmlh_salah, indexLabel: "Salah {y}" },
+      { y: data.jmlh_kosong, indexLabel: "Kosong {y}" },
+      { y: data.jmlh_benar, indexLabel: "Benar {y}" },
+
+      ]
+    }
+    ]
   });
+   chart.render();
+ }
+
+ function lihat_grafik(id){
+  var kelas = ".modal-on"+id;
+  var data = $(kelas).data('todo');
+  $('.modal-title').text('Grafik Latihan ');
+  $('#myModal').modal('show');
+  load_grafik(data);
+}
+
+function show_report(){
+  $('#myModal2').modal('show');
+  $('#myModal2 modal-title').text('Report Latihan');
+}
+
+$(document).ready(function() {
+  $(".table").dataTable();
+  $("#owl2").owlCarousel();
+});
 
 </script>
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>

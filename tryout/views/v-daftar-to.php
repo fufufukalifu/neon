@@ -98,8 +98,11 @@
   }
 
   $(document).ready(function() {
-    $('.table').DataTable();
-
+    $('.table').dataTable( {
+    "bFilter": false,
+    "bPaginate":false,
+    "bInfo":false
+  } );
 
   });
 </script>
