@@ -59,6 +59,13 @@ class Mvideoback extends CI_Model
 		return $query->result_array();
 	}
 
+	//query haspus video
+	public function del_video($videoID)
+	{
+		$this->db->where('id',$videoID);
+		$this->db->delete('tb_video');
+	}
+
 
 }
 ?>

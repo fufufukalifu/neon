@@ -69,7 +69,7 @@ class Mregister extends CI_Model {
         $this->email->subject('Verifikasi Email');
         $message = '<html><meta/><head/><body>';
         $message .='<p> Dear' . ' ' . $this->session->userdata['USERNAME'] . ',</p>';
-        $message .='<p>Terimakasih telah mendaftar di Neon. Silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun anda. Setelah Aktifasi akun anda, anda akan bla2x</p>';
+        $message .='<p>Terimakasih telah mendaftar di Neon. Untuk dapat menggunakan semua fitur silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun mu.</p>';
         $message .= '<p>Terimakasih</p>';
         $message .= '<p>Neon</p>';
         $message .= '</body></html>';

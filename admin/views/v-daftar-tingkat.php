@@ -14,8 +14,8 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tingkatSD" data-toggle="tab">SD</a></li>
                 <li><a href="#tingkatSMP" data-toggle="tab">SMP</a></li>
-                <li><a href="#tingkatSMA" data-toggle="tab">SMA</a></li>
-                <li><a href="#tingkatSMK" data-toggle="tab">SMK</a></li>
+                <li><a href="#tingkatSMA-IPA" data-toggle="tab">SMA IPA</a></li>
+                <li><a href="#tingkatSMA-IPS" data-toggle="tab">SMA IPS</a></li>
             </ul>
             <!--/ tab -->
             <!-- tab content -->
@@ -71,17 +71,17 @@
                                                             } else if ($mapel->tingkatID == 2) {
                                                                 echo 'SMP';
                                                             } else if ($mapel->tingkatID == 3) {
-                                                                echo 'SMA';
+                                                                echo 'SMA - IPA';
                                                             } else if ($mapel->tingkatID == 4) {
-                                                                echo 'SMK';
+                                                                echo 'SMA - IPS';
                                                             } else {
                                                                 echo 'Tidak mempunyai tingkatan';
                                                             }
                                                             ?> </option>
                                                         <option value="1">SD</option>
                                                         <option value="2">SMP</option>
-                                                        <option value="3">SMA</option>
-                                                        <option value="4">SMK</option>
+                                                        <option value="3">SMA - IPA</option>
+                                                        <option value="4">SMA - IPS</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group input-group">
@@ -108,7 +108,8 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="tingkatSMP">
-                    <table class="table table-striped" id="mapelsmp" style="font-size: 13px">
+                    <!--<table class="table table-striped" id="mapelsmp" style="font-size: 13px">-->
+                    <table id="" class="table table-striped display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
@@ -158,17 +159,17 @@
                                                             } else if ($mapel->tingkatID == 2) {
                                                                 echo 'SMP';
                                                             } else if ($mapel->tingkatID == 3) {
-                                                                echo 'SMA';
+                                                                echo 'SMA - IPA';
                                                             } else if ($mapel->tingkatID == 4) {
-                                                                echo 'SMK';
+                                                                echo 'SMA - IPS';
                                                             } else {
                                                                 echo 'Tidak mempunyai tingkatan';
                                                             }
                                                             ?> </option>
                                                         <option value="1">SD</option>
                                                         <option value="2">SMP</option>
-                                                        <option value="3">SMA</option>
-                                                        <option value="4">SMK</option>
+                                                        <option value="3">SMA - IPA</option>
+                                                        <option value="4">SMA - IPS</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group input-group">
@@ -194,8 +195,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="tingkatSMA">
-                    <table class="table table-striped" id="mapelsma" style="font-size: 13px">
+                <div class="tab-pane" id="tingkatSMA-IPA">
+                    <!--<table class="table table-striped" id="mapelsma" style="font-size: 13px">-->
+                    <table id="" class="table table-striped display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
@@ -245,17 +247,17 @@
                                                             } else if ($mapel->tingkatID == 2) {
                                                                 echo 'SMP';
                                                             } else if ($mapel->tingkatID == 3) {
-                                                                echo 'SMA';
+                                                                echo 'SMA - IPA';
                                                             } else if ($mapel->tingkatID == 4) {
-                                                                echo 'SMK';
+                                                                echo 'SMA - IPS';
                                                             } else {
                                                                 echo 'Tidak mempunyai tingkatan';
                                                             }
                                                             ?> </option>
                                                         <option value="1">SD</option>
                                                         <option value="2">SMP</option>
-                                                        <option value="3">SMA</option>
-                                                        <option value="4">SMK</option>
+                                                        <option value="3">SMA - IPA</option>
+                                                        <option value="4">SMA - IPS</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group input-group">
@@ -281,8 +283,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="tingkatSMK">
-                    <table class="table table-striped" id="mapelsmk" style="font-size: 13px">
+                <div class="tab-pane" id="tingkatSMA-IPS">
+                    <!--<table class="table table-striped" id="mapelsmk" style="font-size: 13px">-->
+                    <table id="" class="table table-striped display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
@@ -364,17 +367,17 @@
                                                             } else if ($mapel->tingkatID == 2) {
                                                                 echo 'SMP';
                                                             } else if ($mapel->tingkatID == 3) {
-                                                                echo 'SMA';
+                                                                echo 'SMA - IPA';
                                                             } else if ($mapel->tingkatID == 4) {
-                                                                echo 'SMK';
+                                                                echo 'SMA - IPS';
                                                             } else {
                                                                 echo 'Tidak mempunyai tingkatan';
                                                             }
                                                             ?> </option>
                                                         <option value="1">SD</option>
                                                         <option value="2">SMP</option>
-                                                        <option value="3">SMA</option>
-                                                        <option value="4">SMK</option>
+                                                        <option value="3">SMA - IPA</option>
+                                                        <option value="4">SMA - IPS</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group input-group">
@@ -418,8 +421,8 @@
                 <div class="modal-body">
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                        <select class="form-control" name="idMP">
-                            <option> Pilih Mata Pelajaran</option>
+                        <select class="form-control" name="idMP" required="">
+                            <option value=""> Pilih Mata Pelajaran</option>
                             <?php foreach ($mapels as $mapel): ?>
                                 <option value="<?= $mapel->id ?>"><?= $mapel->namaMataPelajaran ?></option>
                             <?php endforeach ?>
@@ -427,12 +430,12 @@
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                        <select class="form-control" name="idTingkatMP">
-                            <option> Pilih Tingkat Mata Pelajaran</option>
+                        <select class="form-control" name="idTingkatMP" required="">
+                            <option value=""> Pilih Tingkat Mata Pelajaran</option>
                             <option value="1">SD</option>
                             <option value="2">SMP</option>
-                            <option value="3">SMA</option>
-                            <option value="4">SMK</option>
+                            <option value="3">SMA IPA</option>
+                            <option value="4">SMA IPS</option>
                         </select>
                     </div>
                     <div class="form-group input-group">
@@ -500,4 +503,10 @@
         // it is superfluous to have to manually call the modal.
         $('#modalHapus').modal('show');
     });
+
+    $(document).ready(function () {
+        $('table.display').DataTable();
+    });
 </script>
+
+
