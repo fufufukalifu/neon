@@ -23,10 +23,15 @@
 					<nav class="main-nav">
 						<ul class="clear-fix">
 							<li>
-								<a href="">Latihan</a>
+								<a href="<?=base_url('index.php/tryout') ?>">Try Out</a>
 							</li>
+
 							<li>
-								<a href="index.html">Logout</a>
+								<a href="<?=base_url('index.php/tesonline/daftarlatihan') ?>">Latihan</a>
+							</li>
+
+							<li>
+								<a href="<?=base_url('index.php/login/logout') ?>">Logout</a>
 							</li>
 						</ul>
 					</nav>

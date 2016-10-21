@@ -37,8 +37,8 @@
 
 
 
-<!-- Text Widget -->
-<div class="mb15" >
+ <!-- Text Widget -->
+ <div class="mb15" >
   <!-- Header -->
   <div class="section-header section-header-bordered mb10">
    <h4 class="section-title">
@@ -90,48 +90,49 @@
  </div>
 
 </div>
-<style type="text/css">
-  tbody tr td{
-    border: 5px solid white;
-  }
-</style>
-<div class="col-md-9">
-  <h3>Daftar History TO</h3>
-  <div class="col-md-12" id="owl2">
-    <?php if ($paket_dikerjakan==array()): ?>
-      <h4>Tidak ada paket soal.</h4>
-    <?php else: ?>
-      <?php foreach ($paket_dikerjakan as $paketitem): ?>
-       <div class="col-md-6">
-        <div class="panel bg-color-1">
-         <div class="panel-heading text-left">
-           <strong> <?=$paketitem['nm_paket'] ?> </strong>
-           <?php if ($paketitem['status_pengerjaan']==2): ?>
-            <span><strong>status</strong>:Belum/Tidak selesai</span>
-          <?php elseif($paketitem['status_pengerjaan']==3): ?>
-            <span><strong>status</strong>:Selesai<br><br></span>
-          <?php endif ?>
-        </strong>
-      </div>
 
-      <div class="panel-body text-center">
-       <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/130x130" alt="">    
-     </div>
-     <div class="panel-body">
-       <?php if ($paketitem['status_pengerjaan']==2): ?>
-         <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-           class="cws-button border-radius bt-color-3 modal-on<?=$paketitem['id_paket']?>"
-           data-todo='<?=json_encode($paketitem)?>'>Lanjut</a>
-         <?php elseif($paketitem['status_pengerjaan']==1): ?>
-          <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-           class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
-           data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
-         <?php endif ?>    
-         </div>
-     </div>
-   </div>
- <?php endforeach ?>
-<?php endif ?>
+
+<div class="col-md-9">
+  <section>
+    <!-- gallery navigation -->
+    <div class="carousel-container">
+      <h2>Paket Soal yang Sudah Dikerjakan</h2>
+      <div class="carousel-nav">
+        <div class="carousel-button">
+                <div class="prev"><i class="fa fa-angle-left"></i></div><!-- 
+              --><div class="next"><i class="fa fa-angle-right"></i></div>
+            </div>
+          </div>
+          <!-- / gallery navigation -->
+          <!-- gallery container -->
+          <div class="grid-col-row">
+            <div class="owl-carousel owl-three-item">
+
+              <?php if($paket_dikerjakan==array()): ?>
+                <h4>Tidak ada paket soal.</h4>
+              <?php else: ?>
+                <?php foreach ($paket_dikerjakan as $paketitem): ?>
+                <div class="gallery-item">
+                  <div class="portfolio-item">
+                    <div class="picture">
+                      <div class="hover-effect"></div>
+                      <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/370x270" alt>
+                    </div> 
+                    <h3><?=$paketitem['nm_paket'] ?> <br>
+                    <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+                        class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
+                        data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a></h3>
+                  </div>
+                </div>
+              <?php endforeach ?>
+
+                 <?php endif ?>
+              </div>
+            </div>
+          </div>
+          <!-- / gallery container -->
+        </section>
+      </div>
 </div>
 </div>
 

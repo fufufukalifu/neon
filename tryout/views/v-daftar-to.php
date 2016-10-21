@@ -54,6 +54,9 @@
         <th>Nama Tryout</th>
         <th>Tanggal Mulai</th>
         <th>Tanggal Berakhir</th>
+        <th>Masa berlaku TO</th>
+        <th>Keaktivan</th>
+
         <th width="10%">Aksi</th>
       </tr>
     </thead>
@@ -65,13 +68,43 @@
         <td><?=$tryout_item['nm_tryout'] ?></td>
         <td><?=$tryout_item['tgl_mulai'] ?></td>
         <td><?=$tryout_item['tgl_berhenti'] ?></td>
-
+        <?php 
+          $date1 = new DateTime($tryout_item['tgl_mulai']);
+          $date2 = new DateTime($tryout_item['tgl_berhenti']);
+          $date3 = $date2->diff($date1);
+          $hariini = new DateTime(date("Y-m-d"));
+          $sisa = new stdClass();
+          if ($hariini>$date2) {
+            $sisa->days = 0;
+          } else {
+            $sisa = $date2->diff($hariini);
+          }
+        ?>
+        <td><?=$date3->d." Hari" ?></td>
+        <td><?=$sisa->days ?> Hari</td>
         <td>
-          <a class="btn btn-primary detail-<?=$tryout_item['id_tryout']?>" 
-            title="Lihat Detail" 
+        <?php if ($sisa->days == 0): ?>
+                    <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
+            title="Lihat Report" 
+            data-todo='<?=json_encode($tryout_item) ?>'
+            onclick="lihat_report(<?=$tryout_item['id_tryout'] ?>)"
+            ><i class="glyphicon glyphicon-book"></i></a>
+        <?php else: ?>
+                  <a class="btn btn-primary detail-<?=$tryout_item['id_tryout']?>" 
+            title="Lihat Paket Soal" 
             data-todo='<?=json_encode($tryout_item) ?>'
             onclick="lihat_detail(<?=$tryout_item['id_tryout'] ?>)"
             ><i class="glyphicon glyphicon-list-alt"></i></a>
+
+          <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
+            title="Lihat Report" 
+            data-todo='<?=json_encode($tryout_item) ?>'
+            onclick="lihat_report(<?=$tryout_item['id_tryout'] ?>)"
+            ><i class="glyphicon glyphicon-book"></i></a>
+        <?php endif ?>
+
+
+
           </td>
           </tr>
         <?php endforeach ?>
@@ -94,7 +127,6 @@
     
     var kelas = ".detail-"+id_to;
     var data_to = $(kelas).data('todo');
-    console.log(data_to);
   }
 
   $(document).ready(function() {
