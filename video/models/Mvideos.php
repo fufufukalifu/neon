@@ -145,6 +145,19 @@ class Mvideos extends CI_Model
     $query = $this->db->get();
     return $query->result();
   }
-
+  //get nama file untuk menghapus file video di Videoback->function del_file_video
+  function get_nameFile($videoID)
+  {
+   $this->db->select('namaFile');
+   $this->db->from('tb_video');
+   $this->db->where('id',$videoID);
+   $query = $this->db->get();
+    return $query->result();
+    // $result = $query->result_array();
+    // if($query->num_rows() == 1) {
+    //   return $result[0];
+    // }
+    // return $result;
+  }
 }
 ?>

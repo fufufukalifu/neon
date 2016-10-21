@@ -21,9 +21,9 @@
 </div>
 
 <script type="text/javascript">
+var  tblist_video;
 $(document).ready(function() {
 		//#get list by id guru
-		var  tblist_video;
 		tblist_video = $('#zero-configuration').DataTable({ 
          "processing": true,
          "ajax": {
@@ -44,7 +44,30 @@ $(document).ready(function() {
 //##
 
 //# fungsi menghapus video
-	function dropvideo(gid){
-
+	function drop_video(videoID){
+		if(confirm('Are you sure delete this data?')){
+	  $.ajax({
+	            url : base_url+"index.php/videoBack/del_file_video/"+videoID,
+	            type: "POST",
+	            dataType: "JSON",
+	            success: function(data)
+	            {
+	            	console.log('success');
+	              reload_tblist();
+					    },
+					    error: function (jqXHR, textStatus, errorThrown)
+					    {
+					      alert('Error deleting data');
+					    }
+	    });
+  	}
 	}
+// fungsi updt
+
+
+//fungsi reload table
+function  reload_tblist(){
+  tblist_video.ajax.reload(null,false);
+}
+
 </script>
