@@ -1,12 +1,13 @@
 <html>
     <head>
         <title>{judul_halaman}</title>
-        <script>var base_url = '<?php echo base_url() ?>';</script>
-        <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
-        <meta charse="utf-8">
+         <meta charse="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         <!-- style -->
-        <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
+        <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
+        <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>"/>
         <link rel="stylesheet" href="<?= base_url('assets/plugins/owl/css/owl.carousel.min.css'); ?>">
         <link rel="shortcut icon" href="<?= base_url('assets/back/img/favicon.png') ?>">
@@ -15,13 +16,12 @@
         <link rel="stylesheet" href="<?= base_url('assets/back/css/main.css') ?>">
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/css/jquery.fancybox.css') ?>" />
         <link rel="stylesheet" href="<?= base_url('assets/back/css/owl.carousel.css') ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
-        <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
-        <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
-        
         <!--styles -->
     </head>
     <body>
+    <script>var base_url = '<?php echo base_url() ?>';</script>
+    <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
+       
         <?php
         foreach ($files as $key) {
             include ($key);
