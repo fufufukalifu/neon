@@ -12,8 +12,8 @@ class MbankSoal extends CI_Model {
 
     public function get_soalID($UUID) {
         $this->db->where('UUID', $UUID);
-        $this->db->where('publish', 1);
-        $this->db->where('status', 1);
+        // $this->db->where('publish', 1);
+        // $this->db->where('status', 1);
         
         $this->db->select('id_soal')->from('tb_banksoal');
         $query = $this->db->get();
@@ -120,7 +120,8 @@ class MbankSoal extends CI_Model {
 
     //function untuk update pilihan jawaban text
     public function ch_jawaban($data) {
-        $this->db->update_batch('tb_piljawaban', $data['dataJawaban'], 'id_pilihan');
+        $this->db->where('id_soal',$data['id_soal']);
+        $this->db->update_batch('tb_piljawaban', $data['dataJawaban'], 'pilihan');
     }
 
     public function ch_gambar($datagambar) {
@@ -187,6 +188,31 @@ class MbankSoal extends CI_Model {
 
     $result = $this->db->query($myquery);
     return $result->result_array();
+    }
+
+    // hitung jumlah pilihan berdasarkan id
+    public function get_count_pilihan($id_soal)
+    {
+        $this->db->where('id_soal',$id_soal);
+        $this->db->from('tb_piljawaban');
+        $count= $this->db->count_all_results();
+        // var_dump($num_rows) ;
+        return $count;
+    }
+
+    // delete one piljawaban by id_soal
+    public function del_oneJawaban($id_soal)
+    {   
+        $this->db->where('id_soal', $id_soal);
+        $this->db->where('pilihan','E');
+        $this->db->delete('tb_piljawaban');
+        // var_dump($data['dataJawaban']);
+    }
+    // add one piljawaban by id_soal
+    public function add_oneJawaban($pil_E)
+    {
+       $this->db->insert('tb_piljawaban',$pil_E);
+        // var_dump($data['dataJawaban']);
     }
 }
 

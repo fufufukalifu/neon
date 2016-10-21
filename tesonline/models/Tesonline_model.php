@@ -20,14 +20,14 @@ class Tesonline_model extends CI_Model {
     }
 
     public function get_soal($id_latihan) {
-        $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul');
+        $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
         $this->db->where('sollat.id_latihan', $id_latihan);
         $query = $this->db->get();
         $soal = $query->result_array();
 
-        $this->db->select('*,id_latihan as idlat, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw');
+        $this->db->select('*,id_latihan as idlat, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw, pil.gambar as pilgam');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
         $this->db->join('tb_piljawaban as pil', 'soal.id_soal = pil.id_soal');
@@ -70,6 +70,13 @@ class Tesonline_model extends CI_Model {
         $this->db->update('tb_latihan');
     }
 
+    public function levelLatihan($id) {
+        $this->db->select('tingkatKesulitan as level');
+        $this->db->from('tb_latihan');
+        $this->db->where('id_latihan', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 
 ?>

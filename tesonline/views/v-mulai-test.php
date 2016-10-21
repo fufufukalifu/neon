@@ -140,7 +140,7 @@
             <td><?=$latihanitem['tingkatKesulitan'] ?></td>
             <td><?=$latihanitem['status_pengerjaan'] ?></td>
             <td><?=$latihanitem['jumlahSoal'] ?></td>
-            <td><?=$latihanitem['tgl_pengerjaan'] ?></td>
+            <td><?=$latihanitem['date_created'] ?></td>
 
             <td>
               <a class="btn btn-success detail-<?=$latihanitem['id_latihan']?>" 

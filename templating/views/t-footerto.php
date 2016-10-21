@@ -29,7 +29,13 @@
     }
     ;
     $(document).on("keydown", disableF5);
-
+</script>
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
+    };
+</script>
+<script>
     function countdown(minutes, stat) {
         var seconds = 60;
         var mins = minutes;
@@ -41,14 +47,15 @@
         }
 
         function tick() {
-
             var counter = document.getElementById("timer");
-            setCookie("minutes", mins, 10)
-            setCookie("seconds", seconds, 10)
+            setCookie("minutes", mins, 10);
+            setCookie("seconds", seconds, 10);
             var current_minutes = mins - 1
+
             seconds--;
-            counter.innerHTML =
-                    current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+
+            counter.innerHTML = current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+
             //save the time in cookie
             if (seconds > 0) {
                 setTimeout(tick, 1000);
@@ -63,53 +70,7 @@
 //                    document.getElementById("hasil").submit();
                     deleteAllCookies('seconds', 'minutes');
                 }
-
             }
-        }
-        tick();
-    }
-
-    function countup(jam, menit, detik, stat) {
-        var detiks = detik;
-        var menits = menit;
-        var jams = jam;
-
-        if (getCookie("menits") && getCookie("detiks") && getCookie("jams") && stat)
-        {
-            var detiks = getCookie("detiks");
-            var menits = getCookie("menits");
-            var jams = getCookie("jams");
-        }
-
-        function tick() {
-//            var counter = document.getElementById("timer");
-            setCookie("menits", menits, 10);
-            setCookie("detiks", detiks, 10);
-            setCookie("jams", jams, 10);
-
-//            var current_minutes = mins + 1;
-//            var current_hours = hours + 1;
-
-            detiks++;
-
-//            counter.innerHTML = (hours < 10 ? "0" : "") + String(hours) + ":" + (mins < 10 ? "0" : "") + String(mins) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-            document.getElementById("durasi").value = (jams * 60 * 60) + (menits * 60) + detiks;
-
-            //save the time in cookie
-            if (detiks < 59) {
-                setTimeout(tick, 1000);
-            } else {
-                if (detiks == 59 && menits == 59) {
-                    setTimeout(function () {
-                        countup(parseInt(jams) + 1, 0, false);
-                    }, 1000);
-                } else if (seconds == 59) {
-                    setTimeout(function () {
-                        countup(parseInt(jams), parseInt(menits) + 1, -1, false);
-                    }, 1000);
-                }
-            }
-
         }
         tick();
     }
@@ -133,24 +94,20 @@
         }
         return "";
     }
-//    deleteAllCookies();
-//    deleteAllCookies('seconds', 'minutes');
-    countdown(<?php foreach ($paket as $row) {
-    echo $row['durasi'];
-} ?>, true);
+
+//     deleteAllCookies('seconds', 'minutes');
+//        deleteAllCookies();
+    countdown(<?php foreach ($paket as $row) { echo $row['durasi'];} ?>, true);
+//    countup(0, 0, 0, true);
 
 
     function deleteAllCookies(seconds, mins) {
         document.cookie = seconds + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
         document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-        document.cookie = mins + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
     }
 </script>
-<script type="text/javascript">
-    window.onbeforeunload = function () {
-        return "Data yang dimasukan akan hilang, yakin keluar dari halaman?";
-    };
 
+<script type="text/javascript">
     function deleteAllCookies() {
         setCookie('minutes', '', -1);
         setCookie('seconds', '', -1);
