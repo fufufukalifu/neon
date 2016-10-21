@@ -51,7 +51,7 @@
                                <label class="control-label">Mata Pelajaran</label>
                                <div class="has-icon pull-left">
                                 <select class="form-control"  name="mataPelajaran">
-                                    <option value>-Pilih Matapelajaragn-</option>
+                                    <option value>-Pilih Matapelajaran-</option>
                                     <?php 
                                     foreach ($mataPelajaran as $row) {
                                         $id = $row['id'];
