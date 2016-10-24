@@ -49,21 +49,19 @@ class Tryout extends MX_Controller {
   redirect("tryout/daftarpaket");
  }
 
- public function create_session($id_paket) {
-//$this->session->userdata('id_paket',$id_paket);
- }
-
  public function daftarpaket() {
   $id_to = $this->session->userdata('id_tryout');
   $datas['id_tryout'] = $id_to;
   $datas['id_pengguna'] = $this->session->userdata('id');
+  $data['nama_to'] = $this->Tryout_model->get_tryout_by_id($id_to)[0]['nm_tryout'];
 
+  
 
 
   if (isset($id_to)) {
    $data = array(
     'judul_halaman' => 'Neon - Daftar Paket',
-    'judul_header' => 'Daftar Paket',
+    'judul_header' => 'Tryout : '.$data['nama_to'],
     'judul_tingkat' => '',
     );
 

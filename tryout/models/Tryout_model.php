@@ -107,7 +107,7 @@ class Tryout_model extends MX_Controller {
     public function get_tryout_by_id($data) {
         $this->db->select('*');
         $this->db->from('tb_tryout to');
-        $this->db->where('to.id_tryout', $data['id_tryout']);
+        $this->db->where('to.id_tryout', $data);
         $query = $this->db->get();
         return $query->result_array();
     }

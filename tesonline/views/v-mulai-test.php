@@ -53,36 +53,10 @@
      </div>
      <!--/ Header -->
      <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
-     <a onclick="show_report();" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar Latihan</a>
    </ul>
  </div>
  <!--/ Category -->
 
- <!-- Category -->
- <div class="mb15">
-  <!-- Header -->
-  <div class="section-header section-header-bordered mb10">
-   <h4 class="section-title">
-    <p class="font-alt nm">Filter By</p>
-  </h4>
-</div>
-<!--/ Header -->
-<ul class="list-unstyled">
- <li class="mb5"><i class="ico-angle-right text-muted mr5"></i> 
-  <form>
-   <p class="has-succes">
-    <select>
-     <option>- Pilih Filter-</option>
-     <option>Pelajaran</option>
-     <option>Status</option>
-   </select>
- </p>
-
-</form>
-</li>
-</ul>
-</div>
-<!--/ Category -->
 
 <!-- Text Widget -->
 <div class="mb15" >
@@ -93,15 +67,7 @@
   </h4>
 </div>
 <!--/ Header -->
-<p class="nm text-default">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
- quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
- consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
- quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
- consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
- cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
- proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p class="nm text-default">Disamping ini adalah daftar latihanmu, semakin sering kamu latihan pemahamanmu pasti semakin bagus! jadi tunggu apa lagi? ayo latihan dan latihan!<hr><br><br><br></p>
 </div>
 <!--/ Text Widget -->
 </div>
