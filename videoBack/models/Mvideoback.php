@@ -66,6 +66,23 @@ class Mvideoback extends CI_Model
 		$this->db->delete('tb_video');
 	}
 
+	public function get_video_by_UUID($UUID)
+	{	
+		$this->db->select('*');
+		$this->db->from('tb_video');
+		$this->db->where('UUID',$UUID);
+		$query = $this->db->get();
+		return $query->result_array();
+
+	}
+
+	public function ch_video($data)
+	{	
+		$this->db->set($data['video']);
+		$this->db->where('UUID',$data['UUID']);
+		$this->db->update('tb_video');
+		redirect(site_url('videoBack/managervideo'));
+	}
 
 }
 ?>

@@ -9,13 +9,10 @@
 
     <div class="col-md-12">
         <!-- START Form panel -->
-        <form  class="panel panel-default form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-            <div class="panel-heading"><h5 class="panel-title">Upload Video</h5>
+        <form  class="panel panel-default form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <div class="panel-heading"><h5 class="panel-title">Form Update Video</h5>
+            <input type="text" name="UUID" value="<?=$video['UUID']?>" hidden="true" >
             </div>
-           
-            <div class="form-group message-container">
-                
-            </div><!-- will be use as done/fail message container -->
 
             <div  class="form-group">
                 <label class="col-sm-1 control-label">Tingkat</label>
@@ -56,10 +53,10 @@
             <label class="control-label col-sm-2">Pilihan Upload Video</label>
               <div class="col-sm-8">
                 <div class="btn-group" data-toggle="buttons" >
-                  <label class="btn btn-info active" id="up_server">
+                  <label class="btn btn-info " id="up_server">
                     <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
                   </label>
-                  <label class="btn btn-default " id="up_link">
+                  <label class="btn btn-default active " id="up_link">
                     <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
                   </label>
                 </div>
@@ -67,10 +64,10 @@
             </div>
 
             <!-- untuk preview video -->
-            <div  class="form-group prv_video" hidden="true">
+            <div  class="form-group server" hidden="true">
                 <div class="row" style="margin:1%;"> 
                     <div class="col-md-12">
-                        <video id="preview" class="img-tumbnail image" src="" width="100%" height="50%" controls >
+                        <video id="preview" class="img-tumbnail image" src="<?=base_url();?>assets/video/<?=$video['namaFile'];?>" width="100%" height="50%" controls >
                             
                         </video>
                     </div>
@@ -93,7 +90,7 @@
             </div> -->
 
             <!-- upload ke server -->
-            <div id="upload" class="form-group server">
+            <div id="upload" class="form-group server" hidden="true">
                 <label class="col-sm-2 control-label">File Video</label>
                 <div class="col-sm-4">
 
@@ -107,17 +104,17 @@
 
             <!-- upload video by link -->
 
-            <div class="form-group link" hidden="true">
+            <div class="form-group link" >
               <label class="col-sm-2 control-label">Link Video</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="link_video">
+              <div class="col-sm-9">
+                <input class="form-control" type="text" value="<?=$video['link']?>" name="link_video">
               </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Judul Video</label>
                 <div class="col-sm-9">
-                    <input type="text" name="judulvideo" class="form-control">
+                    <input type="text" name="judulvideo" value="<?=$video['judulVideo']?>" class="form-control">
                      <span class="text-danger"><?php echo form_error('judulvideo'); ?></span>
                 </div>
 
@@ -126,7 +123,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Deskripsi Video</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" name="deskripsi"></textarea>
+                    <textarea class="form-control" name="deskripsi"><?=$video['deskripsi']?></textarea>
                 </div>
             </div>
 
