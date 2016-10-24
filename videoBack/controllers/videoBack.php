@@ -51,7 +51,11 @@ class videoBack extends MX_Controller {
             $row[] = $list_video['videoID'];
             $row[] = $list_video['judulVideo'];
             $row[] = $list_video['namaFile'];
+            $row[] = $list_video['matapelajaran'];
+            $row[] = $list_video['judulBab'];
+            $row[] = $list_video['judulSubBab'];
             $row[] = substr($list_video['deskripsi'], 0, 100)." <a href=''>Read More</a>";
+            $row[] = $list_video['namaDepan']." ".$list_video['namaBelakang'];
             $row[] = '<a class="btn btn-sm btn-danger"  
             title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
             <i class="ico-remove"></i></a>  
