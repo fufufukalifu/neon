@@ -51,10 +51,20 @@ class videoBack extends MX_Controller {
             $row[] = $list_video['videoID'];
             $row[] = $list_video['judulVideo'];
             $row[] = $list_video['namaFile'];
+            $row[] = $list_video['matapelajaran'];
+            $row[] = $list_video['judulBab'];
+            $row[] = $list_video['judulSubBab'];
             $row[] = substr($list_video['deskripsi'], 0, 100)." <a href=''>Read More</a>";
+            $row[] = $list_video['namaDepan']." ".$list_video['namaBelakang'];
             $row[] = '<a class="btn btn-sm btn-danger"  
             title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
             <i class="ico-remove"></i></a>  
+
+            <a class="btn btn-sm btn-warning" href="videoBack/formUpdateVideo/'.$list_video['UUID'].'"  title="Detail Video"
+               )"
+                >
+                    <i class="ico-file5"></i>
+                        </a> 
 
             <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Detail Video"
                 data-id='.json_encode($list_video).'
@@ -62,6 +72,7 @@ class videoBack extends MX_Controller {
                 >
                     <i class="ico-file5"></i>
                         </a>  ';
+
             $data[] = $row;
             $n++;
 
@@ -83,9 +94,36 @@ class videoBack extends MX_Controller {
     //menampilkan view form upload
     public function formupvideo() {
 
+
         $data['judul_halaman'] = "upload Video";
         $data['files'] = array(
             APPPATH . 'modules/videoBack/views/v-upload-video-form.php',
+        );
+        
+
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        // cek hakakses 
+        if ($hakAkses=='admin') {
+            // jika admin
+            $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+            // jika guru
+            $this->parser->parse('templating/index-b-guru', $data);
+        }elseif($hakAkses=='siswa'){
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }else{
+            
+            redirect(site_url('login'));
+        }
+    }
+
+     //menampilkan view form upload
+    public function formUpdateVideo($UUID) {
+         $data['video']=$this->MvideoBack->get_video_by_UUID($UUID)[0];
+        $data['judul_halaman'] = "update Video";
+        $data['files'] = array(
+            APPPATH . 'modules/videoBack/views/v-update-video-form.php',
         );
         
 
@@ -145,15 +183,50 @@ class videoBack extends MX_Controller {
     }
 
     // fungsi untuk upload video
-    public function upvideo() {
-        //load library n helper
-        $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
+    public function upvideo($data) {
 
         $config['upload_path'] = './assets/video';
         $config['allowed_types'] = 'mp4';
         $config['max_size'] = 90000;
         $this->load->library('upload', $config);
+             // pengecekan upload
+        if (!$this->upload->do_upload('video')) {
+                // jika upload video gagal
+            $error = array('error' => $this->upload->display_errors());
+
+        } else {
+                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
+            $file_data = $this->upload->data();
+            $video = $file_data['file_name'];
+
+
+            $penggunaID = $this->session->userdata['id'];
+            $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+            $guruID = $data['tb_guru']['id'];
+            $UUID=uniqid();
+                //data yg akan di masukan ke tabel video
+            $data_video = array(
+                'judulVideo' => $data['judulVideo'] ,
+                'namaFile' => $video,
+                'deskripsi' => $data['deskripsi'],
+                'published' => $data['published'],
+                'guruID' => $guruID,
+                'subBabID' => $data['subBabID'],
+                'UUID' => $UUID
+                );
+
+            $this->MvideoBack->insertVideo($data_video);
+        }
+    }
+       
+
+    public function cek_option_upload()
+     {
+          //load library n helper
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+
+
 
         //set role
         $this->form_validation->set_rules('judulvideo', 'Judul Video', 'required');
@@ -162,43 +235,138 @@ class videoBack extends MX_Controller {
 
         //pesan error atau pesan kesalahan pengisian form upload video
         $this->form_validation->set_message('required', '*Data tidak boleh kosong!');
-
+        //value post
+         $data['judulVideo'] = htmlspecialchars($this->input->post('judulvideo'));
+         $data['deskripsi'] = htmlspecialchars($this->input->post('deskripsi'));
+         $data['subBabID'] = htmlspecialchars($this->input->post('subBab'));
+         $data['published'] = htmlspecialchars($this->input->post('publish'));
+         $link=$this->input->post('link_video');
+         $option_up=htmlentities($this->input->post('option_up'));
         if ($this->form_validation->run() == FALSE) {
             $this-> formupvideo();
         }else{
-             // pengecekan upload
-            if (!$this->upload->do_upload('video')) {
-                // jika upload video gagal
-                $error = array('error' => $this->upload->display_errors());
-                
-            } else {
-                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
-                $file_data = $this->upload->data();
-                $video = $file_data['file_name'];
-                //data post dari form upload video
-                $judulVideo = htmlspecialchars($this->input->post('judulvideo'));
-                $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
-                $subBabID = htmlspecialchars($this->input->post('subBab'));
-                $published = htmlspecialchars($this->input->post('publish'));
-
+             if ($option_up =='link') {
                 $penggunaID = $this->session->userdata['id'];
                 $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
                 $guruID = $data['tb_guru']['id'];
-
-                //data yg akan di masukan ke tabel video
-                $data_video = array(
-                    'judulVideo' => $judulVideo,
-                    'namaFile' => $video,
-                    'deskripsi' => $deskripsi,
-                    'published' => $published,
+                $UUID = uniqid();
+                 $data_video = array(
+                    'judulVideo' => $data['judulVideo'] ,
+                    'link' => $link,
+                    'deskripsi' => $data['deskripsi'],
+                    'published' => $data['published'],
                     'guruID' => $guruID,
-                    'subBabID' => $subBabID
+                    'subBabID' => $data['subBabID'],
+                    'UUID' => $UUID
                 );
                
                 $this->MvideoBack->insertVideo($data_video);
-            }
+             }else{
+                $this->upvideo($data);
+             }
         }
+     } 
+
+     public function cek_option_update()
+     {
+           //load library n helper
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+
+        //set role
+        $this->form_validation->set_rules('judulvideo', 'Judul Video', 'required');
+        $this->form_validation->set_rules('subBab', 'Subbab', 'required');
+         // $this->form_validation->set_rules('video', 'Video', 'required');
+
+        //pesan error atau pesan kesalahan pengisian form upload video
+        $this->form_validation->set_message('required', '*Data tidak boleh kosong!');
+        //value post
+         $data['judulVideo'] = htmlspecialchars($this->input->post('judulvideo'));
+         $data['deskripsi'] = htmlspecialchars($this->input->post('deskripsi'));
+         $data['subBabID'] = htmlspecialchars($this->input->post('subBab'));
+         $data['published'] = htmlspecialchars($this->input->post('publish'));
+         $data['UUID']=$this->input->post('UUID');
+         $UUID=$data['UUID'];
+         $link=$this->input->post('link_video');
+         $option_up=htmlentities($this->input->post('option_up'));
+        if ($this->form_validation->run() == FALSE) {
+            $this-> formUpdateVideo($data['UUID']);
+        }else{
+             if ($option_up =='link') {
+                $this->dropVideoServer($UUID);
+                $penggunaID = $this->session->userdata['id'];
+                $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+                $guruID = $data['tb_guru']['id'];
+                 $data['video'] = array(
+                    'judulVideo' => $data['judulVideo'] ,
+                    'namaFile' => null,
+                    'link' => $link,
+                    'deskripsi' => $data['deskripsi'],
+                    'published' => $data['published'],
+                    'guruID' => $guruID,
+                    'subBabID' => $data['subBabID'],
+                );
+               
+                $this->MvideoBack->ch_video($data);
+
+             }else{
+                
+              
+                $this->updateVideo($data);
+             }
+        }
+     }
+
+     // fungsi untuk Update video server
+    public function updateVideo($data) {
        
+        $config['upload_path'] = './assets/video';
+        $config['allowed_types'] = 'mp4';
+        $config['max_size'] = 90000;
+        $this->load->library('upload', $config);
+
+        $penggunaID = $this->session->userdata['id'];
+        $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+        $guruID = $data['tb_guru']['id'];
+        $UUID=$data['UUID'];
+       
+             // pengecekan upload
+        if ($this->upload->do_upload('video')) {
+          $this->dropVideoServer($UUID);
+                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
+         $file_data = $this->upload->data();
+         $video = $file_data['file_name'];
+                //data yg akan di masukan ke tabel video
+         $data['video'] = array(
+          'judulVideo' => $data['judulVideo'] ,
+          'namaFile' => $video,
+          'link' => null,
+          'deskripsi' => $data['deskripsi'],
+          'published' => $data['published'],
+          'guruID' => $guruID,
+          'subBabID' => $data['subBabID'],
+          );
+        } else {
+          $data['video'] = array(
+            'judulVideo' => $data['judulVideo'] ,
+            'link' => null,
+            'deskripsi' => $data['deskripsi'],
+            'published' => $data['published'],
+            'guruID' => $guruID,
+            'subBabID' => $data['subBabID'],
+            );
+        }
+          $this->MvideoBack->ch_video($data);
+    }
+    //hapus video di server
+    public function dropVideoServer($UUID)
+    {
+        $video=$this->MvideoBack->get_video_by_UUID($UUID)[0];
+
+        if ($video['namaFile']!=null) {
+          unlink(FCPATH . "./assets/video/" . $video['namaFile']);
+        }
+
     }
 
     //hapus video di db
