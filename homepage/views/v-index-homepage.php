@@ -62,29 +62,29 @@
                         <div class="grid-col grid-col-3 alt">
                             <div class="counter-block">
                                 <i class="flaticon-book1"></i>
-                                <div class="counter" data-count="356">0</div>
+                                <div class="counter" data-count="{jumlah_mapel}">0</div>
                                 <div class="counter-name">Pelajaran</div>
                             </div>
                         </div>
                         <div class="grid-col grid-col-3 alt">
                             <div class="counter-block">
                                 <i class="flaticon-multiple"></i>
-                                <div class="counter" data-count="4781">0</div>
-                                <div class="counter-name">Peserta</div>
+                                <div class="counter" data-count="{jumlah_siswa}">0</div>
+                                <div class="counter-name">Siswa</div>
                             </div>							
                         </div>
                         <div class="grid-col grid-col-3 alt">
                             <div class="counter-block">
                                 <i class="flaticon-pencil"></i>
-                                <div class="counter" data-count="41">0</div>
+                                <div class="counter" data-count="{jumlah_guru}">0</div>
                                 <div class="counter-name">Pengajar</div>
                             </div>
                         </div>
                         <div class="grid-col grid-col-3 alt">
                             <div class="counter-block last">
-                                <i class="flaticon-speech"></i>
-                                <div class="counter" data-count="120">0</div>
-                                <div class="counter-name">Konsultasi</div>
+                                <i class="fa fa-caret-square-o-right"></i>
+                                <div class="counter" data-count="{jumlah_video}">0</div>
+                                <div class="counter-name">Video</div>
                             </div>
                         </div>
                     </div>
@@ -152,14 +152,13 @@
                             </div>
                         </div>
                         <div class="grid-col grid-col-6 clear-fix">
-                            <h2>Learn More About Us From Video</h2>
-                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at susp. Vivamus orci urna, ornare vitae tellus in, condimentum imperdiet eros. Maecea accumsan, massa nec vulputate congue.</p>
-                            <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.</p>
+                            <h2>Yuk, kenali lebih mengenal neon lewat video pendek disamping.</h2>
+                            <p>Untuk lebih dapat mengenal neon itu apa, silahkan klik tombol mulai pada video disamping ini. semoga teman-teman bisa tambah kenal sama neon yah.</p>
                             <br/>
                             <br/>
                             <br/>
                             <br/>
-                            <a href="page-about-us.html" class="cws-button bt-color-3 border-radius alt icon-right float-right">Watch More<i class="fa fa-angle-right"></i></a>
+                            <!-- <a href="page-about-us.html" class="cws-button bt-color-3 border-radius alt icon-right float-right">Watch More<i class="fa fa-angle-right"></i></a> -->
                         </div>
                     </div>
                 </div>

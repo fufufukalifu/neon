@@ -2,7 +2,7 @@
         <main>
             <div class="grid-col-row clear-fix">
                 <div class="row">
-                    <div class="container"><h1 class="text-center">Untuk melatih pemahamanmu, ayo lakukan tes online!</h1><br></div>
+                    <div class="container"><h1 class="text-center">Untuk melatih pemahamanmu, ayo lakukan latihan!</h1><br></div>
                 </div>
                 <div class="grid-col grid-col-6">
                     <div class="course-item">
@@ -15,7 +15,7 @@
                             <center><h3 style="text-align:center"><a href=""></a></h3></center>
                         </div>
                         <div class="course-date bg-color-3 clear-fix">
-                            <div class="description">Tes Online<br></div>
+                            <div class="description">Latihan Online<br></div>
                             <div class="divider"></div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="course-hover">
                             <img src="http://placehold.it/370x280" data-at2x="http://placehold.it/370x280" alt>
                             <div class="hover-bg bg-color2"></div>
-                            <a href="<?=base_url() ?>index.php/tryout">Mulai Tes</a>
+                            <a href="<?=base_url() ?>index.php/tryout">Mulai Latihan</a>
                         </div>
                         <div class="course-name clear-fix">
                             <center><h3 style="text-align:center"><a href=""></a></h3></center>
@@ -48,8 +48,8 @@
 <main>
     <div class="page-content grid-row">
         <div class="porfolio-item">
-            <div class="col-md-2"><img src="<?=base_url('assets/back/img/logo.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
-            <div class="col-md-10">
+            <div class="col-md-3"><img src="<?=base_url('assets/back/img/logo-tara.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
+            <div class="col-md-9">
                 <h4>Selamat Datang Di netJo!</h4>
                 <p>Sudah siap memulai belajar dengan cara asyik dan santai? mulailah dengan memilih mata pelajaran yang sesuai dengan tingkatanmu.</p>
             </div>

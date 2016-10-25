@@ -3,7 +3,7 @@
         <div class="grid-row">
             <div class="login-block" style="min-width: 35%">
                 <div class="logo">
-                    <img src="<?= base_url('assets/back/img/logo.png') ?>" alt>
+                    <img src="<?= base_url('assets/back/img/logo-tara.png') ?>" alt width="50%">
                     <!--<h4>Login</h4>-->
                 </div>
                 <div class="">

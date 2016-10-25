@@ -31,8 +31,8 @@ class Mguru extends CI_Model
 	public function update_photo($photo)
 	{
 		$data = array(
-               'photo' => $photo
-            );
+			'photo' => $photo
+			);
 		$penggunaID=$this->session->userdata['id'] ;
 		$this->db->where('penggunaID',$penggunaID);
 		$this->db->update('tb_guru',$data);
@@ -66,9 +66,27 @@ class Mguru extends CI_Model
 		$this->db->from('tb_guru');
 		$this->db->where('penggunaID',$penggunaID); 
 		$query = $this->db->get();
-         return $query->result_array();
+		return $query->result_array();
 	}
 
+	#function untuk mengambil 4 rcord random dari table guru
+	function get_guru_random(){
+		$this->db->select('namaDepan,namaBelakang,alamat,noKontak,mataPelajaranID,biografi,photo');
+		$this->db->from('tb_guru');
+		$this->db->order_by( 'rand()' );
+		$this->db->limit(4);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	##
+
+	## function untuk get jumlah guru berapa
+	function get_teachers_number(){
+		$this->db->select('id');
+		$this->db->from('tb_guru');
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
 
 }
 

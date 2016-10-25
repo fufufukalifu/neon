@@ -24,7 +24,7 @@
 
     <div class="grid-col grid-col-3">
         <div class="hover-effect"></div>
-        <h5><strong>Sekolah Menengah Kejuruan<br></strong></h5>
+        <h5><strong>Sekolah Menengah Atas IPA<br></strong></h5>
         <ol>
             <?php foreach ($pelajaran_smk as $pelajaran_items): ?>
             <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
@@ -34,7 +34,7 @@
 
 <div class="grid-col grid-col-3">
     <div class="hover-effect"></div>
-    <h5><strong>Sekolah Menengah Atas<br></strong></h5>
+    <h5><strong>Sekolah Menengah Atas IPS<br></strong></h5>
     <ol>
         <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
         <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>

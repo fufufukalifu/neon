@@ -160,6 +160,14 @@ class Mmatapelajaran extends CI_Model {
         return $query->result_array();
     }
 
+    #Menghitung jumlah pelajaran secara keseluruhan
+    function get_courses_number(){
+        $this->db->select('id');
+        $this->db->from('tb_tingkat-pelajaran');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
 }
 
 ?>

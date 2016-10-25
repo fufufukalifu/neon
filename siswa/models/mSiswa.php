@@ -4,7 +4,6 @@ class Msiswa extends CI_Model {
     #Start function pengaturan profile siswa#
 
     public function update_siswa($data) {
-
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
@@ -52,6 +51,13 @@ class Msiswa extends CI_Model {
         return $query->result();
     }
 
+    public function get_siswa_numbers() {
+        //select from 2 table di join semuanya
+        $this->db->select('id');
+        $this->db->from('tb_siswa');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
     public function get_datsiswa() {
 
         $penggunaID = $this->session->userdata['id'];

@@ -129,7 +129,6 @@ class Mvideos extends CI_Model
     $this->db->where('video.status', '0');
     $query = $this->db->get();
     return $query->result();
-
   }
 
 
@@ -158,6 +157,13 @@ class Mvideos extends CI_Model
     //   return $result[0];
     // }
     // return $result;
+  }
+
+    function get_numbers_all_video() {
+    $this->db->select( 'video.id as videoID' );
+    $this->db->from( 'tb_video video' );
+    $query = $this->db->get();
+    return $query->num_rows();
   }
 }
 ?>

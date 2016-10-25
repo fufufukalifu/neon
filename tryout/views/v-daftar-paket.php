@@ -20,39 +20,6 @@
    <!-- START Row -->
    <div class="row">
     <!-- START Left Section -->
-    <div class="col-md-3 mb15">
-     <!-- Category -->
-     <div class="mb15">
-      <!-- Header -->
-      <div class="section-header section-header-bordered mb10">
-       <h4 class="section-title">
-         <p class="font-alt nm">Menu</p>
-       </h4>
-     </div>
-     <!--/ Header -->
-     <a href="<?=base_url('index.php/tryout') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-list-alt"></i> Daftar TO</a>
-   </ul>
- </div>
- <!--/ Category -->
-
-
-
- <!-- Text Widget -->
- <div class="mb15" >
-  <!-- Header -->
-  <div class="section-header section-header-bordered mb10">
-   <h4 class="section-title">
-    <p class="font-alt nm">Deskripsi</p>
-  </h4>
-</div>
-<!--/ Header -->
-<p class="nm text-default">Disamping ini adalah daftar paket yang harus kamu kerjakan! dan dibawahnya merupakan laporan dari paket soal yang sudah kamu kerjakan.<hr><br><br><br><br><br><br><br><br><br></p>
-</div>
-<!--/ Text Widget -->
-</div>
-<!--/ END Left Section -->
-
-
 <!-- top -->
 <div class="col-md-9">
   <h3>Daftar Paket TO yang Belum Dikerjakan</h3>
@@ -98,12 +65,6 @@
     <div class="carousel-container">
       <h2>Paket Soal yang Sudah Dikerjakan</h2>
       <div class="carousel-nav">
-        <div class="carousel-button">
-                <div class="prev"><i class="fa fa-angle-left"></i></div><!-- 
-              --><div class="next"><i class="fa fa-angle-right"></i></div>
-            </div>
-          </div>
-          <!-- / gallery navigation -->
           <!-- gallery container -->
           <div class="grid-col-row">
             <div class="owl-carousel owl-three-item">
@@ -116,7 +77,7 @@
                   <div class="portfolio-item">
                     <div class="picture">
                       <div class="hover-effect"></div>
-                      <img src="http://placehold.it/130x130" data-at2x="http://placehold.it/370x270" alt>
+                      <img src="http://placehold.it/100x100" data-at2x="http://placehold.it/370x270" alt>
                     </div> 
                     <h3><?=$paketitem['nm_paket'] ?> <br>
                     <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 

@@ -42,45 +42,20 @@
    <!-- START Row -->
    <div class="row">
     <!-- START Left Section -->
-    <div class="col-md-3 mb15">
-     <!-- Category -->
-     <div class="mb15">
-      <!-- Header -->
-      <div class="section-header section-header-bordered mb10">
-       <h4 class="section-title">
-         <p class="font-alt nm">Menu</p>
-       </h4>
-     </div>
-     <!--/ Header -->
-     <a href="<?=base_url('index.php/tesonline') ?>" class="cws-button small bt-color-3"><i class="glyphicon glyphicon-plus"></i> Latihan</a>
-   </ul>
- </div>
- <!--/ Category -->
-
-
-<!-- Text Widget -->
-<div class="mb15" >
-  <!-- Header -->
-  <div class="section-header section-header-bordered mb10">
-   <h4 class="section-title">
-    <p class="font-alt nm">Deskripsi</p>
-  </h4>
-</div>
-<!--/ Header -->
-<p class="nm text-default">Disamping ini adalah daftar latihanmu, semakin sering kamu latihan pemahamanmu pasti semakin bagus! jadi tunggu apa lagi? ayo latihan dan latihan!<hr><br><br><br></p>
-</div>
-<!--/ Text Widget -->
-</div>
-<!--/ END Left Section -->
 
 <style type="text/css">
   .table th:hover{
     cursor: hand;
+}
+   .pagination li:before{
+    color:white;
+    list-style: 
+   }
   }
 </style>
 <!-- top -->
-<div class="col-md-9">
-  <h3>Daftar Latihan</h3>
+<div class="col-md-12">
+  <h3>Daftar Latihan <a href="../tesonline" class="cws-button bt-color-4 border-radius icon-left"><i class="fa fa-plus-square"></i>Buat Latihan</a></h3>
   <div class="col-md-12">
     <?php if ($latihan==array()): ?>
       <h4>Tidak ada latihan.</h4>
@@ -124,7 +99,7 @@
 
 </div>
 
-<div class="col-md-9">
+<div class="col-md-12">
   <h3>Daftar Report</h3>
   <div class="col-md-12">
     <?php if ($report==array()): ?>

@@ -16,8 +16,8 @@
 				<div class="grid-row clear-fix">
 					<!-- logo -->
 					<a href="<?=base_url() ?>" class="logo">
-						<img src="<?=base_url('assets/back/img/logo.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt>
-						<h1>Neon</h1>
+						<img src="<?=base_url('assets/back/img/logo.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" height="30px">
+						<h1> </h1>
 					</a>
 					<!-- / logo -->
 					<nav class="main-nav">
