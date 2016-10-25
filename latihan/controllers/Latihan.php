@@ -64,12 +64,9 @@ class Latihan extends MX_Controller {
                 "id_latihan" => $id_latihan,
                 "id_soal" => $row['id_soal']
             );
-            // print_r($data['mm_sol']); echo "<br>";
             $this->mlatihan->insert_tb_mm_sol_lat($data['mm_sol']);
         };
-        // print_r($data['mm_sol']);
         // $data['pilihan']=$this->mlatihan->get_piljawaban($id_soal);
-        // print_r($data['banksoal']);
     }
 
     public function formlatihan() {

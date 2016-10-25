@@ -10,15 +10,18 @@ class Login extends MX_Controller {
         $this->load->helper('url');
         $this->load->model('Mlogin');
         $this->load->library('session');
+        if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+               redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+               redirect('guru/dashboard');
+            }else{
+
+            }
     }
+}
 
     public function index() {
-//        $this->load->view('templating/t-header');
-//        $this->facebookIdentity();
-//        $this->load->view('vLogin.php');
-//        $this->load->view('templating/t-sessionlogin');
-//        $this->load->view('templating/t-footer');
-
         $data = array(
             'judul_halaman' => 'Login - Neon',
             'judul_header' => 'Welcome'
@@ -53,6 +56,8 @@ class Login extends MX_Controller {
                     'AKTIVASI' => $row->aktivasi,
                     'eMail' => $row->eMail,
                     'verifikasiCode' => $verifikasiCode,
+                    'loggedin' => TRUE,
+
                 );
                 $this->session->set_userdata($sess_array);
 
@@ -80,16 +85,7 @@ class Login extends MX_Controller {
         }
     }
 
-    function logout() {
-        $this->session->unset_userdata("id");
-        $this->session->unset_userdata("USERNAME");
-        $this->session->unset_userdata("HAKAKSES");
-        $this->session->unset_userdata('userData');
-        $this->session->sess_destroy();
 
-        $this->session->set_flashdata('notif', ' Terimakasih sudah belajar bersama kami');
-        redirect(site_url('login'));
-    }
 
     public function konfirmasi() {
         $this->load->view('templating/t-header');

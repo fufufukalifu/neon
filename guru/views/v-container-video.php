@@ -20,7 +20,7 @@
          <img class="img-circle img-bordered-teal mb10" src="<?php echo base_url( 'assets/image/photo/guru/' )?><?=$data_guru['photo'] ?>" alt="" width="120px" height="120px">
          <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6"><?php echo $data_guru['namaDepan']." ".$data_guru['namaBelakang'] ?></span></h4>
          <h6 class="nm" style="color:black"><span class="iconmoon-location-6"><?php echo $data_guru['namaMataPelajaran'] ?></span></h6>
-         <a href="<?=base_url('index.php/login/logout') ?>" class="btn btn-primary mt5" >Logout</a>
+         <a href="<?=base_url('index.php/logout') ?>" class="btn btn-primary mt5" >Logout</a>
        </div>
        <img data-toggle="unveil" src="<?php echo base_url( 'assets/image/background/400x250/placeholder.jpg' )?>" alt="Cover" height="30%"/>
      </div>

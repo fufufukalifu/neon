@@ -12,6 +12,15 @@ class ToBack extends MX_Controller
 		$this->load->model('siswa/msiswa');
 		$this->load->model('Templating/mtemplating');
 		parent::__construct();
+		      if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+               redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+               // redirect('guru/dashboard');
+            }else{
+              redirect('login');
+            }
+    }
 	}
 
 	#START Function buat TO#

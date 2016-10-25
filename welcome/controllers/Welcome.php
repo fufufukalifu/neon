@@ -26,6 +26,15 @@ class Welcome extends MX_Controller {
         $this->load->model( 'tingkat/MTingkat' );
 
         $this->load->library( 'parser' );
+                if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+               // redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+               redirect('guru/dashboard');
+            }else{
+
+            }
+    }
 
     }
 
