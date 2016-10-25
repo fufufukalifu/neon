@@ -34,6 +34,7 @@
 									<th>No</th>
 									<th>Nama Peserta</th>
 									<th>Nilai akhir</th>
+									<th>Paket</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -44,6 +45,11 @@
 										<td><?=$i ?></td>
 										<td><?=$peserta['namaDepan'] ." ".$peserta['namaBelakang']?></td>
 										<td><?=$peserta['total_nilai'] ?></td>
+										<td>
+											<form action="" method="get">
+												<input type="text" name="id_to">
+												<input type="text" name="id_pengguna">
+											</form></td>
 										<td>
 											<a href="#" class="report-<?=$peserta['idReport'] ?>" data-todo='<?= json_encode($peserta) ?>'onclick="lihat_hasil_to(<?=$peserta['idReport'] ?>);"><i class="ico-file2" title="Lihat Detail TO"></i></a>
 										</td>

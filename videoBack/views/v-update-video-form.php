@@ -128,12 +128,12 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2">Published</label>
+                <label class="control-label col-sm-2">Publish</label>
                 <div class="col-sm-4">
                     <select name="publish" class="form-control">
                         <option value="0" selected>Select</option>
-                        <option value="0">Private</option>
-                        <option value="1">Public</option>
+                        <option value="0">Tidak</option>
+                        <option value="1">Ya</option>
                     </select>
                 </div>
             </div>

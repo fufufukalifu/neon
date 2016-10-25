@@ -554,17 +554,7 @@
        </a>
       </li>
       <li >
-       <a href="">
-        <span class="text">Daftar Published Video</span>
-       </a>
-      </li>
-      <li >
-       <a href="">
-        <span class="text">Daftar Unpublished Video</span>
-       </a>
-      </li>
-      <li >
-       <a href="">
+       <a href="<?=base_url()?>videoBack/managervideo">
         <span class="text">Daftar semua video</span>
        </a>
       </li>
