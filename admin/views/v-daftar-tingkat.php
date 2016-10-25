@@ -307,38 +307,6 @@
                                         <button type="button" id="hapusBtn" class="btn btn-default" data-toggle="modal" data-id="<?= $mapel->id ?>" title="Hapus Data"><i class="ico-remove"></i></button>
                                     </td>
                                     <!-- Modal -->
-
-                            <div id="modalRubah" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Rubah Data Tingkat Mata Pelajaran</h4>
-                                        </div>
-                                        <form action="<?= base_url('index.php/admin/rubahtingkatMP') ?>" method="post">
-                                            <div class="modal-body rubah">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                                                    <input name="namaMP" id="namaMP" type="text" class="form-control" placeholder="Keterangan Mata Pelajaran" required> <br>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                                                    <input name="tingkatMP" id="tingkatMP" type="text" class="form-control" placeholder="Keterangan Mata Pelajaran" required> <br>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon"><i class="ico-notebook"></i></span>
-                                                    <input name="keterangan" id="keterangan" type="text" class="form-control" placeholder="Keterangan Mata Pelajaran" required> <br>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                             </tr>
                             <div id="modalRubah<?= $mapel->id ?>" class="modal fade" role="dialog">
                                 <div class="modal-dialog">

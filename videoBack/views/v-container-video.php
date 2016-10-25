@@ -9,7 +9,11 @@
 					<th>ID</th>
 					<th>Judul Video</th>
 					<th>Nama File</th>
+					<th>Matapelajaran</th>
+					<th>Bab</th>
+					<th>Subbab</th>
 					<th>Deskripsi</th>
+					<th>Upload by</th>
 					<th width="20%">Aksi</th>
 				</tr>
 			</thead>
