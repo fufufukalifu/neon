@@ -90,20 +90,20 @@
                         <div class="form-group">
                             <select class="form-control" name="tingkatID" id="tingkatID" required>
                                 <option value="">-Pilih Tingkat Sekolah-</option>
-                                <option value="5">Kelas 1 - SD</option>
-                                <option value="6">Kelas 2 - SD</option>
-                                <option value="7">Kelas 3 - SD</option>
-                                <option value="8">Kelas 4 - SD</option>
-                                <option value="9">Kelas 5 - SD</option>
-                                <option value="10">Kelas 6 - SD</option>
-                                <option value="11">Kelas 7 - SMP</option>
-                                <option value="12">Kelas 8 - SMP</option>
-                                <option value="13">Kelas 9 - SMP</option>
-                                <option value="14">Kelas 10 - SMA IPA</option>
-                                <option value="15">Kelas 11 - SMA IPA</option>
-                                <option value="16">Kelas 12 - SMA IPA</option>
-                                <option value="17">Kelas 10 - SMA IPS</option>
-                                <option value="18">Kelas 11 - SMA IPS</option>
+                                <option value="6">Kelas 1 - SD</option>
+                                <option value="7">Kelas 2 - SD</option>
+                                <option value="8">Kelas 3 - SD</option>
+                                <option value="9">Kelas 4 - SD</option>
+                                <option value="10">Kelas 5 - SD</option>
+                                <option value="11">Kelas 6 - SD</option>
+                                <option value="12">Kelas 7 - SMP</option>
+                                <option value="13">Kelas 8 - SMP</option>
+                                <option value="14">Kelas 9 - SMP</option>
+                                <option value="15">Kelas 10 - SMA IPA</option>
+                                <option value="16">Kelas 11 - SMA IPA</option>
+                                <option value="17">Kelas 12 - SMA IPA</option>
+                                <option value="18">Kelas 10 - SMA IPS</option>
+                                <option value="19">Kelas 11 - SMA IPS</option>
                                 <option value="19">Kelas 12 - SMA IPS</option>  
                             </select>
                         </div>
