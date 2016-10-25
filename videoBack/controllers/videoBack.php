@@ -48,6 +48,11 @@ class videoBack extends MX_Controller {
             //                     <input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
             //                     <label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
             //                 </span>";
+            if ($list_video['published']=='1') {
+              $publish='Publish';
+            }else{
+              $publish='No Publish';
+            }
             $row[] = $list_video['videoID'];
             $row[] = $list_video['judulVideo'];
             $row[] = $list_video['namaFile'];
@@ -56,6 +61,7 @@ class videoBack extends MX_Controller {
             $row[] = $list_video['judulSubBab'];
             $row[] = substr($list_video['deskripsi'], 0, 100)." <a href=''>Read More</a>";
             $row[] = $list_video['namaDepan']." ".$list_video['namaBelakang'];
+            $row[] =  $publish;
             $row[] = '<a class="btn btn-sm btn-danger"  
             title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
             <i class="ico-remove"></i></a>  
@@ -77,7 +83,7 @@ class videoBack extends MX_Controller {
             $n++;
 
         }
-        //print_r($data);
+
         $output = array(
             "data"=>$data,
         );

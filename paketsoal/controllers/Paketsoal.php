@@ -13,6 +13,15 @@ class Paketsoal extends MX_Controller
 		$this->load->helper( array( 'form', 'url' ) );
 		$this->load->model('Templating/mtemplating');
 		parent::__construct();
+		if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+               redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+               // redirect('guru/dashboard');
+            }else{
+            	redirect('login');
+            }
+    }
 	}
 
 	##ajax untuk melakukan update pada paket soal
@@ -214,7 +223,7 @@ class Paketsoal extends MX_Controller
 			$n++;
 
 		}
-		//print_r($data);
+
 		$output = array(
 			"data"=>$data,
 		);
@@ -230,9 +239,7 @@ class Paketsoal extends MX_Controller
 		$idSoal = $this->input->post('data');
 		$idSubbab = $this->input->post('idSubBab');
 		$idpaket = $this->input->post('id_paket');
-		var_dump($idSubbab);
-		var_dump('masuk');
-		echo "haiiiiiiiiiiiiii";
+
 		 $mmpaket=array();
 		 foreach ($idSoal as $key ) {		 
 		 	$mmpaket[] = array(
@@ -278,7 +285,7 @@ class Paketsoal extends MX_Controller
 			$n++;
 
 		}
-		//print_r($data);
+
 		$output = array(
 			"data"=>$data,
 		);
@@ -286,6 +293,26 @@ class Paketsoal extends MX_Controller
 		
 	}
 
+	public function get_soal_byid_paket($idpaket){
+		$list = $this->MPaketsoal->get_soal_by_idpaket($idpaket);
+		$data = array();
+		foreach ($list as $list_soal) {
+			$n='1';
+			$row = array();
+			$row[] = $list_soal['id_soal'];
+			$row[] = $list_soal['judul_soal'];
+			$row[] = $list_soal['soal'];
+			$data[] = $row;
 
+			$n++;
+			
+		}
+		$output = array(
+				"data"=>$data,
+		);
+
+		echo json_encode( $output );
+	
+	}
 }
 ?>

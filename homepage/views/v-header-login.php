@@ -31,7 +31,7 @@
 							</li>
 
 							<li>
-								<a href="<?=base_url('index.php/login/logout') ?>">Logout</a>
+								<a href="<?=base_url('index.php/logout') ?>">Logout</a>
 							</li>
 						</ul>
 					</nav>

@@ -10,9 +10,20 @@ class Tryout extends MX_Controller {
  public function __construct() {
   $this->load->library('parser');
   $this->load->model('Tryout_model');
-//        $this->load->model('Tesonline_model');
   $this->load->model('tesonline/Tesonline_model');
   parent::__construct();
+  # check session
+  if ($this->session->userdata('loggedin')==true) {
+   if ($this->session->userdata('HAKAKSES')=='siswa'){
+   }else if($this->session->userdata('HAKAKSES')=='guru'){
+    redirect('guru/dashboard');
+   }else{
+    redirect('login');
+   }
+  }else{
+   redirect('login');
+  }
+  ##
  }
 
  public function ajax_get_paket($id_tryout) {
@@ -109,81 +120,81 @@ class Tryout extends MX_Controller {
 
 //# fungsi indeks
 //fungsi ilham
-    public function mulaitest() {
-        if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
-        $id = $this->session->userdata['id_mm-tryoutpaket'];
-        $data['topaket']= $this->Tryout_model->datatopaket($id);
+ public function mulaitest() {
+  if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
+   $id = $this->session->userdata['id_mm-tryoutpaket'];
+   $data['topaket']= $this->Tryout_model->datatopaket($id);
 //        echo $id;
-        $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
+   $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
 
 //        echo $id_paket; 
-        $data['paket'] = $this->Tryout_model->durasipaket($id_paket);
+   $data['paket'] = $this->Tryout_model->durasipaket($id_paket);
 //        var_dump($data);
 
-        $this->load->view('templating/t-headerto');
-        $query = $this->load->Tryout_model->get_soal($id_paket);
-        $data['soal'] = $query['soal'];
-        $data['pil'] = $query['pil'];
+   $this->load->view('templating/t-headerto');
+   $query = $this->load->Tryout_model->get_soal($id_paket);
+   $data['soal'] = $query['soal'];
+   $data['pil'] = $query['pil'];
 ////        var_dump($data);
-        $this->load->view('vHalamanTo.php', $data);
-        $this->load->view('templating/t-footerto', $data);
-        } else {
-            $this->errorTest();
-        }
-    }
+   $this->load->view('vHalamanTo.php', $data);
+   $this->load->view('templating/t-footerto', $data);
+  } else {
+   $this->errorTest();
+  }
+ }
 
-    public function errorTest() {
-        $this->load->view('templating/t-headerto');
-        $this->load->view('v-error-test.php');
-    }
+ public function errorTest() {
+  $this->load->view('templating/t-headerto');
+  $this->load->view('v-error-test.php');
+ }
 
-    public function cekJawaban() {
-        $data = $this->input->post('pil');
+ public function cekJawaban() {
+  $data = $this->input->post('pil');
 
 //        var_dump($data);
-        $id = $this->session->userdata['id_mm-tryoutpaket'];
-        $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
+  $id = $this->session->userdata['id_mm-tryoutpaket'];
+  $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
 ////   
-        $result = $this->Tryout_model->jawabansoal($id_paket);
+  $result = $this->Tryout_model->jawabansoal($id_paket);
 //        var_dump($result);
-        $benar = 0;
-        $salah = 0;
-        $kosong = 0;
-        $koreksi = array();
-        $idSalah = array();
-        for ($i = 0; $i < sizeOf($result); $i++) {
-            $id = $result[$i]['soalid'];
-            $data[$id];
-            if (!isset($data[$id])) {
-                $kosong++;
-                $koreksi[] = $result[$i]['soalid'];
-                $idSalah[] = $i;
-            } else if ($data[$id] == $result[$i]['jawaban']) {
-                $benar++;
-            } else {
-                $salah++;
-                $koreksi[] = $result[$i]['soalid'];
-                $idSalah[] = $i;
-            }
-        }
+  $benar = 0;
+  $salah = 0;
+  $kosong = 0;
+  $koreksi = array();
+  $idSalah = array();
+  for ($i = 0; $i < sizeOf($result); $i++) {
+   $id = $result[$i]['soalid'];
+   $data[$id];
+   if (!isset($data[$id])) {
+    $kosong++;
+    $koreksi[] = $result[$i]['soalid'];
+    $idSalah[] = $i;
+   } else if ($data[$id] == $result[$i]['jawaban']) {
+    $benar++;
+   } else {
+    $salah++;
+    $koreksi[] = $result[$i]['soalid'];
+    $idSalah[] = $i;
+   }
+  }
 //////
 //            echo 'kosong = ' . $kosong;
 //            echo 'Salah = ' . $salah;
 //            echo 'benar = ' . $benar;
         //
-        $hasil['id_pengguna'] = $this->session->userdata['id'];
-        $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];;
-        $hasil['jmlh_kosong'] = $kosong;
-        $hasil['jmlh_benar'] = $benar;
-        $hasil['jmlh_salah'] = $salah;
-        $hasil['total_nilai'] = $benar;
-        $hasil['poin'] = $benar;
-        $hasil['status_pengerjaan'] = 1;
-        
-        $result = $this->load->Tryout_model->inputreport($hasil);
-        $this->session->unset_userdata('id_mm-tryoutpaket');
-        redirect(base_url('index.php/tryout'));
-    }
+  $hasil['id_pengguna'] = $this->session->userdata['id'];
+  $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];;
+  $hasil['jmlh_kosong'] = $kosong;
+  $hasil['jmlh_benar'] = $benar;
+  $hasil['jmlh_salah'] = $salah;
+  $hasil['total_nilai'] = $benar;
+  $hasil['poin'] = $benar;
+  $hasil['status_pengerjaan'] = 1;
+
+  $result = $this->load->Tryout_model->inputreport($hasil);
+  $this->session->unset_userdata('id_mm-tryoutpaket');
+  redirect(base_url('index.php/tryout'));
+ }
 
     //end fungsi ilham
 }

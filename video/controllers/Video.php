@@ -114,7 +114,7 @@ class Video extends MX_Controller {
             APPPATH.'modules/video/views/f-daftar-video.php',
             APPPATH.'modules/templating/views/footer.php'
         );
-        // print_r( $data );
+
          $this->parser->parse( 'templating/index', $data );
       
 
@@ -173,9 +173,7 @@ class Video extends MX_Controller {
 
             // //ambil komen berdasarkan id video
             // $data['komen']=$this->load->mKomen->get_komen_byvideo( $idvideo );
-            //var_dump( $data['komen'] );
 
-            //print_r($data);
             //$this->loadparse($data);
             $this->parser->parse( 'templating/index', $data );
             // $this->load->view( 'templating/t-header' );

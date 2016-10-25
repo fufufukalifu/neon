@@ -500,7 +500,7 @@
       <li><a href="<?=base_url('index.php/guru/pengaturanProfileguru');?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
       <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
       <li class="divider"></li>
-      <li><a href="<?=base_url('index.php/login/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+      <li><a href="<?=base_url('index.php/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
      </ul>
     </li>
     <!-- Profile dropdown -->
@@ -554,17 +554,7 @@
        </a>
       </li>
       <li >
-       <a href="">
-        <span class="text">Daftar Published Video</span>
-       </a>
-      </li>
-      <li >
-       <a href="">
-        <span class="text">Daftar Unpublished Video</span>
-       </a>
-      </li>
-      <li >
-       <a href="">
+       <a href="<?=base_url()?>videoBack/managervideo">
         <span class="text">Daftar semua video</span>
        </a>
       </li>

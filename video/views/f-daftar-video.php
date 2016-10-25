@@ -9,7 +9,6 @@
     <main>
 <!-- START TAMPIL DAFTAR -->
      <?php
-       //print_r($bab_video);
      $cekjudulbab=null;
      $i='0'; 
      // echo "==================="."<br>";

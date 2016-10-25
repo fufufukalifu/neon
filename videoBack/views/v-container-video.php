@@ -14,6 +14,7 @@
 					<th>Subbab</th>
 					<th>Deskripsi</th>
 					<th>Upload by</th>
+					<th>Status</th>
 					<th width="20%">Aksi</th>
 				</tr>
 			</thead>
