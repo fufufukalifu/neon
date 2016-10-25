@@ -350,9 +350,9 @@ class ToBack extends MX_Controller
 					}
 		###menampilkan siswa yang belum ikutan TO.
 					// menampilkan list Pkaet by to for Report
-					public function getPaketByIdTo($idpaket)
+					public function getPaketByIdTo($daftar_peserta)
 					{
-						# code...
+							var_dump($daftar_peserta);
 					}
 
 }

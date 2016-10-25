@@ -47,8 +47,8 @@
 										<td><?=$peserta['total_nilai'] ?></td>
 										<td>
 											<form action="" method="get">
-												<input type="text" name="id_to">
-												<input type="text" name="id_pengguna">
+												<input type="text" value="<?=$peserta['id_to'] ?>" name="id_to">
+												<input type="text" value="<?=$peserta['idPengguna'] ?>" name="id_pengguna">
 											</form></td>
 										<td>
 											<a href="#" class="report-<?=$peserta['idReport'] ?>" data-todo='<?= json_encode($peserta) ?>'onclick="lihat_hasil_to(<?=$peserta['idReport'] ?>);"><i class="ico-file2" title="Lihat Detail TO"></i></a>
@@ -84,8 +84,8 @@
 		var kelas = ".report-"+id;
 		var data = $(kelas).data('todo');
 		load_grafik(data);
-		$('.modal-title').text('Grafik Tryout ');
-   		$('#myModal').modal('show');
+		    $('.modal-title').text('Grafik Tryout ');
+    $('#myModal').modal('show');
 	}
 
 	function load_grafik(data) {
