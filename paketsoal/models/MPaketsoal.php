@@ -236,6 +236,15 @@ class MPaketsoal extends CI_Model {
 
 	}
 
+	public function get_soal_by_idpaket($idpaket){
+		$this->db->select('*');
+		$this->db->from('tb_mm-paketbank paketbank');
+		$this->db->join('tb_banksoal bank','paketbank.id_soal = bank.id_soal');
+		$this->db->where('paketbank.id_paket',$idpaket);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	##########################
 
 

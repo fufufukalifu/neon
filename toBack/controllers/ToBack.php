@@ -12,15 +12,15 @@ class ToBack extends MX_Controller
 		$this->load->model('siswa/msiswa');
 		$this->load->model('Templating/mtemplating');
 		parent::__construct();
-		      if ($this->session->userdata('loggedin')==true) {
-            if ($this->session->userdata('HAKAKSES')=='siswa'){
-               redirect('welcome');
-            }else if($this->session->userdata('HAKAKSES')=='guru'){
+		if ($this->session->userdata('loggedin')==true) {
+			if ($this->session->userdata('HAKAKSES')=='siswa'){
+				redirect('welcome');
+			}else if($this->session->userdata('HAKAKSES')=='guru'){
                // redirect('guru/dashboard');
-            }else{
-              redirect('login');
-            }
-    }
+			}else{
+				redirect('login');
+			}
+		}
 	}
 
 	#START Function buat TO#
@@ -316,7 +316,7 @@ class ToBack extends MX_Controller
 							$row[] = $list_paket['id_paket'];
 							$row[] = $list_paket['nm_paket'];
 							$row[] = $list_paket['deskripsi'];
-							$row[] = "<a href='' class='btn btn-primary'>Lihat</a>";
+							$row[] = "<a onclick="."lihatsoal(".$list_paket['id_paket'].")"." class='btn btn-primary'>Lihat</a>";
 							$data[] = $row;
 							$n++;
 						}
@@ -352,8 +352,8 @@ class ToBack extends MX_Controller
 					// menampilkan list Pkaet by to for Report
 					public function getPaketByIdTo($daftar_peserta)
 					{
-							var_dump($daftar_peserta);
+						var_dump($daftar_peserta);
 					}
 
-}
-?>
+				}
+				?>
