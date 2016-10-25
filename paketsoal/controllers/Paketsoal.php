@@ -13,6 +13,15 @@ class Paketsoal extends MX_Controller
 		$this->load->helper( array( 'form', 'url' ) );
 		$this->load->model('Templating/mtemplating');
 		parent::__construct();
+		if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+               redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+               // redirect('guru/dashboard');
+            }else{
+            	redirect('login');
+            }
+    }
 	}
 
 	##ajax untuk melakukan update pada paket soal
@@ -214,7 +223,7 @@ class Paketsoal extends MX_Controller
 			$n++;
 
 		}
-		//print_r($data);
+
 		$output = array(
 			"data"=>$data,
 		);
@@ -278,7 +287,7 @@ class Paketsoal extends MX_Controller
 			$n++;
 
 		}
-		//print_r($data);
+
 		$output = array(
 			"data"=>$data,
 		);

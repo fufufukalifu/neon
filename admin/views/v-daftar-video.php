@@ -26,7 +26,6 @@
                         <tbody>
                             <?php foreach ($videos as $video): ?>
                                 <tr>
-                                    <?php //print_r($videos) ?>
                                     <td><?= $video->videoID ?></td>
                                     <td><?= $video->judulVideo ?></td>
                                     <td><?= $video->namaFile ?></td>

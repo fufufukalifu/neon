@@ -413,7 +413,7 @@
                            
                             <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                             <li class="divider"></li>
-                            <li><a href="<?=base_url('index.php/login/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+                            <li><a href="<?=base_url('index.php/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
                         </ul>
                     </li>
                     <!-- Profile dropdown -->

@@ -33,7 +33,7 @@ class Homepage extends MX_Controller {
         );
         $data['file'] = 'v-container.php';
         $data['teachers'] = $this->mGuru->get_guru_random();
-        // print_r($datas['jumlahGuru']);
+
         $this->parser->parse('v-index-homepage', $data);
     }
 

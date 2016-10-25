@@ -16,8 +16,16 @@ class Guru extends MX_Controller {
         $this->load->model('Templating/mtemplating');
         $this->load->model('siswa/msiswa');
         $this->load->library('parser');
-        sessionkonfirm();
-        get_session_guru();
+        //cek kalo bukan guru lemparin.
+        if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+             // redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+             // redirect('guru/dashboard');
+            }else{
+            // redirect('login');
+            }
+        }
 
     }
 
@@ -64,162 +72,162 @@ class Guru extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
          // jika admin
-         $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
+           $this->parser->parse('admin/v-index-admin', $data);
+       } elseif($hakAkses=='guru'){
          // jika guru
-           $this->parser->parse('templating/index-b-guru', $data);
-        }else{
+         $this->parser->parse('templating/index-b-guru', $data);
+     }else{
         // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-          #END Cek USer#
+        redirect(site_url('login'));
     }
+          #END Cek USer#
+}
 
     //menampilkan video manager untuk user
-    public function videomanager() {
-        redirect( '/videoback' );
-    }
+public function videomanager() {
+    redirect( '/videoback' );
+}
 
     //halaman untuk mengupload  video
-    public function uploadvideo() {
-        redirect( '/videoback' );
-    }
+public function uploadvideo() {
+    redirect( '/videoback' );
+}
 
 
     //untuk merubah data guru.
-    public function setting() {
-        $this->load->view( 'templating/t-header' );
-        $this->load->view( 'vProfileGuru' );
-        $this->load->view( 'templating/t-footer' );
-    }
+public function setting() {
+    $this->load->view( 'templating/t-header' );
+    $this->load->view( 'vProfileGuru' );
+    $this->load->view( 'templating/t-footer' );
+}
     //untuk menampilkan form updt guru
-    public function pengaturanProfileguru() {
-        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        $data['guru'] = $this->mguru->get_datguru();
-        $data['eMail']=$this->session->userdata['eMail'];
-        $data['files'] = array(
-            APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
-            );
-        $data['judul_halaman'] = "Pengaturan Profile Guru";
-        $this->parser->parse('templating/index-b-guru', $data);
-    }
+public function pengaturanProfileguru() {
+    $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+    $data['guru'] = $this->mguru->get_datguru();
+    $data['eMail']=$this->session->userdata['eMail'];
+    $data['files'] = array(
+        APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
+        );
+    $data['judul_halaman'] = "Pengaturan Profile Guru";
+    $this->parser->parse('templating/index-b-guru', $data);
+}
 
-    public function ubahprofileguru() {
+public function ubahprofileguru() {
 
         //load library n helper
-        $this->load->helper( array( 'form', 'url' ) );
-        $this->load->library( 'form_validation' );
+    $this->load->helper( array( 'form', 'url' ) );
+    $this->load->library( 'form_validation' );
 
 
         //syarat pengisian form perubahan profile
-        $this->form_validation->set_rules( 'namadepan', 'Nama Depan', 'required' );
-        $this->form_validation->set_rules( 'alamat', 'Alamat', 'required' );
-        $this->form_validation->set_rules( 'nokontak', 'No Kontak', 'required' );
-        ;
+    $this->form_validation->set_rules( 'namadepan', 'Nama Depan', 'required' );
+    $this->form_validation->set_rules( 'alamat', 'Alamat', 'required' );
+    $this->form_validation->set_rules( 'nokontak', 'No Kontak', 'required' );
+    ;
 
         //pesan error atau pesan kesalahan pengisian form
-        $this->form_validation->set_message( 'is_unique', '*Nama Pengguna sudah terpakai' );
-        $this->form_validation->set_message( 'max_length', '*Nama Pengguna maksimal 12 karakter!' );
-        $this->form_validation->set_message( 'min_length', '*Nama Pengguna minimal 5 karakter!' );
-        $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
+    $this->form_validation->set_message( 'is_unique', '*Nama Pengguna sudah terpakai' );
+    $this->form_validation->set_message( 'max_length', '*Nama Pengguna maksimal 12 karakter!' );
+    $this->form_validation->set_message( 'min_length', '*Nama Pengguna minimal 5 karakter!' );
+    $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
 
 
         //pengecekan inputan / pengisian form
-        if ( $this->form_validation->run() == FALSE ) {
-            $this->pengaturanProfileguru();
-        } else {
-            $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
-            $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );
-            $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
-            $alamat = htmlspecialchars( $this->input->post( 'alamat' ) );
-            $noKontak = htmlspecialchars( $this->input->post( 'nokontak' ) );
-            $biografi = htmlspecialchars( $this->input->post( 'biografi' ) );
+    if ( $this->form_validation->run() == FALSE ) {
+        $this->pengaturanProfileguru();
+    } else {
+        $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
+        $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );
+        $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
+        $alamat = htmlspecialchars( $this->input->post( 'alamat' ) );
+        $noKontak = htmlspecialchars( $this->input->post( 'nokontak' ) );
+        $biografi = htmlspecialchars( $this->input->post( 'biografi' ) );
 
 
-            $data_post = array(
-                'namaDepan' => $namaDepan,
-                'namaBelakang' => $namaBelakang,
-                'mataPelajaranID' =>$mataPelajaranID,
-                'alamat' => $alamat,
-                'noKontak' => $noKontak,
-                'biografi' => $biografi,
-                );
+        $data_post = array(
+            'namaDepan' => $namaDepan,
+            'namaBelakang' => $namaBelakang,
+            'mataPelajaranID' =>$mataPelajaranID,
+            'alamat' => $alamat,
+            'noKontak' => $noKontak,
+            'biografi' => $biografi,
+            );
 
-            $this->mguru->update_guru( $data_post );
-        }
+        $this->mguru->update_guru( $data_post );
     }
+}
 
-    public function ubahakunguru() {
-
-        //load library n helper
-        $this->load->helper( array( 'form', 'url' ) );
-        $this->load->library( 'form_validation' );
-
+public function ubahakunguru() {
 
         //load library n helper
-        $this->load->helper( array( 'form', 'url' ) );
-        $this->load->library( 'form_validation' );
+    $this->load->helper( array( 'form', 'url' ) );
+    $this->load->library( 'form_validation' );
+
+
+        //load library n helper
+    $this->load->helper( array( 'form', 'url' ) );
+    $this->load->library( 'form_validation' );
 
         //syarat pengisian form perubahan nama pengguna dan email
-        $this->form_validation->set_rules( 'namapengguna', 'Nama Pengguna', 'trim|required|min_length[5]|max_length[12]|is_unique[tb_pengguna.namaPengguna]' );
-        $this->form_validation->set_rules( 'email', 'Email', 'required|is_unique[tb_pengguna.email]' );
+    $this->form_validation->set_rules( 'namapengguna', 'Nama Pengguna', 'trim|required|min_length[5]|max_length[12]|is_unique[tb_pengguna.namaPengguna]' );
+    $this->form_validation->set_rules( 'email', 'Email', 'required|is_unique[tb_pengguna.email]' );
 
         //pesan error atau pesan kesalahan pengisian form
-        $this->form_validation->set_message( 'is_unique', 'email', '*Email sudah terpakai' );
-        $this->form_validation->set_message( 'is_unique', '*Nama Pengguna sudah terpakai' );
-        $this->form_validation->set_message( 'max_length', '*Nama Pengguna maksimal 12 karakter!' );
-        $this->form_validation->set_message( 'min_length', '*Nama Pengguna minimal 5 karakter!' );
-        $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
+    $this->form_validation->set_message( 'is_unique', 'email', '*Email sudah terpakai' );
+    $this->form_validation->set_message( 'is_unique', '*Nama Pengguna sudah terpakai' );
+    $this->form_validation->set_message( 'max_length', '*Nama Pengguna maksimal 12 karakter!' );
+    $this->form_validation->set_message( 'min_length', '*Nama Pengguna minimal 5 karakter!' );
+    $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
 
 
-        if ( $this->form_validation->run() == FALSE ) {
-            $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-            $data['guru'] = $this->mguru->get_datguru();
-            $this->load->view( 'templating/t-header' );
-            $this->load->view( 'vPengaturanProfileGuru',$data );
-            $this->load->view( 'templating/t-footer' );
-        } else {
-            $namaPengguna = htmlspecialchars( $this->input->post( 'namapengguna' ) );
-            $email = htmlspecialchars( $this->input->post( 'email' ) );
-            $data_post = array(
-                'namaPengguna' => $namaPengguna,
-                'email' => $email,
-                );
-            $this->mguru->update_akun( $data_post );
-        }
+    if ( $this->form_validation->run() == FALSE ) {
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['guru'] = $this->mguru->get_datguru();
+        $this->load->view( 'templating/t-header' );
+        $this->load->view( 'vPengaturanProfileGuru',$data );
+        $this->load->view( 'templating/t-footer' );
+    } else {
+        $namaPengguna = htmlspecialchars( $this->input->post( 'namapengguna' ) );
+        $email = htmlspecialchars( $this->input->post( 'email' ) );
+        $data_post = array(
+            'namaPengguna' => $namaPengguna,
+            'email' => $email,
+            );
+        $this->mguru->update_akun( $data_post );
     }
+}
 
-    public function ubahkatasandi() {
+public function ubahkatasandi() {
 
         //load library n helper
-        $this->load->helper( array( 'form', 'url' ) );
-        $this->load->library( 'form_validation' );
+    $this->load->helper( array( 'form', 'url' ) );
+    $this->load->library( 'form_validation' );
 
 
         //syarat pengisian form perubahan pasword
-        $this->form_validation->set_rules( 'sandilama', 'Kata Sandi Lama', 'required' );
-        $this->form_validation->set_rules( 'newpass', 'Kata Sandi Baru', 'required|matches[verifypass]' );
-        $this->form_validation->set_rules( 'verifypass', 'Password Confirmation', 'required' );
+    $this->form_validation->set_rules( 'sandilama', 'Kata Sandi Lama', 'required' );
+    $this->form_validation->set_rules( 'newpass', 'Kata Sandi Baru', 'required|matches[verifypass]' );
+    $this->form_validation->set_rules( 'verifypass', 'Password Confirmation', 'required' );
 
         //pesan error atau pesan kesalahan pengisian form
-        $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
-        $this->form_validation->set_message( 'matches', '*Kata Sandi tidak sama!' );
+    $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
+    $this->form_validation->set_message( 'matches', '*Kata Sandi tidak sama!' );
 
 
-        if ( $this->form_validation->run() == FALSE ) {
-           $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-           $data['guru'] = $this->mguru->get_datguru();
-           $this->load->view( 'templating/t-header' );
-           $this->load->view( 'vPengaturanProfileGuru',$data );
-           $this->load->view( 'templating/t-footer' );
-       } else {
-        $kataSandi = htmlspecialchars( md5( $this->input->post( 'newpass' ) ) );
+    if ( $this->form_validation->run() == FALSE ) {
+     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+     $data['guru'] = $this->mguru->get_datguru();
+     $this->load->view( 'templating/t-header' );
+     $this->load->view( 'vPengaturanProfileGuru',$data );
+     $this->load->view( 'templating/t-footer' );
+ } else {
+    $kataSandi = htmlspecialchars( md5( $this->input->post( 'newpass' ) ) );
 
-        $data_post = array(
-            'kataSandi' => $kataSandi,
-            );
-        $this->mguru->update_katasandi( $data_post );
-    }
+    $data_post = array(
+        'kataSandi' => $kataSandi,
+        );
+    $this->mguru->update_katasandi( $data_post );
+}
 }
 
 public function upload($oldphoto) {

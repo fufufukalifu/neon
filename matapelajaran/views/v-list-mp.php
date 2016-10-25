@@ -38,7 +38,7 @@
                                 <tbody>
                                   <?php foreach ($pelajaran as $row): ?>
                                     <tr>
-                                        <?php //print_r($videos) ?>
+                                        
                                         <td><?= $row['keterangan']; ?></td>
                                         <td><a href="" class="label label-primary">Lihat Bab</a></td>
                                        

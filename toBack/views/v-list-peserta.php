@@ -84,8 +84,8 @@
 		var kelas = ".report-"+id;
 		var data = $(kelas).data('todo');
 		load_grafik(data);
-		    $('.modal-title').text('Grafik Tryout ');
-    $('#myModal').modal('show');
+		$('.modal-title').text('Grafik Tryout ');
+   		$('#myModal').modal('show');
 	}
 
 	function load_grafik(data) {

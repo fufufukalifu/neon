@@ -83,7 +83,7 @@ class videoBack extends MX_Controller {
             $n++;
 
         }
-        //print_r($data);
+
         $output = array(
             "data"=>$data,
         );

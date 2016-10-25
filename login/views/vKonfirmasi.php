@@ -14,7 +14,7 @@
                 <div class="toolbar">
                     <ol class="breadcrumb breadcrumb-transparent nm">
                         <li><a href="<?= base_url(); ?>">Beranda</a></li>
-                        <li class="active"><a href="<?php echo base_url('index.php/login/logout'); ?>">Logout</a></li>
+                        <li class="active"><a href="<?php echo base_url('index.php/logout'); ?>">Logout</a></li>
                         
                     </ol>
                 </div>
