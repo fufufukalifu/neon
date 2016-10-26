@@ -31,6 +31,15 @@
 							<li>
 								<a href="<?=base_url('index.php/login')?>">Masuk</a>
 							</li>
+							<li>
+								<a href="#service">Layanan</a>
+							</li>
+							<li>
+								<a href="#getintouch">Interaksi</a>
+							</li>
+							<li>
+								<a href="<?=base_url('index.php/login')?>">Tetimonials</a>
+							</li>
 						</ul>
 					</nav>
 				</div>

@@ -4,37 +4,37 @@
 				<h2 class="center-text">About Us</h2>
 				<div class="grid-col-row">
 					<div class="grid-col grid-col-6">
-						<h3>Why We Are Better</h3>
-						<p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at suscipit. Vivamus orci urna, ornare vitae tellus in.</p>
+						<h3>Kenapa Harus Neon</h3>
+						<p>Dibawah ini adalah kenggulan dari neon..yuk cek dulu</p>
 						<!-- accordions -->
 						<div class="accordions">
 							<!-- content-title -->
-							<div class="content-title active">Donec sollicitudin lacus in felis luctus blandit?</div>
+							<div class="content-title active">Video Pembelajaran Lengkap, Asyik dan Mudah dimengerti</div>
 							<!--/content-title -->
 							<!-- accordions content -->
-							<div class="content">Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</div>
+							<div class="content">Puluhan ribu video bisa kalian akses. Ada 2 jenis video, video screen recording untuk kebutuhan akses low badwith dan file kecil dan videa teacrer recording untuk akses dengan bandwith besar dan ukuran file yang besar, jenis ini kalian bisa lihat guru yang mengajar.</div>
 							<!--/accordions content -->
 							<!-- content-title -->
-							<div class="content-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit?</div>
+							<div class="content-title">Terdapat puluhan ribu latihan soal yang bisa di akses kapanpun</div>
 							<!--/content-title -->
 							<!-- accordions content -->
-							<div class="content">Nullam elementum tristique risus nec pellentesque. Pellentesque bibendum nunc eget nunc hendrerit auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur gravida urna nisl</div>
+							<div class="content">Soal-soal tahun terlama dan terbaru, dari soal latihan, UN sampai dengan SBMPTN terbaru Neon hadirkan untuk kalian. Kalian bisa latihan sesuka dan sepuasnya.</div>
 							<!--/accordions content -->
 							<!-- content-title -->
-							<div class="content-title">Aenean commodo ligula eget dolor. Aenean massa?</div>
+							<div class="content-title">Bisa Konsultasi 24 jam?</div>
 							<!--/content-title -->
 							<!-- accordions content -->
-							<div class="content">Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</div>
+							<div class="content">Neon menyediakan guru-guru piket yang khusus akan menjawab pertanyaan dan curhatan kalian dalam proses belajar. Rasanya kalian seperti punya mentor pribadi bersama Neon. Bisa kalian akses lewat website atau smartphone..</div>
 							<!--/accordions content -->
 							<!-- content-title -->
-							<div class="content-title">Moreno gotro ja pisit amet, consectetuer adipiscing elit?</div>
+							<div class="content-title">Belajar Toefl Full Free</div>
 							<!--/content-title -->
 							<!-- accordions content -->
-							<div class="content">Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</div>
+							<div class="content">Kapan lagi bisa belajar online dan dapat gratis belajar TOEFL, ya Cuma di NEON... Temen-temen bisa merasakan belajar TOEFL secara asyik dan mudah disini..</div>
 							<!--/accordions content -->
 						</div>
 						<!--/accordions -->
-						<a href="" class="cws-button bt-color-3 border-radius alt icon-right">View Detail<i class="fa fa-angle-right"></i></a>
+						
 					</div>
 					<div class="grid-col grid-col-6">
 						<div class="owl-carousel full-width-slider">

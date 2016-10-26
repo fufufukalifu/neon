@@ -102,6 +102,15 @@ class Msiswa extends CI_Model {
 }
     ##query get siswa belum to.
 
+    #query get semua siswa
+        function get_all_siswa(){
+            $this->db->select('*');
+            $this->db->from('tb_siswa siswa');
+            $this->db->join('tb_pengguna pengguna','siswa.penggunaID = pengguna.id');
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+    ##
 }
 
 ?>

@@ -9,8 +9,10 @@ class Siswa extends MX_Controller {
         parent::__construct();
         $this->load->model( 'msiswa' );
         $this->load->helper( 'session' );
-        sessionkonfirm();
-        get_session_siswa();
+        $this->load->library( 'parser' );
+
+        // sessionkonfirm();
+        // get_session_siswa();
     }
 
     //
@@ -199,6 +201,53 @@ class Siswa extends MX_Controller {
             // $data['img'] = base_url().'/images/'.$file_data['file_name'];
             // $this->load->view('beranda/success_msg',$data);
         }
+    }
+
+
+
+    ##menampilkan daftar siswa ajax
+    public function ajax_daftar_siswa(){
+        $list = $this->msiswa->get_all_siswa();
+
+        $data = array();
+        $no = 0;
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ( $list as $list_siswa ) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $list_siswa['id'];
+            $row[] = $list_siswa['namaDepan']." ".$list_siswa['namaBelakang'];
+            $row[] = $list_siswa['namaPengguna'];
+            
+            $row[] = $list_siswa['namaSekolah'];
+        $row[] = '<a href=""  title="Mail To">'.$list_siswa['eMail'].'</a> <i class="ico-mail-send"></i>';
+
+        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_siswa('."'".$list_siswa['id']."'".')"><i class="ico-edit"></i></a> 
+
+        <a class="btn btn-sm btn-primary"  title="Detail" onclick="detail_siswa('."'".json_encode($list_siswa['id'])."'".')"><i class="ico-file5"></i></a>
+
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_siswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+
+        }
+
+        $output = array(
+                    "data"=>$data,
+        );
+        echo json_encode( $output );
+    }
+    ##menampilkan siswa
+    public function daftar(){
+    $data['judul_halaman'] = "Daftar siswa";
+    $data['files'] = array(
+        APPPATH . 'modules/siswa/views/v-daftar-siswa.php',
+        );
+            // jika admin
+    $this->parser->parse('admin/v-index-admin', $data);
+        
     }
 
 }

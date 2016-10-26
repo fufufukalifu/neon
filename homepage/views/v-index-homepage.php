@@ -32,19 +32,20 @@
                 <div class="grid-row clear-fix">
                     <div class="grid-col-row">
                         <div class="grid-col grid-col-6">
-                            <a href="" class="service-icon"><i class="flaticon-pie"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-medical"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-restaurant"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-website"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-hotel"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-web-programming"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-camera"></i></a>
-                            <a href="" class="service-icon"><i class="flaticon-speech"></i></a>
+                            <a onclick="changekonten('Konsultasi')" title="Konsultasi" class="service-icon"><i class="flaticon-speech"></i></a>
+                            <a onclick="changekonten('VideoBelajar')" title="Video Belajar" class="service-icon"><i class="fa fa-caret-square-o-right"></i></a>
+                            <a onclick="changekonten('Tryout')" title="Tryout" class="service-icon"><i class="flaticon-pencil"></i></a>
+                            <a onclick="changekonten('latihan')" title="Latihan" class="service-icon"><i class="fa fa-book"></i></a>
+                            <a onclick="changekonten('edudrive')" title="Edu Drive" class="service-icon"><i class="fa fa-book"></i></a>
+                            <a onclick="changekonten('toflfokus')" title="Tofl Fokus" class="service-icon"><i class="fa fa-book"></i></a>
+                            <a onclick="changekonten('penjurusan')" title="Penjurusan" class="service-icon"><i class="fa fa-graduation-cap"></i></a>
+                            <a onclick="changekonten('raportonline')" title="Raport Online" class="service-icon"><i class="fa fa-book"></i></a>
+
+
                         </div>
-                        <div class="grid-col grid-col-6 clear-fix">
-                            <h2>Our Services</h2>
-                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at susp. Vivamus orci urna, ornare vitae tellus in, condimentum imperdiet eros. Maecea accumsan, massa nec vulputate congue. Maecenas nec odio et ante tincidunt creptus alarimus tempus.</p>
-                            <a href="" class="cws-button bt-color-3 border-radius alt icon-right float-right">Learn More<i class="fa fa-angle-right"></i></a>
+                        <div class="grid-col grid-col-6 clear-fix konten">
+                            <h2>Layanan Kita</h2>
+                            <p>Silahkan klik icon yang tersedia untuk melihat penjelasan dari layanan apa saja yang terdapat di neon.</p>
                         </div>
                     </div>
                 </div>
@@ -131,11 +132,11 @@
                 </div>
                 <div class="them-mask bg-color-2"></div>
                 <div class="grid-row center-text">
-                    <div class="font-style-1 margin-none">Get In Touch With Us</div>
+                    <div class="font-style-1 margin-none">Berinteraksi Dengan Kami.</div>
                     <div class="divider-mini"></div>
-                    <p class="parallax-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p class="parallax-text">Neon hadir untuk kalian yang pengen pinter dengan cara mudah dan asyik. Ayo bergabung dengan Neon. Silahkan masukkan email kalian.</p>
                     <form class="subscribe">
-                        <input type="text" name="email" value="" size="40" placeholder="Enter your email" aria-required="true"><input type="submit" value="Subscribe">
+                        <input type="text" name="email" value="" size="40" placeholder="Email kalian : contoh = nama@gmail.com" aria-required="true"><input type="submit" value="Subscribe">
                     </form>
                 </div>
             </div>
@@ -164,6 +165,9 @@
                 </div>
             </section>
             <!-- / section -->
+            <hr class="divider-color" />
+
+            <?php include 'v-pricing-table.php'; ?>
             <!-- parallax section -->
             <div class="parallaxed">
                 <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
@@ -204,6 +208,42 @@
         <!-- footer -->
         <?php include 'v-footer.php' ?>
         <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
+        <script type="text/javascript">
+            function changekonten(data){
+                var judul;
+                var isi;
+                if (data=="VideoBelajar") {
+                    judul = "Video Belajar";
+                    isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
+                }else if(data=="Konsultasi"){
+                    judul = "Konsultasi";
+                    isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
+                }else if(data=="Tryout"){
+                    judul = "TryOut Online"
+                    isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
+                }else if(data=="edudrive"){
+                    judul = "Edu Drive";
+                    isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
+                }else if(data=="toflfokus"){
+                    judul = "TOEFL Fokus";
+                    isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
+                }else if(data=="penjurusan"){
+                    judul = "Penjurusan";
+                    isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
+                }else if(data=="raportonline"){
+                    judul = "Raport Online";
+                    isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
+                }else{
+                    //latihan
+                    judul = "Latihan Online";
+                    isi = "Nah ini ni... bagi kamu yang demen nguji kemampuan diri kalian, dengan latihan online ini, kalian bisa latihan kapapun selama kalian mau. Dan Asyiknya lagi kalian bisa pilih sendiri level soalnya dari yang mudah sampai yang susah.";
+                }
+                    $('.konten h2').html(judul).animate();
+                    $('.konten p').html(isi);
+
+
+            }
+        </script>
         <script type='text/javascript' src="<?= base_url('assets/back/js/jquery.validate.min.js') ?>"></script>
         <script src="<?= base_url('assets/back/js/jquery.form.min.js') ?>"></script>
         <script src="<?= base_url('assets/back/js/TweenMax.min.js') ?>"></script>

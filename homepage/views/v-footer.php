@@ -69,21 +69,7 @@
 								<li>
 									<a href="index.html">Home</a>
 								</li>
-								<li>
-									<a href="courses-grid.html">Courses</a>
-								</li>
-								<li>
-									<a href="content-elements.html">Plans</a>
-								</li>
-								<li>
-									<a href="blog-default.html">News</a>
-								</li>
-								<li>
-									<a href="page-about-us.html">Pages</a>
-								</li>
-								<li>
-									<a href="contact-us.html">Contact</a>
-								</li>
+								
 							</ul>
 						</nav>
 					</div>
