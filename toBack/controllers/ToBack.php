@@ -350,9 +350,30 @@ class ToBack extends MX_Controller
 					}
 		###menampilkan siswa yang belum ikutan TO.
 					// menampilkan list Pkaet by to for Report
-					public function getPaketByIdTo($daftar_peserta)
+					public function reportPaketSiswa()
 					{
-						var_dump($daftar_peserta);
+						$data['id_to']=htmlspecialchars($this->input->get('id_to'));
+						$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
+						$data['idPengguna']=$penggunaID;
+						$data['siswa']=$this->mToBack->get_nama_siswa($penggunaID)[0];
+						$data['reportPaket']=$this->mToBack->get_report_paket($data);
+						$data['files'] = array(
+							APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
+							);
+						$data['judul_halaman'] = "Report Siswa Perpaket";
+						$this->load->view('templating/index-b-guru', $data);
+					}
+					//menampilkan report paket 
+					public function reportpaket($idpaket)
+					{
+						$data['report']=$this->mToBack->get_all_report_paket($idpaket);
+						
+							$data['files'] = array(
+							APPPATH . 'modules/paketsoal/views/v-report-paket.php',
+							);
+						$data['judul_halaman'] = "Report Siswa Perpaket";
+						$this->load->view('templating/index-b-guru', $data);
+
 					}
 
 				}

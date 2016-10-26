@@ -121,7 +121,8 @@ class Admin extends MX_Controller {
         $data['mapelsd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['mapelsmp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['mapelsma'] = $this->mmatapelajaran->daftarMapelSMA();
-        $data['mapelsmk'] = $this->mmatapelajaran->daftarMapelSMK();
+        $data['mapelsmaipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
+        $data['mapelsmaips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
 
          $hakAkses=$this->session->userdata['HAKAKSES'];
         

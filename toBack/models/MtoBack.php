@@ -145,6 +145,41 @@ class MTOBack extends CI_Model {
         return $query->result_array();
 
 	}
+
+	public function get_report_paket($data)
+	{
+		$this->db->select('mto.id_tryout,id_pengguna,nm_paket,jmlh_kosong,jmlh_benar,jmlh_salah,total_nilai,poin');
+		$this->db->from('tb_report-paket rp');
+		$this->db->join('tb_mm-tryoutpaket mto','mto.id=rp.id_mm-tryout-paket');
+		$this->db->join('tb_paket paket', 'paket.id_paket=mto.id_paket');
+		$this->db->where('mto.id_tryout',$data['id_to']);
+		$this->db->where('id_pengguna',$data['idPengguna']);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	//untuk identitas report
+	public function get_nama_siswa($penggunaID)
+	{	
+		$this->db->select('id,namaDepan,namaBelakang');
+		$this->db->from('tb_siswa');
+		$this->db->where('penggunaID',$penggunaID);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
+
+	public function get_all_report_paket($idpaket)
+	{
+		$this->db->select('namaDepan,namaBelakang,mto.id_tryout,id_pengguna,nm_paket,jmlh_kosong,jmlh_benar,jmlh_salah,total_nilai,poin');
+		$this->db->from('tb_report-paket rp');
+		$this->db->join('tb_mm-tryoutpaket mto','mto.id=rp.id_mm-tryout-paket');
+		$this->db->join('tb_paket paket', 'paket.id_paket=mto.id_paket');
+		$this->db->join('tb_pengguna user','user.id=rp.id_pengguna');
+		$this->db->join('tb_siswa siswa','siswa.penggunaID=user.id');
+		$this->db->where('paket.id_paket',$idpaket);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
 }
 ?>
 
