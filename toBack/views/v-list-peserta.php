@@ -34,8 +34,8 @@
 									<th>No</th>
 									<th>Nama Peserta</th>
 									<th>Nilai akhir</th>
-									<th>Paket</th>
-									<th>Aksi</th>
+									<th>Report Paket</th>
+									<th>Report Try Out</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -46,9 +46,10 @@
 										<td><?=$peserta['namaDepan'] ." ".$peserta['namaBelakang']?></td>
 										<td><?=$peserta['total_nilai'] ?></td>
 										<td>
-											<form action="" method="get">
-												<input type="text" value="<?=$peserta['id_to'] ?>" name="id_to">
-												<input type="text" value="<?=$peserta['idPengguna'] ?>" name="id_pengguna">
+											<form action="<?=base_url('toBack/reportPaketSiswa')?>" method="get">
+												<input type="text" value="<?=$peserta['id_to'] ?>" name="id_to" hidden='true'>
+												<input type="text" value="<?=$peserta['idPengguna'] ?>" name="id_pengguna"  hidden='true'>
+												<button class="btn btn-sm" type="submit"><i class="ico-file2" title="Lihat Detail TO"></i></button>
 											</form></td>
 										<td>
 											<a href="#" class="report-<?=$peserta['idReport'] ?>" data-todo='<?= json_encode($peserta) ?>'onclick="lihat_hasil_to(<?=$peserta['idReport'] ?>);"><i class="ico-file2" title="Lihat Detail TO"></i></a>

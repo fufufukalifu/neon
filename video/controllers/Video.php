@@ -24,14 +24,14 @@ class Video extends MX_Controller {
     }
 
     //halaman tampilkan sub bab dan see
-    public function videosub( $id_sub_bab, $id_video=null ) {
+    public function videosub( $id_sub_bab, $id_video ) {
         //digunakan untuk semua video
         $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
         //digunakan untuk judul subab
         $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
         if ( !isset( $id_video ) ) {
             //tidak ada id video
-            echo "string";
+            
             if ( $data['judul_sub_bab']==array() ) {
                 //kalo yang diklik belum punya video
 
