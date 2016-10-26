@@ -419,7 +419,7 @@
       var tableku = $('.modal-body table').dataTable();
             
       $('#myModal').modal('show');
-      // tableku.table.destroy();
+      
       $('.modal-body table').dataTable({
         data:data.data,
         "language": {

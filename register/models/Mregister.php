@@ -4,17 +4,17 @@ class Mregister extends CI_Model {
 
     //merupakan function untuk menyimpan data guru ke tabel guru di databse Neon  
 
-    public function insert_guru($data_guru, $sess_array) {
+    public function insert_guru($data_guru) {
         $this->db->insert('tb_guru', $data_guru);
 
-        if ($this->db->affected_rows() === 1) {
-            $penggunaID = $data_guru['penggunaID'];
-            $this->set_verifikasicode($penggunaID);
-            $this->session->set_userdata($sess_array);
-            $this->send_verifikasi_email();
-        } else {
-//            echo"masuk else"; //for testign
-        }
+//         if ($this->db->affected_rows() === 1) {
+//             $penggunaID = $data_guru['penggunaID'];
+//             $this->set_verifikasicode($penggunaID);
+//             $this->session->set_userdata($sess_array);
+//             $this->send_verifikasi_email();
+//         } else {
+// //            echo"masuk else"; //for testign
+//         }
     }
 
     //merupakan function untuk menyimpan data guru ke tabel penggunas di databse Neon  

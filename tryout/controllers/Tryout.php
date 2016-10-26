@@ -6,12 +6,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  */
 class Tryout extends MX_Controller {
-
+ 
  public function __construct() {
   $this->load->library('parser');
   $this->load->model('Tryout_model');
   $this->load->model('tesonline/Tesonline_model');
   parent::__construct();
+      
   # check session
   if ($this->session->userdata('loggedin')==true) {
    if ($this->session->userdata('HAKAKSES')=='siswa'){

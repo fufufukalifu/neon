@@ -88,6 +88,16 @@ class Mguru extends CI_Model
 		return $query->num_rows();
 	}
 
+	## function get guru
+	function get_teacher_user(){
+		$this->db->select('*');
+		$this->db->from('tb_guru guru');
+		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
+		$this->db->order_by('regTime','desc');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 }
 
 ?>

@@ -208,7 +208,6 @@ class Register extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-
             $this->registerguru();
         } else {
             //data guru
@@ -248,17 +247,10 @@ class Register extends MX_Controller {
                 'mataPelajaranID' => $mataPelajaranID,
                 'penggunaID' => $penggunaID,
             );
-            //data unutk session guru
-            $sess_array = array(
-                'id' => $penggunaID,
-                'USERNAME' => $namaPengguna,
-                'HAKAKSES' => $hakAkses,
-                'eMail' => $email
-            );
 
             //melempar data guru ke function insert_guru di kelas model
-            $data['mregister'] = $this->mregister->insert_guru($data_guru, $sess_array);
-            redirect(site_url('register/verifikasi'));
+            $data['mregister'] = $this->mregister->insert_guru($data_guru);
+            
         }
     }
 

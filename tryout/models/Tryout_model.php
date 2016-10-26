@@ -18,6 +18,7 @@ class Tryout_model extends MX_Controller {
 
     #get paket yang belum dikerjakan.
     public function get_paket_undo($id_to) {
+        echo $id_to;
         $query = "SELECT *
 				FROM `tb_tryout` `to` 
 				JOIN `tb_mm-tryoutpaket` `topaket` 
@@ -40,7 +41,7 @@ class Tryout_model extends MX_Controller {
             $query = "
                 SELECT * FROM `tb_report-paket` report
                 JOIN `tb_mm-tryoutpaket` mm ON
-                report.`id_mm-tryout-paket` = mm.`id_paket` 
+                report.`id_mm-tryout-paket` = mm.`id` 
                 JOIN `tb_tryout` tryout ON
                 tryout.`id_tryout` = mm.`id_tryout`
                 JOIN `tb_paket` pkt ON

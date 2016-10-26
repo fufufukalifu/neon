@@ -72,14 +72,14 @@ class Guru extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
          // jika admin
-           $this->parser->parse('admin/v-index-admin', $data);
-       } elseif($hakAkses=='guru'){
+         $this->parser->parse('admin/v-index-admin', $data);
+     } elseif($hakAkses=='guru'){
          // jika guru
-         $this->parser->parse('templating/index-b-guru', $data);
-     }else{
+       $this->parser->parse('templating/index-b-guru', $data);
+   }else{
         // jika siswa redirect ke welcome
-        redirect(site_url('login'));
-    }
+    redirect(site_url('login'));
+}
           #END Cek USer#
 }
 
@@ -215,12 +215,12 @@ public function ubahkatasandi() {
 
 
     if ( $this->form_validation->run() == FALSE ) {
-     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-     $data['guru'] = $this->mguru->get_datguru();
-     $this->load->view( 'templating/t-header' );
-     $this->load->view( 'vPengaturanProfileGuru',$data );
-     $this->load->view( 'templating/t-footer' );
- } else {
+       $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+       $data['guru'] = $this->mguru->get_datguru();
+       $this->load->view( 'templating/t-header' );
+       $this->load->view( 'vPengaturanProfileGuru',$data );
+       $this->load->view( 'templating/t-footer' );
+   } else {
     $kataSandi = htmlspecialchars( md5( $this->input->post( 'newpass' ) ) );
 
     $data_post = array(
@@ -291,6 +291,45 @@ public function ubahemailGuru() {
     redirect(site_url('guru/dashboard'));
 }
 
+}
+
+
+## Menampilkan daftar guru
+public function daftar(){
+    $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+    $data['judul_halaman'] = "Daftar Guru";
+    $data['files'] = array(
+        APPPATH . 'modules/register/views/v-daftar-guru.php',
+        );
+            // jika admin
+    $this->parser->parse('admin/v-index-admin', $data);
+}
+
+## ajax menampilkan data guru
+function ajax_list_guru(){
+    $list  = $this->mguru->get_teacher_user();
+
+
+    $data = array();
+    $no = 0;
+    foreach ($list as $teacheritem) {
+        $row = array();
+        $no++;
+        $row[] = $no;
+        $row[] = $teacheritem['namaDepan']." ".$teacheritem['namaBelakang'];
+        $row[] = $teacheritem['namaPengguna'];
+        $row[] = $teacheritem['regTime'];
+        $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['id']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
+
+        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_teacher('."'".$teacheritem['id']."'".')"><i class="ico-edit"></i></a>
+
+        <a class="btn btn-sm btn-primary"  title="Detail" onclick="detail_teacher('."'".json_encode($teacheritem['id'])."'".')"><i class="ico-file5"></i></a>
+
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_teacher('."'".$teacheritem['id']."'".')"><i class="ico-remove"></i></a>';
+        $data[] = $row;
+    }
+    $output = array("data"=>$data);
+    echo json_encode($output);
 }
 
 }

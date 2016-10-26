@@ -84,6 +84,13 @@
         <td><?=$sisa->days ?> Hari</td>
         <td>
         <?php if ($sisa->days == 0): ?>
+
+           <a class="btn btn-primary detail-<?=$tryout_item['id_tryout']?>" 
+            title="Lihat Paket Soal" 
+            data-todo='<?=json_encode($tryout_item) ?>'
+            onclick="lihat_detail(<?=$tryout_item['id_tryout'] ?>)"
+            ><i class="glyphicon glyphicon-list-alt"></i></a>
+              
                     <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
             title="Lihat Report" 
             data-todo='<?=json_encode($tryout_item) ?>'
