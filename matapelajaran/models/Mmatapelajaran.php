@@ -53,12 +53,25 @@ class Mmatapelajaran extends CI_Model {
         return $query->result();
     }
 
-    public function daftarMapelSMK() {
+    public function daftarMapelSMAIPA() {
         $this->db->select('tp.id, tp.tingkatID, tp.matapelajaranID, tp.keterangan,mp.namaMataPelajaran');
         $this->db->from('tb_mata-pelajaran mp');
         $this->db->from('tb_tingkat-pelajaran tp');
         $this->db->where('mp.id = tp.mataPelajaranID');
         $this->db->where('tingkatID', '4');
+        $this->db->where('mp.status', '1');
+        $this->db->where('tp.status', '1');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    public function daftarMapelSMAIPS() {
+        $this->db->select('tp.id, tp.tingkatID, tp.matapelajaranID, tp.keterangan,mp.namaMataPelajaran');
+        $this->db->from('tb_mata-pelajaran mp');
+        $this->db->from('tb_tingkat-pelajaran tp');
+        $this->db->where('mp.id = tp.mataPelajaranID');
+        $this->db->where('tingkatID', '5');
         $this->db->where('mp.status', '1');
         $this->db->where('tp.status', '1');
 
