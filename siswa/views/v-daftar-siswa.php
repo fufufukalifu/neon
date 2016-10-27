@@ -31,9 +31,10 @@
 	</section>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			url = base_url+"siswa/ajax_daftar_siswa";
 			$('.daftarguru').DataTable({
 				"ajax": {
-					"url": "http://localhost/neon/index.php/siswa/ajax_daftar_siswa",
+					"url": url,
 					"type": "POST"
 				},
 				"emptyTable":       "Tidak Ada Data Siswa",

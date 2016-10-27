@@ -42,10 +42,11 @@
 	</section>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			url = base_url+"guru/ajax_list_guru";
 			//load daftar guru.
 			$('.daftarguru').DataTable({
 				"ajax": {
-					"url": "http://localhost/neon/index.php/guru/ajax_list_guru",
+					"url": url,
 					"type": "POST"
 				},
 				"emptyTable":"Tidak Ada Data Guru",
