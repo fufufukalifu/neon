@@ -315,21 +315,27 @@ function ajax_list_guru(){
     foreach ($list as $teacheritem) {
         $row = array();
         $no++;
+        $kelas = "btn btn-sm btn-primary detail-".$teacheritem['guruID'];
         $row[] = $no;
         $row[] = $teacheritem['namaDepan']." ".$teacheritem['namaBelakang'];
         $row[] = $teacheritem['namaPengguna'];
         $row[] = $teacheritem['regTime'];
-        $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['id']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
+        $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
 
-        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_teacher('."'".$teacheritem['id']."'".')"><i class="ico-edit"></i></a>
+        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-edit"></i></a>
 
-        <a class="btn btn-sm btn-primary"  title="Detail" onclick="detail_teacher('."'".json_encode($teacheritem['id'])."'".')"><i class="ico-file5"></i></a>
+        <a class='."'".$kelas."'".' data-todo='."'".json_encode($teacheritem)."'".' title="Detail" onclick="detail_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-file5"></i></a>
 
-        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_teacher('."'".$teacheritem['id']."'".')"><i class="ico-remove"></i></a>';
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_teacher('."'".$teacheritem['guruID']."'".','."'".$teacheritem['penggunaID']."'".')"><i class="ico-remove"></i></a>';
         $data[] = $row;
     }
     $output = array("data"=>$data);
     echo json_encode($output);
+}
+
+
+function drop_teacher($id_guru,$id_pengguna){
+    $this->mguru->drop_guru( $id_guru,$id_pengguna );
 }
 
 }

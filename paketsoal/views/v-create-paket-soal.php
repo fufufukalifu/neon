@@ -175,6 +175,13 @@
             "url": base_url+"index.php/paketsoal/ajax_list",
             "type": "POST"
         },
+        "language": {
+            "blengthMenu": "Menampilkan _MENU_ records per page",
+            "bzeroRecords": "Maaf Tidak ada yang ditemukan",
+            "binfo": "Menampilkan page _PAGE_ dari _PAGES_",
+            "binfoEmpty": "Tidak Ada Record Guru",
+            "binfoFiltered": "(filtered from _MAX_ total records)"
+        },
         "processing": true,
     });
     });

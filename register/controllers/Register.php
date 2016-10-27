@@ -250,6 +250,7 @@ class Register extends MX_Controller {
 
             //melempar data guru ke function insert_guru di kelas model
             $data['mregister'] = $this->mregister->insert_guru($data_guru);
+            redirect(base_url('guru/daftar'));
             
         }
     }

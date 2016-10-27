@@ -90,12 +90,27 @@ class Mguru extends CI_Model
 
 	## function get guru
 	function get_teacher_user(){
-		$this->db->select('*');
+		$this->db->select('*, guru.id as guruID,pengguna.id as penggunaID');
 		$this->db->from('tb_guru guru');
 		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
 		$this->db->order_by('regTime','desc');
+		$this->db->where('pengguna.status', 1);
+		$this->db->where('guru.status', 1);
+
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+
+	## function hapus guru
+	function drop_guru($id,$idp){
+		//update tabel guru statusnya jadi 0
+		$this->db->set( 'status', 0 );
+		$this->db->where( 'id', $id );
+		$this->db->update( 'tb_guru' );
+		// //update table pengguna statusnya jadi 0
+		$this->db->set( 'status', 0 );
+		$this->db->where( 'id', $idp );
+		$this->db->update( 'tb_pengguna' );
 	}
 
 }
