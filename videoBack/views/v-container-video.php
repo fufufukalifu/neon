@@ -3,7 +3,7 @@
 		<div class="panel-heading">
 			<h5 class="panel-title">Video Yang Telah Anda Upload</h5>
 		</div>
-		<table class="table table-striped" id="zero-configuration" style="font-size: 14px">
+		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
 			<thead>
 				<tr>
 					<th>ID</th>

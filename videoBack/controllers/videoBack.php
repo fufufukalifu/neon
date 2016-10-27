@@ -218,7 +218,8 @@ class videoBack extends MX_Controller {
                 'published' => $data['published'],
                 'guruID' => $guruID,
                 'subBabID' => $data['subBabID'],
-                'UUID' => $UUID
+                'UUID' => $UUID,
+                'jenis_video' => $data['jenis_video']
                 );
 
             $this->MvideoBack->insertVideo($data_video);
@@ -246,6 +247,7 @@ class videoBack extends MX_Controller {
          $data['deskripsi'] = htmlspecialchars($this->input->post('deskripsi'));
          $data['subBabID'] = htmlspecialchars($this->input->post('subBab'));
          $data['published'] = htmlspecialchars($this->input->post('publish'));
+         $data['jenis_video'] = htmlspecialchars($this->input->post('jenis_video'));
          $link=$this->input->post('link_video');
          $option_up=htmlentities($this->input->post('option_up'));
         if ($this->form_validation->run() == FALSE) {
@@ -263,7 +265,8 @@ class videoBack extends MX_Controller {
                     'published' => $data['published'],
                     'guruID' => $guruID,
                     'subBabID' => $data['subBabID'],
-                    'UUID' => $UUID
+                    'UUID' => $UUID,
+                     'jenis_video' => $data['jenis_video']
                 );
                
                 $this->MvideoBack->insertVideo($data_video);
@@ -419,7 +422,7 @@ class videoBack extends MX_Controller {
     public function getTingkat() {
         $data = $this->output
         ->set_content_type( "application/json" )
-        ->set_output( json_encode( $this->MvideoBack->scTingkat() ) ) ;
+        ->set_output( json_encode( $this->MvideoBack->scTingkatvideo() ) ) ;
     }
 
 
