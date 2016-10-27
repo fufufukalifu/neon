@@ -4,9 +4,6 @@
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-       
-
-
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">

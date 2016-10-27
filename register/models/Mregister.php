@@ -60,7 +60,6 @@ class Mregister extends CI_Model {
 
     // function untuk mengirim code verifikasi email ke email user/siswa 
     public function send_verifikasi_email() {
-
         $this->load->library('email'); // load email library
         $verifikasiCode = $this->session->userdata['verifikasiCode'];
         $address = $this->session->userdata['eMail'];
