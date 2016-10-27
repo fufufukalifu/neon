@@ -12,9 +12,9 @@
         <form  class="panel panel-default form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data">
             <div class="panel-heading"><h5 class="panel-title">Upload Video</h5>
             </div>
-           
+
             <div class="form-group message-container">
-                
+
             </div><!-- will be use as done/fail message container -->
 
             <div  class="form-group">
@@ -47,23 +47,23 @@
                     <select class="form-control" name="subBab" id="subbab">
 
                     </select>
-                     <span class="text-danger"><?php echo form_error('subBab'); ?></span>
+                    <span class="text-danger"><?php echo form_error('subBab'); ?></span>
                 </div>
             </div>
 
             <!-- pilih option upload video -->
             <div class="form-group">
-            <label class="control-label col-sm-2">Pilihan Upload Video</label>
-              <div class="col-sm-8">
-                <div class="btn-group" data-toggle="buttons" >
-                  <label class="btn btn-info active" id="up_server">
-                    <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
-                  </label>
-                  <label class="btn btn-default " id="up_link">
-                    <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
-                  </label>
+                <label class="control-label col-sm-2">Pilihan Upload Video</label>
+                <div class="col-sm-8">
+                    <div class="btn-group" data-toggle="buttons" >
+                        <label class="btn btn-info active" id="up_server">
+                            <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
+                        </label>
+                        <label class="btn btn-default " id="up_link">
+                            <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
+                        </label>
+                    </div>
                 </div>
-              </div>
             </div>
 
             <!-- untuk preview video -->
@@ -71,7 +71,7 @@
                 <div class="row" style="margin:1%;"> 
                     <div class="col-md-12">
                         <video id="preview" class="img-tumbnail image" src="" width="100%" height="50%" controls >
-                            
+
                         </video>
                     </div>
                     <div class="col-md-5 left"> 
@@ -86,11 +86,11 @@
                 </div>
             </div>
 
-<!--             <div class="form-group server" hidden="true">
-                <div class="col-md-11 bottom">		
-                    <progress id="prog" max="100" value="0" style="display:none;"></progress>
-                </div>
-            </div> -->
+            <!--             <div class="form-group server" hidden="true">
+                            <div class="col-md-11 bottom">		
+                                <progress id="prog" max="100" value="0" style="display:none;"></progress>
+                            </div>
+                        </div> -->
 
             <!-- upload ke server -->
             <div id="upload" class="form-group server">
@@ -108,17 +108,28 @@
             <!-- upload video by link -->
 
             <div class="form-group link" hidden="true">
-              <label class="col-sm-2 control-label">Link Video</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="link_video">
-              </div>
+                <label class="col-sm-2 control-label">Link Video</label>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" name="link_video">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Jenis Video</label>
+                <div class="col-sm-4">
+                    <select name="jenis_video" class="form-control" required>
+                        <option value="" selected>-Pilih Jenis Video-</option>
+                        <option value="1">Room Recording</option>
+                        <option value="2">Screen Recording</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Judul Video</label>
                 <div class="col-sm-9">
                     <input type="text" name="judulvideo" class="form-control">
-                     <span class="text-danger"><?php echo form_error('judulvideo'); ?></span>
+                    <span class="text-danger"><?php echo form_error('judulvideo'); ?></span>
                 </div>
 
             </div>
@@ -142,8 +153,10 @@
             </div>
 
             <div class="panel-footer">
-                <button type="reset" class="btn btn-default">Reset</button>
-                <button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+                <div class="col-md-2 col-md-offset-4 pull-right">
+                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+                </div>
             </div>
 
         </form>
@@ -154,132 +167,132 @@
 </section>
 
 
-            <script>
-                // Script for getting the dynamic values from database using jQuery and AJAX
-                $(document).ready(function () {
-                    $('#eTingkat').change(function () {
+<script>
+    // Script for getting the dynamic values from database using jQuery and AJAX
+    $(document).ready(function () {
+        $('#eTingkat').change(function () {
 
-                        var form_data = {
-                            name: $('#eTingkat').val()
-                        };
+            var form_data = {
+                name: $('#eTingkat').val()
+            };
 
-                        $.ajax({
-                            url: "<?php echo site_url('videoback/getPelajaran'); ?>",
-                            type: 'POST',
-                            data: form_data,
-                            success: function (msg) {
-                                var sc = '';
-                                $.each(msg, function (key, val) {
-                                    sc += '<option value="' + val.id + '">' + val.keterangan + '</option>';
-                                });
-                                $("#ePelajaran option").remove();
-                                $("#ePelajaran").append(sc);
-                            }
-                        });
+            $.ajax({
+                url: "<?php echo site_url('videoback/getPelajaran'); ?>",
+                type: 'POST',
+                data: form_data,
+                success: function (msg) {
+                    var sc = '';
+                    $.each(msg, function (key, val) {
+                        sc += '<option value="' + val.id + '">' + val.keterangan + '</option>';
                     });
-                      // Strat  event untuk pilihan jenis input  
-                    $("#up_server").click(function(){
-                        $(".server").show();
-                         $(".link").hide();
-                    });
-                    $("#up_link").click(function(){
-                        $(".link").show();
-                        $(".server").hide();
-                        $(".prv_video").hide();     
-                    });
-                    $("#file").click(function(){
-                       $(".prv_video").show();
-                    });
+                    $("#ePelajaran option").remove();
+                    $("#ePelajaran").append(sc);
+                }
+            });
+        });
+        // Strat  event untuk pilihan jenis input  
+        $("#up_server").click(function () {
+            $(".server").show();
+            $(".link").hide();
+        });
+        $("#up_link").click(function () {
+            $(".link").show();
+            $(".server").hide();
+            $(".prv_video").hide();
+        });
+        $("#file").click(function () {
+            $(".prv_video").show();
+        });
 
+    });
+
+
+    //buat load tingkat
+    function loadTingkat() {
+        jQuery(document).ready(function () {
+            var tingkat_id = {"tingkat_id": $('#tingkat').val()};
+            var idTingkat;
+
+            $.ajax({
+                type: "POST",
+                data: tingkat_id,
+                url: "<?= base_url() ?>index.php/videoback/getTingkat",
+                success: function (data) {
+                    console.log("Data" + data);
+                    $('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
+                    $.each(data, function (i, data) {
+                        $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                        return idTingkat = data.id;
+                    });
+                }
+            });
+
+            $('#tingkat').change(function () {
+                tingkat_id = {"tingkat_id": $('#tingkat').val()};
+                loadPelajaran($('#tingkat').val());
+            })
+
+            $('#pelajaran').change(function () {
+                pelajaran_id = {"pelajaran_id": $('#pelajaran').val()};
+                load_bab($('#pelajaran').val());
+            })
+
+            $('#bab').change(function () {
+                load_sub_bab($('#bab').val());
+            })
+        })
+    }
+    ;
+
+    //buat load pelajaran
+    function loadPelajaran(tingkatID) {
+        $.ajax({
+            type: "POST",
+            data: tingkatID.tingkat_id,
+            url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+            success: function (data) {
+                $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+                $.each(data, function (i, data) {
+                    $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
                 });
+            }
+        });
+    }
+    //buat load bab
+    function load_bab(mapelID) {
+        $.ajax({
+            type: "POST",
+            data: mapelID.mapel_id,
+            url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+            success: function (data) {
+
+                $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+                //console.log(data);
+                $.each(data, function (i, data) {
+                    $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                });
+            }
+
+        });
+    }
+    //load sub bab
+    function load_sub_bab(babID) {
+        $.ajax({
+            type: "POST",
+            data: babID.bab_id,
+            url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
+            success: function (data) {
+                $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+                console.log(data);
+                $.each(data, function (i, data) {
+                    $('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
+                });
+            }
+
+        });
+    }
 
 
-                //buat load tingkat
-                function loadTingkat() {
-                    jQuery(document).ready(function () {
-                        var tingkat_id = {"tingkat_id": $('#tingkat').val()};
-                        var idTingkat;
-
-                        $.ajax({
-                            type: "POST",
-                            data: tingkat_id,
-                            url: "<?= base_url() ?>index.php/videoback/getTingkat",
-                            success: function (data) {
-                                console.log("Data" + data);
-                                $('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
-                                $.each(data, function (i, data) {
-                                    $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
-                                    return idTingkat = data.id;
-                                });
-                            }
-                        });
-
-                        $('#tingkat').change(function () {
-                            tingkat_id = {"tingkat_id": $('#tingkat').val()};
-                            loadPelajaran($('#tingkat').val());
-                        })
-
-                        $('#pelajaran').change(function () {
-                            pelajaran_id = {"pelajaran_id": $('#pelajaran').val()};
-                            load_bab($('#pelajaran').val());
-                        })
-
-                        $('#bab').change(function () {
-                            load_sub_bab($('#bab').val());
-                        })
-                    })
-                }
-                ;
-
-                //buat load pelajaran
-                function loadPelajaran(tingkatID) {
-                    $.ajax({
-                        type: "POST",
-                        data: tingkatID.tingkat_id,
-                        url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
-                        success: function (data) {
-                            $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
-                            $.each(data, function (i, data) {
-                                $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
-                            });
-                        }
-                    });
-                }
-                //buat load bab
-                function load_bab(mapelID) {
-                    $.ajax({
-                        type: "POST",
-                        data: mapelID.mapel_id,
-                        url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
-                        success: function (data) {
-
-                            $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-                            //console.log(data);
-                            $.each(data, function (i, data) {
-                                $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-                            });
-                        }
-
-                    });
-                }
-                //load sub bab
-                function load_sub_bab(babID) {
-                    $.ajax({
-                        type: "POST",
-                        data: babID.bab_id,
-                        url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
-                        success: function (data) {
-                            $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-                            console.log(data);
-                            $.each(data, function (i, data) {
-                                $('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
-                            });
-                        }
-
-                    });
-                }
-
-
-                loadTingkat();
-            </script>
+    loadTingkat();
+</script>
 

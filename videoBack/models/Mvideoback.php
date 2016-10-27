@@ -84,5 +84,13 @@ class Mvideoback extends CI_Model
 		redirect(site_url('videoBack/managervideo'));
 	}
 
+        public function scTingkatvideo()
+	{
+		$this->db->select('id,aliasTingkat');
+                $this->db->from('tb_tingkat');
+                $this->db->limit(5);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
 ?>
