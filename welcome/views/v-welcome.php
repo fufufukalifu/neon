@@ -1,3 +1,9 @@
+<div class="page-title" style="background:#2b3036">
+    <div class="grid-row">
+        <h1>{judul_header2}</h1>
+    </div>
+</div>
+
 <div class="page-content grid-row">
     <main>
 

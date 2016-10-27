@@ -41,12 +41,13 @@ class Welcome extends MX_Controller {
     public function index() {
         $data = array(
             'judul_halaman' => 'Neon - Welcome',
-            'judul_header' =>'Welcome'
+            'judul_header' =>'Welcome',
+            'judul_header2' =>'Daftar Tingkat'
+
         );
 
         $data['files'] = array( 
             APPPATH.'modules/homepage/views/v-header-login.php',
-            APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/welcome/views/v-welcome.php',
             APPPATH.'modules/welcome/views/v-tampil-tes.php',
             APPPATH.'modules/homepage/views/v-footer.php',

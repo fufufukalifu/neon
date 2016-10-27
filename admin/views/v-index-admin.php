@@ -463,7 +463,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('guru/daftar') ?>">
                                     <span class="text">Daftar Guru</span>
                                 </a>
                             </li>
@@ -481,7 +481,7 @@
                         <ul id="siswa" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Siswa</li>
                             <li >
-                                <a href="">
+                                <a href="<?=base_url('siswa/daftar') ?>">
                                     <span class="text">Daftar Siswa</span>
                                 </a>
                             </li>

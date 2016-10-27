@@ -1,13 +1,13 @@
 <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog" role="document" style="background: white">
     <div class="modal-content">
-      
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><br>
       </div>
 
       <div class="modal-body">
-        <table class="table table-bordered" style="font-size: 13px">
+        <table class="table table-bordered listsoal" style="font-size: 13px">
          <thead>
           <tr>
            <th >ID Soal</th>
@@ -21,14 +21,14 @@
         </tbody>                                   
       </form>
     </table>
-      </div>
-      
-      <div class="modal-footer">
-        <a href="" class="btn btn-primary">Cancel</a>
-      </div>
+  </div>
 
-    </div>
-  </div><!-- /.modal-content -->
+  <div class="modal-footer">
+    <a href="" class="btn btn-primary">Cancel</a>
+  </div>
+
+</div>
+</div><!-- /.modal-content -->
 </div>
 
 <div>
@@ -38,7 +38,7 @@
    <!--START LIST PAKET dan SISWA -->
    <div class="panel panel-default">
     <div class="panel-heading">
-     <h3 class="panel-title">NAMA TO</h3>
+     <h3 class="panel-title text-center">Nama Tryout : <?=$nm_to ?></h3>
    </div>
    <!-- Start Panel Body ALL -->
    <div class="panel-body">
@@ -416,15 +416,16 @@
 
      }
      function get_data_json(data){
-      var tableku = $('.modal-body table').dataTable();
-            
+      tableku = $('.modal-body table').dataTable();
+
       $('#myModal').modal('show');
       
-      $('.modal-body table').dataTable({
+      $('.listsoal').dataTable({
         data:data.data,
         "language": {
-      "emptyTable": "Tidak Ada Soal"
-    },
+          "emptyTable": "Tidak Ada Soal",
+          "bDestroy": true,
+        },
       })
     }
     function lihatsoal(id){

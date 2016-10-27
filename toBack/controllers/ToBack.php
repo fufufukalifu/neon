@@ -72,6 +72,7 @@ class ToBack extends MX_Controller
 		if (!$data['tryout']==array()) {		
 			$id_to = $data['tryout']['id_tryout'];
 			$data['id_to']=$data['tryout']['id_tryout'];
+			$data['nm_to']=$data['tryout']['nm_tryout'];
 			$data['siswa'] = $this->msiswa->get_siswa_blm_ikutan_to($id_to);
 			$data['files'] = array(
 				APPPATH . 'modules/toback/views/v-bundlepaket.php',

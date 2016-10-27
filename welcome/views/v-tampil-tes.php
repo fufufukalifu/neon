@@ -1,3 +1,9 @@
+<div class="page-title" style="background:#2b3036">
+    <div class="grid-row">
+        <h1>Latihan Online Dan Tryout</h1>
+    </div>
+</div>
+
     <div class="page-content grid-row">
         <main>
             <div class="grid-col-row clear-fix">
@@ -48,9 +54,9 @@
 <main>
     <div class="page-content grid-row">
         <div class="porfolio-item">
-            <div class="col-md-3"><img src="<?=base_url('assets/back/img/logo-tara.png')?>"  data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
+            <div class="col-md-3"><img src="<?=base_url('assets/back/img/logo-tara.png')?>"  data-at2x="<?=base_url('assets/back/img/logo.png')?>" width="90%" alt></div>
             <div class="col-md-9">
-                <h4>Selamat Datang Di netJo!</h4>
+                <h4>Selamat Datang Di neon!</h4>
                 <p>Sudah siap memulai belajar dengan cara asyik dan santai? mulailah dengan memilih mata pelajaran yang sesuai dengan tingkatanmu.</p>
             </div>
             <br><br>

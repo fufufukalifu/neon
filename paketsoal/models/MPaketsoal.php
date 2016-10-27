@@ -210,7 +210,7 @@ class MPaketsoal extends CI_Model {
 	//get id Paket
 	public function get_id_by_UUID($UUID)
 	{
-		$this->db->select('id_tryout');
+		$this->db->select('id_tryout, nm_tryout');
 		$this->db->from('tb_tryout');
 		$this->db->where('UUID',$UUID);
 		$query = $this->db->get();
