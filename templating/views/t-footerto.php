@@ -67,7 +67,7 @@
                     }, 1000);
                 } else {
                     alert('Waktu Habis!');
-//                    document.getElementById("hasil").submit();
+                    document.getElementById("hasil").submit();
                     deleteAllCookies('seconds', 'minutes');
                 }
             }
