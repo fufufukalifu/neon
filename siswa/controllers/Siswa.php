@@ -8,6 +8,7 @@ class Siswa extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
+        $this->load->model('Register/mregister');
         $this->load->helper('session');
         $this->load->library('parser');
 
@@ -213,7 +214,9 @@ class Siswa extends MX_Controller {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $list_siswa['id'];
+            $row[] = $list_siswa['idsiswa'];
+            ;
+            $row[] = $list_siswa['penggunaID'];
             $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
             $row[] = $list_siswa['namaPengguna'];
 
@@ -224,7 +227,7 @@ class Siswa extends MX_Controller {
 
         <a class="btn btn-sm btn-primary"  title="Detail" onclick="detail_siswa(' . "'" . json_encode($list_siswa['id']) . "'" . ')"><i class="ico-file5"></i></a>
 
-        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_siswa(' . "'" . $list_siswa['id'] . "'" . ')"><i class="ico-remove"></i></a>';
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
         }
@@ -320,8 +323,7 @@ class Siswa extends MX_Controller {
 
 //session buat id
             $id_arr = array('id' => $penggunaID);
-            $this->session->set_userdata($id_arr);
-
+//            $this->session->set_userdata($id_arr);
 //data array siswa
             $data_siswa = array(
                 'namaDepan' => $namaDepan,
@@ -334,17 +336,25 @@ class Siswa extends MX_Controller {
                 'tingkatID' => $tingkatID,
             );
 //data unutk session siswa
-            $sess_array = array(
-                'id' => $penggunaID,
-                'USERNAME' => $namaPengguna,
-                'HAKAKSES' => $hakAkses,
-                'eMail' => $email,
-                'tingkatID' => $tingkatID
-            );
+//            $sess_array = array(
+//                'id' => $penggunaID,
+//                'USERNAME' => $namaPengguna,
+//                'HAKAKSES' => $hakAkses,
+//                'eMail' => $email,
+//                'tingkatID' => $tingkatID
+//            );
 //melempar data guru ke function insert_guru di kelas model
-//            $data['mregister'] = $this->mregister->insert_siswa($data_siswa, $sess_array);
+            $data['mregister'] = $this->mregister->insert_siswabyadmin($data_siswa, $email, $namaPengguna);
 //            redirect(site_url('register/verifikasi'));
+
+            redirect(base_url('index.php/siswa/daftarsiswa'));
         }
+    }
+
+    public function deleteSiswa() {
+        $idsiswa = $this->input->post('idsiswa');
+        $idpengguna = $this->input->post('idpengguna');
+        $this->msiswa->hapus_siswa($idsiswa,$idpengguna);
     }
 
 }

@@ -74,7 +74,7 @@ class Mregister extends CI_Model {
         $message .= '</body></html>';
         $this->email->message($message);
         $this->email->send();
-        
+
 //        if ($this->email->send())
 ////            echo "Mail Sent!"; //untuk testing
 //    }else
@@ -205,6 +205,52 @@ class Mregister extends CI_Model {
         $this->db->where('eMail', $email);
         $this->db->set('kataSandi', $data);
         $this->db->update('tb_pengguna');
+    }
+
+    //merupakan function untuk menyimpan data guru ke tabel siswa di databse Neon  
+    public function insert_siswabyadmin($data_siswa, $email, $username) {
+        $this->db->insert('tb_siswa', $data_siswa);
+        if ($this->db->affected_rows() === 1) {
+            $penggunaID = $data_siswa['penggunaID'];
+            $code = $this->set_verifikasicodebyadmin($penggunaID);
+            $this->send_verifikasi_emailbyadmin($code, $email, $username);
+            $this->session->set_flashdata('notif', ' Data siswa telah berhasil dibuat');
+        } else {
+            $this->session->set_flashdata('notif', ' Data siswa gagal dibuat');
+        }
+    }
+
+    //set verifikasi code untuk memverifikasi email
+    private function set_verifikasicodebyadmin($penggunaID) {
+        $sql = "SELECT regTime FROM tb_pengguna WHERE id= '" . $penggunaID . "'";
+        $result = $this->db->query($sql);
+        $row = $result->row();
+        $verifikasiCode = md5((string) $row->regTime);
+
+        return $verifikasiCode;
+    }
+
+    public function send_verifikasi_emailbyadmin($code, $email, $username) {
+        $this->load->library('email'); // load email library
+        $verifikasiCode = $code;
+        $address = $email;
+        $this->email->from('noreply@sibejooclass.com', 'Neon');
+        $this->email->to($address);
+        $this->email->subject('Verifikasi Email');
+        $message = '<html><meta/><head/><body>';
+        $message .='<p> Dear' . ' ' . $username . ',</p>';
+        $message .='<p>Terimakasih telah mendaftar di Neon. Untuk dapat menggunakan semua fitur silahkan <strong><a href="' . base_url() . 'index.php/register/verifikasi_email/' . $address . '/' . $verifikasiCode . '">klik disini</a></strong> untuk aktifasi akun mu.</p>';
+        $message .= '<p>Terimakasih</p>';
+        $message .= '<p>Neon</p>';
+        $message .= '</body></html>';
+        $this->email->message($message);
+        $this->email->send();
+
+//        if ($this->email->send())
+////            echo "Mail Sent!"; //untuk testing
+//    }else
+////            echo "There is error in sending mail!"; //untuk testing
+//    }
     }
 
 }

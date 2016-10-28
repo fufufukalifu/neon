@@ -1,26 +1,27 @@
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
 <section id="main" role="main">
-    <div class="row">
-        <div class="col-md-12"><br>
+    <div class="col-md-12">
+        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">Daftar Siswa</h4>
                     <!-- Trigger the modal with a button -->
-                    <button title="Tambah Data" type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal" style="margin-top:-30px;" ><i class="ico-plus"></i></button>
+                    <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>
                     <br>
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
-                <table class="daftarguru table table-striped mt15" style="font-size: 13px">
+
+                <table class="daftarguru table table-striped" style="font-size: 13px">
                     <thead>
                         <tr>
                             <th>no</th>
                             <th>Id siswa</th>
+                            <th>Id Pengguna</th>
                             <th>Nama Lengkap</th>
                             <th>Nama Pengguna</th>
                             <th>Tanggal Daftar</th>
                             <th>Email</th>
                             <th>Aksi</th>
-
                         </tr>
                     </thead>
 
@@ -33,16 +34,43 @@
     </div>
 </section>
 <script type="text/javascript">
+    var tb_siswa;
     $(document).ready(function () {
-        url = base_url + "siswa/ajax_daftar_siswa";
-        $('.daftarguru').DataTable({
+        tb_siswa = $('.daftarguru').DataTable({
             "ajax": {
-                "url": url,
+                "url": base_url + "siswa/ajax_daftar_siswa",
                 "type": "POST"
             },
             "emptyTable": "Tidak Ada Data Siswa",
             "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
         });
-
     });
+
+    function dropSiswa(idsiswa, idpengguna) {
+        if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
+            // ajax delete data to database
+
+            $.ajax({
+                url: base_url + "index.php/siswa/deleteSiswa/" + idsiswa + "/" + idpengguna,
+                data: "idsiswa=" + idsiswa + "&idpengguna=" + idpengguna,
+                type: "POST",
+                dataType: "TEXT",
+                success: function (data, respone)
+                {
+                    reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error deleting data');
+                    // console.log(jqXHR);
+                    // console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        }
+    }
+
+    function reload_tblist() {
+        tb_siswa.ajax.reload(null, false);
+    }
 </script>

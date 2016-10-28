@@ -6,12 +6,24 @@
         <!-- START row -->
         <div class="row">
             <div class="col-md-8 col-md-offset-2 ">
+                <?php if ($this->session->flashdata('notif') != '') {
+                    ?>
+                    <div class="alert alert-warning fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <span class="semibold">Note :</span><?php echo $this->session->flashdata('notif'); ?>
+                    </div>
+                <?php } else { ?>
+                    <div class="alert alert-warning fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <span class="semibold">Note :</span>&nbsp;&nbsp;Pastikan data form di isi dengan benar.
+                    </div>
+                <?php }; ?>
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal panel panel-default login-form" name="form-register" action="<?= base_url() ?>index.php/siswa/savesiswa" method="post">
+                <form class="form-horizontal panel panel-default login-form " name="form-register" action="<?= base_url() ?>index.php/siswa/savesiswa" method="post">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tambah Data Siswa</h3>
                         <!-- untuk menampung bab id -->
-                        <button title="Tambah Data" type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal" style="margin-top:-33px;" >Kembali</button>
+                        <a href="<?= base_url('index.php/siswa/daftar')?>" class="btn btn-default btn-sm pull-right"style="margin-top:-33px;" >Kembali</a>
                     </div>               
                     <div class="panel-body">
                         <br>
@@ -108,7 +120,7 @@
                             <div class="col-sm-10 col-md-offset-1">
                                 <input placeholder="Confirm Password" type="password" class="form-control" name="passconf" data-parsley-equalto="input[name=password]" maxlength="20" required>
                                 <span class="text-danger"><?php echo form_error('katasandi'); ?></span>
-                        
+
                             </div>
                         </div>
                         <hr>
