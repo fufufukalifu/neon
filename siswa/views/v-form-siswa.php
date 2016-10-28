@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 ">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal panel panel-default" name="form-register" action="<?= base_url() ?>index.php/register/savesiswaadmin" method="post">
+                <form class="form-horizontal panel panel-default login-form" name="form-register" action="<?= base_url() ?>index.php/siswa/savesiswa" method="post">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tambah Data Siswa</h3>
                         <!-- untuk menampung bab id -->
