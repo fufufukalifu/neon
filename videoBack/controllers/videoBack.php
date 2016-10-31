@@ -66,7 +66,7 @@ class Videoback extends MX_Controller {
             title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
             <i class="ico-remove"></i></a>  
 
-            <a class="btn btn-sm btn-warning" href="videoback/formUpdateVideo/'.$list_video['UUID'].'"  title="Detail Video"
+            <a class="btn btn-sm btn-warning" href="videoback/formUpdateVideo/'.$list_video['UUID'].'"  title="Ubah Video"
                )"
                 >
                     <i class="ico-file5"></i>

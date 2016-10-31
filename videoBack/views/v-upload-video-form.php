@@ -19,10 +19,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Peringatan!!</h4>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
       </div>
       <div class="modal-body">
-        <p>Silahkan cek type extension video! type yang bisa di upload hanya .mp4</p>
+        <h3 class="text-center">Silahkan cek type extension video!</h3>
+        <h5 class="text-center">Type yang bisa di upload hanya .mp4</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
