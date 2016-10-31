@@ -8,6 +8,104 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
 } 
 
 ?>
+<!-- Strat Script Matjax -->
+     <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({
+         showProcessingMessages: false,
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+       });
+     </script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+
+<script>
+var Preview = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+  buffer: null,      // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  //
+  //  Get the preview and buffer DIV's
+  //
+  Init: function () {
+    this.preview = document.getElementById("MathPreview");
+    this.buffer = document.getElementById("MathBuffer");
+  },
+
+  //
+  //  Switch the buffer and preview, and display the right one.
+  //  (We use visibility:hidden rather than display:none since
+  //  the results of running MathJax are more accurate that way.)
+  //
+  SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+    preview.style.position = ""; preview.style.visibility = "";
+  },
+
+  //
+  //  This gets called when a key is pressed in the textarea.
+  //  We check if there is already a pending update and clear it if so.
+  //  Then set up an update to occur after a small delay (so if more keys
+  //    are pressed, the update won't occur until after there has been 
+  //    a pause in the typing).
+  //  The callback function is set up below, after the Preview object is set up.
+  //
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //
+  //  Creates the preview and runs MathJax on it.
+  //  If MathJax is already trying to render the code, return
+  //  If the text hasn't changed, return
+  //  Otherwise, indicate that MathJax is running, and start the
+  //    typesetting.  After it is done, call PreviewDone.
+  //  
+  CreatePreview: function () {
+    Preview.timeout = null;
+    if (this.mjPending) return;
+    var text = document.getElementById("MathInput").value;
+    if (text === this.oldtext) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+ ["Typeset",MathJax.Hub,this.buffer],
+ ["PreviewDone",this]
+      );
+    }
+  },
+
+  //
+  //  Indicate that MathJax is no longer running,
+  //  and swap the buffers to show the results.
+  //
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//
+//  Cache a callback to the CreatePreview action
+//
+Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+Preview.callback.autoReset = true;  // make sure it can run more than once
+
+</script>
+     <!-- END Script Matjax -->
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
 <section id="main" role="main">
@@ -80,12 +178,79 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Soal</label>
+
+                            <label class="control-label col-sm-2">Jensi Editor</label>
+
                             <div class="col-sm-8">
-                                <textarea  name="editor1" class="form-control" id="">
-                                    <?=$banksoal['soal'];?>
-                                </textarea>
+
+                                <div class="btn-group" data-toggle="buttons" >
+
+                                      <label class="btn active " id="in-soal">
+
+                                        <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
+
+                                      </label>
+
+                                      <label class="btn" id="pr-rumus">
+
+                                        <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
+
+                                      </label>
+
+                                 </div>
+
                             </div>
+
+                        </div>
+
+                        <div class="form-group">
+                           <!-- Start Editor Soal -->
+                           <div id="editor-soal">
+                            <label class="control-label col-sm-2">Soal</label>
+                             <div class="col-sm-10">
+
+                                 <textarea  name="editor1" class="form-control" id="">
+
+                                     <?=$banksoal['soal'];?>
+
+                                 </textarea>
+
+                             </div>
+                            </div>
+                            <!-- End Editor Soal -->
+                            <!-- Start Math jax -->
+                            <div id="editor-rumus" hidden="true">
+                              <label class="control-label col-sm-2">Buat rumus</label>
+                              <div class="col-sm-10">
+
+                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" >
+                               </textarea>
+
+                              </div>
+                              <label class="control-label col-sm-2"></label>
+                               <div class="col-sm-10">
+                               <p>
+                               Configured delimiters:
+                                <ul>
+                               <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
+                               <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
+                               <li>Asciimath: <code>`...`</code>.</li>
+                               </ul>
+                               </p>
+                               </div>
+                               
+                              <label class="control-label col-sm-2"></label>
+                              <div class="col-sm-10">
+                              <label class="control-label" >Preview is shown here:</label>
+                               <div class="form-control" id="MathPreview" ></div>
+                               <div class="form-control" id="MathBuffer" style=" 
+                               visibility:hidden; position:absolute; top:0; left: 0"></div>
+                              </div>
+                            </div>
+                            <script>
+                            Preview.Init();
+                            </script>
+                            <!-- End MathJax -->
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
@@ -355,6 +520,23 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
     <!-- script untuk option hide and show -->
     <script type="text/javascript">
         $(document).ready(function(){
+          // Start event untuk jenis editor
+            $("#in-soal").click(function(){
+
+                $("#editor-soal").show();
+
+                 $("#editor-rumus").hide();
+
+            });
+
+            $("#pr-rumus").click(function(){
+
+                $("#editor-rumus").show();
+
+                 $("#editor-soal").hide();
+
+            });
+           // End event untuk jenis editor
             // Strat  event untuk pilihan jenis input  
             $("#text").click(function(){
                 $(".piltext").show();
