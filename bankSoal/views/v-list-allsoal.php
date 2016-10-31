@@ -1,4 +1,3 @@
-
 <!-- START Template Main -->
 <section id="main" role="main">
     <!-- START Template Container -->
@@ -56,7 +55,7 @@
     $(document).ready(function() {
         tb_allSoal = $('#tb_allSoal').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/bankSoal/ajax_listAllSoal/",
+                    "url": base_url+"index.php/banksoal/ajax_listAllSoal/",
                     "type": "POST"
                     },
             "processing": true,
@@ -68,7 +67,7 @@
                // ajax delete data to database
                
                $.ajax({
-                     url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
+                     url : base_url+"index.php/banksoal/deletebanksoal/"+id_soal,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)

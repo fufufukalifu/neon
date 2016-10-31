@@ -9,8 +9,8 @@ class Tryout extends MX_Controller {
  
  public function __construct() {
   $this->load->library('parser');
-  $this->load->model('Tryout_model');
-  $this->load->model('tesonline/Tesonline_model');
+  $this->load->model('Mtryout');
+  $this->load->model('tesonline/Mtesonline');
   parent::__construct();
       
   # check session
@@ -28,7 +28,7 @@ class Tryout extends MX_Controller {
  }
 
  public function ajax_get_paket($id_tryout) {
-  $data = $this->Tryout_model->get_paket_by_id_to($id_tryout);
+  $data = $this->Mtryout->get_paket_by_id_to($id_tryout);
 
   $output = array('data' => $data);
   echo json_encode($output);
@@ -51,8 +51,8 @@ class Tryout extends MX_Controller {
    APPPATH . 'modules/homepage/views/v-footer.php',
    );
 
-  $datas['id_siswa'] = $this->Tryout_model->get_id_siswa();
-  $data['tryout'] = $this->Tryout_model->get_tryout_akses($datas);
+  $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+  $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
   $this->parser->parse('templating/index', $data);
  }
 
@@ -65,7 +65,7 @@ class Tryout extends MX_Controller {
   $id_to = $this->session->userdata('id_tryout');
   $datas['id_tryout'] = $id_to;
   $datas['id_pengguna'] = $this->session->userdata('id');
-  $data['nama_to'] = $this->Tryout_model->get_tryout_by_id($id_to)[0]['nm_tryout'];
+  $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
 
   
 
@@ -86,8 +86,8 @@ class Tryout extends MX_Controller {
     APPPATH . 'modules/homepage/views/v-footer.php',
     );
 
-   $data['paket_dikerjakan'] = $this->Tryout_model->get_paket_reported($datas);
-   $data['paket'] = $this->Tryout_model->get_paket_undo($id_to);
+   $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
+   $data['paket'] = $this->Mtryout->get_paket_undo($id_to);
 
    $this->parser->parse('templating/index', $data);
   } else {
@@ -124,16 +124,16 @@ class Tryout extends MX_Controller {
  public function mulaitest() {
   if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
    $id = $this->session->userdata['id_mm-tryoutpaket'];
-   $data['topaket']= $this->Tryout_model->datatopaket($id);
+   $data['topaket']= $this->Mtryout->datatopaket($id);
 //        echo $id;
-   $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
+   $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
 
 //        echo $id_paket; 
-   $data['paket'] = $this->Tryout_model->durasipaket($id_paket);
+   $data['paket'] = $this->Mtryout->durasipaket($id_paket);
 //        var_dump($data);
 
    $this->load->view('templating/t-headerto');
-   $query = $this->load->Tryout_model->get_soal($id_paket);
+   $query = $this->load->Mtryout->get_soal($id_paket);
    $data['soal'] = $query['soal'];
    $data['pil'] = $query['pil'];
 ////        var_dump($data);
@@ -154,9 +154,9 @@ class Tryout extends MX_Controller {
 
 //        var_dump($data);
   $id = $this->session->userdata['id_mm-tryoutpaket'];
-  $id_paket = $this->Tryout_model->datapaket($id)[0]->id_paket;
+  $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
 ////   
-  $result = $this->Tryout_model->jawabansoal($id_paket);
+  $result = $this->Mtryout->jawabansoal($id_paket);
 //        var_dump($result);
   $benar = 0;
   $salah = 0;
@@ -192,7 +192,7 @@ class Tryout extends MX_Controller {
   $hasil['poin'] = $benar;
   $hasil['status_pengerjaan'] = 1;
 
-  $result = $this->load->Tryout_model->inputreport($hasil);
+  $result = $this->load->Mtryout->inputreport($hasil);
   $this->session->unset_userdata('id_mm-tryoutpaket');
   redirect(base_url('index.php/tryout'));
  }

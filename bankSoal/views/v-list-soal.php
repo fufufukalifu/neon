@@ -64,7 +64,7 @@
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/bankSoal/ajax_soalPerSub/"+subBab,
+                    "url": base_url+"index.php/banksoal/ajax_soalPerSub/"+subBab,
                     "type": "POST"
                     },
             "processing": true,
@@ -78,7 +78,7 @@
                // ajax delete data to database
                console.log(id_soal);
                $.ajax({
-                     url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
+                     url : base_url+"index.php/banksoal/deletebanksoal/"+id_soal,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)

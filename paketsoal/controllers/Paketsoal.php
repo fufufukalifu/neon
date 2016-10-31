@@ -3,15 +3,15 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 /**
  *
  */
-class Paketsoal extends MX_Controller
+class paketsoal extends MX_Controller
 {
 	public function __construct() {
 		$this->load->library( 'parser' );
-		$this->load->model( 'MPaketsoal' );
-		$this->load->model( 'BankSoal/mBankSoal' );
+		$this->load->model( 'mpaketsoal' );
+		$this->load->model( 'banksoal/mbanksoal' );
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
-		$this->load->model('Templating/mtemplating');
+		$this->load->model('templating/mtemplating');
 		parent::__construct();
 		if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -41,14 +41,14 @@ class Paketsoal extends MX_Controller
 
 	##ajax untuk melakukan edit, mengambil nilai dari hasil query
 	public function ajax_edit( $id ) {
-		$data = $this->MPaketsoal->get_by_id( $id );
+		$data = $this->mpaketsoal->get_by_id( $id );
 		echo json_encode( $data );
 	}
 	#
 
 	#menampilkan semoa paket soal
 	function ajax_list() {
-		$list = $this->load->MPaketsoal->getpaketsoal();
+		$list = $this->load->mpaketsoal->getpaketsoal();
 		$data = array();
 	
 		$baseurl = base_url();
@@ -79,7 +79,7 @@ class Paketsoal extends MX_Controller
 
 	#ajax untuk menampilkan soal yang terdapat pada paket soal tertentu.
 	function ajax_listsoal($idpaket) {
-		$list = $this->load->MPaketsoal->soal_by_paketID($idpaket);
+		$list = $this->load->mpaketsoal->soal_by_paketID($idpaket);
 		$data = array();
 
 
@@ -111,10 +111,10 @@ class Paketsoal extends MX_Controller
 
 	#daftar paket soal
 	function tambahpaketsoal() {		
-		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+		$data['paket_soal'] = $this->load->mpaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Buat Paket Soal";
 		$data['files'] = array(
-			APPPATH.'modules/Paketsoal/views/v-create-paket-soal.php',
+			APPPATH.'modules/paketsoal/views/v-create-paket-soal.php',
 		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
@@ -123,10 +123,10 @@ class Paketsoal extends MX_Controller
 	##menambahkan soal
 	function add_soal() {
 		
-		$data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+		$data['paket_soal'] = $this->load->mpaketsoal->getpaketsoal();
 		$data['judul_halaman'] = "Tambahkan Paket Soal";
 		$data['files'] = array(
-			APPPATH.'modules/Paketsoal/views/v-create-paket-soal.php',
+			APPPATH.'modules/paketsoal/views/v-create-paket-soal.php',
 		);
 		$this->load->view( 'templating/index-b-guru', $data );
 	}
@@ -144,12 +144,12 @@ class Paketsoal extends MX_Controller
 			'durasi' =>$this->input->post( 'durasi' )
 		);
 
-		$this->MPaketsoal->insertpaketsoal( $data );
+		$this->mpaketsoal->insertpaketsoal( $data );
 	}
 	##
 
 	function droppaketsoal( $id ) {
-		$this->MPaketsoal->droppaket( $id );
+		$this->mpaketsoal->droppaket( $id );
 	}
 
 	#mengupdate paket soal
@@ -162,7 +162,7 @@ class Paketsoal extends MX_Controller
 			'durasi' => $this->input->post( 'deskripsi' )
 		);
 
-		$this->MPaketsoal->rubahpaket( $id, $data );
+		$this->mpaketsoal->rubahpaket( $id, $data );
 	}
 	##
 
@@ -170,22 +170,22 @@ class Paketsoal extends MX_Controller
 	function ambil_paket_soal() {
 		$data = $this->output
 		->set_content_type( "application/json" )
-		->set_output( json_encode( $this->load->MPaketsoal->getpaketsoal() ) ) ;
+		->set_output( json_encode( $this->load->mpaketsoal->getpaketsoal() ) ) ;
 	}
 	##
 
 	#menambahkan soal ada paket tertentu.
 	function addbanksoal( $idpaket ) {
 		
-		$paket_soal = $this->load->MPaketsoal->getpaket_by_id($idpaket);
+		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		if (!$paket_soal==array()) {
-			$data['listadd_soal']=$this->load->MPaketsoal->soal_by_paketID($idpaket);
+			$data['listadd_soal']=$this->load->mpaketsoal->soal_by_paketID($idpaket);
 			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
 			$data['id_paket']=$idpaket;
 			
 			$data['files'] = array(
-				APPPATH.'modules/Paketsoal/views/v-add-soal.php',
+				APPPATH.'modules/paketsoal/views/v-add-soal.php',
 			);
 			
 		} else {
@@ -201,7 +201,7 @@ class Paketsoal extends MX_Controller
 	#
 	function ajax_get_soal_by_subbabid( $subBabID ) {
 
-		$list = $soal=$this->mBankSoal->get_soal( $subBabID );
+		$list = $soal=$this->mbanksoal->get_soal( $subBabID );
 		$data = array();
 
 
@@ -250,7 +250,7 @@ class Paketsoal extends MX_Controller
 		 }
 		 
 
-		 $this->MPaketsoal->insert_soal_paket($mmpaket);
+		 $this->mpaketsoal->insert_soal_paket($mmpaket);
 		
 	}
 	#END Function add soal paket#
@@ -258,7 +258,7 @@ class Paketsoal extends MX_Controller
 	#hapus paket soal
 	public function dropsoalpaket($id)
 	{
-		$this->MPaketsoal->drop_soal_paket($id);
+		$this->mpaketsoal->drop_soal_paket($id);
 
 	}
 	##
@@ -268,7 +268,7 @@ class Paketsoal extends MX_Controller
 		$param['id_paket'] = $id_paket;
 		$param['id_subab'] = $id_subab;
 
-		$list = $soal=$this->mBankSoal->get_soal_terdaftar($param);
+		$list = $soal=$this->mbanksoal->get_soal_terdaftar($param);
 
 		//mengambil nilai list
 		$baseurl = base_url();
@@ -294,7 +294,7 @@ class Paketsoal extends MX_Controller
 	}
 
 	public function get_soal_byid_paket($idpaket){
-		$list = $this->MPaketsoal->get_soal_by_idpaket($idpaket);
+		$list = $this->mpaketsoal->get_soal_by_idpaket($idpaket);
 		$data = array();
 		foreach ($list as $list_soal) {
 			$n='1';

@@ -7,8 +7,8 @@ class Video extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'Mvideos' );
-        $this->load->model( 'Guru/Mguru' );
-        $this->load->model( 'komen/mKomen' );
+        $this->load->model( 'guru/mguru' );
+        $this->load->model( 'komen/mkomen' );
         $this->load->library( 'parser' );
     }
 
@@ -137,7 +137,7 @@ class Video extends MX_Controller {
             $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
             $onevideo = $data['videosingle'];
             $guruID = $onevideo[0]->guruID;
-            $penulis = $this->load->Mguru->get_penulis( $guruID )[0];
+            $penulis = $this->load->mguru->get_penulis( $guruID )[0];
             $data = array(
                 'judul_halaman' => 'Neon - Video : '.$onevideo[0]->judulVideo,
                 'judul_header' => 'Video berjudul '.$onevideo[0]->judulVideo,
@@ -172,7 +172,7 @@ class Video extends MX_Controller {
             //
 
             // //ambil komen berdasarkan id video
-            // $data['komen']=$this->load->mKomen->get_komen_byvideo( $idvideo );
+            // $data['komen']=$this->load->mkomen->get_komen_byvideo( $idvideo );
 
             //$this->loadparse($data);
             $this->parser->parse( 'templating/index', $data );

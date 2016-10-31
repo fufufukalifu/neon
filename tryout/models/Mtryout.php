@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  *
  */
-class Tryout_model extends MX_Controller {
+class Mtryout extends MX_Controller {
 
     public function __construct() {
         
@@ -93,7 +93,7 @@ class Tryout_model extends MX_Controller {
         $this->db->from('tb_tryout to');
         $this->db->join('tb_hakakses-to hakAkses', 'to.id_tryout = hakAkses.id_tryout');
         //hakakses
-        $this->db->where('hakakses.id_siswa', $data['id_siswa']);
+        $this->db->where('hakAkses.id_siswa', $data['id_siswa']);
         //published
         $this->db->where('to.publish', 1);
         //rentang waktu

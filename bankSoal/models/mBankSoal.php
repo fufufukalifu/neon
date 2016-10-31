@@ -3,7 +3,7 @@
 /**
  * 
  */
-class MbankSoal extends CI_Model {
+class Mbanksoal extends CI_Model {
     # Start Function untuk form soal#	
 
     public function insert_soal($dataSoal) {

@@ -549,12 +549,12 @@
       <li class="submenu-header ellipsis">Video</li>
 
       <li >
-       <a href="<?=base_url('index.php/videoBack/formupvideo')?>">
+       <a href="<?=base_url('index.php/videoback/formupvideo')?>">
         <span class="text">Upload Video</span>
        </a>
       </li>
       <li >
-       <a href="<?=base_url()?>videoBack/managervideo">
+       <a href="<?=base_url()?>index.php/videoback/managervideo">
         <span class="text">Daftar semua video</span>
        </a>
       </li>

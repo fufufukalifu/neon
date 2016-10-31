@@ -20,19 +20,19 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
         <div class="row">
             <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updateBanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->
                         <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
-                        <input type="text" name="soalID" value="<?=$bankSoal['id_soal'];?>" hidden="true">
-                        <input type="text" name="UUID" value="<?=$bankSoal['UUID'];?>"  hidden="true">
+                        <input type="text" name="soalID" value="<?=$banksoal['id_soal'];?>" hidden="true">
+                        <input type="text" name="UUID" value="<?=$banksoal['UUID'];?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label col-sm-2">Judul Soal</label>
                             <div class="col-sm-8">
-                                <input type="text" name="judul" value="<?=$bankSoal['judul_soal'];?>" class="form-control">
+                                <input type="text" name="judul" value="<?=$banksoal['judul_soal'];?>" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,14 +49,14 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                         <div class="form-group">
                             <label class="control-label col-sm-2">Sumber</label>
                             <div class="col-sm-8">
-                                <input type="text" name="sumber" value="<?=$bankSoal['sumber'];?>" class="form-control">
+                                <input type="text" name="sumber" value="<?=$banksoal['sumber'];?>" class="form-control">
                             </div>
                         </div>
                          <div class="form-group">
                             <label class="control-label col-sm-2">Gambar Soal</label>
                              <div class="col-sm-8 " >
                                 <div class="col-sm-12">
-                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$bankSoal['gambar_soal'];?>" alt="" />
+                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$banksoal['gambar_soal'];?>" alt="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -83,7 +83,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                             <label class="control-label col-sm-2">Soal</label>
                             <div class="col-sm-8">
                                 <textarea  name="editor1" class="form-control" id="">
-                                    <?=$bankSoal['soal'];?>
+                                    <?=$banksoal['soal'];?>
                                 </textarea>
                             </div>
                         </div>

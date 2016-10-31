@@ -8,7 +8,7 @@ class Siswa extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
-        $this->load->model('Register/mregister');
+        $this->load->model('register/mregister');
         $this->load->helper('session');
         $this->load->library('parser');
 

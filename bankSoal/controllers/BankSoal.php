@@ -3,12 +3,12 @@
 /**
  * 
  */
-class BankSoal extends MX_Controller {
+class Banksoal extends MX_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('mbanksoal');
-        $this->load->model('Templating/mtemplating');
+        $this->load->model('Mbanksoal');
+        $this->load->model('templating/Mtemplating');
         $this->load->library('parser');
     }
 
@@ -25,7 +25,7 @@ class BankSoal extends MX_Controller {
         $tingkatID = htmlspecialchars($this->input->get('tingkatID'));
       
        
-        $data['pelajaran'] = $this->mbanksoal->get_pelajaran($tingkatID);
+        $data['pelajaran'] = $this->Mbanksoal->get_pelajaran($tingkatID);
         $data['tingkatID'] = $tingkatID;
 
         $data['files'] = array(
@@ -65,7 +65,7 @@ class BankSoal extends MX_Controller {
 
     public function listbab() {
         $mpID = htmlspecialchars($this->input->get('mpID'));
-        $data['bab'] = $this->mbanksoal->get_bab($mpID);
+        $data['bab'] = $this->Mbanksoal->get_bab($mpID);
         $data['judul_halaman'] = "List Bab";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-list-bab.php',
@@ -98,7 +98,7 @@ class BankSoal extends MX_Controller {
     public function listsubbab() {
         $babID = htmlspecialchars($this->input->get('bab'));
 
-        $data['subbab'] = $this->mbanksoal->get_subbab($babID);
+        $data['subbab'] = $this->Mbanksoal->get_subbab($babID);
         $data['judul_halaman'] = "List Sub Bab";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-list-subbab.php',
@@ -163,8 +163,8 @@ class BankSoal extends MX_Controller {
     }
     // function untuk mengambil data soal
     function ajax_soalPerSub($subBab) {
-        $list  = $this->mbanksoal->get_soal($subBab);
-         $pilihan = $this->mbanksoal->get_pilihan($subBab);
+        $list  = $this->Mbanksoal->get_soal($subBab);
+         $pilihan = $this->Mbanksoal->get_pilihan($subBab);
 
         // $list = $this->load->mToBack->paket_by_toID($idTO);
         $data = array();
@@ -255,8 +255,8 @@ class BankSoal extends MX_Controller {
     //function untuk menampilkan halaman all soal
     public function allsoal()
     {
-        // $data['soal'] = $this->mbanksoal->get_allsoal();
-        // $data['pilihan'] = $this->mbanksoal->get_allpilihan();
+        // $data['soal'] = $this->Mbanksoal->get_allsoal();
+        // $data['pilihan'] = $this->Mbanksoal->get_allpilihan();
        
         $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
@@ -284,8 +284,8 @@ class BankSoal extends MX_Controller {
 
     // function untuk mengambil data soal
     function ajax_listAllSoal() {
-        $list = $this->mbanksoal->get_allsoal();
-        $pilihan = $this->mbanksoal->get_allpilihan();
+        $list = $this->Mbanksoal->get_allsoal();
+        $pilihan = $this->Mbanksoal->get_allpilihan();
 
         // $list = $this->load->mToBack->paket_by_toID($idTO);
         $data = array();
@@ -452,10 +452,10 @@ class BankSoal extends MX_Controller {
            );
 
            //call fungsi insert soal
-           $this->mbanksoal->insert_soal($dataSoal);
+           $this->Mbanksoal->insert_soal($dataSoal);
             $this->up_img_soal($UUID);
            // // mengambil id soal untuk fk di tb_piljawaban
-           $data['tb_banksoal'] = $this->mbanksoal->get_soalID($UUID)[0];
+           $data['tb_banksoal'] = $this->Mbanksoal->get_soalID($UUID)[0];
            $soalID = $data['tb_banksoal']['id_soal'];
 
 
@@ -521,7 +521,7 @@ class BankSoal extends MX_Controller {
                
 
                //call function insert jawaban tet
-               $this->mbanksoal->insert_jawaban($dataJawaban);
+               $this->Mbanksoal->insert_jawaban($dataJawaban);
            } else {
                #jika inputan gambar
                //call functiom upload gamabar
@@ -551,7 +551,7 @@ class BankSoal extends MX_Controller {
         $data['dataSoal']=  array(
             'gambar_soal' => $file_name);
 
-            $this->mbanksoal->ch_soal($data);
+            $this->Mbanksoal->ch_soal($data);
     }
     public function ch_img_soal($UUID) {
         $config['upload_path'] = './assets/image/soal/';
@@ -561,7 +561,7 @@ class BankSoal extends MX_Controller {
         $config['max_height'] = 768;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
-        $oldgambar = $this->mbanksoal->get_oldgambar_soal($UUID);
+        $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID);
         if ($this->upload->do_upload($gambar)) {
          foreach ($oldgambar as $rows) {
             unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
@@ -571,13 +571,13 @@ class BankSoal extends MX_Controller {
          $data['UUID']=$UUID;
          $data['dataSoal']=  array(
           'gambar_soal' => $file_name);
-         $this->mbanksoal->ch_soal($data);
+         $this->Mbanksoal->ch_soal($data);
         }
         
        
        
 
-        // $this->mbanksoal->insert_gambar($datagambar);
+        // $this->Mbanksoal->insert_gambar($datagambar);
     }
     //function untuk mengupload gambar pilihan jawaban
     public function up_img_jawaban($soalID) {
@@ -621,7 +621,7 @@ class BankSoal extends MX_Controller {
             $n++;
         }
 
-        $this->mbanksoal->insert_gambar($datagambar);
+        $this->Mbanksoal->insert_gambar($datagambar);
     }
 
     #ENDFunction untuk form upload soal#
@@ -634,10 +634,10 @@ class BankSoal extends MX_Controller {
         $UUID = htmlspecialchars($this->input->get('UUID'));
 
         //get data soan where==UUID
-        $data['bankSoal'] = $this->mbanksoal->get_onesoal($UUID)[0];
-        $id_soal = $data['bankSoal']['id_soal'];
+        $data['banksoal'] = $this->Mbanksoal->get_onesoal($UUID)[0];
+        $id_soal = $data['banksoal']['id_soal'];
             //get piljawaban == id soal
-        $data['piljawaban'] = $this->mbanksoal->get_piljawaban($id_soal);
+        $data['piljawaban'] = $this->Mbanksoal->get_piljawaban($id_soal);
         $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-update-soal.php',
@@ -668,7 +668,7 @@ class BankSoal extends MX_Controller {
 
     }
 
-    public function updateBanksoal() {
+    public function updatebanksoal() {
        
         #Start post data soal#
         $judul_soal = htmlspecialchars($this->input->post('judul'));
@@ -715,7 +715,7 @@ class BankSoal extends MX_Controller {
         );
 
         //call fungsi insert soal
-        $this->mbanksoal->ch_soal($data);
+        $this->Mbanksoal->ch_soal($data);
         $this->ch_img_soal($UUID);
 
         #data yg dilempar ke function count_pilihan#
@@ -776,8 +776,8 @@ class BankSoal extends MX_Controller {
             }
              
             //call function insert jawaban tet
-            $this->mbanksoal->ch_jawaban($data);
-            // $this->mbanksoal->ch_jawaban($data);
+            $this->Mbanksoal->ch_jawaban($data);
+            // $this->Mbanksoal->ch_jawaban($data);
         } else {
             #jika inputan gambar
 
@@ -792,17 +792,17 @@ class BankSoal extends MX_Controller {
     public function count_pilihan($data){
 
       $id_soal=$data['id_soal'];
-      $count_dat=$this->mbanksoal->get_count_pilihan($id_soal);
+      $count_dat=$this->Mbanksoal->get_count_pilihan($id_soal);
       $a = $count_dat;
       if ( $count_dat>$data['jum_pilihan']) {
-        $this->mbanksoal->del_oneJawaban( $id_soal);
+        $this->Mbanksoal->del_oneJawaban( $id_soal);
       } else if ($count_dat<$data['jum_pilihan']) {
         // insert pilihan jawaban option E
         $pil_E = array(
           'pilihan' => 'E',
           'id_soal' => $id_soal
         );
-        $this->mbanksoal->add_oneJawaban($pil_E);
+        $this->Mbanksoal->add_oneJawaban($pil_E);
 
       }
 
@@ -819,7 +819,7 @@ class BankSoal extends MX_Controller {
         $this->load->library('upload', $config2);
         $this->upload->initialize($config2);
 
-        $oldgambar = $this->mbanksoal->get_oldgambar($soalID);
+        $oldgambar = $this->Mbanksoal->get_oldgambar($soalID);
 
         $n = '1';
         $datagambar = array();
@@ -861,15 +861,15 @@ class BankSoal extends MX_Controller {
         // pengecekan jika array kosong
         if ($datagambar!=array()) {
           // jika array tidak kosong panggil function ch_gambar
-         $this->mbanksoal->ch_gambar($datagambar);
+         $this->Mbanksoal->ch_gambar($datagambar);
         }
     }
 
     #END Function untuk form update bank soal #
     #END Function untuk delete bank soal #
 
-    public function deleteBanksoal($data) {
-        $this->mbanksoal->del_banksoal($data);
+    public function deletebanksoal($data) {
+        $this->Mbanksoal->del_banksoal($data);
     }
 
 }

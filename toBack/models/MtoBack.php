@@ -1,6 +1,6 @@
 <?php
 defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
-class MTOBack extends CI_Model {
+class Mtoback extends CI_Model {
 
 	var $table = 'tb_paket';
 	var $column_order = array('id_paket','nm_paket','deskripsi');
