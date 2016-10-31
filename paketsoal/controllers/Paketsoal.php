@@ -264,10 +264,10 @@ class paketsoal extends MX_Controller
 	##
 
 	#ajax untuk menampilkan soal yang sudah di pub, belum terdaftar di paket dan statusnya 1
-	function ajax_unregistered_soal( $id_paket, $id_subab ) {
+	function ajax_unregistered_soal( $id_paket) {
 		$param['id_paket'] = $id_paket;
-		$param['id_subab'] = $id_subab;
-
+		// $param['id_subab'] = $id_subab;
+		$data=array();
 		$list = $soal=$this->mbanksoal->get_soal_terdaftar($param);
 
 		//mengambil nilai list
