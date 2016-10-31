@@ -538,7 +538,7 @@ class Banksoal extends MX_Controller {
     //function upload gambar soal
      public function up_img_soal($UUID) {
         $config['upload_path'] = './assets/image/soal/';
-        $config['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
@@ -555,7 +555,7 @@ class Banksoal extends MX_Controller {
     }
     public function ch_img_soal($UUID) {
         $config['upload_path'] = './assets/image/soal/';
-        $config['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
@@ -582,7 +582,7 @@ class Banksoal extends MX_Controller {
     //function untuk mengupload gambar pilihan jawaban
     public function up_img_jawaban($soalID) {
         $config2['upload_path'] = './assets/image/jawaban/';
-        $config2['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config2['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
         $config2['max_size'] = 100;
         $config2['max_width'] = 1024;
         $config2['max_height'] = 768;
@@ -812,7 +812,7 @@ class Banksoal extends MX_Controller {
 
         // unlink( FCPATH . "./assets/image/jawaban/".$xxxx );
         $config2['upload_path'] = './assets/image/jawaban/';
-        $config2['allowed_types'] = 'jpeg|gif|jpg|png';
+        $config2['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
         $config2['max_size'] = 100;
         $config2['max_width'] = 1024;
         $config2['max_height'] = 768;

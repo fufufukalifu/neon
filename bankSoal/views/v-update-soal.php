@@ -113,7 +113,23 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-      
+      <!-- Start Modal salah upload video -->
+<div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Peringatan!!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Silahkan cek type extension gambar! Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
@@ -173,7 +189,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileSoal" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal"/>
+                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +325,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileA" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1"/>
+                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar A -->
@@ -346,7 +362,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileB" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2"/>
+                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                         </div>
@@ -383,7 +399,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileC" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3"/>
+                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -421,7 +437,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileD" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4"/>
+                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar D -->                       
@@ -460,7 +476,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     <label for="fileE" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5"/>
+                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -697,7 +713,34 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         });
     </script>
      <!-- End script untuk priview gambar soal -->
-
+<!-- start script js validation extension -->
+<script type="text/javascript">
+ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+function ValidateSingleInput(oInput) {
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+             $('#warningupload').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
+</script>
+<!-- END -->
    
     
 

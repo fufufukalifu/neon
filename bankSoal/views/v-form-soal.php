@@ -6,7 +6,7 @@
 
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
-    <!-- Strat Script Matjax -->
+<!-- Strat Script Matjax -->
      <script type="text/x-mathjax-config">
        MathJax.Hub.Config({
          showProcessingMessages: false,
@@ -106,7 +106,23 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <!-- END Script Matjax -->
 
     <div class="container-fluid">
-
+<!-- Start Modal salah upload video -->
+<div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Peringatan!!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Silahkan cek type extension gambar! Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
         <!-- START row -->
 
         <div class="row">
@@ -223,7 +239,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal"/>
+                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -421,7 +437,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileA" name="gambar1"/>
+                                    <input style="display:none;" type="file" id="fileA" name="gambar1" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -493,7 +509,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileB" name="gambar2"/>
+                                    <input style="display:none;" type="file" id="fileB" name="gambar2" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -565,7 +581,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileC" name="gambar3"/>
+                                    <input style="display:none;" type="file" id="fileC" name="gambar3" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -639,7 +655,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileD" name="gambar4"/>
+                                    <input style="display:none;" type="file" id="fileD" name="gambar4" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -713,7 +729,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                     </label>
 
-                                    <input style="display:none;" type="file" id="fileE" name="gambar5"/>
+                                    <input style="display:none;" type="file" id="fileE" name="gambar5" onchange="ValidateSingleInput(this);"/>
 
                                 </div>
 
@@ -1179,9 +1195,37 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </script>
 
      <!-- End script untuk priview gambar soal -->
-
+<!-- start script js validation extension -->
+<script type="text/javascript">
+ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+function ValidateSingleInput(oInput) {
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+             $('#warningupload').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
+</script>
+<!-- END -->
  
 
 </section>
+
 
         <!--/ END Template Main -->
