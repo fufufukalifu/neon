@@ -61,7 +61,7 @@ class Mvideos extends CI_Model
         tingkat.`id` = tingpel.`tingkatID`
         JOIN `tb_mata-pelajaran` mapel
         ON mapel.`id` = tingpel.`mataPelajaranID`
-        WHERE `aliasMataPelajaran` = '$alias_pelajaran' AND `aliasTingkat` = '$alias_tingkat'
+        WHERE `aliasMataPelajaran` = '$alias_pelajaran' AND `aliasTingkat` = '$alias_tingkat' order by bab.id
 ";
 
     $result = $this->db->query($myquery);
