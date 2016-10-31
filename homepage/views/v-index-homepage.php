@@ -54,11 +54,11 @@
 
             <?php include 'v-last-courses.php'; ?>
 
-            <hr class="divider-color" />
+            <hr class="divider-color" id="service" />
 
             <!-- section -->
 
-            <section class="fullwidth-background padding-section">
+            <section class="fullwidth-background padding-section" >
 
                 <div class="grid-row clear-fix">
 
@@ -87,8 +87,8 @@
 
 
                         </div>
-
-                        <div class="grid-col grid-col-6 clear-fix konten">
+                        <div></div>
+                        <div class="grid-col grid-col-6 clear-fix konten" >
 
                             <h2>Layanan Kita</h2>
 
@@ -204,7 +204,7 @@
 
                 </div>
 
-                <div class="them-mask bg-color-2"></div>
+                <div class="them-mask bg-color-2" id="getintouch"></div>
 
                 <div class="grid-row center-text">
 
@@ -310,7 +310,7 @@
 
             <!-- section -->
 
-            <section class="fullwidth-background testimonial padding-section">
+            <section class="fullwidth-background testimonial padding-section" id="testimonials">
 
                 <div class="grid-row">
 
@@ -361,6 +361,24 @@
         <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
 
         <script type="text/javascript">
+            $(".main-nav li a.testimonials").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#testimonials").offset().top
+                }, 2000);
+            });
+
+            $(".main-nav li a.service").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#service").offset().top
+                }, 2000);
+            });
+
+            $(".main-nav li a.getintouch").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#getintouch").offset().top
+                }, 2000);
+            });
+
 
             function changekonten(data){
 
