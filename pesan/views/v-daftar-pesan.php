@@ -4,23 +4,22 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Daftar Siswa</h4>
+                    <h4 class="panel-title">Daftar Pesan</h4>
                     <!-- Trigger the modal with a button -->
-                    <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>
+                    <!--<a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>-->
                     <br>
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarguru table table-striped display responsive nowrap" style="font-size: 13px">
+                <table class="daftarpesan table table-striped display responsive nowrap" style="font-size: 13px">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>Id siswa</th>
-                            <th>Nama Lengkap</th>
-                            <th>Nama Pengguna</th>
-                            <th>Sekolah</th>
+                            <th>No</th>
+                            <th>Pengirim Pesan</th>
+                            <th>Telepon</th>
                             <th>Email</th>
-                            <th>Report Siswa</th>
+                            <th>Pesan</th>
+                            <th>Tgl Pesan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -34,25 +33,25 @@
     </div>
 </section>
 <script type="text/javascript">
-    var tb_siswa;
+    var tb_pesan;
     $(document).ready(function () {
-        tb_siswa = $('.daftarguru').DataTable({
+        tb_pesan = $('.daftarpesan').DataTable({
             "ajax": {
-                "url": base_url + "siswa/ajax_daftar_siswa",
+                "url": base_url + "Pesan/ajax_daftar_pesan",
                 "type": "POST"
             },
-            "emptyTable": "Tidak Ada Data Siswa",
+            "emptyTable": "Tidak Ada Data Pesan",
             "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
         });
     });
 
-    function dropSiswa(idsiswa, idpengguna) {
-        if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
+    function dropPesan(id_pesan) {
+        if (confirm('Apakah Anda yakin akan menghapus data ini?')) {
             // ajax delete data to database
-
+            console.log(base_url + "index.php/Pesan/deletePesan/" + id_pesan);
             $.ajax({
-                url: base_url + "index.php/siswa/deleteSiswa/" + idsiswa + "/" + idpengguna,
-                data: "idsiswa=" + idsiswa + "&idpengguna=" + idpengguna,
+                url: base_url + "index.php/Pesan/deletePesan/" + id_pesan,
+                data: "id_pesan=" + id_pesan,
                 type: "POST",
                 dataType: "TEXT",
                 success: function (data, respone)
@@ -69,9 +68,8 @@
             });
         }
     }
-
     function reload_tblist() {
-        tb_siswa.ajax.reload(null, false);
+        tb_pesan.ajax.reload(null, false);
     }
 
 </script>

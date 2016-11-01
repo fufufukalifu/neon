@@ -11,6 +11,8 @@ class Homepage extends MX_Controller {
         $this->load->model('siswa/msiswa');
         $this->load->model('matapelajaran/mmatapelajaran');
         $this->load->model('video/mvideos');
+        $this->load->model('Mhomepage');
+        
     }
 
     public function index() {
@@ -36,5 +38,12 @@ class Homepage extends MX_Controller {
 
         $this->parser->parse('v-index-homepage', $data);
     }
-
+    
+    function addpesan() {
+        $data['name'] = htmlspecialchars($this->input->post('namalengkap'));
+        $data['phone'] = htmlspecialchars($this->input->post('telepon'));
+        $data['alamat'] = htmlspecialchars($this->input->post('email'));
+        $data['pesan'] = htmlspecialchars($this->input->post('pesan'));
+        $this->Mhomepage->insert_pesan($data);
+    }
 }
