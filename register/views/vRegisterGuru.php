@@ -3,7 +3,7 @@
     <!-- START Register Content -->
     <section class="container">
         <div class="row">
-            <div class="col-md-10 data-offset=2">
+            <div class="col-md-10">
                 <div class="text-center" style="margin-bottom:20px;">
                     <img src="<?=base_url('assets/back/img/logo-tara.png') ?>" > 
                     <br><h5 class="semibold text-muted mt-5"><br>Membuat Akun Guru</h5>

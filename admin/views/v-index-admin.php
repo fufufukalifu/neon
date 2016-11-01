@@ -482,7 +482,12 @@
 
                         <ul id="siswa" class="submenu collapse ">
                             <li class="submenu-header ellipsis">Siswa</li>
-                            <li >
+                            <li>
+                                <a href="<?=base_url('siswa/daftarsiswa') ?>">
+                                    <span class="text">Registrasi Siswa</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?=base_url('siswa/daftar') ?>">
                                     <span class="text">Daftar Siswa</span>
                                 </a>

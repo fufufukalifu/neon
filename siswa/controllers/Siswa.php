@@ -215,17 +215,14 @@ class Siswa extends MX_Controller {
             $row = array();
             $row[] = $no;
             $row[] = $list_siswa['idsiswa'];
-            ;
-            $row[] = $list_siswa['penggunaID'];
             $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
             $row[] = $list_siswa['namaPengguna'];
 
             $row[] = $list_siswa['namaSekolah'];
             $row[] = '<a href=""  title="Mail To">' . $list_siswa['eMail'] . '</a> <i class="ico-mail-send"></i>';
+            $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>';
 
-            $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_siswa(' . "'" . $list_siswa['id'] . "'" . ')"><i class="ico-edit"></i></a> 
-
-        <a class="btn btn-sm btn-primary"  title="Detail" onclick="detail_siswa(' . "'" . json_encode($list_siswa['id']) . "'" . ')"><i class="ico-file5"></i></a>
+            $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
 
         <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
 
@@ -354,7 +351,80 @@ class Siswa extends MX_Controller {
     public function deleteSiswa() {
         $idsiswa = $this->input->post('idsiswa');
         $idpengguna = $this->input->post('idpengguna');
-        $this->msiswa->hapus_siswa($idsiswa,$idpengguna);
+        $this->msiswa->hapus_siswa($idsiswa, $idpengguna);
+    }
+
+    //tgl 30 Oktober
+    function updateSiswa($idsiswa, $idpengguna) {
+        if ($idsiswa == null || $idpengguna == 0) {
+            echo 'kosong';
+        } else {
+            $idsiswa = $idsiswa;
+            $idpengguna = $idpengguna;
+
+            $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+
+//            var_dump($data);
+
+            $data['judul_halaman'] = "Rubah Data Siswa";
+            $data['files'] = array(
+                APPPATH . 'modules/siswa/views/v-update-siswa.php',
+            );
+            // jika admin
+            $this->parser->parse('admin/v-index-admin', $data);
+        }
+    }
+
+    //tgl 30 Oktober
+    function reportSiswa($idpengguna) {
+        if ($idpengguna == 0) {
+            echo 'kosong';
+        } else {
+            $idpengguna = $idpengguna;
+            $data['reportla'] = $this->msiswa->get_reportlatihan_siswa($idpengguna);
+//            var_dump($data);
+
+            $data['judul_halaman'] = "Report Siswa";
+            $data['files'] = array(
+                APPPATH . 'modules/siswa/views/v-report-siswa.php',
+            );
+//            // jika admin
+            $this->parser->parse('admin/v-index-admin', $data);
+        }
+    }
+
+    ##menampilkan daftar siswa ajax
+
+    public function ajax_daftar_latihan() {
+        $list = $this->msiswa->get_all_siswa();
+
+        $data = array();
+        $no = 0;
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ($list as $list_siswa) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $list_siswa['idsiswa'];
+            $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
+            $row[] = $list_siswa['namaPengguna'];
+
+            $row[] = $list_siswa['namaSekolah'];
+            $row[] = '<a href=""  title="Mail To">' . $list_siswa['eMail'] . '</a> <i class="ico-mail-send"></i>';
+            $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>';
+
+            $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
+
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "data" => $data,
+        );
+        echo json_encode($output);
     }
 
 }

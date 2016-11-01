@@ -114,14 +114,32 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
-    function hapus_siswa($idsiswa,$idpengguna) {
+    function hapus_siswa($idsiswa, $idpengguna) {
         $this->db->set('status', 0);
         $this->db->where('id', $idsiswa);
         $this->db->update('tb_siswa');
-        
+
         $this->db->set('status', 0);
         $this->db->where('id', $idpengguna);
         $this->db->update('tb_pengguna');
+    }
+
+    function get_siswa_byid($idsiswa,$idpengguna) {
+        $this->db->select('*,siswa.id as idsiswa');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
+        $this->db->where('pengguna.id', $idpengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    function get_reportlatihan_siswa($idpengguna) {
+        $this->db->select('*');
+        $this->db->from('tb_report-latihan reportla');
+        $this->db->join('tb_latihan latihan', 'reportla.id_latihan = latihan.id_latihan');
+        $this->db->where('reportla.id_pengguna', $idpengguna);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     ##
