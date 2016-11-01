@@ -10,24 +10,53 @@
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarlatihan table table-striped display responsive nowrap" style="font-size: 13px">
-                    <thead>
-                        <tr>
-                            <th>no</th>
-                            <th>Id siswa</th>
-                            <th>Nama Lengkap</th>
-                            <th>Nama Pengguna</th>
-                            <th>Sekolah</th>
-                            <th>Email</th>
-                            <th>Report Siswa</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
+                <div class="tab-pane" id="tingkatSMP">
 
-                    <tbody>
+                    <!--<table class="table table-striped" id="mapelsmp" style="font-size: 13px">-->
 
-                    </tbody>
-                </table>
+                    <table id="" class="table table-striped display" cellspacing="0" width="100%">
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Latihan</th>
+                                <th>Waktu Pengerjaan</th>
+                                <th>Jumlah Soal</th>
+                                <th>Benar</th>
+                                <th>Salah</th>
+                                <th>Kosong</th>
+                                <!--<th>Level Soal</th>-->
+                                <th>Durasi Pengerjaan</th>
+                                <th>Skore</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($reportla as $key) {
+                                ?>
+                                <tr>
+                                    <td class="text-center"><?= $i ?></td>
+                                    <td><?= $key['nm_latihan'] ?></td>
+                                    <td><?= $key['tgl_pengerjaan'] ?></td>
+                                    <td class="text-center"><?= $key['jmlh_benar'] + $key['jmlh_salah'] + $key['jmlh_kosong'] ?></td>
+                                    <td class="text-center"><?= $key['jmlh_benar'] ?></td>
+                                    <td class="text-center"><?= $key['jmlh_salah'] ?></td>
+                                    <td class="text-center"><?= $key['jmlh_kosong'] ?></td>
+                                    <td><?= $key['durasi_pengerjaan'] / 60 ?> Menit</td>
+                                    <td><?= $key['skore'] ?></td>
+                                </tr>
+
+                            <?php }$i++;
+                            ?>
+                        </tbody>
+
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
@@ -37,27 +66,35 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">Report Tryout Siswa</h4>
                     <!-- Trigger the modal with a button -->
-                    <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>
+                    <!--<a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>-->
                     <br>
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarlatihan table table-striped display responsive nowrap" style="font-size: 13px">
+                <table class="table table-striped display" style="font-size: 13px">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>Id siswa</th>
-                            <th>Nama Lengkap</th>
-                            <th>Nama Pengguna</th>
-                            <th>Sekolah</th>
-                            <th>Email</th>
-                            <th>Report Siswa</th>
-                            <th>Aksi</th>
+                            <th>No</th>
+                            <th>Tryout</th>
+                            <th>Tgl Tryout</th>
+                            <th class="text-center">Nilai Rata-Rata </th>
+                            <th class="text-center">Nilai Perpaket</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
+                        <?php
+                        $i = 1;
+                        foreach ($reportla as $key) {
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $i ?></td>
+                                <td><?= $key['nm_latihan'] ?></td>
+                                <td><?= $key['tgl_pengerjaan'] ?></td>
+                                <td class="text-center"><?= $key['jmlh_benar'] + $key['jmlh_salah'] + $key['jmlh_kosong'] ?></td>
+                                <td class="text-center"><a href="#">Lihat Detail</a></td>
+                            </tr>
+                        <?php }$i++;
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -65,43 +102,7 @@
     </div>
 </section>
 <script type="text/javascript">
-    var tb_siswa;
     $(document).ready(function () {
-        tb_siswa = $('.daftarlatihan').DataTable({
-            "ajax": {
-                "url": base_url + "siswa/ajax_daftar_latihan/",
-                "type": "POST"
-            },
-            "emptyTable": "Tidak Ada Data Latihan",
-            "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-        });
+        $('table.display').DataTable();
     });
-
-    function dropSiswa(idsiswa, idpengguna) {
-        if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
-            // ajax delete data to database
-
-            $.ajax({
-                url: base_url + "index.php/siswa/deleteSiswa/" + idsiswa + "/" + idpengguna,
-                data: "idsiswa=" + idsiswa + "&idpengguna=" + idpengguna,
-                type: "POST",
-                dataType: "TEXT",
-                success: function (data, respone)
-                {
-                    reload_tblist();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error deleting data');
-                    // console.log(jqXHR);
-                    // console.log(textStatus);
-                    console.log(errorThrown);
-                }
-            });
-        }
-    }
-
-    function reload_tblist() {
-        tb_siswa.ajax.reload(null, false);
-    }
 </script>
