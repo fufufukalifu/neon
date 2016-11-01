@@ -92,5 +92,32 @@ class Mvideoback extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function get_video_by_sub()
+	{
+				$this->db->select('*');
+		$this->db->from('tb_video');
+		$this->db->where('UUID',$UUID);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_video_by_bab()
+	{
+		# code...
+	}
+	public function get_video_by_mapel()
+	{
+		# code...
+	}
+	public function get_video_by_tingkat()
+	{
+		# code...
+	}
+
+	public function get_all_video()
+	{
+		# code...
+	}
 }
 ?>

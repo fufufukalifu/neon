@@ -156,13 +156,27 @@ class Videoback extends MX_Controller {
 
     public function managervideo() {
         // $data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
-        $data['judul_halaman'] = "Video manager";
+        $data['judul_halaman'] = "My Video";
         $data['files'] = array(
             APPPATH.'modules/videoback/views/v-container-video.php',
         );
-        $this->load->view( 'templating/index-b-guru', $data );
 
 
+         $hakAkses=$this->session->userdata['HAKAKSES'];
+                // cek hakakses 
+                if ($hakAkses=='admin') {
+                    // jika admin
+                    $this->parser->parse('admin/v-index-admin', $data);
+                } elseif($hakAkses=='guru'){
+                    // jika guru
+                    $this->parser->parse('templating/index-b-guru', $data);
+                }elseif($hakAkses=='siswa'){
+                    // jika siswa redirect ke welcome
+                    redirect(site_url('welcome'));
+                }else{
+                    
+                    redirect(site_url('login'));
+                }
         // $this->load->view('templating/t-header');
         // $this->load->view('guru/v-left-bar');
         // $this->load->view('v-video-manager', $this->get_video_manager());
@@ -429,6 +443,101 @@ class Videoback extends MX_Controller {
 
 
     //Start function untuk dropdown dependent pada form upload video#
+
+    // fungsi untuk filter video
+    public function filter_video()
+    {
+        $tingkat = $this->input->post('tingkat');
+        $pelajaran = $this->input->post('mataPelajaran');
+        $bab=$this->input->post('bab');
+        $subbab=$this->input->post('subbab');
+
+        if ($subbab != null) {
+            $this->Mvideoback->get_video_by_sub($subbab);
+        } else if ($bab != null) {
+            $this->Mvideoback->get_video_by_bab($bab);
+        } else if ($pelajaran != null) {
+            $this->Mvideoback->get_video_by_mapel($pelajaran);
+        } else if ($tingkat != null) {
+            $this->Mvideoback->get_video_by_tingkat($tingkat);
+        } else {
+            # code...
+        }    
+    }
+
+    // daftar semua video
+    public function listvideo()
+    {
+        $data['judul_halaman'] = "My Video";
+        $data['files'] = array(
+            APPPATH.'modules/videoback/views/v-all-video.php',
+        );
+
+         $this->parser->parse('templating/index-b-guru', $data);
+        
+    }
+
+    function ajax_get_all_video(){
+        $guru_id = $this->session->userdata['id_guru'];
+        $data['videos_uploaded'] = $this->load->mvideos->get_all_video();
+       // var_dump($data['videos_uploaded']);
+        $list = $data['videos_uploaded'];
+        $data = array();
+
+        //var_dump($list);
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ( $list as $list_video ) {
+            $n='1';
+            $row = array();
+
+            // $row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+            //                     <input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
+            //                     <label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
+            //                 </span>";
+            if ($list_video['published']=='1') {
+              $publish='Publish';
+            }else{
+              $publish='No Publish';
+            }
+            $row[] = $list_video['videoID'];
+            $row[] = $list_video['judulVideo'];
+            $row[] = $list_video['namaFile'];
+            $row[] = $list_video['matapelajaran'];
+            $row[] = $list_video['judulBab'];
+            $row[] = $list_video['judulSubBab'];
+            $row[] = substr($list_video['deskripsi'], 0, 100)." <a href=''>Read More</a>";
+            $row[] = $list_video['namaDepan']." ".$list_video['namaBelakang'];
+            $row[] =  $publish;
+            $row[] = '<a class="btn btn-sm btn-danger"  
+            title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
+            <i class="ico-remove"></i></a>  
+
+            <a class="btn btn-sm btn-warning" href="videoback/formUpdateVideo/'.$list_video['UUID'].'"  title="Ubah Video"
+               )"
+                >
+                    <i class="ico-file5"></i>
+                        </a> 
+
+            <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Detail Video"
+                data-id='.json_encode($list_video).'
+                onclick="detail('."'".$list_video['videoID']."'".')"
+                >
+                    <i class="ico-file5"></i>
+                        </a>  ';
+
+            $data[] = $row;
+            $n++;
+
+        }
+
+        $output = array(
+            "data"=>$data,
+        );
+        echo json_encode( $output );
+    }
+
+
 
 }
 
