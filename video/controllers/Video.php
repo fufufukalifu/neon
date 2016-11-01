@@ -65,6 +65,8 @@ class Video extends MX_Controller {
         $data['judulbab'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id );
 
         if ( $data['judulbab']==array() ) {
+            $judul_halaman = 'asdasd';
+
             $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );

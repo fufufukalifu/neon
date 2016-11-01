@@ -91,11 +91,11 @@
 
               <h4><strong><?php echo $judulbab ;?><br></strong></h4>
               <ol>
-                <li><a href="#"><?php echo $subbab ;?></a></li>
+                <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
                 <?php        
               }else{
                ?>
-               <li><a href="#"><?php echo $subbab ;?></a></li>
+               <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
                <?php
              }
              $cekjudulbab=$judulbab;

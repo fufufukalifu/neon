@@ -4,14 +4,45 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Daftar Siswa</h4>
+                    <h4 class="panel-title">Report Latihan Siswa</h4>
+                    <!-- Trigger the modal with a button -->
+                    <br>
+                    <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
+                </div>
+
+                <table class="daftarlatihan table table-striped display responsive nowrap" style="font-size: 13px">
+                    <thead>
+                        <tr>
+                            <th>no</th>
+                            <th>Id siswa</th>
+                            <th>Nama Lengkap</th>
+                            <th>Nama Pengguna</th>
+                            <th>Sekolah</th>
+                            <th>Email</th>
+                            <th>Report Siswa</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Report Tryout Siswa</h4>
                     <!-- Trigger the modal with a button -->
                     <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>
                     <br>
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarguru table table-striped display responsive nowrap" style="font-size: 13px">
+                <table class="daftarlatihan table table-striped display responsive nowrap" style="font-size: 13px">
                     <thead>
                         <tr>
                             <th>no</th>
@@ -36,12 +67,12 @@
 <script type="text/javascript">
     var tb_siswa;
     $(document).ready(function () {
-        tb_siswa = $('.daftarguru').DataTable({
+        tb_siswa = $('.daftarlatihan').DataTable({
             "ajax": {
-                "url": base_url + "siswa/ajax_daftar_siswa",
+                "url": base_url + "siswa/ajax_daftar_latihan/",
                 "type": "POST"
             },
-            "emptyTable": "Tidak Ada Data Siswa",
+            "emptyTable": "Tidak Ada Data Latihan",
             "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
         });
     });
@@ -73,5 +104,4 @@
     function reload_tblist() {
         tb_siswa.ajax.reload(null, false);
     }
-
 </script>

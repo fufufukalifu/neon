@@ -73,8 +73,6 @@
       </div>
       <!--Akhir 1-->
 
-
-
       <!-- Awal 2 -->
       <div class="grid-col-row clear-fix" >
         <div class="grid-col grid-col-3">
@@ -85,11 +83,11 @@
         ?>
         <h4><strong><?php echo $judulbab ;?><br></strong></h4>
         <ol>
-          <li><a href="#"><?php echo $bab_video_items->judulVideo ;?></a></li>
+          <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->videoID."/".$bab_video_items->subbabID ?>"><?php echo $bab_video_items->judulVideo ;?></a></li>
           <?php        
         }else{
          ?>
-         <li><a href="#"><?php echo $bab_video_items->judulVideo ;?></a></li>
+         <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->videoID."/".$bab_video_items->subbabID ?>"><?php echo $bab_video_items->judulVideo ;?></a></li>
          <?php
        }
        $cekjudulbab=$judulbab;
