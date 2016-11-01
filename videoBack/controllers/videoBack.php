@@ -3,16 +3,16 @@
 /**
  *
  */
-class videoBack extends MX_Controller {
+class Videoback extends MX_Controller {
 
     function __construct() {
         parent::__construct();
         $this->load->helper('session');
-        $this->load->model('MvideoBack');
+        $this->load->model('Mvideoback');
         $this->load->library('table');
         $this->load->model('video/mvideos');
         $this->load->model('guru/mguru');
-        $this->load->model('Templating/mtemplating');
+        $this->load->model('templating/mtemplating');
          $this->load->library('parser');
         // sessionkonfirm();
         // get_session_guru();
@@ -66,7 +66,7 @@ class videoBack extends MX_Controller {
             title="Hapus" onclick="drop_video('."'".$list_video['videoID']."'".')">
             <i class="ico-remove"></i></a>  
 
-            <a class="btn btn-sm btn-warning" href="videoBack/formUpdateVideo/'.$list_video['UUID'].'"  title="Detail Video"
+            <a class="btn btn-sm btn-warning" href="videoback/formUpdateVideo/'.$list_video['UUID'].'"  title="Ubah Video"
                )"
                 >
                     <i class="ico-file5"></i>
@@ -103,7 +103,7 @@ class videoBack extends MX_Controller {
 
         $data['judul_halaman'] = "upload Video";
         $data['files'] = array(
-            APPPATH . 'modules/videoBack/views/v-upload-video-form.php',
+            APPPATH . 'modules/videoback/views/v-upload-video-form.php',
         );
         
 
@@ -126,10 +126,10 @@ class videoBack extends MX_Controller {
 
      //menampilkan view form upload
     public function formUpdateVideo($UUID) {
-         $data['video']=$this->MvideoBack->get_video_by_UUID($UUID)[0];
+         $data['video']=$this->Mvideoback->get_video_by_UUID($UUID)[0];
         $data['judul_halaman'] = "update Video";
         $data['files'] = array(
-            APPPATH . 'modules/videoBack/views/v-update-video-form.php',
+            APPPATH . 'modules/videoback/views/v-update-video-form.php',
         );
         
 
@@ -158,7 +158,7 @@ class videoBack extends MX_Controller {
         // $data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
         $data['judul_halaman'] = "Video manager";
         $data['files'] = array(
-            APPPATH.'modules/videoBack/views/v-container-video.php',
+            APPPATH.'modules/videoback/views/v-container-video.php',
         );
         $this->load->view( 'templating/index-b-guru', $data );
 
@@ -173,7 +173,7 @@ class videoBack extends MX_Controller {
         // $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher($guru_id);
         //         $data['jumlah_video'] = count($this->load->mvideos->get_video_by_teacher($guru_id));
         // $data['files'] = array(
-        //     APPPATH . 'modules/videoBack/views/v-video-manager.php',
+        //     APPPATH . 'modules/videoback/views/v-video-manager.php',
         //     );
 
         // $data['judul_halaman'] = "List  Mata Pelajaran";
@@ -207,7 +207,7 @@ class videoBack extends MX_Controller {
 
 
             $penggunaID = $this->session->userdata['id'];
-            $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+            $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
             $guruID = $data['tb_guru']['id'];
             $UUID=uniqid();
                 //data yg akan di masukan ke tabel video
@@ -222,7 +222,7 @@ class videoBack extends MX_Controller {
                 'jenis_video' => $data['jenis_video']
                 );
 
-            $this->MvideoBack->insertVideo($data_video);
+            $this->Mvideoback->insertVideo($data_video);
         }
     }
        
@@ -255,7 +255,7 @@ class videoBack extends MX_Controller {
         }else{
              if ($option_up =='link') {
                 $penggunaID = $this->session->userdata['id'];
-                $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+                $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
                 $guruID = $data['tb_guru']['id'];
                 $UUID = uniqid();
                  $data_video = array(
@@ -269,7 +269,7 @@ class videoBack extends MX_Controller {
                      'jenis_video' => $data['jenis_video']
                 );
                
-                $this->MvideoBack->insertVideo($data_video);
+                $this->Mvideoback->insertVideo($data_video);
              }else{
                 $this->upvideo($data);
              }
@@ -304,7 +304,7 @@ class videoBack extends MX_Controller {
              if ($option_up =='link') {
                 $this->dropVideoServer($UUID);
                 $penggunaID = $this->session->userdata['id'];
-                $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+                $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
                 $guruID = $data['tb_guru']['id'];
                  $data['video'] = array(
                     'judulVideo' => $data['judulVideo'] ,
@@ -316,7 +316,7 @@ class videoBack extends MX_Controller {
                     'subBabID' => $data['subBabID'],
                 );
                
-                $this->MvideoBack->ch_video($data);
+                $this->Mvideoback->ch_video($data);
 
              }else{
                 
@@ -335,7 +335,7 @@ class videoBack extends MX_Controller {
         $this->load->library('upload', $config);
 
         $penggunaID = $this->session->userdata['id'];
-        $data['tb_guru'] = $this->MvideoBack->getIDguru($penggunaID)[0];
+        $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
         $guruID = $data['tb_guru']['id'];
         $UUID=$data['UUID'];
        
@@ -365,12 +365,12 @@ class videoBack extends MX_Controller {
             'subBabID' => $data['subBabID'],
             );
         }
-          $this->MvideoBack->ch_video($data);
+          $this->Mvideoback->ch_video($data);
     }
     //hapus video di server
     public function dropVideoServer($UUID)
     {
-        $video=$this->MvideoBack->get_video_by_UUID($UUID)[0];
+        $video=$this->Mvideoback->get_video_by_UUID($UUID)[0];
 
         if ($video['namaFile']!=null) {
           unlink(FCPATH . "./assets/video/" . $video['namaFile']);
@@ -381,7 +381,7 @@ class videoBack extends MX_Controller {
     //hapus video di db
     public function dropVideo($videoID)
     {
-        $this->MvideoBack->del_video($videoID);
+        $this->Mvideoback->del_video($videoID);
     }
     //hapus file video
     public function del_file_video($videoID)
@@ -402,19 +402,19 @@ class videoBack extends MX_Controller {
     public function getPelajaran( $tingkatID ) {
         $data = $this->output
         ->set_content_type( "application/json" )
-        ->set_output( json_encode( $this->MvideoBack->scPelajaran( $tingkatID ) ) ) ;
+        ->set_output( json_encode( $this->Mvideoback->scPelajaran( $tingkatID ) ) ) ;
     }
 
     public function getBab( $tpelajaranID ) {
         $data = $this->output
         ->set_content_type( "application/json" )
-        ->set_output( json_encode( $this->MvideoBack->scBab( $tpelajaranID ) ) ) ;
+        ->set_output( json_encode( $this->Mvideoback->scBab( $tpelajaranID ) ) ) ;
     }
 
     public function getSubbab( $babID ) {
         $data = $this->output
         ->set_content_type( "application/json" )
-        ->set_output( json_encode( $this->MvideoBack->scSubbab( $babID ) ) );
+        ->set_output( json_encode( $this->Mvideoback->scSubbab( $babID ) ) );
 
 
     }
@@ -422,7 +422,7 @@ class videoBack extends MX_Controller {
     public function getTingkat() {
         $data = $this->output
         ->set_content_type( "application/json" )
-        ->set_output( json_encode( $this->MvideoBack->scTingkatvideo() ) ) ;
+        ->set_output( json_encode( $this->Mvideoback->scTingkatvideo() ) ) ;
     }
 
 

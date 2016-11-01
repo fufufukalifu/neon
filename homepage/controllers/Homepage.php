@@ -7,16 +7,16 @@ class Homepage extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('parser');
-        $this->load->model('guru/mGuru');
-        $this->load->model('siswa/mSiswa');
+        $this->load->model('guru/mguru');
+        $this->load->model('siswa/msiswa');
         $this->load->model('matapelajaran/mmatapelajaran');
         $this->load->model('video/mvideos');
     }
 
     public function index() {
-        $datas['jumlahGuru'] = $this->mGuru->get_teachers_number();
+        $datas['jumlahGuru'] = $this->mguru->get_teachers_number();
         $datas['jumlahMapel'] = $this->mmatapelajaran->get_courses_number();
-        $datas['jumlahSiswa'] = $this->mSiswa->get_siswa_numbers();
+        $datas['jumlahSiswa'] = $this->msiswa->get_siswa_numbers();
         $datas['jumlahVideo'] = $this->mvideos->get_numbers_all_video();
 
 
@@ -32,7 +32,7 @@ class Homepage extends MX_Controller {
 
         );
         $data['file'] = 'v-container.php';
-        $data['teachers'] = $this->mGuru->get_guru_random();
+        $data['teachers'] = $this->mguru->get_guru_random();
 
         $this->parser->parse('v-index-homepage', $data);
     }

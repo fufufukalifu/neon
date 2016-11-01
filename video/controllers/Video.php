@@ -7,8 +7,8 @@ class Video extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'Mvideos' );
-        $this->load->model( 'Guru/Mguru' );
-        $this->load->model( 'komen/mKomen' );
+        $this->load->model( 'guru/mguru' );
+        $this->load->model( 'komen/mkomen' );
         $this->load->library( 'parser' );
     }
 
@@ -65,6 +65,8 @@ class Video extends MX_Controller {
         $data['judulbab'] = $this->load->Mvideos->get_video_by_sub( $sub_bab_id );
 
         if ( $data['judulbab']==array() ) {
+            $judul_halaman = 'asdasd';
+
             $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
             $this->load->view( 'templating/t-header' );
             $this->load->view( 'templating/t-navbarUser', $data );
@@ -103,7 +105,9 @@ class Video extends MX_Controller {
         $data = array(
             'judul_halaman' => 'Neon - Video Pelajaran '. $data['aliaspelajaran'],
             'judul_header' => $data['title'],
-            'mapel' => $alias_pelajaran
+            'mapel' => $alias_pelajaran,
+            'alias_tingkat' =>$data['aliastingkat'],
+            'alias_pelajaran' => $data['aliaspelajaran']
         );
 
         //
@@ -114,7 +118,38 @@ class Video extends MX_Controller {
             APPPATH.'modules/video/views/f-daftar-video.php',
             APPPATH.'modules/templating/views/footer.php'
         );
+        // print_r($data);
+         $this->parser->parse( 'templating/index', $data );
+      
 
+    }
+
+        public function daftarallvideo( $alias_pelajaran = "", $alias_tingkat = "" ) {
+        
+        //tampilkan bab dan subab video
+        $data['aliastingkat'] = $alias_tingkat;
+        $data['aliaspelajaran'] = $alias_pelajaran;
+        $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk tingkat ".$data['aliastingkat'];
+        //data untuk templating
+        $data = array(
+            'judul_halaman' => 'Neon - Video Pelajaran '. $data['aliaspelajaran'],
+            'judul_header' => $data['title'],
+            'mapel' => $alias_pelajaran            ,'alias_tingkat' =>$data['aliastingkat'],
+            'alias_pelajaran' => $data['aliaspelajaran']
+        );
+
+        //
+        $data['bab_video'] = $this->load->Mvideos->get_video_as_sub( $alias_tingkat, $alias_pelajaran );
+        $data['files'] = array(
+            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/templating/views/t-f-pagetitle.php',
+            APPPATH.'modules/video/views/f-daftar-video-bybab.php',
+            APPPATH.'modules/templating/views/footer.php'
+        );
+
+        // var_dump($data['bab_video']);
+
+        
          $this->parser->parse( 'templating/index', $data );
       
 
@@ -137,7 +172,7 @@ class Video extends MX_Controller {
             $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
             $onevideo = $data['videosingle'];
             $guruID = $onevideo[0]->guruID;
-            $penulis = $this->load->Mguru->get_penulis( $guruID )[0];
+            $penulis = $this->load->mguru->get_penulis( $guruID )[0];
             $data = array(
                 'judul_halaman' => 'Neon - Video : '.$onevideo[0]->judulVideo,
                 'judul_header' => 'Video berjudul '.$onevideo[0]->judulVideo,
@@ -172,7 +207,7 @@ class Video extends MX_Controller {
             //
 
             // //ambil komen berdasarkan id video
-            // $data['komen']=$this->load->mKomen->get_komen_byvideo( $idvideo );
+            // $data['komen']=$this->load->mkomen->get_komen_byvideo( $idvideo );
 
             //$this->loadparse($data);
             $this->parser->parse( 'templating/index', $data );

@@ -32,7 +32,7 @@ $(document).ready(function() {
 		tblist_video = $('#zero-configuration').DataTable({ 
          "processing": true,
          "ajax": {
-          "url": base_url+"index.php/videoBack/ajax_get_video_by_id_guru",
+          "url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
           "type": "POST"
         },
       });
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	function drop_video(videoID){
 		if(confirm('Are you sure delete this data?')){
 	  $.ajax({
-	            url : base_url+"index.php/videoBack/del_file_video/"+videoID,
+	            url : base_url+"index.php/videoback/del_file_video/"+videoID,
 	            type: "POST",
 	            dataType: "JSON",
 	            success: function(data)

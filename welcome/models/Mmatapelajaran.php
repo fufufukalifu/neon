@@ -11,8 +11,8 @@ class Mmatapelajaran extends CI_Model
 		return $query->result();
 	}
 
-	public function get_pelajaran_smk(){
-		$query = $this->db->get('view_pelajaran_smk');
+	public function get_pelajaran_sma_ips(){
+		$query = $this->db->get('view_pelajaran_sma_ips');
 		return $query->result();
 	}
 

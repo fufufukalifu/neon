@@ -332,7 +332,7 @@
      $('#tbpaket input').attr('checked',false);
 
      if (idpaket.length > 0) {
-      var url = base_url+"index.php/toBack/addPaketToTO";
+      var url = base_url+"index.php/toback/addPaketToTO";
 
       $.ajax({
        url : url,
@@ -378,7 +378,7 @@
         $('#tbsiswa input').attr('checked',false);
 
         if (idsiswa.length > 0) {
-         var url = base_url+"index.php/toBack/addsiswaToTO";
+         var url = base_url+"index.php/toback/addsiswaToTO";
 
          $.ajax({
           url : url,
@@ -449,7 +449,7 @@
      if (confirm('Apakah Anda yakin akan menghapus data paket? ')) {
                // ajax delete data to database
                $.ajax({
-                url : base_url+"index.php/toBack/dropPaketTo/"+idKey,
+                url : base_url+"index.php/toback/dropPaketTo/"+idKey,
                 type: "POST",
                 dataType: "TEXT",
                 success: function(data,respone)
@@ -475,7 +475,7 @@
             if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
                // ajax delete data to database
                $.ajax({
-                url : base_url+"index.php/toBack/dropSiswaTo/"+idKey,
+                url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
                 type: "POST",
                 dataType: "TEXT",
                 success: function(data,respone)

@@ -124,7 +124,7 @@ class Msiswa extends CI_Model {
         $this->db->update('tb_pengguna');
     }
 
-    function get_siswa_byid($idsiswa,$idpengguna) {
+    function get_siswa_byid($idsiswa, $idpengguna) {
         $this->db->select('*,siswa.id as idsiswa');
         $this->db->from('tb_siswa siswa');
         $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
@@ -132,7 +132,7 @@ class Msiswa extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     function get_reportlatihan_siswa($idpengguna) {
         $this->db->select('*');
         $this->db->from('tb_report-latihan reportla');

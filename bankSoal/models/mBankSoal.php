@@ -3,7 +3,7 @@
 /**
  * 
  */
-class MbankSoal extends CI_Model {
+class Mbanksoal extends CI_Model {
     # Start Function untuk form soal#	
 
     public function insert_soal($dataSoal) {
@@ -165,7 +165,6 @@ class MbankSoal extends CI_Model {
 
     #ambil soal yang belum terdaftar dalam paket soal.
     public function get_soal_terdaftar($data){
-       $sub =  $data['id_subab'];
        $paket = $data['id_paket'];
         
         $myquery ="SELECT * FROM `tb_banksoal` bank
@@ -179,12 +178,9 @@ class MbankSoal extends CI_Model {
              ON pb.`id_soal`= b.`id_soal`
              JOIN `tb_paket` p ON
              p.`id_paket` = pb.`id_paket`
-             JOIN `tb_subbab` sub ON
-             sub.`id` = p.`id_subbab`
-             WHERE pb.`id_subbab` = $sub
             AND p.`id_paket` = $paket
-            )
-            ";
+           )"
+            ;
 
     $result = $this->db->query($myquery);
     return $result->result_array();

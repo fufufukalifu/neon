@@ -53,7 +53,16 @@
 
 </section>
 <!--/ END Template Main -->
-<
+<!-- Start Math jax -->
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+  <script type="text/javascript" async
+  src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
+</script>
+<!-- end Math jax -->
 
 <script type="text/javascript">
 
@@ -64,7 +73,7 @@
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/bankSoal/ajax_soalPerSub/"+subBab,
+                    "url": base_url+"index.php/banksoal/ajax_soalPerSub/"+subBab,
                     "type": "POST"
                     },
             "processing": true,
@@ -78,7 +87,7 @@
                // ajax delete data to database
                console.log(id_soal);
                $.ajax({
-                     url : base_url+"index.php/bankSoal/deleteBanksoal/"+id_soal,
+                     url : base_url+"index.php/banksoal/deletebanksoal/"+id_soal,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)

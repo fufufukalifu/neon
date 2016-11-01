@@ -13,7 +13,7 @@ class Guru extends MX_Controller {
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'komen/mkomen' );
         $this->load->model( 'register/mregister' );
-        $this->load->model('Templating/mtemplating');
+        $this->load->model('templating/mtemplating');
         $this->load->model('siswa/msiswa');
         $this->load->library('parser');
         //cek kalo bukan guru lemparin.

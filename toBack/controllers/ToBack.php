@@ -3,14 +3,14 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 /**
  *
  */
-class ToBack extends MX_Controller
+class Toback extends MX_Controller
 {
 	public function __construct() {
 		$this->load->library( 'parser' );
-		$this->load->model('mToBack');
-		$this->load->model( 'paketsoal/MPaketsoal' );
+		$this->load->model('Mtoback');
+		$this->load->model( 'paketsoal/mpaketsoal' );
 		$this->load->model('siswa/msiswa');
-		$this->load->model('Templating/mtemplating');
+		$this->load->model('templating/mtemplating');
 		parent::__construct();
 		if ($this->session->userdata('loggedin')==true) {
 			if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -45,7 +45,7 @@ class ToBack extends MX_Controller
 			'UUID' =>$UUID
 			);
 
-		$this->mToBack->insert_to($dat_To);
+		$this->Mtoback->insert_to($dat_To);
 		redirect(site_url('toback/addPaketTo/'.$UUID));
 	}
 	#END Function buat TO#
@@ -68,7 +68,7 @@ class ToBack extends MX_Controller
 
 	public function cek_PaketTo($UUID)
 	{
-		$data['tryout'] = $this->MPaketsoal->get_id_by_UUID($UUID);
+		$data['tryout'] = $this->mpaketsoal->get_id_by_UUID($UUID);
 		if (!$data['tryout']==array()) {		
 			$id_to = $data['tryout']['id_tryout'];
 			$data['id_to']=$data['tryout']['id_tryout'];
@@ -93,7 +93,7 @@ class ToBack extends MX_Controller
 		$id_paket=$this->input->post('idpaket');
 		$id_tryout=$this->input->post('id_to');
 		// $id_paket=$this->input->post('test');
-		// $this->mToBack->inseert_addPaket();
+		// $this->Mtoback->inseert_addPaket();
 		$dat_paket=array();//testing
 		foreach ($id_paket as $key) {
 			$dat_paket[] = array(
@@ -101,7 +101,7 @@ class ToBack extends MX_Controller
 				'id_paket'=>$key);
 			
 		}
-		$this->mToBack->insert_addPaket($dat_paket);
+		$this->Mtoback->insert_addPaket($dat_paket);
 		// var_dump(expression)
 	}
 	// add hak akses to siswa 
@@ -110,7 +110,7 @@ class ToBack extends MX_Controller
 		$id_siswa=$this->input->post('idsiswa');
 		$id_tryout=$this->input->post('id_to');
 		// $id_paket=$this->input->post('test');
-		// $this->mToBack->inseert_addPaket();
+		// $this->Mtoback->inseert_addPaket();
 		//menampung array id siswa
 		$dat_siswa=array();
 		foreach ($id_siswa as $key) {
@@ -120,14 +120,14 @@ class ToBack extends MX_Controller
 			
 		}
 		//add siswa ke paket 
-		$this->mToBack->insert_addSiswa($dat_siswa);
+		$this->Mtoback->insert_addSiswa($dat_siswa);
 		// var_dump(expression)
 	}
 
 
 	//menampikan paket yg sudah di add
 	function ajax_listpaket_by_To($idTO) {
-		$list = $this->load->mToBack->paket_by_toID($idTO);
+		$list = $this->load->Mtoback->paket_by_toID($idTO);
 		$data = array();
 
 		$baseurl = base_url();
@@ -154,7 +154,7 @@ class ToBack extends MX_Controller
 	function ajax_listsiswa_by_To($idTO) {
 		
 
-		$list = $this->load->mToBack->siswa_by_totID($idTO);
+		$list = $this->load->Mtoback->siswa_by_totID($idTO);
 		$data = array();
 
 		$baseurl = base_url();
@@ -194,7 +194,7 @@ class ToBack extends MX_Controller
 	// menampilkan list to
 	public function ajax_listsTO()
 	{
-		$list =$this->mToBack->get_To();
+		$list =$this->Mtoback->get_To();
 		$data = array();
 
 		$baseurl = base_url();
@@ -241,11 +241,11 @@ class ToBack extends MX_Controller
 					}
 					public function dropTO($id_tryout)
 					{
-						$this->mToBack->drop_TO($id_tryout);
+						$this->Mtoback->drop_TO($id_tryout);
 					}
 
 					public function ajax_edit( $id_tryout) {
-						$data = $this->mToBack->get_TO_by_id( $id_tryout );
+						$data = $this->Mtoback->get_TO_by_id( $id_tryout );
 						echo json_encode( $data );
 					}
 	#END Function di halaman daftar TO#
@@ -253,13 +253,13 @@ class ToBack extends MX_Controller
 	// Drop paketb to TO
 					public function dropPaketTo($idKey)
 					{
-						$this->mToBack->drop_paket_toTO($idKey);
+						$this->Mtoback->drop_paket_toTO($idKey);
 					}
 
 	// Drop siswa to to
 					public function dropSiswaTo($idKey)
 					{
-						$this->mToBack->drop_siswa_toTO($idKey);
+						$this->Mtoback->drop_siswa_toTO($idKey);
 					}
 
 
@@ -278,17 +278,17 @@ class ToBack extends MX_Controller
 							'publish'=>$publish,
 							);
 
-						$this->mToBack->ch_To($data);
+						$this->Mtoback->ch_To($data);
 					}
 
 	#####OPIK#########################################
 
 					public function reportto($uuid){
-						$data['tryout'] = $this->mToBack->get_to_byuuid($uuid);
+						$data['tryout'] = $this->Mtoback->get_to_byuuid($uuid);
 
 						if (!$data['tryout']==array()) {
 							$id_to  = $data['tryout'][0]['id_tryout'];
-							$data['daftar_peserta'] =$this->mToBack->get_all_report($id_to);
+							$data['daftar_peserta'] =$this->Mtoback->get_all_report($id_to);
 							$data['files'] = array(
 								APPPATH . 'modules/toback/views/v-list-peserta.php',
 								);
@@ -307,7 +307,7 @@ class ToBack extends MX_Controller
 
 		##menampilkan paket yang belum ada di TO.
 					function ajax_list_all_paket($id_to){
-						$list = $this->MPaketsoal->get_paket_unregistered($id_to);
+						$list = $this->mpaketsoal->get_paket_unregistered($id_to);
 						$data = array();
 						$baseurl = base_url();
 						$n = 1;
@@ -356,8 +356,8 @@ class ToBack extends MX_Controller
 						$data['id_to']=htmlspecialchars($this->input->get('id_to'));
 						$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
 						$data['idPengguna']=$penggunaID;
-						$data['siswa']=$this->mToBack->get_nama_siswa($penggunaID)[0];
-						$data['reportPaket']=$this->mToBack->get_report_paket($data);
+						$data['siswa']=$this->Mtoback->get_nama_siswa($penggunaID)[0];
+						$data['reportPaket']=$this->Mtoback->get_report_paket($data);
 						$data['files'] = array(
 							APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
 							);
@@ -367,7 +367,7 @@ class ToBack extends MX_Controller
 					//menampilkan report paket 
 					public function reportpaket($idpaket)
 					{
-						$data['report']=$this->mToBack->get_all_report_paket($idpaket);
+						$data['report']=$this->Mtoback->get_all_report_paket($idpaket);
 						
 							$data['files'] = array(
 							APPPATH . 'modules/paketsoal/views/v-report-paket.php',

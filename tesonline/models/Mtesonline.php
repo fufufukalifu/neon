@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tesonline_model extends CI_Model {
+class Mtesonline extends CI_Model {
 
     //mengambil paket tingkat dan mapel tertentu
     //misalnya : IPA untuk Tingkat SD

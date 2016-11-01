@@ -1,4 +1,4 @@
-<?php 
-
-echo "HAISSSSSSSSSSSSSS";
+<?php 
+
+echo "HAISSSSSSSSSSSSSS";
  ?>

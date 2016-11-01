@@ -8,6 +8,104 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
 } 
 
 ?>
+<!-- Strat Script Matjax -->
+     <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({
+         showProcessingMessages: false,
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+       });
+     </script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+
+<script>
+var Preview = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+  buffer: null,      // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  //
+  //  Get the preview and buffer DIV's
+  //
+  Init: function () {
+    this.preview = document.getElementById("MathPreview");
+    this.buffer = document.getElementById("MathBuffer");
+  },
+
+  //
+  //  Switch the buffer and preview, and display the right one.
+  //  (We use visibility:hidden rather than display:none since
+  //  the results of running MathJax are more accurate that way.)
+  //
+  SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+    preview.style.position = ""; preview.style.visibility = "";
+  },
+
+  //
+  //  This gets called when a key is pressed in the textarea.
+  //  We check if there is already a pending update and clear it if so.
+  //  Then set up an update to occur after a small delay (so if more keys
+  //    are pressed, the update won't occur until after there has been 
+  //    a pause in the typing).
+  //  The callback function is set up below, after the Preview object is set up.
+  //
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //
+  //  Creates the preview and runs MathJax on it.
+  //  If MathJax is already trying to render the code, return
+  //  If the text hasn't changed, return
+  //  Otherwise, indicate that MathJax is running, and start the
+  //    typesetting.  After it is done, call PreviewDone.
+  //  
+  CreatePreview: function () {
+    Preview.timeout = null;
+    if (this.mjPending) return;
+    var text = document.getElementById("MathInput").value;
+    if (text === this.oldtext) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+ ["Typeset",MathJax.Hub,this.buffer],
+ ["PreviewDone",this]
+      );
+    }
+  },
+
+  //
+  //  Indicate that MathJax is no longer running,
+  //  and swap the buffers to show the results.
+  //
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//
+//  Cache a callback to the CreatePreview action
+//
+Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+Preview.callback.autoReset = true;  // make sure it can run more than once
+
+</script>
+     <!-- END Script Matjax -->
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
 <section id="main" role="main">
@@ -15,24 +113,41 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
-      
+<!-- Start Modal salah upload gambar -->
+<div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek type extension gambar! </h3>
+        <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updateBanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->
                         <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
-                        <input type="text" name="soalID" value="<?=$bankSoal['id_soal'];?>" hidden="true">
-                        <input type="text" name="UUID" value="<?=$bankSoal['UUID'];?>"  hidden="true">
+                        <input type="text" name="soalID" value="<?=$banksoal['id_soal'];?>" hidden="true">
+                        <input type="text" name="UUID" value="<?=$banksoal['UUID'];?>"  hidden="true">
                     </div>               
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label col-sm-2">Judul Soal</label>
                             <div class="col-sm-8">
-                                <input type="text" name="judul" value="<?=$bankSoal['judul_soal'];?>" class="form-control">
+                                <input type="text" name="judul" value="<?=$banksoal['judul_soal'];?>" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,14 +164,14 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                         <div class="form-group">
                             <label class="control-label col-sm-2">Sumber</label>
                             <div class="col-sm-8">
-                                <input type="text" name="sumber" value="<?=$bankSoal['sumber'];?>" class="form-control">
+                                <input type="text" name="sumber" value="<?=$banksoal['sumber'];?>" class="form-control">
                             </div>
                         </div>
                          <div class="form-group">
                             <label class="control-label col-sm-2">Gambar Soal</label>
                              <div class="col-sm-8 " >
                                 <div class="col-sm-12">
-                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$bankSoal['gambar_soal'];?>" alt="" />
+                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$banksoal['gambar_soal'];?>" alt="" />
                                  </div>
                                          
                                 <div class="col-sm-12">
@@ -75,17 +190,84 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileSoal" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal"/>
+                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Soal</label>
+
+                            <label class="control-label col-sm-2">Jensi Editor</label>
+
                             <div class="col-sm-8">
-                                <textarea  name="editor1" class="form-control" id="">
-                                    <?=$bankSoal['soal'];?>
-                                </textarea>
+
+                                <div class="btn-group" data-toggle="buttons" >
+
+                                      <label class="btn active " id="in-soal">
+
+                                        <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
+
+                                      </label>
+
+                                      <label class="btn" id="pr-rumus">
+
+                                        <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
+
+                                      </label>
+
+                                 </div>
+
                             </div>
+
+                        </div>
+
+                        <div class="form-group">
+                           <!-- Start Editor Soal -->
+                           <div id="editor-soal">
+                            <label class="control-label col-sm-2">Soal</label>
+                             <div class="col-sm-10">
+
+                                 <textarea  name="editor1" class="form-control" id="">
+
+                                     <?=$banksoal['soal'];?>
+
+                                 </textarea>
+
+                             </div>
+                            </div>
+                            <!-- End Editor Soal -->
+                            <!-- Start Math jax -->
+                            <div id="editor-rumus" hidden="true">
+                              <label class="control-label col-sm-2">Buat rumus</label>
+                              <div class="col-sm-10">
+
+                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" >
+                               </textarea>
+
+                              </div>
+                              <label class="control-label col-sm-2"></label>
+                               <div class="col-sm-10">
+                               <p>
+                               Configured delimiters:
+                                <ul>
+                               <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
+                               <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
+                               <li>Asciimath: <code>`...`</code>.</li>
+                               </ul>
+                               </p>
+                               </div>
+                               
+                              <label class="control-label col-sm-2"></label>
+                              <div class="col-sm-10">
+                              <label class="control-label" >Preview is shown here:</label>
+                               <div class="form-control" id="MathPreview" ></div>
+                               <div class="form-control" id="MathBuffer" style=" 
+                               visibility:hidden; position:absolute; top:0; left: 0"></div>
+                              </div>
+                            </div>
+                            <script>
+                            Preview.Init();
+                            </script>
+                            <!-- End MathJax -->
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
@@ -144,7 +326,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileA" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1"/>
+                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar A -->
@@ -181,7 +363,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileB" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2"/>
+                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +400,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileC" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3"/>
+                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -256,7 +438,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileD" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4"/>
+                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar D -->                       
@@ -295,7 +477,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
                                     <label for="fileE" class="btn btn-success">
                                         Pilih Gambar
                                     </label>
-                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5"/>
+                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
                                 </div>
                             </div>
                             <!-- END input Gambar C -->                       
@@ -355,6 +537,23 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
     <!-- script untuk option hide and show -->
     <script type="text/javascript">
         $(document).ready(function(){
+          // Start event untuk jenis editor
+            $("#in-soal").click(function(){
+
+                $("#editor-soal").show();
+
+                 $("#editor-rumus").hide();
+
+            });
+
+            $("#pr-rumus").click(function(){
+
+                $("#editor-rumus").show();
+
+                 $("#editor-soal").hide();
+
+            });
+           // End event untuk jenis editor
             // Strat  event untuk pilihan jenis input  
             $("#text").click(function(){
                 $(".piltext").show();
@@ -515,7 +714,34 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
         });
     </script>
      <!-- End script untuk priview gambar soal -->
-
+<!-- start script js validation extension -->
+<script type="text/javascript">
+ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+function ValidateSingleInput(oInput) {
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+             $('#warningupload').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
+</script>
+<!-- END -->
    
     
 
