@@ -18,7 +18,7 @@ class Mtryout extends MX_Controller {
 
     #get paket yang belum dikerjakan.
     public function get_paket_undo($id_to) {
-        echo $id_to;
+//        echo $id_to;
         $query = "SELECT *
 				FROM `tb_tryout` `to` 
 				JOIN `tb_mm-tryoutpaket` `topaket` 

@@ -609,6 +609,25 @@
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="javascript:void(0);" data-target="#pesan" data-toggle="submenu" data-parent=".topmenu">
+                            <span class="figure"><i class="ico-bubble"></i></span>
+                            <span class="text">Pesan</span>
+                            <span class="arrow"></span>
+                        </a>
+
+                        <ul id="pesan" class="submenu collapse ">
+                            <li class="submenu-header ellipsis">Pesan</li>
+
+                            <li >
+                                <a href="<?=  base_url('index.php/pesan')?>">
+                                    <span class="text">Daftar Pesan</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
 
                 </ul>
                 <!--/ END Template Navigation/Menu -->
