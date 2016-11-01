@@ -345,6 +345,15 @@ class Mvideos extends CI_Model
 
   }
 
+  function get_last_video(){
+    $this->db->select( '*' );
+    $this->db->from( 'tb_video video' );
+    $this->db->order_by('date_created','desc');
+    $this->db->limit('2');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
 }
 
 ?>

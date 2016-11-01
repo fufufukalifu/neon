@@ -470,7 +470,6 @@
 
         <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js') ?>"></script>
 
-        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/ex tensions/revolution.extension.kenburn.min.js') ?>"></script>
 
         <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.navigation.min.js') ?>"></script>
 
@@ -490,9 +489,6 @@
 
         <script src="<?= base_url('assets/back/js/jquery.tweet.js') ?>"></script>
 
-        <script type='text/javascript' src="<?= base_url('assets/back/tuner/js/colorpicker.js') ?>"></script>
-
-        <script type='text/javascript' src="<?= base_url('assets/back/tuner/js/scripts.js') ?>"></script>
 
         <script src="<?= base_url('assets/back/js/jquery.fancybox.pack.js') ?>"></script>
 
