@@ -24,33 +24,52 @@ class Video extends MX_Controller {
     }
 
     //halaman tampilkan sub bab dan see
-    public function videosub( $id_sub_bab, $id_video ) {
+    public function videosub( $id_sub_bab) {
         //digunakan untuk semua video
-        $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+        // $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
         //digunakan untuk judul subab
-        $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+        $datas['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
+        $babid = $datas['judul_sub_bab'][0]['babID'];
+        $data['subab'] = $this->load->Mvideos->get_sub_by_id($babid);
+        // print_r($data);
+
         if ( !isset( $id_video ) ) {
             //tidak ada id video
-            
-            if ( $data['judul_sub_bab']==array() ) {
+            if ( $datas['judul_sub_bab']==array()) {
                 //kalo yang diklik belum punya video
-
                 $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
-                $this->load->view( 'templating/t-header' );
-                $this->load->view( 'templating/t-navbarUser' );
-                $this->load->view( 'v-banner-videoBelajar', $data );
-                $this->load->view( 'templating/t-footer' );
+                // $this->load->view( 'templating/t-header' );
+                // $this->load->view( 'templating/t-navbarUser' );
+                // $this->load->view( 'v-banner-videoBelajar', $data );
+                // $this->load->view( 'templating/t-footer' );
             }else {
-                //kalo yang diklik sudah punya video
+             $data['title'] = $datas['judul_sub_bab'][0]['judulBab'];
+             $data = array(
+                'judul_halaman' => 'Video Bab '.$data['title'],
+                'judul_header' => $data['title']
+            );
+             //video yang subab ini.
+            $data['bab_video'] =  $datas['judul_sub_bab'];
+            //video pertama yang ditampilkan
+            $data['video'] = $data['bab_video'][0];
 
+            $data['files'] = array(
+                APPPATH.'modules/homepage/views/v-header.php',                
+                // APPPATH.'modules/video/views/f-daftar-sub.php',
+                APPPATH.'modules/templating/views/footer.php'
+            );
+                // print_r($data['video']);
+            $this->parser->parse( 'templating/index', $data );
+
+
+                //kalo yang diklik sudah punya video
                 //digunakan untuk mengambil array index0, jadi pada saat klik sub diambil video yang urutan pertama untuk ditampilkan
-                $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
-                $data['title'] = $data['judul_sub_bab']->judulSubBab;
-                $this->load->view( 'templating/t-header' );
-                $this->load->view( 'templating/t-navbarUser' );
-                $this->load->view( 'v-banner-videoBelajar', $data );
-                $this->load->view( 'v-single-video', $data );
-                $this->load->view( 'templating/t-footer' );
+                // // $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
+                // $this->load->view( 'templating/t-header' );
+                // $this->load->view( 'templating/t-navbarUser' );
+                // $this->load->view( 'v-banner-videoBelajar', $data );
+                // $this->load->view( 'v-single-video', $data );
+                // $this->load->view( 'templating/t-footer' );
             }
             //$data['title'] = $data['judul_sub_bab']->judulSubBab;
         }else {
@@ -100,7 +119,7 @@ class Video extends MX_Controller {
         //tampilkan bab dan subab video
         $data['aliastingkat'] = $alias_tingkat;
         $data['aliaspelajaran'] = $alias_pelajaran;
-        $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk tingkat ".$data['aliastingkat'];
+        $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk ".$data['aliastingkat'];
         //data untuk templating
         $data = array(
             'judul_halaman' => 'Neon - Video Pelajaran '. $data['aliaspelajaran'],
@@ -113,7 +132,7 @@ class Video extends MX_Controller {
         //
         $data['bab_video'] = $this->load->Mvideos->get_video_as_bab( $alias_tingkat, $alias_pelajaran );
         $data['files'] = array(
-            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/video/views/f-daftar-video.php',
             APPPATH.'modules/templating/views/footer.php'
@@ -129,7 +148,7 @@ class Video extends MX_Controller {
         //tampilkan bab dan subab video
         $data['aliastingkat'] = $alias_tingkat;
         $data['aliaspelajaran'] = $alias_pelajaran;
-        $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk tingkat ".$data['aliastingkat'];
+        $data['title'] = "Pelajaran ".$data['aliaspelajaran']." untuk ".$data['aliastingkat'];
         //data untuk templating
         $data = array(
             'judul_halaman' => 'Neon - Video Pelajaran '. $data['aliaspelajaran'],
@@ -141,7 +160,7 @@ class Video extends MX_Controller {
         //
         $data['bab_video'] = $this->load->Mvideos->get_video_as_sub( $alias_tingkat, $alias_pelajaran );
         $data['files'] = array(
-            APPPATH.'modules/homepage/views/v-header.php',
+            APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/t-f-pagetitle.php',
             APPPATH.'modules/video/views/f-daftar-video-bybab.php',
             APPPATH.'modules/templating/views/footer.php'
@@ -158,17 +177,19 @@ class Video extends MX_Controller {
     public function seevideo( $idvideo ) {
         //data untuk templating
         $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
-        if ( $data['videosingle']==array() ) {
+        if ( $data['videosingle']==array()) {
             $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
             // $this->load->view( 'templating/t-header' );
             // $this->load->view( 'templating/t-navbarUser' );
             // $this->load->view( 'v-banner-videoBelajar', $data );
             // $this->load->view( 'templating/t-footer' );
         }else {
+            //ambil id bab.
+            $idbab = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['id'];
+            $video_by_bab = $this->Mvideos->get_all_video_by_bab($idbab);
+
             //ambil satu video bedasarkan idnya
-
-
-
+            $namasub = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
             $data['videosingle'] = $this->load->Mvideos->get_single_video( $idvideo );
             $onevideo = $data['videosingle'];
             $guruID = $onevideo[0]->guruID;
@@ -181,19 +202,23 @@ class Video extends MX_Controller {
                 'file' => $onevideo[0]->namaFile,
                 'nama_penulis'=> $penulis['namaDepan']." ".$penulis['namaBelakang'],
                 'biografi'=> $penulis['biografi'],
-                'photo'=>$penulis['photo']
-
+                'photo'=>$penulis['photo'],
+                'nama_sub'=>$namasub,
             );
             $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub( $subid );
+            $data['video_by_bab'] = $this->Mvideos->get_all_video_by_bab($idbab);
+
+
             $data['files'] = array(
-                APPPATH.'modules/homepage/views/v-header.php',
-                APPPATH.'modules/templating/views/t-f-pagetitle.php',
+                APPPATH.'modules/homepage/views/v-header-login.php',
+                // APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 APPPATH.'modules/video/views/f-single-video.php',
                 APPPATH.'modules/templating/views/footer.php'
             );
 
+            
             //ambil index 0 yang akan dijadikan judul di title
             // $onevideo = $data['videosingle'];
             // $data['video'] = $onevideo[0];
