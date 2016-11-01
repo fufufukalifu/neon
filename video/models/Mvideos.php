@@ -20,7 +20,7 @@ class Mvideos extends CI_Model
 
     //select from 5 table di join semuanya
 
-    $this->db->select( 'bab.id as babid,subbab.id as subbabID,aliasMataPelajaran,judulBab,judulSubBab,aliasTingkat ' );
+    $this->db->select( 'bab.id as babid,subbab.id as subid,aliasMataPelajaran,judulBab,judulSubBab,aliasTingkat' );
 
     $this->db->from( 'tb_subbab subbab' );
 
@@ -50,7 +50,7 @@ class Mvideos extends CI_Model
 
     function get_video_as_sub( $alias_tingkat, $alias_pelajaran ) {
     //select from 5 table di join semuanya
-        $myquery ="SELECT *,video.id as videoID, subbab.id as subbabID FROM tb_video video
+        $myquery ="SELECT * FROM tb_video video
         JOIN tb_subbab subbab ON
         video.subBabID = subbab.id
         JOIN tb_bab bab ON

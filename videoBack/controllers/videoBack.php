@@ -72,11 +72,11 @@ class Videoback extends MX_Controller {
                     <i class="ico-file5"></i>
                         </a> 
 
-            <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Detail Video"
-                data-id='.json_encode($list_video).'
+            <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+                data-id='."'".json_encode($list_video)."'".'
                 onclick="detail('."'".$list_video['videoID']."'".')"
                 >
-                    <i class="ico-file5"></i>
+                    <i class=" ico-play3"></i>
                         </a>  ';
 
             $data[] = $row;
@@ -468,17 +468,17 @@ class Videoback extends MX_Controller {
     // daftar semua video
     public function listvideo()
     {
-        $data['judul_halaman'] = "My Video";
+        $data['judul_halaman'] = "Daftar Semua Video";
         $data['files'] = array(
             APPPATH.'modules/videoback/views/v-all-video.php',
         );
 
-         $this->parser->parse('templating/index-b-guru', $data);
+            $this->parser->parse('admin/v-index-admin', $data);
         
     }
 
     function ajax_get_all_video(){
-        $guru_id = $this->session->userdata['id_guru'];
+        
         $data['videos_uploaded'] = $this->load->mvideos->get_all_video();
        // var_dump($data['videos_uploaded']);
         $list = $data['videos_uploaded'];
@@ -519,11 +519,11 @@ class Videoback extends MX_Controller {
                     <i class="ico-file5"></i>
                         </a> 
 
-            <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Detail Video"
-                data-id='.json_encode($list_video).'
+           <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+                data-id='."'".json_encode($list_video)."'".'
                 onclick="detail('."'".$list_video['videoID']."'".')"
                 >
-                    <i class="ico-file5"></i>
+                    <i class=" ico-play3"></i>
                         </a>  ';
 
             $data[] = $row;
