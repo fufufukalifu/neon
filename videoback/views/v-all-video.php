@@ -25,6 +25,8 @@
 
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+					<button type="button" class="btn btn-primary">Save changes</button>
+
 				</div>
 
 			</div>
@@ -59,6 +61,8 @@
 
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+					<button type="button" class="btn btn-primary">Save changes</button>
+
 				</div>
 
 			</div>
@@ -69,7 +73,7 @@
 	<!-- End Modal Detail Video -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h5 class="panel-title">Video Yang Telah Anda Upload</h5>
+				<h5 class="panel-title">Daftar Semua Video</h5>
 		</div>
 		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
 			<thead>
@@ -100,7 +104,7 @@ $(document).ready(function() {
 		tblist_video = $('#zero-configuration').DataTable({ 
          "processing": true,
          "ajax": {
-          "url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
+          "url": base_url+"index.php/videoback/ajax_get_all_video",
           "type": "POST"
         },
       });

@@ -7,12 +7,9 @@ class Mvideoback extends CI_Model
 {
 	
 	public function insertVideo($data_video)
-	{	
-		
+	{		
 		$this->db->insert('tb_video', $data_video);
 		redirect(site_url('videoback/managervideo'));
-
-
 	}
 
 	// untuk mengambil get value tingkatan seperti sd, smo dll u/
@@ -91,6 +88,87 @@ class Mvideoback extends CI_Model
                 $this->db->limit(5);
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+
+	public function get_video_by_sub()
+	{
+				$this->db->select('*');
+		$this->db->from('tb_video');
+		$this->db->where('UUID',$UUID);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_nama_sub($subbab)
+	{
+		$this->db->select('judulSubBab');
+		$this->db->from('tb_subbab');
+		$this->db->where('id',$subbab);
+		$query = $this->db->get();
+
+		$result = $query->result_array();
+
+		if($query->num_rows() == 1) {
+
+			return $result[0];
+
+		}
+
+		return $result;
+	}
+
+	public function get_nama_bab($bab)
+	{
+		$this->db->select('judulBab');
+		$this->db->from('tb_bab');
+		$this->db->where('id',$bab);
+		$query = $this->db->get();
+
+		$result = $query->result_array();
+
+		if($query->num_rows() == 1) {
+
+			return $result[0];
+
+		}
+
+		return $result;
+	}
+
+	public function get_nama_mapel($mapel)
+	{
+		$this->db->select('keterangan');
+		$this->db->from('tb_tingkat-pelajaran');
+		$this->db->where('id',$mapel);
+		$query = $this->db->get();
+
+		$result = $query->result_array();
+
+		if($query->num_rows() == 1) {
+
+			return $result[0];
+
+		}
+
+		return $result;
+	}
+
+	public function get_nama_tingkat($tingkat)
+	{
+		$this->db->select('aliasTingkat');
+		$this->db->from('tb_tingkat');
+		$this->db->where('id',$tingkat);
+		$query = $this->db->get();
+
+		$result = $query->result_array();
+
+		if($query->num_rows() == 1) {
+
+			return $result[0];
+
+		}
+
+		return $result;
 	}
 }
 ?>
