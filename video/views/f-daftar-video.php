@@ -6,7 +6,7 @@
 <div class="page-content grid-row">
 
   <div class="row">
-    <div class="col-md-6">
+<!--     <div class="col-md-6">
      <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
        <label class="btn active cws-button alt btn-primary bg-color-2" id="in-soal"> 
@@ -23,7 +23,7 @@
 
         </div></h5>
        
-      </div>
+      </div> -->
       <div class="col-md-6">
        <h5>Video : <div class="btn-group" data-toggle="buttons" > 
 
@@ -86,11 +86,11 @@
 
               <h4><strong><?php echo $judulbab ;?><br></strong></h4>
               <ol>
-                <li><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
+                <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
                 <?php        
               }else{
                ?>
-               <li><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
+               <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
                <?php
              }
              $cekjudulbab=$judulbab;

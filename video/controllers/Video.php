@@ -25,57 +25,15 @@ class Video extends MX_Controller {
 
     //halaman tampilkan sub bab dan see
     public function videosub( $id_sub_bab) {
-        //digunakan untuk semua video
-        // $data['subBab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
-        //digunakan untuk judul subab
-        $datas['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab );
-        $babid = $datas['judul_sub_bab'][0]['babID'];
-        $data['subab'] = $this->load->Mvideos->get_sub_by_id($babid);
-        // print_r($data);
-
-        if ( !isset( $id_video ) ) {
-            //tidak ada id video
-            if ( $datas['judul_sub_bab']==array()) {
-                //kalo yang diklik belum punya video
-                $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
-                // $this->load->view( 'templating/t-header' );
-                // $this->load->view( 'templating/t-navbarUser' );
-                // $this->load->view( 'v-banner-videoBelajar', $data );
-                // $this->load->view( 'templating/t-footer' );
-            }else {
-             $data['title'] = $datas['judul_sub_bab'][0]['judulBab'];
-             $data = array(
-                'judul_halaman' => 'Video Bab '.$data['title'],
-                'judul_header' => $data['title']
-            );
-             //video yang subab ini.
-            $data['bab_video'] =  $datas['judul_sub_bab'];
-            //video pertama yang ditampilkan
-            $data['video'] = $data['bab_video'][0];
-
-            $data['files'] = array(
-                APPPATH.'modules/homepage/views/v-header.php',                
-                // APPPATH.'modules/video/views/f-daftar-sub.php',
-                APPPATH.'modules/templating/views/footer.php'
-            );
-                // print_r($data['video']);
-            $this->parser->parse( 'templating/index', $data );
-
-
-                //kalo yang diklik sudah punya video
-                //digunakan untuk mengambil array index0, jadi pada saat klik sub diambil video yang urutan pertama untuk ditampilkan
-                // // $data['judul_sub_bab'] = $this->load->Mvideos->get_all_subab( $id_sub_bab )[0];
-                // $this->load->view( 'templating/t-header' );
-                // $this->load->view( 'templating/t-navbarUser' );
-                // $this->load->view( 'v-banner-videoBelajar', $data );
-                // $this->load->view( 'v-single-video', $data );
-                // $this->load->view( 'templating/t-footer' );
-            }
-            //$data['title'] = $data['judul_sub_bab']->judulSubBab;
-        }else {
-            //ada id video
-            echo "string2";
+        //dapetin dulu idbabnya.
+        $id_video = $this->Mvideos->get_video_single_bysub($id_sub_bab);
+        if ($id_video) {
+            $link = 'video/seevideo/'.$id_video;
+            redirect(base_url($link));
+        } else {
+            echo "<h1>Error</h1>";
         }
+        
     }
 
     //halaman tampilkan semua video dalam 1 subab

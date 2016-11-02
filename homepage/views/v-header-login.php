@@ -47,20 +47,18 @@
 						<ul class="clear-fix">
 							<li>
 
-								<a href="<?=base_url('index.php/welcome') ?>">Home</a>
+								<a href="<?=base_url('welcome') ?>">Home</a>
+
+							</li>
+
+														<li>
+
+								<a href="<?=base_url('konsultasi') ?>">Konsultasi</a>
 
 							</li>
 							<li>
 
-								<a href="<?=base_url('index.php/tryout') ?>">Try Out</a>
-
-							</li>
-
-
-
-							<li>
-
-								<a href="<?=base_url('index.php/tesonline/daftarlatihan') ?>">Latihan</a>
+								<a href="<?=base_url('tryout') ?>">Try Out</a>
 
 							</li>
 
@@ -68,7 +66,15 @@
 
 							<li>
 
-								<a href="<?=base_url('index.php/logout') ?>">Logout</a>
+								<a href="<?=base_url('tesonline/daftarlatihan') ?>">Latihan</a>
+
+							</li>
+
+
+
+							<li>
+
+								<a href="<?=base_url('logout') ?>">Logout</a>
 
 							</li>
 

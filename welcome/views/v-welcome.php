@@ -8,7 +8,12 @@
 
 </div>
 
-
+<style type="text/css">
+    .col-md-2{
+        margin: 20px;
+        padding: 0;
+    }
+</style>
 
 <div class="page-content grid-row">
 
@@ -18,7 +23,7 @@
 
         <div class="grid-col-row clear-fix" >
 
-            <div class="grid-col grid-col-3">
+            <div class="grid-col col-md-2">
 
                 <div class="hover-effect"></div>
 
@@ -38,7 +43,7 @@
 
 
 
-        <div class="grid-col grid-col-3">
+        <div class="grid-col col-md-2">
 
             <div class="hover-effect"></div>
 
@@ -58,7 +63,7 @@
 
 
 
-    <div class="grid-col grid-col-3">
+    <div class="grid-col col-md-2">
 
         <div class="hover-effect"></div>
 
@@ -78,11 +83,31 @@
 
 
 
-<div class="grid-col grid-col-3">
+<div class="grid-col col-md-2">
 
     <div class="hover-effect"></div>
 
     <h5><strong>Sekolah Menengah Atas IPS<br></strong></h5>
+
+    <ol>
+
+        <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
+
+        <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+
+        
+
+    <?php endforeach ?>
+
+</ol>
+
+</div>
+
+<div class="grid-col col-md-2">
+
+    <div class="hover-effect"></div>
+
+    <h5><strong>Sekolah Menengah Atas<br></strong></h5>
 
     <ol>
 
