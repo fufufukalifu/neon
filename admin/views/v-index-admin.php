@@ -42,7 +42,69 @@
 
     <!-- START Body -->
     <body>
-                <!-- START Modal ADD BANK SOAL -->
+            <!-- START Modal Filter Video -->
+         <div class="modal fade" id="modalvideo" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+           <div class="modal-content">
+            <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title">Filter Video</h4>
+            </div>
+
+
+            <!-- Start Body modal -->
+            <div class="modal-body">
+             <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/videoback/filter_video" method="post" >
+              <div  class="form-group">
+               <label class="col-sm-3 control-label">Tingkat</label>
+               <div class="col-sm-8">
+               <!-- vtkt = video tingkat -->
+                <select class="form-control gettkt" name="tingkat" id="vtkt">
+                 <option>-Pilih Tingkat-</option>
+                </select>
+               </div>
+              </div>
+
+              <div  class="form-group">
+               <label class="col-sm-3 control-label">Mata Pelajaran</label>
+               <div class="col-sm-8">
+                <select class="form-control getpel" name="mataPelajaran" id="vpel">
+
+                </select>
+               </div>
+              </div>
+
+              <div  class="form-group">
+               <label class="col-sm-3 control-label">Bab</label>
+               <div class="col-sm-8">
+                <select class="form-control getbb" name="bab" id="vbab">
+
+                </select>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <label class="col-sm-3 control-label">Subab</label>
+               <div class="col-sm-8">
+                <select class="form-control subb" name="subbab" id="vsub">
+
+                </select>
+               </div>
+              </div>
+
+             </div>
+             <!-- END BODY modla-->
+             <div class="modal-footer">
+              <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+             </div>
+            </form> 
+           </div><!-- /.modal-content -->
+
+          </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
+         <!-- END  Modal Filter Video -->
+
+        <!-- START Modal ADD BANK SOAL -->
         <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -50,8 +112,6 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Modal title</h4>
                     </div>
-
-                    
                         <!-- Start Body modal -->
                         <div class="modal-body">
                         <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
@@ -101,6 +161,7 @@
                
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
@@ -517,38 +578,48 @@
                         </ul>
                     </li>
 
+
                     <li>
-                        <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
-                            <span class="figure"><i class="ico-facetime-video"></i></span>
-                            <span class="text">Video</span>
-                            <span class="arrow"></span>
-                        </a>
+                     <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
+                      <span class="figure"><i class="ico-facetime-video"></i></span>
+                      <span class="text">Video</span>
+                      <span class="arrow"></span>
+                     </a>
 
-                        <ul id="video" class="submenu collapse ">
-                            <li class="submenu-header ellipsis">Video</li>
+                     <ul id="video" class="submenu collapse ">
+                      <li class="submenu-header ellipsis">Video</li>
 
-                            <li >
-                                <a href="<?=base_url('index.php/videoBack/formupvideo')?>">
-                                    <span class="text">Upload Video</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Daftar Published Video</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Daftar Unpublished Video</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="">
-                                    <span class="text">Daftar semua video</span>
-                                </a>
-                            </li>
+                      <li >
+                       <a href="<?=base_url('index.php/videoback/formupvideo')?>">
+                        <span class="text">Upload Video</span>
+                       </a>
+                      </li>
 
-                        </ul>
+                      <li>
+                       <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
+
+                        <span class="text">Daftar video</span>
+
+                        <span class="arrow"></span>
+
+                       </a>
+
+                       <ul id="filtervideo" class="submenu collapse ">
+
+                        <li class="submenu-header ellipsis">Daftar video</li>
+
+                        <li><a href="<?=base_url('/index.php/videoback/listvideo')?>"><span class="text">Daftar Semua video</span>
+
+                        </a></li>
+
+                        <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
+
+                        </a></li>
+
+                       </ul>
+                      </li>
+
+                     </ul>
                     </li>
 
                     <li>
@@ -1074,121 +1145,259 @@
         <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
-         <script type="text/javascript">
-            //panggil modal
-            function add_soal() {
-                $('#modalsoal').modal('show'); // show bootstrap modal
-            }
-
-        </script>
-       <!-- drop down dependend for get subbab -->
         <script type="text/javascript">
+//panggil modal
+function add_soal() {
+$('#modalsoal').modal('show'); // show bootstrap modal
+}
+
+function filter_video() {
+$('#modalvideo').modal('show'); // show bootstrap modal
+}
+
+function add_to() {
+   if (halaman) {
+ $('#modalto').modal('show'); // show bootstrap modal
+}else{
+   var konfirm = window.confirm("Anda akan dialihkan pada halaman tryout?");
+   if (konfirm) {
+      document.location.href = base_url+"index.php/toback/listTo";
+  }
+}
+
+}
+
+</script>
+<!-- drop down dependend for get subbab -->
+<script type="text/javascript">
 
 
-           
-            //buat load tingkat untuk modal buat soal
-            function loadTkt() {
-                console.log('load Tingkat');
-                jQuery(document).ready(function () {
-                    var tingkat_id = {"tingkat_id": $('#gettkt').val()};
-                    var idTingkat;
+   function hide_e_crtTo() {
+      $("#e_crtTo").hide();
+  }
+  function hide_e_tglTo() {
+      $("#e_tglTo").hide();
+  }
+  function crtTo() {
+      var nm_paket   =   $('#to_nm').val();
+      var tgl_mulai  =   $('#to_tglmulai').val();
+      var tgl_akhir  =   $('#to_tglakhir').val();
+      var wkt_mulai  =   $('#to_wktakhir').val();
+      var wkt_akhir  =   $('#to_wktmulai').val();
+      var publish;
+      if ($('#to_publish:checked')==true) {
+         publish = 1;
+     } else{
+         publish = 0;
+     }
+// pengecekan inputan pembuatan to
+// cek inputan kosong
+if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
+    // validasi tanggal mulai dan tanggal akhir
+    if (tgl_mulai<tgl_akhir) {
+       var url = base_url+"index.php/toback/buatTo";
+       $.ajax({
+          url : url,
+          type: "POST",
+          data: { nmpaket : nm_paket,
+             tglmulai:tgl_mulai,
+             tglakhir:tgl_akhir,
+             wktmulai:wkt_mulai,
+             wktakhir:wkt_akhir,
+             publish :publish 
 
-                    $.ajax({
-                        type: "POST",
-                        data: tingkat_id,
-                        url: "<?= base_url() ?>index.php/videoback/getTingkat",
-                        success: function (data) {
-                            console.log("Data" + data);
-                            $('#gettkt').html('<option value="">-- Pilih Tingkat  --</option>');
-                            $.each(data, function (i, data) {
-                                $('#gettkt').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
-                                return idTingkat = data.id;
-                            });
+         },
+                        // cache: false,
+                      // dataType: "JSON",
+                      success: function(data,respone)
+                      {   
+                         reload_tblist();  
+                         $("#e_crtTo").hide(); 
+                         $('#modalto').modal('hide'); 
+                            $('#form_to')[0].reset(); // reset form on modals
+                            $('#modalto').removeClass('has-error'); // clear error class  
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+
+                            // $("#e_crtTo").show();
+                            alert('Error adding / update data');
                         }
                     });
+   } else {
+       $("#e_tglTo").show();
+   }
+   
+}else{
 
-                    $('#gettkt').change(function () {
-                        tingkat_id = {"tingkat_id": $('#gettkt').val()};
-                        loadPel($('#gettkt').val());
-                    })
+ $("#e_crtTo").show();
+}
 
-                    $('#getpel').change(function () {
-                        pelajaran_id = {"pelajaran_id": $('#getpel').val()};
-                        loadBb($('#getpel').val());
-                    })
 
-                    $('#getbb').change(function () {
-                        loadSubb($('#getbb').val());
-                        loadPel(idTingkat);
-                    })
-                })
-            }
-            ;
 
-            //buat load pelajaran
+}
+// ####################################################
+            //buat load tingkat untuk modal buat soal
+            // load tingkat untuk modal bank soal
+            function loadTkt() {
+               jQuery(document).ready(function () {
+                  var tingkat_id = {"tingkat_id": $('#stkt').val()};
+              // tingkat id untuk modal video
+              // var tingkat_idv = {"tingkat_id": $('vstkt').val()}
+              var idTingkat;
+
+              $.ajax({
+                 type: "POST",
+                 data: tingkat_id,
+                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
+                 success: function (data) {
+
+                    $('.gettkt').html('<option value="">-- Pilih Tingkat  --</option>');
+                    $.each(data, function (i, data) {
+                       $('.gettkt').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                       return idTingkat = data.id;
+                   });
+                }
+            });
+              // event untuk modal bank soal
+              // #############################
+              $('#stkt').change(function () {
+                 tingkat_id = {"tingkat_id": $('#stkt').val()};
+                 loadPel($('#stkt').val());
+             });
+              $('#spel').change(function () {
+                 pelajaran_id = {"pelajaran_id": $('#spel').val()};
+                 loadBb($('#spel').val());
+             });
+              $('#sbab').change(function () {
+                 loadSubb($('#sbab').val());
+               // loadPel(idTingkat);
+           });
+              // #############################
+
+              // event untuk modal video
+              // ##############################
+              $('#vtkt').change(function () {
+                 tingkat_id = {"tingkat_id": $('#vtkt').val()};
+                 loadPelv($('#vtkt').val());
+             });
+              $('#vpel').change(function () {
+                 pelajaran_id = {"pelajaran_id": $('#vpel').val()};
+                 loadBbv($('#vpel').val());
+             });
+              $('#vbab').change(function () {
+                 loadSubbv($('#vbab').val());
+               // loadPel(idTingkat);
+           });
+               // ##############################
+           })
+           }
+           ;
+
+            //buat load pelajaran untuk  modal bank soal
             function loadPel(tingkatID) {
-                $.ajax({
-                    type: "POST",
-                    data: tingkatID.tingkat_id,
-                    url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
-                    success: function (data) {
-                        $('#getpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
-                        $.each(data, function (i, data) {
-                            $('#getpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
-                        });
-                    }
-                });
-            }
-            //buat load bab
+               $.ajax({
+                  type: "POST",
+                  data: tingkatID.tingkat_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+                  success: function (data) {
+                     $('#spel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+                     $.each(data, function (i, data) {
+                        $('#spel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                    });
+                 }
+             });
+           }
+            //buat load pelajaran untuk  modal filter video
+            function loadPelv(tingkatID) {
+               $.ajax({
+                  type: "POST",
+                  data: tingkatID.tingkat_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+                  success: function (data) {
+                     $('#vpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+                     $.each(data, function (i, data) {
+                        $('#vpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                    });
+                 }
+             });
+           }
+            // load bab untuk modal bank soal
             function loadBb(mapelID) {
-                $.ajax({
-                    type: "POST",
-                    data: mapelID.mapel_id,
-                    url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
-                    success: function (data) {
+               $.ajax({
+                  type: "POST",
+                  data: mapelID.mapel_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                  success: function (data) {
 
-                        $('#getbb').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-                        //console.log(data);
-                        $.each(data, function (i, data) {
-                            $('#getbb').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-                        });
-                    }
+                     $('#sbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
 
-                });
-            }
+                     $.each(data, function (i, data) {
+                        $('#sbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                    });
+                 }
 
-            //load sub bab
+             });
+           }
+             //load bab untuk modal video
+             function loadBbv(mapelID) {
+               $.ajax({
+                  type: "POST",
+                  data: mapelID.mapel_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                  success: function (data) {
+
+                     $('#vbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+
+                     $.each(data, function (i, data) {
+                        $('#vbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                    });
+                 }
+
+             });
+           }
+
+            //load sub bab untuk modal soal
             function loadSubb(babID){
-                $.ajax({
-                    type: "POST",
-                    data: babID.bab_id,
-                    url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
-                    success: function(data){
-                        $('#subb').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-                        console.log(data);
-                        $.each(data, function(i, data){
-                            $('#subb').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
-                        });
-                    }
+               $.ajax({
+                  type: "POST",
+                  data: babID.bab_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
+                  success: function(data){
+                     $('#ssub').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
 
-                });
-            }
+                     $.each(data, function(i, data){
+                        $('#ssub').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
+                    });
+                 }
 
-            // function gosoal() {
-            //     // document.Location('Google.com');
-            //     // window.Location.href(google.com');
-            //     // url = base_url+"index.php/paketsoal/addpaketsoal";
-            //     // alert('star');
-            //    
-            // }
+             });
+           }
+            // load sub bab untk modal video
+            function loadSubbv(babID){
+               $.ajax({
+                  type: "POST",
+                  data: babID.bab_id,
+                  url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
+                  success: function(data){
+                     $('#vsub').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
 
+                     $.each(data, function(i, data){
+                        $('#vsub').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
+                    });
+                 }
 
+             });
+           }
 
-            loadTkt();
-        </script>
+           loadTkt();
+// ####################################################
 
-        <!--/ App and page level script -->
-        <!--/ END JAVASCRIPT SECTION -->
-    </body>
-    <!--/ END Body -->
-</html>
+</script>
+
+           <!--/ App and page level script -->
+           <!--/ END JAVASCRIPT SECTION -->
+          </body>
+          <!--/ END Body -->
+          </html>

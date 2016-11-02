@@ -606,51 +606,52 @@
       <span class="figure"><i class="ico-facetime-video"></i></span>
       <span class="text">Video</span>
       <span class="arrow"></span>
-     </a>
+    </a>
 
-     <ul id="video" class="submenu collapse ">
+    <ul id="video" class="submenu collapse ">
       <li class="submenu-header ellipsis">Video</li>
 
       <li >
        <a href="<?=base_url('index.php/videoback/formupvideo')?>">
         <span class="text">Upload Video</span>
-       </a>
-      </li>
-      <li >
-       <a href="<?=base_url()?>index.php/videoback/managervideo">
-        <span class="text">Daftar Semua video</span>
-       </a>
-      </li>
-      <li>
-        <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
+      </a>
+    </li>
+
+    <li>
+      <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
 
         <span class="text">Daftar video</span>
 
-          <span class="arrow"></span>
+        <span class="arrow"></span>
 
+      </a>
+
+      <ul id="filtervideo" class="submenu collapse ">
+
+        <li class="submenu-header ellipsis">Daftar video</li>
+
+        <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span>
+
+        </a></li>
+        <li >
+         <a href="<?=base_url('/index.php/videoback/listvideo')?>">
+          <span class="text">Daftar Semua video</span>
         </a>
-
-        <ul id="filtervideo" class="submenu collapse ">
-
-          <li class="submenu-header ellipsis">Daftar video</li>
-
-          <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span>
-
-          </a></li>
-
-          <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
-
-          </a></li>
-
-
-
-
-
-        </ul>
       </li>
 
-     </ul>
-    </li>
+      <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
+
+      </a></li>
+
+
+
+
+
+    </ul>
+  </li>
+
+</ul>
+</li>
 
     <li>
      <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">

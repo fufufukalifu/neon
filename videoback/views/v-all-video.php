@@ -73,7 +73,7 @@
 	<!-- End Modal Detail Video -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h5 class="panel-title">Video Yang Telah Anda Upload</h5>
+				<h5 class="panel-title">Daftar Semua Video</h5>
 		</div>
 		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
 			<thead>
