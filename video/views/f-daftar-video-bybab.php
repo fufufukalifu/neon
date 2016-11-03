@@ -6,24 +6,19 @@
 <div class="page-content grid-row">
 
   <div class="row">
-    <h1>Materi {mapel}</h1>
-    <h4>Silahkan pilih materi yang akan kamu pelajar...</h4>
-  </div>
-
-  <div class="row">
     <div class="col-md-6">
-     <h5>View : <div class="btn-group" data-toggle="buttons" > 
+     <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
-       <label class="btn active cws-button alt btn-primary bg-color-2" id="in-soal"> 
+       <label class="btn active cws-button alt btn-primary bg-color-2" onclick="semua()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
       </label>
 
-      <label class="btn cws-button alt btn-primary bg-color-2" id="pr-rumus" title="Tampilkan Jenis Video Room"> 
-        <input type="radio" name="options"   autocomplete="off"> Room
+      <label class="btn cws-button alt btn-primary bg-color-2" title="Tampilkan Jenis Video Room" onclick="justroom()"> 
+        <input type="radio" name="options" autocomplete="off"> Room
       </label> 
 
-      <label class="btn cws-button alt btn-primary bg-color-2" id="pr-rumus" title="Tampilkan Jenis Video Screen"> 
-        <input type="radio" name="options"   autocomplete="off"> Screen
+      <label class="btn cws-button alt btn-primary bg-color-2" title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
+        <input type="radio" name="options" autocomplete="off"> Screen
       </label> 
 
     </div></h5>
@@ -33,7 +28,7 @@
    <h5>Video : <div class="btn-group" data-toggle="buttons" > 
 
      <label class="btn cws-button alt active btn-primary bg-color-2" id="in-soal"> 
-      <input type="radio" name="options"  autocomplete="off" checked="true"> By Bab
+      <input type="radio" name="options"  autocomplete="off" checked="true"> By Video
     </label> 
 
     <label class="btn cws-button alt btn-primary bg-color-2 " id="pr-rumus" onclick="direct()"> 
@@ -55,8 +50,8 @@
   <!-- START TAMPIL DAFTAR -->
 
   <?php
-    $cekjudulbab=null;
-    $i='0'; 
+  $cekjudulbab=null;
+  $i='0'; 
   ?>
   <!-- Awal 1 -->
   <div class="grid-col-row clear-fix" >
@@ -64,12 +59,12 @@
       <div class="hover-effect"></div>        
       <!-- Awal 1 -->
       <?php foreach ($bab_video as $bab_video_items) {
-        
+
         $judulbab=$bab_video_items->judulBab;
         // $subbab=$bab_video_items->judulSubBab;
         if ($cekjudulbab != $judulbab) { 
           if($i=='1'){?>
-        </ol>
+        </ul>	
       </div>
       <!--Akhir 1-->
 
@@ -82,24 +77,43 @@
         }
         ?>
         <h4><strong><?php echo $judulbab ;?><br></strong></h4>
-        <ol>
-          <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->videoID."/".$bab_video_items->subbabID ?>"><?php echo $bab_video_items->judulVideo ;?></a></li>
-          <?php        
-        }else{
-         ?>
-         <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->videoID."/".$bab_video_items->subbabID ?>"><?php echo $bab_video_items->judulVideo ;?></a></li>
-         <?php
-       }
-       $cekjudulbab=$judulbab;
-       $i='1';
-       ?>
-       <?php }  ?>
-       <!-- Ahir 2 -->
-     </ol>
-   </div>
-   <!-- Akhir 2 -->
-   <!-- END TAMPIL DAFTAR -->
- </main>
+        <ul>
+        <?php if ($bab_video_items->jenis_video==2): ?>
+          <li class="room"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Room" >
+           <?=$bab_video_items->judulVideo." (r)" ;?>           
+         </a>
+       </li>
+        <?php else: ?>
+          <li class="screen"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Screen" >
+           <?=$bab_video_items->judulVideo." (s)" ;?>           
+         </a>
+       </li>
+        <?php endif ?>
+          <?php }else{  ?>
+        <?php if ($bab_video_items->jenis_video==2): ?>
+          <li class="room"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Room" >
+           <?=$bab_video_items->judulVideo." (r)" ;?>           
+         </a>
+       </li>
+        <?php else: ?>
+          <li class="screen"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Screen" >
+           <?=$bab_video_items->judulVideo." (s)" ;?>           
+         </a>
+       </li>
+        <?php endif ?>
+          
+       <?php
+     }
+     $cekjudulbab=$judulbab;
+     $i='1';
+     ?>
+     <?php }  ?>
+     <!-- Ahir 2 -->
+   </ul>	
+ </div>
+ <!-- Akhir 2 -->
+ <!-- END TAMPIL DAFTAR -->
+</main>
 </div>
 
 <!-- ucapan selamat datang -->
@@ -131,7 +145,7 @@
       <!-- Indicators -->
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      </ol>
+      </ul>	
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -174,6 +188,20 @@
       window.location = base_url+"video/daftarvideo/"+aliasMapel+"/"+tingkat;
     }
 
+    function justroom(){
+      $('.screen').hide("slow");
+      $('.room').show("slow");
+    }
+
+    function justscreen(){
+      $('.screen').show("slow");
+      $('.room').hide("slow");
+    }
+
+    function semua(){
+      $('.screen').show("slow");
+      $('.room').show("slow");
+    }
   </script>
 
 

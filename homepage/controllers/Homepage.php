@@ -35,6 +35,7 @@ class Homepage extends MX_Controller {
         );
         $data['file'] = 'v-container.php';
         $data['teachers'] = $this->mguru->get_guru_random();
+        $data['last_video'] = $this->mvideos->get_last_video();
 
         $this->parser->parse('v-index-homepage', $data);
     }

@@ -6,13 +6,8 @@
 <div class="page-content grid-row">
 
   <div class="row">
-    <h1>Materi {mapel}</h1>
-    <h4>Silahkan pilih materi yang akan kamu pelajar...</h4>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-     <h5>View : <div class="btn-group" data-toggle="buttons" > 
+<!--     <div class="col-md-6">
+     <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
        <label class="btn active cws-button alt btn-primary bg-color-2" id="in-soal"> 
           <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
@@ -28,12 +23,12 @@
 
         </div></h5>
        
-      </div>
+      </div> -->
       <div class="col-md-6">
        <h5>Video : <div class="btn-group" data-toggle="buttons" > 
 
        <label class="btn cws-button alt btn-primary bg-color-2" onclick="direct()"> 
-          <input type="radio" name="options"  autocomplete="off" checked="true" > By Bab
+          <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
         </label> 
 
         <label class="btn cws-button alt btn-primary bg-color-2 active" id="pr-rumus" active> 
