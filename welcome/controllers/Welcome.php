@@ -117,6 +117,8 @@ class Welcome extends MX_Controller {
         $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
 
         $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
+        $data['pelajaran_sma_ipa'] = $this->load->Mmatapelajaran->get_pelajaran_sma_ipa();
+
 
 
 

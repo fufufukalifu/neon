@@ -27,9 +27,10 @@ class Video extends MX_Controller {
     public function videosub( $id_sub_bab) {
         //dapetin dulu idbabnya.
         $id_video = $this->Mvideos->get_video_single_bysub($id_sub_bab);
-        if ($id_video) {
-            $link = 'video/seevideo/'.$id_video;
-            redirect(base_url($link));
+        if ($id_video){
+            // $link ='video/seevideo/'.$id_video;
+            // redirect(base_url($link));
+            redirect('google.com');
         } else {
             echo "<h1>Error</h1>";
         }
