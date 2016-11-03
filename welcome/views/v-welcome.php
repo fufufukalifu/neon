@@ -67,7 +67,7 @@
 
         <div class="hover-effect"></div>
 
-        <h5><strong>Sekolah Menengah Atas IPA<br></strong></h5>
+        <h5><strong>Sekolah Menengah<br></strong></h5>
 
         <ol>
 
@@ -87,11 +87,11 @@
 
     <div class="hover-effect"></div>
 
-    <h5><strong>Sekolah Menengah Atas IPS<br></strong></h5>
+    <h5><strong>Sekolah Menengah Atas IPA<br></strong></h5>
 
     <ol>
 
-        <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
+        <?php foreach ($pelajaran_sma_ipa as $pelajaran_items): ?>
 
         <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
@@ -107,7 +107,7 @@
 
     <div class="hover-effect"></div>
 
-    <h5><strong>Sekolah Menengah Atas<br></strong></h5>
+    <h5><strong>Sekolah Menengah Atas IPS<br></strong></h5>
 
     <ol>
 

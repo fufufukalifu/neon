@@ -62,7 +62,7 @@
 
 							<li>
 
-								<a class="getintouch" href="#getintouch">Interaksi</a>
+								<a class="subs" href="#subs">Interaksi</a>
 
 							</li>
 

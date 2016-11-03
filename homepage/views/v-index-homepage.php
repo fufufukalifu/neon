@@ -204,7 +204,7 @@
 
                 </div>
 
-                <div class="them-mask bg-color-2" id="getintouch"></div>
+                <div class="them-mask bg-color-2" id="subs"></div>
 
                 <div class="grid-row center-text">
 
@@ -213,11 +213,25 @@
                     <div class="divider-mini"></div>
 
                     <p class="parallax-text">Neon hadir untuk kalian yang pengen pinter dengan cara mudah dan asyik. Ayo bergabung dengan Neon. Silahkan masukkan email kalian.</p>
+                    <?php if ($this->session->flashdata('notif') != '') {
+                        ?>
 
-                    <form class="subscribe">
+                        <div class="alert alert-warning fade in">
 
-                        <input type="text" name="email" value="" size="40" placeholder="Email kalian : contoh = nama@gmail.com" aria-required="true"><input type="submit" value="Subscribe">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
+                            <span class="semibold"></span><?php echo $this->session->flashdata('notif'); ?>
+
+                        </div>
+
+                    <?php } ?>
+                    <form class="subscribe login-form" action="<?= base_url('index.php/Homepage/addsubs') ?>" method="post">
+                        <!-- untuk menampilkan pesan kesalahan penginputan email -->
+                        <input type="email" class="form-control input-sm" name="email" id="emailsubs" method="post" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">    
+
+                       <!--<input type="email" class="form-control input-sm" name="emailsubs" id="emailsubs" value="<?php echo set_value('emailsubs'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">-->
+                        <!-- untuk menampilkan pesan kesalahan penginputan email -->
+                        <span class="text-danger"><?php echo form_error('email'); ?></span> 
                     </form>
 
                 </div>
@@ -359,76 +373,98 @@
         <?php include 'v-footer.php' ?>
 
         <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
-
+        <script>
+                                $(document).ready(function () {
+                                    $("#formsub").submit(function (e) {
+                                        e.preventDefault();
+                                        var emailsubs = $("#emailsubs").val();
+                                        $.ajax({
+                                            type: "POST",
+                                            url: '<?php echo base_url() ?>index.php/Homepage/addsubs',
+                                            data: {emailsubs: emailsubs},
+                                            success: function (data)
+                                            {
+                                                alert('SUCCESS!!');
+                                                document.getElementById("emailsubs").value = "";
+                                            },
+                                            error: function ()
+                                            {
+                                                alert('fail');
+                                                console.log(data);
+                                            }
+                                        });
+                                    });
+                                });
+        </script>
         <script type="text/javascript">
-            $(".main-nav li a.testimonials").click(function() {
+            $(".main-nav li a.testimonials").click(function () {
                 $('html, body').animate({
                     scrollTop: $("#testimonials").offset().top
                 }, 2000);
             });
 
-            $(".main-nav li a.service").click(function() {
+            $(".main-nav li a.service").click(function () {
                 $('html, body').animate({
                     scrollTop: $("#service").offset().top
                 }, 2000);
             });
 
-            $(".main-nav li a.getintouch").click(function() {
+            $(".main-nav li a.subs").click(function () {
                 $('html, body').animate({
-                    scrollTop: $("#getintouch").offset().top
+                    scrollTop: $("#subs").offset().top
                 }, 2000);
             });
 
 
-            function changekonten(data){
+            function changekonten(data) {
 
                 var judul;
 
                 var isi;
 
-                if (data=="VideoBelajar") {
+                if (data == "VideoBelajar") {
 
                     judul = "Video Belajar";
 
                     isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
 
-                }else if(data=="Konsultasi"){
+                } else if (data == "Konsultasi") {
 
                     judul = "Konsultasi";
 
                     isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
 
-                }else if(data=="Tryout"){
+                } else if (data == "Tryout") {
 
                     judul = "TryOut Online"
 
                     isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
 
-                }else if(data=="edudrive"){
+                } else if (data == "edudrive") {
 
                     judul = "Edu Drive";
 
                     isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
 
-                }else if(data=="toflfokus"){
+                } else if (data == "toflfokus") {
 
                     judul = "TOEFL Fokus";
 
                     isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
 
-                }else if(data=="penjurusan"){
+                } else if (data == "penjurusan") {
 
                     judul = "Penjurusan";
 
                     isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
 
-                }else if(data=="raportonline"){
+                } else if (data == "raportonline") {
 
                     judul = "Raport Online";
 
                     isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
 
-                }else{
+                } else {
 
                     //latihan
 
@@ -438,9 +474,9 @@
 
                 }
 
-                    $('.konten h2').html(judul).animate();
+                $('.konten h2').html(judul).animate();
 
-                    $('.konten p').html(isi);
+                $('.konten p').html(isi);
 
 
 
