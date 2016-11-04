@@ -203,10 +203,47 @@ class Video extends MX_Controller {
         }
     }
 
-    function watchvideo( $id_video ) {
+        #ajax untuk menampilkan soal yang sudah di pub, belum terdaftar di paket dan statusnya 1
+    function ajax_get_last_video() {
+        $data=array();
+        $list = $soal=$this->Mvideos->get_last_video();
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ( $list as $list_video ) {
+            $n='1';
+            $row = array();
 
+            // $row[] = $list_video['id'];
+            // $row[] = $list_video['judulVideo'];
+            // $row[] = $list_video['date_created'];
+            // $row[] = $list_video['deskripsi'];
+            // $link = base_url('video/seevideo')."/".$list_video['id'];
+            $row[] ="<article>
+                    <img src='http://placehold.it/83x83' data-at2x='' alt>
+                   <a onclick='kunjungivideo(".$list_video['id'].")'> 
+                   <h3>".$list_video['judulVideo']."</h3></a>
+                    <div class='course-date'>
+                        <div>".$list_video['date_created']."</div>
+                    </div>
+                    <p>".$list_video['deskripsi']."</p>
+                </article>";
+            
+
+
+
+
+            $data[] = $row;
+            $n++;
+
+        }
+
+        $output = array(
+            "data"=>$data,
+        );
+        // echo $link;
+        echo json_encode( $output );
+        
     }
-
     //########## FRONT END  ####################
 
     //----------# BACK END  #----------#
