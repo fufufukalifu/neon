@@ -102,7 +102,7 @@ class Welcome extends MX_Controller {
 
             APPPATH.'modules/welcome/views/v-tampil-tes.php',
 
-            APPPATH.'modules/homepage/views/v-footer.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
 
         );
 
