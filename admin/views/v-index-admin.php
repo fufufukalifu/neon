@@ -701,6 +701,42 @@
 
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:void(0);" data-target="#testi" data-toggle="submenu" data-parent=".topmenu">
+                            <span class="figure"><i class="ico-bubble-user"></i></span>
+                            <span class="text">Testimoni</span>
+                            <span class="arrow"></span>
+                        </a>
+
+                        <ul id="testi" class="submenu collapse ">
+                            <li class="submenu-header ellipsis">Testimoni</li>
+
+                            <li >
+                                <a href="<?=  base_url('index.php/testimoni')?>">
+                                    <span class="text">Daftar Testimoni</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-target="#subscribe" data-toggle="submenu" data-parent=".topmenu">
+                            <span class="figure"><i class="ico-envelop2"></i></span>
+                            <span class="text">Subscribe</span>
+                            <span class="arrow"></span>
+                        </a>
+
+                        <ul id="subscribe" class="submenu collapse ">
+                            <li class="submenu-header ellipsis">Subscribe</li>
+
+                            <li >
+                                <a href="<?=  base_url('index.php/testimoni')?>">
+                                    <span class="text">Daftar Subscribe</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
                     <!--Start menu konsultasi -->
                      <li>

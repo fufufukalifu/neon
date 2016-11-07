@@ -26,6 +26,11 @@ class Mmatapelajaran extends CI_Model
 		return $query->result();
 	}
 
+		public function get_pelajaran_sma_ipa(){
+		$query = $this->db->get('view_pelajaran_sma');
+		return $query->result();
+	}
+
 	
 
 
