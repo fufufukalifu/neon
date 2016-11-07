@@ -319,78 +319,6 @@
                 </div>
 
             </div>
-<<<<<<< HEAD
-
-            <!-- parallax section -->
-
-            <hr class="divider-color" />
-
-            <!-- section -->
-
-            <section class="fullwidth-background testimonial padding-section" id="testimonials">
-
-                <div class="grid-row">
-
-                    <h2 class="center-text">Testimonials</h2>
-
-                    <div class="owl-carousel testimonials-carousel">
-
-                        <?php
-                        foreach ($testimoni as $key) {
-                            ?>
-                            <div class="gallery-item">
-
-                                <div class="quote-avatar-author clear-fix"><img src="<?= base_url('assets/image/photo/siswa/'.$key['photo']) ?>" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info"><?= $key['namaDepan']." ".$key['namaBelakang']?><br><span><?=$key['namaSekolah']?></span></div></div>
-
-                                <p><?= $key['testimoni']?></p>
-
-                            </div>
-                            <?php
-                        }
-                        ?>
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- / section -->
-
-        </div>
-
-        <!-- / content -->
-
-        <!-- footer -->
-
-        <?php include 'v-footer.php' ?>
-
-        <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
-        <script>
-                                $(document).ready(function () {
-                                    $("#formsub").submit(function (e) {
-                                        e.preventDefault();
-                                        var emailsubs = $("#emailsubs").val();
-                                        $.ajax({
-                                            type: "POST",
-                                            url: '<?php echo base_url() ?>index.php/Homepage/addsubs',
-                                            data: {emailsubs: emailsubs},
-                                            success: function (data)
-                                            {
-                                                alert('SUCCESS!!');
-                                                document.getElementById("emailsubs").value = "";
-                                            },
-                                            error: function ()
-                                            {
-                                                alert('fail');
-                                                console.log(data);
-                                            }
-                                        });
-                                    });
-                                });
-        </script>
-        <script type="text/javascript">
-            $(".main-nav li a.testimonials").click(function () {
-=======
 <section class="fullwidth-background testimonial padding-section" id="testimonials">
 
                 <div class="grid-row">
@@ -434,120 +362,73 @@
 
         <script type="text/javascript">
             $(".main-nav li a.testimonials").click(function() {
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
                 $('html, body').animate({
                     scrollTop: $("#testimonials").offset().top
                 }, 2000);
             });
 
-<<<<<<< HEAD
-            $(".main-nav li a.service").click(function () {
-=======
             $(".main-nav li a.service").click(function() {
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
                 $('html, body').animate({
                     scrollTop: $("#service").offset().top
                 }, 2000);
             });
 
-<<<<<<< HEAD
-            $(".main-nav li a.subs").click(function () {
-                $('html, body').animate({
-                    scrollTop: $("#subs").offset().top
-=======
             $(".main-nav li a.getintouch").click(function() {
                 $('html, body').animate({
                     scrollTop: $("#getintouch").offset().top
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
                 }, 2000);
             });
 
 
-<<<<<<< HEAD
-            function changekonten(data) {
-=======
             function changekonten(data){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                 var judul;
 
                 var isi;
 
-<<<<<<< HEAD
-                if (data == "VideoBelajar") {
-=======
                 if (data=="VideoBelajar") {
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "Video Belajar";
 
                     isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
 
-<<<<<<< HEAD
-                } else if (data == "Konsultasi") {
-=======
                 }else if(data=="Konsultasi"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "Konsultasi";
 
                     isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
 
-<<<<<<< HEAD
-                } else if (data == "Tryout") {
-=======
                 }else if(data=="Tryout"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "TryOut Online"
 
                     isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
 
-<<<<<<< HEAD
-                } else if (data == "edudrive") {
-=======
                 }else if(data=="edudrive"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "Edu Drive";
 
                     isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
 
-<<<<<<< HEAD
-                } else if (data == "toflfokus") {
-=======
                 }else if(data=="toflfokus"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "TOEFL Fokus";
 
                     isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
 
-<<<<<<< HEAD
-                } else if (data == "penjurusan") {
-=======
                 }else if(data=="penjurusan"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "Penjurusan";
 
                     isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
 
-<<<<<<< HEAD
-                } else if (data == "raportonline") {
-=======
                 }else if(data=="raportonline"){
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     judul = "Raport Online";
 
                     isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
 
-<<<<<<< HEAD
-                } else {
-=======
                 }else{
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
                     //latihan
 
@@ -557,15 +438,9 @@
 
                 }
 
-<<<<<<< HEAD
-                $('.konten h2').html(judul).animate();
-
-                $('.konten p').html(isi);
-=======
                     $('.konten h2').html(judul).animate();
 
                     $('.konten p').html(isi);
->>>>>>> a8d8dc281c0ea705cc01171faf26b6439489b651
 
 
 
@@ -597,6 +472,8 @@
 
 
         <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.navigation.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.migration.min.js') ?>"></script>
 
         <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.parallax.min.js') ?>"></script>      
 
