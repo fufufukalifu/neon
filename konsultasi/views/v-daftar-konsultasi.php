@@ -16,7 +16,7 @@
 			<!-- tabs -->
 			<div class="tabs">
 				<div class="block-tabs-btn clear-fix">
-					<div class="tabs-btn" data-tabs-id="tabs1">Semua Konsultasi</div>
+					<div class="tabs-btn" data-tabs-id="tabs1">Semua Pertanyaan</div>
 					<div class="tabs-btn" data-tabs-id="tabs2">Pertanyaan Setingkat</div>
 					<div class="tabs-btn active" data-tabs-id="tabs3">Pertanyaan saya</div>
 				</div>

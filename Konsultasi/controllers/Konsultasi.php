@@ -35,7 +35,6 @@ class Konsultasi extends MX_Controller{
     $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
     $data['questions']=$this->mkonsultasi->get_all_questions();
     $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa());
-    $data['questions']=$this->mkonsultasi->get_all_questions();
     $data['questions_bylevel']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa());
 
 
@@ -49,7 +48,7 @@ class Konsultasi extends MX_Controller{
     } 
     
   }
-
+    //ajax add konsultasis
     function ajax_add_konsultasi(){
         $isi = $this->input->post( 'isi' ) ;
         $judul = $this->input->post( 'namapertanyaan' );
@@ -64,6 +63,8 @@ class Konsultasi extends MX_Controller{
       // echo "string";
     }
 
+
+//bertanya berdasarkan idsub
  public function bertanya($idsub){
     $data = array(
       'judul_halaman' => 'Neon - Konsultasi',
@@ -83,6 +84,10 @@ class Konsultasi extends MX_Controller{
   public function singlekonsultasi($id_pertanyaan){
       $single_pertanyaan = $this->mkonsultasi->get_pertanyaan($id_pertanyaan)[0];
       $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
+      $date = $single_pertanyaan['date_created'];
+
+    $timestamp = strtotime($date);
+
     $data = array(
       'judul_halaman' => 'Neon - Konsultasi',
       'judul_header'=> $single_pertanyaan['judulPertanyaan'],
@@ -90,11 +95,14 @@ class Konsultasi extends MX_Controller{
       'author'=> $single_pertanyaan['namaDepan']." ".$single_pertanyaan['namaBelakang'],
       'jumlah'=>$jumlah,
       'sub'=>$single_pertanyaan['judulSubBab'],
-      'akses'=>$single_pertanyaan['hakAkses']
-
+      'akses'=>$single_pertanyaan['hakAkses'],
+      'id_pertanyaan'=>$id_pertanyaan,
+      'id_pengguna'=>$this->session->userdata('id'),
+      'tanggal'=>date("d", $timestamp),
+      'bulan'=>date("M", $timestamp),
       );
       // print_r($data);
-    
+    $data['isi'] = $single_pertanyaan['isiPertanyaan'];
     $data['data_postingan'] = $this->mkonsultasi->get_postingan($id_pertanyaan);
     $data['files'] = array(
       APPPATH.'modules/homepage/views/v-header-login.php',
@@ -114,6 +122,20 @@ class Konsultasi extends MX_Controller{
   echo $jumlah;
  }
 
+
+function ajax_add_jawaban(){
+  $isiJawaban = $this->input->post( 'isiJawaban' ) ;
+        $penggunaID = $this->input->post( 'penggunaID' );
+        $pertanyaanID = $this->input->post( 'pertanyaanID' );
+
+    $data = array(
+      'isiJawaban' => $isiJawaban,
+      'penggunaID' => $penggunaID,
+      'pertanyaanID' =>$pertanyaanID,
+    );
+    $this->mkonsultasi->insert_jawaban($data);
+    print_r($data);
+}
  public function konsul(){
 
    $this->load->view('templating/t-header');

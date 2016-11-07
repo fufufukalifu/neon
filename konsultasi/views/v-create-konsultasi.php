@@ -9,6 +9,11 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
+										<div class="alert alert-dismissable alert-danger" id="info" hidden="true" >
+							<button type="button" class="close" onclick="hideme()" >×</button>
+							<strong>Terjadi Kesalahan</strong> <br>isi tanggapan anda.
+						</div>
+
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h2 class="modal-title text-center text-danger">Preview Postingan</h2>
 				</div>
@@ -97,7 +102,7 @@
 		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
 			$('#info').show();
 		}else{
-			url = base_url+"konsultasi/ajax_add_konsultasi/";
+			url = base_url+"konsultasi/ajax_add_jawaban/";
 			$.ajax({
 				url : url,
 				type: "POST",
