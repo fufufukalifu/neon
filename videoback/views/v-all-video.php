@@ -141,7 +141,7 @@ $(document).ready(function() {
 	  $.ajax({
 	            url : base_url+"index.php/videoback/del_file_video/"+videoID,
 	            type: "POST",
-	            dataType: "JSON",
+	            dataType: "TEXT",
 	            success: function(data)
 	            {
 	            	console.log('success');

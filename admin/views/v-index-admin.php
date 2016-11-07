@@ -103,64 +103,67 @@
           </div><!-- /.modal-dialog -->
          </div><!-- /.modal -->
          <!-- END  Modal Filter Video -->
+ <!-- START Modal ADD BANK SOAL -->
+ <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title">Form Soal</h4>
+    </div>
 
-        <!-- START Modal ADD BANK SOAL -->
-        <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal title</h4>
-                    </div>
-                        <!-- Start Body modal -->
-                        <div class="modal-body">
-                        <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
-                            <div  class="form-group">
-                                <label class="col-sm-3 control-label">Tingkat</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="tingkat" id="gettkt">
-                                        <option>-Pilih Tingkat-</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div  class="form-group">
-                                <label class="col-sm-3 control-label">Mata Pelajaran</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="mataPelajaran" id="getpel">
+    <!-- Start Body modal -->
+    <div class="modal-body">
+     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Tingkat</label>
+       <div class="col-sm-8">
+       <!-- stkt = soal tingkat -->
+        <select class="form-control gettkt" name="tingkat" id="stkt">
+         <option>-Pilih Tingkat-</option>
+        </select>
+       </div>
+      </div>
 
-                                    </select>
-                                </div>
-                            </div>
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Mata Pelajaran</label>
+       <div class="col-sm-8">
+        <select class="form-control getpel" name="mataPelajaran" id="spel">
 
-                            <div  class="form-group">
-                                <label class="col-sm-3 control-label">Bab</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="bab" id="getbb">
+        </select>
+       </div>
+      </div>
 
-                                    </select>
-                                </div>
-                            </div>
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Bab</label>
+       <div class="col-sm-8">
+        <select class="form-control getbb" name="bab" id="sbab">
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Subab</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="subbab" id="subb">
+        </select>
+       </div>
+      </div>
 
-                                    </select>
-                                </div>
-                            </div>
-                                
-                        </div>
-                        <!-- END BODY modla-->
-                        <div class="modal-footer">
-                            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
-                        </div>
-                   </form> 
-                </div><!-- /.modal-content -->
-               
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Subab</label>
+       <div class="col-sm-8">
+        <select class="form-control subb" name="subbab" id="ssub">
+
+        </select>
+       </div>
+      </div>
+
+     </div>
+     <!-- END BODY modla-->
+     <div class="modal-footer">
+      <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+     </div>
+    </form> 
+   </div><!-- /.modal-content -->
+
+  </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+ <!-- END  Modal ADD BANK SOAL-->
 
         <!-- START Template Header -->
         <header id="header" class="navbar navbar-fixed-top">
@@ -739,6 +742,33 @@
 
                         </ul>
                     </li>
+
+                    <!--Start menu konsultasi -->
+                     <li>
+                     <a href="javascript:void(0);" data-target="#konsultasi" data-toggle="submenu" data-parent=".topmenu">
+                      <span class="figure"><i class="ico-clipboard"></i></span>
+                      <span class="text">Konsultasi Forum</span>
+                      <span class="arrow"></span>
+                     </a>
+
+                     <ul id="konsultasi" class="submenu collapse ">
+                      <li class="submenu-header ellipsis">Konsultasi Forum/li>
+
+                      <li >
+                       <a href="javascript:void(0);">
+                        <span class="text">Daftar Konsultasi Forum</span>
+                       </a>
+                      </li>
+
+                      <li >
+                       <a href="<?= base_url('index.php/konsulback/aq_konsul');?>">
+                        <span class="text">Akumulasi Poin Konsultasi</span>
+                       </a>
+                      </li>
+
+                     </ul>
+                    </li>
+                    <!--END menu konsultasi -->
 
 
                 </ul>
