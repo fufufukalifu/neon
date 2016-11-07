@@ -690,7 +690,7 @@
     <li>
      <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
       <span class="figure"><i class="ico-clipboard"></i></span>
-      <span class="text">Try Out</span>
+      <span class="text">Try Outs</span>
       <span class="arrow"></span>
      </a>
 
@@ -717,6 +717,32 @@
      </ul>
     </li>
 
+    <!--Start menu konsultasi -->
+     <li>
+     <a href="javascript:void(0);" data-target="#konsultasi" data-toggle="submenu" data-parent=".topmenu">
+      <span class="figure"><i class="ico-clipboard"></i></span>
+      <span class="text">Konsultasi Forum</span>
+      <span class="arrow"></span>
+     </a>
+
+     <ul id="konsultasi" class="submenu collapse ">
+      <li class="submenu-header ellipsis">Konsultasi Forum/li>
+
+      <li >
+       <a href="javascript:void(0);">
+        <span class="text">Daftar Konsultasi Forum</span>
+       </a>
+      </li>
+
+      <li >
+       <a href="<?= base_url('index.php/konsulback/myhistory');?>">
+        <span class="text">History</span>
+       </a>
+      </li>
+
+     </ul>
+    </li>
+    <!--END menu konsultasi -->
 
    </ul>
    <!--/ END Template Navigation/Menu -->
