@@ -30,18 +30,20 @@
   		$data['files'] = array(
   			APPPATH . 'modules/konsulback/views/v-history-konsul.php',
   			);
-  		$guruID=$this->session->userdata['id_guru'];
+  		$penggunaID=$this->session->userdata['id'];
   		// get jumlah respon
-  		$data['countJawab']=$this->Mkonsulback->get_count_jawab($guruID);
+  		$data['countJawab']=$this->Mkonsulback->get_count_jawab($penggunaID);
   		// get data guru
-  		$datguru=$this->Mkonsulback->get_datguru($guruID);
+  		$datguru=$this->Mkonsulback->get_datguru($penggunaID);
   		$data['nama']=$datguru['namaDepan'].' '.$datguru['namaBelakang'];
   		$data['photo']=base_url().'assets/image/photo/siswa/'.$datguru['photo'];
-  		$data['countLove']=$datguru['love'];
+  		$data['countLove']=$this->Mkonsulback->get_count_love($penggunaID);
   		// get respon atau jawaban
-  		$data['respon']=$this->Mkonsulback->get_respone_by_guru($guruID);
+  		$data['respon']=$this->Mkonsulback->get_respone_by_guru($penggunaID);
   		$tamppoin=($data['countJawab']*5)+($data['countLove']*10);
   		$data['poin']=$tamppoin;
+      //get data komen untuk tabel histrori komen
+      $data['komen']=$this->Mkonsulback->get_komen_love($penggunaID);
 
          #START cek hakakses#
   		$hakAkses=$this->session->userdata['HAKAKSES'];
@@ -58,7 +60,7 @@
           #END Cek USer#
   	}
   	// history guru berdasarkan id guru
-  	public function history($guruID)
+  	public function history($penggunaID)
   	{
 
   		$data['judul_halaman'] = "History Konsultasi";
@@ -66,17 +68,18 @@
   			APPPATH . 'modules/konsulback/views/v-history-konsul.php',
   			);
   		// get jumlah respon
-  		$data['countJawab']=$this->Mkonsulback->get_count_jawab($guruID);
+  		$data['countJawab']=$this->Mkonsulback->get_count_jawab($penggunaID);
   		// get data guru
-  		$datguru=$this->Mkonsulback->get_datguru($guruID);
+  		$datguru=$this->Mkonsulback->get_datguru($penggunaID);
   		$data['nama']=$datguru['namaDepan'].' '.$datguru['namaBelakang'];
   		$data['photo']=base_url().'assets/image/photo/siswa/'.$datguru['photo'];
-  		$data['countLove']=$datguru['love'];
+  		$data['countLove']=$this->Mkonsulback->get_count_love($penggunaID);
   		// get respon atau jawaban
-  		$data['respon']=$this->Mkonsulback->get_respone_by_guru($guruID);
+  		$data['respon']=$this->Mkonsulback->get_respone_by_guru($penggunaID);
   		$tamppoin=($data['countJawab']*5)+($data['countLove']*10);
   		$data['poin']=$tamppoin;
-
+      //get data komen untuk tabel histrori komen
+      $data['komen']=$this->Mkonsulback->get_komen_love($penggunaID);
          #START cek hakakses#
   		$hakAkses=$this->session->userdata['HAKAKSES'];
   		if ($hakAkses=='admin') {
@@ -101,15 +104,17 @@
   		$dat_guru=$this->Mkonsulback->get_aq_konsul();
   		$tampAq=array();
   		foreach ($dat_guru as $value) {
-  			$guruID=$value['id'];
-  			$datguru=$this->Mkonsulback->get_datguru($guruID);
-  			$countJawab=$this->Mkonsulback->get_count_jawab($guruID);
-  			$poin=($countJawab*5)+($value['love']*10);
+  			$penggunaID=$value['penggunaID'];
+  			$love=$this->Mkonsulback->get_count_love($penggunaID);
+  			$datguru=$this->Mkonsulback->get_datguru($penggunaID);
+  			$countJawab=$this->Mkonsulback->get_count_jawab($penggunaID);
+  			$poin=($countJawab*5)+($love*10);
   			$tampAq[]=array('poin'=>$poin,
   							'nama'=>$value['namaDepan'].' '.$value['namaBelakang'],
-  							'love'=>$value['love'],
+                'mapel'=>$value['mapel'],
+  							'love'=>$love,
   							'countJawab'=>$countJawab,
-  							'guruID'=>$value['id']
+  							'penggunaID'=>$penggunaID
   							);
   		}
   		rsort($tampAq);
