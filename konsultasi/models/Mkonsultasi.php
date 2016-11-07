@@ -11,15 +11,15 @@ class Mkonsultasi extends CI_Model
 	//ambil semua pertnyaan
 	function get_all_questions(){
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
-				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
-				`isiPertanyaan`, `pertanyaan`.`date_created`, 
-				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
-				FROM `tb_k_pertanyaan` `pertanyaan` 
-				JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
-				JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
-				ORDER BY `pertanyaan`.`date_created` DESC LIMIT 5 ";
-		        $result = $this->db->query($sub);
-        $result->result_array();
+		`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+		`isiPertanyaan`, `pertanyaan`.`date_created`, 
+		`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		FROM `tb_k_pertanyaan` `pertanyaan` 
+		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
+		ORDER BY `pertanyaan`.`date_created` DESC LIMIT 5 ";
+		$result = $this->db->query($sub);
+		$result->result_array();
 
 		if ($result->result_array()==array()) {
 			return false;
@@ -31,16 +31,16 @@ class Mkonsultasi extends CI_Model
 	//ambil pertanyaan yang dimiliki oleh id tertentu.
 	function get_my_questions($id_siswa){
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
-				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
-				`isiPertanyaan`, `pertanyaan`.`date_created`, 
-				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
-				FROM `tb_k_pertanyaan` `pertanyaan` 
-				JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
-				JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
-				WHERE `siswa`.`id` = $id_siswa ORDER BY `pertanyaan`.`date_created` DESC LIMIT 5";
-		        $result = $this->db->query($sub);
+		`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+		`isiPertanyaan`, `pertanyaan`.`date_created`, 
+		`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		FROM `tb_k_pertanyaan` `pertanyaan` 
+		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
+		WHERE `siswa`.`id` = $id_siswa ORDER BY `pertanyaan`.`date_created` DESC LIMIT 5";
+		$result = $this->db->query($sub);
 
-        $result->result_array();
+		$result->result_array();
 
 		if ($result->result_array()==array()) {
 			return false;
@@ -53,17 +53,17 @@ class Mkonsultasi extends CI_Model
 	function get_my_question_level($id_tingkat){
 
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, `namaDepan`, 
-				`namaBelakang`, `judulPertanyaan`, `isiPertanyaan`, `pertanyaan`.`date_created`, `subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
-				FROM `tb_k_pertanyaan` `pertanyaan` 
-				JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
-				JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
-				JOIN `tb_tingkat` `tingkat` ON `siswa`.`tingkatID` = `tingkat`.`id` 
-				WHERE `tingkat`.`id` = $id_tingkat ORDER BY `pertanyaan`.`date_created` 
-				DESC LIMIT 5";
+		`namaBelakang`, `judulPertanyaan`, `isiPertanyaan`, `pertanyaan`.`date_created`, `subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		FROM `tb_k_pertanyaan` `pertanyaan` 
+		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
+		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_tingkat` `tingkat` ON `siswa`.`tingkatID` = `tingkat`.`id` 
+		WHERE `tingkat`.`id` = $id_tingkat ORDER BY `pertanyaan`.`date_created` 
+		DESC LIMIT 5";
 
-		        $result = $this->db->query($sub);
+		$result = $this->db->query($sub);
 
-        $result->result_array();
+		$result->result_array();
 
 		if ($result->result_array()==array()) {
 			return false;
@@ -102,7 +102,7 @@ class Mkonsultasi extends CI_Model
 
 	//ambil postingan dalam pertanyaan tertentu.
 	function get_postingan($pertanyaanID){
-		$this->db->select('*');
+		$this->db->select('*,jawab.id as jawabID');
 		$this->db->from('tb_k_jawab jawab');
 		$this->db->where('jawab.pertanyaanID',$pertanyaanID);
 		$this->db->join('tb_pengguna pengguna','pengguna.id = jawab.penggunaID');
@@ -118,8 +118,14 @@ class Mkonsultasi extends CI_Model
 
 
 	// =========## cruud ##==============
-		public function insert_konstulasi( $data ) {
+	public function insert_konstulasi( $data ) {
 		$this->db->insert( 'tb_k_pertanyaan', $data );
+
+	}
+
+// insert jawaban
+	public function insert_jawaban($data){
+		$this->db->insert( 'tb_k_jawab', $data );
 
 	}
 }
