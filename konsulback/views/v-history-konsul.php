@@ -1,45 +1,5 @@
 <div id="container">
-   <!-- Start Modal Detail Video dari server -->
-   <div class="modal fade" id="detail-konsul">
-
-      <div class="modal-dialog" role="document">
-
-         <div class="modal-content">
-
-            <div class="modal-header">
-
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-                  <span aria-hidden="true">&times;</span>
-
-               </button>
-
-               <h3 class="modal-title text-center"> Detail Konsultasi</h3>
-
-            </div>
-
-            <div class="modal-body">
-               <h5>Isi konsultasi</h5>
-               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-
-            <div class="modal-footer">
-
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-
-         </div>
-
-      </div>
-
-   </div>
-   <!-- End Modal Detail Video -->	
+   
   <!-- Top Stats -->
   <div class="row">
     <div class="col-sm-3">
@@ -104,8 +64,20 @@
 
 </div>
 <!--/ Top Stats -->
+ <!-- menu tab -->
+   <div>
+     <ul class="nav nav-tabs">
+      <li class="active"><a href="#respon" data-toggle="tab">History Respone</a></li>
+      <li><a href="#komen" data-toggle="tab">History Komen Love</a></li>
+    </ul>
+  </div>
+ <!-- End menu tab -->
+<!-- START TAB KONTEN -->
+<div class="tab-content">
+<!-- Start tab pane history respon -->
+<div class="tab-pane active" id="respon">
 <!-- Start Penel -->
-<div class="panel panel-inverse">
+<div class="panel ">
  <!-- Start Panel Body -->
  <div class="panel-body">
    <!-- Start Tabel -->
@@ -113,6 +85,7 @@
       <thead>
        <tr>
          <th>No</th>
+         <th>Judul Pertanyaan</th>
          <th>Pertanyaan</th>
          <th>Jawaban</th>
          <th>Tanggal</th>
@@ -124,6 +97,7 @@
       <?php foreach ($respon as $value): ?>
          <tr>
             <th><?=$no;?></th>
+            <th><?=$value['judulPertanyaan']?></th>
             <th><?=$value['isiPertanyaan']?></th>
             <th><?=substr($value['isiJawaban'], 0, 100)?>...</th>
             <th><?=$value['tgl']?></th>
@@ -138,6 +112,50 @@
 <!-- END Panel Body -->
 </div>
 <!-- End Panel -->
+</div>
+<!-- END tab pane history respon -->
+
+<!-- Start tab pane history respon -->
+<div class="tab-pane" id="komen">
+<!-- Start Penel -->
+<div class="panel ">
+ <!-- Start Panel Body -->
+ <div class="panel-body">
+   <!-- Start Tabel -->
+   <table class="table table-striped" id="" style="font-size: 12px">
+      <thead>
+       <tr>
+         <th>No</th>
+         <th>Nama</th>
+         <th>Komentar</th>
+         <th>Tanggal</th>
+      </tr>
+      </thead>
+      <tbody>
+          <?php $no='1'; ?>
+          <?php foreach ($komen as $rows ): ?>
+            <tr>
+              <th><?=$no;?></th>
+              <th><?=$rows['namaDepan'];?> <?=$rows['namaBelakang'];?></th>
+              <th><?=$rows['komentar'];?></th>
+               <th><?=$rows['tgl'];?></th>
+            </tr>
+            <?php $no++; ?>
+          <?php endforeach ?>
+          
+      </tbody>
+   </table>
+<!-- Start Tabel -->
+</div>
+<!-- END Panel Body -->
+</div>
+<!-- End Panel -->
+</div>
+<!-- END tab pane history respon -->
+</div>
+<!-- END TAB KONTEN -->
+
+
 </div>
 <script type="text/javascript">
    function detail_konsul() {
