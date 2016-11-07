@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
 
  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
-        
+
 
         <!--styles -->
 
@@ -44,6 +44,9 @@
         <?php include 'v-header.php' ?>
 
         <?php include 'v-revolution-slidder.php' ?>
+
+
+
 
         <hr class="divider-color">
 
