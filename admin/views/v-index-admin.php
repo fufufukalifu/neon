@@ -727,7 +727,12 @@
                             <li class="submenu-header ellipsis">Subscribe</li>
 
                             <li >
-                                <a href="<?=  base_url('index.php/testimoni')?>">
+                                <a href="<?=  base_url('index.php/Subscribe')?>">
+                                    <span class="text">Kirim berita</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="<?=  base_url('index.php/Subscribe/daftarsubs')?>">
                                     <span class="text">Daftar Subscribe</span>
                                 </a>
                             </li>

@@ -332,30 +332,19 @@
 
                     <div class="owl-carousel testimonials-carousel">
 
-                        <div class="gallery-item">
+                        <?php
+                        foreach ($testimoni as $key) {
+                            ?>
+                            <div class="gallery-item">
 
-                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
+                                <div class="quote-avatar-author clear-fix"><img src="<?= base_url('assets/image/photo/siswa/'.$key['photo']) ?>" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info"><?= $key['namaDepan']." ".$key['namaBelakang']?><br><span><?=$key['namaSekolah']?></span></div></div>
 
-                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
+                                <p><?= $key['testimoni']?></p>
 
-                        </div>
-
-                        <div class="gallery-item">
-
-                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
-
-                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
-
-                        </div>
-
-                        <div class="gallery-item">
-
-                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
-
-                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
-
-                        </div>
-
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
 
                 </div>
