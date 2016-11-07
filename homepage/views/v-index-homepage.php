@@ -146,7 +146,7 @@
 
                                 <div class="counter-name">Siswa</div>
 
-                            </div>							
+                            </div>       
 
                         </div>
 

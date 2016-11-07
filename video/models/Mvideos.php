@@ -278,7 +278,7 @@ class Mvideos extends CI_Model
 
   //ambil video terakhir diupdate
 function get_last_video(){
-  $this->db->select( '*' );
+  $this->db->select( 'id,judulVideo,date_created,deskripsi' );
   $this->db->from( 'tb_video video' );
   $this->db->order_by('date_created','desc');
   $this->db->limit('2');
