@@ -197,7 +197,6 @@ class Video extends MX_Controller {
         }
     }
 
-<<<<<<< HEAD
         #ajax untuk menampilkan soal yang sudah di pub, belum terdaftar di paket dan statusnya 1
     function ajax_get_last_video() {
         $data=array();
@@ -222,15 +221,6 @@ class Video extends MX_Controller {
                     </div>
                     <p>".$list_video['deskripsi']."</p>
                 </article>";
-            
-
-=======
-    function watchvideo($id_video) {
-        
-    }
->>>>>>> af2bbd4b0490a1c9f9f31be08c21ee61df286fed
-
-
 
             $data[] = $row;
             $n++;

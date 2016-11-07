@@ -1,3 +1,14 @@
+<style type="text/css">
+	.komen {
+		width:80%;
+		margin-left: 120px;
+	}
+	.komen li{
+		margin: 0;
+		padding: 0;
+		line-height:1.5;
+	}
+</style>
 <main class="container">
 	<div class="page-content">
 		<section>
@@ -30,14 +41,19 @@
 											data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											width=60
 											alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
-											<q><b><?=$question['judulPertanyaan'] ?></b>
-											<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span><br> 
-												<?=$question['isiPertanyaan'] ?>
-											</q>
+
+											<q>
+												<b><?=$question['judulPertanyaan'] ?></b>
+												<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+											</q>	
+											<div class="komen">
+												<?=$question['isiPertanyaan'] ?><br>
+											</div>
+											
 										</div>
-										<br>
+										
 										<div class="tags-post">
-											<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag">jumlah</a>
+											<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
 										</div>
 										<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
 											Read More 
@@ -79,15 +95,21 @@
 								data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 								width=60
 								alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
-								<q><b><?=$question['judulPertanyaan'] ?></b><span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span><br> 
-									<?=$question['isiPertanyaan'] ?>
-								</q>
+
+								<q>
+									<b><?=$question['judulPertanyaan'] ?></b>
+									<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+								</q>	
+								<div class="komen">
+									<?=$question['isiPertanyaan'] ?><br>
+								</div>
+								
 							</div>
 							<br>
 							<div class="tags-post">
-								<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag">jumlah</a>
+								<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
 							</div>
-							<a href="blog-post.html" class="cws-button border-radius alt icon-right">
+							<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
 								Read More 
 								<i class="fa fa-angle-right"></i></a>
 							</article>
@@ -115,15 +137,21 @@
 											data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											width=60
 											alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
-											<q><b><?=$question['judulPertanyaan'] ?></b><span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span><br> 
-												<?=$question['isiPertanyaan'] ?>
-											</q>
+
+											<q>
+												<b><?=$question['judulPertanyaan'] ?></b>
+												<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+											</q>	
+											<div class="komen">
+												<?=$question['isiPertanyaan'] ?><br>
+											</div>
+											
 										</div>
 										<br>
 										<div class="tags-post">
-											<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag">jumlah</a>
+											<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
 										</div>
-										<a href="blog-post.html" class="cws-button border-radius alt icon-right">
+										<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
 											Read More 
 											<i class="fa fa-angle-right"></i></a>
 										</article>

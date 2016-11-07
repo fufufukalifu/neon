@@ -82,18 +82,20 @@ class Konsultasi extends MX_Controller{
 
   public function singlekonsultasi($id_pertanyaan){
       $single_pertanyaan = $this->mkonsultasi->get_pertanyaan($id_pertanyaan)[0];
+      $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
     $data = array(
       'judul_halaman' => 'Neon - Konsultasi',
       'judul_header'=> $single_pertanyaan['judulPertanyaan'],
       'isi'=> $single_pertanyaan['isiPertanyaan'],
       'author'=> $single_pertanyaan['namaDepan']." ".$single_pertanyaan['namaBelakang'],
-      'jumlah'=>100,
+      'jumlah'=>$jumlah,
       'sub'=>$single_pertanyaan['judulSubBab'],
       'akses'=>$single_pertanyaan['hakAkses']
 
       );
       // print_r($data);
-
+    
+    $data['data_postingan'] = $this->mkonsultasi->get_postingan($id_pertanyaan);
     $data['files'] = array(
       APPPATH.'modules/homepage/views/v-header-login.php',
       // APPPATH.'modules/templating/views/t-f-pagetitle.php',
@@ -106,7 +108,11 @@ class Konsultasi extends MX_Controller{
     $this->parser->parse( 'templating/index', $data );
  }
 
-
+  # fungsi ajax get jumlah postingan
+ function ajax_get_jumlah_postingan($id_pertanyaan){
+  $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
+  echo $jumlah;
+ }
 
  public function konsul(){
 

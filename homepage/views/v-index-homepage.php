@@ -42,10 +42,6 @@
 
         <?php include 'v-revolution-slidder.php' ?>
 
-
-
-
-
         <hr class="divider-color">
 
         <!-- content -->
@@ -296,7 +292,7 @@
 
             <!-- parallax section -->
 
-            <div class="parallaxed">
+<div class="parallaxed">
 
                 <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
 
@@ -308,4 +304,192 @@
 
                 <div class="grid-row center-text">
 
-                    <!-- twitter
+                    <!-- twitter -->
+
+                    <div class="twitter-1"></div>
+
+                    <!-- / twitter -->
+
+                </div>
+
+            </div>
+<section class="fullwidth-background testimonial padding-section" id="testimonials">
+
+                <div class="grid-row">
+
+                    <h2 class="center-text">Testimonials</h2>
+
+                    <div class="owl-carousel testimonials-carousel">
+
+                        <div class="gallery-item">
+
+                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
+
+                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
+
+                        </div>
+
+                        <div class="gallery-item">
+
+                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
+
+                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
+
+                        </div>
+
+                        <div class="gallery-item">
+
+                            <div class="quote-avatar-author clear-fix"><img src="http://placehold.it/94x94" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info">Karl Doe<br><span>Writer</span></div></div>
+
+                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+        <?php include 'v-footer.php' ?>
+
+        <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
+
+        <script type="text/javascript">
+            $(".main-nav li a.testimonials").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#testimonials").offset().top
+                }, 2000);
+            });
+
+            $(".main-nav li a.service").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#service").offset().top
+                }, 2000);
+            });
+
+            $(".main-nav li a.getintouch").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#getintouch").offset().top
+                }, 2000);
+            });
+
+
+            function changekonten(data){
+
+                var judul;
+
+                var isi;
+
+                if (data=="VideoBelajar") {
+
+                    judul = "Video Belajar";
+
+                    isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
+
+                }else if(data=="Konsultasi"){
+
+                    judul = "Konsultasi";
+
+                    isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
+
+                }else if(data=="Tryout"){
+
+                    judul = "TryOut Online"
+
+                    isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
+
+                }else if(data=="edudrive"){
+
+                    judul = "Edu Drive";
+
+                    isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
+
+                }else if(data=="toflfokus"){
+
+                    judul = "TOEFL Fokus";
+
+                    isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
+
+                }else if(data=="penjurusan"){
+
+                    judul = "Penjurusan";
+
+                    isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
+
+                }else if(data=="raportonline"){
+
+                    judul = "Raport Online";
+
+                    isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
+
+                }else{
+
+                    //latihan
+
+                    judul = "Latihan Online";
+
+                    isi = "Nah ini ni... bagi kamu yang demen nguji kemampuan diri kalian, dengan latihan online ini, kalian bisa latihan kapapun selama kalian mau. Dan Asyiknya lagi kalian bisa pilih sendiri level soalnya dari yang mudah sampai yang susah.";
+
+                }
+
+                    $('.konten h2').html(judul).animate();
+
+                    $('.konten p').html(isi);
+
+
+
+
+
+            }
+
+        </script>
+
+        <script type='text/javascript' src="<?= base_url('assets/back/js/jquery.validate.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/jquery.form.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/TweenMax.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/main.js') ?>"></script>
+
+        <!-- jQuery REVOLUTION Slider  -->
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/jquery.themepunch.tools.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/jquery.themepunch.revolution.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.slideanims.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.actions.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js') ?>"></script>
+
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.navigation.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.migration.min.js') ?>"></script>
+
+        <script type="text/javascript" src="<?= base_url('assets/back/rs-plugin/js/extensions/revolution.extension.parallax.min.js') ?>"></script>      
+
+        <script src="<?= base_url('assets/back/js/jquery.isotope.min.js') ?>"></script>
+
+
+
+        <script src="<?= base_url('assets/back/js/owl.carousel.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/jquery-ui.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/jflickrfeed.min.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/jquery.tweet.js') ?>"></script>
+
+
+        <script src="<?= base_url('assets/back/js/jquery.fancybox.pack.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/jquery.fancybox-media.js') ?>"></script>
+
+        <script src="<?= base_url('assets/back/js/retina.min.js') ?>"></script>
+
+    </body>
+
+</html>
