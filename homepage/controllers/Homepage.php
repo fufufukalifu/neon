@@ -19,6 +19,7 @@ class Homepage extends MX_Controller {
         $datas['jumlahMapel'] = $this->mmatapelajaran->get_courses_number();
         $datas['jumlahSiswa'] = $this->msiswa->get_siswa_numbers();
         $datas['jumlahVideo'] = $this->mvideos->get_numbers_all_video();
+        
 
 
         $data = array(
@@ -31,6 +32,7 @@ class Homepage extends MX_Controller {
         $data['file'] = 'v-container.php';
         $data['teachers'] = $this->mguru->get_guru_random();
         $data['last_video'] = $this->mvideos->get_last_video();
+        $data['testimoni'] = $this->Mhomepage->gettestimoni();
 
         $this->parser->parse('v-index-homepage', $data);
     }

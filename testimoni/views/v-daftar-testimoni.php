@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
+
 <section id="main" role="main">
     <div class="col-md-12">
         <div class="row">
@@ -31,11 +32,67 @@
     </div>
 </section>
 <script type="text/javascript">
+
+    function updatea(id_testi) {
+//        var ischecked = $("input:checkbox.publish").is(':checked'); 
+        var pu = $("input:checkbox.publish").val();
+        console.log(pu);
+//        if (pu == 1) {
+            $.ajax({
+                url: base_url + "index.php/Testimoni/publishtestimoni/" + id_testi,
+                data: "id_testi=" + id_testi,
+                type: "POST",
+                dataType: "TEXT",
+                success: function (data, respone)
+                {
+                    alert('Testimoni dipublish pada tampilan utama');
+                    reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error disable testimoni');
+                    // console.log(jqXHR);
+                    // console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+//        }
+    }
+
+
+    function droptea(id_testi) {
+//        var ischecked = $("input:checkbox.publish").is(':checked');   
+        var nilai = $("input:checkbox.drop").val();
+        console.log(nilai);
+//        if (nilai == 1) {
+            $.ajax({
+                url: base_url + "index.php/Testimoni/disabletestimoni/" + id_testi,
+                data: "id_testi=" + id_testi,
+                type: "POST",
+                dataType: "TEXT",
+                success: function (data, respone)
+                {
+                    alert('Testimoni dihilangkan dari tampilan utama');
+                    reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error publish testimoni');
+                    // console.log(jqXHR);
+                    // console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+//        }
+    }
+
+
+
     var tb_testimoni;
     $(document).ready(function () {
         tb_testimoni = $('.daftartestimoni').DataTable({
             "ajax": {
-                    "url": base_url + "Testimoni/ajax_daftar_testimoni",
+                "url": base_url + "Testimoni/ajax_daftar_testimoni",
                 "type": "POST"
             },
             "emptyTable": "Tidak Ada Data Pesan",
@@ -43,13 +100,13 @@
         });
     });
 
-    function dropPesan(id_pesan) {
+    function dropTestimoni(id_testi) {
         if (confirm('Apakah Anda yakin akan menghapus data ini?')) {
             // ajax delete data to database
-            console.log(base_url + "index.php/Pesan/deletePesan/" + id_pesan);
+//            console.log(base_url + "index.php/Testimoni/deletePesan/" + id_testi);
             $.ajax({
-                url: base_url + "index.php/Pesan/deletePesan/" + id_pesan,
-                data: "id_pesan=" + id_pesan,
+                url: base_url + "index.php/Testimoni/deleteTesti/" + id_testi,
+                data: "id_testi=" + id_testi,
                 type: "POST",
                 dataType: "TEXT",
                 success: function (data, respone)
@@ -66,6 +123,7 @@
             });
         }
     }
+
     function reload_tblist() {
         tb_testimoni.ajax.reload(null, false);
     }

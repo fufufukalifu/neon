@@ -38,10 +38,15 @@ class Testimoni extends MX_Controller {
             $row[] = $list_testi['namaDepan'] . " " . $list_testi['namaBelakang'];
             $row[] = $list_testi['testimoni'];
             $row[] = $list_testi['date_created'];
-            $row[] = '<form action="" class="text-center"><input type="checkbox" name="publish" value="1"></form>';
+            if ($list_testi['publish'] == 1) {
+                  $row[] = '<form action="" class="text-center"><input class="drop" type="checkbox" onchange="droptea(' . "" . $list_testi['id_testimoni'] . ')" value="'.$list_testi['publish'].'" checked></form>';
+            }else{
+                  $row[] = '<form action="" class="text-center"><input class="publish" type="checkbox" onchange="updatea(' . "" . $list_testi['id_testimoni'] . ')" value="'.$list_testi['publish'].'"></form>';
+            }
+          
 //            $row[] = $list_testi['alamat'];
 //            $row[] = $list_testi['pesan'];
-            $row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPesan(' . "" . $list_testi['id_testimoni'] . ')"><i class="ico-remove"></i></a>';
+            $row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTestimoni(' . "" . $list_testi['id_testimoni'] . ')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
         }
@@ -52,16 +57,26 @@ class Testimoni extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function deletePesan() {
-        $idpesan = $this->input->post('id_pesan');
+    public function deleteTesti() {
+        $idtesti= $this->input->post('id_testi');
 //        var_dump($idpesan);
-//        $this->Mpesan->hapus_pesan($idpesan);
+        $this->Mtestimoni->hapus_testi($idtesti);
     }
 
     public function addtestimoni() {
         $data['testimoni'] = $this->input->post('isitestimoni');
         $data['id_user'] = $this->session->userdata['id'];
         $this->Mtestimoni->addtestimoni($data);
+    }
+    
+    public function publishtestimoni() {
+        $id = $this->input->post('id_testi');
+        $this->Mtestimoni->publishtestimoni($id);
+    }
+    
+    public function disabletestimoni() {
+        $id = $this->input->post('id_testi');
+        $this->Mtestimoni->disabletestimoni($id);
     }
 
 }
