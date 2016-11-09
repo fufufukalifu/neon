@@ -2,14 +2,38 @@
 	.komen {
 		width:80%;
 		margin-left: 120px;
+		/*border: 1px solid pink;*/
+
 	}
 	.komen li{
 		margin: 0;
 		padding: 0;
 		line-height:1.8;
 	}
-	.komen{
+	.komen quote{
 		/*border: 1px solid black;*/
+		padding: 3px 20px;
+		width: inherit;
+		background: rgba(0,0,0,.1);
+		font-style: italic;
+	}
+	blockquote {
+		background: #f9f9f9;
+		border-left: 10px solid #ccc;
+		margin: 1.5em 10px;
+		padding: 0.5em 10px;
+		quotes: "\201C""\201D""\2018""\2019";
+	}
+	blockquote:before {
+		color: #ccc;
+		content: open-quote;
+		font-size: 4em;
+		line-height: 0.1em;
+		margin-right: 0.25em;
+		vertical-align: -0.4em;
+	}
+	blockquote p {
+		display: inline;
 	}
 </style>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
@@ -29,17 +53,11 @@
 
 					<div class="modal-body">
 
-					<div class="quotes kuote">
-							<p><i>
 
-							</p><i>
-						</div>
-						<textarea  name="editor1" class="form-control" id="isi">
-						</textarea>
-						<div class="modal-footer bg-color-3">
-							<button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
-							<button type="button" class="cws-button bt-color-2 border-radius alt small mulai-btn post" onclick="save()">Post</button>
-						</div>
+						
+					</div>
+					<div class="modal-footer bg-color-3">
+						
 					</div>
 
 				</div><!-- /.modal-content -->
@@ -70,7 +88,7 @@
 					<div>
 						<p><q><b>{judul_header}</b></q></p>
 						<div class="komen"><?=$isi ?>
-							<input type="hidden" name="" value="<?=$isi ?>">
+							<input type="hidden" name="single" value="<?=$isi ?>">
 						</div>
 						<input type="hidden" name="" value="{isi}">
 
@@ -81,7 +99,7 @@
 				<div class="tags-post">
 					<a href="#" rel="tag">{sub}</a>
 					<?php// echo "$isi"; ?>
-					<a onclick="quote(<?php echo htmlspecialchars($isi) ?>)" rel="tag">quote</a>
+					<a onclick="quote('single')" rel="tag">quote</a>
 					<a onclick="quote()" rel="tag">Balas</a>
 
 				</div>
@@ -108,17 +126,16 @@
 							<div>
 								<div class="komen"><?=$item_postingan['isiJawaban'] ?>
 
-									<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban'] ?>">
+									<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
 
 								</div>
-								<input type="hidden" name="" value="{isi}">
 
 							</div>
 
 						</div><br>
 
 						<div class="text-right">
-							<a href="" class="cws-button alt bt-color-1 icon-left smaller">
+							<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
 								<i class="fa fa-heart">
 								</i>Point
 							</a>
@@ -136,49 +153,77 @@
 	</div>
 
 	<script type="text/javascript">
-		var ckeditor = CKEDITOR.replace( 'editor1' );
-
+		var ckeditor;
+		var string;
 		function quote(data=""){
-			// $('.modal-body .quotes q').append("");
+			elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
+			button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post' onclick='save()'>Post</button>";
 
-		// console.log(data);
-		if (data=="") {
-			$('#myModal').modal('show');
+			$('.modal-body').html(elemen);
+			$('.modal-footer').html(button);
+
+
+			ckeditor = CKEDITOR.replace( 'editor1' );
+
+
+			if (data=="") {
+				$('.modal-header .modal-title').html("Balas Pertanyaan");
+				string = 0;
+				$('#myModal').modal('show');
 			// ckeditor.setData(data);
 		}else{
+			$('.modal-header .modal-title').html("Quote Jawaban");
+
 			string = $('input[name='+data+']').val();
+			$('.modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
 			console.log(string);
-			$('.modal-body .quotes p i').html(string);
-
-			ckeditor.setData(string);
+			// ckeditor.setData(string);
 			$('#myModal').modal('show');
-		// }
-
-	}
-}
-	function save(){
-
-		var desc = ckeditor.getData();
-		var data = {
-			isiJawaban : desc+"<br>",
-			penggunaID : $('input[name=idpengguna]').val(),
-			pertanyaanID : $('input[name=idpertanyaan]').val(),
 		}
-		console.log(data);
-		idpertanyaan= data.pertanyaanID;
+	}
+	function save(){
+		//kalo kosong
+		if (string==0) {
+			var desc = ckeditor.getData();
+
+			var data = {
+				isiJawaban : desc+"",
+				penggunaID : $('input[name=idpengguna]').val(),
+				pertanyaanID : $('input[name=idpertanyaan]').val(),
+			}
+			idpertanyaan= data.pertanyaanID;
+		}else{
+			console.log(string);
+			quote = "<blockquote>"+string+"</blockquote>";
+			var desc = quote+ckeditor.getData();
+			console.log(desc);
+
+			var data = {
+				isiJawaban : desc+"",
+				penggunaID : $('input[name=idpengguna]').val(),
+				pertanyaanID : $('input[name=idpertanyaan]').val(),
+			}
+			console.log(data);
+			idpertanyaan= data.pertanyaanID;
 		// console.log(data);
 
-		if (data.isiJawaban == "") {
-			$('#info').show();
-		}else{
-			url = base_url+"konsultasi/ajax_add_jawaban/";
-			$.ajax({
-				url : url,
-				type: "POST",
-				data: data,
-				dataType: "TEXT",
-				success: function(data)
-				{
+	}
+
+
+
+
+
+	if (data.isiJawaban == "") {
+		$('#info').show();
+	}else{
+		url = base_url+"konsultasi/ajax_add_jawaban/";
+		$.ajax({
+			url : url,
+			type: "POST",
+			data: data,
+			dataType: "TEXT",
+			success: function(data)
+			{
 				// alert('masd');
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
@@ -190,6 +235,41 @@
             	alert('Error adding / update data');
             }
         });
-		}
 	}
+}
+
+function point(data){
+	elemen = "<textarea class='form-control' name='komentar'></textarea>";
+	$('.modal-body').html(elemen);
+	$('.modal-header .modal-title').html("Berikan Komentar");
+	$('#myModal').modal('show');
+	button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+
+	$('.modal-footer').html(button);
+}
+
+function komen(data){
+	var isikomentar = $('textarea[name=komentar]').val();
+	console.log(isikomentar);
+	url = base_url+"konsultasi/ajax_add_point/"+data;
+
+	data = {
+		isiKomentar : isikomentar
+	}
+
+	$.ajax({
+		url : url,
+		type: "POST",
+		data: data,
+		dataType: "TEXT",
+		success: function(data)
+		{
+			alert('berhasil');
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			alert('Error adding / update data');
+		}
+	});
+}
 </script>
