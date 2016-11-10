@@ -9,6 +9,10 @@
 		line-height:1.5;
 	}
 </style>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
+
 <main class="container">
 	<div class="page-content">
 		<section>
@@ -27,7 +31,7 @@
 						<form class="form-group">
 							<p class="input-icon">
 								<i class="fa fa-search"></i>
-								<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search">
+								<input type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="tanya1">
 							</p>
 						</form>
 						<?php foreach ($questions as $question): ?>
@@ -183,31 +187,15 @@
 </div>
 </main>
 <script type="text/javascript">
-	$(this).ready( function() {  
-		$("#search").autocomplete({  
-
-			minLength: 1,  
-			source:   
-			function(req, add){  
-				$.ajax({  
-					url: "<?php echo base_url(); ?>index.php/autocomplete/lookup",  
-					dataType: 'json',  
-					type: 'POST',  
-					data: req,  
-					success:      
-					function(data){  
-						if(data.response =="true"){  
-							add(data.message);  
-							console.log(data);
-						}  
-					},  
-				});  
-			},  
-
+	$(document).ready(function() {  
+		url = base_url +"konsultasi/search";
+		$('#tanya1').autocomplete({
+			source: url,
+			select: function (event, ui) {
+				window.location = ui.item.url;
+			}
 		});
-
-	});  
-
+	});
 	function showmodal(){
 		$('#myModal').modal('show');
 	}
