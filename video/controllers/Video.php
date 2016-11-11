@@ -225,7 +225,7 @@ class Video extends MX_Controller {
     }
 
     public function comment() {
-        $isiKomen = htmlspecialchars($this->input->post('comment'));
+        $isiKomen = $this->input->post('comment');
         $idvideo = htmlspecialchars($this->input->post('idvideo'));
         $userID = $this->session->userdata['id'];
 

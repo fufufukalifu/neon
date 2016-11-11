@@ -28,7 +28,7 @@ class mKomen extends CI_Model
 
 	//fungsi untuk menampilkan komen yang ada di halaman seevideo
 	public function get_komen_byvideo( $idvideo ) {
-		$this->db->select( 'namaPengguna`,komen.date_created,`isiKomen`,avatar' );
+		$this->db->select( 'komen.id as komenID, namaPengguna`,komen.date_created,`isiKomen`,avatar' );
 		$this->db->from( 'tb_komen komen' );
 		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
 		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');

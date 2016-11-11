@@ -1,270 +1,278 @@
-            <!-- START Blog Content -->
-            <section class="section bgcolor-white " id="main" role="main">
-                <div class="container">
-                    <!-- START Row -->
+           <style type="text/css">
+            blockquote{
+              display:block;
+              background: #fff;
+              padding: 15px 20px 15px 45px;
+              margin: 0 0 20px;
+              position: relative;
+
+              /*Font*/
+              font-size: 13px;
+              line-height: 1.2;
+              color: #666;
+              text-align: justify;
+
+              /*Borders - (Optional)*/
+              border-left: 10px solid #ccc;
+              border-right: 2px solid #ccc;
+
+          }
+
+          blockquote::before{
+              content: "\201C"; /*Unicode for Left Double Quote*/
+
+              /*Font*/
+              font-family: Georgia, serif;
+              font-size: 20px;
+              font-weight: bold;
+              color: #999;
+
+              /*Positioning*/
+              position: absolute;
+              left: 10px;
+              top:5px;
+          }
+
+          blockquote::after{
+              /*Reset to make sure*/
+              content: "";
+          }
+
+          blockquote a{
+              text-decoration: none;
+              background: #eee;
+              cursor: pointer;
+              padding: 0 3px;
+              color: #c76c0c;
+          }
+
+          blockquote a:hover{
+             color: #666;
+         }
+
+         blockquote em{
+          font-style: italic;
+      }
+  </style> <!-- START Blog Content -->
+  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <!-- If you'd like to support IE8 -->
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
+  <section class="section bgcolor-white " id="main" role="main">
+    <div class="container-fluid">
+        <!-- START Row -->
+        <div class="row">
+            <!-- START Left Section -->
+            <div class="col-md-12 mb15">
+                <!-- Blog post #1 -->
+                <!-- Content -->
+                <section class="panel-body pl0 pr0">
                     <div class="row">
-                        <!-- START Left Section -->
-                        <div class="col-md-12 mb15">
-                            <!-- Blog post #1 -->
-                                <!-- Content -->
-                                <section class="panel-body pl0 pr0">
-                                    <div class="row">
-                                        <!-- post date -->
-                                        <div class="col-xs-3 col-sm-1 col-md-1 pr0">
-                                            <div class="panel widget">
-                                                <div class="pa10">
-                                                    <h4 class="bold nm text-primary text-center">28</h4>
-                                                </div>
-                                                <hr class="nm">
-                                                <div class="pa10 bgcolor-default">
-                                                    <p class="semibold nm text-default text-center">Oct</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/ post date -->
-
-                                        <!-- post content -->
-                                        <div class="col-xs-9 col-sm-11 col-md-11">
-                                            <!-- heading -->
-                                            <h3 class="font-alt ellipsis mt0"><a href="javascript:void(0);" class="text-default">{judul_header}</a></h3>
-                                            <!--/ heading -->
-
-                                            <!-- meta -->
-                                            <p class="meta">
-                                                <a href="javascript:void(0);">6 comment</a><!-- comments -->
-                                                <span class="text-muted mr5 ml5">&#8226;</span>
-                                                <span class="text-muted">In </span><a href="javascript:void(0);">{nama_sub}</a><!-- category -->
-                                                <span class="text-muted mr5 ml5">&#8226;</span>
-                                                <span class="text-muted">By </span><a href="javascript:void(0);">{nama_penulis}</a><!-- author -->
-                                            </p>
-                                            <!--/ meta -->
-
-                                            <!-- text -->
-                                            <div class="text-default">
-                                                <p>{deskripsi}</p>
-                                            </div>
-                                            <!--/ text -->
-                                        </div>
-                                        <!--/ post content -->
-                                    </div>
-                                </section>
-                                <!--/ Content -->
-
-                                <!-- Author bio -->
-                                <section class="panel-body">
-                                    <!-- Header -->
-                                    <div class="section-header section-header-bordered mb15">
-                                        <h4 class="section-title">
-                                            <p class="font-alt nm">Tentang Penulis</p>
-                                        </h4>
-                                    </div>
-                                    <!--/ Header -->
-                                    <div class="well mb0">
-                                        <ul class="list-table">
-                                            <li style="width:80px;">
-                                                <img class="img-circle" src="../image/avatar/avatar4.jpg" alt="" width="70px" height="70px">
-                                            </li>
-                                            <li class="text-left">
-                                                <h5 class="semibold mt0 text-accent">{nama_penulis}</h5>
-                                                <p class="text-muted nm">{biografi}</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </section>
-                                <!--/ Author bio -->
-
-                                <!-- Comments -->
-                                <section class="panel-body">
-                                    <!-- Header -->
-                                    <div class="section-header section-header-bordered mb15">
-                                        <h4 class="section-title">
-                                            <p class="font-alt nm">Comments (6)</p>
-                                        </h4>
-                                    </div>
-                                    <!--/ Header -->
-                                    <div class="media-list media-list-bubble">
-                                        <div class="media">
-                                            <a href="javascript:void(0);" class="media-object pull-left">
-                                                <img src="../image/avatar/avatar1.jpg" class="img-circle" alt="">
-                                            </a>
-                                            <div class="media-body">
-                                                <div class="media-text">
-                                                    <h5 class="semibold mt0 mb5 text-default">Erica Jacobson</h5>
-                                                    <p class="mb5">Lorem ipsum dolor sit amet, eu vide nusquam sed, sit et vitae vocent. At est possit numquam percipit. Vidisse aliquip comprehensam pro cu, vim ex dolore docendi.</p>
-                                                    <!-- meta icon -->
-                                                    <p class="mb0">
-                                                        <span class="media-meta">Aug 26, 2013</span>
-                                                        <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                        <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                    </p>
-                                                    <!--/ meta icon -->
-                                                </div>
-
-                                                <!-- nested #1 -->
-                                                <div class="media">
-                                                    <a href="javascript:void(0);" class="media-object pull-left">
-                                                        <img src="../image/avatar/avatar4.jpg" class="img-circle" alt="">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <div class="media-text">
-                                                            <h5 class="semibold mt0 mb5 text-accent">Colt Jenkins</h5>
-                                                            <p class="mb5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus.</p>
-                                                            <!-- meta icon -->
-                                                            <p class="mt5 mb0">
-                                                                <span class="media-meta">Mar 23, 2014</span>
-                                                                <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                                <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                            </p>
-                                                            <!--/ meta icon -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- nested #1 -->
-
-                                                <!-- nested #2 -->
-                                                <div class="media">
-                                                    <a href="javascript:void(0);" class="media-object pull-left">
-                                                        <img src="../image/avatar/avatar9.jpg" class="img-circle" alt="">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <div class="media-text">
-                                                            <h5 class="semibold mt0 mb5 text-default">Tamara Moon</h5>
-                                                            <p class="mb5">Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy.</p>
-                                                            <!-- meta icon -->
-                                                            <p class="mt5 mb0">
-                                                                <span class="media-meta">Apr 10, 2014</span>
-                                                                <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                                <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                            </p>
-                                                            <!--/ meta icon -->
-                                                        </div>
-
-                                                        <!-- nested #2-1 -->
-                                                        <div class="media">
-                                                            <a href="javascript:void(0);" class="media-object pull-left">
-                                                                <img src="../image/avatar/avatar3.jpg" class="img-circle" alt="">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <div class="media-text">
-                                                                    <h5 class="semibold mt0 mb5 text-default">Oscar Daniels</h5>
-                                                                    <p class="mb5">Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio.</p>
-                                                                    <!-- meta icon -->
-                                                                    <p class="mt5 mb0">
-                                                                        <span class="media-meta">Apr 8, 2014</span>
-                                                                        <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                                        <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                                    </p>
-                                                                    <!--/ meta icon -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- nested #2-1 -->
-                                                    </div>
-                                                </div>
-                                                <!-- nested #2 -->
-                                            </div>
-                                        </div>
-
-                                        <div class="media">
-                                            <a href="javascript:void(0);" class="media-object pull-left">
-                                                <img src="../image/avatar/avatar4.jpg" class="img-circle" alt="">
-                                            </a>
-                                            <div class="media-body">
-                                                <div class="media-text">
-                                                    <h5 class="semibold mt0 mb5 text-accent">Colt Jenkins</h5>
-                                                    <p class="mb5">Aliquam fringilla cursus purus. Nullam scelerisque neque sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis in, cursus et, eros.</p>
-                                                    <!-- meta icon -->
-                                                    <p class="mt5 mb0">
-                                                        <span class="media-meta">Nov 11, 2014</span>
-                                                        <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                        <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                    </p>
-                                                    <!--/ meta icon -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="media">
-                                            <a href="javascript:void(0);" class="media-object pull-left">
-                                                <img src="../image/avatar/avatar5.jpg" class="img-circle" alt="">
-                                            </a>
-                                            <div class="media-body">
-                                                <div class="media-text">
-                                                    <h5 class="semibold mt0 mb5 text-default">Hermione Mayo</h5>
-                                                    <p class="mb5">Donec est mauris, rhoncus id, mollis nec, cursus a, enim. Suspendisse aliquet, sem ut cursus luctus, ipsum leo elementum sem, vitae aliquam eros turpis non enim. Mauris quis turpis</p>
-                                                    <!-- meta icon -->
-                                                    <p class="mt5 mb0">
-                                                        <span class="media-meta">Aug 2, 2014</span>
-                                                        <span class="mr5 ml5 text-muted">&#8226;</span>
-                                                        <a href="javascript:void(0);" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
-                                                    </p>
-                                                    <!--/ meta icon -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <!-- Comments -->
-
-                                <!-- Post Comments -->
-                                <section class="panel-footer pb0">
-                                    <!-- Header -->
-                                    <div class="section-header section-header-bordered mb15">
-                                        <h4 class="section-title">
-                                            <p class="font-alt nm">Post your comment</p>
-                                        </h4>
-                                    </div>
-                                    <!--/ Header -->
-
-                                    <form class="form-horizontal" data-toggle="formajax" data-options='{ "url": "server/form-ajax.php" }'>
-                                        <div class="form-group message-container">
-                                            <div class="alert alert-info">
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                <h4 class="mt0 mb5 semibold">Info</h4>
-                                                <p class="nm">Please do not spam. Any spamming activity will not be tolerate.</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Name <span class="text-danger">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="name" class="form-control" data-parsley-required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Email <span class="text-danger">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="email" name="email" class="form-control" data-parsley-required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Website</label>
-                                            <div class="col-sm-9">
-                                                <input type="email" name="website" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Your comment</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control" rows="6" name="comment"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-default">Reset</button>
-                                                <button type="submit" class="btn btn-success ladda-button" data-style="expand-right"><span class="ladda-label">Submit</span></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    form
-                                </section>
-                                <!--/ Post Comments -->
-                            </article>
-                            <!--/ Blog post #1 -->
+                        <!-- post date -->
+                        <div class="col-xs-3 col-sm-1 col-md-1 pr0">
+                            <div class="panel widget">
+                                <div class="pa10">
+                                    <h4 class="bold nm text-primary text-center">{tanggal}</h4>
+                                </div>
+                                <hr class="nm">
+                                <div class="pa10 bgcolor-default">
+                                    <p class="semibold nm text-default text-center">{bulan}</p>
+                                </div>
+                            </div>
                         </div>
-                        <!--/ END Left Section -->
+                        <!--/ post date -->
 
+                        <!-- post content -->
+                        <div class="col-xs-9 col-sm-11 col-md-11">
+                            <!-- heading -->
+                            <h3 class="font-alt ellipsis mt0"><a href="javascript:void(0);" class="text-default">{judul_header}</a></h3>
+                            <!--/ heading -->
+                            <div class="container-fluid">
+                                <video id="my-video" class="video-js" controls preload="auto"
+                                poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                                <source src="<?= base_url('assets/video/{file}'); ?>" type='video/mp4'>
+                                    <source src="<?= base_url('assets/video/{file}'); ?>" type='video/webm'>
+                                        <p class="vjs-no-js">
+                                          To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                      </p>
+                                  </video>
+
+                                  <!-- <video preload controls src="<?= base_url('assets/video/{file}'); ?>" width="100%" ></video> -->
+
+                              </div>
+                              <!-- meta -->
+                              <p class="meta">
+                                <a href="javascript:void(0);">{jumlah_comment} komen</a><!-- comments -->
+                                <span class="text-muted mr5 ml5">&#8226;</span>
+                                <span class="text-muted">In </span><a href="javascript:void(0);">{nama_sub}</a><!-- category -->
+                                <span class="text-muted mr5 ml5">&#8226;</span>
+                                <span class="text-muted">By </span><a href="javascript:void(0);">{nama_penulis}</a><!-- author -->
+                            </p>
+                            <!--/ meta -->
+
+                            <!-- text -->
+                            <div class="text-default">
+                                <p>{deskripsi}</p>
+                            </div>
+                            <!--/ text -->
+                        </div>
+                        <!--/ post content -->
                     </div>
-                    <!--/ END Row -->
-                </div>
-            </section>
-            <!--/ END Blog Content -->  
+                </section>
+                <!--/ Content -->
+
+                <!-- Author bio -->
+                <section class="panel-body">
+                    <!-- Header -->
+                    <div class="section-header section-header-bordered mb15">
+                        <h4 class="section-title">
+                            <p class="font-alt nm">Tentang Penulis</p>
+                        </h4>
+                    </div>
+                    <!--/ Header -->
+                    <div class="well mb0">
+                        <ul class="list-table">
+                            <li style="width:80px;">
+                                <img class="img-circle" src="{avatar}" alt="" width="70px" height="70px">
+                            </li>
+                            <li class="text-left">
+                                <h5 class="semibold mt0 text-accent">{nama_penulis}</h5>
+                                <p class="text-muted nm">{biografi}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--/ Author bio -->
+
+                <!-- Comments -->
+                <section class="panel-body">
+                    <!-- Header -->
+                    <div class="section-header section-header-bordered mb15">
+                        <h4 class="section-title">
+                            <p class="font-alt nm">Komen ({jumlah_comment})</p>
+                        </h4>
+                    </div>
+                    <!--/ Header -->
+                    <?php foreach ($comments as $comment): ?>
+                        <div class="media-list media-list-bubble" >
+
+                            <div class="media" >
+                                <a href="javascript:void(0);" class="media-object pull-left">
+                                    <?php $img = base_url('assets/image/photo/'.$comment->hakAkses.'/'.$comment->avatar) ?>
+                                    <img src="<?=$img ?>" class="img-circle" alt="">
+                                </a>
+
+                                <div class="media-body">
+
+                                    <div class="media-text" style="width: 100%">
+                                        <h5 class="semibold mt0 mb5 text-default"><?=$comment->namaPengguna ?></h5>
+                                        <p class="<?=$comment->komenID ?> mb15"><?=$comment->isiKomen ?></p>
+                                        <input type="hidden" name="<?=$comment->komenID ?>" value="<?=$comment->isiKomen ?>">
+                                        <!-- meta icon -->
+                                        <p class="mb0">
+                                            <span class="media-meta"><?=$comment->date_created ?></span>
+                                            <span class="mr5 ml5 text-muted">&#8226;</span>
+                                            <a onclick="reply(<?=$comment->komenID ?>)" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
+                                        </p>
+                                        <!--/ meta icon -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+
+                </section>
+                <!-- Comments -->
+
+                <!-- Post Comments -->
+                <section class="panel-footer pb0">
+                    <!-- Header -->
+                    <div class="section-header section-header-bordered mb15">
+                        <h4 class="section-title">
+                            <p class="font-alt nm">Kirim Postingan</p>
+                        </h4>
+                    </div>
+                    <!--/ Header -->
+                    <div class="container-fluid">
+                        <form class="form-horizontal" data-toggle="formajax" data-options='{ "url": "server/form-ajax.php" }'>
+                            <div class="form-group">
+                                <div id="info">
+                                    <div class="sukses text-info text-center hide">
+                                        <span>Komen anda telah terkirim, tunggu moderisasi dari guru yang bersangkutan</span>
+                                    </div>
+                                    <div class="gagal text-danger text-center hide">
+                                        <span>Gagal memberikan komen !</span>
+                                    </div> 
+                                    <div class="lengkapi text-danger text-center hide">
+                                        <span>Tolong isi komentar</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" rows="6" name="comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-success ladda-button" data-style="expand-right" onclick="post()"><span class="ladda-label">Post</span></button>
+                                    <button type="reset" class="btn btn-default">Reset</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <!--/ Post Comments -->
+            </article>
+            <!--/ Blog post #1 -->
+        </div>
+        <!--/ END Left Section -->
+
+    </div>
+    <!--/ END Row -->
+</div>
+</section>
+<!--/ END Blog Content -->  
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+<script type="text/javascript">
+    function reply(komenID){
+        name = 'input[name='+komenID+']';
+        quote = $(name).val();
+        console.log(quote);
+
+        $('textarea[name=comment]').val("<blockquote>"+quote+"</blockquote>");
+
+    }
+
+    function post(){
+        var isiKomen = $('textarea[name=comment]').val();
+        var videoID = <?= $this->uri->segment(3) ?>;
+        if (isiKomen=="") {
+            $('#info .lengkapi').removeClass('hide');
+            $('#info .sukses').addClass('hide');
+            $('#info .gagal').addClass('hide');
+        }else{
+           $.ajax({
+            type: "POST",
+            url: base_url+"/komenback/addkomen",
+            data: {isiKomen: isiKomen, videoID: videoID},
+            success: function (data)
+            {
+             // alert('SUCCESS!!');
+             $('#info .lengkapi').addClass('hide');
+             $('#info .sukses').removeClass('hide');
+             $('#info .gagal').addClass('hide');
+             // $('textarea[name=comment]').val();
+                                // window.location = base_url+"/video/seevideo/"+videoID;
+                            },
+                            error: function ()
+                            {
+                                $('#info .lengkapi').removeClass('hide');
+                                $('#info .sukses').addClass('hide');
+                                $('#info .gagal').removeClass('hide');
+                            }
+                        }); 
+       }
+   }
+</script>
