@@ -56,7 +56,8 @@
 
     <!-- Start Body modal -->
     <div class="modal-body">
-     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
+<!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
+<form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal" method="post" >
       <div  class="form-group">
        <label class="col-sm-3 control-label">Tingkat</label>
        <div class="col-sm-8">

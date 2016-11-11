@@ -15,6 +15,7 @@
       </div>
    </div>
    <!--/ END Statistic Widget -->
+   
 </div>
 <div class="col-sm-3">
   <!-- START Statistic Widget -->
@@ -81,7 +82,7 @@
  <!-- Start Panel Body -->
  <div class="panel-body">
    <!-- Start Tabel -->
-   <table class="table table-striped" id="zero-configuration" style="font-size: 12px">
+   <table class="table table-striped" id="zero-configuration1" style="font-size: 12px">
       <thead>
        <tr>
          <th>No</th>
@@ -122,7 +123,7 @@
  <!-- Start Panel Body -->
  <div class="panel-body">
    <!-- Start Tabel -->
-   <table class="table table-striped" id="" style="font-size: 12px">
+   <table class="table table-striped" id="zero-configuration" style="font-size: 12px">
       <thead>
        <tr>
          <th>No</th>

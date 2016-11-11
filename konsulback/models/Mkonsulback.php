@@ -4,16 +4,18 @@
  */
  class Mkonsulback extends CI_Model
  {
+ 	private $table = "tb_k_pertanyaan";
+
  	 function __construct() {
         parent::__construct();
         $this->load->helper('session');
     }
  	// get hitung jumlah jawaban guru
  	// 
- 	// get general data guru
+ 	// get general data guru by pengguna ID
  	public function get_datguru($penggunaID)
  	{
- 		$this->db->select('namaDepan,namaBelakang,photo');
+ 		$this->db->select('namaDepan,namaBelakang,photo,mataPelajaranID');
  		$this->db->from('tb_pengguna user');
  		$this->db->join('tb_guru guru','user.id=guru.penggunaID');
  		$this->db->where('guru.penggunaID',$penggunaID);
@@ -21,6 +23,7 @@
 		$result = $query->result_array();
  		return $result[0];
  	}
+
  	// get jumlah jawaban atau respone guru terhadap konsultasi
  	public function get_count_jawab($penggunaID)
  	{
@@ -71,5 +74,114 @@
  		$query = $this->db->get();
         return $query->result_array();
  	}
+
+ 	public function get_id_siswa() {
+        $this->db->select('siswa.id');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
+
+        $this->db->where('pengguna.id', '49');
+
+        $query = $this->db->get();
+        return $query->result()[0]->id;
+    }
+
+    	//ambil pertanyaan yang dimiliki oleh id tertentu.
+	function get_my_questions($mataPelajaranID){
+		$this->db->limit(1);
+		// $this->db->offset($this->uri->segment(3));
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+				`isiPertanyaan`, `pertanyaan`.`date_created`, 
+				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
+		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_bab` `bab`','`subbab`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->where('`tp`.`mataPelajaranID`',$mataPelajaranID)->order_by('`pertanyaan`.`date_created`','desc');
+		 $query = $this->db->get();
+		 		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->result_array();
+		}
+
+  //     
+	}
+
+	// ajax pagination
+	public function all($limit)
+	{
+		$this->db->limit($limit);
+		// $this->db->offset($this->uri->segment(4));
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+				`isiPertanyaan`, `pertanyaan`.`date_created`, 
+				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
+		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->order_by('`pertanyaan`.`date_created`','desc');
+		 $query = $this->db->get();
+		return $query->result_array();
+	}
+
+	// load more soal
+	public function more_all_soal($getLastContentId)
+	{
+		$limit=1;
+		$this->db->limit($limit);
+		// $this->db->offset($this->uri->segment(4));
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+				`isiPertanyaan`, `pertanyaan`.`date_created`, 
+				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
+		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->order_by('`pertanyaan`.`date_created`','asc');
+		 $query = $this->db->get();
+		return $query->result_array();
+	}
+
+		// load more soal berdasarkan keahlian guru
+	public function more_guru_soal($getLastContentId)
+	{
+		$limit=1;
+		$this->db->limit($limit);
+		// $this->db->offset($this->uri->segment(4));
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+				`isiPertanyaan`, `pertanyaan`.`date_created`, 
+				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
+		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->order_by('`pertanyaan`.`date_created`','asc');
+		 $query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function count_my_questions ($mataPelajaranID)
+	{
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+				`isiPertanyaan`, `pertanyaan`.`date_created`, 
+				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
+		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_bab` `bab`','`subbab`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->where('`tp`.`mataPelajaranID`',$mataPelajaranID)->order_by('`pertanyaan`.`date_created`','desc');
+		$query = $this->db->get();   
+		return $query->num_rows();
+	}
+
+	public function count()
+	{
+		return $this->db->count_all_results($this->table);		
+	}
 
  } ?>
