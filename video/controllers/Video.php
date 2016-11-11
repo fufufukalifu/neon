@@ -16,14 +16,6 @@ class Video extends MX_Controller {
     //########## FRONT END  ####################
 
 
-
-    public function index() {
-        $this->load->view('templating/t-header');
-        $this->load->view('templating/t-navbarUser');
-        $this->load->view('templating/t-title-site');
-        $this->load->view('templating/t-footer');
-    }
-
     //halaman tampilkan sub bab dan see
     public function videosub($id_sub_bab) {
         //dapetin dulu idbabnya.
@@ -165,35 +157,15 @@ class Video extends MX_Controller {
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub($subid);
             $data['video_by_bab'] = $this->Mvideos->get_all_video_by_bab($idbab);
 
+            $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
 
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 // APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/f-single-video.php',
-                APPPATH . 'modules/templating/views/footer.php'
+                APPPATH . 'modules/homepage/views/v-footer.php'
             );
-
-
-            //ambil index 0 yang akan dijadikan judul di title
-            // $onevideo = $data['videosingle'];
-            // $data['video'] = $onevideo[0];
-            // $data['title'] = $onevideo[0]->judulVideo;
-            // $data['idvideo']=$onevideo[0]->id;
-            // $data['videoData'] = $this->load->Mvideos->get_matapelajaran( $idvideo )[0];
-            // //get id guru
-            // $guruID = $onevideo[0]->guruID;
-            // //ambil data guru yang membuat video
-            //
-
-            // //ambil komen berdasarkan id video
-            // $data['komen']=$this->load->mkomen->get_komen_byvideo( $idvideo );
-            //$this->loadparse($data);
             $this->parser->parse('templating/index', $data);
-            // $this->load->view( 'templating/t-header' );
-            // $this->load->view( 'templating/t-navbarUser' );
-            // $this->load->view( 'v-banner-videoBelajar', $data );
-            // $this->load->view( 'v-single-video', $data );
-            // $this->load->view( 'templating/t-footer' );
         }
     }
 
@@ -253,7 +225,7 @@ class Video extends MX_Controller {
     }
 
     public function comment() {
-        $isiKomen = htmlspecialchars($this->input->post('comment'));
+        $isiKomen = $this->input->post('comment');
         $idvideo = htmlspecialchars($this->input->post('idvideo'));
         $userID = $this->session->userdata['id'];
 
@@ -268,8 +240,8 @@ class Video extends MX_Controller {
     //----------# BACK END  #----------#
 
     public function addkomen() {
-        $isiKomen = htmlspecialchars($this->input->post('isiKomen'));
-        $idvideo = htmlspecialchars($this->input->post('videoID'));
+        $isiKomen = $this->input->post('isiKomen');
+        $idvideo = $this->input->post('videoID');
         $userID = $this->session->userdata['id'];
 
         $dataKomen = array(

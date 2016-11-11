@@ -16,7 +16,6 @@ class Konsultasi extends MX_Controller{
 
   function get_id_siswa(){
    return $this->mtryout->get_id_siswa();
-
  }
 
  public function index() {
@@ -134,8 +133,28 @@ function ajax_add_jawaban(){
     'pertanyaanID' =>$pertanyaanID,
     );
   $this->mkonsultasi->insert_jawaban($data);
-  print_r($data);
 }
+
+function check_point($id_jawaban){
+  $id_siswa = $this->get_id_siswa();
+  $id_pengguna = $this->get_id_pengguna($id_jawaban);
+  $komentar = "Asd";
+  $id_jawab = $this->input->post('idJawaban');
+  // $id_jawab = "53";
+
+
+  $data = array(
+    'siswaID' => $id_siswa,
+    'penggunaID' => $id_pengguna,
+    'komentar' =>$komentar,
+    'jawabID'=>$id_jawab
+    );
+  
+
+  $check = $this->mkonsultasi->check_postingan($data);
+  echo json_encode($check);
+}
+
 //add point.
 function ajax_add_point($id_jawaban){
   //penggunaID
@@ -143,13 +162,20 @@ function ajax_add_point($id_jawaban){
   $id_siswa = $this->get_id_siswa();
   $id_pengguna = $this->get_id_pengguna($id_jawaban);
   $komentar = $this->input->post('isiKomentar');
+  $id_jawab = $this->input->post('idJawaban');
+
   $data = array(
     'siswaID' => $id_siswa,
     'penggunaID' => $id_pengguna,
     'komentar' =>$komentar,
+    'jawabID'=>$id_jawab
     );
-  var_dump($data);
+  // var_dump($data);
+
+  // $check = $this->mkonsultasi->check_postingan($data);
   $this->mkonsultasi->insert_point($data);
+  // var_dump($check); 
+  // "<script>alert('masuk')</script>";
 
 }
 
@@ -157,51 +183,62 @@ function get_id_pengguna($id_jawaban){
   return $this->mkonsultasi->get_penggunaID($id_jawaban);
 }
 
-function compare_date($id_jawaban){
-  $date_created = date("Y-m-d",strtotime($this->mkonsultasi->get_date($id_jawaban)));
-  $date_today = date("Y-m-d");
+// check postingan 
+// function check_point(){
 
-  if($date_created>$date_today){
-    json_encode(true);
-  }else{
-    json_encode(false);
-  }
-}
+// }
 
 function searchpertanyaan(){
   $this->load->view('coba');
 }
 
-function search(){
+function search_all(){
   $namapertanyaan = $_GET['term'];
   // var_dump($namapertanyaan);
-  $result = $this->mkonsultasi->cari_pertanyaan($namapertanyaan);
+  $result = $data['questions']=$this->mkonsultasi->get_all_questions($namapertanyaan);
 
   $pertanyaan = array();
   foreach ($result as $key) {
     $pertanyaan[] = array(
-      'value'=>$key->judulPertanyaan,
-      'url'=>base_url('konsultasi/singlekonsultasi')."/".$key->id,
-
+      'value'=>$key['judulPertanyaan'],
+      'url'=>base_url('konsultasi/singlekonsultasi')."/".$key['pertanyaanID'],
       );
     // $pertanyaan[] = $key->judulPertanyaan  
   }
   echo json_encode($pertanyaan);
 }
 
-function search2($id_pertanyaan){
-  $data_postingan = $this->mkonsultasi->get_postingan($id_pertanyaan);
-  // var_dump($data_postingan);
-  foreach ($data_postingan as $result_item) {
-        // $arr_result = array();
+function search_mine(){
+  $namapertanyaan = $_GET['term'];
+  // var_dump($namapertanyaan);
+  $result = $data['questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa(),$namapertanyaan);
 
-    $arr_result[] = $result_item['isiJawaban'];
-        // print_r($arr_result);
-        // echo json_encode($arr_result);
-
+  $pertanyaan = array();
+  foreach ($result as $key) {
+    $pertanyaan[] = array(
+      'value'=>$key['judulPertanyaan'],
+      'url'=>base_url('konsultasi/singlekonsultasi')."/".$key['pertanyaanID'],
+      );
+    // $pertanyaan[] = $key->judulPertanyaan  
   }
-  echo json_encode($arr_result);
+  echo json_encode($pertanyaan);
+}
 
+
+  function search_tingkat(){
+  $namapertanyaan = $_GET['term'];
+  // var_dump($namapertanyaan);
+  $result = $data['questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$namapertanyaan);
+
+  $pertanyaan = array();
+  foreach ($result as $key) {
+    $pertanyaan[] = array(
+      'value'=>$key['judulPertanyaan'],
+      'url'=>base_url('konsultasi/singlekonsultasi')."/".$key['pertanyaanID'],
+      );
+    // $pertanyaan[] = $key->judulPertanyaan  
+  }
+  echo json_encode($pertanyaan);
 }
 
 

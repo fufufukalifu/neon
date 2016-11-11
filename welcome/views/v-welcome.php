@@ -33,7 +33,7 @@
 
                     <?php foreach ($pelajaran_sd as $pelajaran_items): ?>
 
-                    <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
                 <?php endforeach ?>
 
@@ -53,7 +53,7 @@
 
                 <?php foreach ($pelajaran_smp as $pelajaran_items): ?>
 
-                <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
             <?php endforeach ?>
 
@@ -73,7 +73,7 @@
 
             <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
 
-            <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+            <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
         <?php endforeach ?>
 
@@ -93,7 +93,7 @@
 
         <?php foreach ($pelajaran_sma_ipa as $pelajaran_items): ?>
 
-        <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+        <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
         
 
@@ -113,7 +113,7 @@
 
         <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
 
-        <li><a href="../index.php/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+        <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
 
         
 

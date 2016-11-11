@@ -49,7 +49,9 @@ class Tryout extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             APPPATH . $konten,
-            APPPATH . 'modules/homepage/views/v-footer.php',
+//            APPPATH . 'modules/homepage/views/v-footer.php',
+            APPPATH . 'modules/testimoni/views/v-footer.php',
+            
         );
 
         $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
@@ -152,7 +154,8 @@ class Tryout extends MX_Controller {
     public function cekJawaban() {
         $data = $this->input->post('pil');
 
-//        var_dump($data);
+       // var_dump($data);
+       // echo $data[27][0];
         $id = $this->session->userdata['id_mm-tryoutpaket'];
         $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
 ////   
@@ -166,11 +169,14 @@ class Tryout extends MX_Controller {
         for ($i = 0; $i < sizeOf($result); $i++) {
             $id = $result[$i]['soalid'];
             $data[$id];
+            // echo $data[$id][0];
+            // echo "<br>";
+            echo $result[$i]['jawaban'];
             if (!isset($data[$id])) {
                 $kosong++;
                 $koreksi[] = $result[$i]['soalid'];
                 $idSalah[] = $i;
-            } else if ($data[$id] == $result[$i]['jawaban']) {
+            } else if ($data[$id][0] == $result[$i]['jawaban']) {
                 $benar++;
             } else {
                 $salah++;
@@ -179,9 +185,9 @@ class Tryout extends MX_Controller {
             }
         }
 //////
-//            echo 'kosong = ' . $kosong;
-//            echo 'Salah = ' . $salah;
-//            echo 'benar = ' . $benar;
+           // echo 'kosong = ' . $kosong;
+           // echo 'Salah = ' . $salah;
+           // echo 'benar = ' . $benar;
         //
   $hasil['id_pengguna'] = $this->session->userdata['id'];
         $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];

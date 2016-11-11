@@ -20,9 +20,9 @@
 			<!-- tabs -->
 			<div class="tabs">
 				<div class="block-tabs-btn clear-fix">
-					<div class="tabs-btn" data-tabs-id="tabs1">Semua Pertanyaan</div>
+					<div class="tabs-btn active	" data-tabs-id="tabs1">Semua Pertanyaan</div>
 					<div class="tabs-btn" data-tabs-id="tabs2">Pertanyaan Setingkat</div>
-					<div class="tabs-btn active" data-tabs-id="tabs3">Pertanyaan saya</div>
+					<div class="tabs-btn" data-tabs-id="tabs3">Pertanyaan saya</div>
 				</div>
 				<!-- tabs keeper -->
 				<div class="tabs-keeper">
@@ -31,9 +31,10 @@
 						<form class="form-group">
 							<p class="input-icon">
 								<i class="fa fa-search"></i>
-								<input type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="tanya1">
+								<input type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
 							</p>
 						</form>
+						semua
 						<?php foreach ($questions as $question): ?>
 							<div class="blog-post">
 								<article>
@@ -44,7 +45,8 @@
 											<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											width=60
-											alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
+											alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?>
+											<br></div></div>
 
 											<q>
 												<b><?=$question['judulPertanyaan'] ?></b>
@@ -84,11 +86,11 @@
 			<form class="form-group">
 				<p class="input-icon">
 					<i class="fa fa-search"></i>
-					<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search">
+					<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search2">
 				</p>
 			</form>
-			<?php foreach ($questions as $question): ?>
-
+			PERTANYAAN LEVEL
+			<?php foreach ($questions_bylevel as $question): ?>
 				<div class="blog-post">
 					<article>
 						<hr class="divider-color">
@@ -126,9 +128,10 @@
 						<form class="form-group">
 							<p class="input-icon">
 								<i class="fa fa-search"></i>
-								<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search">
+								<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search3">
 							</p>
 						</form>
+							PERTANYAANKU
 						<?php foreach ($my_questions as $question): ?>
 
 							<div class="blog-post">
@@ -188,9 +191,23 @@
 </main>
 <script type="text/javascript">
 	$(document).ready(function() {  
-		url = base_url +"konsultasi/search";
-		$('#tanya1').autocomplete({
-			source: url,
+
+		$('#search1').autocomplete({
+			source:  base_url +"konsultasi/search_all",
+			select: function (event, ui) {
+				window.location = ui.item.url;
+			}
+		});
+
+		$('#search2').autocomplete({
+			source: base_url +"konsultasi/search_tingkat",
+			select: function (event, ui) {
+				window.location = ui.item.url;
+			}
+		});
+
+		$('#search3').autocomplete({
+			source: base_url +"konsultasi/search_mine",
 			select: function (event, ui) {
 				window.location = ui.item.url;
 			}

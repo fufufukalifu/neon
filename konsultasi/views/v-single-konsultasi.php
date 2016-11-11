@@ -106,7 +106,7 @@
 			</article>
 		</div>
 
-		<hr class="divider-big">
+		<hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?>
 		<?php if ($data_postingan!=array()): ?>
 			<?php foreach ($data_postingan as $item_postingan): ?>
 				<div class="blog-post">
@@ -134,17 +134,41 @@
 
 						</div><br>
 
-						<div class="text-right">
-							<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
-								<i class="fa fa-heart">
-								</i>Point
-							</a>
-							<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
-								<i class="fa fa-quote-right ">
-								</i>Quote	
-							</a>
-						</div>
+						<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
+							<div class="text-right">
+								<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
+									<i class="fa fa-quote-right ">
+									</i>Quote	
+								</a>
+							</div>
+						<?php else :?>
+							<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+								<div class="text-right">
+									<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
+										<i class="fa fa-quote-right ">
+										</i>Quote	
+									</a>
+								</div>
 
+							<?php else :?>
+								<div class="text-right">
+									<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
+										<i class="fa fa-heart">
+										</i>Point
+									</a>
+
+									<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
+										<i class="fa fa-quote-right ">
+										</i>Quote	
+									</a>
+								</div>
+							<?php endif ?>
+
+						<?php endif ?>
+
+
+
+						
 					</article>
 				</div>
 			<?php endforeach ?>
@@ -246,30 +270,62 @@ function point(data){
 	button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
 	$('.modal-footer').html(button);
+	
+
 }
 
 function komen(data){
 	var isikomentar = $('textarea[name=komentar]').val();
-	console.log(isikomentar);
-	url = base_url+"konsultasi/ajax_add_point/"+data;
 
-	data = {
-		isiKomentar : isikomentar
+	// url = base_url+"konsultasi/ajax_add_point/"+data;
+	url = base_url+"konsultasi/check_point/"+data;
+
+	datas = {
+		isiKomentar : isikomentar,
+		idJawaban : data
 	}
-
+	var stat;
 	$.ajax({
 		url : url,
 		type: "POST",
-		data: data,
-		dataType: "TEXT",
-		success: function(data)
+		data: datas,
+		dataType: "json",
+		success: function(data, status, jqXHR)
 		{
-			alert('berhasil');
+			stat = get_data(data, datas);
 		},
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			alert('Error adding / update data');
 		}
 	});
+
 }
+
+function get_data(data, datas){
+	status = data;
+	postingan = datas;
+	if (status==1) {
+		alert("Tidak Dapat Memberikan Point")
+	}else{
+		console.log(postingan.idJawaban);
+		url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
+		$.ajax({
+			url : url,
+			type: "POST",
+			data: datas,
+			dataType: "text",
+			success: function()
+			{
+				alert("sudah ditambahkan");
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				alert('Error adding / update data');
+			}
+		});
+	}
+}
+
+
 </script>
