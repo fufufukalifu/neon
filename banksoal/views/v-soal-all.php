@@ -11,6 +11,19 @@ MathJax.Hub.Config({
 </script>
 <!-- end Math jax -->
 
+<!-- Start Modal konfirmasi hapus -->
+<div class="modal fade" id="konfirmasiDlt" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+
+    <div class="alert alert-danger ">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="semibold">Anda Yakin Menghapus DATA INI?</h4>
+        <p class="mb10">Silahkan cek kembali, jika anda yakin silahkan klik tombol di bawah ini untuk melanjutkan proses hapus data.</p>
+        <button type="button" class="btn btn-danger btn-right" onclick="konfirmasiHapus()">hapus Data</button>
+    </div>
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
     <!-- START Template Container -->
     <div class="container-fluid">
@@ -19,12 +32,16 @@ MathJax.Hub.Config({
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-teal">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Daftar Soal</h3>
-
+                        <h3 class="panel-title">Daftar Semua Soal</h3>
+                         <!-- Start menu tambah soal -->
+                        <div class="panel-toolbar text-right">
+                            <a class="btn btn-inverse btn-outline" href="<?= base_url(); ?>index.php/banksoal/formsoal" title="Tambah Data" ><i class="ico-plus"></i></a>
+                        </div>
+                         <!-- END menu tambah soal -->
                     </div>
-                    <table class="table table-striped table-bordered" id="tb_allSoal" style="font-size: 13px">
+                    <table class="table table-striped table-bordered" id="tb_allSoal" style="font-size: 13px" width="100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -37,7 +54,7 @@ MathJax.Hub.Config({
                                 <th>Publish</th>
                                 <!-- <th>Random</th> -->
                                 <th></th>
-                                <th></th>
+                                <th ></th>
 
                             </tr>
                         </thead>
@@ -102,4 +119,8 @@ MathJax.Hub.Config({
       tb_allSoal.ajax.reload(null,false); 
     }
 
+    // tampil modal kofirmasi hapus
+    function konfirmasiHapus (id_soal) {
+        $('#konfirmasiDlt').modal('show');
+    }
 </script>

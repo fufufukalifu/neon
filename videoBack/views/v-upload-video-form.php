@@ -36,7 +36,7 @@
 
         <!-- START Form panel -->
 
-        <form  class="panel panel-default form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <form  class="panel panel-teal form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
             <div class="panel-heading"><h5 class="panel-title">Upload Video</h5>
 

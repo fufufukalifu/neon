@@ -129,13 +129,18 @@ class Banksoal extends MX_Controller {
     }
     ## START FUNCTION UNTUK HALAMAN SOAL PERSUB-BAB
     // Functon menampilkan halaman list soal per sub--bab
-    public function listsoal() {
-      
-        $subBab = htmlspecialchars($this->input->get('subbab'));
+    public function subsoal($subBab ) {
         $data ['subBab'] = $subBab;
-        $data['judul_halaman'] = "Bank Soal";
+        $datSub=$this->Mbanksoal->dat_sub($subBab);
+        $babID=$datSub->babID;
+        $datBab=$this->Mbanksoal->get_judulBab($babID);
+        $judulBab=$datBab->judulBab;
+        $tingkatPelajaranID=$datBab->tingkatPelajaranID;
+        $namaMp=$this->Mbanksoal->get_namaMp($tingkatPelajaranID);
+        $data ['judulSub'] =$datSub->judulSubBab;
+        $data['judul_halaman'] = "Bank Soal ".$namaMp."/".$judulBab;
         $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-list-soal.php',
+            APPPATH . 'modules/banksoal/views/v-soal-sub.php',
             );
         #START cek hakakses#
         $hakAkses=$this->session->userdata['HAKAKSES'];
@@ -177,6 +182,7 @@ class Banksoal extends MX_Controller {
             $id_soal=$list_soal['id_soal'];
             $random=$list_soal['random'];
             $publish=$list_soal['publish'];
+            $soal=$list_soal['soal'];
             $ckRandom="";
             $ckPublish="";
 
@@ -211,9 +217,12 @@ class Banksoal extends MX_Controller {
             $row[] = $id_soal;
             $row[] = $list_soal['judul_soal'];
             $row[] = $list_soal['sumber'];
-            $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
-            $row[] = $list_soal['soal'];
+            if ($soal!=null) {
+                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
+            } else{
+                $row[] = $soal;
+            }
             $row[] = $jawabanBenar;
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
@@ -231,7 +240,7 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-default"><i class="ico-file5"></i></button>
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
@@ -251,6 +260,279 @@ class Banksoal extends MX_Controller {
     } 
     ## END START FUNCTION UNTUK HALAMAN SOAL PERSUB-BAB#
 
+    ##Start Function untuk halaman soal perBab##
+     // function untuk mengambil data soal
+    function ajax_soalPerbab($bab) {
+        $list  = $this->Mbanksoal->get_soal_bab($bab);
+        $pilihan = $this->Mbanksoal->get_pilihan_bab($bab);
+        $data = array();
+        $baseurl = base_url();
+        foreach ( $list as $list_soal ) {
+            $jawabanBenar= "";
+            $jawaban=$list_soal['jawaban'];
+            $tingkat=$list_soal['kesulitan'];
+            $id_soal=$list_soal['id_soal'];
+            $random=$list_soal['random'];
+            $publish=$list_soal['publish'];
+            $soal=$list_soal['soal'];
+            $ckRandom="";
+            $ckPublish="";
+
+             // menentukan tingkat kesulitan dengan indeks 1 - 3
+            if ($tingkat == '3') {
+                $kesulitan = 'Sulit';
+            } elseif ($tingkat == '2') {
+                $kesulitan = 'Sedang';
+            }else {
+               $kesulitan = 'Mudah';
+            }
+            // menentukan jawaban benar
+            foreach ( $pilihan as $piljawaban ) {
+                $id_soal_fk=$piljawaban['id_soal'];
+                $op=$piljawaban['pilihan'];
+                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
+                    $jawabanBenar=$piljawaban['jawabanBenar'];
+                } 
+                
+            }
+            // menentukan checked random
+            if ($random =='1') {
+                $ckRandom="checked";
+            } 
+            //mnentukan checked publish
+              if ($publish =='1') {
+                $ckPublish="checked";
+            } 
+            
+            $row = array();
+            $row[] = $id_soal;
+            $row[] = $list_soal['judul_soal'];
+            $row[] = $list_soal['sumber'];
+            $row[] = $list_soal['judulSubBab'];
+            $row[] = $kesulitan;
+              if ($soal!=null) {
+                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
+            } else{
+                $row[] = $soal;
+            }
+            $row[] = $jawabanBenar;
+           $row[] ='
+                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
+                                <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
+                                <label for="ckRand" >&nbsp;&nbsp;</label>
+                    </span>';
+
+            // $row[] ='
+            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+            //         </span>';
+            $row[] = '
+            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+
+                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
+                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+
+            </form>';
+
+             $row[]=' 
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+
+        }
+    
+        $output = array(
+            
+            "data"=>$data,
+        );
+
+        echo json_encode( $output );
+    } 
+
+    ##
+ ##Start Function untuk halaman soal per mata pelajaran##
+     // function untuk mengambil data soal
+    function ajax_soalPerMp($idMp) {
+      $list  = $this->Mbanksoal->get_soal_mp($idMp);
+        $pilihan = $this->Mbanksoal->get_pilihan_mp($idMp);
+        $data = array();
+        $baseurl = base_url();
+        foreach ( $list as $list_soal ) {
+            $jawabanBenar= "";
+            $jawaban=$list_soal['jawaban'];
+            $tingkat=$list_soal['kesulitan'];
+            $id_soal=$list_soal['id_soal'];
+            $random=$list_soal['random'];
+            $publish=$list_soal['publish'];
+            $ckRandom="";
+            $ckPublish="";
+
+             // menentukan tingkat kesulitan dengan indeks 1 - 3
+            if ($tingkat == '3') {
+                $kesulitan = 'Sulit';
+            } elseif ($tingkat == '2') {
+                $kesulitan = 'Sedang';
+            }else {
+               $kesulitan = 'Mudah';
+            }
+            // menentukan jawaban benar
+            foreach ( $pilihan as $piljawaban ) {
+                $id_soal_fk=$piljawaban['id_soal'];
+                $op=$piljawaban['pilihan'];
+                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
+                    $jawabanBenar=$piljawaban['jawabanBenar'];
+                } 
+                
+            }
+            // menentukan checked random
+            if ($random =='1') {
+                $ckRandom="checked";
+            } 
+            //mnentukan checked publish
+              if ($publish =='1') {
+                $ckPublish="checked";
+            } 
+            
+            $row = array();
+            $row[] = $id_soal;
+            $row[] = $list_soal['judul_soal'];
+            $row[] = $list_soal['sumber'];
+            $row[] = $list_soal['judulBab'];
+            $row[] = $kesulitan;
+            $soal=$list_soal['soal'];
+              if ($soal!=null) {
+                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
+            } else{
+                $row[] = $soal;
+            }
+            $row[] = $jawabanBenar;
+           $row[] ='
+                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
+                                <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
+                                <label for="ckRand" >&nbsp;&nbsp;</label>
+                    </span>';
+
+            // $row[] ='
+            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+            //         </span>';
+            $row[] = '
+            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+
+                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
+                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+
+            </form>';
+
+             $row[]=' 
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+
+        }
+    
+        $output = array(
+            
+            "data"=>$data,
+        );
+
+        echo json_encode( $output );
+    } 
+ ##Start Function untuk halaman soal per mata pelajaran##
+     // function untuk mengambil data soal
+    function ajax_soalPerTkt($tingkatID) {
+      $list  = $this->Mbanksoal->get_soal_tkt($tingkatID);
+        $pilihan = $this->Mbanksoal->get_pilihan_tkt($tingkatID);
+        $data = array();
+        $baseurl = base_url();
+        foreach ( $list as $list_soal ) {
+            $jawabanBenar= "";
+            $jawaban=$list_soal['jawaban'];
+            $tingkat=$list_soal['kesulitan'];
+            $id_soal=$list_soal['id_soal'];
+            $random=$list_soal['random'];
+            $publish=$list_soal['publish'];
+            $ckRandom="";
+            $ckPublish="";
+
+             // menentukan tingkat kesulitan dengan indeks 1 - 3
+            if ($tingkat == '3') {
+                $kesulitan = 'Sulit';
+            } elseif ($tingkat == '2') {
+                $kesulitan = 'Sedang';
+            }else {
+               $kesulitan = 'Mudah';
+            }
+            // menentukan jawaban benar
+            foreach ( $pilihan as $piljawaban ) {
+                $id_soal_fk=$piljawaban['id_soal'];
+                $op=$piljawaban['pilihan'];
+                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
+                    $jawabanBenar=$piljawaban['jawabanBenar'];
+                } 
+                
+            }
+            // menentukan checked random
+            if ($random =='1') {
+                $ckRandom="checked";
+            } 
+            //mnentukan checked publish
+              if ($publish =='1') {
+                $ckPublish="checked";
+            } 
+            
+            $row = array();
+            $row[] = $id_soal;
+            $row[] = $list_soal['judul_soal'];
+            $row[] = $list_soal['sumber'];
+            $row[] = $list_soal['keterangan'];
+            $row[] = $kesulitan;
+            $soal=$list_soal['soal'];
+             if ($soal!=null) {
+                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
+            } else{
+                $row[] = $soal;
+            }
+            $row[] = $jawabanBenar;
+           $row[] ='
+                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
+                                <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
+                                <label for="ckRand" >&nbsp;&nbsp;</label>
+                    </span>';
+
+            // $row[] ='
+            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+            //         </span>';
+            $row[] = '
+            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+
+                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
+                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+
+            </form>';
+
+             $row[]=' 
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+
+        }
+    
+        $output = array(
+            
+            "data"=>$data,
+        );
+
+        echo json_encode( $output );
+    } 
+
     ## START FUNCTION UNTUK HALAMAN ALL SOAL##
     //function untuk menampilkan halaman all soal
     public function allsoal()
@@ -260,7 +542,7 @@ class Banksoal extends MX_Controller {
        
         $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-list-allsoal.php',
+            APPPATH . 'modules/banksoal/views/v-soal-all.php',
             );
         #START cek hakakses#
         $hakAkses=$this->session->userdata['HAKAKSES'];
@@ -300,7 +582,7 @@ class Banksoal extends MX_Controller {
             $publish=$list_soal['publish'];
             $ckRandom="";
             $ckPublish="";
-
+            $soal=$list_soal['soal'];
             
              // menentukan tingkat kesulitan dengan indeks 1 - 3
             if ($tingkat == '3') {
@@ -336,7 +618,13 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['sumber'];
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
-            $row[] =  $list_soal['soal'];
+            if ($soal!=null) {
+                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
+            } else{
+                $row[] = $soal;
+            }
+            
+           
             $row[] = $jawabanBenar;
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
@@ -354,12 +642,12 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-default"><i class="ico-file5"></i></button>
+                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
             $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="konfirmasiHapus('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
 
@@ -376,7 +664,6 @@ class Banksoal extends MX_Controller {
     #Start Function untuk form upload bank soal#
 
     public function formsoal() {
-        $data['subBab'] = htmlspecialchars($this->input->get('subBab'));
 
         $data['judul_halaman'] = "Bank Soal";
         $data['files'] = array(
@@ -386,19 +673,12 @@ class Banksoal extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
             // jika admin
-            if ($data['subBab'] == null) {
-                redirect(site_url('admin'));
-            } else {
-                $this->parser->parse('admin/v-index-admin', $data);
-            }
+            $this->parser->parse('admin/v-index-admin', $data);
+           
             
         } elseif($hakAkses=='guru'){
             // jika guru
-            if ($data['subBab'] == null) {
-                redirect(site_url('guru/dashboard/'));
-            } else {
-                $this->parser->parse('templating/index-b-guru', $data);
-            }
+            $this->parser->parse('templating/index-b-guru', $data);
             
         }else{
                         // jika siswa redirect ke welcome
@@ -414,12 +694,6 @@ class Banksoal extends MX_Controller {
         $subBabID = htmlspecialchars($this->input->post('subBabID'));
         //syarat pengisian form upload soal
         $this->form_validation->set_rules('judul', 'Judul Soal', 'trim|required|is_unique[tb_banksoal.judul_soal]');
-        //pengecekan pengisian form regitrasi siswa
-        // if ($this->form_validation->run() == FALSE) {##
-        //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-            // redirect(site_url('banksoal/formsoal?subBab='.$subBabID));
-        // } else {##
-         // START SINTX UPLOAD SOAL
            $options = htmlspecialchars($this->input->post('options'));
            $jum_pilihan = htmlspecialchars($this->input->post('opjumlah'));
            $UUID = uniqid();
@@ -457,8 +731,6 @@ class Banksoal extends MX_Controller {
            // // mengambil id soal untuk fk di tb_piljawaban
            $data['tb_banksoal'] = $this->Mbanksoal->get_soalID($UUID)[0];
            $soalID = $data['tb_banksoal']['id_soal'];
-
-
            #Start pengecekan jenis inputan jawaban#
            //pengkondisian untuk jenis inputan text atau gambar
            if ($options == 'text') {
@@ -517,9 +789,6 @@ class Banksoal extends MX_Controller {
                    )
                );
             }
-            
-               
-
                //call function insert jawaban tet
                $this->Mbanksoal->insert_jawaban($dataJawaban);
            } else {
@@ -528,11 +797,8 @@ class Banksoal extends MX_Controller {
                $this->up_img_jawaban($soalID);
            }
            #END pengecekan jenis inputan jawaban#
-           redirect(site_url('banksoal/listsoal?subbab=' . $subBabID));
-         // END SINTX UPLOAD SOAL
-        // }##
-
-        
+           redirect(site_url('banksoal/allsoal'));
+         // END SINTX UPLOAD SOAL  
     }
 
     //function upload gambar soal
@@ -573,10 +839,6 @@ class Banksoal extends MX_Controller {
           'gambar_soal' => $file_name);
          $this->Mbanksoal->ch_soal($data);
         }
-        
-       
-       
-
         // $this->Mbanksoal->insert_gambar($datagambar);
     }
     //function untuk mengupload gambar pilihan jawaban
@@ -614,10 +876,6 @@ class Banksoal extends MX_Controller {
             } else {
               # code...
             }
-            
-
-            
-
             $n++;
         }
 
@@ -872,6 +1130,139 @@ class Banksoal extends MX_Controller {
         $this->Mbanksoal->del_banksoal($data);
     }
 
+    // fungsi untuk memfilter video yang akan di tampilkan
+    public function filtersoal()
+    {
+        $tingkatID = $this->input->post('tingkat');
+        $mpID = $this->input->post('mataPelajaran');
+        $bab=$this->input->post('bab');
+        $subbab=$this->input->post('subbab');
+        if ($subbab != null) {
+            //list soal
+            $this->subsoal($subbab);
+        } else if ($bab != null) {
+            $this->soalBab($bab);
+        } else if ($mpID != null) {
+            $this->soalMp($mpID);
+        } else if ($tingkatID != null) {
+            $this->soalTingkat($tingkatID);
+        } else {
+           $this->allsoal();
+            // $this->listsoal($subbab);
+        }    
+    }
+
+    // list soal per bab
+    public function soalBab($babID)
+    { 
+        // $subBab = htmlspecialchars($this->input->get('subbab'));
+        $data ['babID'] = $babID;
+        $datBab=$this->Mbanksoal->get_judulBab($babID);
+        $data['judulBab']=$datBab->judulBab;
+        $tingkatPelajaranID=$datBab->tingkatPelajaranID;
+        $namaMp=$this->Mbanksoal->get_namaMp($tingkatPelajaranID);
+        $data['judul_halaman'] = "Bank Soal ".$namaMp;
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-soal-bab.php',
+            );
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses =='admin') {
+            // jika admin
+            if ($babID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+            if ($babID == null) {
+                 redirect(site_url('guru/dashboard/'));
+            } else {
+               $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+    }
+
+     // list soal per mata Pelajaran
+    public function soalMp($mpID)
+    { 
+        // $subBab = htmlspecialchars($this->input->get('subbab'));
+        $data ['mpID'] = $mpID;
+        $tingkatPelajaranID=$mpID;
+        $namaMp=$this->Mbanksoal->get_namaMp($mpID);
+        $data['namaMp']=$namaMp;
+        $data['judul_halaman'] = "Bank Soal ".$namaMp;
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-soal-mp.php',
+            );
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses =='admin') {
+            // jika admin
+            if ($mpID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+            if ($mpID == null) {
+                 redirect(site_url('guru/dashboard/'));
+            } else {
+               $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+    }
+
+    // list soal per tingkat
+    public function soalTingkat($tingkatID)
+    { 
+        // $subBab = htmlspecialchars($this->input->get('subbab'));
+        $data ['tingkatID'] = $tingkatID;
+        $tingkatPelajaranID=$tingkatID;
+        $tingkat=$this->Mbanksoal->get_namaTingkat($tingkatPelajaranID);
+        $data['tingkat']=$tingkat;
+        $data['judul_halaman'] = "Bank Soal ".$tingkat;
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-soal-tingkat.php',
+            );
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses =='admin') {
+            // jika admin
+            if ($tingkatID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admin/v-index-admin', $data);
+            }
+            
+        } elseif($hakAkses=='guru'){
+             // jika guru
+            if ($tingkatID == null) {
+                 redirect(site_url('guru/dashboard/'));
+            } else {
+               $this->parser->parse('templating/index-b-guru', $data);
+            }
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+    }
 }
 
 ?>

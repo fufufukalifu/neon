@@ -8,24 +8,25 @@
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-teal">
                     <div class="panel-heading">
 
-                        <h3 class="panel-title">Daftar Soal Berdasarkan Subbab</h3>
-                        <form action="<?= base_url(); ?>index.php/banksoal/formsoal" method="get">
-                            <input type="text" name="subBab" id="subBabID" value="<?= $subBab; ?>" hidden="true" >
-                            <button title="Tambah Data" type="submit" class="btn btn-default pull-right"  style="margin-top:-30px;"><i class="ico-plus"></i></button>    
-                        </form>
-                        <hr>
+                        <h3 class="panel-title ">Daftar Soal Berdasarkan Mata Pelajaran '<?=$namaMp;?>'</h3>
+                        <!-- Start menu tambah soal -->
+                        <div class="panel-toolbar text-right">
+                        <input type="text" name="mp" id="mpID" value="<?= $mpID; ?>" hidden="true" >
+                            <a class="btn btn-inverse btn-outline" href="<?= base_url(); ?>index.php/banksoal/formsoal" title="Tambah Data" ><i class="ico-plus"></i></a>
+                        </div>
+                         <!-- END menu tambah soal -->
 
                     </div>
-                    <table class="table table-striped" id="tb_soalsub" style="font-size: 13px">
+                    <table class="table table-striped" id="tb_soalsub" style="font-size: 13px" width="100%">
                         <thead>
                             <tr>
                                <th>ID</th>
                                 <th>Judul Soal</th>
                                 <th>Sumber</th>
-                                <th>Mata Pelajaran</th>
+                                <th>Judul Bab</th>
                                 <th>Tingkat Kesulitan</th>
                                 <th>Soal</th>
                                 <th>Jawaban</th>
@@ -67,13 +68,13 @@ MathJax.Hub.Config({
 <script type="text/javascript">
 
     var tblist_TO;
-    var subBab =$('#subBabID').val();
+    var idMp =$('#mpID').val();
     // var idTo =$('#id_to').val();
   
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/banksoal/ajax_soalPerSub/"+subBab,
+                    "url": base_url+"index.php/banksoal/ajax_soalPerMp/"+idMp,
                     "type": "POST"
                     },
             "processing": true,
