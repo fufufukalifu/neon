@@ -226,11 +226,13 @@ class Mmatapelajaran extends CI_Model {
 
         $this->db->select('*');
 
-        $this->db->from('tb_bab');
+        $this->db->from('tb_bab as tbbab');
+        $this->db->join('tb_tingkat-pelajaran as tbtipe','tbbab.tingkatPelajaranID = tbtipe.id');
+//        $this->db->join('tb_mata-pelajaran as tbmapel','tbtipe.mataPelajaranID = tbmapel.id');
 
         $this->db->where('tingkatPelajaranID', $id);
 
-        $this->db->where('status', 1);
+        $this->db->where('tbbab.status', 1);
 
         $query = $this->db->get();
 
