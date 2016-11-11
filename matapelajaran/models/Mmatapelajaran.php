@@ -224,7 +224,7 @@ class Mmatapelajaran extends CI_Model {
 
         $this->session->set_userdata('id_mp', $id);
 
-        $this->db->select('*');
+        $this->db->select('*, tbbab.id as idbab');
 
         $this->db->from('tb_bab as tbbab');
         $this->db->join('tb_tingkat-pelajaran as tbtipe','tbbab.tingkatPelajaranID = tbtipe.id');
