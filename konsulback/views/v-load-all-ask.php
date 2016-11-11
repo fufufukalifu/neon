@@ -8,18 +8,32 @@
 // $count=mysql_num_rows($result);
 // if($count>0){
 foreach ($moreask as $row):
-                                   
-                                        $id=$row['pertanyaanID'];
+	
+	$id=$row['pertanyaanID'];
 
-                                        $message=$row['isiPertanyaan'];
+$message=$row['isiPertanyaan'];
 ?>
-<li>
-<a href="#"><?php echo $message; ?></a>
-</li>
+<div class="media-list">
+                                       <a href="<?=base_url('konsulback/konsultasi/') ?><?=$row['pertanyaanID'] ?>" class="media border-dotted">
+                                        <span class="pull-left">
+                                          <img src="<?=base_url("assets/image/photo/siswa/".$row['photo'])?>" class="img-circle" width="65px" height="65px" alt="">
+                                        </span>
+                                        <span class="media-body">
+                                          <span class="media-heading"><?=$row['namaDepan']." ".$row['namaBelakang'] ?></span>
+                                          <span class="media-text ellipsis nm"><?=$row['isiPertanyaan'] ?></span>
+                                          <!-- meta icon -->
+                                          <span class="label label-primary"><i class=" ico-book3"></i><?=$row['judulSubBab'] ?></span>
+                                          <span class="label label-success"><i class="ico-bubble2"></i><?=$row['jumlah'] ?></span>
+                                          <span></span>
+                                          <!--/ meta icon -->
+                                        </span>
+                                        <span class="pull-right">(<?=$row['date_created'] ?>)</span>
+                                      </a>
+                                    </div>
 <?php endforeach ?>
 
 <a href="#"><div id="load_more_<?php echo $id; ?>" class="more_tab">
-<div id="<?php echo $id; ?>" class="more_button">Load More Content</div></a>
+<div id="<?php echo $id; ?>" class="more_button">Load More</div></a>
 </div>
 
 <?php

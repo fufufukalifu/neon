@@ -135,7 +135,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         <div class="row">
             <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->

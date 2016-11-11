@@ -58,7 +58,7 @@
                                             <th width="30%">Isi Komen</th>
                                             <th>Tanggal</th>
                                             <th>Judul video</th>
-                                            <th width="30%">Aksi</th>
+                                            <th width="18%">Aksi</th>
 
 
                                         </tr>
@@ -88,7 +88,7 @@
             });
 
             function respon(komenID){
-                button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Laporkan</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Respon</button>";
+                button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Respon</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Batal</button>";
                 $('#respon .modal-footer').html(button);
                 $('#respon').modal('show');
 
@@ -117,7 +117,6 @@
             }
 
             function check(videoID){
-                alert(videoID);
                 window.location=base_url+"komenback/seevideo/"+videoID;
             }
 

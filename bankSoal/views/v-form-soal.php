@@ -132,7 +132,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                 <!-- Form horizontal layout bordered -->
 
-                <form class="form-horizontal form-bordered panel panel-default" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
 
                     <div class="panel-heading">
 
