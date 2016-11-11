@@ -35,7 +35,8 @@ public function index() {
         APPPATH . 'modules/homepage/views/v-header-login.php',
         APPPATH . 'modules/templating/views/t-f-pagetitle.php',
         APPPATH . 'modules/tesonline/views/v-test-show-tingkat.php',
-        APPPATH . 'modules/homepage/views/v-footer.php',
+//        APPPATH . 'modules/homepage/views/v-footer.php',
+        APPPATH . 'modules/testimoni/views/v-footer.php',
         );
     $data['tingkat'] = $this->load->mtingkat->gettingkat();
     $this->parser->parse('templating/index', $data);
