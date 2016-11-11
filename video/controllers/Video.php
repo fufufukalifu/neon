@@ -240,8 +240,8 @@ class Video extends MX_Controller {
     //----------# BACK END  #----------#
 
     public function addkomen() {
-        $isiKomen = htmlspecialchars($this->input->post('isiKomen'));
-        $idvideo = htmlspecialchars($this->input->post('videoID'));
+        $isiKomen = $this->input->post('isiKomen');
+        $idvideo = $this->input->post('videoID');
         $userID = $this->session->userdata['id'];
 
         $dataKomen = array(

@@ -47,10 +47,10 @@
           }
 
           blockquote a:hover{
-             color: #666;
-         }
+           color: #666;
+       }
 
-         blockquote em{
+       blockquote em{
           font-style: italic;
       }
   </style> <!-- START Blog Content -->
@@ -81,25 +81,24 @@
                             </div>
                         </div>
                         <!--/ post date -->
-
                         <!-- post content -->
-                        <div class="col-xs-9 col-sm-11 col-md-11">
+                        <div class="col-xs-9 col-sm-11 col-md-12">
                             <!-- heading -->
                             <h3 class="font-alt ellipsis mt0"><a href="javascript:void(0);" class="text-default">{judul_header}</a></h3>
                             <!--/ heading -->
                             <div class="container-fluid">
+                                <center>    
                                 <video id="my-video" class="video-js" controls preload="auto"
-                                poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                                <source src="<?= base_url('assets/video/{file}'); ?>" type='video/mp4'>
-                                    <source src="<?= base_url('assets/video/{file}'); ?>" type='video/webm'>
-                                        <p class="vjs-no-js">
-                                          To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                                      </p>
-                                  </video>
-
-                                  <!-- <video preload controls src="<?= base_url('assets/video/{file}'); ?>" width="100%" ></video> -->
-
+                                    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                                    <source src="<?= base_url('assets/video/{file}'); ?>"  style="width: 90%;height: 400px"  type='video/mp4'>
+                                        <source src="<?= base_url('assets/video/{file}'); ?>" type='video/webm'>
+                                            <p class="vjs-no-js">
+                                              To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                          </p>
+                                      </video>
+                                  </center>
+                                  <br>
                               </div>
                               <!-- meta -->
                               <p class="meta">
@@ -239,7 +238,6 @@
     function reply(komenID){
         name = 'input[name='+komenID+']';
         quote = $(name).val();
-        console.log(quote);
 
         $('textarea[name=comment]').val("<blockquote>"+quote+"</blockquote>");
 
@@ -253,9 +251,9 @@
             $('#info .sukses').addClass('hide');
             $('#info .gagal').addClass('hide');
         }else{
-           $.ajax({
+         $.ajax({
             type: "POST",
-            url: base_url+"/komenback/addkomen",
+            url: base_url+"/video/addkomen",
             data: {isiKomen: isiKomen, videoID: videoID},
             success: function (data)
             {
@@ -273,6 +271,6 @@
                                 $('#info .gagal').removeClass('hide');
                             }
                         }); 
-       }
-   }
+     }
+ }
 </script>
