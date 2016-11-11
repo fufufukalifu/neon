@@ -647,7 +647,7 @@ class Banksoal extends MX_Controller {
             </form>';
 
             $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="konfirmasiHapus('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
 

@@ -676,9 +676,9 @@
        </a>
        <ul id="subbanksoal" class="submenu collapse ">
         <li class="submenu-header ellipsis">Sub Bank Soal</li>
-        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semual Soal</span>
+        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Soal</span>
         </a></li>
-        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
+        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Video</span>
         </a></li>
 
 
@@ -730,7 +730,7 @@
       <li class="submenu-header ellipsis">Konsultasi Forum/li>
 
       <li >
-       <a href="javascript:void(0);">
+       <a href="<?= base_url('index.php/konsulback/listkonsul');?>">
         <span class="text">Daftar Konsultasi Forum</span>
        </a>
       </li>

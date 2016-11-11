@@ -167,15 +167,16 @@
     {
        $getLastContentId=$this->input->post('getLastContentId');
       $data['moreask']=$this->Mkonsulback->more_all_soal($getLastContentId);
-     
-      // var_dump($getLastContentId);
       $this->load->view('v-load-all-ask',$data);
     }
         // function more listkonsul
     public function moremapelsoal()
     {
-       $getLastContentId=$this->input->post('getLastContentId');
-      $data['moreask1']=$this->Mkonsulback->more_guru_soal($getLastContentId);
+      $penggunaID=$this->session->userdata['id'];
+      $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+      $data['mataPelajaranID']=$dat_guru['mataPelajaranID'];
+      $data['getLastContentId']=$this->input->post('getLastContentId');
+      $data['moreask1']=$this->Mkonsulback->more_guru_soal($data);
      
       // var_dump($getLastContentId);
       $this->load->view('v-load-mapel-ask',$data);
@@ -274,5 +275,38 @@
 
       
     } 
+
+    public function konsultasi($id_pertanyaan)
+    {
+       $single_pertanyaan = $this->mkonsultasi->get_pertanyaan($id_pertanyaan)[0];
+        $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
+        $date = $single_pertanyaan['date_created'];
+
+        $timestamp = strtotime($date);
+
+        $data = array(
+          'judul_halaman' => 'Neon - Konsultasi',
+          'judul_header'=> $single_pertanyaan['judulPertanyaan'],
+          'isi'=> $single_pertanyaan['isiPertanyaan'],
+          'author'=> $single_pertanyaan['namaDepan']." ".$single_pertanyaan['namaBelakang'],
+          'jumlah'=>$jumlah,
+          'sub'=>$single_pertanyaan['judulSubBab'],
+          'akses'=>$single_pertanyaan['hakAkses'],
+          'id_pertanyaan'=>$id_pertanyaan,
+          'id_pengguna'=>$this->session->userdata('id'),
+          'tanggal'=>date("d", $timestamp),
+          'bulan'=>date("M", $timestamp),
+          );
+            // print_r($data);
+        $data['isi'] = $single_pertanyaan['isiPertanyaan'];
+        $data['data_postingan'] = $this->mkonsultasi->get_postingan($id_pertanyaan);
+        $data['files'] = array(
+          APPPATH.'modules/konsulback/views/v-konsultasi-back.php'
+          );
+
+
+
+       $this->parser->parse('templating/index-b-guru', $data);
+    }
 
   } ?>
