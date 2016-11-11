@@ -102,7 +102,7 @@
 		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
 			$('#info').show();
 		}else{
-			url = base_url+"konsultasi/ajax_add_jawaban/";
+			url = base_url+"konsultasi/ajax_add_konsultasi/";
 			$.ajax({
 				url : url,
 				type: "POST",
