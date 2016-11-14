@@ -619,6 +619,9 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
             if ($soal!=null) {
+                // $row[]='<button type="button" class="btn btn-default" data-container="" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." >
+                //                                 left
+                //                             </button>';
                  $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
             } else{
                 $row[] = $soal;
