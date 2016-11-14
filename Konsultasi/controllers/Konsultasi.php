@@ -38,6 +38,7 @@ class Konsultasi extends MX_Controller{
 
 
   $this->parser->parse( 'templating/index', $data );
+  // var_dump($this->get_tingkat_siswa());
 }
 
 function get_tingkat_siswa(){

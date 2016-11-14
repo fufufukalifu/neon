@@ -47,10 +47,10 @@
           }
 
           blockquote a:hover{
-           color: #666;
-       }
+             color: #666;
+         }
 
-       blockquote em{
+         blockquote em{
           font-style: italic;
       }
   </style> <!-- START Blog Content -->
@@ -88,7 +88,7 @@
                             <!--/ heading -->
                             <div class="container-fluid">
                                 <center>    
-                                <video id="my-video" class="video-js" controls preload="auto"
+                                    <video id="my-video" class="video-js" controls preload="auto"
                                     poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
                                     <source src="<?= base_url('assets/video/{file}'); ?>"  style="width: 90%;height: 400px"  type='video/mp4'>
                                         <source src="<?= base_url('assets/video/{file}'); ?>" type='video/webm'>
@@ -199,7 +199,7 @@
                             <div class="form-group">
                                 <div id="info">
                                     <div class="sukses text-info text-center hide">
-                                        <span>Komen anda telah terkirim, tunggu moderisasi dari guru yang bersangkutan</span>
+                                    <span>Komen anda telah terkirim</span>
                                     </div>
                                     <div class="gagal text-danger text-center hide">
                                         <span>Gagal memberikan komen !</span>
@@ -251,7 +251,7 @@
             $('#info .sukses').addClass('hide');
             $('#info .gagal').addClass('hide');
         }else{
-         $.ajax({
+           $.ajax({
             type: "POST",
             url: base_url+"/video/addkomen",
             data: {isiKomen: isiKomen, videoID: videoID},
@@ -271,6 +271,6 @@
                                 $('#info .gagal').removeClass('hide');
                             }
                         }); 
-     }
- }
+       }
+   }
 </script>
