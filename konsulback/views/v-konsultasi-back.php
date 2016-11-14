@@ -17,24 +17,61 @@
 		background: rgba(0,0,0,.1);
 		font-style: italic;
 	}
-	blockquote {
-		background: #f9f9f9;
-		border-left: 10px solid #ccc;
-		margin: 1.5em 10px;
-		padding: 0.5em 10px;
-		quotes: "\201C""\201D""\2018""\2019";
-	}
-	blockquote:before {
-		color: #ccc;
-		content: open-quote;
-		font-size: 4em;
-		line-height: 0.1em;
-		margin-right: 0.25em;
-		vertical-align: -0.4em;
-	}
-	blockquote p {
-		display: inline;
-	}
+ blockquote{
+              display:block;
+              background: #fff;
+              padding: 15px 20px 15px 45px;
+              margin: 0 0 20px;
+              position: relative;
+
+              /*Font*/
+              font-size: 13px;
+              line-height: 1.2;
+              color: #666;
+              text-align: justify;
+
+              /*Borders - (Optional)*/
+              border-left: 10px solid #ccc;
+              border-right: 2px solid #ccc;
+
+          }
+
+          blockquote::before{
+              content: "\201C"; /*Unicode for Left Double Quote*/
+
+              /*Font*/
+              font-family: Georgia, serif;
+              font-size: 20px;
+              font-weight: bold;
+              color: #999;
+
+              /*Positioning*/
+              position: absolute;
+              left: 10px;
+              top:5px;
+          }
+
+          blockquote::after{
+              /*Reset to make sure*/
+              content: "";
+          }
+
+          blockquote a{
+              text-decoration: none;
+              background: #eee;
+              cursor: pointer;
+              padding: 0 3px;
+              color: #c76c0c;
+          }
+
+          blockquote a:hover{
+             color: #666;
+         }
+
+         blockquote em{
+          font-style: italic;
+      }
+
 </style>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
@@ -50,7 +87,10 @@
 						<div class="modal-title">Balas</div>
 					</div>
 
+
 					<div class="modal-body">
+
+
 						
 					</div>
 					<div class="modal-footer bg-color-3">
@@ -62,126 +102,129 @@
 			</div><!-- /.modal-dialog -->
 
 		</div>
+	
 
-		<section id="main" role="main">
-			<!-- START Template Container -->
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<!-- START panel -->
-						<div class="panel panel-teal">
-							<!-- panel heading/header -->
-							<div class="panel-heading">
+			<section id="main" role="main">
+				<!-- START Template Container -->
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+						<!-- Start Panel -->
+							<div class="panel panel-teal">
+								<!-- panel heading/header -->
+								<div class="panel-heading">
+									<h3 class="panel-title col-md-6">Konsultasi {author}</h3>
+								</div>
+								<!--/ panel heading/header -->
+								<!-- Start panel Body -->
+								<div class="panel-body">
+									<!-- Start media List -->
+									<div class="media-list">
+										<!-- Stat Media wall -->
+										<div class="media well mb0">
+											<span class="pull-left">
+												<img src="http://placehold.it/60x60" class="img-circle" width="65px" height="65px" alt="">
+											</span>
+											<span class="media-body">
+												<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
+												<input type="hidden" value="{id_pengguna}" name="idpengguna">
+												<span class="media-heading">{author}</span>
+												<span class="media-text ellipsis nm"><?=$isi ?></span>
+												<!-- meta icon -->
+												<span></span>
+												<!-- <span class="label label-inverse">{akses}</span> -->
+												<span class="label label-primary"><i class=" ico-book3"></i>{sub}</span>
+												<!-- <span class="label label-success"><i class="ico-bubble2"></i>{jumlah}</span> -->
+												<a href="javascript:void(0);"><span class="label label-success" onclick="quote()" rel="tag">Balas <i class="ico-bubble-dots3"></i></span></a>
+												<a href="javascript:void(0);"><span class="label label-inverse" onclick="quote('single')" >Quote <i class="ico-bubble-quote"></i></span></a>
+												<span class="pull-right">{tanggal}|{bulan}</span>
+												<!--/ meta icon -->
+											</span>
+										</div>
+										<!-- Stat Media wall -->
+									</div>
+									<!-- END media List -->
+<!-- Start media list Respon -->
+<hr>
+<div class="media-list">
 
-							<div class="day">{tanggal}</div><div class="month">{bulan}</div>
-								<h3 class="panel-title col-md-6"><i class="ico-quotes-left mr5"></i> {author}</h3>
-							</div>
-							<!--/ panel heading/header -->
-							<!-- panel body -->
-							<div class="panel-body">
-								Lorem ipsum dolor sit amet, mei essent everti theophrastus an, accusam lucilius vis eu. In mei accusamus efficiendi mediocritatem, eos ex paulo complectitur.
-							</div>
-							<!--/ panel body -->
+	<!-- <hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?> -->
+	<?php if ($data_postingan!=array()): ?>
+		<?php foreach ($data_postingan as $item_postingan): ?>
+			<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
+			<div class="blog-post">
+				<article>
+					<!-- Start Respon Guru -->
+					<div class="media border-dotted">
+						<span class="pull-left">
+							<img src="<?=$gbr?>" class="img-circle" width="65px" height="65px" alt="">
+						</span>
+						<div class="media-body">
+						<h5 class="semibold mt0 text-accent"><?=$item_postingan['namaPengguna'] ?></h5>
+							<p class="media-text ellipsis nm"><?=$item_postingan['isiJawaban'] ?>
+								<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+							</p>
+							<!-- meta icon -->
+							<span></span>
+							<!-- <span class="label label-inverse">{akses}</span> -->
+							<span class="label label-primary"><i class=" ico-book3"></i>{sub}</span>
+							
+							<!-- Start Pengecekan quote  n love -->
+							<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
+						<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+								Quote <i class="ico-bubble-quote"></i>	
+							</a>
+					<?php else :?>
+						<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+							<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+								Quote <i class="ico-bubble-quote"></i>
+							</a>
+
+						<?php else :?>
+					
+								<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+							Quote <i class="ico-bubble-quote"></i>
+							</a>
+						<?php endif ?>
+
+					<?php endif ?>
+							<!-- END Pengecekan quote  n love -->
+							<span class="pull-right"><?=$item_postingan['date_created'] ?></span>
+							<!--/ meta icon -->
 						</div>
-						<!--/ END panel -->
+						<hr>
 					</div>
-				</div>
+
+					<!-- END Respon Guru -->
+
+
+					
+
+				</article>
 			</div>
-
-		</section>
-		
-
-
-		<div class="panel panel-teal" >	
-
-			<div class="blog-post"><article>
-				<div class="post-info">
-					<div class="date-post"><div class="day">{tanggal}</div><div class="month">{bulan}</div></div>
-					<div class="post-info-main">
-						<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
-						<input type="hidden" value="{id_pengguna}" name="idpengguna">
-
-						<div class="author-post">by {author}</div>
-					</div>
-					<div class="comments-post"><i class="fa fa-comment"></i> {jumlah}</div>
-				</div>
-
-				<div class="quotes clear-fix" >
-					<div class="quote-avatar-author clear-fix">
-						<img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt="">
-						<div class="author-info">{author}<br><span>{akses}</span></div>
-					</div>
-
-					<div>
-						<p><q><b>{judul_header}</b></q></p>
-						<div class="komen"><?=$isi ?>
-							<input type="hidden" name="single" value="<?=$isi ?>">
-						</div>
-						<input type="hidden" name="" value="{isi}">
-
-					</div>
-
-				</div><br>
-
-				<div class="tags-post">
-					<a href="#" rel="tag">{sub}</a>
-					<?php// echo "$isi"; ?>
-					<a onclick="quote('single')" rel="tag">quote</a>
-					<a onclick="quote()" rel="tag">Balas</a>
-
-				</div>
-			</article>
-		</div>
-
-		<hr class="divider-big">
-		<?php if ($data_postingan!=array()): ?>
-			<?php foreach ($data_postingan as $item_postingan): ?>
-				<div class="blog-post">
-					<article>
-						<div class="row bg-color-2">
-							<div class="container"><?=$item_postingan['date_created'] ?></div>
-						</div><br>
-
-						<div class="quotes clear-fix" >
-							<div class="quote-avatar-author clear-fix">
-								<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
-								<img 
-								src="<?=$gbr ?>" width="60px">
-								<div class="author-info"><?=$item_postingan['namaPengguna'] ?><br><span><?=$item_postingan['hakAkses'] ?></span></div>
-							</div>
-
-							<div>
-								<div class="komen"><?=$item_postingan['isiJawaban'] ?>
-
-									<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+		<?php endforeach ?>
+	<?php endif ?>
+</div>
+<!-- End media list Respon -->
+						
 
 								</div>
+								<!-- END panel Body -->
 
 							</div>
-
-						</div><br>
-
-						<div class="text-right">
-							<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
-								<i class="fa fa-heart">
-								</i>Point
-							</a>
-							<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
-								<i class="fa fa-quote-right ">
-								</i>Quote	
-							</a>
+							<!-- END Panel -->
 						</div>
-
-					</article>
+					</div>
 				</div>
-			<?php endforeach ?>
-		<?php endif ?>
+			</section>
 
-	</div>
+
+
 
 	<script type="text/javascript">
 		var ckeditor;
 		var string;
+		$("blockquote").attr('class', 'media well mb0');
 		function quote(data=""){
 			elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
 			button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post' onclick='save()'>Post</button>";
@@ -255,7 +298,7 @@
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
                 // alert('berhasil');
-                window.location = base_url+"konsultasi/singlekonsultasi/"+idpertanyaan;
+                window.location = base_url+"konsulback/konsultasi/"+idpertanyaan;
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -273,30 +316,62 @@ function point(data){
 	button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
 	$('.modal-footer').html(button);
+	
+
 }
 
 function komen(data){
 	var isikomentar = $('textarea[name=komentar]').val();
-	console.log(isikomentar);
-	url = base_url+"konsultasi/ajax_add_point/"+data;
 
-	data = {
-		isiKomentar : isikomentar
+	// url = base_url+"konsultasi/ajax_add_point/"+data;
+	url = base_url+"konsultasi/check_point/"+data;
+
+	datas = {
+		isiKomentar : isikomentar,
+		idJawaban : data
 	}
-
+	var stat;
 	$.ajax({
 		url : url,
 		type: "POST",
-		data: data,
-		dataType: "TEXT",
-		success: function(data)
+		data: datas,
+		dataType: "json",
+		success: function(data, status, jqXHR)
 		{
-			alert('berhasil');
+			stat = get_data(data, datas);
 		},
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			alert('Error adding / update data');
 		}
 	});
+
 }
+
+function get_data(data, datas){
+	status = data;
+	postingan = datas;
+	if (status==1) {
+		alert("Tidak Dapat Memberikan Point")
+	}else{
+		console.log(postingan.idJawaban);
+		url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
+		$.ajax({
+			url : url,
+			type: "POST",
+			data: datas,
+			dataType: "text",
+			success: function()
+			{
+				alert("sudah ditambahkan");
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				alert('Error adding / update data');
+			}
+		});
+	}
+}
+
+
 </script>

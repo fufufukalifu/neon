@@ -18,8 +18,20 @@ class Mbug extends CI_Model
 	}
 
 
+	public function get_all_bugs() {
+		$this->db->select( 'bug.id, isiError, bug.date_created, halaman, bug.status, aksi, pengguna.namaPengguna');
+		$this->db->from( 'tb_laporan_bug bug' );
+		$this->db->join('tb_pengguna pengguna','pengguna.id=bug.penggunaID');
+
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 
+	function update_bug($data){
+		$this->db->where( 'id', $data=>id );
+		$this->db->update( 'tb_paket', $datas );
+	}
 
 
 }
