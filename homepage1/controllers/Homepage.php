@@ -12,7 +12,6 @@ class Homepage extends MX_Controller {
         $this->load->model('matapelajaran/mmatapelajaran');
         $this->load->model('video/mvideos');
         $this->load->model('Mhomepage');
-        
     }
 
     public function index() {
@@ -20,18 +19,15 @@ class Homepage extends MX_Controller {
         $datas['jumlahMapel'] = $this->mmatapelajaran->get_courses_number();
         $datas['jumlahSiswa'] = $this->msiswa->get_siswa_numbers();
         $datas['jumlahVideo'] = $this->mvideos->get_numbers_all_video();
-
-
+        
 
 
         $data = array(
-        'judul_halaman' => 'Neon Homepage',
-        'jumlah_guru' => $datas['jumlahGuru'],
-        'jumlah_siswa' => $datas['jumlahSiswa'],
-        'jumlah_mapel' => $datas['jumlahMapel'],
-        'jumlah_video'=> $datas['jumlahVideo']
-
-
+            'judul_halaman' => 'Neon Homepage',
+            'jumlah_guru' => $datas['jumlahGuru'],
+            'jumlah_siswa' => $datas['jumlahSiswa'],
+            'jumlah_mapel' => $datas['jumlahMapel'],
+            'jumlah_video' => $datas['jumlahVideo']
         );
         $data['file'] = 'v-container.php';
         $data['teachers'] = $this->mguru->get_guru_random();
@@ -40,7 +36,7 @@ class Homepage extends MX_Controller {
 
         $this->parser->parse('v-index-homepage', $data);
     }
-    
+
     function addpesan() {
         $data['name'] = htmlspecialchars($this->input->post('namalengkap'));
         $data['phone'] = htmlspecialchars($this->input->post('telepon'));
@@ -49,7 +45,7 @@ class Homepage extends MX_Controller {
         $this->Mhomepage->insert_pesan($data);
     }
 
-     function addsubs() {
+    function addsubs() {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_subscribe.email]');
 
@@ -72,4 +68,5 @@ class Homepage extends MX_Controller {
             $this->index();
         }
     }
+
 }

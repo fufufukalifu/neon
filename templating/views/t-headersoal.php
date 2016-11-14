@@ -27,6 +27,8 @@
 
         <link rel="stylesheet" href="<?= base_url('assets/plugins/selectize/css/selectize.min.css'); ?>">
 
+        <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+        <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
         <!--<link rel="stylesheet" href="../plugins/datatables/css/jquery.datatables.min.css">-->
 
         <!--/ Plugins stylesheet -->

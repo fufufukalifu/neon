@@ -53,7 +53,8 @@ public function pilihmapel($idtingkat) {
         APPPATH . 'modules/homepage/views/v-header-login.php',
         APPPATH . 'modules/templating/views/t-f-pagetitle.php',
         APPPATH . 'modules/tesonline/views/v-test-show-mapel.php',
-        APPPATH . 'modules/homepage/views/v-footer.php',
+        // APPPATH . 'modules/homepage/views/v-footer.php',
+        APPPATH . 'modules/testimoni/views/v-footer.php',
         );
     $data['mapel'] = $this->load->mtingkat->getmapelbytingkatid($idtingkat);
 
@@ -89,7 +90,8 @@ public function mulai() {
         APPPATH . 'modules/homepage/views/v-header-login.php',
         APPPATH . 'modules/templating/views/t-f-pagetitle.php',
         APPPATH . $konten,
-        APPPATH . 'modules/homepage/views/v-footer.php',
+        // APPPATH . 'modules/homepage/views/v-footer.php',
+        APPPATH . 'modules/testimoni/views/v-footer.php',
         );
     $this->parser->parse('templating/index', $data);
 }
@@ -110,7 +112,8 @@ public function daftarlatihan() {
         APPPATH . 'modules/homepage/views/v-header-login.php',
         APPPATH . 'modules/templating/views/t-f-pagetitle.php',
         APPPATH . $konten,
-        APPPATH . 'modules/homepage/views/v-footer.php',
+        // APPPATH . 'modules/homepage/views/v-footer.php',
+        APPPATH . 'modules/testimoni/views/v-footer.php',
         );
     $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['USERNAME']);
     $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
