@@ -53,7 +53,6 @@
 
 					<div class="modal-body">
 
-
 						
 					</div>
 					<div class="modal-footer bg-color-3">
@@ -65,189 +64,198 @@
 			</div><!-- /.modal-dialog -->
 
 		</div>
-		<div class="container">	
 
-			<div class="blog-post"><article>
-				<div class="post-info">
-					<div class="date-post"><div class="day">{tanggal}</div><div class="month">{bulan}</div></div>
-					<div class="post-info-main">
-						<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
-						<input type="hidden" value="{id_pengguna}" name="idpengguna">
-
-						<div class="author-post">by {author}</div>
-					</div>
-					<div class="comments-post"><i class="fa fa-comment"></i> {jumlah}</div>
-				</div>
-
-				<div class="quotes clear-fix" >
-					<div class="quote-avatar-author clear-fix">
-						<img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt="">
-						<div class="author-info">{author}<br><span>{akses}</span></div>
-					</div>
-
-					<div>
-						<p><q><b>{judul_header}</b></q></p>
-						<div class="komen"><?=$isi ?>
-							<input type="hidden" name="single" value="<?=$isi ?>">
+		<div class="modal fade " tabindex="-1" role="dialog" id="modalJawab">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button><br>
+							<div class="modal-title">Balas</div>
 						</div>
-						<input type="hidden" name="" value="{isi}">
 
+
+						<div class="modal-body">
+							<div class='quotes kuote'><p><i></p><i></div>
+							<textarea name='editor1' class='form-control' id="komenText"></textarea>
+						</div>
+						<div class="modal-footer bg-color-3">
+							<a type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</a><a type='a' class='cws-button bt-color-2 alt small mulai-btn post' onclick='simpan_jawaban()'>Post</a>
+						</div>
+
+					</div><!-- /.modal-content -->
+
+				</div><!-- /.modal-dialog -->
+
+			</div>
+			<div class="container">	
+
+				<div class="blog-post"><article>
+					<div class="post-info">
+						<div class="date-post"><div class="day">{tanggal}</div><div class="month">{bulan}</div></div>
+						<div class="post-info-main">
+							<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
+							<input type="hidden" value="{id_pengguna}" name="idpengguna">
+
+							<div class="author-post">by {author}</div>
+						</div>
+						<div class="comments-post"><i class="fa fa-comment"></i> {jumlah}</div>
 					</div>
 
-				</div><br>
+					<div class="quotes clear-fix" >
+						<div class="quote-avatar-author clear-fix">
+							<img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt="">
+							<div class="author-info">{author}<br><span>{akses}</span></div>
+						</div>
 
-				<div class="tags-post">
-					<a href="#" rel="tag">{sub}</a>
-					<?php// echo "$isi"; ?>
-					<a onclick="quote('single')" rel="tag">quote</a>
-					<a onclick="quote()" rel="tag">Balas</a>
-
-				</div>
-			</article>
-		</div>
-
-		<hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?>
-		<?php if ($data_postingan!=array()): ?>
-			<?php foreach ($data_postingan as $item_postingan): ?>
-				<div class="blog-post">
-					<article>
-						<div class="row bg-color-2">
-							<div class="container"><?=$item_postingan['date_created'] ?></div>
-						</div><br>
-
-						<div class="quotes clear-fix" >
-							<div class="quote-avatar-author clear-fix">
-								<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
-								<img 
-								src="<?=$gbr ?>" width="60px">
-								<div class="author-info"><?=$item_postingan['namaPengguna'] ?><br><span><?=$item_postingan['hakAkses'] ?></span></div>
+						<div>
+							<p><q><b>{judul_header}</b></q></p>
+							<div class="komen"><?=$isi ?>
+								<input type="hidden" name="single" value="<?=$isi ?>">
 							</div>
+							<input type="hidden" name="" value="{isi}">
 
-							<div>
-								<div class="komen"><?=$item_postingan['isiJawaban'] ?>
+						</div>
 
-									<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+					</div><br>
+
+					<div class="tags-post">
+						<a href="#" rel="tag">{sub}</a>
+						<?php// echo "$isi"; ?>
+						<a onclick="quote('single')" rel="tag">quote</a>
+						<a onclick="quote(0)" rel="tag">Balas</a>
+
+					</div>
+				</article>
+			</div>
+
+			<hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?>
+			<?php if ($data_postingan!=array()): ?>
+				<?php foreach ($data_postingan as $item_postingan): ?>
+					<div class="blog-post">
+						<article>
+							<div class="row bg-color-2">
+								<div class="container"><?=$item_postingan['date_created'] ?></div>
+							</div><br>
+
+							<div class="quotes clear-fix" >
+								<div class="quote-avatar-author clear-fix">
+									<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
+									<img 
+									src="<?=$gbr ?>" width="60px">
+									<div class="author-info"><?=$item_postingan['namaPengguna'] ?><br><span><?=$item_postingan['hakAkses'] ?></span></div>
+								</div>
+
+								<div>
+									<div class="komen"><?=$item_postingan['isiJawaban'] ?>
+
+										<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+
+									</div>
 
 								</div>
 
-							</div>
+							</div><br>
 
-						</div><br>
-
-						<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
-							<div class="text-right">
-								<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
-									<i class="fa fa-quote-right ">
-									</i>Quote	
-								</a>
-							</div>
-						<?php else :?>
-							<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+							<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
 								<div class="text-right">
 									<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
 										<i class="fa fa-quote-right ">
 										</i>Quote	
 									</a>
 								</div>
-
 							<?php else :?>
-								<div class="text-right">
-									<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
-										<i class="fa fa-heart">
-										</i>Point
-									</a>
+								<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+									<div class="text-right">
+										<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
+											<i class="fa fa-quote-right ">
+											</i>Quote	
+										</a>
+									</div>
 
-									<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
-										<i class="fa fa-quote-right ">
-										</i>Quote	
-									</a>
-								</div>
+								<?php else :?>
+									<div class="text-right">
+										<a onclick="point(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-1 icon-left smaller">
+											<i class="fa fa-heart">
+											</i>Point
+										</a>
+
+										<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="cws-button alt bt-color-2 icon-left smaller">
+											<i class="fa fa-quote-right ">
+											</i>Quote	
+										</a>
+									</div>
+								<?php endif ?>
+
 							<?php endif ?>
 
-						<?php endif ?>
 
 
+							
+						</article>
+					</div>
+				<?php endforeach ?>
+			<?php endif ?>
 
-						
-					</article>
-				</div>
-			<?php endforeach ?>
-		<?php endif ?>
+		</div>
 
-	</div>
+		<script type="text/javascript">
+			var ckeditor;
+			var string;
+			var txt = 1;
+			function quote(data){
+				if (data==0) { 	
+					$('#modalJawab .modal-body .quotes p i').html("");
 
-	<script type="text/javascript">
-		var ckeditor;
-		var string;
-		function quote(data=""){
-			elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
-			button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post' onclick='save()'>Post</button>";
-
-			$('.modal-body').html(elemen);
-			$('.modal-footer').html(button);
-
-
-			ckeditor = CKEDITOR.replace( 'editor1' );
-
-
-			if (data=="") {
-				$('.modal-header .modal-title').html("Balas Pertanyaan");
-				string = 0;
-				$('#myModal').modal('show');
+					$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
+					string = 0;
+					$('#modalJawab').modal('show');
 			// ckeditor.setData(data);
 		}else{
-			$('.modal-header .modal-title').html("Quote Jawaban");
-
+			$('#modalJawab .modal-header .modal-title').html("Quote Jawaban");
 			string = $('input[name='+data+']').val();
-			$('.modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
-			console.log(string);
+			$('#modalJawab .modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
 			// ckeditor.setData(string);
-			$('#myModal').modal('show');
+			$('#modalJawab').modal('show');
 		}
-	}
-	function save(){
+			// ckeditor = CKEDITOR.replace( 'editor1' );
+
+		}
+		function simpan_jawaban(){
+			txt = $('#komenText').val();
+			console.log(txt);
+			console.log(string);
 		//kalo kosong
 		if (string==0) {
-			var desc = ckeditor.getData();
-
+			var desc = txt;/*ckeditor.getData();*/
 			var data = {
-				isiJawaban : desc+"",
+				isiJawaban : desc,
 				penggunaID : $('input[name=idpengguna]').val(),
 				pertanyaanID : $('input[name=idpertanyaan]').val(),
 			}
 			idpertanyaan= data.pertanyaanID;
 		}else{
-			console.log(string);
-			quote = "<blockquote>"+string+"</blockquote>";
-			var desc = quote+ckeditor.getData();
-			console.log(desc);
+			quote = "<blockquote>"+string+"</blockquote>"+txt;
+
 
 			var data = {
-				isiJawaban : desc+"",
+				isiJawaban : quote,
 				penggunaID : $('input[name=idpengguna]').val(),
 				pertanyaanID : $('input[name=idpertanyaan]').val(),
 			}
-			console.log(data);
 			idpertanyaan= data.pertanyaanID;
-		// console.log(data);
-
-	}
-
-
-
-
-
-	if (data.isiJawaban == "") {
-		$('#info').show();
-	}else{
-		url = base_url+"konsultasi/ajax_add_jawaban/";
-		$.ajax({
-			url : url,
-			type: "POST",
-			data: data,
-			dataType: "TEXT",
-			success: function(data)
-			{
+		}
+		if (data.isiJawaban == "") {
+			$('#info').show();
+		}else{
+			url = base_url+"konsultasi/ajax_add_jawaban/";
+			$.ajax({
+				url : url,
+				type: "POST",
+				data: data,
+				dataType: "TEXT",
+				success: function(data)
+				{
 				// alert('masd');
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
@@ -259,23 +267,23 @@
             	alert('Error adding / update data');
             }
         });
+		}
 	}
-}
 
-function point(data){
-	elemen = "<textarea class='form-control' name='komentar'></textarea>";
-	$('.modal-body').html(elemen);
-	$('.modal-header .modal-title').html("Berikan Komentar");
-	$('#myModal').modal('show');
-	button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+	function point(data){
+		elemen = "<textarea class='form-control' name='komentar'></textarea>";
+		$('.modal-body').html(elemen);
+		$('.modal-header .modal-title').html("Berikan Komentar");
+		$('#myModal').modal('show');
+		button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
-	$('.modal-footer').html(button);
-	
+		$('.modal-footer').html(button);
+		
 
-}
+	}
 
-function komen(data){
-	var isikomentar = $('textarea[name=komentar]').val();
+	function komen(data){
+		var isikomentar = $('textarea[name=komentar]').val();
 
 	// url = base_url+"konsultasi/ajax_add_point/"+data;
 	url = base_url+"konsultasi/check_point/"+data;
