@@ -2,184 +2,180 @@
 
 <html>
 
-    <head>
+<head>
 
-        <title>{judul_halaman}</title>
+    <title>{judul_halaman}</title>
 
-        <meta charset="utf-8">
+    <meta charset="utf-8">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-        <!-- style -->
+    <!-- style -->
 
-        <link rel="shortcut icon" href="<?= base_url('assets/back/img/favicon.png') ?>">
+    <link rel="shortcut icon" href="<?= base_url('assets/back/img/favicon.png') ?>">
 
-        <link rel="stylesheet" href="<?= base_url('assets/back/css/font-awesome.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/back/css/font-awesome.css') ?>">
 
-        <link rel="stylesheet" href="<?= base_url('assets/back/fi/flaticon.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/back/fi/flaticon.css') ?>">
 
-        <link rel="stylesheet" href="<?= base_url('assets/back/css/main.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/back/css/main.css') ?>">
 
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/tuner/css/colorpicker.css') ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/tuner/css/colorpicker.css') ?>" />
 
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/tuner/css/styles.css') ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/tuner/css/styles.css') ?>" />
 
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/css/jquery.fancybox.css') ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/css/jquery.fancybox.css') ?>" />
 
-        <link rel="stylesheet" href="<?= base_url('assets/back/css/owl.carousel.css') ?>"/>
+    <link rel="stylesheet" href="<?= base_url('assets/back/css/owl.carousel.css') ?>"/>
 
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/rs-plugin/css/settings.css') ?>" media="screen">
 
-        <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/back/css/animate.css') ?>">
 
- <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
 
-        <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
-        <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
-        
+    <!--styles -->
 
-        <!--styles -->
+</head>
 
-    </head>
+<body>
 
-    <body>
+    <?php include 'v-header.php' ?>
 
-        <?php include 'v-header.php' ?>
-
-        <?php include 'v-revolution-slidder.php' ?>
+    <?php include 'v-revolution-slidder.php' ?>
 
 
 
 
-        <hr class="divider-color">
+    <hr class="divider-color">
 
-        <!-- content -->
+    <!-- content -->
 
-        <div id="home" class="page-content padding-none">
+    <div id="home" class="page-content padding-none">
 
-            <?php include 'v-last-courses.php'; ?>
+        <?php include 'v-last-courses.php'; ?>
 
-            <hr class="divider-color" id="service" />
+        <hr class="divider-color" id="service" />
 
-            <!-- section -->
+        <!-- section -->
 
-            <section class="fullwidth-background padding-section" >
+        <section class="fullwidth-background padding-section" >
 
-                <div class="grid-row clear-fix">
+            <div class="grid-row clear-fix">
 
-                    <div class="grid-col-row">
+                <div class="grid-col-row">
 
-                        <div class="grid-col grid-col-6">
+                    <div class="grid-col grid-col-6">
 
-                            <a onclick="changekonten('Konsultasi')" title="Konsultasi" class="service-icon"><i class="flaticon-speech"></i></a>
+                        <a onclick="changekonten('Konsultasi')" title="Konsultasi" class="service-icon"><i class="flaticon-speech"></i></a>
 
-                            <a onclick="changekonten('VideoBelajar')" title="Video Belajar" class="service-icon"><i class="fa fa-caret-square-o-right"></i></a>
+                        <a onclick="changekonten('VideoBelajar')" title="Video Belajar" class="service-icon"><i class="fa fa-caret-square-o-right"></i></a>
 
-                            <a onclick="changekonten('Tryout')" title="Tryout" class="service-icon"><i class="flaticon-pencil"></i></a>
+                        <a onclick="changekonten('Tryout')" title="Tryout" class="service-icon"><i class="flaticon-pencil"></i></a>
 
-                            <a onclick="changekonten('latihan')" title="Latihan" class="service-icon"><i class="fa fa-book"></i></a>
+                        <a onclick="changekonten('latihan')" title="Latihan" class="service-icon"><i class="fa fa-book"></i></a>
 
-                            <a onclick="changekonten('edudrive')" title="Edu Drive" class="service-icon"><i class="fa fa-book"></i></a>
+                        <a onclick="changekonten('edudrive')" title="Edu Drive" class="service-icon"><i class="fa fa-book"></i></a>
 
-                            <a onclick="changekonten('toflfokus')" title="Tofl Fokus" class="service-icon"><i class="fa fa-book"></i></a>
+                        <a onclick="changekonten('toflfokus')" title="Tofl Fokus" class="service-icon"><i class="fa fa-book"></i></a>
 
-                            <a onclick="changekonten('penjurusan')" title="Penjurusan" class="service-icon"><i class="fa fa-graduation-cap"></i></a>
+                        <a onclick="changekonten('penjurusan')" title="Penjurusan" class="service-icon"><i class="fa fa-graduation-cap"></i></a>
 
-                            <a onclick="changekonten('raportonline')" title="Raport Online" class="service-icon"><i class="fa fa-book"></i></a>
+                        <a onclick="changekonten('raportonline')" title="Raport Online" class="service-icon"><i class="fa fa-book"></i></a>
 
 
 
 
 
-                        </div>
-                        <div></div>
-                        <div class="grid-col grid-col-6 clear-fix konten" >
+                    </div>
+                    <div></div>
+                    <div class="grid-col grid-col-6 clear-fix konten" >
 
-                            <h2>Layanan Kita</h2>
+                        <h2>Layanan Kita</h2>
 
-                            <p>Silahkan klik icon yang tersedia untuk melihat penjelasan dari layanan apa saja yang terdapat di neon.</p>
-
-                        </div>
+                        <p>Silahkan klik icon yang tersedia untuk melihat penjelasan dari layanan apa saja yang terdapat di neon.</p>
 
                     </div>
 
                 </div>
 
-            </section>
+            </div>
 
-            <!-- / section -->
+        </section>
 
-            <!-- paralax section -->
+        <!-- / section -->
 
-            <div class="parallaxed">
+        <!-- paralax section -->
 
-                <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
+        <div class="parallaxed">
 
-                    <img src="<?= base_url('assets/back/img/parallax.png') ?>" alt="">
+            <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
+
+                <img src="<?= base_url('assets/back/img/parallax.png') ?>" alt="">
 
 
 
-                </div>
+            </div>
 
-                <div class="them-mask bg-color-1"></div>
+            <div class="them-mask bg-color-1"></div>
 
-                <div class="grid-row">
+            <div class="grid-row">
 
-                    <div class="grid-col-row clear-fix">
+                <div class="grid-col-row clear-fix">
 
-                        <div class="grid-col grid-col-3 alt">
+                    <div class="grid-col grid-col-3 alt">
 
-                            <div class="counter-block">
+                        <div class="counter-block">
 
-                                <i class="flaticon-book1"></i>
+                            <i class="flaticon-book1"></i>
 
-                                <div class="counter" data-count="{jumlah_mapel}">0</div>
+                            <div class="counter" data-count="{jumlah_mapel}">0</div>
 
-                                <div class="counter-name">Pelajaran</div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="grid-col grid-col-3 alt">
-
-                            <div class="counter-block">
-
-                                <i class="flaticon-multiple"></i>
-
-                                <div class="counter" data-count="{jumlah_siswa}">0</div>
-
-                                <div class="counter-name">Siswa</div>
-
-                            </div>       
+                            <div class="counter-name">Pelajaran</div>
 
                         </div>
 
-                        <div class="grid-col grid-col-3 alt">
+                    </div>
 
-                            <div class="counter-block">
+                    <div class="grid-col grid-col-3 alt">
 
-                                <i class="flaticon-pencil"></i>
+                        <div class="counter-block">
 
-                                <div class="counter" data-count="{jumlah_guru}">0</div>
+                            <i class="flaticon-multiple"></i>
 
-                                <div class="counter-name">Pengajar</div>
+                            <div class="counter" data-count="{jumlah_siswa}">0</div>
 
-                            </div>
+                            <div class="counter-name">Siswa</div>
+
+                        </div>       
+
+                    </div>
+
+                    <div class="grid-col grid-col-3 alt">
+
+                        <div class="counter-block">
+
+                            <i class="flaticon-pencil"></i>
+
+                            <div class="counter" data-count="{jumlah_guru}">0</div>
+
+                            <div class="counter-name">Pengajar</div>
 
                         </div>
 
-                        <div class="grid-col grid-col-3 alt">
+                    </div>
 
-                            <div class="counter-block last">
+                    <div class="grid-col grid-col-3 alt">
 
-                                <i class="fa fa-caret-square-o-right"></i>
+                        <div class="counter-block last">
 
-                                <div class="counter" data-count="{jumlah_video}">0</div>
+                            <i class="fa fa-caret-square-o-right"></i>
 
-                                <div class="counter-name">Video</div>
+                            <div class="counter" data-count="{jumlah_video}">0</div>
 
-                            </div>
+                            <div class="counter-name">Video</div>
 
                         </div>
 
@@ -189,33 +185,33 @@
 
             </div>
 
-            <!-- / paralax section -->
+        </div>
 
-            <hr class="divider-color" />
+        <!-- / paralax section -->
+
+        <hr class="divider-color" />
 
 
 
-            <hr class="divider-color"/>
+        <hr class="divider-color"/>
 
-            <?php include 'v-about-us.php' ?>
+        <?php include 'v-about-us.php' ?>
 
-            <!-- parallax section -->
+        <!-- parallax section -->
 
-            <div class="parallaxed">
+        <div class="parallaxed">
 
-                <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
+            <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
 
-                    <img src="<?= base_url('assets/back/img/parallax.png') ?>" alt="">
+                <img src="<?= base_url('assets/back/img/parallax.png') ?>" alt="">
 
-                </div>
+            </div>
 
-                <div class="them-mask bg-color-2" id="subs"></div>
+            <div class="them-mask bg-color-2" id="subs"></div>
 
-                <div class="grid-row center-text">
+            <div class="grid-row center-text">
 
-                    <div class="font-style-1 margin-none">Berinteraksi Dengan Kami.</div>
-
-                    <div class="divider-mini"></div>
+                <div class="font-style-1 margin-none">Berinteraksi Dengan Kami.</div>
 
                     <p class="parallax-text">Neon hadir untuk kalian yang pengen pinter dengan cara mudah dan asyik. Ayo bergabung dengan Neon. Silahkan masukkan email kalian.</p>
                     
@@ -287,7 +283,7 @@
 
             <!-- parallax section -->
 
-<div class="parallaxed">
+            <div class="parallaxed">
 
                 <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
 
@@ -308,7 +304,7 @@
                 </div>
 
             </div>
-<section class="fullwidth-background testimonial padding-section" id="testimonials">
+            <section class="fullwidth-background testimonial padding-section" id="testimonials">
 
                 <div class="grid-row">
 
@@ -335,28 +331,28 @@
                 </div>
 
             </section>
-        <?php include 'v-footer.php' ?>
+            <?php include 'v-footer.php' ?>
 
-        <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
+            <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
 
-        <script type="text/javascript">
-            $(".main-nav li a.testimonials").click(function() {
-                $('html, body').animate({
-                    scrollTop: $("#testimonials").offset().top
-                }, 2000);
-            });
+            <script type="text/javascript">
+                $(".main-nav li a.testimonials").click(function() {
+                    $('html, body').animate({
+                        scrollTop: $("#testimonials").offset().top
+                    }, 2000);
+                });
 
-            $(".main-nav li a.service").click(function() {
-                $('html, body').animate({
-                    scrollTop: $("#service").offset().top
-                }, 2000);
-            });
+                $(".main-nav li a.service").click(function() {
+                    $('html, body').animate({
+                        scrollTop: $("#service").offset().top
+                    }, 2000);
+                });
 
-            $(".main-nav li a.subs").click(function() {
-                $('html, body').animate({
-                    scrollTop: $("#subs").offset().top
-                }, 2000);
-            });
+                $(".main-nav li a.subs").click(function() {
+                    $('html, body').animate({
+                        scrollTop: $("#subs").offset().top
+                    }, 2000);
+                });
 
             $(document).ready(function () {
                 $("#formsubs").submit(function (e) {
@@ -388,55 +384,55 @@
             });
 
 
-            function changekonten(data){
+                function changekonten(data){
 
-                var judul;
+                    var judul;
 
-                var isi;
+                    var isi;
 
-                if (data=="VideoBelajar") {
+                    if (data=="VideoBelajar") {
 
-                    judul = "Video Belajar";
+                        judul = "Video Belajar";
 
-                    isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
+                        isi = "Neon Menyediakan Video Belajar yang lengkap, asyik dan mudah dipahami. Tidak hanya itu Neon juga memberikan 2 jenis video yang bisa kalian sesuaiank dengan kecepatan akses internet kalian. Video Screen Recording untuk akses badwith dan kuota yang tidak terlalu besar dan Teacher Recording untuk kalian punya akses internet cepat dan kuota besar. Neon juga  menyediakan video2 pembahasan soal."
 
-                }else if(data=="Konsultasi"){
+                    }else if(data=="Konsultasi"){
 
-                    judul = "Konsultasi";
+                        judul = "Konsultasi";
 
-                    isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
+                        isi = "Neon menyediakan tentor-tentor piket yang setiap saat akan menjawab pertanyaan-pertanyaan kalian ni guys, so jangan kuatir kalo tiba2 kalian mendaadak ada pertanyaan yang harus segera diselesaikan, kalian bisa langsung hubungi tentor neon."
 
-                }else if(data=="Tryout"){
+                    }else if(data=="Tryout"){
 
-                    judul = "TryOut Online"
+                        judul = "TryOut Online"
 
-                    isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
+                        isi = "Kalian bisa menikmati latihan semester, latihan UN, Latian SBMPTN atau TryOut yang lain secara online. Soal-soal yang disediakan variatif, asyik dan tentunya sangat bagus untuk meningkatkan kemampuan kalian."
 
-                }else if(data=="edudrive"){
+                    }else if(data=="edudrive"){
 
-                    judul = "Edu Drive";
+                        judul = "Edu Drive";
 
-                    isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
+                        isi = "Edu drive ini semacam gudang file, yang isinya macam2 jenis file yang bisa digunakan untuk belajar. Misalnya di edudrive ada soal-soal UN terbaru, Soal SMBPTN terbaru, Prediksi soal UAS dll. Kalian bisa mengakses atau mendownloadnya sesuka kalian.";
 
-                }else if(data=="toflfokus"){
+                    }else if(data=="toflfokus"){
 
-                    judul = "TOEFL Fokus";
+                        judul = "TOEFL Fokus";
 
-                    isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
+                        isi = "Pagi kalian yg pengen memperdalam bahasa inggris denga belajar toefl disini tempatnya. Cukup menjadi member neon anda bisa belajar toefl sesuka dan sepuasnya sampaikalian benar-benar bisa.";
 
-                }else if(data=="penjurusan"){
+                    }else if(data=="penjurusan"){
 
-                    judul = "Penjurusan";
+                        judul = "Penjurusan";
 
-                    isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
+                        isi = "Masih bingung pilih jurusan untuk tempat kuliah kalian ? . Tenang, neon akan membatu  kalian. Dengan sistem DETECTION kami akan membantu kalia menemukan jurusan yang tepat untuk kuliah kalian.";
 
-                }else if(data=="raportonline"){
+                    }else if(data=="raportonline"){
 
-                    judul = "Raport Online";
+                        judul = "Raport Online";
 
-                    isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
+                        isi = "Rapor online akan merekan semua kegiatan kalian selama menjadi member.Informasi tentang video pembelajaran yang kalian akses, latihan dan TO yang kalian kerjakan akan bisa kalian lihat dalam rapor online."
 
-                }else{
+                    }else{
 
                     //latihan
 
@@ -446,9 +442,9 @@
 
                 }
 
-                    $('.konten h2').html(judul).animate();
+                $('.konten h2').html(judul).animate();
 
-                    $('.konten p').html(isi);
+                $('.konten p').html(isi);
 
 
 
@@ -506,4 +502,4 @@
 
     </body>
 
-</html>
+    </html>

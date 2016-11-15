@@ -86,7 +86,7 @@ class Welcome extends MX_Controller {
 
             'judul_header' =>'Welcome',
 
-            'judul_header2' =>'Daftar Tingkat'
+            'judul_header2' =>'Video Belajar'
 
 
 

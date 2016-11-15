@@ -12,7 +12,7 @@
 
 					<a href="tel:(0274) 450300 " class="phone-number"><i class="fa fa-phone"></i>(0274) 450300 </a>
 
-					<a href="mailto:info@Neon-ny.com " class="email"><i class="fa fa-envelope-o"></i>info@Neon-ny.com </a>
+					<a href="mailto:info@neonjogja.com  " class="email"><i class="fa fa-envelope-o"></i>info@neonjogja.com </a>
 
 				</address>
 

@@ -33,7 +33,9 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/back/css/jquery.fancybox.css') ?>" />
 
         <link rel="stylesheet" href="<?= base_url('assets/back/css/owl.carousel.css') ?>"/>
-
+    <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
         <!--styles -->
 
     </head>

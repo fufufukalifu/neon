@@ -105,7 +105,7 @@
                 };
 
                 $.ajax({
-                    url : base_url +"komenback/addkomen",
+                    url : base_url +"bug/tindakan_laporan",
                     data:data,
                     dataType:"TEXT",
                     type:'post',
@@ -118,8 +118,27 @@
                 });
             }
 
-            function check(videoID){
-                window.location=base_url+"komenback/seevideo/"+videoID;
-            }
+            function drop(idlapor){
 
-        </script>
+                var result = confirm("Hapus laporan bug?");
+                if (result) {
+                $.ajax({
+                    url : base_url +"bug/delete/"+idlapor,
+                    dataType:"TEXT",
+                    type:'post',
+                    success:function(){
+                        alert('sukses');
+                    }, error:function(){
+                        alert('gagal');
+                    }
+
+                });
+                }
+
+                
+                }
+
+
+
+
+</script>
