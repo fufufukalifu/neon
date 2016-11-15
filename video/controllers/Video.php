@@ -55,7 +55,7 @@ class Video extends MX_Controller {
             //$data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
             $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
             $data['files'] = array(
-                APPPATH . 'modules/homepage/views/v-header.php',
+                APPPATH . 'modules/homepage/views/v-header.php',         
                 APPPATH . 'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/v-container-all-videos.php',
                 APPPATH . 'modules/templating/views/footer.php'
@@ -86,7 +86,7 @@ class Video extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             APPPATH . 'modules/video/views/f-daftar-video.php',
-            APPPATH . 'modules/templating/views/footer.php'
+            APPPATH . 'modules/testimoni/views/v-footer.php'
         );
         // print_r($data);
         $this->parser->parse('templating/index', $data);
@@ -112,7 +112,8 @@ class Video extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
-            APPPATH . 'modules/templating/views/footer.php'
+            APPPATH . 'modules/testimoni/views/v-footer.php'
+            
         );
 
         // var_dump($data['bab_video']);
