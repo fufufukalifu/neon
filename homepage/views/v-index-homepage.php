@@ -229,7 +229,7 @@
                     </div>
 
                     <?php } ?>
-                    <form class="subscribe login-form" action="<?= base_url('index.php/Homepage/addsubs') ?>" method="post">
+                    <form class="subscribe login-form" action="<?= base_url('index.php/homepage/addsubs') ?>" method="post">
                         <!-- untuk menampilkan pesan kesalahan penginputan email -->
                         <input type="email" class="form-control input-sm" name="email" id="emailsubs" method="post" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">    
 
@@ -335,7 +335,7 @@
                             ?>
                             <div class="gallery-item">
 
-                                <div class="quote-avatar-author clear-fix"><img src="<?= base_url('assets/image/photo/siswa/'.$key['photo']) ?>" data-at2x="http://placehold.it/94x94" alt=""><div class="author-info"><?= $key['namaDepan']." ".$key['namaBelakang']?><br><span><?=$key['namaSekolah']?></span></div></div>
+                                <div class="quote-avatar-author clear-fix"><img src="<?= base_url('assets/image/photo/siswa/'.$key['photo']) ?>" height=128 width=128 alt=""><div class="author-info"><?= $key['namaDepan']." ".$key['namaBelakang']?><br><span><?=$key['namaSekolah']?></span></div></div>
 
                                 <p><?= $key['testimoni']?></p>
 
