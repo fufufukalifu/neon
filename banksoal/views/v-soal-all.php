@@ -65,6 +65,7 @@ MathJax.Hub.Config({
                 </div>
             </div>
         </div>
+        
         <!--/ END row -->
 
     </div>
@@ -76,9 +77,11 @@ MathJax.Hub.Config({
 
 </section>
 <!--/ END Template Main -->
-
+<!-- /javascript/app.min.js -->
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+ <script type="text/javascript" src="<?=base_url('assets/javascript/app.min.js')?>"></script>
 <script type="text/javascript">
+
 
     var tb_allSoal;
     $(document).ready(function() {
