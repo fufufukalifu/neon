@@ -47,19 +47,17 @@ class Bug extends MX_Controller {
 			$row[] = $bug_item->id;
 			$row[] = $bug_item->isiError;
 			$row[] = $bug_item->date_created;
-			$row[] = $bug_item->namaPengguna;
-
 			$row[] = $bug_item->halaman;
+			$row[] = $bug_item->namaPengguna;
       		if ($bug_item->status==0) {
       			$row[] = "Belum Ditanggapi";
       		}else{
-      			$row[] = "proses";
-
+      			$row[] = "Selesai Ditanggai";
       		}
 			$row[] = $bug_item->aksi;
 			$row[] = "
 			<a class='btn btn-primary' onclick='respon(".$bug_item->id.")'><i class='icon ico-pencil' title='Respon'></i></a> 
-			<a class='btn btn-danger' onclick='spam(".$bug_item->id.")'><i class='icon ico-remove3' title='Hapus'></i></a>
+			<a class='btn btn-danger' onclick='drop(".$bug_item->id.")'><i class='icon ico-remove3' title='Hapus'></i></a>
 			";
 
 
@@ -75,17 +73,19 @@ class Bug extends MX_Controller {
 	}
 
 	function tindakan_laporan(){
-		// $id = $this->input->post('idKomen');
-  // 		$tindakan = $this->input->post('isTindakan');
-
-		$id = 19;
-  		$tindakan = "isi Tindakan";
+		$id = $this->input->post('idKomen');
+  		$tindakan = $this->input->post('isTindakan');
 
   		$datas = array('id'=>$id,
-  						'aksi'=>$tindakan
+  						'aksi'=>$tindakan,
+  						'status'=>1
   			);
-  		echo $datas[0]=>id;
-  		// $this->mbug->update_bug($datas);
+
+  		$this->mbug->update_bug($datas);
+	}
+
+	function delete($idlapor){
+		$this->mbug->drop($idlapor);
 	}
 }
 ?>

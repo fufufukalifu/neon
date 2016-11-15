@@ -29,10 +29,15 @@ class Mbug extends CI_Model
 
 
 	function update_bug($data){
-		$this->db->where( 'id', $data=>id );
-		$this->db->update( 'tb_paket', $datas );
+		$datas = array('aksi' => $data['aksi'], 'status'=>1);
+		$this->db->where( 'id', $data['id'] );
+		$this->db->update( 'tb_laporan_bug', $datas );
 	}
 
+	function drop($idlapor){
+		$this->db->where( 'id', $idlapor);
+		$this->db->delete('tb_laporan_bug');
+	}
 
 }
 
