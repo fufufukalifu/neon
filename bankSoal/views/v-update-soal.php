@@ -126,7 +126,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -256,7 +256,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileSoal" class="btn btn-success">
+                                    <label for="fileSoal" class="btn btn-sm btn-default">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
@@ -265,19 +265,19 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         </div>
                         <div class="form-group">
 
-                            <label class="control-label col-sm-2">Jensi Editor</label>
+                            <label class="control-label col-sm-2">Jenis Editor</label>
 
                             <div class="col-sm-8">
 
                                 <div class="btn-group" data-toggle="buttons" >
 
-                                      <label class="btn active " id="in-soal">
+                                      <label class="btn btn-teal btn-outline active " id="in-soal">
 
                                         <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
 
                                       </label>
 
-                                      <label class="btn" id="pr-rumus">
+                                      <label class="btn btn-teal btn-outline" id="pr-rumus">
 
                                         <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
 
@@ -342,23 +342,23 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
-                                      <label class="btn  " id="empatpil">
+                                      <label class="btn btn-teal btn-outline " id="empatpil">
                                         <input type="radio" name="opjumlah" value="4" autocomplete="off" > 4 Pilihan
                                       </label>
-                                      <label class="btn active" id="limapil">
+                                      <label class="btn btn-teal btn-outline" id="limapil">
                                         <input type="radio" name="opjumlah"  value="5" autocomplete="off" checked="true"> 5 Pilihan
                                       </label>
                                  </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Jensi Pilihan</label>
+                            <label class="control-label col-sm-2">Jenis Pilihan</label>
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
-                                      <label class="btn active " id="text">
+                                      <label class="btn btn-teal btn-outline active " id="text">
                                         <input type="radio" name="options" value="text" autocomplete="off" checked="true"> Text
                                       </label>
-                                      <label class="btn" id="gambar">
+                                      <label class="btn btn-teal btn-outline" id="gambar">
                                         <input type="radio" name="options"  value="gambar" autocomplete="off"> Gambar
                                       </label>
                                  </div>
@@ -392,7 +392,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileA" class="btn btn-success">
+                                    <label for="fileA" class="btn btn-sm btn-default ">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
@@ -429,7 +429,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileB" class="btn btn-success">
+                                    <label for="fileB" class="btn btn-sm btn-default ">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
@@ -466,7 +466,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileC" class="btn btn-success">
+                                    <label for="fileC" class="btn btn-sm btn-default">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
@@ -504,7 +504,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileD" class="btn btn-success">
+                                    <label for="fileD" class="btn btn-sm btn-default ">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
@@ -520,7 +520,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <!-- Start input text E -->
                             <div class="col-sm-8 piltext" >
 
-                                <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true">
+                                <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true" id="pilE">
                                <textarea name="e" class="form-control"> <?=$piljawaban['4']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text E -->
@@ -543,7 +543,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="fileE" class="btn btn-success">
+                                    <label for="fileE" class="btn btn-sm btn-default">
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
@@ -612,7 +612,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         $(document).ready(function(){
 
 
-          // set kesulitan ################
+          // set option kesulitan ################
            var tampkesulitan=$('#tampkesulitan').val();
           if (tampkesulitan ==3) {
             $('#lvl3').attr('selected','selected');
@@ -625,20 +625,14 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
           }
           // ########################
 
-          // Set Jawaban ###########
-          // $('.id_100 option[value=val2]').attr('selected','selected');
-
-
-          // ###########################
-          // $('#opjawaban option[value=A]').attr('selected','selected');
+          // Set option Jawaban ###########
           var tampjawaban =  $('#tampjawaban').val();
           if (tampjawaban != '') {
               var tamid ='#opjawaban option[value='+tampjawaban+']';
              $(tamid).attr('selected','selected');
           }else{
           }
-          // set publish################
-
+          // set option publish################
            var tamppublish=$('#tamppublish').val();
           if (tamppublish ==1) {
              $('#gift').attr('checked','checked');
@@ -646,11 +640,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
           }
           // ########################
 
-          // set random################
+          // set option random################
            var tamprandom=$('#tamprandom').val();
           if (tamprandom ==1) {
              $('#idrand').attr('checked','checked');
           }else{
+          }
+          // ########################
+
+          // set option jum piljawab################
+           var pilE=$('#pilE').val();
+          if (pilE=='') {
+            // hide input pilihan E
+            $("#pilihan").hide();
+            $("#pilihanop").hide();
+            $("#empatpil").addClass('active');
+            
+          }else{
+            $("#limapil").addClass('active');
           }
           // ########################
 
