@@ -25,6 +25,50 @@ MathJax.Hub.Config({
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- Start Modal Detail Soal dari server -->
+    <div class="modal fade" id="mdetailsoal">
+
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                        <span aria-hidden="true">&times;</span>
+
+                    </button>
+
+                    <h3 class="semibold mt0 text-accent text-center"></h3>
+
+                </div>
+
+                <div class="modal-body">
+                <label>Soal :</label>
+                <p class="text-justify" id="dsoal">
+                    
+                </p>
+
+                <label>Jawaban :</label>
+                <p class="text-justify" id="djawaban">
+                    
+                </p>
+                    
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger mb5" data-dismiss="modal">Close</button>
+
+                </div>
+
+            </div>
+
+        </div>
+       
+    </div>
+    <!-- End Modal Detail Soal-->
     <!-- START Template Container -->
     <div class="container-fluid">
 
@@ -44,7 +88,7 @@ MathJax.Hub.Config({
                     <table class="table table-striped table-bordered" id="tb_allSoal" style="font-size: 13px" width="100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th >ID</th>
                                 <th>Judul Soal</th>
                                 <th>Sumber</th>
                                 <th>Mata Pelajaran</th>
@@ -53,7 +97,7 @@ MathJax.Hub.Config({
                                 <th>Jawaban</th>
                                 <th>Publish</th>
                                 <!-- <th>Random</th> -->
-                                <th></th>
+                                <th> </th>
                                 <th ></th>
 
                             </tr>
@@ -74,7 +118,6 @@ MathJax.Hub.Config({
     <!-- START To Top Scroller -->
     <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
     <!--/ END To Top Scroller -->
-
 </section>
 <!--/ END Template Main -->
 <!-- /javascript/app.min.js -->
@@ -92,6 +135,10 @@ MathJax.Hub.Config({
                     },
             "processing": true,
         });
+        $(function () {
+              $('[data-toggle="popover"]').popover()
+            });
+       
     });
 
     function dropSoal(id_soal) {
@@ -112,7 +159,7 @@ MathJax.Hub.Config({
                             alert('Error deleting data');
                             // console.log(jqXHR);
                             // console.log(textStatus);
-                            console.log(errorThrown);
+                            // console.log(errorThrown);
                     }
                 });
              }
@@ -125,5 +172,17 @@ MathJax.Hub.Config({
     // tampil modal kofirmasi hapus
     function konfirmasiHapus (id_soal) {
         $('#konfirmasiDlt').modal('show');
+    }
+
+    // Fungsi untuk detail soal
+    function detailSoal(id_soal) {
+        var kelas ='.detail-'+id_soal;
+        var data = $(kelas).data('id');
+        var jawaban=$('#jawaban-'+id_soal).val();
+        $('h3.semibold').html(data.judul_soal);
+
+        $('p#dsoal').html(data.soal);
+        $('p#djawaban').html(jawaban);
+        $('#mdetailsoal').modal('show');
     }
 </script>

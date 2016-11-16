@@ -447,9 +447,9 @@
             $.ajax({
 
                 type: "POST",
-
+                dataType: "json",
                 data: tingkat_id,
-
+                
                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
 
                 success: function (data) {

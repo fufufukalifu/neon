@@ -25,8 +25,6 @@
 
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-					<button type="button" class="btn btn-primary">Save changes</button>
-
 				</div>
 
 			</div>
@@ -75,7 +73,7 @@
 		<div class="panel-heading">
 				<h5 class="panel-title">Daftar Semua Video</h5>
 		</div>
-		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
+		<table class="table table-striped" id="zero-configuration" style="font-size: 12px" width="100%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -113,11 +111,10 @@ $(document).ready(function() {
       });
 
 //# ketika tombol di klik
-		function detail(id){console.log(id);
+		function detail(id){
 			var kelas ='.detail-'+id;
 			var data = $(kelas).data('id');
 			var links;
-			console.log(data);
 
 			$('h3.modal-title').html(data.judulVideo);
 			if (data.namaFile != null) {
@@ -125,7 +122,7 @@ $(document).ready(function() {
 					$('#video-ply').attr('src',links); 
 					$('#mdetailvideo').modal('show');
 			}else if(data.link != null){
-				links = 'https://www.youtube.com/embed/' + data.link;
+				links = data.link;
 				$('#video-ply-link').attr('src',links); 
 				$('#mvideolink').modal('show');
 			}else{

@@ -221,11 +221,12 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="form-group">
                             <label class="control-label col-sm-2">Kesulitan</label>
                             <div class="col-sm-8">
+                                    <input type="text" name="tampkesulitan" value="<?=$banksoal['kesulitan'];?>" id='tampkesulitan' hidden="true">
                                 <select name="kesulitan" class="form-control">
                                     <option value="">--Silahkan Pilih Tingkat Kesulitan--</option>
-                                    <option value="1">Mudah</option>
-                                    <option value="2">Sedang</option>
-                                    <option value="3">Sulit</option>
+                                    <option value="1" id="lvl1">Mudah</option>
+                                    <option value="2" id="lvl2">Sedang</option>
+                                    <option value="3" id="lvl3">Sulit</option>
                                 </select>
                             </div>
                         </div>
@@ -559,7 +560,8 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="form-group">
                             <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
-                                <select name="jawaban" class="form-control">
+                                <input type="text" id="tampjawaban" value="<?=$banksoal['jawaban'];?>" hidden="true"> 
+                                <select name="jawaban" class="form-control" id="opjawaban">
                                      <option value="">--Silahkan Pilih Jawaban Benar--</option>
                                     <option value="A" >A</option>
                                     <option value="B" >B</option>
@@ -572,12 +574,14 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="form-group">
                             <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
+                                    <input type="text" id="tamppublish" value="<?=$banksoal['publish'];?>" hidden="true">
                                     <input type="checkbox" name="publish" id="gift" value="1">  
                                     <label for="gift"> Publish?</label>   
                                 </div>
                             </div>
                             <div class="col-sm-4 col-sm-offset-1">
-                                <div class="checkbox custom-checkbox">  
+                                <div class="checkbox custom-checkbox">
+                                    <input type="text" id="tamprandom" value="<?=$banksoal['random'];?>" hidden="true">  
                                     <input type="checkbox" name="random" id="idrand" value="1">  
                                     <label for="idrand">Random?</label>   
                                 </div>
@@ -604,7 +608,52 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
     <!-- script untuk option hide and show -->
     <script type="text/javascript">
+       
         $(document).ready(function(){
+
+
+          // set kesulitan ################
+           var tampkesulitan=$('#tampkesulitan').val();
+          if (tampkesulitan ==3) {
+            $('#lvl3').attr('selected','selected');
+          }else if (tampkesulitan==2) {
+            $('#lvl2').attr('selected','selected');
+          }else if (tampkesulitan==1) {
+            $('#lvl1').attr('selected','selected');
+          }else{
+
+          }
+          // ########################
+
+          // Set Jawaban ###########
+          // $('.id_100 option[value=val2]').attr('selected','selected');
+
+
+          // ###########################
+          // $('#opjawaban option[value=A]').attr('selected','selected');
+          var tampjawaban =  $('#tampjawaban').val();
+          if (tampjawaban != '') {
+              var tamid ='#opjawaban option[value='+tampjawaban+']';
+             $(tamid).attr('selected','selected');
+          }else{
+          }
+          // set publish################
+
+           var tamppublish=$('#tamppublish').val();
+          if (tamppublish ==1) {
+             $('#gift').attr('checked','checked');
+          }else{
+          }
+          // ########################
+
+          // set random################
+           var tamprandom=$('#tamprandom').val();
+          if (tamprandom ==1) {
+             $('#idrand').attr('checked','checked');
+          }else{
+          }
+          // ########################
+
           // Start event untuk jenis editor
             $("#in-soal").click(function(){
 

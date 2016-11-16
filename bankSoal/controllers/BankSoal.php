@@ -218,12 +218,18 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['judul_soal'];
             $row[] = $list_soal['sumber'];
             $row[] = $kesulitan;
-            if ($soal!=null) {
-                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
-            } else{
+             $valSoal=$this->cek_soal_tabel($soal);
+            if ($valSoal == true) {
+                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            } else if (strlen($soal)>160 ) {
+           
+                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            } else {
                 $row[] = $soal;
             }
-            $row[] = $jawabanBenar;
+            
+           
+            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -240,11 +246,11 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
-             $row[]=' 
+            $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
@@ -310,12 +316,18 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['sumber'];
             $row[] = $list_soal['judulSubBab'];
             $row[] = $kesulitan;
-              if ($soal!=null) {
-                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
-            } else{
+               $valSoal=$this->cek_soal_tabel($soal);
+            if ($valSoal == true) {
+                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            } else if (strlen($soal)>160 ) {
+           
+                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            } else {
                 $row[] = $soal;
             }
-            $row[] = $jawabanBenar;
+            
+           
+            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -332,11 +344,11 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
-             $row[]=' 
+            $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
@@ -402,12 +414,18 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['judulBab'];
             $row[] = $kesulitan;
             $soal=$list_soal['soal'];
-              if ($soal!=null) {
-                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
-            } else{
+              $valSoal=$this->cek_soal_tabel($soal);
+            if ($valSoal == true) {
+                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            } else if (strlen($soal)>160 ) {
+           
+                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            } else {
                 $row[] = $soal;
             }
-            $row[] = $jawabanBenar;
+            
+           
+            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -424,11 +442,11 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
-             $row[]=' 
+            $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
@@ -492,12 +510,18 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
             $soal=$list_soal['soal'];
-             if ($soal!=null) {
-                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
-            } else{
+            $valSoal=$this->cek_soal_tabel($soal);
+            if ($valSoal == true) {
+                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            } else if (strlen($soal)>160 ) {
+           
+                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            } else {
                 $row[] = $soal;
             }
-            $row[] = $jawabanBenar;
+            
+           
+            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -514,11 +538,11 @@ class Banksoal extends MX_Controller {
 
                                                 <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
                                                 <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
+                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
-             $row[]=' 
+            $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
@@ -583,7 +607,8 @@ class Banksoal extends MX_Controller {
             $ckRandom="";
             $ckPublish="";
             $soal=$list_soal['soal'];
-            
+            // pengecekan soal jika ada tabel
+            $valSoal=$this->cek_soal_tabel($soal);
              // menentukan tingkat kesulitan dengan indeks 1 - 3
             if ($tingkat == '3') {
                 $kesulitan = 'Sulit';
@@ -618,17 +643,22 @@ class Banksoal extends MX_Controller {
             $row[] = $list_soal['sumber'];
             $row[] = $list_soal['keterangan'];
             $row[] = $kesulitan;
-            if ($soal!=null) {
-                // $row[]='<button type="button" class="btn btn-default" data-container="" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." >
-                //                                 left
-                //                             </button>';
-                 $row[] = substr($soal,  0, 140)." <a class='label label-info' href='' title='lihat detail'><i class='ico-eye' ><i>Lihat Detail</a>";
-            } else{
+            if ($valSoal == true) {
+                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            } else if (strlen($soal)>160 ) {
+              // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+              // data-id='."'".json_encode($list_video)."'".'
+              // onclick="detail('."'".$list_video['videoID']."'".')"
+              // >
+              // <i class=" ico-play3"></i>
+              //   </a> 
+                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            } else {
                 $row[] = $soal;
             }
             
            
-            $row[] = $jawabanBenar;
+            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
@@ -664,7 +694,21 @@ class Banksoal extends MX_Controller {
         echo json_encode( $output );
     } 
 
-    #Start Function untuk form upload bank soal#
+    #Start Function untuk form upload bank soal#\
+
+
+
+    // pengecekan soal jika ada tabel
+    public function cek_soal_tabel($soal)
+    {
+         if (strpos($soal, '<table') !== false) {
+            return true;
+        }else{
+            return false;
+        }
+
+    
+    }
 
     public function formsoal() {
 

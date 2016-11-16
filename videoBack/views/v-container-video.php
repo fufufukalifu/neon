@@ -71,7 +71,7 @@
 		<div class="panel-heading">
 			<h5 class="panel-title">Video Yang Telah Anda Upload</h5>
 		</div>
-		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
+		<table class="table table-striped" id="zero-configuration" style="font-size: 12px" width="100%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -121,7 +121,7 @@ $(document).ready(function() {
 					$('#video-ply').attr('src',links); 
 					$('#mdetailvideo').modal('show');
 			}else if(data.link != null){
-				links = 'https://www.youtube.com/embed/' + data.link;
+				links =  data.link;
 				$('#video-ply-link').attr('src',links); 
 				$('#mvideolink').modal('show');
 			}else{

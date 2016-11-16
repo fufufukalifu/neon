@@ -227,7 +227,7 @@
 		$("blockquote").attr('class', 'media well mb0');
 		function quote(data=""){
 			elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
-			button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post' onclick='save()'>Post</button>";
+			button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success' onclick='save()'>Post</button>";
 
 			$('.modal-body').html(elemen);
 			$('.modal-footer').html(button);
@@ -237,7 +237,7 @@
 
 
 			if (data=="") {
-				$('.modal-header .modal-title').html("Balas Pertanyaan");
+				$('.modal-header .modal-title').html("<h4>Balas Pertanyaan</h4>");
 				string = 0;
 				$('#myModal').modal('show');
 			// ckeditor.setData(data);
@@ -313,7 +313,7 @@ function point(data){
 	$('.modal-body').html(elemen);
 	$('.modal-header .modal-title').html("Berikan Komentar");
 	$('#myModal').modal('show');
-	button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+	button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
 	$('.modal-footer').html(button);
 	
