@@ -1,4 +1,74 @@
-<?php  ?>
+<style type="text/css">
+
+  .section {
+    padding: 50px 0
+  }
+  .section:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5
+  }
+  #macy-container::before {
+    content: "";
+    display: table;
+    clear: both
+  }
+  #macy-container {
+    margin-top: 22px
+  }
+  #macy-container::after {
+    content: "";
+    display: table;
+    clear: both
+  }
+  .demo {
+    margin-bottom: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    padding:5px;
+  }
+  .demo-image {
+    width: 100%;
+    display: block;
+    height: auto
+  }
+  .feature-list {
+    margin-bottom: 0;
+    margin-left: 0;
+    width: 100%;
+    list-style: none
+  }
+  .feature-list li {
+    display: inline-block;
+    width: 25%;
+    text-align: center
+  }
+  .feature-list li::before {
+    color: inherit;
+    content: "•";
+    color: #54b9cb;
+    margin-right: 7px
+  }
+  .btn {
+    background-color: #54b9cb;
+    line-height: 53px;
+    padding: 0 18px 0 0;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    transition: all .25s ease-in-out;
+    font-size: 18px
+  }
+  .btn:hover {
+    background-color: #4CA8B9
+  }
+  .btn.has-icon::before {
+    margin-right: 18px;
+    padding: 0 18px;
+    border-right: 1px solid #4daabb;
+    line-height: 53px
+  }
+</style>
 <form>
   <input type="hidden" name="tingkat" value="{alias_tingkat}">
   <input type="hidden" name="pelajaran" value="{alias_pelajaran}">
@@ -46,74 +116,43 @@
 <hr class="divider-color">
 
 <main>
+  <section class="section">
+    <!-- Start Div container -->
+    <div class="container">
+      <!-- Start div macy-container -->
+      <div id="macy-container">
+<?php $i=0;   $cekjudulbab=null;?>
+        <?php foreach ($bab_video as $bab_video_items) {
+          $judulbab=$bab_video_items->judulBab;
+          $subbab=$bab_video_items->judulSubBab;
 
-  <!-- START TAMPIL DAFTAR -->
+          if ($cekjudulbab != $judulbab) { 
+            if($i=='1'){
+              // END div demo
+              ?></div> <?php
+            } ?>
+            <!-- Start div demo -->
+            <div class="demo">
+              <strong><?=$judulbab ?></strong><br>
+              <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?></a></span><br>
+            
 
-  <?php
-  $cekjudulbab=null;
-  $i='0'; 
-  ?>
-  <!-- Awal 1 -->
-  <div class="grid-col-row clear-fix" >
-    <div class="grid-col grid-col-3">
-      <div class="hover-effect"></div>        
-      <!-- Awal 1 -->
-      <?php foreach ($bab_video as $bab_video_items) {
+            <?php }else{ ?>
 
-        $judulbab=$bab_video_items->judulBab;
-        // $subbab=$bab_video_items->judulSubBab;
-        if ($cekjudulbab != $judulbab) { 
-          if($i=='1'){?>
-        </ul>	
-      </div>
-      <!--Akhir 1-->
-
-      <!-- Awal 2 -->
-      <div class="grid-col-row clear-fix" >
-        <div class="grid-col grid-col-3">
-          <div class="hover-effect"></div>
-          <!-- Awal 2 -->
-          <?php
-        }
-        ?>
-        <h4><strong><?php echo $judulbab ;?><br></strong></h4>
-        <ul>
-        <?php if ($bab_video_items->jenis_video==2): ?>
-          <li class="room"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Room" >
-           <?=$bab_video_items->judulVideo." (r)" ;?>           
-         </a>
-       </li>
-        <?php else: ?>
-          <li class="screen"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Screen" >
-           <?=$bab_video_items->judulVideo." (s)" ;?>           
-         </a>
-       </li>
-        <?php endif ?>
-          <?php }else{  ?>
-        <?php if ($bab_video_items->jenis_video==2): ?>
-          <li class="room"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Room" >
-           <?=$bab_video_items->judulVideo." (r)" ;?>           
-         </a>
-       </li>
-        <?php else: ?>
-          <li class="screen"><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items->videoID?>" title="Screen" >
-           <?=$bab_video_items->judulVideo." (s)" ;?>           
-         </a>
-       </li>
-        <?php endif ?>
-          
-       <?php
-     }
-     $cekjudulbab=$judulbab;
-     $i='1';
-     ?>
-     <?php }  ?>
-     <!-- Ahir 2 -->
-   </ul>	
- </div>
- <!-- Akhir 2 -->
- <!-- END TAMPIL DAFTAR -->
-</main>
+            
+            <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?></a></span><br>
+            <?php } ?>
+            <?php   $cekjudulbab=$judulbab;
+  $i='1'; ?>
+            <?php } ?>
+            </div>
+            <!-- END DIV DEMO -->
+          </div>
+          <!-- END div macy-container -->
+        </div>
+        <!-- END Div container -->
+      </section>
+    </main>
 </div>
 
 <!-- ucapan selamat datang -->
@@ -132,29 +171,45 @@
 </main>
 
 <!-- ucapan selamat datang -->
+<script src="http://macyjs.com/assets/js/macy.min.js"></script>
+<script type="text/javascript">
+  function direct(){
+    var tingkat = $("input[name='tingkat']").val();
+    var aliasMapel = $("input[name='pelajaran']").val();
+    window.location = base_url+"video/daftarvideo/"+<?=$this->uri->segment(3) ?>;
+  }
 
-  <script type="text/javascript">
-    function direct(){
-      var tingkat = $("input[name='tingkat']").val();
-      var aliasMapel = $("input[name='pelajaran']").val();
-      window.location = base_url+"video/daftarvideo/"+aliasMapel+"/"+tingkat;
-    }
+  function justroom(){
+    $('.screen').hide("slow");
+    $('.room').show("slow");
+  }
 
-    function justroom(){
-      $('.screen').hide("slow");
-      $('.room').show("slow");
-    }
+  function justscreen(){
+    $('.screen').show("slow");
+    $('.room').hide("slow");
+  }
 
-    function justscreen(){
-      $('.screen').show("slow");
-      $('.room').hide("slow");
-    }
+  function semua(){
+    $('.screen').show("slow");
+    $('.room').show("slow");
+  }
 
-    function semua(){
-      $('.screen').show("slow");
-      $('.room').show("slow");
-    }
-  </script>
+  $(document).ready(function(){
+    Macy.init({
+      container: '#macy-container',
+      trueOrder: false,
+      waitForImages: false,
+      margin: 24,
+      columns: 3,
+      breakAt: {
+        1200: 5,
+        940: 3,
+        520: 2,
+        400: 1
+      }
+    });
+  });
+</script>
 
 
 

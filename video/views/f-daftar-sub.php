@@ -54,11 +54,6 @@
          </div>
          <!-- Akhir 2 -->
          <!-- END TAMPIL DAFTAR -->
-
-
-
-
-
        </main>
   <hr class="divider-big">
 
@@ -70,7 +65,7 @@
     function direct(){
       var tingkat = $("input[name='tingkat']").val();
       var aliasMapel = $("input[name='pelajaran']").val();
-      window.location = base_url+"video/daftarallvideo/"+aliasMapel+"/"+tingkat;
+      window.location = base_url+"video/daftarallvideo/"+<?=$this->uri->segment(3) ?>;
     }
 
   </script>

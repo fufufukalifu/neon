@@ -1,118 +1,137 @@
-<?php  ?>
+<style type="text/css">
+
+  .section {
+    padding: 50px 0
+  }
+  .section:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5
+  }
+  #macy-container::before {
+    content: "";
+    display: table;
+    clear: both
+  }
+  #macy-container {
+    margin-top: 22px
+  }
+  #macy-container::after {
+    content: "";
+    display: table;
+    clear: both
+  }
+  .demo {
+    margin-bottom: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    padding:5px;
+  }
+  .demo-image {
+    width: 100%;
+    display: block;
+    height: auto
+  }
+  .feature-list {
+    margin-bottom: 0;
+    margin-left: 0;
+    width: 100%;
+    list-style: none
+  }
+  .feature-list li {
+    display: inline-block;
+    width: 25%;
+    text-align: center
+  }
+  .feature-list li::before {
+    color: inherit;
+    content: "•";
+    color: #54b9cb;
+    margin-right: 7px
+  }
+  .btn {
+    background-color: #54b9cb;
+    line-height: 53px;
+    padding: 0 18px 0 0;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    transition: all .25s ease-in-out;
+    font-size: 18px
+  }
+  .btn:hover {
+    background-color: #4CA8B9
+  }
+  .btn.has-icon::before {
+    margin-right: 18px;
+    padding: 0 18px;
+    border-right: 1px solid #4daabb;
+    line-height: 53px
+  }
+</style>
 <form>
   <input type="hidden" name="tingkat" value="{alias_tingkat}">
-<input type="hidden" name="pelajaran" value="{alias_pelajaran}">
+  <input type="hidden" name="pelajaran" value="{alias_pelajaran}">
 </form>
 <div class="page-content grid-row">
 
   <div class="row">
-<!--     <div class="col-md-6">
-     <h5>Type : <div class="btn-group" data-toggle="buttons" > 
-
-       <label class="btn active cws-button alt btn-primary bg-color-2" id="in-soal"> 
-          <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
-        </label>
-
-        <label class="btn cws-button alt btn-primary bg-color-2" id="pr-rumus" title="Tampilkan Jenis Video Room"> 
-          <input type="radio" name="options"   autocomplete="off"> Room
-        </label> 
-
-        <label class="btn cws-button alt btn-primary bg-color-2" id="pr-rumus" title="Tampilkan Jenis Video Screen"> 
-          <input type="radio" name="options"   autocomplete="off"> Screen
-        </label> 
-
-        </div></h5>
-       
-      </div> -->
-      <div class="col-md-6">
-       <h5>Video : <div class="btn-group" data-toggle="buttons" > 
-
+    <div class="col-md-6">
+     <h5>Video : <div class="btn-group" data-toggle="buttons" > 
        <label class="btn cws-button alt btn-primary bg-color-2" onclick="direct()"> 
-          <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
-        </label> 
+        <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
+      </label> 
+      <label class="btn cws-button alt btn-primary bg-color-2 active" id="pr-rumus" active> 
+        <input type="radio" name="bysub" autocomplete="off"> By Sub Bab
+      </label> 
+    </div></h5>
 
-        <label class="btn cws-button alt btn-primary bg-color-2 active" id="pr-rumus" active> 
-          <input type="radio" name="bysub" autocomplete="off"> By Sub Bab
-        </label> 
+  </div>
+</div>
+<br>
+<hr class="divider-color">
 
-        </div></h5>
-       
-       </div>
+<main>
+  <section class="section">
+    <!-- Start Div container -->
+    <div class="container">
+      <!-- Start div macy-container -->
+      <div id="macy-container">
+<?php $i=0;   $cekjudulbab=null;?>
+        <?php foreach ($bab_video as $bab_video_items) {
+          $judulbab=$bab_video_items->judulBab;
+          $subbab=$bab_video_items->judulSubBab;
 
-     </div>
+          if ($cekjudulbab != $judulbab) { 
+            if($i=='1'){
+              // END div demo
+              ?></div> <?php
+            } ?>
+            <!-- Start div demo -->
+            <div class="demo">
+              <strong><?=$judulbab ?></strong><br>
+              <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></span><br>
+            
 
-     <br>
+            <?php }else{ ?>
 
-     <hr class="divider-color">
-
-     <main>
-
-      <!-- START TAMPIL DAFTAR -->
-
-      <?php
-
-      $cekjudulbab=null;
-
-      $i='0'; 
-
-     // echo "==================="."<br>";
-
-      ?>
-
-      <!-- Awal 1 -->
-      <div class="grid-col-row clear-fix" >
-        <div class="grid-col grid-col-3">
-          <div class="hover-effect"></div>        
-          <!-- Awal 1 -->
-          <?php foreach ($bab_video as $bab_video_items) {
-            $judulbab=$bab_video_items->judulBab;
-            $subbab=$bab_video_items->judulSubBab;
-            if ($cekjudulbab != $judulbab) { 
-              if($i=='1'){?>
-              </ol>
+            
+            <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></span><br>
+            <?php } ?>
+            <?php   $cekjudulbab=$judulbab;
+  $i='1'; ?>
+            <?php } ?>
             </div>
-            <!--Akhir 1-->
-
-
-
-            <!-- Awal 2 -->
-            <div class="grid-col-row clear-fix" >
-              <div class="grid-col grid-col-3">
-                <div class="hover-effect"></div>
-                <!-- Awal 2 -->
-                <?php
-              }
-              ?>
-
-              <h4><strong><?php echo $judulbab ;?><br></strong></h4>
-              <ol>
-                <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
-                <?php        
-              }else{
-               ?>
-               <li><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></li>
-               <?php
-             }
-             $cekjudulbab=$judulbab;
-             $i='1';
-             ?>
-             <?php } 
-             ?>
-             <!-- Ahir 2 -->
-           </ol>
-         </div>
-         <!-- Akhir 2 -->
-         <!-- END TAMPIL DAFTAR -->
-
-
-
-
-
-       </main>
-     </div>
-
-     <!-- ucapan selamat datang -->
-     <main>
+            <!-- END DIV DEMO -->
+          </div>
+          <!-- END div macy-container -->
+        </div>
+        <!-- END Div container -->
+      </section>
+    </main>
+    <!-- ucapan selamat datang -->
+    <hr class="divider-color">
+    <main>
       <div class="page-content grid-row">
         <div class="porfolio-item">
           <div class="col-md-2"><img src="<?=base_url('assets/back/img/logo.png')?>"  width="200px" data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
@@ -125,67 +144,33 @@
         </div>
       </div>
     </main>
-
-    <!-- ucapan selamat datang -->
-
+  </div>
 
 
+  <hr class="divider-big">
+  <script src="http://macyjs.com/assets/js/macy.min.js"></script>
+  <script type="text/javascript">
+    function direct(){
+      var tingkat = $("input[name='tingkat']").val();
+      var aliasMapel = $("input[name='pelajaran']").val();
+      window.location = base_url+"video/daftarallvideo/"+<?=$this->uri->segment(3) ?>;
+    }
 
 
-    <!-- testimonials -->
+    $(document).ready(function(){
+      Macy.init({
+        container: '#macy-container',
+        trueOrder: false,
+        waitForImages: false,
+        margin: 24,
+        columns: 3,
+        breakAt: {
+          1200: 5,
+          940: 3,
+          520: 2,
+          400: 1
+        }
+      });
+    });
 
-    <div class="row">
-      <div class="container">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          </ol>
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <img src="http://placehold.it/1200x380" alt="Chania">
-            </div>
-
-            <!-- Left and right controls -->
-
-            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-
-              <span class="sr-only">Previous</span>
-
-            </a>
-
-            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-
-              <span class="sr-only">Next</span>
-
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-      <br><br>
-
-      <hr class="divider-big">
-
-
-
-
-
-<script type="text/javascript">
-  function direct(){
-    var tingkat = $("input[name='tingkat']").val();
-    var aliasMapel = $("input[name='pelajaran']").val();
-    window.location = base_url+"video/daftarallvideo/"+aliasMapel+"/"+tingkat;
-  }
-
-</script>
+  </script>

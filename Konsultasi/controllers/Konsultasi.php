@@ -1,5 +1,4 @@
 <?php 
-
 class Konsultasi extends MX_Controller{
 
     //put your code here
@@ -27,8 +26,8 @@ class Konsultasi extends MX_Controller{
   $data['files'] = array(
     APPPATH.'modules/homepage/views/v-header-login.php',
     APPPATH.'modules/templating/views/t-f-pagetitle.php',
-    APPPATH.'modules/Konsultasi/views/v-daftar-konsultasi.php',
-    APPPATH.'modules/Konsultasi/views/v-show-tingkat.php',
+    APPPATH.'modules/konsultasi/views/v-daftar-konsultasi.php',
+    APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
     APPPATH.'modules/homepage/views/v-footer.php'
     );
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
@@ -75,7 +74,7 @@ public function bertanya($idsub){
   $data['files'] = array(
     APPPATH.'modules/homepage/views/v-header-login.php',
     APPPATH.'modules/templating/views/t-f-pagetitle.php',
-    APPPATH.'modules/Konsultasi/views/v-create-konsultasi.php',
+    APPPATH.'modules/konsultasi/views/v-create-konsultasi.php',
     APPPATH.'modules/homepage/views/v-footer.php'
     );
   $this->parser->parse( 'templating/index', $data );
@@ -107,7 +106,7 @@ public function singlekonsultasi($id_pertanyaan){
   $data['files'] = array(
     APPPATH.'modules/homepage/views/v-header-login.php',
       // APPPATH.'modules/templating/views/t-f-pagetitle.php',
-    APPPATH.'modules/Konsultasi/views/v-single-konsultasi.php',
+    APPPATH.'modules/konsultasi/views/v-single-konsultasi.php',
     APPPATH.'modules/homepage/views/v-footer.php'
     );
 
@@ -246,5 +245,4 @@ function search_mine(){
 
 
 }
-
 ?>

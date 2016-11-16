@@ -121,7 +121,6 @@
 
 					<div class="tags-post">
 						<a href="#" rel="tag">{sub}</a>
-						<?php// echo "$isi"; ?>
 						<a onclick="quote('single')" rel="tag">quote</a>
 						<a onclick="quote(0)" rel="tag">Balas</a>
 
@@ -129,7 +128,7 @@
 				</article>
 			</div>
 
-			<hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?>
+			<hr class="divider-big">
 			<?php if ($data_postingan!=array()): ?>
 				<?php foreach ($data_postingan as $item_postingan): ?>
 					<div class="blog-post">
@@ -334,6 +333,4 @@ function get_data(data, datas){
 		});
 	}
 }
-
-
 </script>

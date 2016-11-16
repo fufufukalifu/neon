@@ -1,11 +1,6 @@
 <?php
-
 class Mvideos extends CI_Model
-
 {
-
-
-
   function __construct() {
     $this->load->database();
   }
@@ -33,7 +28,7 @@ class Mvideos extends CI_Model
   }
 
   //mengambil matapelajaran berdasarkan tingkat dan matapelajaranya
-  function get_video_as_bab( $alias_tingkat, $alias_pelajaran ) {
+  function get_video_as_bab( $tingpelID ) {
     //select from 5 table di join semuanya
     $this->db->select( 'bab.id as babid,subbab.id as subbabID,aliasMataPelajaran,judulBab,judulSubBab,aliasTingkat ' );
     $this->db->from( 'tb_subbab subbab' );
@@ -42,8 +37,7 @@ class Mvideos extends CI_Model
     $this->db->join( 'tb_tingkat tingkat', 'tingpel.tingkatID=tingkat.id' );
     $this->db->join( 'tb_mata-pelajaran mapel', 'tingpel.mataPelajaranID=mapel.id' );
     //where
-    $this->db->where( 'aliasMataPelajaran', $alias_pelajaran );
-    $this->db->where( 'aliasTingkat', $alias_tingkat );
+    $this->db->where( 'tingpel.id', $tingpelID );
     $query = $this->db->get();
     return $query->result();
   }
@@ -62,7 +56,7 @@ class Mvideos extends CI_Model
   }
 
 
-  function get_video_as_sub( $alias_tingkat, $alias_pelajaran ) {
+  function get_video_as_sub($tingkatID) {
     //select from 5 table di join semuanya
     $myquery ="SELECT *,video.id as videoID, subbab.id as subbabID,bab.id as babID FROM tb_video video
     JOIN tb_subbab subbab ON
@@ -75,7 +69,7 @@ class Mvideos extends CI_Model
     tingkat.`id` = tingpel.`tingkatID`
     JOIN `tb_mata-pelajaran` mapel
     ON mapel.`id` = tingpel.`mataPelajaranID`
-    WHERE `aliasMataPelajaran` = '$alias_pelajaran' AND `aliasTingkat` = '$alias_tingkat' order by bab.id
+    WHERE tingpel.id = $tingkatID order by bab.id
     ";
 
     $result = $this->db->query($myquery);
@@ -416,6 +410,24 @@ function get_idbab_by_idsub($id_sub){
 
     return $query->result_array();
   }
+
+
+function get_meta_data_tingkat($tingkatID){
+      $myquery = 
+      "SELECT * FROM
+        (SELECT * FROM `tb_tingkat-pelajaran` WHERE id =  $tingkatID ) AS tingpel 
+        JOIN `tb_tingkat` AS tingkat 
+          ON tingpel.tingkatID = tingkat.id JOIN `tb_mata-pelajaran` mapel ON
+mapel.id = tingpel.`mataPelajaranID`
+  ";
+    $result = $this->db->query($myquery);
+    // return $result->result_array();
+    if ($result->result_array()==array()) {
+      return false;
+    } else {
+      return $result->result_array()[0];
+    }
+}
 
 }
 
