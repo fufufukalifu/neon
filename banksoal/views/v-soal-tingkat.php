@@ -3,7 +3,50 @@
 <section id="main" role="main">
     <!-- START Template Container -->
     <div class="container-fluid">
+<!-- Start Modal Detail Soal dari server -->
+    <div class="modal fade" id="mdetailsoal">
 
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                        <span aria-hidden="true">&times;</span>
+
+                    </button>
+
+                    <h3 class="semibold mt0 text-accent text-center"></h3>
+
+                </div>
+
+                <div class="modal-body">
+                <label>Soal :</label>
+                <p class="text-justify" id="dsoal">
+                    
+                </p>
+
+                <label>Jawaban :</label>
+                <p class="text-justify" id="djawaban">
+                    
+                </p>
+                    
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger mb5" data-dismiss="modal">Close</button>
+
+                </div>
+
+            </div>
+
+        </div>
+       
+    </div>
+    <!-- End Modal Detail Soal-->
 
         <!-- START row -->
         <div class="row">
@@ -108,6 +151,18 @@ MathJax.Hub.Config({
     }
     function reload_tblist(){
       tblist_TO.ajax.reload(null,false); 
+    }
+ // Fungsi untuk detail soal
+    function detailSoal(id_soal) {
+        var kelas ='.detail-'+id_soal;
+        var data = $(kelas).data('id');
+        var jawaban=$('#jawaban-'+id_soal).val();
+        console.log(data);
+        $('h3.semibold').html(data.judul_soal);
+
+        $('p#dsoal').html(data.soal);
+        $('p#djawaban').html(jawaban);
+        $('#mdetailsoal').modal('show');
     }
 
 </script>

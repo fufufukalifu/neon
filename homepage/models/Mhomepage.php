@@ -24,6 +24,20 @@ class Mhomepage extends CI_Model {
         return $query->result_array();
     }
 
+    function mail_exists($key)
+    {
+        $this->db->select("*");
+        $this->db->where($key);
+        $this->db->from('tb_subscribe');
+        
+        $query = $this->db->get();
+        if ($query->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 
 ?>

@@ -36,7 +36,6 @@
     <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
     <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
 
-
     <!--styles -->
 
 </head>
@@ -214,27 +213,11 @@
 
                 <div class="font-style-1 margin-none">Berinteraksi Dengan Kami.</div>
 
-                <div class="divider-mini"></div>
-
-                <p class="parallax-text">Neon hadir untuk kalian yang pengen pinter dengan cara mudah dan asyik. Ayo bergabung dengan Neon. Silahkan masukkan email kalian.</p>
-                <?php if ($this->session->flashdata('notif') != '') {
-                    ?>
-
-                    <div class="alert alert-warning fade in">
-
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-                        <span class="semibold"></span><?php echo $this->session->flashdata('notif'); ?>
-
-                    </div>
-
-                    <?php } ?>
-                    <form class="subscribe login-form" action="<?= base_url('index.php/homepage/addsubs') ?>" method="post">
+                    <p class="parallax-text">Neon hadir untuk kalian yang pengen pinter dengan cara mudah dan asyik. Ayo bergabung dengan Neon. Silahkan masukkan email kalian.</p>
+                    
+                    <form class="subscribe login-form" id="formsubs" method="post">
                         <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                        <input type="email" class="form-control input-sm" name="email" id="emailsubs" method="post" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">    
-
-                        <!--<input type="email" class="form-control input-sm" name="emailsubs" id="emailsubs" value="<?php echo set_value('emailsubs'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">-->
-                        <!-- untuk menampilkan pesan kesalahan penginputan email -->
+                        <input type="email" class="form-control input-sm" name="email" id="emailsubs" value="<?php echo set_value('email'); ?>" placeholder="xxx@mail.com" required><input type="submit" value="Subscribe">    
                         <span class="text-danger"><?php echo form_error('email'); ?></span> 
                     </form>
 
@@ -370,6 +353,35 @@
                         scrollTop: $("#subs").offset().top
                     }, 2000);
                 });
+
+            $(document).ready(function () {
+                $("#formsubs").submit(function (e) {
+                    e.preventDefault();
+                    var emailsubs = $("#emailsubs").val();
+                    // console.log(emailsubs);
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo base_url() ?>index.php/homepage/addsubs',
+                        data: {emailsubs: emailsubs},
+                        success: function (data)
+                        {
+                            // console.log(data);
+                            // if ($this->session->flashdata('subs') == '1') {
+                                swal("Berhasil!", "Terimakasih sudah berlangganan", "success");
+                            // }else{
+                                // sweetAlert("Oops...", "Something went wrong!", "error");
+                            // };
+                             // alert('Teacherrimakasih sudah bergabung bersama NEON');
+                            document.getElementById("emailsubs").value = "";
+                        },
+                        error: function ()
+                        {
+                            alert('fail');
+                            console.log(data);
+                        }
+                    });
+                });
+            });
 
 
                 function changekonten(data){

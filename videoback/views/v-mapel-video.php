@@ -72,7 +72,7 @@
 				<h5 class="panel-title">Daftar Video Berdasarkan Matapelajaran <?=$nama?></h5>
 			<input type="text" value="<?=$mapelID?>" name="" id="idmapel" hidden>
 		</div>
-		<table class="table table-striped" id="zero-configuration" style="font-size: 12px">
+		<table class="table table-striped" id="zero-configuration" style="font-size: 12px" width="100%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -123,7 +123,7 @@ $(document).ready(function() {
 					$('#video-ply').attr('src',links); 
 					$('#mdetailvideo').modal('show');
 			}else if(data.link != null){
-				links = 'https://www.youtube.com/embed/' + data.link;
+				links =  data.link;
 				$('#video-ply-link').attr('src',links); 
 				$('#mvideolink').modal('show');
 			}else{

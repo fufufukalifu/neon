@@ -248,10 +248,10 @@ class Videoback extends MX_Controller {
                 $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
                 $guruID = $data['tb_guru']['id'];
                 $UUID = uniqid();
-                $idlink=$this->get_idlink($link);
+                $linkembed=$this->get_linkembed($link);
                  $data_video = array(
                     'judulVideo' => $data['judulVideo'] ,
-                    'link' => $idlink,
+                    'link' => $linkembed,
                     'deskripsi' => $data['deskripsi'],
                     'published' => $data['published'],
                     'guruID' => $guruID,
@@ -268,27 +268,25 @@ class Videoback extends MX_Controller {
      } 
 
      // get id video youtube untuk di simpan ke db
-     public function get_idlink($link)
+     public function get_linkembed($link)
      {
         $mulai='0';
         $end='0';
-        $idlink=' ';
+        $linkembed=' ';
         $i=0;
         // echo strlen($nama);
         for ($x = 0; $x < strlen($link); $x++) {
 
-          if ($link[$x] == '=' && $mulai == '0') {
-            $mulai='1';
-          }else if ($mulai=='1' && $link[$x] != '=') {
-            $idlink[$i]=$link[$x];
-            $i++;
-          } else if($mulai=='1'){
-
+          if ($link[$x] == '=' ) {
+            $startID=$x+1;
+            $linkembed='https://www.youtube.com/embed/'.substr($link, $startID,11);
             break;
+          }else{
+            $linkembed=$link;
           }
           
         }
-        return $idlink;
+        return $linkembed;
      }
 
      public function cek_option_update()
@@ -321,11 +319,11 @@ class Videoback extends MX_Controller {
                 $penggunaID = $this->session->userdata['id'];
                 $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
                 $guruID = $data['tb_guru']['id'];
-                $idlink=$this->get_idlink($link);
+                $linkembed=$this->get_linkembed($link);
                  $data['video'] = array(
                     'judulVideo' => $data['judulVideo'] ,
                     'namaFile' => null,
-                    'link' => $idlink,
+                    'link' => $linkembed,
                     'deskripsi' => $data['deskripsi'],
                     'published' => $data['published'],
                     'guruID' => $guruID,

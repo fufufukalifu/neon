@@ -50,26 +50,24 @@ class Homepage extends MX_Controller {
     }
 
      function addsubs() {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_subscribe.email]');
 
-        $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
+        $data['email'] = htmlspecialchars($this->input->post('emailsubs'));
 
-        $this->form_validation->set_message('required', '*tidak boleh kosong!');
-
-        $this->form_validation->set_message('valid_email', '*silahkan masukan alamat email anda dengan benar');
-
-
-
-        if ($this->form_validation->run() == FALSE) {
-//jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-//            redirect(base_url('index.php/Homepage/#subs'));
-            $this->index();
-        } else {
-            $data['email'] = htmlspecialchars($this->input->post('email'));
-            $this->Mhomepage->insert_subs($data);
-            $this->session->set_flashdata('notif', ' Terimakasih sudah berlangganan berita NEON');
-            $this->index();
+        if ($this->Mhomepage->mail_exists($data['email'] == true)) {
+               $this->Mhomepage->insert_subs($data);
+               $this->session->set_flashdata('subs', '1');
+                // return Json(    
+                //     // status = "success"
+                //     subs = "done";
+                // );
+               // t TRUE;
+        }else{
+             $this->session->set_flashdata('subs', '2');
+             // return Json({
+             //        // status = "success"
+             //        subs = "fail"
+             // });
+             // echo FALSE;
         }
     }
 }
