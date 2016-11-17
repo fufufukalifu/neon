@@ -59,7 +59,7 @@ class paketsoal extends MX_Controller
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
-			$row[] = '<a class="btn btn-sm btn-primary"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
+			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
 			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
 
@@ -150,7 +150,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
-			'durasi' =>$this->input->post( 'durasi' )
+			'durasi' =>$this->input->post( 'durasi' ),
+			'random'=>$this->input->post('random')
 		);
 
 		$this->mpaketsoal->insertpaketsoal( $data );
@@ -168,7 +169,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' =>  $this->input->post( 'nama_paket' ) ,
 			'deskripsi' => $this->input->post( 'jumlah_soal' ),
 			'jumlah_soal' => $this->input->post( 'durasi' ),
-			'durasi' => $this->input->post( 'deskripsi' )
+			'durasi' => $this->input->post( 'deskripsi' ),
+			'random'=>$this->input->post('random')
 		);
 
 		$this->mpaketsoal->rubahpaket( $id, $data );

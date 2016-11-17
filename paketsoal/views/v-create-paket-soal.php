@@ -20,91 +20,91 @@
 
                     <div class="panel-body">
 
-                         <!-- START PESAN ERROR EMPTY INPUT -->
+                       <!-- START PESAN ERROR EMPTY INPUT -->
 
-                          <div class="form-group alert alert-dismissable alert-danger" id="e_paket" hidden="true" >
+                       <div class="form-group alert alert-dismissable alert-danger" id="e_paket" hidden="true" >
 
-                            <button type="button" class="close" onclick="hide_e_paket()" >×</button>
+                        <button type="button" class="close" onclick="hide_e_paket()" >×</button>
 
-                            <strong>O.M.G.!</strong> Silahkan Diisi Semua.
+                        <strong>O.M.G.!</strong> Silahkan Diisi Semua.
 
-                          </div>
+                    </div>
 
-                          <!-- END PESAN ERROR EMPTY INPUT -->
+                    <!-- END PESAN ERROR EMPTY INPUT -->
 
-                        <div class="form-group">
+                    <div class="form-group">
 
-                            <div class="row">
+                        <div class="row">
 
-                                <input type="hidden" value="" name="id_paket"/>
+                            <input type="hidden" value="" name="id_paket"/>
 
-                                <div class="col-sm-12">
+                            <div class="col-sm-12">
 
-                                    
 
-                                    <label class="control-label">Nama Paket <span class="text-danger">*</span></label>
 
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-sm-7">
-
-                                    <span class="text-danger"><?php echo form_error('nama_paket'); ?></span>
-
-                                    <input type="text" name="nama_paket" class="form-control" placeholder="First" required>
-
-                                </div>
+                                <label class="control-label">Nama Paket <span class="text-danger">*</span></label>
 
                             </div>
 
                         </div>
 
-                        
+                        <div class="row">
 
-                        <div class="form-group">
-                            
-                            <div class="row">
+                            <div class="col-sm-7">
 
-                                <div class="col-sm-12">
+                                <span class="text-danger"><?php echo form_error('nama_paket'); ?></span>
 
-                                    <label class="control-label">Deskripsi </span></label>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-sm-12">
-
-                                    <textarea class="form-control" name="deskripsi" id="deskripsi"></textarea>
-
-                                </div>
+                                <input type="text" name="nama_paket" class="form-control" placeholder="First" required>
 
                             </div>
 
                         </div>
 
+                    </div>
 
 
-                        <div class="form-group">
 
-                            <div class="row">
+                    <div class="form-group">
 
-                                <div class="col-sm-6">
+                        <div class="row">
 
-                                    <label class="control-label">Jumlah Soal <span class="text-danger">*</span></label>
+                            <div class="col-sm-12">
 
-                                    <select name="jumlah_soal" class="form-control" required>
+                                <label class="control-label">Deskripsi </span></label>
 
-                                        <option value="">-Pilih Jumlah Soal-</option>
+                            </div>
 
-                                        <?php for ($i=10;$i<=40;$i++): 
+                        </div>
 
-                                        if ($i % 10 ==0) { ?>
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <textarea class="form-control" name="deskripsi" id="deskripsi"></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <div class="row">
+
+                            <div class="col-sm-6">
+
+                                <label class="control-label">Jumlah Soal <span class="text-danger">*</span></label>
+
+                                <select name="jumlah_soal" class="form-control" required>
+
+                                    <option value="">-Pilih Jumlah Soal-</option>
+
+                                    <?php for ($i=5;$i<=60;$i++): 
+
+                                    if ($i % 5 ==0) { ?>
 
                                         <option value=<?=$i ?>><?=$i ?></option>
 
@@ -150,35 +150,52 @@
 
                                       <option value="135">135</option>
 
-                                    </select>
+                                  </select>
 
-                                </div>
+                              </div>
 
-                            </div>
+                          </div>
 
+
+
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                            <label class="control-label">Apakah soal akan di random?</label>
+                               <div class="checkbox custom-checkbox">  
+                                    <input type="checkbox" name="random" id="idrand" value="1">  
+                                    <label for="idrand"> Random
+                                    </label> 
+                                 </div>
+                             </div>
                         </div>
 
 
+                     </div>
 
-                        <div class="panel-footer">
+            </div>
+            <div class="panel-footer">
 
 
 
-                            <button type="submit" class="btn btn-primary" name="proses" id="btnSave" onclick="save()" >Proses</button>
+                <button type="submit" class="btn btn-primary" name="proses" id="btnSave" onclick="save()" >Simpan</button>
 
-                            <button type="reset" class="btn btn-inverse" id="btnReset">reset</button>
-
-                        </div>
-
-                    </div>
-
-                </form>
+                <button type="reset" class="btn btn-danger" id="btnReset">reset</button>
 
             </div>
 
         </div>
 
-    </div>    
+    </form>
+
+</div>
+
+</div>
+
+</div>    
 
 </div>
 
@@ -206,7 +223,7 @@
 
 
 
-                        
+
 
                         <div class="panel-footer">
 
@@ -234,7 +251,7 @@
 
     <div class="col-md-12">
 
-        <div class="panel panel-default">
+        <div class="panel panel-inverse">
 
             <div class="panel-heading">
 
@@ -250,17 +267,16 @@
 
                         <div class="col-md-12">
 
-                            <form class="panel panel-default" action="" data-parsley-validate>
+                            <form class="panel panel-teal" action="" data-parsley-validate>
 
                                 <div class="panel-heading">
 
                                     <h3 class="panel-title"><i class="ico-books"></i>Daftar Paket Soal</h3>
+                                    <div class="panel-toolbar text-right">
+                                        <a onclick="add_paket()" class="btn btn-inverse btn-outline"><i class="glyphicon glyphicon-plus" title="Add Paket Soal"></i></a>
 
-                                    <a onclick="add_paket()" class="btn btn-primary"><i class="glyphicon glyphicon-plus" title="Add Paket Soal"></i></a>
-
-                                    <a onclick="reload_table()" class="btn btn-success"><i class="glyphicon glyphicon-refresh" title="Refresh"></i></a>
-
-                                    <hr>
+                                        <a onclick="reload_table()" class="btn btn-inverse "><i class="glyphicon glyphicon-refresh" title="Refresh"></i></a>
+                                    </div>
 
                                 </div>               
 
@@ -344,7 +360,7 @@
 
         table = $('#datatable').DataTable({ 
 
-           "ajax": {
+         "ajax": {
 
             "url": base_url+"index.php/paketsoal/ajax_list",
 
@@ -400,15 +416,17 @@ function add_paket(){
 
 function save(){
 
-   
 
-    
+
+
 
     var nama_paket= $('[name="nama_paket"]').val();
 
     var jumlah_soal  = $('[name="jumlah_soal"]').val();
 
     var durasi = $('[name="durasi"]').val();
+
+    var random = $('[name="random"]').val();
 
     
 
@@ -426,7 +444,7 @@ function save(){
 
     }
 
-   
+
 
     if (nama_paket != "" && jumlah_soal != ""  && durasi != ""  ) {
 
@@ -436,21 +454,21 @@ function save(){
 
              // ajax adding data to database
 
-        $.ajax({
+             $.ajax({
 
-            url : url,
+                url : url,
 
-            type: "POST",
+                type: "POST",
 
-            data: $('#form').serialize(),
+                data: $('#form').serialize(),
 
-            dataType: "JSON",
+                dataType: "JSON",
 
-            success: function(data)
+                success: function(data)
 
-            {
+                {
 
-             $('#modal_form').modal('hide');
+                   $('#modal_form').modal('hide');
 
                 $('#btnSave').text('save'); //change button text
 
@@ -476,25 +494,25 @@ function save(){
 
         });
 
-      
 
-    } else {
 
-         $("#e_paket").show();
+         } else {
 
-    }
+           $("#e_paket").show();
 
-    
+       }
 
 
 
-   
 
 
 
-}
 
-function reload_table(){
+
+
+   }
+
+   function reload_table(){
 
     table.ajax.reload(null,false); //reload datatable ajax 
 
