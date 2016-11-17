@@ -4,8 +4,8 @@
 */
 class Komenback extends MX_Controller
 {
-	
-	function __construct(){
+  
+  function __construct(){
    $this->load->library('parser');
    $this->load->model('mkomen');
    $this->load->model('video/mvideos');
@@ -26,7 +26,13 @@ class Komenback extends MX_Controller
    $this->parser->parse('admin/v-index-admin', $data);
  } elseif ($hakAkses == 'guru') {
             // jika guru
-   redirect(site_url('guru/dashboard/'));
+   // redirect(site_url('guru/dashboard/'));
+    $data['judul_halaman'] = "Dashboard Guru : Komen";
+  $data['files'] = array(
+   APPPATH . 'modules/komenback/views/v-table-komen.php',
+   );
+   $this->parser->parse('templating/index-b-guru', $data);
+
  } elseif ($hakAkses == 'siswa') {
    redirect(site_url('welcome'));
  } else {

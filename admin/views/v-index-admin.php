@@ -449,13 +449,7 @@
 
   </ul>
 </li>
-<li>
-<a href="<?=base_url('komenback') ?>" data-target="#komen" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-comments"></i></span>
-    <span class="text">Komen</span>
-    <span class="arrow"></span>
-  </a>
-</li>
+
 <li>
   <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-clipboard"></i></span>
@@ -575,7 +569,13 @@
 </a>
 </li>
 <!--END menu konsultasi -->
-
+<li>
+<a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-comments"></i></span>
+    <span class="text">Komen</span>
+    <span class="arrow"></span>
+  </a>
+</li>
 
 </ul>
 <!--/ END Template Navigation/Menu -->

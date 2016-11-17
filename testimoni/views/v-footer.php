@@ -71,7 +71,7 @@
                                             <textarea maxlength=520 name="testimoni" id="isitestimoni" class="form-control" placeholder="Tuliskan testimonimu (max 520 Karakter)" cols="40" rows="5" aria-invalid="false" required></textarea>
                                         </div>
 
-                                        <button type="submit" class="cws-button bt-color-3 border-radius alt icon-right">Kirim <i class="fa fa-angle-right"></i></button>
+                                        <a type="submit" onclick="simpan_testimonials()" class="cws-button bt-color-3 border-radius alt icon-right">Kirim <i class="fa fa-angle-right"></i></a>
 
                                     </form>
 
@@ -110,32 +110,30 @@
                     </footer>
 
                     <script>
-                        $(document).ready(function () {
-                            $("#formtestimoni").submit(function (e) {
-                                e.preventDefault();
-                                var isitestimoni = $("#isitestimoni").val();
-                                $.ajax({
-                                    type: "POST",
-                                    url: '<?php echo base_url() ?>index.php/Testimoni/addtestimoni',
-                                    data: {isitestimoni: isitestimoni},
-                                    success: function (data)
-                                    {
-                                        swal("Good job!", "Testimoni mu telah terkirim!", "success")
-                                        document.getElementById("isitestimoni").value = "";
-                                    },
-                                    error: function ()
-                                    {
-                                        alert('fail');
-                                    }
-                                });
+                        function simpan_testimonials(){
+                            var isitestimoni = $("#isitestimoni").val();
+                            $.ajax({
+                                type: "POST",
+                                url: '<?php echo base_url() ?>index.php/testimoni/addtestimoni',
+                                data: {isitestimoni: isitestimoni},
+                                success: function (data)
+                                {
+                                    swal("Good job!", "Testimoni mu telah terkirim!", "success")
+                                    document.getElementById("isitestimoni").value = "";
+                                },
+                                error: function ()
+                                {
+                                    alert('fail');
+                                }
                             });
-                        });
+                        }
+
 
                         $.ajax({
-                           type: "POST",
-                           dataType:"JSON",
-                           url: "<?= base_url() ?>video/ajax_get_last_video",
-                           success: function (data,i) {
+                         type: "POST",
+                         dataType:"JSON",
+                         url: "<?= base_url() ?>video/ajax_get_last_video",
+                         success: function (data,i) {
             // console.log(data.data[0]);
             $('#video_last').append(data.data[0]);
             $('#video_last').append(data.data[1]);
