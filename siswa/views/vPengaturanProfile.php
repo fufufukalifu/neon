@@ -83,7 +83,29 @@
                         <!-- START Tab-content -->
 
                         <div class="tab-content">
+                             <?php if ($this->session->flashdata('updsiswa') != '') {
 
+                                ?>
+
+                                <div class="alert alert-warning fade in">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                    <span class="semibold">Note :</span><?php echo $this->session->flashdata('updsiswa'); ?>
+
+                                </div>
+
+                            <?php } else { ?>
+
+                                <div class="alert alert-warning fade in">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Pastikan data form di isi dengan benar.
+
+                                </div>
+
+                            <?php }; ?>
                        
 
                             <!-- tab-pane: profile -->
@@ -334,7 +356,7 @@
 
                                             <div class="col-md-12">
 
-                                                <h4 class="semibold text-primary mt0 mb5">Email</h4>
+                                                <h4 class="semibold mt0 mb5">Email</h4>
 
                                                 <p class="text-default nm">Masukan email barumu, untuk merubah email yang sekarang digunakan</p>
 
@@ -408,7 +430,7 @@
 
                                             <div class="col-md-12">
 
-                                                <h4 class="semibold text-primary mt0 mb5">Kata Sandi</h4>
+                                                <h4 class="semibold mt0 mb5">Kata Sandi</h4>
 
                                                 <p class="text-default nm">Ingin merubah password?</p>
 

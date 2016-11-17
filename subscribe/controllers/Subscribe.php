@@ -57,7 +57,7 @@ class Subscribe extends MX_Controller {
         $data['create_by'] = $this->session->userdata['USERNAME'];
         $this->Msubscribe->addberita($data);
         $this->kirimberita($data);
-        redirect(base_url('Subscribe'));
+        redirect(base_url('subscribe'));
     }
 
     function kirimberita($datas) {

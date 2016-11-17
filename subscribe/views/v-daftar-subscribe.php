@@ -23,7 +23,6 @@
                     </thead>
 
                     <tbody>
-
                     </tbody>
                 </table>
             </div>
@@ -35,7 +34,7 @@
     $(document).ready(function () {
         tb_subs = $('.daftarsubs').DataTable({
             "ajax": {
-                "url": base_url + "Subscribe/ajax_daftar_subs",
+                "url": base_url + "subscribe/ajax_daftar_subs",
                 "type": "POST"
             },
             "emptyTable": "Tidak Ada Data Subscribe",
@@ -48,7 +47,7 @@
             // ajax delete data to database
 //            console.log(base_url + "index.php/Subscribe/deletePesan/" + id_subs);
             $.ajax({
-                url: base_url + "index.php/Subscribe/deletesubs/" + id_subs,
+                url: base_url + "index.php/subscribe/deletesubs/" + id_subs,
                 data: "id_subs=" + id_subs,
                 type: "POST",
                 dataType: "TEXT",

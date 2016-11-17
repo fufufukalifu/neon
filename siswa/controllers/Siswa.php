@@ -85,11 +85,12 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $data['siswa'] = $this->msiswa->get_datsiswa();
-            $this->load->view('templating/t-header');
-            $this->load->view('templating/t-navbarUser');
-            $this->load->view('vPengaturanProfile', $data);
-            $this->load->view('templating/t-footer');
+            // $data['siswa'] = $this->msiswa->get_datsiswa();
+            // $this->load->view('templating/t-header');
+            // $this->load->view('templating/t-navbarUser');
+            // $this->load->view('vPengaturanProfile', $data);
+            // $this->load->view('templating/t-footer');
+            $this->profilesetting();
         } else {
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
@@ -110,6 +111,7 @@ class Siswa extends MX_Controller {
                 'alamatSekolah' => $alamatSekolah,
             );
 
+            $this->session->set_flashdata('updsiswa', 'Data profilmu telah berubah');
             $this->msiswa->update_siswa($data_post);
         }
     }
@@ -146,6 +148,7 @@ class Siswa extends MX_Controller {
             $data_post = array(
                 'eMail' => $email,
             );
+            $this->session->set_flashdata('updsiswa', 'Emailmu telah berhasil dirubah');
             $this->msiswa->update_email($data_post);
 
 
@@ -184,11 +187,13 @@ class Siswa extends MX_Controller {
             $kataSandi = $data['pengguna']['kataSandi'];
             // var_dump($kataSandi);
             if ($kataSandi == $inputSandi) {
+                $this->session->set_flashdata('updsiswa', 'Passwordmu telah berubah');
                 $this->msiswa->update_katasandi($data_post);
             } else {
                 // code...
                 // echo "salah"; //for testing
-                 redirect(site_url('siswa/profilesetting'));
+                $this->session->set_flashdata('updsiswa', 'Password gagal  dirubah, password lama salah');
+                redirect(site_url('siswa/profilesetting'));
             }
         }
     }
@@ -219,8 +224,9 @@ class Siswa extends MX_Controller {
         } else {
             $file_data = $this->upload->data();
             $photo = $file_data['file_name'];
+            $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
             $this->msiswa->update_photo($photo);
-            echo "berhasil upload"; //for testing
+            // echo "berhasil upload"; //for testing
             // $data['img'] = base_url().'/images/'.$file_data['file_name'];
             // $this->load->view('beranda/success_msg',$data);
         }
