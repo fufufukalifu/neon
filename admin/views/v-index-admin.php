@@ -523,12 +523,12 @@
     <li class="submenu-header ellipsis">Subscribe</li>
 
     <li >
-      <a href="<?=  base_url('index.php/Subscribe')?>">
+      <a href="<?=  base_url('index.php/subscribe')?>">
         <span class="text">Kirim berita</span>
       </a>
     </li>
     <li >
-      <a href="<?=  base_url('index.php/Subscribe/daftarsubs')?>">
+      <a href="<?=  base_url('index.php/subscribe/daftarsubs')?>">
         <span class="text">Daftar Subscribe</span>
       </a>
     </li>
