@@ -8,7 +8,7 @@
 
    <!--START Panel  -->
 
-   <div class="panel panel-teal">
+   <div class="panel panel-inverse">
 
     <div class="panel-heading">
 
@@ -32,7 +32,7 @@
 
         <!-- start -->
 
-        <div class="panel panel-inverse">
+        <div class="panel panel-teal">
 
          <div class="panel-heading">
 
@@ -258,7 +258,7 @@
 
 <div class="col-sm-11">
 
-  <div class="panel panel-inverse">
+  <div class="panel panel-teal">
 
    <div class="panel-heading">
 
@@ -518,7 +518,7 @@ function loadTingkat(){
 
    $('.soal').empty();
 
-   load_pelajaran(idTingkat);
+
 
    var idSubBab = $('#subBabId').val();
 
@@ -661,21 +661,22 @@ function loadsubbab(babID) {
 
 function addsoal(subBabId){
 
-    var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket;
+    var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
 
     console.log(url);
+
     list_soal = $('#oplistsoal').DataTable({ 
 
      "ajax": {
-      dataType: "json",
+
       "url": url,
 
-      "type": "POST",
-
+      "type": "POST"
 
     },
-    destroy: true,
+        destroy: true,
     searching: false
+
   });
 
   }

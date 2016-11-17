@@ -86,12 +86,21 @@ class paketsoal extends MX_Controller
 		//mengambil nilai list
 		$baseurl = base_url();
 		foreach ( $list as $list_soal ) {
+			$kesulitan = $list_soal['kesulitan'];
+			if ($kesulitan == 3) {
+				$kesulitan = "Sulit";
+			} else if ($kesulitan == 2) {
+				$kesulitan = "Sedang";
+			} else {
+				$kesulitan ="Mudah";
+			}
+			
 			$row = array();
 			$row[] = $list_soal['id_soal'];
 			$row[] = $list_soal['judul_soal'];
 			$row[] = $list_soal['sumber'];
 			$row[] = $list_soal['soal'];
-			$row[] = $list_soal['kesulitan'];
+			$row[] = $kesulitan;
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_soal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
@@ -264,9 +273,9 @@ class paketsoal extends MX_Controller
 	##
 
 	#ajax untuk menampilkan soal yang sudah di pub, belum terdaftar di paket dan statusnya 1
-	function ajax_unregistered_soal( $id_paket) {
+	function ajax_unregistered_soal( $id_paket,$subBabId) {
 		$param['id_paket'] = $id_paket;
-		// $param['id_subab'] = $id_subab;
+		$param['subBabId'] = $subBabId;
 		$data=array();
 		$list = $soal=$this->mbanksoal->get_soal_terdaftar($param);
 
@@ -274,13 +283,20 @@ class paketsoal extends MX_Controller
 		$baseurl = base_url();
 		foreach ( $list as $list_soal ) {
 			$n='1';
+			$kesulitan = $list_soal['kesulitan'];
+			if ($kesulitan == 3) {
+				$kesulitan = "Sulit";
+			} else if ($kesulitan == 2) {
+				$kesulitan = "Sedang";
+			} else {
+				$kesulitan ="Mudah";
+			}
 			$row = array();
-
 			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'><input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal']."><label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label></span>";
 			$row[] = $list_soal['judul_soal'];
 			$row[] = $list_soal['sumber'];
 			$row[] = $list_soal['soal'];
-			$row[] = $list_soal['kesulitan'];
+			$row[] = $kesulitan;
 			$data[] = $row;
 			$n++;
 
