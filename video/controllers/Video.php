@@ -135,7 +135,7 @@ class Video extends MX_Controller {
             // $this->load->view( 'templating/t-footer' );
         } else {
             //ambil id bab.
-            $idbab = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['id'];
+            $idbab = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['babID'];
             $video_by_bab = $this->Mvideos->get_all_video_by_bab($idbab);
 
             //ambil satu video bedasarkan idnya
