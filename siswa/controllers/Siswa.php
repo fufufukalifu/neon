@@ -19,11 +19,33 @@ class Siswa extends MX_Controller {
     //
 
     public function profilesetting() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+
+            'judul_header' =>'Pengaturan Akun',
+
+            'judul_header2' =>'Pengaturan Akun'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/siswa/views/headersiswa.php',
+
+            APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            // $this->load->view('vPengaturanProfile', $data);
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
         $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->load->view('templating/t-header');
-        $this->load->view('templating/t-navbarUser');
-        $this->load->view('vPengaturanProfile', $data);
-        $this->load->view('templating/t-footer');
+        $this->parser->parse( 'templating/index', $data );
     }
 
     public function index() {
@@ -113,13 +135,11 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $data['siswa'] = $this->msiswa->get_datsiswa();
-            sessionkonfirm();
-            sessionsiswa();
-            $this->load->view('templating/t-header');
-            $this->load->view('templating/t-navbarUser');
-            $this->load->view('vPengaturanProfile', $data);
-            $this->load->view('templating/t-footer');
+             $this->profilesetting();
+        // sessionkonfirm();
+        // sessionsiswa();
+
+       
         } else {
             $email = htmlspecialchars($this->input->post('email'));
 
@@ -127,6 +147,8 @@ class Siswa extends MX_Controller {
                 'eMail' => $email,
             );
             $this->msiswa->update_email($data_post);
+
+
         }
     }
 
@@ -148,23 +170,25 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            $data['siswa'] = $this->msiswa->get_datsiswa();
-            $this->load->view('templating/t-header');
-            $this->load->view('templating/t-navbarUser');
-            $this->load->view('vPengaturanProfile', $data);
-            $this->load->view('templating/t-footer');
+            // $data['siswa'] = $this->msiswa->get_datsiswa();
+            // $this->load->view('templating/t-header');
+            // $this->load->view('templating/t-navbarUser');
+            // $this->load->view('vPengaturanProfile', $data);
+            // $this->load->view('templating/t-footer');
+            $this->profilesetting();
         } else {
             $kataSandi = htmlspecialchars(md5($this->input->post('newpass')));
             $inputSandi = htmlspecialchars(md5($this->input->post('sandilama')));
             $data_post = array('kataSandi' => $kataSandi,);
             $data['pengguna'] = $this->msiswa->get_password()[0];
             $kataSandi = $data['pengguna']['kataSandi'];
-            var_dump($kataSandi);
+            // var_dump($kataSandi);
             if ($kataSandi == $inputSandi) {
                 $this->msiswa->update_katasandi($data_post);
             } else {
                 // code...
-                echo "salah"; //for testing
+                // echo "salah"; //for testing
+                 redirect(site_url('siswa/profilesetting'));
             }
         }
     }
@@ -182,12 +206,13 @@ class Siswa extends MX_Controller {
 
 
             $data['error'] = array('error' => $this->upload->display_errors());
-            $data['siswa'] = $this->msiswa->get_datsiswa();
-            $this->load->view('templating/t-header');
-            $this->load->view('templating/t-navbarUser');
-            $this->load->view('vPengaturanProfile', $data);
+            $this->profilesetting();
+            // $data['siswa'] = $this->msiswa->get_datsiswa();
+            // $this->load->view('templating/t-header');
+            // $this->load->view('templating/t-navbarUser');
+            // $this->load->view('vPengaturanProfile', $data);
 
-            $this->load->view('templating/t-footer');
+            // $this->load->view('templating/t-footer');
 
 
             // $this->load->view('beranda/main_view',$error);,

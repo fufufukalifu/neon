@@ -172,7 +172,7 @@ class Tryout extends MX_Controller {
             $data[$id];
             // echo $data[$id][0];
             // echo "<br>";
-            echo $result[$i]['jawaban'];
+            // echo $result[$i]['jawaban'];
             if (!isset($data[$id])) {
                 $kosong++;
                 $koreksi[] = $result[$i]['soalid'];
