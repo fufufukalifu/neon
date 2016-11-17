@@ -25,6 +25,7 @@ class Msubscribe extends CI_Model {
     function get_emailsubs() {
         $this->db->select('email as emailsub');
         $this->db->from('tb_subscribe');
+        $this->db->where('status', 1);
         $query = $this->db->get();
         return $query->result_array();
     }
