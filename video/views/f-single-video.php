@@ -107,31 +107,31 @@
             if($i=='1'){
               // END div demo
               ?></div> <?php
-            } ?>
-            <!-- Start div demo -->
-            <div class="demo">
+          } ?>
+          <!-- Start div demo -->
+          <div class="demo">
               <strong><?=$subbab ?></strong><br>
-                <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
+              <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
                  <?=$bab_video_items['judulVideo'];?>           
-               </a></span><br>
-           <?php }else{ ?>
+             </a></span><br>
+             <?php }else{ ?>
 
-                <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
+             <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
                  <?=$bab_video_items['judulVideo'];?>           
-               </a></span><br>
-           
-           <?php } ?>
-           <?php   $cekjudulsubbab=$subbab;
-           $i='1'; ?>
-           <?php } ?>
+             </a></span><br>
+
+             <?php } ?>
+             <?php   $cekjudulsubbab=$subbab;
+             $i='1'; ?>
+             <?php } ?>
          </div>
          <!-- END DIV DEMO -->
-       </div>
-       <!-- END div macy-container -->
      </div>
-     <!-- END Div container -->
-   </section>
- </main>
+     <!-- END div macy-container -->
+ </div>
+ <!-- END Div container -->
+</section>
+</main>
 
 
 <hr class="divider-color" />
@@ -248,24 +248,27 @@
             }else{
                $.ajax({
                 type: "POST",
-                url: '<?php echo base_url() ?>index.php/Video/addkomen',
+                url: '<?php echo base_url() ?>index.php/video/addkomen',
                 data: {isiKomen: isiKomen, videoID: videoID},
                 success: function (data)
                 {
-                                // alert('SUCCESS!!');
-                                $('#info .lengkapi').addClass('hide');
-                                $('#info .sukses').removeClass('hide');
-                                $('#info .gagal').addClass('hide');
-                                document.getElementById("isiKomen").value = "";
-                                // window.location = base_url+"/video/seevideo/"+videoID;
-                            },
-                            error: function ()
-                            {
-                                $('#info .lengkapi').removeClass('hide');
-                                $('#info .sukses').addClass('hide');
-                                $('#info .gagal').removeClass('hide');
-                            }
-                        }); 
+                    swal({   title: "Komen Berhasil ditambahkan",   
+                       type: "info",   
+                       showCancelButton: false,   
+                       confirmButtonColor: "#8BDCF7",   
+                       confirmButtonText: "Ok!",   
+                       closeOnConfirm: false }, 
+                       function(){   
+                        window.location = base_url+"video/seevideo/"+videoID;
+                        ; });
+                },
+                error: function ()
+                {
+                    $('#info .lengkapi').removeClass('hide');
+                    $('#info .sukses').addClass('hide');
+                    $('#info .gagal').removeClass('hide');
+                }
+            }); 
            }
 
        });
