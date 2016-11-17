@@ -125,6 +125,8 @@ class Video extends MX_Controller {
     public function seevideo($idvideo) {
         //data untuk templating
         $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
+        $metaMapel = $this->Mvideos->get_meta_mapel($data['videosingle'][0]->subBabID);
+        $judul_header = ($metaMapel['namaMataPelajaran']."->".$metaMapel['judulBab']);
         if ($data['videosingle'] == array()) {
             $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
             // $this->load->view( 'templating/t-header' );
@@ -150,7 +152,7 @@ class Video extends MX_Controller {
             $penulis = $this->load->mguru->get_penulis($guruID)[0];
             $data = array(
                 'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
-                'judul_header' => 'Video berjudul ' . $onevideo[0]->judulVideo,
+                'judul_header' => $judul_header,
                 'judul_video' => $onevideo[0]->judulVideo,
                 'deskripsi' => $onevideo[0]->deskripsi,
                 'file' => $judul,
@@ -168,7 +170,7 @@ class Video extends MX_Controller {
 
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header-login.php',
-                // APPPATH.'modules/templating/views/t-f-pagetitle.php',
+                APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/f-single-video.php',
                 APPPATH . 'modules/testimoni/views/v-footer.php'
             );

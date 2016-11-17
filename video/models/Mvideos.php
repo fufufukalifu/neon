@@ -297,139 +297,159 @@ function get_idbab_by_idsub($id_sub){
 }
 
 // ambil semua video
-    function get_all_video( ) {
+function get_all_video( ) {
 
-    $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+  $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
 
-    $this->db->from( 'tb_video video' );
+  $this->db->from( 'tb_video video' );
 
-    $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
+  $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
 
-    $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
 
-    $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
 
-    $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
-    $this->db->where('video.status', '1');
+  $this->db->where('video.status', '1');
 
-    $query = $this->db->get();
+  $query = $this->db->get();
 
 
 
-    return $query->result_array();
-  }
+  return $query->result_array();
+}
 
   // ambil data video berdasarkan subbab
-  function get_subbab_video($subbab){
-    $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+function get_subbab_video($subbab){
+  $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
 
-    $this->db->from( 'tb_video video' );
+  $this->db->from( 'tb_video video' );
 
-    $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
+  $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
 
-    $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
 
-    $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
 
-    $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
-    $this->db->where('video.status', '1');
-    $this->db->where('video.subBabID',$subbab);
+  $this->db->where('video.status', '1');
+  $this->db->where('video.subBabID',$subbab);
 
-    $query = $this->db->get();
+  $query = $this->db->get();
 
-    return $query->result_array();
-  }
+  return $query->result_array();
+}
 
     // ambil data video berdasarkan bab
-  function get_bab_video($bab){
-    $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+function get_bab_video($bab){
+  $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
 
-    $this->db->from( 'tb_video video' );
+  $this->db->from( 'tb_video video' );
 
-    $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
+  $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
 
-    $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
 
-    $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
 
-    $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
-    $this->db->where('video.status', '1');
-    $this->db->where('bab.id',$bab);
+  $this->db->where('video.status', '1');
+  $this->db->where('bab.id',$bab);
 
-    $query = $this->db->get();
+  $query = $this->db->get();
 
-    return $query->result_array();
-  }
+  return $query->result_array();
+}
    // ambil data video berdasarkan mapel
-  function get_mapel_video($mapel){
-    $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+function get_mapel_video($mapel){
+  $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
 
-    $this->db->from( 'tb_video video' );
+  $this->db->from( 'tb_video video' );
 
-    $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
+  $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
 
-    $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
 
-    $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
 
-    $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
-    $this->db->where('video.status', '1');
-    $this->db->where('tp.id',$mapel);
+  $this->db->where('video.status', '1');
+  $this->db->where('tp.id',$mapel);
 
-    $query = $this->db->get();
+  $query = $this->db->get();
 
-    return $query->result_array();
-  }
+  return $query->result_array();
+}
 
      // ambil data video berdasarkan tingkat
-  function get_tingkat_video($tingkat){
-    $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+function get_tingkat_video($tingkat){
+  $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
 
-    $this->db->from( 'tb_video video' );
+  $this->db->from( 'tb_video video' );
 
-    $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
+  $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
 
-    $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
 
-    $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
 
-    $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
 
-    $this->db->join('tb_tingkat tkt','tp.tingkatID=tkt.id');
+  $this->db->join('tb_tingkat tkt','tp.tingkatID=tkt.id');
 
-    $this->db->where('video.status', '1');
+  $this->db->where('video.status', '1');
 
-    $this->db->where('tkt.id',$tingkat);
+  $this->db->where('tkt.id',$tingkat);
 
-    $query = $this->db->get();
+  $query = $this->db->get();
 
-    return $query->result_array();
-  }
+  return $query->result_array();
+}
 
 
 function get_meta_data_tingkat($tingkatID){
-      $myquery = 
-      "SELECT * FROM
-        (SELECT * FROM `tb_tingkat-pelajaran` WHERE id =  $tingkatID ) AS tingpel 
-        JOIN `tb_tingkat` AS tingkat 
-          ON tingpel.tingkatID = tingkat.id JOIN `tb_mata-pelajaran` mapel ON
-mapel.id = tingpel.`mataPelajaranID`
+  $myquery = 
+  "SELECT * FROM
+  (SELECT * FROM `tb_tingkat-pelajaran` WHERE id =  $tingkatID ) AS tingpel 
+  JOIN `tb_tingkat` AS tingkat 
+  ON tingpel.tingkatID = tingkat.id JOIN `tb_mata-pelajaran` mapel ON
+  mapel.id = tingpel.`mataPelajaranID`
   ";
-    $result = $this->db->query($myquery);
+  $result = $this->db->query($myquery);
     // return $result->result_array();
-    if ($result->result_array()==array()) {
-      return false;
-    } else {
-      return $result->result_array()[0];
-    }
+  if ($result->result_array()==array()) {
+    return false;
+  } else {
+    return $result->result_array()[0];
+  }
 }
 
+
+function get_meta_mapel($subBabID){
+  $myquery = "
+  SELECT `namaMataPelajaran`, `judulBab` FROM 
+  (SELECT * FROM `tb_subbab` subab
+    WHERE subab.id = $subBabID) AS subbab
+  JOIN tb_bab bab
+  ON bab.id = subbab.`babID`
+  JOIN `tb_tingkat-pelajaran` tingpel
+  ON tingpel.`id` = bab.`tingkatPelajaranID`
+  JOIN `tb_mata-pelajaran` mapel
+  ON mapel.`id` = `tingpel`.`mataPelajaranID`
+  ";
+  $result = $this->db->query($myquery);
+    // return $result->result_array();
+  if ($result->result_array()==array()) {
+    return false;
+  } else {
+    return $result->result_array()[0];
+  }
+}
 }
 
 ?>
-
