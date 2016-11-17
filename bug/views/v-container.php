@@ -78,67 +78,84 @@
         <!--/ END row -->
 
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#ajax-source-komen").DataTable({
-                    "bProcessing": true,
-                    "sAjaxSource": base_url+"bug/ajax_data_bugs",
-                    "sServerMethod": "POST",
-                    "bSearching": false,
-                    "responsive": true,
-                });
+         var tb_laporan_bug;
+         $(document).ready(function(){
+           tb_laporan_bug= $("#ajax-source-komen").DataTable({
+            "bProcessing": true,
+            "sAjaxSource": base_url+"bug/ajax_data_bugs",
+            "sServerMethod": "POST",
+            "bSearching": false,
+            "responsive": true,
+        });
+
+       });
+
+         function respon(komenID){
+            button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Respon</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Batal</button>";
+            $('#respon .modal-footer').html(button);
+            $('#respon').modal('show');$('textarea[name=respon]').val("");
+
+        }
+
+        function post(idlapor){
+            tindakan = $('textarea[name=respon]').val();
+
+            var data = {
+                'idKomen':idlapor,
+                'isTindakan':tindakan
+            };
+
+            $.ajax({
+                url : base_url +"bug/tindakan_laporan",
+                data:data,
+                dataType:"TEXT",
+                type:'post',
+                success:function(){
+                    swal("Terkirim!", "Laporan bug telah direspon", "success");
+                    $('#respon').modal('hide');
+            reload_tblist();
+                    
+                }, error:function(){
+                    swal("Gagal!", "Laporan bug gagal direspon", "warning");
+                }
 
             });
 
-            function respon(komenID){
-                button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Respon</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Batal</button>";
-                $('#respon .modal-footer').html(button);
-                $('#respon').modal('show');
 
-            }
+        }
 
-            function post(idlapor){
-                tindakan = $('textarea[name=respon]').val();
+        function drop(idlapor){
+            swal({   title: "Anda Yakin?",   
+                text: "Anda akan menghapus laporan bug?",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Yup, hapus laporan",   
+                closeOnConfirm: false }, 
+                function(){
+                    $.ajax({
+                        url : base_url +"bug/delete/"+idlapor,
+                        dataType:"TEXT",
+                        type:'post',
+                        success:function(){
+                         swal("Terhapus!", "Laporan bug telah terhapus", "success");
+                         reload_tblist();
+                     }, error:function(){
+                         swal("Gagal!", "Laporan bug gagal terhapus", "warning");
+                         reload_tblist();
+                     }
 
-                var data = {
-                    'idKomen':idlapor,
-                    'isTindakan':tindakan
-                };
-
-                $.ajax({
-                    url : base_url +"bug/tindakan_laporan",
-                    data:data,
-                    dataType:"TEXT",
-                    type:'post',
-                    success:function(){
-                        alert('sukses');
-                    }, error:function(){
-                        alert('gagal');
-                    }
-
+                 });
                 });
-            }
-
-            function drop(idlapor){
-
-                var result = confirm("Hapus laporan bug?");
-                if (result) {
-                $.ajax({
-                    url : base_url +"bug/delete/"+idlapor,
-                    dataType:"TEXT",
-                    type:'post',
-                    success:function(){
-                        alert('sukses');
-                    }, error:function(){
-                        alert('gagal');
-                    }
-
-                });
-                }
-
-                
-                }
 
 
 
 
-</script>
+        }
+        function reload_tblist() {
+            tb_laporan_bug.ajax.reload(null, false);
+        }
+
+
+
+    </script>

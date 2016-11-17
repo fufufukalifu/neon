@@ -11,7 +11,7 @@
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarpesan table table-striped display responsive nowrap" style="font-size: 13px">
+                <table class="daftarpesan table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                         <tr>
                             <th>No</th>
@@ -37,7 +37,7 @@
     $(document).ready(function () {
         tb_pesan = $('.daftarpesan').DataTable({
             "ajax": {
-                "url": base_url + "Pesan/ajax_daftar_pesan",
+                "url": base_url + "pesan/ajax_daftar_pesan",
                 "type": "POST"
             },
             "emptyTable": "Tidak Ada Data Pesan",
@@ -46,27 +46,31 @@
     });
 
     function dropPesan(id_pesan) {
-        if (confirm('Apakah Anda yakin akan menghapus data ini?')) {
-            // ajax delete data to database
-            console.log(base_url + "index.php/Pesan/deletePesan/" + id_pesan);
-            $.ajax({
-                url: base_url + "index.php/Pesan/deletePesan/" + id_pesan,
-                data: "id_pesan=" + id_pesan,
-                type: "POST",
-                dataType: "TEXT",
-                success: function (data, respone)
-                {
-                    reload_tblist();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error deleting data');
-                    // console.log(jqXHR);
-                    // console.log(textStatus);
-                    console.log(errorThrown);
-                }
+        swal({   title: "Anda Yakin?",   
+            text: "Anda akan menghapus pesan?",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yup, hapus pesan",   
+            closeOnConfirm: false }, 
+            function(){
+                $.ajax({
+                    url: base_url + "index.php/pesan/deletePesan/" + id_pesan,
+                    data: "id_pesan=" + id_pesan,
+                    type: "POST",
+                    dataType: "TEXT",
+                    success: function (data, respone)
+                    {
+                        swal("Terhapus!", "Pesan Telah terhapus", "success");
+
+                        reload_tblist();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal('Error deleting data');
+                    }
+                });
             });
-        }
     }
     function reload_tblist() {
         tb_pesan.ajax.reload(null, false);

@@ -106,38 +106,57 @@ function seevideo($idvideo){
     $namasub = $this->load->mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
     $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
     $onevideo = $data['videosingle'];
-    $guruID = $onevideo[0]->guruID;
-    $penulis = $this->load->mguru->get_penulis($guruID)[0];
-    $date = strtotime($onevideo[0]->date_created);
-    $data = array(
-      'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
-      'judul_header' =>  $onevideo[0]->judulVideo,
-      'judul_video' => $onevideo[0]->judulVideo,
-      'deskripsi' => $onevideo[0]->deskripsi,
-      'file' => $onevideo[0]->namaFile,
-      'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
-      'biografi' => $penulis['biografi'],
-      'photo' => $penulis['photo'],
-      'nama_sub' => $namasub,
-      'jumlah_comment'=>count($this->mkomen->get_komen_byvideo($idvideo)),
-      'tanggal'=>date("d", $date),
-      'bulan'=>date("M", $date),
-      'avatar'=>base_url('assets/image/photo/guru/').$penulis['photo'],
-      );
-    $subid = $onevideo[0]->subBabID;
+
+    if($onevideo[0]->namaFile==NULL){
+      // $judul = $onevideo[0]->link;
+      $judul = "<iframe width='100%' height='430' src='".$onevideo[0]->link."''></iframe>";
+    }else{
+      $link = base_url()."assets/video/".$onevideo[0]->namaFile;
+      $judul = "<video id='my-video' class='video-js' controls preload='auto'
+      poster='MY_VIDEO_POSTER.jpg' data-setup='{}'>
+      <source src='".$link."'  style='width: 90%;height: 400px'  type='video/mp4'>
+        <source src='".$link."' type='video/webm'>
+          <p class='vjs-no-js'>
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href='http://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+          </p>
+        </video>";
+      }
+
+    // echo $judulxz;
+
+      $guruID = $onevideo[0]->guruID;
+      $penulis = $this->load->mguru->get_penulis($guruID)[0];
+      $date = strtotime($onevideo[0]->date_created);
+      $data = array(
+        'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
+        'judul_header' =>  $onevideo[0]->judulVideo,
+        'judul_video' => $onevideo[0]->judulVideo,
+        'deskripsi' => $onevideo[0]->deskripsi,
+        'file' => $judul,
+        'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
+        'biografi' => $penulis['biografi'],
+        'photo' => $penulis['photo'],
+        'nama_sub' => $namasub,
+        'jumlah_comment'=>count($this->mkomen->get_komen_byvideo($idvideo)),
+        'tanggal'=>date("d", $date),
+        'bulan'=>date("M", $date),
+        'avatar'=>base_url('assets/image/photo/guru/').$penulis['photo'],
+        );
+      $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
-    $data['videobysub'] = $this->load->mvideos->get_video_by_sub($subid);
-    $data['video_by_bab'] = $this->mvideos->get_all_video_by_bab($idbab);
+      $data['videobysub'] = $this->load->mvideos->get_video_by_sub($subid);
+      $data['video_by_bab'] = $this->mvideos->get_all_video_by_bab($idbab);
 
-    $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
+      $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
 
-    $data['files'] = array(
-      APPPATH . 'modules/komenback/views/v-single-video-komen.php',
-      );
-               $this->parser->parse('admin/v-index-admin', $data);
+      $data['files'] = array(
+        APPPATH . 'modules/komenback/views/v-single-video-komen.php',
+        );
+      $this->parser->parse('admin/v-index-admin', $data);
 
+    }
   }
-}
 
 }
 ?>
