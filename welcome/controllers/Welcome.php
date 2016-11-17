@@ -46,7 +46,7 @@ class Welcome extends MX_Controller {
 
         parent::__construct();
 
-        $this->load->model( 'Mmatapelajaran' );
+        $this->load->model( 'matapelajaran/mmatapelajaran' );
 
         $this->load->model( 'tingkat/MTingkat' );
 
@@ -109,18 +109,11 @@ class Welcome extends MX_Controller {
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
-
-        $data['pelajaran_sma'] = $this->load->Mmatapelajaran->get_pelajaran_sma();
-
-        $data['pelajaran_sma_ips'] = $this->load->Mmatapelajaran->get_pelajaran_sma_ips();
-
-        $data['pelajaran_smp'] = $this->load->Mmatapelajaran->get_pelajaran_smp();
-
-        $data['pelajaran_sd'] = $this->load->Mmatapelajaran->get_pelajaran_sd();
-        $data['pelajaran_sma_ipa'] = $this->load->Mmatapelajaran->get_pelajaran_sma_ipa();
-
-
-
+        $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
+        $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
+        $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
+        $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
+        $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
 
         $this->parser->parse( 'templating/index', $data );
 

@@ -22,113 +22,61 @@
 
 
         <div class="grid-col-row clear-fix" >
+            <div class="grid-col col-md-2">
+                <div class="hover-effect"></div>
+                <h5><strong>Sekolah Dasar<br></strong></h5>
+                <ol>
+                    <?php foreach ($pelajaran_sd as $pelajaran_items): ?>
+                        <li><a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
+
 
             <div class="grid-col col-md-2">
-
                 <div class="hover-effect"></div>
-
-                <h5><strong>Sekolah Dasar<br></strong></h5>
-
+                <h5><strong>SMP<br></strong></h5>
                 <ol>
+                    <?php foreach ($pelajaran_smp as $pelajaran_items): ?>
+                        <li><a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
 
-                    <?php foreach ($pelajaran_sd as $pelajaran_items): ?>
+            <div class="grid-col col-md-2">
+                <div class="hover-effect"></div>
+                <h5><strong>SMA<br></strong></h5>
+                <ol>
+                    <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
+                        <li><a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
 
-                    <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+            <div class="grid-col col-md-2">
+                <div class="hover-effect"></div>
+                <h5><strong>SMA IPA<br></strong></h5>
+                <ol>
+                    <?php foreach ($pelajaran_sma_ipa as $pelajaran_items): ?>
+                        <li><a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
 
-                <?php endforeach ?>
 
-            </ol>
+            <div class="grid-col col-md-2">
+                <div class="hover-effect"></div>
+                <h5><strong>SMA IPS<br></strong></h5>
+                <ol>
+                    <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
+                        <li><a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
+                    <?php endforeach ?>
+                </ol>
+            </div>
 
         </div>
-
-
-
-        <div class="grid-col col-md-2">
-
-            <div class="hover-effect"></div>
-
-            <h5><strong>Sekolah Menengah Pertama<br></strong></h5>
-
-            <ol>
-
-                <?php foreach ($pelajaran_smp as $pelajaran_items): ?>
-
-                <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-
-            <?php endforeach ?>
-
-        </ol>
-
     </div>
-
-
-
-    <div class="grid-col col-md-2">
-
-        <div class="hover-effect"></div>
-
-        <h5><strong>Sekolah Menengah<br></strong></h5>
-
-        <ol>
-
-            <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
-
-            <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-
-        <?php endforeach ?>
-
-    </ol>
-
-</div>
-
-
-
-<div class="grid-col col-md-2">
-
-    <div class="hover-effect"></div>
-
-    <h5><strong>Sekolah Menengah Atas IPA<br></strong></h5>
-
-    <ol>
-
-        <?php foreach ($pelajaran_sma_ipa as $pelajaran_items): ?>
-
-        <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-
-        
-
-    <?php endforeach ?>
-
-</ol>
-
-</div>
-
-<div class="grid-col col-md-2">
-
-    <div class="hover-effect"></div>
-
-    <h5><strong>Sekolah Menengah Atas IPS<br></strong></h5>
-
-    <ol>
-
-        <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
-
-        <li><a href="<?=base_url() ?>/video/daftarvideo/<?= $pelajaran_items->aliasMataPelajaran ?>/<?= $pelajaran_items->aliasTingkat ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a></li>
-
-        
-
-    <?php endforeach ?>
-
-</ol>
-
-</div>
-
-
-
-</div>
-
 </main>
-
 </div>
 
 <hr class="divider-color">

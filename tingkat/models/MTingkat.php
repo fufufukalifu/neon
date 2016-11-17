@@ -58,6 +58,25 @@ class MTingkat extends CI_Model {
 
 	}
 
+	public function getmapelipa() {
+
+		$this->db->select('namaMataPelajaran,keterangan,tingkat.id AS tingkatID, mapel.id AS mapelID,tingpel.id as tingpelID')->from( 'tb_tingkat tingkat' );
+	    $this->db->join( 'tb_tingkat-pelajaran tingpel', 'tingpel.tingkatID=tingkat.id' );
+    	$this->db->join( 'tb_mata-pelajaran mapel', 'tingpel.mataPelajaranID=mapel.id' );
+		$this->db->where( 'tingkat.status', 1 );
+		$this->db->where( 'tingkat.id', '3' );
+		$this->db->or_where( 'tingkat.id', '4' );
+		$this->db->or_where( 'tingkat.id', '5' );
+
+
+
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 
 	# get tingkat bedasarkan id siswa;
 	function get_level_by_siswaID($id_siswa){

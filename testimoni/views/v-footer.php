@@ -7,28 +7,27 @@
             <section class="grid-col grid-col-4 footer-about">
 
                 <h2 class="corner-radius">Mengenai Neon</h2>
-
                 <div>
 
-                    <h3>Sed aliquet dui auctor blandit ipsum tincidunt</h3>
+                    <h3>Sedikit Bahasan Mengenai Neon</h3>
 
-                    <p>Quis rhoncus lorem dolor eu sem. Aenean enim risus, convallis id ultrices eget.</p>
+                    <p>Neon Jogja adalah Singkatan Dari Neutron Online, tempat para siswa-siswa neon belajar menggunakan media pembelajaran online.</p>
 
                 </div>
 
                 <address>
 
-                    <p></p>	
+                    <p></p> 
 
                     <a href="tel:(0274) 450300" class="phone-number">(0274) 450300</a>
 
                     <br />
 
-                    <a href="mailto: info@Neon-ny.com" class="email"> info@Neon-ny.com</a>
+                    <a href="mailto: info@neonjogja.com" class="email"> info@neonjogja.com</a>
 
                     <br />
 
-                    <a href="www.Neon-ny.com" class="site">www.Neon-ny.com</a>
+                    <a href="http://neonjogja.com" class="site">www.neonjogja.com</a>
 
                     <br />
 
@@ -50,107 +49,105 @@
                     
                                     </div> -->
 
-            </section>
+                                </section>
 
-            <section class="grid-col grid-col-4 footer-latest">
-                <h2 class="corner-radius" id="masuk">Video Terbaru</h2>
-                <div id="video_last">   
+                                <section class="grid-col grid-col-4 footer-latest">
+                                    <h2 class="corner-radius" id="masuk">Video Terbaru</h2>
+                                    <div id="video_last">   
 
-                </div>
+                                    </div>
 
-            </section>
+                                </section>
 
-            <section class="grid-col grid-col-4 footer-contact-form" id="pesan">
+                                <section class="grid-col grid-col-4 footer-contact-form" id="pesan">
 
-                <h2 class="corner-radius">Kirim Kami Testimoni</h2>
+                                    <h2 class="corner-radius">Kirim Kami Testimoni</h2>
 
-                <div class="email_server_responce"></div>
+                                    <div class="email_server_responce"></div>
 
-                <form action="" id="formtestimoni" class="login-form" method="post">
+                                    <form action="" id="formtestimoni" class="login-form" method="post">
 
-                    <div class="form-group">
-                        <textarea maxlength=520 name="testimoni" id="isitestimoni" class="form-control" placeholder="Tuliskan testimonimu (max 520 Karakter)" cols="40" rows="5" aria-invalid="false" required></textarea>
-                    </div>
+                                        <div class="form-group">
+                                            <textarea maxlength=520 name="testimoni" id="isitestimoni" class="form-control" placeholder="Tuliskan testimonimu (max 520 Karakter)" cols="40" rows="5" aria-invalid="false" required></textarea>
+                                        </div>
 
-                    <button type="submit" class="cws-button bt-color-3 border-radius alt icon-right">Kirim <i class="fa fa-angle-right"></i></button>
+                                        <button type="submit" class="cws-button bt-color-3 border-radius alt icon-right">Kirim <i class="fa fa-angle-right"></i></button>
 
-                </form>
+                                    </form>
 
-            </section>
+                                </section>
 
-        </div>
+                            </div>
 
-    </div>
+                        </div>
 
-    <div class="footer-bottom">
+                        <div class="footer-bottom">
 
-        <div class="grid-row clear-fix">
+                            <div class="grid-row clear-fix">
 
-            <div class="copyright">neonjogja.com<span></span> 2016</div>
+                                <div class="copyright">neonjogja.com<span></span> 2016</div>
 
-            <nav class="footer-nav">
+                                <nav class="footer-nav">
 
-                <ul class="clear-fix">
+                                    <ul class="clear-fix">
 
-                    <li>
+                                        <li>
 
-                        <a href="index.html">Home</a>
+                                            <a onclick="laporkanbug()">Laporkan Bug</a>
 
-                    </li>
+                                        </li>
 
 
 
-                </ul>
+                                    </ul>
 
-            </nav>
+                                </nav>
 
-        </div>
+                            </div>
 
-    </div>
+                        </div>
 
-</footer>
+                    </footer>
 
-<script>
-    $(document).ready(function () {
-        $("#formtestimoni").submit(function (e) {
-            e.preventDefault();
-            var isitestimoni = $("#isitestimoni").val();
-            $.ajax({
-                type: "POST",
-                url: '<?php echo base_url() ?>index.php/testimoni/addtestimoni',
-                data: {isitestimoni: isitestimoni},
-                success: function (data)
-                {
-                    alert('Testimoni mu telah terkirim!!');
-                    document.getElementById("isitestimoni").value = "";
-                },
-                error: function ()
-                {
-                    alert('fail');
-                    console.log(data);
-                }
-            });
-        });
-    }); 
+                    <script>
+                        $(document).ready(function () {
+                            $("#formtestimoni").submit(function (e) {
+                                e.preventDefault();
+                                var isitestimoni = $("#isitestimoni").val();
+                                $.ajax({
+                                    type: "POST",
+                                    url: '<?php echo base_url() ?>index.php/Testimoni/addtestimoni',
+                                    data: {isitestimoni: isitestimoni},
+                                    success: function (data)
+                                    {
+                                        swal("Good job!", "Testimoni mu telah terkirim!", "success")
+                                        document.getElementById("isitestimoni").value = "";
+                                    },
+                                    error: function ()
+                                    {
+                                        alert('fail');
+                                    }
+                                });
+                            });
+                        });
 
-$.ajax({
-         type: "POST",
-         dataType:"JSON",
-         url: "<?= base_url() ?>video/ajax_get_last_video",
-         success: function (data,i) {
+                        $.ajax({
+                           type: "POST",
+                           dataType:"JSON",
+                           url: "<?= base_url() ?>video/ajax_get_last_video",
+                           success: function (data,i) {
             // console.log(data.data[0]);
-                $('#video_last').append(data.data[0]);
-                $('#video_last').append(data.data[1]);
+            $('#video_last').append(data.data[0]);
+            $('#video_last').append(data.data[1]);
 
             // console.log(data);
         }
     });
 
-    function kunjungivideo(data){
-        alert(data);
-        document.location = base_url+"video/seevideo/"+data;
-    }     
-</script>
+                        function kunjungivideo(data){
+                            document.location = base_url+"video/seevideo/"+data;
+                        }            
+                    </script>
 
+                    <!-- / footer -->
 <!-- / footer -->
-

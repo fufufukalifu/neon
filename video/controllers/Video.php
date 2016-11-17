@@ -65,23 +65,23 @@ class Video extends MX_Controller {
     }
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
-    public function daftarvideo($alias_pelajaran = "", $alias_tingkat = "") {
+    public function daftarvideo($tingpelID) {
+
+// tampilkan ini matapelajaran apa dan untuk tingkat apa.
+        $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
+        // print_r($data['meta']);
 
         //tampilkan bab dan subab video
-        $data['aliastingkat'] = $alias_tingkat;
-        $data['aliaspelajaran'] = $alias_pelajaran;
-        $data['title'] = "Pelajaran " . $data['aliaspelajaran'] . " untuk " . $data['aliastingkat'];
+        $data['title'] = "Pelajaran " . $data['meta']['namaMataPelajaran'] . " untuk " . $data['meta']['aliasTingkat'];
         //data untuk templating
         $data = array(
-            'judul_halaman' => 'Neon - Video Pelajaran ' . $data['aliaspelajaran'],
+            'judul_halaman' => 'Neon - Video Pelajaran ' . $data['meta']['aliasMataPelajaran'],
             'judul_header' => $data['title'],
-            'mapel' => $alias_pelajaran,
-            'alias_tingkat' => $data['aliastingkat'],
-            'alias_pelajaran' => $data['aliaspelajaran']
+            'mapel' => $data['meta']['aliasMataPelajaran'], 'alias_tingkat' => $data['meta']['aliasTingkat'],
+            'alias_pelajaran' => $data['meta']['aliasMataPelajaran']
         );
-
         //
-        $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($alias_tingkat, $alias_pelajaran);
+        $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($tingpelID);
         $data['files'] = array(
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -92,22 +92,23 @@ class Video extends MX_Controller {
         $this->parser->parse('templating/index', $data);
     }
 
-    public function daftarallvideo($alias_pelajaran = "", $alias_tingkat = "") {
+    public function daftarallvideo($tingpelID) {
+        // tampilkan ini matapelajaran apa dan untuk tingkat apa.
+        $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
+        // print_r($data['meta']);
 
         //tampilkan bab dan subab video
-        $data['aliastingkat'] = $alias_tingkat;
-        $data['aliaspelajaran'] = $alias_pelajaran;
-        $data['title'] = "Pelajaran " . $data['aliaspelajaran'] . " untuk " . $data['aliastingkat'];
+        $data['title'] =$data['meta']['namaMataPelajaran'] . " untuk " . $data['meta']['aliasTingkat'];
         //data untuk templating
         $data = array(
-            'judul_halaman' => 'Neon - Video Pelajaran ' . $data['aliaspelajaran'],
+            'judul_halaman' => 'Neon - Video Pelajaran ' . $data['meta']['aliasMataPelajaran'],
             'judul_header' => $data['title'],
-            'mapel' => $alias_pelajaran, 'alias_tingkat' => $data['aliastingkat'],
-            'alias_pelajaran' => $data['aliaspelajaran']
+            'mapel' => $data['meta']['aliasMataPelajaran'], 'alias_tingkat' => $data['meta']['aliasTingkat'],
+            'alias_pelajaran' => $data['meta']['aliasMataPelajaran']
         );
 
         //
-        $data['bab_video'] = $this->load->Mvideos->get_video_as_sub($alias_tingkat, $alias_pelajaran);
+        $data['bab_video'] = $this->load->Mvideos->get_video_as_sub($tingpelID);
         $data['files'] = array(
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -116,7 +117,6 @@ class Video extends MX_Controller {
             
         );
 
-        // var_dump($data['bab_video']);
 
 
         $this->parser->parse('templating/index', $data);
@@ -140,6 +140,12 @@ class Video extends MX_Controller {
             $namasub = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
             $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
             $onevideo = $data['videosingle'];
+            if($onevideo[0]->namaFile==NULL){
+                $judul = $onevideo[0]->link;
+            }else{
+                $link = "assets/video/".$onevideo[0]->namaFile;
+                $judul = base_url($link);
+            }
             $guruID = $onevideo[0]->guruID;
             $penulis = $this->load->mguru->get_penulis($guruID)[0];
             $data = array(
@@ -147,7 +153,7 @@ class Video extends MX_Controller {
                 'judul_header' => 'Video berjudul ' . $onevideo[0]->judulVideo,
                 'judul_video' => $onevideo[0]->judulVideo,
                 'deskripsi' => $onevideo[0]->deskripsi,
-                'file' => $onevideo[0]->namaFile,
+                'file' => $judul,
                 'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
                 'biografi' => $penulis['biografi'],
                 'photo' => $penulis['photo'],
@@ -164,7 +170,7 @@ class Video extends MX_Controller {
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 // APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/f-single-video.php',
-                APPPATH . 'modules/homepage/views/v-footer.php'
+                APPPATH . 'modules/testimoni/views/v-footer.php'
             );
             $this->parser->parse('templating/index', $data);
         }

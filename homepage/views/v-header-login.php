@@ -124,11 +124,7 @@
 
 								</li>
 
-								<li>
 
-									<a onclick="laporkanbug()">Laporkan Bug</a>
-
-								</li>
 
 
 							</ul>

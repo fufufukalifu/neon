@@ -1,11 +1,4 @@
 <?php
-
-/**
-
- *
-
- */
-
 class Mbug extends CI_Model
 
 {
@@ -42,4 +35,3 @@ class Mbug extends CI_Model
 }
 
 ?>
-

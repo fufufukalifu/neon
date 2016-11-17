@@ -48,7 +48,6 @@ public function pilihmapel($idtingkat) {
         'judul_halaman' => 'Neon - Pilih Mata Pelajaran',
         'judul_header' => 'Latihan Online'
         );
-
     $data['files'] = array(
         APPPATH . 'modules/homepage/views/v-header-login.php',
         APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -56,7 +55,14 @@ public function pilihmapel($idtingkat) {
         // APPPATH . 'modules/homepage/views/v-footer.php',
         APPPATH . 'modules/testimoni/views/v-footer.php',
         );
-    $data['mapel'] = $this->load->mtingkat->getmapelbytingkatid($idtingkat);
+    if($idtingkat==3){
+        $data['mapel'] = $this->load->mtingkat->getmapelipa();
+    }else{
+        $data['mapel'] = $this->load->mtingkat->getmapelbytingkatid($idtingkat);
+    }
+    
+
+    
 
     $this->parser->parse('templating/index', $data);
 }
