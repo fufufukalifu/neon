@@ -8,7 +8,7 @@
 
    <!--START Panel  -->
 
-   <div class="panel panel-default">
+   <div class="panel panel-inverse">
 
     <div class="panel-heading">
 
@@ -32,7 +32,7 @@
 
         <!-- start -->
 
-        <div class="panel panel-default">
+        <div class="panel panel-teal">
 
          <div class="panel-heading">
 
@@ -258,7 +258,7 @@
 
 <div class="col-sm-11">
 
-  <div class="panel panel-default">
+  <div class="panel panel-teal">
 
    <div class="panel-heading">
 
@@ -377,6 +377,7 @@
           url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
           type: 'POST',
+          dataType: "json",
 
           data: form_data,
 
@@ -441,6 +442,7 @@ function loadTingkat(){
   $.ajax({
 
    type: "POST",
+   dataType: "json",
 
    data: tingkat_id,
 
@@ -516,7 +518,7 @@ function loadTingkat(){
 
    $('.soal').empty();
 
-   load_pelajaran(idTingkat);
+
 
    var idSubBab = $('#subBabId').val();
 
@@ -557,6 +559,7 @@ $('.tambahsoal').click(function(){
      $.ajax({
 
       type: "POST",
+      dataType: "json",
 
       data: tingkatID.tingkat_id,
 
@@ -591,6 +594,7 @@ function loadbab(mapelID){
   $.ajax({
 
     type: "POST",
+    dataType: "json",
 
     url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
 
@@ -623,6 +627,7 @@ function loadsubbab(babID) {
      $.ajax({
 
       type: "POST",
+      dataType: "json",
 
       data: babID.bab_id,
 
@@ -656,7 +661,7 @@ function loadsubbab(babID) {
 
 function addsoal(subBabId){
 
-    var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket;
+    var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
 
     console.log(url);
 
@@ -669,6 +674,8 @@ function addsoal(subBabId){
       "type": "POST"
 
     },
+        destroy: true,
+    searching: false
 
   });
 

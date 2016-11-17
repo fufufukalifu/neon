@@ -170,7 +170,7 @@ class Video extends MX_Controller {
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 // APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/f-single-video.php',
-                APPPATH . 'modules/homepage/views/v-footer.php'
+                APPPATH . 'modules/testimoni/views/v-footer.php'
             );
             $this->parser->parse('templating/index', $data);
         }

@@ -38,7 +38,7 @@
 
         <!-- START Form panel -->
 
-        <form  class="panel panel-default form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <form  class="panel panel-teal form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
             <div class="panel-heading"><h5 class="panel-title">Form Update Video</h5>
 
@@ -126,13 +126,13 @@
 
                 <div class="btn-group" data-toggle="buttons" >
 
-                  <label class="btn btn-info " id="up_server">
+                  <label class="btn btn-teal btn-outline " id="up_server">
 
                     <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
 
                   </label>
 
-                  <label class="btn btn-default active " id="up_link">
+                  <label class="btn btn-teal btn-outline active " id="up_link">
 
                     <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
 
@@ -208,7 +208,7 @@
 
 
 
-                    <label for="file" class="btn btn-success">
+                    <label for="file" class="btn btn-sm btn-default">
 
                         Pilih Video
 
@@ -279,14 +279,13 @@
                 <label class="control-label col-sm-2">Publish</label>
 
                 <div class="col-sm-4">
-
+                <input type="text" value="<?=$video['published']?>" id="tamp-publish" hidden="true">
                     <select name="publish" class="form-control">
 
-                        <option value="0" selected>Select</option>
 
-                        <option value="0">Tidak</option>
+                        <option value="0" id="pub0">Tidak</option>
 
-                        <option value="1">Ya</option>
+                        <option value="1" id="pub1">Ya</option>
 
                     </select>
 
@@ -298,9 +297,7 @@
 
             <div class="panel-footer">
 
-                <button type="reset" class="btn btn-default">Reset</button>
-
-                <button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+                <button type="submit" class="btn btn-primary" data-style="zoom-in"><span class="ladda-label">Simpan</span></button>
 
             </div>
 
@@ -328,10 +325,17 @@
 
                 $(document).ready(function () {
 
+                      // Set option Jawaban ###########
+                     var tamppublish=$('#tamp-publish').val();
+                     if (tamppublish ==1) {
+                       $('#pub1').attr('selected','selected');
+                       }else{
+                        $('#pub0').attr('selected','selected');
+                       }
+
+                      // ######################################
+
                     $('#eTingkat').change(function () {
-
-
-
                         var form_data = {
 
                             name: $('#eTingkat').val()
@@ -345,7 +349,7 @@
                             url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                             type: 'POST',
-
+dataType: "json",
                             data: form_data,
 
                             success: function (msg) {
@@ -417,7 +421,7 @@
                         $.ajax({
 
                             type: "POST",
-
+dataType: "json",
                             data: tingkat_id,
 
                             url: "<?= base_url() ?>index.php/videoback/getTingkat",
@@ -483,7 +487,7 @@
                     $.ajax({
 
                         type: "POST",
-
+dataType: "json",
                         data: tingkatID.tingkat_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -511,7 +515,7 @@
                     $.ajax({
 
                         type: "POST",
-
+dataType: "json",
                         data: mapelID.mapel_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -545,7 +549,7 @@
                     $.ajax({
 
                         type: "POST",
-
+dataType: "json",
                         data: babID.bab_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,

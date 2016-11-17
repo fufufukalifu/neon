@@ -121,7 +121,8 @@
     <div class="container">
       <!-- Start div macy-container -->
       <div id="macy-container">
-<?php $i=0;   $cekjudulbab=null;?>
+
+        <?php $i=0;   $cekjudulbab=null;?>
         <?php foreach ($bab_video as $bab_video_items) {
           $judulbab=$bab_video_items->judulBab;
           $subbab=$bab_video_items->judulSubBab;
@@ -134,82 +135,93 @@
             <!-- Start div demo -->
             <div class="demo">
               <strong><?=$judulbab ?></strong><br>
-              <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?></a></span><br>
-            
+              <?php if ($bab_video_items->jenis_video == 1): ?>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+              <?php else: ?>
+                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+              <?php endif ?>
 
-            <?php }else{ ?>
 
-            
-            <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?></a></span><br>
-            <?php } ?>
-            <?php   $cekjudulbab=$judulbab;
-  $i='1'; ?>
-            <?php } ?>
+              
+
+
+              <?php }else{ ?>
+
+
+              <?php if ($bab_video_items->jenis_video == 1): ?>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+              <?php else: ?>
+                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+                <?php endif ?>
+                <?php } ?>
+                <?php   $cekjudulbab=$judulbab;
+                $i='1'; ?>
+                <?php } ?>
+              </div>
+              <!-- END DIV DEMO -->
             </div>
-            <!-- END DIV DEMO -->
+            <!-- END div macy-container -->
           </div>
-          <!-- END div macy-container -->
-        </div>
-        <!-- END Div container -->
-      </section>
-    </main>
-</div>
-
-<!-- ucapan selamat datang -->
-<main>
-  <div class="page-content grid-row">
-    <div class="porfolio-item">
-      <div class="col-md-2"><img src="<?=base_url('assets/back/img/logo.png')?>"  width="200px" data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
-      <div class="col-md-10">
-        <h4>Selamat Datang Di Neon!</h4>
-        <p>Sudah siap memulai belajar dengan cara asyik dan santai? mulailah dengan memilih mata pelajaran yang sesuai dengan tingkatanmu.</p>
-      </div>
-      <br><br>
-      <br><br>
+          <!-- END Div container -->
+        </section>
+      </main>
     </div>
-  </div>
-</main>
 
-<!-- ucapan selamat datang -->
-<script src="http://macyjs.com/assets/js/macy.min.js"></script>
-<script type="text/javascript">
-  function direct(){
-    var tingkat = $("input[name='tingkat']").val();
-    var aliasMapel = $("input[name='pelajaran']").val();
-    window.location = base_url+"video/daftarvideo/"+<?=$this->uri->segment(3) ?>;
-  }
+    <!-- ucapan selamat datang -->
+    <main>
+      <div class="page-content grid-row">
+        <div class="porfolio-item">
+          <div class="col-md-2"><img src="<?=base_url('assets/back/img/logo.png')?>"  width="200px" data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
+          <div class="col-md-10">
+            <h4>Selamat Datang Di Neon!</h4>
+            <p>Sudah siap memulai belajar dengan cara asyik dan santai? mulailah dengan memilih mata pelajaran yang sesuai dengan tingkatanmu.</p>
+          </div>
+          <br><br>
+          <br><br>
+        </div>
+      </div>
+    </main>
 
-  function justroom(){
-    $('.screen').hide("slow");
-    $('.room').show("slow");
-  }
-
-  function justscreen(){
-    $('.screen').show("slow");
-    $('.room').hide("slow");
-  }
-
-  function semua(){
-    $('.screen').show("slow");
-    $('.room').show("slow");
-  }
-
-  $(document).ready(function(){
-    Macy.init({
-      container: '#macy-container',
-      trueOrder: false,
-      waitForImages: false,
-      margin: 24,
-      columns: 3,
-      breakAt: {
-        1200: 5,
-        940: 3,
-        520: 2,
-        400: 1
+    <!-- ucapan selamat datang -->
+    <script src="http://macyjs.com/assets/js/macy.min.js"></script>
+    <script type="text/javascript">
+      function direct(){
+        var tingkat = $("input[name='tingkat']").val();
+        var aliasMapel = $("input[name='pelajaran']").val();
+        window.location = base_url+"video/daftarvideo/"+<?=$this->uri->segment(3) ?>;
       }
-    });
-  });
-</script>
+
+      function justroom(){
+        $('.screen').hide("slow");
+        $('.room').show("slow");
+      }
+
+      function justscreen(){
+        $('.screen').show("slow");
+        $('.room').hide("slow");
+      }
+
+      function semua(){
+        $('.screen').show("slow");
+        $('.room').show("slow");
+      }
+
+      $(document).ready(function(){
+        Macy.init({
+          container: '#macy-container',
+          trueOrder: false,
+          waitForImages: false,
+          margin: 24,
+          columns: 3,
+          breakAt: {
+            1200: 5,
+            940: 3,
+            520: 2,
+            400: 1
+          }
+        });
+      });
+    </script>
 
 
 

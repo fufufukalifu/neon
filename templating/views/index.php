@@ -34,29 +34,15 @@
 
     <link rel="stylesheet" href="<?= base_url('assets/back/css/owl.carousel.css') ?>"/>
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-$.fn.modal.Constructor.prototype.enforceFocus = function() {
-  modal_this = this
-  $(document).on('focusin.modal', function (e) {
-    if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length 
-    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') 
-    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
-      modal_this.$element.focus()
-    }
-  })
-};
-          });
-    </script>
-<script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
-<link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
-<!--styles -->
+    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
+    <!--styles -->
 
 </head>
 
 <body>
 
-    <script>var base_url = '<?php echo base_url() ?>';</script>
+<script type="text/javascript">var base_url = "<?= base_url() ?>"</script>
 
     <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
 

@@ -891,7 +891,7 @@ function ValidateSingleInput(oInput) {
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                 type: 'POST',
-
+ dataType: "json",
                 data: form_data,
 
                 success: function (msg) {
@@ -963,7 +963,7 @@ function ValidateSingleInput(oInput) {
             $.ajax({
 
                 type: "POST",
-
+ dataType: "json",
                 data: tingkat_id,
 
                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
@@ -1029,7 +1029,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: tingkatID.tingkat_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -1057,7 +1057,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: mapelID.mapel_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -1091,7 +1091,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: babID.bab_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,

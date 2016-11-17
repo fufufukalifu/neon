@@ -302,7 +302,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileSoal" class="btn btn-success">
+                                    <label for="fileSoal" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -318,19 +318,19 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                        <div class="form-group">
 
-                            <label class="control-label col-sm-2">Jensi Editor</label>
+                            <label class="control-label col-sm-2">Jenis Editor</label>
 
                             <div class="col-sm-8">
 
                                 <div class="btn-group" data-toggle="buttons" >
 
-                                      <label class="btn active " id="in-soal">
+                                      <label class="btn btn-teal btn-outline active " id="in-soal">
 
                                         <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
 
                                       </label>
 
-                                      <label class="btn" id="pr-rumus">
+                                      <label class="btn btn-teal btn-outline" id="pr-rumus">
 
                                         <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
 
@@ -402,13 +402,13 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="btn-group" data-toggle="buttons" >
 
-                                      <label class="btn " id="empatpil">
+                                      <label class="btn btn-teal btn-outline " id="empatpil">
 
                                         <input type="radio" name="opjumlah" value="4" autocomplete="off" > 4 Pilihan
 
                                       </label>
 
-                                      <label class="btn active" id="limapil">
+                                      <label class="btn btn-teal btn-outline active" id="limapil">
 
                                         <input type="radio" name="opjumlah"  value="5" autocomplete="off" checked="true"> 5 Pilihan
 
@@ -422,19 +422,19 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                         <div class="form-group">
 
-                            <label class="control-label col-sm-2">Jensi Pilihan</label>
+                            <label class="control-label col-sm-2">Jenis Pilihan</label>
 
                             <div class="col-sm-8">
 
                                 <div class="btn-group" data-toggle="buttons" >
 
-                                      <label class="btn active " id="text">
+                                      <label class="btn btn-teal btn-outline active " id="text">
 
                                         <input type="radio" name="options" value="text" autocomplete="off" checked="true"> Text
 
                                       </label>
 
-                                      <label class="btn" id="gambar">
+                                      <label class="btn btn-teal btn-outline" id="gambar">
 
                                         <input type="radio" name="options"  value="gambar" autocomplete="off"> Gambar
 
@@ -500,7 +500,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileA" class="btn btn-success">
+                                    <label for="fileA" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -572,7 +572,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileB" class="btn btn-success">
+                                    <label for="fileB" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -644,7 +644,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileC" class="btn btn-success">
+                                    <label for="fileC" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -718,7 +718,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileD" class="btn btn-success">
+                                    <label for="fileD" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -792,7 +792,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                 <div class="col-sm-12">
 
-                                    <label for="fileE" class="btn btn-success">
+                                    <label for="fileE" class="btn btn-sm btn-default">
 
                                         Pilih Gambar
 
@@ -1318,6 +1318,7 @@ function ValidateSingleInput(oInput) {
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                 type: 'POST',
+                 dataType: "json",
 
                 data: form_data,
 
@@ -1390,7 +1391,7 @@ function ValidateSingleInput(oInput) {
             $.ajax({
 
                 type: "POST",
-
+ dataType: "json",
                 data: tingkat_id,
 
                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
@@ -1456,7 +1457,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: tingkatID.tingkat_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -1484,7 +1485,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: mapelID.mapel_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -1518,7 +1519,7 @@ function ValidateSingleInput(oInput) {
         $.ajax({
 
             type: "POST",
-
+ dataType: "json",
             data: babID.bab_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,

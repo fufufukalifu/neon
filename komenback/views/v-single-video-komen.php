@@ -88,15 +88,7 @@
                             <!--/ heading -->
                             <div class="container-fluid">
                                 <center>    
-                                    <video id="my-video" class="video-js" controls preload="auto"
-                                    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                                    <source src="<?= base_url('assets/video/{file}'); ?>"  style="width: 90%;height: 400px"  type='video/mp4'>
-                                        <source src="<?= base_url('assets/video/{file}'); ?>" type='video/webm'>
-                                            <p class="vjs-no-js">
-                                              To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                                          </p>
-                                      </video>
+                                    {file}
                                   </center>
                                   <br>
                               </div>

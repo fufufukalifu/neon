@@ -23,7 +23,7 @@
 
 				<div class="modal-footer">
 
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
 				</div>
 
@@ -57,7 +57,7 @@
 
 				<div class="modal-footer">
 
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
 				</div>
 
@@ -67,9 +67,14 @@
 
 	</div>
 	<!-- End Modal Detail Video -->
-	<div class="panel panel-default">
+	<div class="panel panel-teal">
 		<div class="panel-heading">
 			<h5 class="panel-title">Daftar Video Berdasarkan Bab <?=$nama?></h5>
+			 <!-- Start menu upload video -->
+                        <div class="panel-toolbar text-right">
+                            <a class="btn btn-inverse btn-outline" href="<?=base_url('index.php/videoback/formupvideo')?>" title="Tambah Data" ><i class="ico-plus"></i></a>
+                        </div>
+                         <!-- END menu upload video -->
 			<input type="text" value="<?=$babID?>" name="" id="idbab" hidden>
 		</div>
 		<table class="table table-striped" id="zero-configuration" style="font-size: 12px" width="100%">

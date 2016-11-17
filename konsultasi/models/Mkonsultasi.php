@@ -18,7 +18,7 @@ class Mkonsultasi extends CI_Model
 		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id`
 		WHERE `judulPertanyaan` LIKE '%$key%' 
-		ORDER BY `pertanyaan`.`date_created` Asc LIMIT 5 ";
+		ORDER BY `pertanyaan`.`date_created` desc ";
 		$result = $this->db->query($sub);
 		$result->result_array();
 
@@ -40,7 +40,7 @@ class Mkonsultasi extends CI_Model
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
 		WHERE `siswa`.`id` = $id_siswa 
 		AND `judulPertanyaan` LIKE '%$key%' 
-		ORDER BY `pertanyaan`.`date_created` asc LIMIT 10";
+		ORDER BY `pertanyaan`.`date_created` desc";
 		$result = $this->db->query($sub);
 
 		$result->result_array();
@@ -61,10 +61,10 @@ class Mkonsultasi extends CI_Model
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
 		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
 		JOIN `tb_tingkat` `tingkat` ON `siswa`.`tingkatID` = `tingkat`.`id` 
-		WHERE `tingkat`.`id` = $id_tingkat 
+		WHERE `tingkat`.`id` = 1
 		AND `judulPertanyaan` LIKE '%$key%' 
 		ORDER BY `pertanyaan`.`date_created` 
-		DESC LIMIT 5";
+		desc";
 
 		$result = $this->db->query($sub);
 
@@ -182,7 +182,7 @@ class Mkonsultasi extends CI_Model
 				$this->db->where('siswaID',$data['siswaID']);
 				$this->db->where('jawabID',$data['jawabID']);
 				$query = $this->db->get();
-					
+				
 				if ($query->result_array()==array()) {
 					return 0;
 				} else {

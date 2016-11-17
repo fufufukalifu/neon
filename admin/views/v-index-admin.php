@@ -17,7 +17,8 @@
   <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
   <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
-
+    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
   <script>var base_url = '<?php echo base_url() ?>';</script>
   <!--/ END META SECTION -->
 
@@ -451,7 +452,7 @@
 <li>
 <a href="<?=base_url('komenback') ?>" data-target="#komen" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-comments"></i></span>
-    <span class="text">Komenback</span>
+    <span class="text">Komen</span>
     <span class="arrow"></span>
   </a>
 </li>
@@ -878,7 +879,9 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 // ####################################################
 
 </script>
-
+            <!-- Cometchat -->
+<link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
+<script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
 <!--/ App and page level script -->
 <!--/ END JAVASCRIPT SECTION -->
 </body>

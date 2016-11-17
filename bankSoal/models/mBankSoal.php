@@ -241,9 +241,12 @@ class Mbanksoal extends CI_Model {
     #ambil soal yang belum terdaftar dalam paket soal.
     public function get_soal_terdaftar($data){
        $paket = $data['id_paket'];
-        
+         $subBabId = $data['subBabId'];   
+              
         $myquery ="SELECT * FROM `tb_banksoal` bank
             WHERE bank.publish = 1
+            AND bank.id_subbab = $subBabId
+            AND bank.jawaban <>''
             AND bank.status = 1
             AND bank.id_soal NOT IN
             (
@@ -258,6 +261,7 @@ class Mbanksoal extends CI_Model {
             ;
 
     $result = $this->db->query($myquery);
+    
     return $result->result_array();
     }
 

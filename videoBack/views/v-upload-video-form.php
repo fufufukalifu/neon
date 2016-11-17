@@ -130,13 +130,13 @@
 
                     <div class="btn-group" data-toggle="buttons" >
 
-                        <label class="btn btn-info active" id="up_server">
+                        <label class="btn btn-teal btn-outline active" id="up_server">
 
                             <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
 
                         </label>
 
-                        <label class="btn btn-default " id="up_link">
+                        <label class="btn btn-teal btn-outline " id="up_link">
 
                             <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
 
@@ -212,7 +212,7 @@
 
 
 
-                    <label for="file" class="btn btn-success">
+                    <label for="file" class="btn btn-sm btn-default">
 
                         Pilih Video
 
@@ -324,11 +324,11 @@
 
             <div class="panel-footer">
 
-                <div class="col-md-2 col-md-offset-4 pull-right">
+                <div class="col-md-2 ">
 
-                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
 
-                    <button type="submit" class="btn btn-success ladda-button" data-style="zoom-in"><span class="ladda-label">Submit</span></button>
+                    <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-in">Submit</button>
 
                 </div>
 
@@ -375,6 +375,7 @@
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                 type: 'POST',
+                dataType: "json",
 
                 data: form_data,
 
@@ -513,6 +514,7 @@
         $.ajax({
 
             type: "POST",
+            dataType: "json",
 
             data: tingkatID.tingkat_id,
 
@@ -541,7 +543,7 @@
         $.ajax({
 
             type: "POST",
-
+dataType: "json",
             data: mapelID.mapel_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -575,7 +577,7 @@
         $.ajax({
 
             type: "POST",
-
+dataType: "json",
             data: babID.bab_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,

@@ -59,7 +59,7 @@ class paketsoal extends MX_Controller
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
-			$row[] = '<a class="btn btn-sm btn-primary"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
+			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
 			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
 
@@ -86,12 +86,21 @@ class paketsoal extends MX_Controller
 		//mengambil nilai list
 		$baseurl = base_url();
 		foreach ( $list as $list_soal ) {
+			$kesulitan = $list_soal['kesulitan'];
+			if ($kesulitan == 3) {
+				$kesulitan = "Sulit";
+			} else if ($kesulitan == 2) {
+				$kesulitan = "Sedang";
+			} else {
+				$kesulitan ="Mudah";
+			}
+			
 			$row = array();
 			$row[] = $list_soal['id_soal'];
 			$row[] = $list_soal['judul_soal'];
 			$row[] = $list_soal['sumber'];
 			$row[] = $list_soal['soal'];
-			$row[] = $list_soal['kesulitan'];
+			$row[] = $kesulitan;
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_soal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
@@ -141,7 +150,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
-			'durasi' =>$this->input->post( 'durasi' )
+			'durasi' =>$this->input->post( 'durasi' ),
+			'random'=>$this->input->post('random')
 		);
 
 		$this->mpaketsoal->insertpaketsoal( $data );
@@ -159,7 +169,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' =>  $this->input->post( 'nama_paket' ) ,
 			'deskripsi' => $this->input->post( 'jumlah_soal' ),
 			'jumlah_soal' => $this->input->post( 'durasi' ),
-			'durasi' => $this->input->post( 'deskripsi' )
+			'durasi' => $this->input->post( 'deskripsi' ),
+			'random'=>$this->input->post('random')
 		);
 
 		$this->mpaketsoal->rubahpaket( $id, $data );
@@ -264,9 +275,9 @@ class paketsoal extends MX_Controller
 	##
 
 	#ajax untuk menampilkan soal yang sudah di pub, belum terdaftar di paket dan statusnya 1
-	function ajax_unregistered_soal( $id_paket) {
+	function ajax_unregistered_soal( $id_paket,$subBabId) {
 		$param['id_paket'] = $id_paket;
-		// $param['id_subab'] = $id_subab;
+		$param['subBabId'] = $subBabId;
 		$data=array();
 		$list = $soal=$this->mbanksoal->get_soal_terdaftar($param);
 
@@ -274,13 +285,20 @@ class paketsoal extends MX_Controller
 		$baseurl = base_url();
 		foreach ( $list as $list_soal ) {
 			$n='1';
+			$kesulitan = $list_soal['kesulitan'];
+			if ($kesulitan == 3) {
+				$kesulitan = "Sulit";
+			} else if ($kesulitan == 2) {
+				$kesulitan = "Sedang";
+			} else {
+				$kesulitan ="Mudah";
+			}
 			$row = array();
-
 			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'><input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal']."><label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label></span>";
 			$row[] = $list_soal['judul_soal'];
 			$row[] = $list_soal['sumber'];
 			$row[] = $list_soal['soal'];
-			$row[] = $list_soal['kesulitan'];
+			$row[] = $kesulitan;
 			$data[] = $row;
 			$n++;
 
