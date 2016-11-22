@@ -1,4 +1,4 @@
-<!-- Start pengecekan jika pilihan 5 atau 4 pilihan --> 
+<!-- Start pengecekan jika pilihan 5 atau 4 pilihan -->
 <?php 
 
 if (!isset($piljawaban['4']['id_pilihan'])) {
@@ -8,7 +8,14 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
 } 
 
 ?>
-
+<!-- Strat Script Matjax -->
+     <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({
+         showProcessingMessages: false,
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+       });
+     </script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
 
 <script>
 var Preview = {
@@ -101,6 +108,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <!-- END Script Matjax -->
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+<!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
+<!-- START Template Main -->
 <section id="main" role="main">
     <!-- START Template Container -->
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
@@ -135,20 +145,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
                         <input type="text" name="soalID" value="<?=$banksoal['id_soal'];?>" hidden="true">
                         <input type="text" name="UUID" value="<?=$banksoal['UUID'];?>"  hidden="true">
+                        <!-- Start old info data soal -->
+                        <input type="text" id="oldtkt" value="<?=$infosoal['id_tingkat'];?>" hidden="true">
+                        <input type="text"  id="oldmp"  value="<?=$infosoal['id_mp'];?>" hidden="true">
+                        <input type="text" id="oldbab"  value="<?=$infosoal['id_bab'];?>" hidden="true">
+                        <input type="text" id="oldsub"  value="<?=$infosoal['id_subbab'];?>" hidden="true">
+                        <!-- END old info data soal -->
                     </div>               
                     <div class="panel-body">
                      <!-- Start Dropd Down depeden -->
-                     <div class="form-group">
-                       <label class="col-sm-1 control-label">Soal : </label> 
-                     
-                       <a class="note note-info mb15"><?=$infosoal['aliasTingkat'];?></a> 
-                       <a class="note note-info mb15"><?=$infosoal['mp'];?></a> 
-                       <a class="note note-info mb15"><?=$infosoal['judulBab'];?></a> 
-                       <a class="note note-info mb15"><?=$infosoal['judulSubBab'];?></a> 
-                       <a class="btn btn-sm btn-teal btn-outline" onclick="showjenissoal()">Edit</a>
-                     </div>
-
-                      <div  class="form-group jenissoal" >
+                    
+                      <div  class="form-group " >
 
                         <label class="col-sm-1 control-label">Tingkat</label>
 
@@ -613,7 +620,18 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     <script type="text/javascript">
        
         $(document).ready(function(){
-           $(".jenissoal").hide();
+        
+
+            //set opton dropdown mp
+              loadPelajaran($('#oldtkt').val());
+            // #########################
+
+            // set option dropdown bab
+              load_bab($('#oldmp').val());
+            // ##################
+            // set optopn dropdown sub
+            load_sub_bab($('#oldbab').val());
+            // ###############
 
           // set option kesulitan ################
            var tampkesulitan=$('#tampkesulitan').val();
@@ -730,7 +748,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             // End event priview gambar soal
             // Start event priview gambar pilihan A
             $('#fileA').on('change',function () {
-                // var filenameA = document.getElementByID('fileA').value;
                 var file = this.files[0];
                 var reader = new FileReader();
                 reader.onload = viewerA.load;
@@ -879,22 +896,18 @@ function ValidateSingleInput(oInput) {
 
         $('#eTingkat').change(function () {
 
-
-
             var form_data = {
 
                 name: $('#eTingkat').val()
 
             };
 
-
-
             $.ajax({
 
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                 type: 'POST',
- dataType: "json",
+                dataType: "json",
                 data: form_data,
 
                 success: function (msg) {
@@ -948,9 +961,6 @@ function ValidateSingleInput(oInput) {
     });
 
 
-    function showjenissoal() {
-      $(".jenissoal").show();
-    }
 
 
     //buat load tingkat
@@ -958,30 +968,33 @@ function ValidateSingleInput(oInput) {
     function loadTingkat() {
 
         jQuery(document).ready(function () {
-
+            var oldtkt = $('#oldtkt').val();
             var tingkat_id = {"tingkat_id": $('#tingkat').val()};
 
             var idTingkat;
 
-
-
             $.ajax({
 
                 type: "POST",
- dataType: "json",
+                dataType: "json",
                 data: tingkat_id,
 
                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
 
                 success: function (data) {
 
-                    console.log("Data" + data);
 
                     $('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
 
                     $.each(data, function (i, data) {
 
+                      if (data.id==oldtkt) {
+                         $('#tingkat').append("<option value='" + data.id + "' selected>" + data.aliasTingkat + "</option>");
+                      } else {
                         $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                      }
+                       
+                        
 
                         return idTingkat = data.id;
 
@@ -1030,11 +1043,11 @@ function ValidateSingleInput(oInput) {
     //buat load pelajaran
 
     function loadPelajaran(tingkatID) {
-
+        var oldmp = $('#oldmp').val();
         $.ajax({
 
             type: "POST",
- dataType: "json",
+            dataType: "json",
             data: tingkatID.tingkat_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -1044,8 +1057,12 @@ function ValidateSingleInput(oInput) {
                 $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
 
                 $.each(data, function (i, data) {
-
-                    $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                    if (data.id == oldmp ) {
+                      $('#pelajaran').append("<option value='" + data.id + "' selected>" + data.keterangan + "</option>");
+                    } else {
+                      $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                    }
+                    
 
                 });
 
@@ -1058,11 +1075,11 @@ function ValidateSingleInput(oInput) {
     //buat load bab
 
     function load_bab(mapelID) {
-
+        var oldbab = $('#oldbab').val();
         $.ajax({
 
             type: "POST",
- dataType: "json",
+            dataType: "json",
             data: mapelID.mapel_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -1076,8 +1093,12 @@ function ValidateSingleInput(oInput) {
                 //console.log(data);
 
                 $.each(data, function (i, data) {
-
-                    $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                    if (data.id==oldbab) {
+                       $('#bab').append("<option value='" + data.id + "' selected>" + data.judulBab + "</option>");
+                    } else {
+                       $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                    }
+                   
 
                 });
 
@@ -1092,11 +1113,11 @@ function ValidateSingleInput(oInput) {
     //load sub bab
 
     function load_sub_bab(babID) {
-
+      var oldsub = $('#oldsub').val();
         $.ajax({
 
             type: "POST",
- dataType: "json",
+            dataType: "json",
             data: babID.bab_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
@@ -1109,7 +1130,11 @@ function ValidateSingleInput(oInput) {
 
                 $.each(data, function (i, data) {
 
-                    $('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
+                   if (data.id==oldsub) {
+                     $('#subbab').append("<option value='" + data.id + "' selected>" + data.judulSubBab + "</option>");
+                   } else {
+                     $('#subbab').append("<option value='" + data.id + "' >" + data.judulSubBab + "</option>");
+                   }
 
                 });
 

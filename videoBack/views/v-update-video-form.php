@@ -41,7 +41,12 @@
         <form  class="panel panel-teal form-horizontal form-bordered" action="<?= base_url() ?>index.php/videoback/cek_option_update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
             <div class="panel-heading"><h5 class="panel-title">Form Update Video</h5>
-
+                                        <!-- Start old info data soal -->
+                        <input type="text" id="oldtkt" value="<?=$infovideo['id_tingkat'];?>" hidden="true">
+                        <input type="text"  id="oldmp"  value="<?=$infovideo['id_mp'];?>" hidden="true">
+                        <input type="text" id="oldbab"  value="<?=$infovideo['id_bab'];?>" hidden="true">
+                        <input type="text" id="oldsub"  value="<?=$infovideo['id_subbab'];?>" hidden="true">
+                        <!-- END old info data soal -->
             <input type="text" name="UUID" value="<?=$video['UUID']?>" hidden="true" >
 
             </div>
@@ -325,6 +330,16 @@
 
                 $(document).ready(function () {
 
+                   // set opton dropdown mp
+                      loadPelajaran($('#oldtkt').val());
+                    // #########################
+
+                    // set option dropdown bab
+                      load_bab($('#oldmp').val());
+                    // ##################
+                    // set optopn dropdown sub
+                    load_sub_bab($('#oldbab').val());
+                    // ###############    
                       // Set option Jawaban ###########
                      var tamppublish=$('#tamp-publish').val();
                      if (tamppublish ==1) {
@@ -349,7 +364,7 @@
                             url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
                             type: 'POST',
-dataType: "json",
+                            dataType: "json",
                             data: form_data,
 
                             success: function (msg) {
@@ -411,17 +426,15 @@ dataType: "json",
                 function loadTingkat() {
 
                     jQuery(document).ready(function () {
-
+                        var oldtkt = $('#oldtkt').val();
                         var tingkat_id = {"tingkat_id": $('#tingkat').val()};
 
                         var idTingkat;
 
-
-
                         $.ajax({
 
                             type: "POST",
-dataType: "json",
+                            dataType: "json",
                             data: tingkat_id,
 
                             url: "<?= base_url() ?>index.php/videoback/getTingkat",
@@ -434,11 +447,15 @@ dataType: "json",
 
                                 $.each(data, function (i, data) {
 
-                                    $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                                 if (data.id==oldtkt) {
+                                   $('#tingkat').append("<option value='" + data.id + "' selected>" + data.aliasTingkat + "</option>");
+                               } else {
+                                $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                            }
 
-                                    return idTingkat = data.id;
+                            return idTingkat = data.id;
 
-                                });
+                        });
 
                             }
 
@@ -483,11 +500,11 @@ dataType: "json",
                 //buat load pelajaran
 
                 function loadPelajaran(tingkatID) {
-
+                    var oldmp = $('#oldmp').val();
                     $.ajax({
 
                         type: "POST",
-dataType: "json",
+                        dataType: "json",
                         data: tingkatID.tingkat_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -498,9 +515,13 @@ dataType: "json",
 
                             $.each(data, function (i, data) {
 
-                                $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                                if (data.id == oldmp ) {
+                                  $('#pelajaran').append("<option value='" + data.id + "' selected>" + data.keterangan + "</option>");
+                              } else {
+                                  $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                              }
 
-                            });
+                          });
 
                         }
 
@@ -511,11 +532,11 @@ dataType: "json",
                 //buat load bab
 
                 function load_bab(mapelID) {
-
+                    var oldbab = $('#oldbab').val();
                     $.ajax({
 
                         type: "POST",
-dataType: "json",
+                        dataType: "json",
                         data: mapelID.mapel_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
@@ -530,9 +551,14 @@ dataType: "json",
 
                             $.each(data, function (i, data) {
 
-                                $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                             if (data.id==oldbab) {
+                                 $('#bab').append("<option value='" + data.id + "' selected>" + data.judulBab + "</option>");
+                             } else {
+                                 $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                             }
+                             
 
-                            });
+                         });
 
                         }
 
@@ -545,11 +571,11 @@ dataType: "json",
                 //load sub bab
 
                 function load_sub_bab(babID) {
-
+                    var oldsub = $('#oldsub').val();
                     $.ajax({
 
                         type: "POST",
-dataType: "json",
+                        dataType: "json",
                         data: babID.bab_id,
 
                         url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
@@ -562,9 +588,12 @@ dataType: "json",
 
                             $.each(data, function (i, data) {
 
-                                $('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
-
-                            });
+                              if (data.id==oldsub) {
+                               $('#subbab').append("<option value='" + data.id + "' selected>" + data.judulSubBab + "</option>");
+                           } else {
+                               $('#subbab').append("<option value='" + data.id + "' >" + data.judulSubBab + "</option>");
+                           }
+                       });
 
                         }
 

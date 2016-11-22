@@ -125,6 +125,8 @@ class Videoback extends MX_Controller {
      //menampilkan view form upload
     public function formUpdateVideo($UUID) {
          $data['video']=$this->Mvideoback->get_video_by_UUID($UUID)[0];
+         $subBabID=$data['video']['subBabID'];
+          $data['infovideo']=$this->Mvideoback->get_info_video($subBabID);
         $data['judul_halaman'] = "update Video";
         $data['files'] = array(
             APPPATH . 'modules/videoback/views/v-update-video-form.php',
