@@ -303,7 +303,6 @@
             <script type="text/javascript">
 
                 function load_grafik(data) {
-
                     var report = {
                         durasi: 0,
                         level: 0,
@@ -314,21 +313,11 @@
 
 
                     //report.durasi = 10;
-
                     report.jumlah_soal = parseInt(data.jumlahSoal);
-
                     report.level = parseInt(data.tingkatKesulitan);
-
                     report.poin = parseInt(data.jmlh_benar);
-
                     //report.konstanta =  report.durasi * report.jumlah_soal;
-
                     report.score = data.jmlh_benar;
-
-
-
-
-
                     var chart = new CanvasJS.Chart("chartContainer", {
                         title: {
                             text: "nama latihan : " + data.nm_latihan + " - Score : " + report.score
@@ -365,33 +354,23 @@
 
 
                 function lihat_grafik(id) {
-
                     var kelas = ".modal-on" + id;
-
                     var data = $(kelas).data('todo');
-
                     $('.modal-title').text('Grafik Latihan ');
-
                     $('#myModal').modal('show');
-
                     load_grafik(data);
-
                 }
 
 
 
                 function show_report() {
-
                     $('#myModal2').modal('show');
-
                     $('#myModal2 modal-title').text('Report Latihan');
-
                 }
 
 
 
                 function mulai_test(id_latihan) {
-
                     window.location.href = base_url + "index.php/latihan/create_session_id_latihan/" + id_latihan;
 
                 }
@@ -401,13 +380,8 @@
 
 
                 $(document).ready(function () {
-
                     $('.table').DataTable();
-
                     $('.table 2').DataTable();
-
-
-
                 })
 
 
