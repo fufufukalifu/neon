@@ -4,7 +4,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Report Latihan Siswa</h4>
+                    <h4 class="panel-title">Report Paket Tryout</h4>
                     <!-- Trigger the modal with a button -->
                     <br>
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
@@ -20,14 +20,13 @@
 
                             <tr>
                                 <th>No</th>
-                                <th>Latihan</th>
+                                <th>Paket</th>
                                 <th>Waktu Pengerjaan</th>
                                 <th>Jumlah Soal</th>
                                 <th>Benar</th>
                                 <th>Salah</th>
                                 <th>Kosong</th>
                                 <!--<th>Level Soal</th>-->
-                                <th>Durasi Pengerjaan</th>
                                 <th>Skore</th>
                             </tr>
 
@@ -36,7 +35,7 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($reportla as $key) {
+                            foreach ($reportpaket as $key) {
                                 ?>
                                 <tr>
                                     <td class="text-center"><?= $i ?></td>
@@ -57,46 +56,6 @@
                     </table>
 
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Report Tryout Siswa</h4>
-                    <!-- Trigger the modal with a button -->
-                    <!--<a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>-->
-                    <br>
-                    <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
-                </div>
-
-                <table class="table table-striped display" style="font-size: 13px">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tryout</th>
-                            <th>Tgl Tryout</th>
-                            <th class="text-center">Nilai Rata-Rata </th>
-                            <th class="text-center">Nilai Perpaket</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        foreach ($reportto as $key) {
-                            ?>
-                            <tr>
-                                <td class="text-center"><?= $i ?></td>
-                                <td><?= $key['nm_tryout'] ?></td>
-                                <td><?= $key['tgl_mulai'] ?></td>
-                                <td class="text-center">-</td>
-                                <td class="text-center"><a href="<?=base_url('siswa/reportto/'.$key['id_tryout'])?>">Lihat Detail</a></td>
-                            </tr>
-                        <?php $i++;};
-                        ?>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

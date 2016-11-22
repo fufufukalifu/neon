@@ -143,6 +143,26 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
+    function get_reporttryout_siswa($idpengguna) {
+        $this->db->select('tryout.id_tryout,tryout.nm_tryout,tryout.tgl_mulai');
+        $this->db->from('tb_siswa as siswa');
+        $this->db->join('tb_hakakses-to as hak', 'siswa.id = hak.id_siswa');
+        $this->db->join('tb_tryout as tryout', 'hak.id_tryout = tryout.id_tryout');
+        $this->db->where('siswa.penggunaID', $idpengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    function get_reportpaket_to($idpengguna,$idto) {
+        $this->db->select('tryout.id_tryout,tryout.nm_tryout,tryout.tgl_mulai');
+        $this->db->from('tb_siswa as siswa');
+        $this->db->join('tb_hakakses-to as hak', 'siswa.id = hak.id_siswa');
+        $this->db->join('tb_tryout as tryout', 'hak.id_tryout = tryout.id_tryout');
+        $this->db->where('siswa.penggunaID', $idpengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     ##
 }
 
