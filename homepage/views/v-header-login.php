@@ -116,16 +116,13 @@
 
 								</li>
 
-
-
 								<li>
-
-									<a href="<?=base_url('logout') ?>">Logout</a>
-
+									<a href="#">Hallo <?= $this->session->userdata['USERNAME']?></a>
+									<ul>
+										<li><a href="<?=base_url('siswa/profilesetting') ?>" class="active">Pengaturan Profil</a></li>
+										<li><a href="<?=base_url('logout') ?>">Logout</a></li>
+									</ul>
 								</li>
-
-
-
 
 							</ul>
 

@@ -24,7 +24,7 @@
                     <!--<br>-->
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
-                <form class="" method="post" action="<?= base_url('index.php/Subscribe/addberita') ?>">
+                <form class="" method="post" action="<?= base_url('index.php/subscribe/addberita') ?>">
                     <div class="form-group">
                         <!--<label class="control-label col-md-1 text-right">Judul</label>-->
                         <div class="col-sm-6">

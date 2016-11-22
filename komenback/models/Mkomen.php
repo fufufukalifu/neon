@@ -1,13 +1,5 @@
 <?php
-
 defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
-
-/**
-
- *
-
- */
-
 class Mkomen extends CI_Model
 
 {
@@ -66,4 +58,3 @@ class Mkomen extends CI_Model
 }
 
 ?>
-

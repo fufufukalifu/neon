@@ -352,7 +352,29 @@
          </span>
         </a>
 
-      
+        <a href="javascript:void(0);" class="media read border-dotted">
+         <span class="media-object pull-left">
+          <i class="ico-alarm2"></i>
+         </span>
+         <span class="media-body">
+          <span class="media-text">Excepteur sint <span class="text-primary semibold">occaecat</span> cupidatat non.</span>
+          <!-- meta icon -->
+          <span class="media-meta pull-right">12w</span>
+          <!--/ meta icon -->
+         </span>
+        </a>
+
+        <a href="javascript:void(0);" class="media read border-dotted">
+         <span class="media-object pull-left">
+          <i class="ico-checkmark3 bgcolor-success"></i>
+         </span>
+         <span class="media-body">
+          <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
+          <!-- meta icon -->
+          <span class="media-meta pull-right">14w</span>
+          <!--/ meta icon -->
+         </span>
+        </a>
        </div>
        <!--/ Message list -->
       </div>
@@ -498,7 +520,7 @@
         <li class="submenu-header ellipsis">Sub Bank Soal</li>
         <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Soal</span>
         </a></li>
-        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Video</span>
+        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
         </a></li>
 
 
@@ -563,6 +585,14 @@
 
      </ul>
     </li>
+
+    <li>
+<a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-comments"></i></span>
+    <span class="text">Komen</span>
+    <span class="arrow"></span>
+  </a>
+</li>
     <!--END menu konsultasi -->
 
    </ul>
