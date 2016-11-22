@@ -1,15 +1,6 @@
 <!-- START Template Main -->
 <section id="main" role="main">
-<!-- Start Math jax -->
-  <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-});
-</script>
-  <script type="text/javascript" async
-  src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
-</script>
-<!-- end Math jax -->
+
 
 <!-- Start Modal konfirmasi hapus -->
 <div class="modal fade" id="konfirmasiDlt" tabindex="-1" role="dialog">
@@ -78,7 +69,7 @@ MathJax.Hub.Config({
             <div class="col-md-12">
                 <div class="panel panel-teal">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Daftar Semua Soal </h3>
+                        <h3 class="panel-title">Daftar Semua Soal</h3>
                          <!-- Start menu tambah soal -->
                         <div class="panel-toolbar text-right">
                             <a class="btn btn-inverse btn-outline" href="<?= base_url(); ?>index.php/banksoal/formsoal" title="Tambah Data" ><i class="ico-plus"></i></a>
@@ -120,6 +111,16 @@ MathJax.Hub.Config({
     <!--/ END To Top Scroller -->
 </section>
 <!--/ END Template Main -->
+<!-- Start Math jax --> 
+<script type="text/x-mathjax-config"> 
+    MathJax.Hub.Config({ 
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} 
+    }); 
+</script> 
+<script type="text/javascript" async 
+        src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
+</script> 
+<!-- end Math jax -->
 <!-- /javascript/app.min.js -->
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript" src="<?=base_url('assets/javascript/app.min.js')?>"></script>
