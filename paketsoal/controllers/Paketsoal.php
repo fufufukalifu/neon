@@ -167,9 +167,9 @@ class paketsoal extends MX_Controller
 		$id=$this->input->post( 'id_paket' );
 		$data = array(
 			'nm_paket' =>  $this->input->post( 'nama_paket' ) ,
-			'deskripsi' => $this->input->post( 'jumlah_soal' ),
-			'jumlah_soal' => $this->input->post( 'durasi' ),
-			'durasi' => $this->input->post( 'deskripsi' ),
+			'deskripsi' => $this->input->post( 'deskripsi' ),
+			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+			'durasi' => $this->input->post( 'durasi' ),
 			'random'=>$this->input->post('random')
 		);
 

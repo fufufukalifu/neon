@@ -326,6 +326,18 @@ class Mbanksoal extends CI_Model {
         $query = $this->db->get();
         return $query->result()[0]->aliasTingkat;
     }
+    // mengetahui info tingkat soal
+    public function get_info_soal($subBabID)
+    {
+        $this->db->select('aliasTingkat,tp.keterangan as mp, judulBab, judulSubBab,');
+         $this->db->from('tb_tingkat tkt' );
+         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->where('subbab.id',$subBabID);
+        $query = $this->db->get();
+        return $query->result_array()[0];
+    }
 }
 
 ?>
