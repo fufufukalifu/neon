@@ -933,9 +933,9 @@ class Banksoal extends MX_Controller {
     #START Function untuk form update bank soal #
 
     public function formUpdate() {
-
-        $data['subBabID'] = htmlspecialchars($this->input->get('subBab'));
-        
+        $subBabID =htmlspecialchars($this->input->get('subBab'));
+        $data['subBabID'] = $subBabID;
+        $data['infosoal']=$this->Mbanksoal->get_info_soal($subBabID);
         $UUID = htmlspecialchars($this->input->get('UUID'));
 
         //get data soan where==UUID

@@ -102,6 +102,30 @@
 			</div><!-- /.modal-dialog -->
 
 		</div>
+
+		<div class="modal fade " tabindex="-1" role="dialog" id="modalJawab">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button><br>
+							<div class="modal-title">Balas</div>
+						</div>
+
+
+						<div class="modal-body">
+							<div class='quotes kuote'><p><i></p><i></div>
+							<textarea name='editor1' class='form-control' id="komenText"></textarea>
+						</div>
+						<div class="modal-footer bg-color-3">
+							<a type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</a><a type='a' class='btn btn-sm btn-primary post' onclick='simpan_jawaban()'>Post</a>
+						</div>
+
+					</div><!-- /.modal-content -->
+
+				</div><!-- /.modal-dialog -->
+
+			</div>
 	
 
 			<section id="main" role="main">
@@ -222,92 +246,162 @@
 
 
 	<script type="text/javascript">
-		var ckeditor;
-		var string;
-		$("blockquote").attr('class', 'media well mb0');
-		function quote(data=""){
-			elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
-			button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success' onclick='save()'>Post</button>";
+	// 	var ckeditor;
+	// 	var string;
+	// 	$("blockquote").attr('class', 'media well mb0');
+	// 	function quote(data=""){
+	// 		elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
+	// 		button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success' onclick='save()'>Post</button>";
 
-			$('.modal-body').html(elemen);
-			$('.modal-footer').html(button);
-
-
-			ckeditor = CKEDITOR.replace( 'editor1' );
+	// 		$('.modal-body').html(elemen);
+	// 		$('.modal-footer').html(button);
 
 
-			if (data=="") {
-				$('.modal-header .modal-title').html("<h4>Balas Pertanyaan</h4>");
-				string = 0;
-				$('#myModal').modal('show');
+	// 		ckeditor = CKEDITOR.replace( 'editor1' );
+
+
+	// 		if (data=="") {
+	// 			$('.modal-header .modal-title').html("<h4>Balas Pertanyaan</h4>");
+	// 			string = 0;
+	// 			$('#myModal').modal('show');
+	// 		// ckeditor.setData(data);
+	// 	}else{
+	// 		$('.modal-header .modal-title').html("Quote Jawaban");
+
+	// 		string = $('input[name='+data+']').val();
+	// 		$('.modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
+	// 		console.log(string);
+	// 		// ckeditor.setData(string);
+	// 		$('#myModal').modal('show');
+	// 	}
+	// }
+
+	var ckeditor;
+			var string;
+			var txt = 1;
+			function quote(data){
+				if (data==0) { 	
+					$('#modalJawab .modal-body .quotes p i').html("");
+
+					$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
+					string = 0;
+					$('#modalJawab').modal('show');
 			// ckeditor.setData(data);
 		}else{
-			$('.modal-header .modal-title').html("Quote Jawaban");
-
+			$('#modalJawab .modal-header .modal-title').html("Quote Jawaban");
 			string = $('input[name='+data+']').val();
-			$('.modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
-			console.log(string);
+			$('#modalJawab .modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
 			// ckeditor.setData(string);
-			$('#myModal').modal('show');
+			$('#modalJawab').modal('show');
 		}
-	}
-	function save(){
+			// ckeditor = CKEDITOR.replace( 'editor1' );
+
+		}
+// 	function save(){
+// 		//kalo kosong
+// 		if (string==0) {
+// 			var desc = ckeditor.getData();
+
+// 			var data = {
+// 				isiJawaban : desc+"",
+// 				penggunaID : $('input[name=idpengguna]').val(),
+// 				pertanyaanID : $('input[name=idpertanyaan]').val(),
+// 			}
+// 			idpertanyaan= data.pertanyaanID;
+// 		}else{
+// 			console.log(string);
+// 			quote = "<blockquote>"+string+"</blockquote>";
+// 			var desc = quote+ckeditor.getData();
+// 			console.log(desc);
+
+// 			var data = {
+// 				isiJawaban : desc+"",
+// 				penggunaID : $('input[name=idpengguna]').val(),
+// 				pertanyaanID : $('input[name=idpertanyaan]').val(),
+// 			}
+// 			console.log(data);
+// 			idpertanyaan= data.pertanyaanID;
+// 		// console.log(data);
+
+// 	}
+
+
+
+
+
+// 	if (data.isiJawaban == "") {
+// 		$('#info').show();
+// 	}else{
+// 		url = base_url+"konsultasi/ajax_add_jawaban/";
+// 		$.ajax({
+// 			url : url,
+// 			type: "POST",
+// 			data: data,
+// 			dataType: "TEXT",
+// 			success: function(data)
+// 			{
+// 				// alert('masd');
+//                 $('.post').text('Posting..'); //change button text
+//                 $('.post').attr('disabled',false); //set button enable
+//                 // alert('berhasil');
+//                 window.location = base_url+"konsulback/konsultasi/"+idpertanyaan;
+//             },
+//             error: function (jqXHR, textStatus, errorThrown)
+//             {
+//             	alert('Error adding / update data');
+//             }
+//         });
+// 	}
+// }
+
+function simpan_jawaban(){
+			txt = $('#komenText').val();
+			console.log(txt);
+			console.log(string);
 		//kalo kosong
 		if (string==0) {
-			var desc = ckeditor.getData();
-
+			var desc = txt;/*ckeditor.getData();*/
 			var data = {
-				isiJawaban : desc+"",
+				isiJawaban : desc,
 				penggunaID : $('input[name=idpengguna]').val(),
 				pertanyaanID : $('input[name=idpertanyaan]').val(),
 			}
 			idpertanyaan= data.pertanyaanID;
 		}else{
-			console.log(string);
-			quote = "<blockquote>"+string+"</blockquote>";
-			var desc = quote+ckeditor.getData();
-			console.log(desc);
+			quote = "<blockquote>"+string+"</blockquote>"+txt;
+
 
 			var data = {
-				isiJawaban : desc+"",
+				isiJawaban : quote,
 				penggunaID : $('input[name=idpengguna]').val(),
 				pertanyaanID : $('input[name=idpertanyaan]').val(),
 			}
-			console.log(data);
 			idpertanyaan= data.pertanyaanID;
-		// console.log(data);
-
-	}
-
-
-
-
-
-	if (data.isiJawaban == "") {
-		$('#info').show();
-	}else{
-		url = base_url+"konsultasi/ajax_add_jawaban/";
-		$.ajax({
-			url : url,
-			type: "POST",
-			data: data,
-			dataType: "TEXT",
-			success: function(data)
-			{
+		}
+		if (data.isiJawaban == "") {
+			$('#info').show();
+		}else{
+			url = base_url+"konsultasi/ajax_add_jawaban/";
+			$.ajax({
+				url : url,
+				type: "POST",
+				data: data,
+				dataType: "TEXT",
+				success: function(data)
+				{
 				// alert('masd');
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
                 // alert('berhasil');
-                window.location = base_url+"konsulback/konsultasi/"+idpertanyaan;
+                window.location =  base_url+"konsulback/konsultasi/"+idpertanyaan;
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
             	alert('Error adding / update data');
             }
         });
+		}
 	}
-}
-
 function point(data){
 	elemen = "<textarea class='form-control' name='komentar'></textarea>";
 	$('.modal-body').html(elemen);

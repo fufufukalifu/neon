@@ -1,4 +1,4 @@
-<!-- Start pengecekan jika pilihan 5 atau 4 pilihan -->
+<!-- Start pengecekan jika pilihan 5 atau 4 pilihan --> 
 <?php 
 
 if (!isset($piljawaban['4']['id_pilihan'])) {
@@ -8,14 +8,7 @@ if (!isset($piljawaban['4']['id_pilihan'])) {
 } 
 
 ?>
-<!-- Strat Script Matjax -->
-     <script type="text/x-mathjax-config">
-       MathJax.Hub.Config({
-         showProcessingMessages: false,
-         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
-       });
-     </script>
-<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+
 
 <script>
 var Preview = {
@@ -145,7 +138,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                     </div>               
                     <div class="panel-body">
                      <!-- Start Dropd Down depeden -->
-                      <div  class="form-group">
+                     <div class="form-group">
+                       <label class="col-sm-1 control-label">Soal : </label> 
+                     
+                       <a class="note note-info mb15"><?=$infosoal['aliasTingkat'];?></a> 
+                       <a class="note note-info mb15"><?=$infosoal['mp'];?></a> 
+                       <a class="note note-info mb15"><?=$infosoal['judulBab'];?></a> 
+                       <a class="note note-info mb15"><?=$infosoal['judulSubBab'];?></a> 
+                       <a class="btn btn-sm btn-teal btn-outline" onclick="showjenissoal()">Edit</a>
+                     </div>
+
+                      <div  class="form-group jenissoal" >
 
                         <label class="col-sm-1 control-label">Tingkat</label>
 
@@ -179,7 +182,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
 
 
-                      <div class="form-group">
+                      <div class="form-group jenissoal">
 
                         <label class="col-sm-1 control-label">Bab</label>
 
@@ -610,7 +613,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     <script type="text/javascript">
        
         $(document).ready(function(){
-
+           $(".jenissoal").hide();
 
           // set option kesulitan ################
            var tampkesulitan=$('#tampkesulitan').val();
@@ -945,7 +948,9 @@ function ValidateSingleInput(oInput) {
     });
 
 
-
+    function showjenissoal() {
+      $(".jenissoal").show();
+    }
 
 
     //buat load tingkat
@@ -1128,4 +1133,4 @@ function ValidateSingleInput(oInput) {
 
 
 </section>
-        <!--/ END Template Main -->
+        <!--/ END Template Main

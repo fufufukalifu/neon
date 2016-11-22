@@ -11,29 +11,35 @@ class Mlatihan extends CI_Model
 {
 
 
-
+	//random buat subbab
 	public function get_random_for_latihan( $param ) {
-
 		$this->db->where( 'id_subbab', $param['id_subab'] );
-
 		// $this->db->where( 'kesulitan', $param['kesulitan'] );
-
-
-
 		$this->db->order_by( 'rand()' );
-
 		$this->db->limit( $param['jumlah_soal'] );
-
 		$this->db->select( '*' );
-
 		$this->db->from( 'tb_banksoal' );
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
+	//random buat bab
+	public function get_random_for_latihan_bab( $param ) {
+		$this->db->where( 'bab.id', $param['id_bab'] );
+		// $this->db->where( 'kesulitan', $param['kesulitan'] );
+		$this->db->order_by( 'rand()' );
+		$this->db->limit( $param['jumlah_soal'] );
+		$this->db->select( '*' );
+		$this->db->from( 'tb_banksoal b' );
+		$this->db->join('tb_subbab sub',
+			'b.id_subbab = sub.id');
+
+		$this->db->join('tb_bab bab',
+			'bab.id = sub.babID');
 
 
 		$query = $this->db->get();
-
 		return $query->result_array();
-
 	}
 
 
@@ -41,50 +47,22 @@ class Mlatihan extends CI_Model
 
 
 
-
 	public function get_piljawaban( $data ) {
-
 		$this->db->order_by( 'rand()' );
-
 		$n='1';
-
 		foreach ( $data as $row ) {
-
 			$id_soal=$row['id_soal'];
-
 			if ( $n=='1' ) {
-
 				$this->db->where( 'id_soal', $id_soal );
-
 			} else {
-
 				$this->db->or_where( 'id_soal', $id_soal );
-
 			}
-
-
-
 			$n++;
-
 		}
-
 		$this->db->select( '*' );
-
 		$this->db->from( 'tb_piljawaban' );
-
 		$query = $this->db->get();
-
 		return $query->result_array();
-
-
-
-		// $this->db->select('*,soal.jawaban as soal_jawab');
-
-		// $this->db->from('tb_banksoal soal');
-
-		// $this->db->join('tb_piljawaban jawaban', ' jawaban.id_soal= soal.id_soal');
-
-		// $this->db->where('id_bab',$babID);
 
 	}
 
@@ -147,21 +125,13 @@ class Mlatihan extends CI_Model
 	 //get daftar latihan by created by
 
 	public function get_report($createdby){
-
 		$this->db->select('*');
-
 		$this->db->from('tb_latihan latihan');
-
 		$this->db->join('tb_report-latihan report',
-
-						'latihan.id_latihan=report.id_latihan');
-
+			'latihan.id_latihan=report.id_latihan');
 		$this->db->where('create_by', $createdby);
-
 		$this->db->order_by('tgl_pengerjaan', 'asc');
-
 		$query = $this->db->get();
-
 		return $query->result_array();
 
 	}
@@ -169,19 +139,12 @@ class Mlatihan extends CI_Model
 
 
 	public function get_latihan($createdby){
-
 		$this->db->select('*');
-
 		$this->db->from('tb_latihan latihan');
-
 		$this->db->where('create_by', $createdby);
-
 		$this->db->where('status_pengerjaan', '1');
 
-		
-
 		$query = $this->db->get();
-
 		return $query->result_array();
 
 	}
@@ -189,21 +152,22 @@ class Mlatihan extends CI_Model
 
 
     //get hasil latihan
-
 	public function get_report_latihan($idlatihan){
-
 		$this->db->select("*");
-
 		$this->db->from('tb_report-latihan');
-
 		$this->db->where('id_latihan',$idlatihan);
-
 		$query = $this->db->get();
-
 		return $query->result_array();
 
 	}
-
+	//get nama latihan by bab
+	public function get_nama_bab($babid){
+		$this->db->select('judulBab');
+		$this->db->from('tb_bab');
+		$this->db->where('id',$babid);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
 
 ?>

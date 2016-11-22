@@ -389,26 +389,16 @@ function get_mapel_video($mapel){
      // ambil data video berdasarkan tingkat
 function get_tingkat_video($tingkat){
   $this->db->select( '*, video.id as videoID,namaDepan,namaBelakang,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
-
   $this->db->from( 'tb_video video' );
-
   $this->db->join( 'tb_guru guru', 'video.guruID=guru.id' );
-
   $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
-
   $this->db->join('tb_bab bab','subbab.babID=bab.id');
-
   $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
 
-
   $this->db->join('tb_tingkat tkt','tp.tingkatID=tkt.id');
-
   $this->db->where('video.status', '1');
-
   $this->db->where('tkt.id',$tingkat);
-
   $query = $this->db->get();
-
   return $query->result_array();
 }
 

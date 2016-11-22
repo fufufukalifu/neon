@@ -17,6 +17,7 @@
  <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
 
+
  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
         <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
  
