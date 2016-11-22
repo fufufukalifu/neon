@@ -36,7 +36,7 @@
  <div class="row">
   <div class="container">
    <!--START LIST PAKET dan SISWA -->
-   <div class="panel panel-default">
+   <div class="panel panel-inverse">
     <div class="panel-heading">
      <h3 class="panel-title text-center">Nama Tryout : <?=$nm_to ?></h3>
    </div>
@@ -44,7 +44,7 @@
    <div class="panel-body">
      <!-- END LIST paket n siswa yang sudah dia ADD -->
      <div class="col-md-6">
-      <div class="panel panel-default">
+      <div class="panel panel-teal">
        <div class="panel-heading">
         <h3 class="panel-title">Daftar Yang Akan DI Tambahkan Ke Try</h3>
         <input type="text" name="id" id="id_to" value="<?=$id_to;?>" hidden='true' >
@@ -143,7 +143,7 @@
 <!-- ########################################### -->
 <!-- START LIST paket n siswa yang sudah dia ADD -->
 <div class="col-md-6">
-  <div class="panel panel-default">
+  <div class="panel panel-teal">
    <div class="panel-heading">
     <h3 class="panel-title">Daftar Soal</h3>
   </div>

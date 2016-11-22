@@ -329,7 +329,7 @@ class Mbanksoal extends CI_Model {
     // mengetahui info tingkat soal
     public function get_info_soal($subBabID)
     {
-        $this->db->select('aliasTingkat,tp.keterangan as mp, judulBab, judulSubBab,');
+        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp,bab.id as id_bab, judulBab, subbab.id as id_subbab ,judulSubBab,');
          $this->db->from('tb_tingkat tkt' );
          $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
