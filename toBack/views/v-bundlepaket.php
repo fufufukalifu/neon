@@ -96,7 +96,15 @@
  <!-- End Tab pane Paket -->
  <!-- Start Tab pane Siswa -->
  <div class="tab-pane" id="siswa">
-  <!-- START TABEL SISWA -->
+  <!-- START TABEL SISWA --><br>
+  <select class="form-control" name="cabang">
+    <option>1</option>
+    <option>1</option>
+    <option>1</option>
+
+
+  </select>
+  <br>
   <table class="table table-striped" style="font-size: 13px" id="siswaBlmTo" width="100%">
    <thead>
     <tr>
@@ -255,6 +263,7 @@
           $('#tbpaket td input[type=checkbox]').prop('checked', false);
         }
       });
+      //####---
 
       // Check all siswa
       $('input[name=checkall_siswa]').click(function(){
@@ -264,6 +273,22 @@
           $('#siswaBlmTo td input[type=checkbox]').prop('checked', false);
         }
       });
+      //####---
+
+      // option untuk cabang
+      $.ajax({
+        type: "POST",
+        url: "<?php echo base_url() ?>index.php/toback/get_cabang_all_cabang/",
+        success: function(data){
+         $('select[name=cabang]').html('<option value="">-- Pilih Cabang  --</option>');
+
+         $.each(data, function(i, data){
+          $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
+        });
+       }
+
+     });
+      //####---
 
       
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
