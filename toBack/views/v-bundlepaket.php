@@ -66,7 +66,7 @@
         <table class="table table-bordered" style="font-size: 13px">
          <thead>
           <tr>
-           <th >Aksi</th>
+           <th> <input type="checkbox" name="checkall"> Aksi</th>
            <th >ID</th>
            <th>Nama paket</th>
            <th>Deskripsi</th>
@@ -97,10 +97,10 @@
  <!-- Start Tab pane Siswa -->
  <div class="tab-pane" id="siswa">
   <!-- START TABEL SISWA -->
-  <table class="table table-striped" style="font-size: 13px" id="siswaBlmTo">
+  <table class="table table-striped" style="font-size: 13px" id="siswaBlmTo" width="100%">
    <thead>
     <tr>
-     <th class="text-center">Aksi</th>
+     <th class="text-center"> <input type="checkbox" name="checkall_siswa"> Aksi</th>
      <th>ID</th>
      <th>Nama Depan</th>
      <th>Nama Belakang</th>
@@ -165,7 +165,7 @@
     </div>
     <div class="panel-body soaltambah">
       <form action="" id="">
-       <table class="table table-striped" id="listaddpaket" style="font-size: 13px">
+       <table class="table table-striped" id="listaddpaket" style="font-size: 13px" width="100%">
         <thead>
          <tr>
           <th>ID</th>
@@ -196,7 +196,7 @@
   <div class="panel-body soaltambah">
     <!-- START TABEL SISWA YG SUDAH DI ADD -->
     <form action="" id="">
-     <table class="table table-striped" id="tblist_siswa" style="font-size: 13px">
+     <table class="table table-striped" id="tblist_siswa" style="font-size: 13px" width="100%">
       <thead>
        <tr>
         <th>ID</th>
@@ -247,7 +247,25 @@
 
 
     $(document).ready(function() {
-      console.log(idTo);
+      //check all paket
+      $('input[name=checkall]').click(function(){
+        if(this.checked) {
+          $('#tbpaket td input[type=checkbox]').prop('checked', true);
+        }else{
+          $('#tbpaket td input[type=checkbox]').prop('checked', false);
+        }
+      });
+
+      // Check all siswa
+      $('input[name=checkall_siswa]').click(function(){
+        if(this.checked) {
+          $('#siswaBlmTo td input[type=checkbox]').prop('checked', true);
+        }else{
+          $('#siswaBlmTo td input[type=checkbox]').prop('checked', false);
+        }
+      });
+
+      
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
        "ajax": {
         "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
@@ -470,6 +488,8 @@
                     });
              }
            }
+
+
            function dropSiswa(idKey) {
             var id_to =$('#id_to').val();
             if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
@@ -495,5 +515,6 @@
 
 
            adda();
+
 
          </script>
