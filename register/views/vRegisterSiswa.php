@@ -1,5 +1,4 @@
 <main>
-<?php var_dump($cabang) ?>
     <section class="fullwidth-background bg-2">
 
         <div class="grid-row">
@@ -328,7 +327,7 @@
                     </div> 
                     <div class="grid-col grid-col-8">
                         <div class="form-group">
-                        <select class="form-control" name="bimbel" required>
+                        <select class="form-control" name="bimbel">
                                 <option value="">- Pilih Bimbel Kalian -</option>
                                 <option value="Neutron">Neutron</option>
                                 <option value="GO">GO</option>
@@ -344,7 +343,7 @@
                         </div> 
                         <div class="grid-col grid-col-8">
                             <div class="form-group">
-                                <select class="form-control" name="cabang" required>
+                                <select class="form-control" name="cabang">
                                     <option value="">- Pilih Cabang -</option>
                                     <?php foreach ($cabang as $cabang_item): ?>
                                     <option value="<?=$cabang_item->id ?>"><?=$cabang_item->namaCabang ?></option>
@@ -359,7 +358,7 @@
 
                         <div class="form-group">
 
-                            <input placeholder="Nomer Induk Siswa Neutron contoh : 120300xxx" type="text" class="login-input input-sm" name="noinduk" value="<?php echo set_value('noinduk'); ?>" data-parsley-required required>
+                            <input placeholder="Nomer Induk Siswa Neutron contoh : 120300xxx" type="text" class="login-input input-sm" name="noinduk" value="<?php echo set_value('noinduk'); ?>" data-parsley-required>
 
                             <i class="ico-tag9 form-control-icon"></i>
 

@@ -246,7 +246,11 @@ $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
             $cabangID = htmlspecialchars($this->input->post('cabang'));
 
 
-
+            if ($cabangID=="") {
+                 $noIndukNeutron = NULL;
+                 $cabangID = NULL;
+            } 
+            
 
 
 
