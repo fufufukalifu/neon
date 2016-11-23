@@ -98,7 +98,7 @@
 
                                 <label class="control-label">Jumlah Soal <span class="text-danger">*</span></label>
 
-                                <select name="jumlah_soal" class="form-control" required>
+                                <select name="jumlah_soal" class="form-control" id="jumlah_soal" required>
 
                                     <option value="">-Pilih Jumlah Soal-</option>
 
@@ -603,8 +603,14 @@ function edit_paket(id)
             $('[name="nama_paket"]').val(data.nm_paket);
 
             $('[name="deskripsi"]').val(data.deskripsi);
-
+           $('[name="jumlah_soal"]').val(data.jumlah_soal);
             $('[name="durasi"]').val(data.durasi);
+           if (data.random ==1) {
+             $('#idrand').attr('checked', true);
+           } else {
+             $('#idrand').attr('unchecked', true);
+           }
+           
 
 
 
