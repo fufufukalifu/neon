@@ -1,11 +1,34 @@
 <!-- Start pengecekan jika pilihan 5 atau 4 pilihan -->
 <?php 
 
+if (!isset($piljawaban['0']['id_pilihan']) || !isset($piljawaban['1']['id_pilihan']) || !isset($piljawaban['2']['id_pilihan']) || !isset($piljawaban['3']['id_pilihan'])) {
+    $piljawaban['0']['id_pilihan']="";
+    $piljawaban['0']['jawaban']="";
+    $piljawaban['0']['gambar']="";
+    // 
+      $piljawaban['1']['id_pilihan']="";
+    $piljawaban['1']['jawaban']="";
+    $piljawaban['1']['gambar']="";
+    // ====
+
+      $piljawaban['2']['id_pilihan']="";
+    $piljawaban['2']['jawaban']="";
+    $piljawaban['2']['gambar']="";
+
+      $piljawaban['3']['id_pilihan']="";
+    $piljawaban['3']['jawaban']="";
+    $piljawaban['3']['gambar']="";
+
+      $piljawaban['4']['id_pilihan']="";
+    $piljawaban['4']['jawaban']="";
+    $piljawaban['4']['gambar']="";
+}
 if (!isset($piljawaban['4']['id_pilihan'])) {
     $piljawaban['4']['id_pilihan']="";
     $piljawaban['4']['jawaban']="";
     $piljawaban['4']['gambar']="";
 } 
+
 
 ?>
 <!-- Strat Script Matjax -->
@@ -353,10 +376,10 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons" >
                                       <label class="btn btn-teal btn-outline " id="empatpil">
-                                        <input type="radio" name="opjumlah" value="4" autocomplete="off" > 4 Pilihan
+                                        <input type="radio" name="opjumlah" value="4" autocomplete="off" id="radio4"> 4 Pilihan
                                       </label>
                                       <label class="btn btn-teal btn-outline" id="limapil">
-                                        <input type="radio" name="opjumlah"  value="5" autocomplete="off" checked="true"> 5 Pilihan
+                                        <input type="radio" name="opjumlah"  value="5" autocomplete="off" id="radio5"> 5 Pilihan
                                       </label>
                                  </div>
                             </div>
@@ -676,9 +699,11 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $("#pilihan").hide();
             $("#pilihanop").hide();
             $("#empatpil").addClass('active');
+            $("#radio4").attr('checked',true);
             
           }else{
             $("#limapil").addClass('active');
+            $("#radio5").attr('checked',true);
           }
           // ########################
 
