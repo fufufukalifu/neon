@@ -31,6 +31,8 @@
                             <!-- END Pencarian tab3 -->
                             <!-- Start data pertanyaan guru-->
                             <div class='main_div'>
+
+                              <input type="text" id="cekload-all" value="<?=$cekloadAll?>" hidden="true">
                               <ul class="load_content" id="load_more_ctnt">
 
                                <?php foreach ($questions as $row):
@@ -61,7 +63,7 @@
                           <div class="more_div">
                             <a href="#">
                               <div id="load_more_<?php echo $id; ?>" class="more_tab">
-                                <div class="more_button" id="<?php echo $id; ?>">Load More 
+                                <div class="more_button more-all" id="<?php echo $id; ?>">Load More 
                                 </div>
                               </a>
                             </div>
@@ -97,6 +99,7 @@
                             <!--  -->
                             <!--Start data Semau  pertanyaan -->
                             <div class='main_div'>
+                            <input type="text" id="cekload-mapel" value="<?=$cekloadMaple?>" hidden="true">
                               <ul class="load_content" id="load_more_ctnt1">
 
                                <?php foreach ($my_questions as $value):
@@ -127,7 +130,7 @@
                           <div class="more_div">
                             <a href="#">
                               <div id="load_more1_<?php echo $id1; ?>" class="more_tab">
-                                <div class="more_button1" id="<?php echo $id1; ?>">Load More Pertanyaan Saya
+                                <div class="more_button1 more-mapel" id="<?php echo $id1; ?>">Load More Pertanyaan Saya
                                 </div>
                               </a>
                             </div>
@@ -145,6 +148,23 @@
               </section>
 
               <script type="text/javascript">
+                $(document).ready(function(){
+                  // Start cek load more all pertanyaan 
+                  var cekloadAll = $('#cekload-all').val();
+                  if (cekloadAll == 'false') {
+                    $('.more-all').hide();
+                  } 
+                  // END cek load more all pertanyaan
+
+                  // Start cek load more maple pertanyaan 
+                   var cekloadMaple = $('#cekload-mapel').val();
+                  if (cekloadMaple == 'false') {
+                    $('.more-mapel').hide();
+                  } 
+                  // END cek load mmore mapel pertanyaan  
+
+                });
+
                 /*FUNGSI LOAD MORE*/
                 $(function() {
                   $('.more_button').live("click",function() 

@@ -150,7 +150,7 @@
       APPPATH.'modules/konsulback/views/v-back-daftar-konsul.php'
       );
     // $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
-    $limit=10;
+    $limit=2;
     $data['questions']=$this->Mkonsulback->all($limit);
     $penggunaID=$this->session->userdata['id'];
     $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
@@ -158,15 +158,106 @@
     $data['my_questions']=$this->Mkonsulback->get_my_questions($mataPelajaranID,$limit);
     // $data['questions_bylevel']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa());
 
+    // Start cek load more all ask/konsul
+       // panjang array
+       $lnAll=count($data['questions']);
+       // get id last id untuk cek ketersedian pertanyaan semua
+       $idlastAll=$lnAll-1;
+       $last_askID=$data['questions'][$idlastAll]['pertanyaanID'];
+       $data['cekloadAll']=$this->cek_emty_konsul_all($last_askID);
+      
+    // ##END cek load more all ask/ konsu.
 
-    // $this->parser->parse( 'templating/index', $data );
+    // Start cek load more all ask/konsul
+       // panjang array
+       $lnMapel=count($data['my_questions']);
+       // get id last id untuk cek ketersedian pertanyaan semua
+       $idlastMapel=$lnMapel-1;
+       $last_askIDMp=$data['my_questions'][$idlastMapel]['pertanyaanID'];
+       $data['cekloadMaple']=$this->cek_emty_konsul_mapel($last_askIDMp);
+      
+    ##END cek load more all ask/ konsu.
+
     $this->parser->parse('templating/index-b-guru', $data);
+    }
+
+    // public function listkonsul()
+    // {
+    //   $data = array(
+    //   'judul_halaman' => 'Neon - Konsultasi',
+    //   'judul_header'=> 'Daftar Pertanyaan'
+    //   );
+
+    // $data['files'] = array(
+    //   APPPATH.'modules/konsulback/views/v-back-daftar-konsul.php'
+    //   );
+    // // $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+    // $limit=2;
+    // $data['questions']=$this->Mkonsulback->all($limit);
+    // $penggunaID=$this->session->userdata['id'];
+    // $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+    // $mataPelajaranID=$dat_guru['mataPelajaranID'];
+    // $data['my_questions']=$this->Mkonsulback->get_my_questions($mataPelajaranID,$limit);
+
+    // //Start cek load more all ask/konsul
+    //    // panjang array
+    //    $lnAll=count($questions);
+    //    // get id last id untuk cek ketersedian pertanyaan semua
+    //    $idlastAll=ln-1;
+    //    $last_pertanyaanID=$data['questions'][$idlast]['pertanyaanID'];
+    //    $cekloadAll=$this->cek_emty_konsul_all($last_pertanyaanID);
+    // // ##END cek load more all ask/ konsu.
+
+    // //Start cek load more all ask/konsul
+    //    // panjang array
+    //    $lnMapel=count($questions);
+    //    // get id last id untuk cek ketersedian pertanyaan pr mapel
+    //    $idlastMapel=ln-1;
+    //    $last_pertanyaanID=$data['my_questions'][$idlast]['pertanyaanID'];
+    //    // $cekloadMaple=$this->cek_emty_konsul_mapel($last_pertanyaanID);
+    // // ##END cek load more ask/ konsu per mapel.
+    //   $this->parser->parse('templating/index-b-guru', $data);
+    // }
+    // cek validasi disable or enable load more untuk 
+    public function cek_emty_konsul_all($last_askID)
+    {
+      $countArr=$this->Mkonsulback->count_konsulAll($last_askID);
+      
+      if ($countArr == 0) {
+        return 'false';
+      } else {
+        return 'true';
+      }
+      
+    }
+    // cek validasi disable or enable load more untuk 
+    public function cek_emty_konsul_mapel($last_askIDMp)
+    {
+      $penggunaID=$this->session->userdata['id'];
+      $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+      $mataPelajaranID=$dat_guru['mataPelajaranID'];
+
+      $countArr=$this->Mkonsulback->count_konsulMapel($last_askIDMp,$mataPelajaranID);
+
+      if ($countArr == 0) {
+        return 'false';
+      } else {
+        return 'true';
+      }
+      
     }
     // function more listkonsul
     public function moreallsoal()
     {
        $getLastContentId=$this->input->post('getLastContentId');
       $data['moreask']=$this->Mkonsulback->more_all_soal($getLastContentId);
+
+        $lnAll=count($data['moreask']);
+       // get id last id untuk cek ketersedian pertanyaan semua
+       $idlastAll=$lnAll-1;
+       $last_pertanyaanID=$data['moreask'][$idlastAll]['pertanyaanID'];
+       $data['cekloadAll2']=$this->cek_emty_konsul_all($last_pertanyaanID);
+
       $this->load->view('v-load-all-ask',$data);
     }
         // function more listkonsul
@@ -177,6 +268,12 @@
       $data['mataPelajaranID']=$dat_guru['mataPelajaranID'];
       $data['getLastContentId']=$this->input->post('getLastContentId');
       $data['moreask1']=$this->Mkonsulback->more_guru_soal($data);
+
+      $lnMapel=count($data['moreask1']);
+       // get id last id untuk cek ketersedian pertanyaan semua
+       $idlastMapel=$lnMapel-1;
+       $last_askIDMp=$data['moreask1'][$idlastMapel]['pertanyaanID'];
+       $data['cekloadMapel2']=$this->cek_emty_konsul_mapel($last_askIDMp);
      
       // var_dump($getLastContentId);
       $this->load->view('v-load-mapel-ask',$data);

@@ -1,3 +1,4 @@
+ <input type="text" id="cekload-mapel2" value="<?=$cekloadMapel2;?>" hidden="true">
 <?php
 // include "dbConfig.php";
 
@@ -33,12 +34,18 @@ $message1=$value['isiPertanyaan'];
 <?php endforeach ?>
 
 <a href="#"><div id="load_more1_<?php echo $id; ?>" class="more_tab">
-<div id="<?php echo $id; ?>" class="more_button1">Load More Pertanyaan saya</div></a>
+<div id="<?php echo $id; ?>" class="more_button1 more-mapel">Load More Pertanyaan saya</div></a>
 </div>
 
-<?php
-// } else{
-// echo "<div class='all_loaded'>No More Content to Load</div>";
-// }
-// }
-?>
+<script type="text/javascript">
+  $(document).ready(function(){     
+                  var cekloadMaple2 = $('#cekload-mapel2').val();
+                  if (cekloadMaple2 == 'false') {
+                    $('.more-all').hide();
+                    console.log(cekloadMaple2);
+                  } else {
+                      console.log(cekloadMaple2);
+                  }
+
+                });
+</script>

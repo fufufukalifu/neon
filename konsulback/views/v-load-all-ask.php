@@ -1,3 +1,4 @@
+   <input type="text" id="cekload-all2" value="<?=$cekloadAll2;?>" hidden="true">
 <?php
 // include "dbConfig.php";
 
@@ -7,6 +8,7 @@
 // $result=mysql_query("select id, isiPertanyaan from tb_k_pertanyaan where id <".$getLastContentId." order by id desc limit 1");
 // $count=mysql_num_rows($result);
 // if($count>0){
+
 foreach ($moreask as $row):
 	
 	$id=$row['pertanyaanID'];
@@ -33,7 +35,7 @@ $message=$row['isiPertanyaan'];
 <?php endforeach ?>
 
 <a href="#"><div id="load_more_<?php echo $id; ?>" class="more_tab">
-<div id="<?php echo $id; ?>" class="more_button">Load More</div></a>
+<div id="<?php echo $id; ?>" class="more_button more-all">Load More</div></a>
 </div>
 
 <?php
@@ -42,3 +44,16 @@ $message=$row['isiPertanyaan'];
 // }
 // }
 ?>
+
+<script type="text/javascript">
+  $(document).ready(function(){     
+                  var cekloadAll2 = $('#cekload-all2').val();
+                  if (cekloadAll2 == 'false') {
+                    $('.more-all').hide();
+                    console.log(cekloadAll2);
+                  } else {
+                      console.log(cekloadAll2);
+                  }
+
+                });
+</script>
