@@ -265,7 +265,7 @@
       <li class="dropdown profile">
         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
           <span class="meta">
-            <span class="avatar"><img src="<?= base_url('assets/image/avatar/avatar7.jpg') ?>" class="img-circle" alt="" /></span>
+            <span class="avatar"></span>
             <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['USERNAME'];?></span>
             <span class="caret"></span>
           </span>
@@ -877,7 +877,14 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 
            loadTkt();
 // ####################################################
-
+  $.ajax({
+   type: "POST",
+   url: "<?= base_url() ?>guru/get_avatar_guru",
+   success: function (data) { 
+    console.log(data);
+      $('span.avatar').html(data);
+  }
+});
 </script>
             <!-- Cometchat -->
 <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">

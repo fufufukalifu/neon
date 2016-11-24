@@ -1,176 +1,312 @@
 <?php 
-/**
-* 
-*/
-class Komenback extends MX_Controller
-{
+ /**
+  * 
+  */
+  class Konsulback extends MX_Controller
+  {
+    private $limit = 10;
+    function __construct()
+    {
+      $this->load->helper( 'session' );
+        parent::__construct();
+        $this->load->model( 'Mkonsulback' );
+        $this->load->library('parser');
+        $this->load->model('konsultasi/mkonsultasi');
+        $this->load->model('tryout/mtryout');
+        $this->load->model('tingkat/mtingkat');
+        $this->load->model('matapelajaran/mmatapelajaran');
 
-  function __construct(){
-   $this->load->library('parser');
-   $this->load->model('mkomen');
-   $this->load->model('video/mvideos');
-   $this->load->model('guru/mguru');
+        //cek kalo bukan guru lemparin.
+        if ($this->session->userdata('loggedin')==true) {
+            if ($this->session->userdata('HAKAKSES')=='siswa'){
+             // redirect('welcome');
+            }else if($this->session->userdata('HAKAKSES')=='guru'){
+             // redirect('guru/dashboard');
+            }else{
+            // redirect('login');
+            }
+        }
+    }
+    //history di guru 
+    public function myhistory()
+    {
 
-
- }
-
- public function index() {
-  $data['judul_halaman'] = "Dashboard Admin";
-  $data['files'] = array(
-   APPPATH . 'modules/komenback/views/v-table-komen.php',
-   );
-  $hakAkses = $this->session->userdata['HAKAKSES'];
-
-  if ($hakAkses == 'admin') {
-            // jika admin
-   $this->parser->parse('admin/v-index-admin', $data);
- } elseif ($hakAkses == 'guru') {
-            // jika guru
-   // redirect(site_url('guru/dashboard/'));
-  $data['judul_halaman'] = "Dashboard Guru : Komen";
-  $data['files'] = array(
-   APPPATH . 'modules/komenback/views/v-table-komen.php',
-   );
-  $this->parser->parse('templating/index-b-guru', $data);
-
-} elseif ($hakAkses == 'siswa') {
- redirect(site_url('welcome'));
-} else {
-            // jika siswa redirect ke homepage
- redirect(site_url('login'));
-}
-}
-
-function ajax_data_komen(){
-  $list = $this->mkomen->get_all_komen();
-            // var_dump($list);
-
-
-  $data = array();
-
-  foreach ( $list as $komen_item ) {
-
-    $row = array();
-    $row[] = $komen_item->komenID;
-      // $row[] = htmlspecialchars(substr($komen_item->isiKomen, 0, 100));
-    $row[] = htmlspecialchars($komen_item->isiKomen);
-
-    $row[] = $komen_item->date_created;
-    $row[] = $komen_item->judulVideo;
-    $row[] = "
-    <a class='btn btn-primary' onclick='respon(".$komen_item->komenID.")'><i class='icon ico-pencil' title='Respon'></i></a> 
-    <a class='btn btn-danger' onclick='spam(".$komen_item->komenID.")'><i class='icon ico-remove3' title='Hapus'></i></a>
-    <a class='btn btn-success' onclick='check(".$komen_item->videoID.")'><i class='ico-bubble-video-chat' title='Check Video'></i></a>
-    ";
-
-
-
-    $data[] = $row;
-  }
-
-  $output = array(
-    "data"=>$data,
-    );
-
-  echo json_encode( $output );
-}
-
-
-public function addkomen() {
-      //select dulu data dari komen berdasarkan komen
-  $idKomen = $this->input->post('idKomen');
-  $komenpost = $this->input->post('isiKomen');
-
-  $komen = $this->mkomen->get_komen_by_idkomen($idKomen);
-  if ($komen!=array()) {
-   $isikomen = "<blockquote>".$komen[0]['isiKomen']."</blockquote>".$komenpost;
-   $datas = array('isikomen'=>$isikomen,
-    'videoID'=>$komen[0]['videoID'],
-    'userID'=>$this->session->userdata('id'),
-    'status'=>1
-    );
-   $this->mvideos->insertComment($datas);
-
- }else{
-  echo "gagal";
-}
-
-}
-
-function seevideo($idvideo){
-        //data untuk templating
-  $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
-  if ($data['videosingle'] == array()) {
-    $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
-
-  } else {
-            //ambil id bab.
-    $idbab = $this->load->mvideos->get_nama_sub_by_id_video($idvideo)['id'];
-    $video_by_bab = $this->mvideos->get_all_video_by_bab($idbab);
-
-            //ambil satu video bedasarkan idnya
-    $namasub = $this->load->mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
-    $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
-    $onevideo = $data['videosingle'];
-
-    if($onevideo[0]->namaFile==NULL){
-      // $judul = $onevideo[0]->link;
-      $judul = "<iframe width='100%' height='430' src='".$onevideo[0]->link."''></iframe>";
-    }else{
-      $link = base_url()."assets/video/".$onevideo[0]->namaFile;
-      $judul = "<video id='my-video' class='video-js' controls preload='auto'
-      poster='MY_VIDEO_POSTER.jpg' data-setup='{}'>
-      <source src='".$link."'  style='width: 90%;height: 400px'  type='video/mp4'>
-        <source src='".$link."' type='video/webm'>
-          <p class='vjs-no-js'>
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href='http://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
-          </p>
-        </video>";
-      }
-
-    // echo $judulxz;
-
-      $guruID = $onevideo[0]->guruID;
-      $penulis = $this->load->mguru->get_penulis($guruID)[0];
-      $date = strtotime($onevideo[0]->date_created);
-      $data = array(
-        'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
-        'judul_header' =>  $onevideo[0]->judulVideo,
-        'judul_video' => $onevideo[0]->judulVideo,
-        'deskripsi' => $onevideo[0]->deskripsi,
-        'file' => $judul,
-        'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
-        'biografi' => $penulis['biografi'],
-        'photo' => $penulis['photo'],
-        'nama_sub' => $namasub,
-        'jumlah_comment'=>count($this->mkomen->get_komen_byvideo($idvideo)),
-        'tanggal'=>date("d", $date),
-        'bulan'=>date("M", $date),
-        'avatar'=>base_url('assets/image/photo/guru/').$penulis['photo'],
-        );
-      $subid = $onevideo[0]->subBabID;
-            //ambil list semua video yang memiliki sub id yang sama
-      $data['videobysub'] = $this->load->mvideos->get_video_by_sub($subid);
-      $data['video_by_bab'] = $this->mvideos->get_all_video_by_bab($idbab);
-
-      $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
-
+      $data['judul_halaman'] = "History Konsultasi";
       $data['files'] = array(
-        APPPATH . 'modules/komenback/views/v-single-video-komen.php',
+        APPPATH . 'modules/konsulback/views/v-history-konsul.php',
         );
+      $penggunaID=$this->session->userdata['id'];
+      // get jumlah respon
+      $data['countJawab']=$this->Mkonsulback->get_count_jawab($penggunaID);
+      // get data guru
+      $datguru=$this->Mkonsulback->get_datguru($penggunaID);
+      $data['nama']=$datguru['namaDepan'].' '.$datguru['namaBelakang'];
+      $data['photo']=base_url().'assets/image/photo/siswa/'.$datguru['photo'];
+      $data['countLove']=$this->Mkonsulback->get_count_love($penggunaID);
+      // get respon atau jawaban
+      $data['respon']=$this->Mkonsulback->get_respone_by_guru($penggunaID);
+      $tamppoin=($data['countJawab']*5)+($data['countLove']*10);
+      $data['poin']=$tamppoin;
+      //get data komen untuk tabel histrori komen
+      $data['komen']=$this->Mkonsulback->get_komen_love($penggunaID);
 
-      if ($this->session->userdata('HAKAKSES')=='admin') {
+         #START cek hakakses#
+      $hakAkses=$this->session->userdata['HAKAKSES'];
+      if ($hakAkses=='admin') {
+         // jika admin
         $this->parser->parse('admin/v-index-admin', $data);
-        # code...
-      } else {
+      } elseif($hakAkses=='guru'){
+         // jika guru
         $this->parser->parse('templating/index-b-guru', $data);
-        # code...
+      }else{
+        // jika siswa redirect ke welcome
+        redirect(site_url('login'));
       }
-      
+          #END Cek USer#
+    }
+    // history guru berdasarkan id guru
+    public function history($penggunaID)
+    {
+
+      $data['judul_halaman'] = "History Konsultasi";
+      $data['files'] = array(
+        APPPATH . 'modules/konsulback/views/v-history-konsul.php',
+        );
+      // get jumlah respon
+      $data['countJawab']=$this->Mkonsulback->get_count_jawab($penggunaID);
+      // get data guru
+      $datguru=$this->Mkonsulback->get_datguru($penggunaID);
+      $data['nama']=$datguru['namaDepan'].' '.$datguru['namaBelakang'];
+      $data['photo']=base_url().'assets/image/photo/siswa/'.$datguru['photo'];
+      $data['countLove']=$this->Mkonsulback->get_count_love($penggunaID);
+      // get respon atau jawaban
+      $data['respon']=$this->Mkonsulback->get_respone_by_guru($penggunaID);
+      $tamppoin=($data['countJawab']*5)+($data['countLove']*10);
+      $data['poin']=$tamppoin;
+      //get data komen untuk tabel histrori komen
+      $data['komen']=$this->Mkonsulback->get_komen_love($penggunaID);
+         #START cek hakakses#
+      $hakAkses=$this->session->userdata['HAKAKSES'];
+      if ($hakAkses=='admin') {
+         // jika admin
+        $this->parser->parse('admin/v-index-admin', $data);
+      } elseif($hakAkses=='guru'){
+         // jika guru
+        $this->parser->parse('templating/index-b-guru', $data);
+      }else{
+        // jika siswa redirect ke welcome
+        redirect(site_url('login'));
+      }
+          #END Cek USer#
+    }
+
+    public function aq_konsul ()
+    {
+      $data['judul_halaman'] = "Akumulasi Konsultasi";
+      $data['files'] = array(
+        APPPATH . 'modules/konsulback/views/v-aq-konsul.php',
+        );
+      $dat_guru=$this->Mkonsulback->get_aq_konsul();
+      $tampAq=array();
+      foreach ($dat_guru as $value) {
+        $penggunaID=$value['penggunaID'];
+        $love=$this->Mkonsulback->get_count_love($penggunaID);
+        $datguru=$this->Mkonsulback->get_datguru($penggunaID);
+        $countJawab=$this->Mkonsulback->get_count_jawab($penggunaID);
+        $poin=($countJawab*5)+($love*10);
+        $tampAq[]=array('poin'=>$poin,
+                'nama'=>$value['namaDepan'].' '.$value['namaBelakang'],
+                'mapel'=>$value['mapel'],
+                'love'=>$love,
+                'countJawab'=>$countJawab,
+                'penggunaID'=>$penggunaID
+                );
+      }
+      rsort($tampAq);
+      $data['dat_aq']=$tampAq;
+         #START cek hakakses#
+      $hakAkses=$this->session->userdata['HAKAKSES'];
+      if ($hakAkses=='admin') {
+         // jika admin
+        $this->parser->parse('admin/v-index-admin', $data);
+      } elseif($hakAkses=='guru'){
+         // jika guru
+        $this->parser->parse('templating/index-b-guru', $data);
+      }else{
+        // jika siswa redirect ke welcome
+        redirect(site_url('login'));
+      }
+         // #END Cek USer#
+    }
+
+    public function listkonsul()
+    {
+      $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Daftar Pertanyaan'
+      );
+
+    $data['files'] = array(
+      APPPATH.'modules/konsulback/views/v-back-daftar-konsul.php'
+      );
+    // $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+    $limit=10;
+    $data['questions']=$this->Mkonsulback->all($limit);
+    $penggunaID=$this->session->userdata['id'];
+    $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+    $mataPelajaranID=$dat_guru['mataPelajaranID'];
+    $data['my_questions']=$this->Mkonsulback->get_my_questions($mataPelajaranID,$limit);
+    // $data['questions_bylevel']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa());
+
+
+    // $this->parser->parse( 'templating/index', $data );
+    $this->parser->parse('templating/index-b-guru', $data);
+    }
+    // function more listkonsul
+    public function moreallsoal()
+    {
+       $getLastContentId=$this->input->post('getLastContentId');
+      $data['moreask']=$this->Mkonsulback->more_all_soal($getLastContentId);
+      $this->load->view('v-load-all-ask',$data);
+    }
+        // function more listkonsul
+    public function moremapelsoal()
+    {
+      $penggunaID=$this->session->userdata['id'];
+      $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+      $data['mataPelajaranID']=$dat_guru['mataPelajaranID'];
+      $data['getLastContentId']=$this->input->post('getLastContentId');
+      $data['moreask1']=$this->Mkonsulback->more_guru_soal($data);
+     
+      // var_dump($getLastContentId);
+      $this->load->view('v-load-mapel-ask',$data);
+    }
+    // Test
+    public function pagination()
+    {
+      $this->load->library('pagination');
+      $config['base_url']='http://localhost/netjoo-2/index.php/konsulback/pagination';
+      $config['per_page']=2;
+      $config['num_link']=2;
+      $config['total_rows']=$this->db->get('tb_k_pertanyaan')->num_rows();
+      $this->pagination->initialize($config);
+      $data['query']=$this->db->get('tb_k_pertanyaan',$config['per_page'],$this->uri->segment(3));
+      var_dump($data['query']);
+      $this->load->view('konsulback/test.php', $data);
+
 
     }
-  }
 
-}
-?>
+  function get_id_siswa(){
+   return $this->Mkonsulback->get_id_siswa();
+
+  }
+    function get_tingkat_siswa(){
+    $id_tingkat = $this->mtingkat->get_level_by_siswaID($this->get_id_siswa());
+    if ($id_tingkat) {
+    return $id_tingkat[0]['tingkatID'];
+    } 
+    
+  }
+  // test
+    // ajax pagination
+    public function ajax()
+    {
+      // $this->load->model('Mkonsulback', 'tb_k_pertanyaan');
+      // $query = $this->tb_k_pertanyaan->all($this->limit);
+      // $total_rows = $this->tb_k_pertanyaan->count();
+      // $this->load->helper('app');
+      // $pagination_links = pagination($total_rows, $this->limit);
+      // $data['pagination']=compact('query', 'pagination_links');
+      // if ( ! $this->input->is_ajax_request()) $this->load->view('v-hpagination');
+      // $this->load->view('v-ajax-pagination', $data);
+
+      // if ( ! $this->input->is_ajax_request()) $this->load->view('v-fpagination');
+      ###########################################################
+      // Konfig halaman
+      #######################################################
+      $data['judul_halaman']='Neon - Konsultasi';
+      $data['judul_header']='Daftar Pertanyaan';
+
+      // $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+      // get data semua pertanyaan
+      $data['questions']=$this->mkonsultasi->get_all_questions();
+      $penggunaID=$this->session->userdata['id'];
+      $dat_guru=$this->Mkonsulback->get_datguru($penggunaID);
+      $mataPelajaranID=$dat_guru['mataPelajaranID'];
+      // get pertanyaan berdasarkan keahlian guru
+      $data['my_questions']=$this->Mkonsulback->get_my_questions($mataPelajaranID,$this->limit);
+      ###################################
+      // Konfig pagination
+      ####################################
+      $this->load->model('Mkonsulback', 'tb_k_pertanyaan');
+      //query1 = all pertanyaan
+      $data['query'] = $this->tb_k_pertanyaan->all($this->limit);
+      //query2 =  pertanyaan berdasarkan mp
+      // $data['query2'] = $this->tb_k_pertanyaan->all($this->limit);
+      $total_rows = $this->tb_k_pertanyaan->count();
+      $this->load->helper('app');
+      // pagination untuk tab semua pertanyaan
+      $data['pagination_links'] = pagination($total_rows, $this->limit);
+      // pagination untuk tab pertanyaan berdasarkan keahlian guru
+      $data['pagination_links1'] = pagination($this->Mkonsulback->count_my_questions($mataPelajaranID),$this->limit);
+      $data['test']='hekoooo';
+      // $data['pagination']=compact('query', 'pagination_links');
+      
+      ######################################
+      // Pengecekan Untuk Jaquery pagination 
+      ######################################
+      if ( ! $this->input->is_ajax_request()){
+              $data['files'] = array(
+        APPPATH.'modules/konsulback/views/v-ajax-pagination.php'
+        );
+                     $data['allasks'] = array(
+        APPPATH.'modules/konsulback/views/v-ajax-all-ask.php'
+        );
+                                   $data['myasks'] = array(
+        APPPATH.'modules/konsulback/views/v-ajax-my-ask.php'
+        );
+                     $this->load->view('templating/index-b-guru', $data);
+      }else{
+        // hasil view tab pagination
+        $this->load->view('v-ajax-my-ask',$data);
+        // $this->load->view('v-ajax-all-ask',$data);
+      }
+
+      
+    } 
+
+    public function konsultasi($id_pertanyaan)
+    {
+       $single_pertanyaan = $this->mkonsultasi->get_pertanyaan($id_pertanyaan)[0];
+        $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
+        $date = $single_pertanyaan['date_created'];
+
+        $timestamp = strtotime($date);
+
+        $data = array(
+          'judul_halaman' => 'Neon - Konsultasi',
+          'judul_header'=> $single_pertanyaan['judulPertanyaan'],
+          'isi'=> $single_pertanyaan['isiPertanyaan'],
+          'author'=> $single_pertanyaan['namaDepan']." ".$single_pertanyaan['namaBelakang'],
+          'jumlah'=>$jumlah,
+          'sub'=>$single_pertanyaan['judulSubBab'],
+          'akses'=>$single_pertanyaan['hakAkses'],
+          'id_pertanyaan'=>$id_pertanyaan,
+          'id_pengguna'=>$this->session->userdata('id'),
+          'tanggal'=>date("d", $timestamp),
+          'bulan'=>date("M", $timestamp),
+          );
+            // print_r($data);
+        $data['isi'] = $single_pertanyaan['isiPertanyaan'];
+        $data['data_postingan'] = $this->mkonsultasi->get_postingan($id_pertanyaan);
+        $data['files'] = array(
+          APPPATH.'modules/konsulback/views/v-konsultasi-back.php'
+          );
+
+
+
+       $this->parser->parse('templating/index-b-guru', $data);
+    }
+
+  } ?>

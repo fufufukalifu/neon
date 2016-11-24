@@ -15,6 +15,8 @@ class Register extends MX_Controller {
         $this->load->library('parser');
 
         $this->load->model('mregister');
+        $this->load->model('cabang/mcabang');
+
 
         $this->load->model('siswa/msiswa');
 
@@ -69,6 +71,7 @@ class Register extends MX_Controller {
 //        $this->load->view('templating/t-footer');
 
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['cabang'] = $this->mcabang->get_all_cabang();
 
         $data = array(
 
@@ -89,7 +92,8 @@ class Register extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-footer.php',
 
         );
-
+$data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['cabang'] = $this->mcabang->get_all_cabang();
 
 
         $this->parser->parse('templating/index', $data);
@@ -235,13 +239,18 @@ class Register extends MX_Controller {
 //data siswa
 
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
-
             $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-
             $alamat = htmlspecialchars($this->input->post('alamat'));
-
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
+            $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+            $cabangID = htmlspecialchars($this->input->post('cabang'));
 
+
+            if ($cabangID=="") {
+                 $noIndukNeutron = NULL;
+                 $cabangID = NULL;
+            } 
+            
 
 
 
@@ -325,6 +334,8 @@ class Register extends MX_Controller {
                 'penggunaID' => $penggunaID,
 
                 'tingkatID' => $tingkatID,
+                'noIndukNeutron'=>$noIndukNeutron,
+                'cabangID'=>$cabangID
 
             );
 

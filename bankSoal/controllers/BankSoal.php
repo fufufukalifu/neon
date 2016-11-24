@@ -998,14 +998,14 @@ class Banksoal extends MX_Controller {
         $idC = htmlspecialchars($this->input->post('idpilC'));
         $idD = htmlspecialchars($this->input->post('idpilD'));
         $idE = htmlspecialchars($this->input->post('idpilE'));
-        $a = $this->input->post('a');
-        $b = $this->input->post('b');
-        $c = $this->input->post('c');
-        $d = $this->input->post('d');
-        $e = $this->input->post('e');
+        $data['a'] = $this->input->post('a');
+        $data['b'] = $this->input->post('b');
+        $data['c']= $this->input->post('c');
+        $data['d'] = $this->input->post('d');
+        $data['e'] = $this->input->post('e');
         #END post data pilihan jawaban#
         //keterangan *kesulitan index 1-3
-
+// var_dump(jum_pilihan);
 
         $data['UUID'] = $UUID;
         $data['dataSoal'] = array(
@@ -1027,7 +1027,7 @@ class Banksoal extends MX_Controller {
         // data['id_soal'] digunakan untuk function pengecekan jumlah pilihan
         $data['id_soal']=$soalID;
         $data['jum_pilihan']=$jum_pilihan;
-        $data['e']=$e;
+       
         ######################
         // cek jumlah pilihan jawaban di db
        $this->count_pilihan($data);
@@ -1040,42 +1040,42 @@ class Banksoal extends MX_Controller {
                $data['dataJawaban']  = array(
                   array(
                     'pilihan' => 'A',
-                    'jawaban' => $a,
+                    'jawaban' => $data['a'],
                 ),
                 array(
                     'pilihan' => 'B',
-                    'jawaban' => $b,
+                    'jawaban' => $data['b'],
                 ),
                 array(
                     'pilihan' => 'C',
-                    'jawaban' => $c,
+                    'jawaban' => $data['c'],
                 ),
                 array(
                     'pilihan' => 'D',
-                    'jawaban' => $d,
+                    'jawaban' => $data['d'],
                 )
                );
             } else {
                 $data['dataJawaban']  = array(
                    array(
                     'pilihan' => 'A',
-                    'jawaban' => $a,
+                    'jawaban' => $data['a'],
                 ),
                 array(
                     'pilihan' => 'B',
-                    'jawaban' => $b,
+                    'jawaban' => $data['b'],
                 ),
                 array(
                     'pilihan' => 'C',
-                    'jawaban' => $c,
+                    'jawaban' => $data['c'],
                 ),
                 array(
                     'pilihan' => 'D',
-                    'jawaban' => $d,
+                    'jawaban' => $data['d'],
                 ),
                 array(
                     'pilihan' => 'E',
-                    'jawaban' => $e,
+                    'jawaban' => $data['e'],
                 )
                );
             }
@@ -1085,13 +1085,14 @@ class Banksoal extends MX_Controller {
             // $this->Mbanksoal->ch_jawaban($data);
         } else {
             #jika inputan gambar
-
             // call functiom upload gamabar
             $this->ch_img_jawaban($soalID);
         }
         #END pengecekan jenis inputan jawaban#
         redirect(site_url('banksoal/allsoal'));
     }
+
+
 
     // pengecekan jumlaha pilihan
     public function count_pilihan($data){
@@ -1101,7 +1102,32 @@ class Banksoal extends MX_Controller {
       $a = $count_dat;
       if ( $count_dat>$data['jum_pilihan']) {
         $this->Mbanksoal->del_oneJawaban( $id_soal);
-      } else if ($count_dat<$data['jum_pilihan']) {
+      } else if ($count_dat < 2 && $data['jum_pilihan'] == 4 ) {
+        echo
+          $dataJawaban = array(
+            array('pilihan' => 'A',
+             'id_soal' => $id_soal),
+            array('pilihan' => 'B',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'C',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'D',
+                'id_soal' => $id_soal));
+          $this->Mbanksoal->insert_jawaban($dataJawaban);
+      }else if ($count_dat < 2 && $data['jum_pilihan'] == 5 ) {
+          $dataJawaban = array(
+            array('pilihan' => 'A',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'B',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'C',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'D',
+                'id_soal' => $id_soal),
+            array('pilihan' => 'E',
+                'id_soal' => $id_soal));
+           $this->Mbanksoal->insert_jawaban($dataJawaban);
+      }else if ($count_dat<$data['jum_pilihan']) {
         // insert pilihan jawaban option E
         $pil_E = array(
           'pilihan' => 'E',

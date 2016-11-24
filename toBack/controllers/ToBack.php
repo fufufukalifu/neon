@@ -8,6 +8,8 @@ class Toback extends MX_Controller
 	public function __construct() {
 		$this->load->library( 'parser' );
 		$this->load->model('Mtoback');
+		$this->load->model('cabang/mcabang');
+
 		$this->load->model( 'paketsoal/mpaketsoal' );
 		$this->load->model('siswa/msiswa');
 		$this->load->model('templating/mtemplating');
@@ -369,12 +371,18 @@ class Toback extends MX_Controller
 					{
 						$data['report']=$this->Mtoback->get_all_report_paket($idpaket);
 						
-							$data['files'] = array(
+						$data['files'] = array(
 							APPPATH . 'modules/paketsoal/views/v-report-paket.php',
 							);
 						$data['judul_halaman'] = "Report Siswa Perpaket";
 						$this->load->view('templating/index-b-guru', $data);
 
+					}
+
+					function get_cabang_all_cabang(){
+						$data = $this->output
+						->set_content_type( "application/json" )
+						->set_output( json_encode( $this->mcabang->get_all_cabang() ) );
 					}
 
 				}

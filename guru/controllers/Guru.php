@@ -64,7 +64,7 @@ class Guru extends MX_Controller {
         $data = $this->videobyteacher();
         #Sesudah Tempalting#
 
-        $data['judul_halaman'] = "dashboard";
+        $data['judul_halaman'] = "Dashboard";
         $data['files'] = array(
             APPPATH . 'modules/guru/views/v-container-video.php',
             );
@@ -72,14 +72,14 @@ class Guru extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
          // jika admin
-         $this->parser->parse('admin/v-index-admin', $data);
-     } elseif($hakAkses=='guru'){
+           $this->parser->parse('admin/v-index-admin', $data);
+       } elseif($hakAkses=='guru'){
          // jika guru
-       $this->parser->parse('templating/index-b-guru', $data);
-   }else{
+         $this->parser->parse('templating/index-b-guru', $data);
+     }else{
         // jika siswa redirect ke welcome
-    redirect(site_url('login'));
-}
+        redirect(site_url('login'));
+    }
           #END Cek USer#
 }
 
@@ -215,12 +215,12 @@ public function ubahkatasandi() {
 
 
     if ( $this->form_validation->run() == FALSE ) {
-       $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-       $data['guru'] = $this->mguru->get_datguru();
-       $this->load->view( 'templating/t-header' );
-       $this->load->view( 'vPengaturanProfileGuru',$data );
-       $this->load->view( 'templating/t-footer' );
-   } else {
+     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+     $data['guru'] = $this->mguru->get_datguru();
+     $this->load->view( 'templating/t-header' );
+     $this->load->view( 'vPengaturanProfileGuru',$data );
+     $this->load->view( 'templating/t-footer' );
+ } else {
     $kataSandi = htmlspecialchars( md5( $this->input->post( 'newpass' ) ) );
 
     $data_post = array(
@@ -336,6 +336,12 @@ function ajax_list_guru(){
 
 function drop_teacher($id_guru,$id_pengguna){
     $this->mguru->drop_guru( $id_guru,$id_pengguna );
+}
+
+function get_avatar_guru(){
+    $avatar = $this->mguru->get_avatar();
+    $photo =  base_url()."assets/image/photo/guru/".$avatar;
+    echo "<img src=".$photo." class='img-circle' alt='' />";
 }
 
 }
