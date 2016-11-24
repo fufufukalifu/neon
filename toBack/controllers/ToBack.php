@@ -340,8 +340,8 @@ class Toback extends MX_Controller
 							$row = array();
 							$row[] = "<input type='checkbox' value=".$list_siswa['id']." >";
 							$row[] = $list_siswa ['id'];
-							$row[] = $list_siswa ['namaDepan'];
-							$row[] = $list_siswa['namaBelakang'];
+							$row[] = $list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'];
+							$row[] = "Asal siswa";
 							// $row[] = '
 							// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
 							$data[] = $row;
