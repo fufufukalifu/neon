@@ -71,7 +71,7 @@ class Subscribe extends MX_Controller {
             $this->email->clear();
             $this->email->from('noreply@sibejooclass.com', 'Neon');
             $this->email->to($key['emailsub']);
-            $this->email->subject($datas[judul]);
+            $this->email->subject($datas['judul']);
 
             $message = '<html><meta/><head/><body>';
 

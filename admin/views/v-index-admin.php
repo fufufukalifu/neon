@@ -438,7 +438,7 @@
       </a>
       <ul id="subbanksoal" class="submenu collapse ">
         <li class="submenu-header ellipsis">Sub Bank Soal</li>
-        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semual Soal</span>
+        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Soal</span>
         </a></li>
         <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
         </a></li>

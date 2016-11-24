@@ -413,11 +413,35 @@ class Siswa extends MX_Controller {
         } else {
             $idpengguna = $idpengguna;
             $data['reportla'] = $this->msiswa->get_reportlatihan_siswa($idpengguna);
+            $data['reportto'] = $this->msiswa->get_reporttryout_siswa($idpengguna);
 //            var_dump($data);
 
             $data['judul_halaman'] = "Report Siswa";
             $data['files'] = array(
                 APPPATH . 'modules/siswa/views/v-report-siswa.php',
+            );
+//            // jika admin
+            $this->parser->parse('admin/v-index-admin', $data);
+        }
+    }
+
+    //tgl 30 Oktober
+    function reportto() {
+        // var_dump($this->session->userdata());
+          $idto = $this->uri->segment(3);
+          // echo $idto;
+        // echo $this->session->userdata['id'];
+        if (empty($idto)) {
+            echo 'tidak ada tryout';
+            // redirect(baseurl('siswa/'))
+        } else {
+            $idpengguna =  $this->session->userdata['id'];
+            // $idto = $this->uri->segmen(3);
+            $data['reportpaket'] = $this->msiswa->get_reportpaket_to($idpengguna,$idto);
+
+            $data['judul_halaman'] = "Report Siswa";
+            $data['files'] = array(
+                APPPATH . 'modules/siswa/views/v-report-paket.php',
             );
 //            // jika admin
             $this->parser->parse('admin/v-index-admin', $data);
