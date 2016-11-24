@@ -16,7 +16,7 @@ class Msiswa extends CI_Model {
         $this->db->update('tb_pengguna', $data);
         $sess_array = array(
             'eMail' => $data['eMail'],
-        );
+            );
         $this->session->set_userdata($sess_array);
         redirect(site_url('siswa/profilesetting'));
     }
@@ -31,7 +31,7 @@ class Msiswa extends CI_Model {
     public function update_photo($photo) {
         $data = array(
             'photo' => $photo
-        );
+            );
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
@@ -90,15 +90,16 @@ class Msiswa extends CI_Model {
     #query get siswa belum to
 
     public function get_siswa_blm_ikutan_to($id) {
-        $query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang` FROM tb_siswa s 
+        $query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang` FROM tb_siswa s 
+        LEFT JOIN `tb_cabang` c
+        ON s.`cabangID` = c.id
         WHERE s.id NOT IN
         (
         SELECT ss.`id` FROM tb_siswa ss
         JOIN `tb_hakakses-to` ho ON
         ho.`id_siswa` = ss.`id`
-        WHERE ho.`id_tryout` = $id
-
-    )";
+        WHERE ho.`id_tryout` = $id)
+        ";
         $result = $this->db->query($query);
         return $result->result_array();
     }

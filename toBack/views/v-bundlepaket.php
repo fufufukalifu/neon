@@ -66,7 +66,7 @@
         <table class="table table-bordered" style="font-size: 13px">
          <thead>
           <tr>
-           <th> <input type="checkbox" name="checkall"> Aksi</th>
+           <th> <input type="checkbox" name="checkall"></th>
            <th >ID</th>
            <th>Nama paket</th>
            <th>Deskripsi</th>
@@ -98,25 +98,24 @@
  <div class="tab-pane" id="siswa">
   <!-- START TABEL SISWA --><br>
   <br>
-  <table class="table table-striped" style="font-size: 13px" id="siswaBlmTo" width="100%">
+  <table class="table table-bordered" style="font-size: 13px" id="siswaBlmTo" width="100%">
    <thead>
     <tr>
-     <th class="text-center"> <input type="checkbox" name="checkall_siswa"> Aksi</th>
+     <th width="10%"><input type="checkbox" name="checkall_siswa"></th>
      <th>ID</th>
      <th>Nama Lengkap</th>
-     <th>Nama Belakang</th>
+     <th>Cabang</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
 
  </tbody>
-     <tfoot>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-
-    </tfoot>
+ <tfoot>
+ <th><i class="ico-search2 text-center"></i></th>
+ <th><input class="form-control" type="text" placeholder="ID" /></th>
+  <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+  <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+</tfoot>
 </table>
 <!-- END TABEL SISWA -->
 <!-- START PESAN ERROR EMPTY INPUT -->
@@ -277,7 +276,8 @@
 
 
 
-      
+      $('#siswaBlmTo tfoot th').first().append("");
+
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
        "ajax": {
         "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
@@ -314,26 +314,26 @@
       });
 
     // Setup - add a text input to each footer cell
-    $('#siswaBlmTo tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
+    // $('#siswaBlmTo tfoot th').each( function () {
+    //     var title = $(this).text();
+    //     $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
+    // } );
+
+    tblist_siswa.columns().every( function () {
+      var that = this;
+      $( 'input', this.footer() ).on( 'keyup change', function () {
+        if ( that.search() !== this.value ) {
+          that
+          .search( this.value )
+          .draw();
+        }
+      } );
     } );
 
-        tblist_siswa.columns().every( function () {
-          var that = this;
-          $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-              that
-              .search( this.value )
-              .draw();
-            }
-          } );
-        } );
 
 
 
-
-      });
+  });
 
     function reload_tblist(){
      tblist_siswaAdd.ajax.reload(null,false);
