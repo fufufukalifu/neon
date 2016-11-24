@@ -176,6 +176,14 @@ class Latihan extends MX_Controller {
 
     }
 
+    public function create_session_id_pembahasan($id_pembahasan){
+
+        $this->session->set_userdata('id_pembahasan',$id_pembahasan);
+
+        redirect('/tesonline/pembahasanlatihan', 'refresh');
+
+    }
+
 
 
 }

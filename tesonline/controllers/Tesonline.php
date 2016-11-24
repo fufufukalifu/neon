@@ -219,4 +219,21 @@ public function cekJawaban() {
     $this->session->unset_userdata('id_latihan');
     redirect(base_url('index.php/tesonline/daftarlatihan'));
 }
+
+public function pembahasanlatihan() {
+    if (!empty($this->session->userdata['id_pembahasan'])) {
+        $id = $this->session->userdata['id_pembahasan'];
+        $this->load->view('templating/t-headersoal');
+
+        $query = $this->load->mtesonline->get_soal($id);
+        $data['soal'] = $query['soal'];
+        $data['pil'] = $query['pil'];
+
+        $this->load->view('vPembahasan.php', $data);
+        $this->load->view('templating/t-footersoal');
+    } else {
+        $this->errorTest();
+    }
+}
+
 }

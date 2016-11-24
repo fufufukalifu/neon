@@ -258,6 +258,15 @@
 
                                                ><i class="glyphicon glyphicon-list-alt"></i></a>
 
+                                    
+                                            <a class="btn btn-primary modal-on<?= $reportitem['id_latihan'] ?>" 
+
+                                               title="Lihat pembahasan" 
+
+                                                onclick="mulai_pembahasan(<?= $reportitem['id_latihan'] ?>)"
+
+                                               ><i class="glyphicon glyphicon-book"></i></a>
+
                                         </td>
 
                                     </tr>
@@ -375,8 +384,10 @@
 
                 }
 
+                function mulai_pembahasan(id_pembahasan) {
+                    window.location.href = base_url + "index.php/latihan/create_session_id_pembahasan/" + id_pembahasan;
 
-
+                }
 
 
                 $(document).ready(function () {
