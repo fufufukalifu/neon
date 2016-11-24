@@ -66,7 +66,7 @@
         <table class="table table-bordered" style="font-size: 13px">
          <thead>
           <tr>
-           <th> <input type="checkbox" name="checkall"> Aksi</th>
+           <th> <input type="checkbox" name="checkall"></th>
            <th >ID</th>
            <th>Nama paket</th>
            <th>Deskripsi</th>
@@ -97,26 +97,25 @@
  <!-- Start Tab pane Siswa -->
  <div class="tab-pane" id="siswa">
   <!-- START TABEL SISWA --><br>
-  <select class="form-control" name="cabang">
-    <option>1</option>
-    <option>1</option>
-    <option>1</option>
-
-
-  </select>
   <br>
-  <table class="table table-striped" style="font-size: 13px" id="siswaBlmTo" width="100%">
+  <table class="table table-bordered" style="font-size: 13px" id="siswaBlmTo" width="100%">
    <thead>
     <tr>
-     <th class="text-center"> <input type="checkbox" name="checkall_siswa"> Aksi</th>
+     <th width="10%"><input type="checkbox" name="checkall_siswa"></th>
      <th>ID</th>
-     <th>Nama Depan</th>
-     <th>Nama Belakang</th>
+     <th>Nama Lengkap</th>
+     <th>Cabang</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
 
  </tbody>
+ <tfoot>
+ <th><i class="ico-search2 text-center"></i></th>
+ <th><input class="form-control" type="text" placeholder="ID" /></th>
+  <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+  <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+</tfoot>
 </table>
 <!-- END TABEL SISWA -->
 <!-- START PESAN ERROR EMPTY INPUT -->
@@ -217,6 +216,7 @@
     <tbody>
 
     </tbody>
+
   </table>
 
 </form>
@@ -250,7 +250,6 @@
  var tblist_paketAdd;
  var tblist_siswaAdd;
  var idTo =$('#id_to').val();
-
     // Script for getting the dynamic values from database using jQuery and AJAX
 
 
@@ -275,22 +274,10 @@
       });
       //####---
 
-      // option untuk cabang
-      $.ajax({
-        type: "POST",
-        url: "<?php echo base_url() ?>index.php/toback/get_cabang_all_cabang/",
-        success: function(data){
-         $('select[name=cabang]').html('<option value="">-- Pilih Cabang  --</option>');
 
-         $.each(data, function(i, data){
-          $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
-        });
-       }
 
-     });
-      //####---
+      $('#siswaBlmTo tfoot th').first().append("");
 
-      
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
        "ajax": {
         "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
@@ -315,6 +302,8 @@
         },
         "processing": true,
       });
+
+
         // tabel siswa yang akan mengokuti ujian
         tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
          "ajax": {
@@ -324,9 +313,27 @@
         "processing": true,
       });
 
+    // Setup - add a text input to each footer cell
+    // $('#siswaBlmTo tfoot th').each( function () {
+    //     var title = $(this).text();
+    //     $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
+    // } );
+
+    tblist_siswa.columns().every( function () {
+      var that = this;
+      $( 'input', this.footer() ).on( 'keyup change', function () {
+        if ( that.search() !== this.value ) {
+          that
+          .search( this.value )
+          .draw();
+        }
+      } );
+    } );
 
 
-      });
+
+
+  });
 
     function reload_tblist(){
      tblist_siswaAdd.ajax.reload(null,false);
@@ -454,7 +461,6 @@
 
 
 
-       console.log(idsiswa);
        idsiswa=null;
 
      }
@@ -497,8 +503,6 @@
                 dataType: "TEXT",
                 success: function(data,respone)
                 {  
-                 console.log(data);
-                 console.log(respone);
                         //if success reload ajax table
                         // $('#modal_form').modal('hide');
                         reload_tblist();

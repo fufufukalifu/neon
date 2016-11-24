@@ -76,7 +76,9 @@
             // api.$('td').click( function () {
             //     api.search( this.innerHTML ).draw();
             // } );
-        }
+        },"oLanguage": {
+                "sSearch": "Search all columns:"
+            }
     } );
 
 	} );
