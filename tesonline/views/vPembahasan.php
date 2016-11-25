@@ -150,12 +150,20 @@
                                                                         $k = $key['soalid'];
                                                                         $pilihan = array("A", "B", "C", "D", "E");
                                                                         $indexpil = 0;
+
+                                                                        $jawaban = $key['jaw'];
                                                                     ?>
 
                                                                     <?php foreach ($pil as $row): ?>
                                                                         <?php if ($row['pilid'] == $k) { ?>
                                                                             <div class="mb10">
-                                                                                 <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
+                                                                                 <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100%; <?php 
+                                                                                                if ($jawaban == $row['pilpil']) {
+                                                                                                    echo "background-color:#63d3e9";
+                                                                                                }else{
+
+                                                                                                }
+                                                                                            ?>">
                                                                                         <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'] ?>" name="pil[<?= $row['pilid'] ?>]">
                                                                                         
                                                                                         <div class ="btn"><?=  $pilihan[$indexpil];?>.
@@ -168,6 +176,14 @@
                                                                                             <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
                                                                                             <?php } ?>
                                                                                             <?= $row['piljaw'] ?>
+                                                                                            <?php 
+                                                                                                if ($jawaban == $row['pilpil']) {
+                                                                                                    echo "&nbsp&nbsp&nbsp&nbsp<i class='fa fa-check fa-2x' aria-hidden='true'></i>";
+                                                                                                }else{
+
+                                                                                                }
+                                                                                            ?>
+                                                                                            
                                                                                             <?php $indexpil++;?>
                                                                                         </label>  
                                                                             </div>
@@ -189,15 +205,18 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-10 col-md-offset-1" style="border: 1px solid #63d3e9;min-height: 100px;padding:10px;text-align:justify">
-                                                                   <!--   <img src="<?= base_url('assets/back/img/logo.png') ?>"  alt>
+                                                                    <!--  <img src="<?= base_url('assets/image/pembahasan/trigonometri.png') ?>" width=100% >
                                                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                                                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                                                                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                                                                     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
                                                                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                                                    -->
-                                                                    <iframe width=100% height="430" src="https://www.youtube.com/embed/H62ZKpD63K4"></iframe>
+                                                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+                                                                   
+                                                                    <!-- <iframe width=100% height="430" src="https://www.youtube.com/embed/H62ZKpD63K4"></iframe> -->
+                                                                    <video width=100% controls>
+                                                                        <source src="<?=base_url('assets/video/ilham.mp4')?>" type="video/mp4">
+                                                                    </video>
                                                                 </div>
                                                             </div>
                                                         </div>   
@@ -265,7 +284,7 @@
 
                                                 <div class="col-md-12" style="">
                                                     <hr> 
-                                                    <button type="button" class="btn btn-info btn-block">Pembahasan Selesai</button>
+                                                    <a href="<?=base_url('tesonline/daftarlatihan')?>"class="btn btn-info btn-block">Pembahasan Selesai</a>
                                                 </div>
 
                                             </div>

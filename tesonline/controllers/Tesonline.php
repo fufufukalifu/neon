@@ -124,6 +124,7 @@ public function daftarlatihan() {
     $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['USERNAME']);
     $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
 
+    $this->session->unset_userdata('id_pembahasan');
     $this->parser->parse('templating/index', $data);
 }
 
@@ -230,7 +231,7 @@ public function pembahasanlatihan() {
         $data['pil'] = $query['pil'];
 
         $this->load->view('vPembahasan.php', $data);
-        $this->load->view('templating/t-footersoal');
+        $this->load->view('footerpembahasan.php');
     } else {
         $this->errorTest();
     }
