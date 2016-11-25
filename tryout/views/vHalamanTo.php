@@ -59,7 +59,7 @@
     }
 
     .terpilih{
-        /*background-color: #63d3e9;*/
+        background-color: #63d3e9;
     }
 
 </style>
@@ -120,7 +120,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
                                                                 <div class="col-md-2"></div>
-                                                                <div class="col-md-4 text-right" style="margin-top:5"><a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>')">Batal Jawab</a>&nbsp&nbsp&nbsp<a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a></div>
+                                                                <div class="col-md-4 text-right" style="margin-top:5"><a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp<a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a></div>
                                                                                                                      </div>
                                                         </div>
                                                         <div class="panel-collapse">
@@ -148,7 +148,8 @@
                                                                         <?php foreach ($pil as $row): ?>
                                                                             <?php if ($row['pilid'] == $k) { ?>
                                                                                 <div class="mb10">
-                                                                                        <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
+                                                                                        <!-- <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% "> -->
+                                                                                        <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
                                                                                         <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'].$pilihan[$indexpil]; ?>" name="pil[<?= $row['pilid']; ?>]" onclick="updateColor(<?= $i ?>)">
                                                                                             <div class ="btn"><?=  $pilihan[$indexpil];?>.
                                                                                             </div>
@@ -264,10 +265,6 @@
     <!--/ END Template Main -->
     <script>
         function updateColor(id) {
-            // var nilai  = 'input[id="' + id + '"]:checked').value.split(';');
-            // var radioInput = document.getElementById('1').value.split('; ');
-            // alert(radioInput);
-            // $(".jwb" + id).html(nilai[1]);
             $(".jwb" + id).html($('input[id="' + id + '"]:checked').val()[1]);
             $('a[alt="' + id + '"]').css({"background-color": "#5bc0de", "color": "#fff", "border": "none"});
         }
@@ -277,12 +274,11 @@
         }
 
 	
-        function bataljawab(idsoal,idpil){
+        function bataljawab(idsoal,idpil,grouppil){
              clearRadioGroup(idsoal);
-             clearpiljaw(idpil);
-             // alert("Hello");
-             // console.log(idsoal);
+             clearpiljaw(idpil,grouppil);
         }
+
 
         function clearRadioGroup(GroupName)
         {
@@ -291,12 +287,16 @@
             ele[i].checked = false;
         }
 
-        function clearpiljaw(id){
+        function clearpiljaw(id,groupname){
             $(".jwb" + id).html("");
             $('a[alt="' + id + '"]').css({"background-color": "#fff", "color": "#00b1e1", "border": "1px solid #63d3e9"});
+            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
         }
 
-        function changeColor(pilid){
-            console.log(pilid);
+        function changeColor(pilid,groupname){
+            console.log(pilid,groupname);
+            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
+            var d = document.getElementById(pilid);
+            d.className = "terpilih";
         }
     </script>
