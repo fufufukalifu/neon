@@ -74,10 +74,9 @@
                 <table class="table table-striped display" style="font-size: 13px">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th class="text-center">No</th>
                             <th>Tryout</th>
                             <th>Tgl Tryout</th>
-                            <th class="text-center">Nilai Rata-Rata </th>
                             <th class="text-center">Nilai Perpaket</th>
                         </tr>
                     </thead>
@@ -90,8 +89,7 @@
                                 <td class="text-center"><?= $i ?></td>
                                 <td><?= $key['nm_tryout'] ?></td>
                                 <td><?= $key['tgl_mulai'] ?></td>
-                                <td class="text-center">-</td>
-                                <td class="text-center"><a href="<?=base_url('siswa/reportto/'.$key['id_tryout'])?>">Lihat Detail</a></td>
+                                <td class="text-center"><a href="<?=base_url('siswa/reportto/'.$key['id_tryout'].'/'.$key['idpengguna'])?>">Lihat Detail</a></td>
                             </tr>
                         <?php $i++;};
                         ?>

@@ -11,7 +11,7 @@
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarguru table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+                <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                         <tr>
                             <th>no</th>
@@ -36,7 +36,7 @@
 <script type="text/javascript">
     var tb_siswa;
     $(document).ready(function () {
-        tb_siswa = $('.daftarguru').DataTable({
+        tb_siswa = $('.daftarsiswa').DataTable({
             "ajax": {
                 "url": base_url + "siswa/ajax_daftar_siswa",
                 "type": "POST"

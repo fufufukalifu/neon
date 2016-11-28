@@ -409,7 +409,7 @@ class Siswa extends MX_Controller {
     //tgl 30 Oktober
     function reportSiswa($idpengguna) {
         if ($idpengguna == 0) {
-            echo 'kosong';
+            // echo 'kosong';
         } else {
             $idpengguna = $idpengguna;
             $data['reportla'] = $this->msiswa->get_reportlatihan_siswa($idpengguna);
@@ -432,10 +432,10 @@ class Siswa extends MX_Controller {
           // echo $idto;
         // echo $this->session->userdata['id'];
         if (empty($idto)) {
-            echo 'tidak ada tryout';
+            // echo 'tidak ada tryout';
             // redirect(baseurl('siswa/'))
         } else {
-            $idpengguna =  $this->session->userdata['id'];
+            $idpengguna =  $this->uri->segment(4);
             // $idto = $this->uri->segmen(3);
             $data['reportpaket'] = $this->msiswa->get_reportpaket_to($idpengguna,$idto);
 

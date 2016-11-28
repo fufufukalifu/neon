@@ -145,21 +145,31 @@ class Msiswa extends CI_Model {
     }
 
     function get_reporttryout_siswa($idpengguna) {
-        $this->db->select('tryout.id_tryout,tryout.nm_tryout,tryout.tgl_mulai');
+        $this->db->select('tryout.id_tryout,tryout.nm_tryout,tryout.tgl_mulai,siswa.penggunaID as idpengguna');
         $this->db->from('tb_siswa as siswa');
         $this->db->join('tb_hakakses-to as hak', 'siswa.id = hak.id_siswa');
         $this->db->join('tb_tryout as tryout', 'hak.id_tryout = tryout.id_tryout');
         $this->db->where('siswa.penggunaID', $idpengguna);
+
+        // $this->db->select('AVG(repa.poin) AS ratarata');
+        // $this->db->from('tb_report-paket as repa');
+        // $this->db->join('tb_mm-tryoutpaket as mmtry', 'repa.id_mm-tryout-paket = mmtry.id');
+        // $this->db->join('tb_paket as pa', 'mmtry.id_paket = pa.id_paket');
+        // $this->db->where('repa.id_pengguna', $idpengguna);
+        // $this->db->where('mmtry.id_tryout', $idto);
+
+
         $query = $this->db->get();
         return $query->result_array();
     }
 
     function get_reportpaket_to($idpengguna,$idto) {
-        $this->db->select('tryout.id_tryout,tryout.nm_tryout,tryout.tgl_mulai');
-        $this->db->from('tb_siswa as siswa');
-        $this->db->join('tb_hakakses-to as hak', 'siswa.id = hak.id_siswa');
-        $this->db->join('tb_tryout as tryout', 'hak.id_tryout = tryout.id_tryout');
-        $this->db->where('siswa.penggunaID', $idpengguna);
+        $this->db->select('pa.nm_paket,repa.tgl_pengerjaan, repa.jmlh_kosong,repa.jmlh_benar,repa.jmlh_salah,repa.poin');
+        $this->db->from('tb_report-paket as repa');
+        $this->db->join('tb_mm-tryoutpaket as mmtry', 'repa.id_mm-tryout-paket = mmtry.id');
+        $this->db->join('tb_paket as pa', 'mmtry.id_paket = pa.id_paket');
+        $this->db->where('repa.id_pengguna', $idpengguna);
+        $this->db->where('mmtry.id_tryout', $idto);
         $query = $this->db->get();
         return $query->result_array();
     }
