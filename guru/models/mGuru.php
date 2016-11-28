@@ -232,7 +232,7 @@ class Mguru extends CI_Model
 		$this->db->from('tb_guru');
 		$this->db->where('penggunaID',$id_pengguna);
 		$query = $this->db->get();
-		return $query->result_array()[0]['photo'];
+		// return $query->result_array()[0]['photo'];
 	}
 
 }

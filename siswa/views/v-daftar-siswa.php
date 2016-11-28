@@ -11,7 +11,7 @@
                     <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
                 </div>
 
-                <table class="daftarguru table table-striped display responsive nowrap" style="font-size: 13px">
+                <table class="daftarguru table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                         <tr>
                             <th>no</th>
