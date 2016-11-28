@@ -152,7 +152,7 @@
              <tr>
               <th>ID Paket</th>
               <th>Nama Paket Soal</th>
-              <th width="10%">Aksi</th>
+              <th width="30%">Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -160,9 +160,14 @@
               <tr>
                 <td><?=$paketitem['id'] ?></td>
                 <td><?=$paketitem['nm_paket'] ?></td>
-                <td><a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+                <td>
+                  <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
                   class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
-                  data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a></td>
+                  data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
+                  <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+                  class="cws-button border-radius bt-color-2"
+                  data-todo='<?=json_encode($paketitem)?>'>Lihat Pembahasan</a>
+                </td>
                 </tr>
               <?php endforeach ?>
             </tbody>

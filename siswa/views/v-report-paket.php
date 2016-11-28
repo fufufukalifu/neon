@@ -7,7 +7,14 @@
                     <h4 class="panel-title">Report Paket Tryout</h4>
                     <!-- Trigger the modal with a button -->
                     <br>
-                    <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
+                    <h4 class="pull-right" style="top:-20">Nilai rata-rata :
+                        <?php
+                            foreach ($ratarata as $key) {
+                                echo $key['rata'];
+
+                            };
+                            ?>
+                     </h4>
                 </div>
                 <!-- <h1><?php print_r($this->session->userdata);?></h1> -->
                 <div class="tab-pane" id="tingkatSMP">

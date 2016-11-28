@@ -174,6 +174,17 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
+    function ratarata_to($idpengguna,$idto) {
+        $this->db->select('repa.poin, AVG(repa.poin) as rata');
+        $this->db->from('tb_report-paket as repa');
+        $this->db->join('tb_mm-tryoutpaket as mmtry', 'repa.id_mm-tryout-paket = mmtry.id');
+        $this->db->join('tb_paket as pa', 'mmtry.id_paket = pa.id_paket');
+        $this->db->where('repa.id_pengguna', $idpengguna);
+        $this->db->where('mmtry.id_tryout', $idto);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     ##
 }
 

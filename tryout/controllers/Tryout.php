@@ -206,6 +206,22 @@ class Tryout extends MX_Controller {
     }
 
     //end fungsi ilham
+
+    public function pembahasanto() {
+    if (!empty($this->session->userdata['id_pembahasan'])) {
+        $id = $this->session->userdata['id_pembahasan'];
+        $this->load->view('templating/t-headersoal');
+
+        $query = $this->load->mtesonline->get_soal($id);
+        $data['soal'] = $query['soal'];
+        $data['pil'] = $query['pil'];
+
+        $this->load->view('vPembahasan.php', $data);
+        $this->load->view('footerpembahasan.php');
+    } else {
+        $this->errorTest();
+    }
+}
 }
 
 ?>

@@ -438,6 +438,7 @@ class Siswa extends MX_Controller {
             $idpengguna =  $this->uri->segment(4);
             // $idto = $this->uri->segmen(3);
             $data['reportpaket'] = $this->msiswa->get_reportpaket_to($idpengguna,$idto);
+            $data['ratarata'] = $this->msiswa->ratarata_to($idpengguna,$idto);
 
             $data['judul_halaman'] = "Report Siswa";
             $data['files'] = array(
