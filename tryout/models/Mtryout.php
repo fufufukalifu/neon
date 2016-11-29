@@ -158,6 +158,29 @@ class Mtryout extends MX_Controller {
         );
     }
 
+    public function get_pembahasan($id_paket) {
+        $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.jawaban as jaw, soal.pembahasan, soal.gambar_pembahasan, soal.video_pembahasan, soal.status_pembahasan, soal.link');
+        $this->db->from('tb_mm-paketbank as paban');
+        $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
+        $this->db->where('paban.id_paket', $id_paket);
+        $query = $this->db->get();
+        $soal = $query->result_array();
+
+        $this->db->select('*,id_paket as idpak, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw, pil.gambar as pilgam');
+        $this->db->from('tb_mm-paketbank as paban');
+        $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
+        $this->db->join('tb_piljawaban as pil', 'soal.id_soal = pil.id_soal');
+        $this->db->where('paban.id_paket', $id_paket);
+        $query = $this->db->get();
+        $pil = $query->result_array();
+
+        return array(
+            'soal' => $soal,
+            'pil' => $pil,
+        );
+    }
+
+
     //get pilihan berdasarkan subbab MP
     public function get_pilihan($subbID) {
         $this->db->select('*,pil.id_soal as pilid, soal.id_soal as soalid, pil.jawaban as piljawaban');

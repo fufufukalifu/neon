@@ -184,7 +184,7 @@
 
               
 
-                    <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
+                 <!--    <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
 
             title="Lihat Report" 
 
@@ -192,7 +192,7 @@
 
             onclick="lihat_report(<?=$tryout_item['id_tryout'] ?>)"
 
-            ><i class="glyphicon glyphicon-book"></i></a>
+            ><i class="glyphicon glyphicon-book"></i></a> -->
 
         <?php else: ?>
 
@@ -208,7 +208,7 @@
 
 
 
-          <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
+         <!--  <a class="btn btn-success detail-<?=$tryout_item['id_tryout']?>" 
 
             title="Lihat Report" 
 
@@ -216,7 +216,7 @@
 
             onclick="lihat_report(<?=$tryout_item['id_tryout'] ?>)"
 
-            ><i class="glyphicon glyphicon-book"></i></a>
+            ><i class="glyphicon glyphicon-book"></i></a> -->
 
         <?php endif ?>
 

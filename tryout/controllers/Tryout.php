@@ -93,7 +93,11 @@ class Tryout extends MX_Controller {
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
             $data['paket'] = $this->Mtryout->get_paket_undo($id_to);
 
+
             $this->parser->parse('templating/index', $data);
+            $this->session->unset_userdata('id_paketpembahasan');
+            $this->session->unset_userdata('id_tryoutpembahasan');
+            $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
         } else {
             //kalo gak ada session
             // redirect('tryout');
@@ -115,6 +119,16 @@ class Tryout extends MX_Controller {
             "status_pengerjaan" => '2'
         );
     }
+
+     function buatpembahasan() {
+            $data = array("id_paket" => $this->input->post('id_paket'),
+                "id_tryout" => $this->input->post('id_tryout'),
+                "id_mm-tryoutpaket" => $this->input->post('id_mm_tryoutpaket'),
+            );
+            $this->session->set_userdata('id_paketpembahasan', $data['id_paket']);
+            $this->session->set_userdata('id_tryoutpembahasan', $data['id_tryout']);
+            $this->session->set_userdata('id_mm-tryoutpaketpembahasan', $data['id_mm-tryoutpaket']);
+        }
 
     //# fungsi indeks
 
@@ -142,6 +156,29 @@ class Tryout extends MX_Controller {
 ////        var_dump($data);
             $this->load->view('vHalamanTo.php', $data);
             $this->load->view('templating/t-footerto', $data);
+        } else {
+            $this->errorTest();
+        }
+    }
+
+    public function mulaipembahasan() {
+        if (!empty($this->session->userdata['id_mm-tryoutpaketpembahasan'])) {
+            $id = $this->session->userdata['id_mm-tryoutpaketpembahasan'];
+            $data['topaket'] = $this->Mtryout->datatopaket($id);
+//        echo $id;
+            $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
+
+//        echo $id_paket; 
+            // $data['paket'] = $this->Mtryout->durasipaket($id_paket);
+//        var_dump($data);
+
+            $this->load->view('templating/t-headerto');
+            $query = $this->load->Mtryout->get_pembahasan($id_paket);
+            $data['soal'] = $query['soal'];
+            $data['pil'] = $query['pil'];
+////        var_dump($data);
+            $this->load->view('v-pembahasanto.php', $data);
+            $this->load->view('footerpembahasan', $data);
         } else {
             $this->errorTest();
         }

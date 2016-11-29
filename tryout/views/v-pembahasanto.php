@@ -86,7 +86,7 @@
                 <div class="">
                     <div class="page-header-section text-center">
                         <img src="<?= base_url('assets/back/img/logo.png') ?>" width="70px"  alt>
-                        <p class="title font-alt">Tryout Online 
+                        <p class="title font-alt">Pembahasan Tryout Online 
                         </p>
                         <?php foreach ($topaket as $key): ?>
                             <div class="text-center"><div style="font-size:20px;"><?= $key['namato'] ?>/<?= $key['namapa'] ?></div></div>
@@ -103,7 +103,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <form action="<?= base_url('index.php/tryout/cekjawaban') ?>" method="post" id="hasil">
+                        <form  id="hasil">
                             <div class="col-md-8" style="margin-bottom:30">
                                 <?php
                                 $i = 1;
@@ -119,9 +119,7 @@
                                                             <!-- <h1>Selamat datang</h1> -->
                                                             <div class="row">
                                                                 <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
-                                                                <div class="col-md-2"></div>
-                                                                <div class="col-md-4 text-right" style="margin-top:5"><a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp<a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a></div>
-                                                                                                                     </div>
+                                                            </div>
                                                         </div>
                                                         <div class="panel-collapse">
                                                             <div class="panel-body">
@@ -143,14 +141,22 @@
                                                                         $k = $key['soalid'];
                                                                         $pilihan = array("A", "B", "C", "D", "E");
                                                                         $indexpil = 0;
+
+                                                                        $jawaban = $key['jaw'];
                                                                         ?>
 
                                                                         <?php foreach ($pil as $row): ?>
                                                                             <?php if ($row['pilid'] == $k) { ?>
                                                                                 <div class="mb10">
                                                                                         <!-- <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% "> -->
-                                                                                        <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
-                                                                                        <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'].$pilihan[$indexpil]; ?>" name="pil[<?= $row['pilid']; ?>]" onclick="updateColor(<?= $i ?>)">
+                                                                                         <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100%; <?php 
+                                                                                                if ($jawaban == $row['pilpil']) {
+                                                                                                    echo "background-color:#63d3e9";
+                                                                                                }else{
+
+                                                                                                }
+                                                                                            ?>">
+                                                                                            <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'].$pilihan[$indexpil]; ?>" name="pil[<?= $row['pilid']; ?>]" onclick="updateColor(<?= $i ?>)">
                                                                                             <div class ="btn"><?=  $pilihan[$indexpil];?>.
                                                                                             </div>
                                                                                              <?php
@@ -161,6 +167,13 @@
                                                                                             <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
                                                                                             <?php } ?>
                                                                                             <?= $row['piljaw'] ?>
+                                                                                             <?php 
+                                                                                                if ($jawaban == $row['pilpil']) {
+                                                                                                    echo "&nbsp&nbsp&nbsp&nbsp<i class='fa fa-check fa-2x' aria-hidden='true'></i>";
+                                                                                                }else{
+
+                                                                                                }
+                                                                                            ?>
                                                                                             <?php $indexpil++;?>
                                                                                         </label>  
                                                                                 </div>
@@ -171,6 +184,55 @@
                                                                             ?>
                                                                         <?php endforeach ?>
                                                                     </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row">      
+                                                                    <div class="col-md-10 col-md-offset-1">
+                                                                        <?php
+                                                                            if ($key['status_pembahasan'] == 0) {
+                                                                                echo "<h5><strong>Tidak ada pembahasan pada soal ini</strong></h5>";
+                                                                            }else{
+                                                                                echo "<h5><strong>Pembahasan :</strong></h5>";
+                                                                            }
+                                                                        ?>
+                                                                    </div>
+
+                                                                    <?php
+                                                                            if ($key['status_pembahasan'] == 1) { ?>
+                                                                                <div class="col-md-10 col-md-offset-1" style="border: 1px solid #63d3e9;min-height: 100px;padding:10px;text-align:justify">
+                                                                            <?php 
+                                                                                if ($key['gambar_pembahasan'] != null) { ?>
+                                                                            
+                                                                                    <!-- echo '<p>'.$key['gambar_pembahasan'].'</p>'; -->
+                                                                                    <img src="<?= base_url('assets/image/pembahasan/'.$key['gambar_pembahasan']) ?>" width=100% >
+                                                                            <?php
+                                                                                }
+
+                                                                                if ($key['pembahasan'] != null) {
+                                                                                    echo '<p>'.$key['pembahasan'].'</p>';
+                                                                                }
+
+                                                                                if ($key['video_pembahasan'] != null) { ?>
+                                                                                    <video width=100% controls>
+                                                                                        <source src="<?=base_url('assets/video/'.$key['video_pembahasan'])?>" type="video/mp4">
+                                                                                    </video>
+                                                                            <?php
+                                                                                }
+                                                                                if ($key['link'] != null) {
+                                                                                    echo '<iframe width=100% height="430" src="'.$key['link'].'"></iframe>';
+                                                                                }
+
+                                                                                
+                                                                            ?>
+                                                                            
+                                                                            
+                                                                        </div>
+                                                                            <?php
+                                                                            }
+                                                                    ?>
+                                                                    <!-- <div class="row"> -->
+                                                                        
+                                                                    <!-- </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -203,8 +265,8 @@
                                     <div class="panel-heading">
                                         <div class="row">
                                             <!--<div class="text-center"><h4>Lembar Jawaban</h4></div>-->
-                                            <div class="text-center"> <h4><span id="timer"></span></h4></div>
-                                            <input type="text" hidden="true" id="durasi" value="" name="durasi" />
+                                            <!-- <div class="text-center"> <h4><span id="timer"></span></h4></div> -->  
+                                            <div class="text-center"> <h4><span>Nomor Soal</span></h4></div>
                                         </div>
                                     </div>
                                     <!--/ panel heading/header--> 
@@ -214,14 +276,13 @@
                                             <div class="row">
                                                 <div class="col-md-10 col-md-offset-1">
                                                     <!--<li class="pageNumbers"></li>-->
-                                                    <div class="ljk" style="margin-top:-20">
+                                                    <div class="ljk" style="">
                                                         <?php
                                                         $nojwb = 1;
                                                         foreach ($soal as $jwb) {
                                                             ?>
                                                             <div id="flex-item" >
-                                                                <div id ="jwb_sisJ" class ="jwb<?= $nojwb ?>"></div>
-                                                                <a href ="#" id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
+                                                                <a id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
                                                             </div>
                                                             <?php
                                                             $nojwb++;
@@ -236,7 +297,7 @@
 
                                                 <div class="col-md-12" style="">
                                                     <hr> 
-                                                    <button type="button" class="btn btn-info btn-block" onclick="kirimHasil();">Kumpulkan Jawaban</button>
+                                                    <a href="<?=base_url('tryout')?>" class="btn btn-info btn-block" >Pembahasan Selesai</a>
                                                 </div>
 
                                             </div>
@@ -263,40 +324,3 @@
 
     </section>
     <!--/ END Template Main -->
-    <script>
-        function updateColor(id) {
-            $(".jwb" + id).html($('input[id="' + id + '"]:checked').val()[1]);
-            $('a[alt="' + id + '"]').css({"background-color": "#5bc0de", "color": "#fff", "border": "none"});
-        }
-
-        function raguColor(id) {
-            $('a[alt="' + id + '"]').css({"background-color": "#ffd66a", "color": "#fff", "border": "none"});
-        }
-
-	
-        function bataljawab(idsoal,idpil,grouppil){
-             clearRadioGroup(idsoal);
-             clearpiljaw(idpil,grouppil);
-        }
-
-
-        function clearRadioGroup(GroupName)
-        {
-          var ele = document.getElementsByName(GroupName);
-            for(var i=0;i<ele.length;i++)
-            ele[i].checked = false;
-        }
-
-        function clearpiljaw(id,groupname){
-            $(".jwb" + id).html("");
-            $('a[alt="' + id + '"]').css({"background-color": "#fff", "color": "#00b1e1", "border": "1px solid #63d3e9"});
-            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
-        }
-
-        function changeColor(pilid,groupname){
-            console.log(pilid,groupname);
-            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
-            var d = document.getElementById(pilid);
-            d.className = "terpilih";
-        }
-    </script>

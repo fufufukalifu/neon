@@ -19,7 +19,7 @@
         font-size: 12px;
         text-align: center;
         text-decoration: none;
-        border: 1px solid #63d3e9; 
+        border: 1px soallid #63d3e9; 
         margin-left: 27px;
         margin-top: 4px;
     }
@@ -198,26 +198,47 @@
                                                             <hr>
                                                              <div class="row">      
                                                                 <div class="col-md-10 col-md-offset-1">
-                                                                        <h5><strong>Pembahasan :</strong></h5>
-                                                                        
+                                                                        <?php
+                                                                            if ($key['status_pembahasan'] == 0) {
+                                                                                echo "<h5><strong>Tidak ada pembahasan pada soal ini</strong></h5>";
+                                                                            }else{
+                                                                                echo "<h5><strong>Pembahasan :</strong></h5>";
+                                                                            }
+                                                                        ?>
                                                                 </div>
-                                                               
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-10 col-md-offset-1" style="border: 1px solid #63d3e9;min-height: 100px;padding:10px;text-align:justify">
-                                                                    <!--  <img src="<?= base_url('assets/image/pembahasan/trigonometri.png') ?>" width=100% >
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
-                                                                   
-                                                                    <!-- <iframe width=100% height="430" src="https://www.youtube.com/embed/H62ZKpD63K4"></iframe> -->
-                                                                    <video width=100% controls>
-                                                                        <source src="<?=base_url('assets/video/ilham.mp4')?>" type="video/mp4">
-                                                                    </video>
-                                                                </div>
+                                                               <?php
+                                                                            if ($key['status_pembahasan'] == 1) { ?>
+                                                                                <div class="col-md-10 col-md-offset-1" style="border: 1px solid #63d3e9;min-height: 100px;padding:10px;text-align:justify">
+                                                                            <?php 
+                                                                                if ($key['gambar_pembahasan'] != null) { ?>
+                                                                            
+                                                                                    <!-- echo '<p>'.$key['gambar_pembahasan'].'</p>'; -->
+                                                                                    <img src="<?= base_url('assets/image/pembahasan/'.$key['gambar_pembahasan']) ?>" width=100% >
+                                                                            <?php
+                                                                                }
+
+                                                                                if ($key['pembahasan'] != null) {
+                                                                                    echo '<p>'.$key['pembahasan'].'</p>';
+                                                                                }
+
+                                                                                if ($key['video_pembahasan'] != null) { ?>
+                                                                                    <video width=100% controls>
+                                                                                        <source src="<?=base_url('assets/video/'.$key['video_pembahasan'])?>" type="video/mp4">
+                                                                                    </video>
+                                                                            <?php
+                                                                                }
+                                                                                if ($key['link'] != null) {
+                                                                                    echo '<iframe width=100% height="430" src="'.$key['link'].'"></iframe>';
+                                                                                }
+
+                                                                                
+                                                                            ?>
+                                                                            
+                                                                            
+                                                                        </div>
+                                                                            <?php
+                                                                            }
+                                                                    ?>
                                                             </div>
                                                         </div>   
                                                     </div>

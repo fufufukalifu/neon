@@ -11,7 +11,7 @@
                 <div class="">
                     <div class="page-header-section text-center">
                         <img src="<?= base_url('assets/back/img/logo.png') ?>" width="70px"  alt>
-                        <p class="title font-alt">Tryout Online</p>
+                        <!-- <p class="title font-alt">Halaman tidak dapat diakses</p> -->
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="text-center">
-                                        <h4>Tryout tidak dapat diakses ! <a href="<?= base_url('index.php/tryout') ?>" class="text-primary">Kembali?</a></h4>
+                                        <h4>Halaman tidak dapat diakses ! <a href="<?= base_url('index.php/tryout') ?>" class="text-primary">Kembali?</a></h4>
 
                                     </div>
                                 </div>
