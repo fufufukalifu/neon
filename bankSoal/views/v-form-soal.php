@@ -5,6 +5,9 @@
     <!-- START Template Container -->
 
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
+        <!--js buat menampilakan priview video sebelum di upload  -->
+
+    <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
 <!-- Strat Script Matjax -->
      <script type="text/x-mathjax-config">
@@ -117,6 +120,25 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       <div class="modal-body">
         <h3 class="text-center">Silahkan cek type extension gambar! </h3>
         <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Start Modal salah upload video -->
+<div class="modal fade" id="warningupload2" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek type extension video!</h3>
+        <h5 class="text-center">Type yang bisa di upload hanya .mp4</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -318,7 +340,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                        <div class="form-group">
 
-                            <label class="control-label col-sm-2">Jenis Editor</label>
+                            <label class="control-label col-sm-2">Jenis Editor aaa</label>
 
                             <div class="col-sm-8">
 
@@ -326,13 +348,13 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                       <label class="btn btn-teal btn-outline active " id="in-soal">
 
-                                        <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
+                                        <input type="radio" autocomplete="off" checked="true"> Input Soal
 
                                       </label>
 
                                       <label class="btn btn-teal btn-outline" id="pr-rumus">
 
-                                        <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
+                                        <input type="radio"   autocomplete="off"> Rumus Matematika
 
                                       </label>
 
@@ -430,13 +452,13 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                       <label class="btn btn-teal btn-outline active " id="text">
 
-                                        <input type="radio" name="options" value="text" autocomplete="off" checked="true"> Text
+                                        <input type="radio" name="op-jawaban"  value="text" autocomplete="off" checked="true"> Text
 
                                       </label>
 
                                       <label class="btn btn-teal btn-outline" id="gambar">
 
-                                        <input type="radio" name="options"  value="gambar" autocomplete="off"> Gambar
+                                        <input type="radio" name="op-jawaban"  value="gambar" autocomplete="off"> Gambar
 
                                       </label>
 
@@ -810,16 +832,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                         <!-- END input Jawaban E -->
 
-
-
-
-
-                  
-
-                       
-
-
-
                         <div class="form-group">
 
                             <label class="control-label col-sm-2">Jawaban Benar</label>
@@ -874,9 +886,283 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                         </div>
 
+                        <!-- Start button show hide pembahasan -->
+                        <div class="form-group">
+                             <label class="control-label col-sm-2">Form Pembahasan</label>
+
+                            <div class="col-sm-8">
+                                <div class="btn-group" data-toggle="buttons" >
+
+                                      <label class="btn btn-inverse btn-outline " id="show-pembahasan">
+
+                                        <input type="radio" name="oppembahasan" value="4" autocomplete="off" > <i class=" ico-file6"></i> Tampil Form Pembahasan
+
+                                      </label>
+
+                                      <label class="btn btn-inverse btn-outline active" id="hide-pembahasan">
+
+                                        <input type="radio" name="oppembahasan"  value="5" autocomplete="off" checked="true"> <i class="ico-file-remove"></i> Hide
+
+                                      </label>
+
+                                 </div>
+                                 </div>
+                        </div>
+                        <!-- END button show hide pembahasan -->
+
+                        <!-- Start Form Pembahsan -->
+                        <div class="form-group pembahasan" hidden="
+                        true">
+                          <!-- Start Penel Pembahasan -->
+                         <div class="panel panel-teal">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">Pembahasan</h3>
+                            <div class="panel-toolbar text-right">
+                                
+
+                             </div>
+                          </div>
+                          <!-- Start Panel Body Pembahasan  -->
+                          <div class="panel-body ">
+                          <!-- Start Pilihan Pembahasan  -->
+                           <div class="form-group">
+
+                            <label class="control-label col-sm-2">Media Pembahasan</label>
+
+                            <div class="col-sm-8">
+
+                                <div class="btn-group" data-toggle="buttons" >
+
+                                      <label class="btn btn-teal btn-outline active " id="m-tex">
+
+                                        <input type="radio" name="opmedia" value="text"  autocomplete="off" checked="true"> Text
+
+                                      </label>
+
+                                      <label class="btn btn-teal btn-outline" id="m-vido">
+
+                                        <input type="radio" name="opmedia" value="video" autocomplete="off"> Video
+
+                                      </label>
+
+                                 </div>
+
+                            </div>
+
+                        </div>
+                          <!-- End Pilihan Pembahasan-->
+
+                             <!-- Start Upload Gambar Pembahasan -->
+                         <div class="form-group tex">
+
+                          <label class="control-label col-sm-2">Gambar Pembahasan</label>
+
+                          <div class="col-sm-8 " >
+
+                            <div class="col-sm-12">
+
+                             <img id="previewPembahasan" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+
+                           </div>
+
+
+
+                           <div class="col-sm-12">
+
+                            <div class="col-md-5 left"> 
+
+                              <h6>Name: <span id="filenamePembahasan"></span></h6> 
+
+                            </div> 
+
+                            <div class="col-md-4 left"> 
+
+                              <h6>Size: <span id="filesizePembahasan"></span>Kb</h6> 
+
+                            </div> 
+
+                            <div class="col-md-3 bottom"> 
+
+                              <h6>Type: <span id="filetypePembahasan"></span></h6> 
+
+                            </div>
+
+                          </div>
+
+
+                          <div class="col-sm-12">
+
+                            <label for="filePembahasan" class="btn btn-sm btn-default">
+
+                              Pilih Gambar
+
+                            </label>
+
+                            <input style="display:none;" type="file" id="filePembahasan" name="gambarPembahasan" onchange="ValidateSingleInput(this);"/>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <!-- End Upload Gambar Pembahsan -->
+
+                           <!-- Start Editor Pembahasan -->
+                           <div  class="form-group tex "> 
+                             <div id="editor-soal">
+                              <label class="control-label col-sm-2">Pembahasan</label>
+                              <div class="col-sm-10">
+
+                               <textarea  name="editor2" class="form-control" id="">
+
+
+
+                               </textarea>
+
+                             </div>
+                           </div>
+
+                         </div>
+                         <!-- End Editor Pembahasan -->
+                      
+
+                      <!-- Start Upload Video Pembahasan -->
+                        <!-- pilih option upload video -->
+
+           <!--  <div class="form-group vido" hidden="true">
+
+                <label class="control-label col-sm-2">Pilihan Upload Video</label>
+
+                <div class="col-sm-8">
+
+                    <div class="btn-group" data-toggle="buttons" >
+
+                        <label class="btn btn-teal btn-outline active" id="up_server">
+
+                            <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
+
+                        </label>
+
+                        <label class="btn btn-teal btn-outline " id="up_link">
+
+                            <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div> -->
+
+
+
+            <!-- untuk preview video -->
+
+            <div  class="form-group prv_video " hidden="true">
+
+                <div class="row" style="margin:1%;"> 
+
+                    <div class="col-md-12">
+
+                        <video id="preview" class="img-tumbnail image" src="" width="100%" height="50%" controls >
+
+
+
+                        </video>
+
+                    </div>
+
+                    <div class="col-md-5 left"> 
+
+                        <h6>Name: <span id="filename"></span></h6> 
+
+                    </div> 
+
+                    <div class="col-md-4 left"> 
+
+                        <h6>Size: <span id="filesize"></span>Kb</h6> 
+
+                    </div> 
+
+                    <div class="col-md-3 bottom"> 
+
+                        <h6>Type: <span id="filetype"></span></h6> 
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!--             <div class="form-group server" hidden="true">
+
+                            <div class="col-md-11 bottom">    
+
+                                <progress id="prog" max="100" value="0" style="display:none;"></progress>
+
+                            </div>
+
+                        </div> -->
+
+
+
+            <!-- upload ke server -->
+
+            <div id="upload" class="form-group server" hidden="true">
+
+                <label class="col-sm-2 control-label">File Video</label>
+
+                <div class="col-sm-4">
+
+
+
+                    <label for="file" class="btn btn-sm btn-default">
+
+                        Pilih Video
+
+                    </label>
+
+                    <input style="display:none;" type="file" id="file" name="video" onchange="ValidateInputVideo(this);"/>
+
+                    <!-- <span class="col-sm-12 text-danger"><?php echo form_error('video'); ?></span> -->
+
+                </div>
+
+            </div>
+
+
+
+            <!-- upload video by link -->
+
+
+
+            <div class="form-group link" hidden="true">
+
+                <label class="col-sm-2 control-label">Link Video</label>
+
+                <div class="col-sm-4">
+
+                    <input class="form-control" type="text" name="link_video">
+
+                </div>
+
+            </div>
+                      <!-- end Upload Video Pembahasan-->
+
+                          </div>
+                          <!-- End Panel Body Pembahasan -->
+                        </div>
+                        <!-- End Panel Pembahasan -->
+                      </div>
+                        <!-- End Form Pembahasan -->
                        
 
                     </div>
+
+       
 
                     <div class="panel-footer">
 
@@ -913,6 +1199,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         // instance, using default configuration.
 
         CKEDITOR.replace( 'editor1' );
+         CKEDITOR.replace( 'editor2' );
 
     </script>
 
@@ -1001,8 +1288,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             $('#fileSoal').on('change',function () {
 
-                console.log('test');
-
                 var file = this.files[0];
 
                 var reader = new FileReader();
@@ -1035,8 +1320,46 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             }
 
-            // End event priview gambar pilihan A
+            // End event priview gambar Soal
 
+            // Start event priview gambar Pembahasan
+
+            $('#filePembahasan').on('change',function () {
+
+              console.log('pembahasan');
+                var file = this.files[0];
+
+                var reader = new FileReader();
+
+                reader.onload = viewerPembahasan.load;
+
+                reader.readAsDataURL(file);
+
+                viewerPembahasan.setProperties(file);
+
+            });
+
+            var viewerPembahasan = {
+
+                load : function(e){
+
+                    $('#previewPembahasan').attr('src', e.target.result);
+
+                },
+
+                setProperties : function(file){
+
+                    $('#filenamePembahasan').text(file.name);
+
+                    $('#filetypePembahasan').text(file.type);
+
+                    $('#filesizePembahasan').text(Math.round(file.size/1024));
+
+                },
+
+            }
+
+            // End event priview gambar Soal
 
 
 
@@ -1259,6 +1582,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
 
 
+
         });
 
     </script>
@@ -1266,8 +1590,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <!-- End script untuk priview gambar soal -->
 <!-- start script js validation extension -->
 <script type="text/javascript">
- var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+// validasi upload gambar 
 function ValidateSingleInput(oInput) {
+  var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]; 
     if (oInput.type == "file") {
         var sFileName = oInput.value;
          if (sFileName.length > 0) {
@@ -1282,6 +1607,32 @@ function ValidateSingleInput(oInput) {
              
             if (!blnValid) {
              $('#warningupload').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
+// validation upload video
+    
+function ValidateInputVideo(oInput) {
+  var _validFileExtensions = [".mp4"]; 
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+                $('#warningupload2').modal('show');
                 // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                 // oInput.value = "";
                 return false;
@@ -1367,6 +1718,32 @@ function ValidateSingleInput(oInput) {
             $(".prv_video").show();
 
         });
+
+
+        // Start Eveb Show Hide Form Pembahasan
+        $("#show-pembahasan").click(function(){
+           $(".pembahasan").show();
+        });
+        $("#hide-pembahasan").click(function(){
+           $(".pembahasan").hide();
+        });
+
+        $("#m-tex").click(function(){
+           $(".vido").hide();
+           $(".tex").show();
+
+           $(".link").hide();
+            $(".server").hide();
+            $(".prv_video").hide();
+        });
+        $("#m-vido").click(function(){
+           $(".tex").hide();
+           $(".vido").show();
+            $(".server").show();
+
+            
+        });
+        // End Even Show Hide Form Pembahasan
 
 
 

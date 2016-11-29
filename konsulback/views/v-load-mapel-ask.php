@@ -41,7 +41,7 @@ $message1=$value['isiPertanyaan'];
   $(document).ready(function(){     
                   var cekloadMaple2 = $('#cekload-mapel2').val();
                   if (cekloadMaple2 == 'false') {
-                    $('.more-all').hide();
+                    $('.more-mapel').hide();
                     console.log(cekloadMaple2);
                   } else {
                       console.log(cekloadMaple2);

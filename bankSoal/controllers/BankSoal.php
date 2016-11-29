@@ -741,7 +741,7 @@ class Banksoal extends MX_Controller {
         $subBabID = htmlspecialchars($this->input->post('subBabID'));
         //syarat pengisian form upload soal
         $this->form_validation->set_rules('judul', 'Judul Soal', 'trim|required|is_unique[tb_banksoal.judul_soal]');
-           $options = htmlspecialchars($this->input->post('options'));
+           $options = htmlspecialchars($this->input->post('op-jawaban'));
            $jum_pilihan = htmlspecialchars($this->input->post('opjumlah'));
            $UUID = uniqid();
            $soal = ($this->input->post('editor1'));
@@ -752,6 +752,8 @@ class Banksoal extends MX_Controller {
            $sumber = htmlspecialchars($this->input->post('sumber'));
            $publish = htmlspecialchars($this->input->post('publish'));
            $random = htmlspecialchars($this->input->post('random'));
+           $pembahasan = $this->input->post('editor2');
+           $opmedia=$this->input->post('opmedia');
            $a = $this->input->post('a');
            $b = $this->input->post('b');
            $c = $this->input->post('c');
@@ -769,7 +771,8 @@ class Banksoal extends MX_Controller {
                'create_by' => $create_by,
                'id_subbab' => $subBabID,
                'UUID' => $UUID,
-               'random' => $random
+               'random' => $random,
+               'pembahasan'=>$pembahasan
            );
 
            //call fungsi insert soal
@@ -780,6 +783,7 @@ class Banksoal extends MX_Controller {
            $soalID = $data['tb_banksoal']['id_soal'];
            #Start pengecekan jenis inputan jawaban#
            //pengkondisian untuk jenis inputan text atau gambar
+
            if ($options == 'text') {
                #jika inputan text
                //cek tipe jumlah pilihan jawaban
@@ -844,6 +848,21 @@ class Banksoal extends MX_Controller {
                $this->up_img_jawaban($soalID);
            }
            #END pengecekan jenis inputan jawaban#
+
+           if ($opmedia=='video') {
+                var_dump($opmedia);
+                // call funtion upload video pembahasan
+                $this->up_video_pembahasan($UUID);
+           } else {
+            var_dump($opmedia);
+                // call funtion upload gambar pembahasan
+                $this->up_img_pembahasan($UUID);
+           }
+           
+   
+
+           
+
            redirect(site_url('banksoal/allsoal'));
          // END SINTX UPLOAD SOAL  
     }
@@ -865,6 +884,56 @@ class Banksoal extends MX_Controller {
             'gambar_soal' => $file_name);
 
             $this->Mbanksoal->ch_soal($data);
+    }
+    //function upload gambar pembahasan
+    public function up_img_pembahasan($UUID)
+    {   
+         // echo "img pembahasan";
+         $configpmb['upload_path'] = './assets/image/pembahasan/';
+        $configpmb['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
+        $configpmb['max_size'] = 100;
+        $configpmb['max_width'] = 1024;
+        $configpmb['max_height'] = 768;
+        $this->load->library('upload', $configpmb);
+        $this->upload->initialize($configpmb);
+        $gambar = "gambarPembahasan";
+        $this->upload->do_upload($gambar);
+        $file_data = $this->upload->data();
+        $file_name = $file_data['file_name'];
+        $data['UUID']=$UUID;
+        $data['dataSoal']=  array(
+            'gambar_pembahasan' => $file_name
+            );
+
+            $this->Mbanksoal->ch_soal($data);
+    }
+    public function up_video_pembahasan($UUID)
+    {
+        // echo "video pembahasan";
+          $configvideo['upload_path'] = './assets/video/videoPembahasan';
+        $configvideo['allowed_types'] = 'mp4';
+        $configvideo['max_size'] = 90000;
+        $this->load->library('upload', $configvideo);
+        $this->upload->initialize($configvideo);
+             // pengecekan upload
+        if (!$this->upload->do_upload('video')) {
+                // jika upload video gagal
+            $error = array('error' => $this->upload->display_errors());
+
+        } else {
+                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
+              $file_data = $this->upload->data();
+           $file_name = $file_data['file_name'];
+        $data['UUID']=$UUID;
+        $data['dataSoal']=  array(
+            'video_pembahasan' => $file_name,
+            'pembahasan'=>'');
+
+            $this->Mbanksoal->ch_soal($data);
+
+
+           
+        }
     }
     public function ch_img_soal($UUID) {
         $config['upload_path'] = './assets/image/soal/';
