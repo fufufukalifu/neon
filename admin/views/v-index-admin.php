@@ -879,9 +879,8 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 // ####################################################
   $.ajax({
    type: "POST",
-   url: "<?= base_url() ?>guru/get_avatar_guru",
+   url: "<?= base_url() ?>admin/get_avatar_ajax",
    success: function (data) { 
-    console.log(data);
       $('span.avatar').html(data);
   }
 });

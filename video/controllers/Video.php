@@ -160,6 +160,7 @@ class Video extends MX_Controller {
                 'biografi' => $penulis['biografi'],
                 'photo' => $penulis['photo'],
                 'nama_sub' => $namasub,
+                'sub_id' => base_url()."video/timeline/".$onevideo[0]->subBabID,
             );
             $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
@@ -246,6 +247,39 @@ class Video extends MX_Controller {
         $this->Mvideos->insertComment($dataKomen);
     }
 
+    function timeline($sub_bab_id){
+                //tampilkan seluruh video yang diklik bab
+        $data['judulbab'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
+
+        if ($data['judulbab'] == array()) {
+            $judul_halaman = 'Timeline video';
+
+            $data['title'] = "Maaf sub-bab yang anda pilih, belum memiliki video! :( ";
+            $this->load->view('templating/t-header');
+            $this->load->view('templating/t-navbarUser', $data);
+            $this->load->view('v-banner-videoBelajar');
+            $this->load->view('templating/t-footer');
+        } else {
+            $judul_halaman = $this->load->Mvideos->get_video_by_sub($sub_bab_id)[0]->judulSubBab;
+            $babId = $data['judulbab'][0]->babID;
+
+            $data = array(
+                'judul_halaman' => 'Neon - Sub : ' . $judul_halaman,
+                'judul_header' => $judul_halaman
+            );
+
+            //get subab bab
+            //$data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
+            $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
+            $data['files'] = array(
+                APPPATH . 'modules/homepage/views/v-header.php',        
+                APPPATH . 'modules/video/views/v-f-timeline-video.php',
+                APPPATH . 'modules/testimoni/views/v-footer.php'
+                
+            );
+            $this->parser->parse('templating/index', $data);
+        }
+    }
     //----------# BACK END  #----------#
 
     public function addkomen() {
