@@ -340,7 +340,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                        <div class="form-group">
 
-                            <label class="control-label col-sm-2">Jenis Editor aaa</label>
+                            <label class="control-label col-sm-2">Jenis Editor </label>
 
                             <div class="col-sm-8">
 
