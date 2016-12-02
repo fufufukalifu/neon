@@ -58,7 +58,20 @@ class Learning_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	//ambil topik  berdasarkkan id topik
+	function get_topik_byid($data){
+		$this->db->select('*');
+		$this->db->where('id',$data);
+		$this->db->from('tb_line_topik');
+		$query = $this->db->get();
+		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->result_array()[0];
+		}
+		
 
+	}
 	// update line topik aktiv
 	function updateaktiv($data){
 		$this->db->where('id', $data);
@@ -114,11 +127,26 @@ class Learning_model extends CI_Model{
 	}
 	/*GET META DATA UNTUK STEP*/
 
+
 	/*insert DATA UNTUK STEP*/
 	function insert_line_step($data){
 		$this->db->insert( 'tb_line_step', $data );
 	}
 	/*insert DATA UNTUK STEP*/
+	// -------------------------------------------------------------------
+
+	/*GET META DATA UNTUK STEP*/
+	function get_materi_babID($data){
+		$this->db->select('m.id, judulMateri, isiMateri');
+		$this->db->from('tb_line_materi m');
+		$this->db->JOIN('tb_subbab s','s.id = m.subBabID'); 
+		$this->db->JOIN('tb_bab b','b.id = s.babID'); 
+		$this->db->where('b.id', $data);
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	/*GET META DATA UNTUK STEP*/
 
 }
 ?>

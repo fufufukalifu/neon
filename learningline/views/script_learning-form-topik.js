@@ -80,7 +80,7 @@ $('input[name=urutan]').keyup(function () {
 $('.simpanlearning').click(function(){
   data = 
   {babID:$('input[name=select_bab]').val(),
-  statusLearning:$('input[name=status]:checked'),
+  statusLearning:1,
   deskripsi:$('textarea[name=deskripsi]').val(),
   namaTopik:$('input[name=nama_topik]').val(),
   urutan:$('input[name=urutan]').val()
@@ -111,7 +111,7 @@ $('.simpanlearning').click(function(){
         function(isConfirm){
           if (isConfirm) {
             swal("selesai", "Anda akan dialihkan ke daftar topik", "success");
-            window.location = base_url+"learningline";
+            window.location.href = base_url+"learningline";
           } else {
           // swal("Cancelled", "Your imaginary file is safe :)", "error");
         }
@@ -123,7 +123,6 @@ $('.simpanlearning').click(function(){
       }
     });
   }
-
 
 });
 /*## ------------------------------saat button simpan diklik-------------------------------##*/

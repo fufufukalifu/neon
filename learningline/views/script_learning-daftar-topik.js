@@ -96,6 +96,7 @@ function drop_topik(idtopik){
 			success:function(){
 				swal("Terhapus!", "Topik berhasil dihapus.", "success");
 				tabel.ajax.reload(null,false);
+				dataTableLearning.ajax.reload(null,false);
 			},
 			error:function(){
 				sweetAlert("Oops...", "Data gagal terhapus!", "error");

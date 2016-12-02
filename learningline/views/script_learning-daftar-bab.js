@@ -112,7 +112,7 @@ function drop_topik(idtopik){
 			url:url,
 			success:function(){
 				swal("Terhapus!", "Topik berhasil dihapus.", "success");
-				tabel.ajax.reload(null,false);
+ reload();
 			},
 			error:function(){
 				sweetAlert("Oops...", "Data gagal terhapus!", "error");
@@ -120,6 +120,11 @@ function drop_topik(idtopik){
 
 		});
 	});
+}
+
+function reload(){
+	tabel.ajax.reload(null,false);
+				dataTableLearning.ajax.reload(null,false);
 }
 /*## -----------------------------Drop Learning-------------------------------##*/
 
