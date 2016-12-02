@@ -75,6 +75,7 @@ class Materi extends MX_Controller
 			redirect(site_url('welcome'));
 		}
 	}
+	// get ajax list materi
 	public function ajax_get_all_materi()
 	{
 		$materi= $this->load->Mmateri->get_all_materi();
@@ -134,7 +135,8 @@ class Materi extends MX_Controller
 	public function form_update_materi($UUID)
 	{
 		$data['singleMateri']=$this->Mmateri->get_single_materi($UUID);
-
+		$subBabID = $data['singleMateri'] ['subBabID'];
+		$data['infomateri']=$this->Mmateri->get_tingkat_info($subBabID);
 		$data['files'] = array(
 			APPPATH . 'modules/materi/views/v-update-materi.php',
 			);

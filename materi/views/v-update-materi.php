@@ -10,6 +10,13 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">Form Update Materi</h3>
 						<input type="text" name="UUID" value="<?=$singleMateri['UUID']?>" hidden="true">
+						  <!-- Start old info data materi -->
+                        <input type="text" id="oldtkt" value="<?=$infomateri['id_tingkat'];?>" hidden="true">
+                        <input type="text"  id="oldmp"  value="<?=$infomateri['id_mp'];?>" hidden="true">
+                        <input type="text" id="oldbab"  value="<?=$infomateri['id_bab'];?>" hidden="true">
+                        <input type="text" id="oldsub"  value="<?=$infomateri['id_subbab'];?>" hidden="true">
+                        <input type="text" id="oldpub"  value="<?=$singleMateri['publish']?>" hidden="true">
+                        <!-- END old info data materi -->
 					</div>
 					<!-- End Panel Heading -->
 
@@ -147,6 +154,23 @@
     // Script for getting the dynamic values from database using jQuery and AJAX
 
     $(document).ready(function () {
+    	//set opton dropdown mp
+              loadPelajaran($('#oldtkt').val());
+            // #########################
+
+            // set option dropdown bab
+              load_bab($('#oldmp').val());
+            // ##################
+            // set optopn dropdown sub
+            load_sub_bab($('#oldbab').val());
+            // ###############
+            //set pub
+            var oldpub=$('#oldpub').val();
+          if (oldpub ==1) {
+             $('#giftcheckbox').attr('checked','checked');
+          }else{
+          }
+            //
     	// Start event untuk jenis editor
     	$("#in-materi").click(function(){
     		$("#editor-soal").show();
@@ -186,6 +210,7 @@
     //buat load tingkat
     function loadTingkat() {
     	jQuery(document).ready(function () {
+    		  var oldtkt = $('#oldtkt').val();
     		var tingkat_id = {"tingkat_id": $('#tingkat').val()};
     		var idTingkat;
     		$.ajax({
@@ -197,7 +222,11 @@
     				console.log("Data" + data);
     				$('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
     				$.each(data, function (i, data) {
-    					$('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+    					 if (data.id==oldtkt) {
+                         $('#tingkat').append("<option value='" + data.id + "' selected>" + data.aliasTingkat + "</option>");
+                      } else {
+                        $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                      }
     					return idTingkat = data.id;
     				});
     			}
@@ -227,6 +256,7 @@
     //buat load pelajaran
 
     function loadPelajaran(tingkatID) {
+    	var oldmp = $('#oldmp').val();
     	$.ajax({
     		type: "POST",
     		dataType: "json",
@@ -235,7 +265,11 @@
     		success: function (data) {
     			$('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
     			$.each(data, function (i, data) {
-    				$('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+    				 if (data.id == oldmp ) {
+                      $('#pelajaran').append("<option value='" + data.id + "' selected>" + data.keterangan + "</option>");
+                    } else {
+                      $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                    }
     			});
     		}
     	});
@@ -244,6 +278,7 @@
     //buat load bab
 
     function load_bab(mapelID) {
+    	var oldbab = $('#oldbab').val();
     	$.ajax({
     		type: "POST",
     		dataType: "json",
@@ -253,7 +288,12 @@
     			$('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
                 //console.log(data);
                 $.each(data, function (i, data) {
-                	$('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                	  if (data.id==oldbab) {
+                       $('#bab').append("<option value='" + data.id + "' selected>" + data.judulBab + "</option>");
+                    } else {
+                       $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                    }
+                   
                 });
               }
             });
@@ -262,6 +302,7 @@
     //load sub bab
 
     function load_sub_bab(babID) {
+    	var oldsub = $('#oldsub').val();
     	$.ajax({
     		type: "POST",
     		dataType: "json",
@@ -270,7 +311,11 @@
     		success: function (data) {
     			$('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
     			$.each(data, function (i, data) {
-    				$('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
+    				  if (data.id==oldsub) {
+                     $('#subbab').append("<option value='" + data.id + "' selected>" + data.judulSubBab + "</option>");
+                   } else {
+                     $('#subbab').append("<option value='" + data.id + "' >" + data.judulSubBab + "</option>");
+                   }
     			});
 
     		}

@@ -1,3 +1,40 @@
+<!-- Start Modal Detail Video dari server -->
+	<div class="modal fade" id="mdetailvideo">
+
+		<div class="modal-dialog" role="document">
+
+			<div class="modal-content">
+
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+						<span aria-hidden="true">&times;</span>
+
+					</button>
+
+					<h3 class="semibold mt0 text-accent text-center"></h3>
+
+				</div>
+
+				<div class="modal-body">
+					<p id="isicontent">
+						
+					</p>
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- End Modal Detail Video -->
 <section class="id="main" role="main"">
 	<div class="container-fluid">
 		<!-- Start row -->
@@ -65,18 +102,11 @@ function detail(id){
 	var data = $(kelas).data('id');
 	var links;
 
-	$('h3.modal-title').html(data.judulVideo);
-	if (data.namaFile != null) {
-		links = '<?=base_url();?>assets/video/' + data.namaFile;
-		$('#video-ply').attr('src',links); 
+	$('h3.semibold').html(data.judulMateri);
+		// links = '<?=base_url();?>assets/video/' + data.namaFile;
+		$('#isicontent').html(data.isiMateri); 
 		$('#mdetailvideo').modal('show');
-	}else if(data.link != null){
-		links = data.link;
-		$('#video-ply-link').attr('src',links); 
-		$('#mvideolink').modal('show');
-	}else{
-
-	}
+	
 	
 }
 //##

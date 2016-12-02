@@ -46,4 +46,17 @@
         $this->db->set('status', '0');
         $this->db->update('tb_line_materi');
  	}
+
+ 	// get info tingkat materi
+    public function get_tingkat_info($subBabID)
+    {
+        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp,bab.id as id_bab, judulBab, subbab.id as id_subbab ,judulSubBab,');
+         $this->db->from('tb_tingkat tkt' );
+         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->where('subbab.id',$subBabID);
+        $query = $this->db->get();
+        return $query->result_array()[0];
+    }
  } ?>

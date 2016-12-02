@@ -586,10 +586,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         </div>
                         <!-- END input Jawaban E -->
 
-
-                  
-                       
-
                         <div class="form-group">
                             <label class="control-label col-sm-2">Jawaban Benar</label>
                             <div class="col-sm-8">
@@ -644,7 +640,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
        
         $(document).ready(function(){
         
-
             //set opton dropdown mp
               loadPelajaran($('#oldtkt').val());
             // #########################
