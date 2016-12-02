@@ -46,6 +46,70 @@
 
 <!-- START Body -->
 <body>
+
+   <!-- START Modal ADD BANK SOAL -->
+ <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title">Form Modul</h4>
+   </div>
+
+
+   <!-- Start Body modal -->
+   <div class="modal-body">
+    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
+    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/modulonline/filtermodul" method="post" >
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Tingkat</label>
+       <div class="col-sm-8">
+         <!-- stkt = soal tingkat -->
+         <select class="form-control gettkt" name="tingkat" id="stkt">
+           <option>-Pilih Tingkat-</option>
+         </select>
+       </div>
+     </div>
+
+     <div  class="form-group">
+       <label class="col-sm-3 control-label">Mata Pelajaran</label>
+       <div class="col-sm-8">
+        <select class="form-control getpel" name="mataPelajaran" id="spel">
+
+        </select>
+      </div>
+    </div>
+
+    <!-- <div  class="form-group">
+     <label class="col-sm-3 control-label">Bab</label>
+     <div class="col-sm-8">
+      <select class="form-control getbb" name="bab" id="sbab">
+
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+   <label class="col-sm-3 control-label">Subab</label>
+   <div class="col-sm-8">
+    <select class="form-control subb" name="subbab" id="ssub">
+
+    </select>
+  </div>
+</div> -->
+
+</div>
+<!-- END BODY modla-->
+<div class="modal-footer">
+  <button type="submit" id="myFormSubmit" class="btn btn-primary">Proses</button>                
+</div>
+</form> 
+</div><!-- /.modal-content -->
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END  Modal ADD BANK SOAL-->
+
  <!-- START Modal ADD BANK SOAL -->
  <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -420,13 +484,10 @@
    <ul class="topmenu topmenu-responsive" data-toggle="menu">
     <li >
      <a href="<?= base_url('index.php/guru/dashboard/') ?>">
-      <span class="figure"><i class="ico-trophy"></i></span>
-      <span class="text">Dashboard</span>
-    </a>
-  </li>
-
-
-
+        <span class="figure"><i class="ico-trophy"></i></span>
+        <span class="text">Dashboard</span>
+      </a>
+    </li>
 
   <li>
    <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
@@ -441,8 +502,8 @@
     <li >
      <a href="<?=base_url('index.php/videoback/formupvideo')?>">
       <span class="text">Upload Video</span>
-    </a>
-  </li>
+      </a>
+    </li>
 
   <li>
     <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
@@ -457,27 +518,17 @@
 
       <li class="submenu-header ellipsis">Daftar video</li>
 
-      <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span>
-
-      </a></li>
+      <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span></a></li>
       <li >
        <a href="<?=base_url('/index.php/videoback/listvideo')?>">
         <span class="text">Daftar Semua video</span>
-      </a>
-    </li>
+        </a>
+      </li>
 
-    <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
-
-    </a></li>
-
-
-
-
-
+      <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span></a></li>
+    </ul>
+  </li>
   </ul>
-</li>
-
-</ul>
 </li>
 
 <li>
@@ -579,6 +630,39 @@
 </li>
 <!--END menu konsultasi -->
 
+<li>
+ <a href="javascript:void(0);" data-target="#modulonline" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard2"></i></span>
+  <span class="text">Modul Online</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="modulonline" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Modul Online</li>
+
+  <li >
+   <a href="javascript:void(0);" onclick="add_modul()">
+    <span class="text">Tambahkan Modul</span> 
+  </a>
+</li>
+<li >
+ <a href="javascript:void(0);" data-target="#submodul" data-toggle="submenu"  >
+  <span class="text">Daftar Modul</span>
+  <span class="arrow"></span>
+</a>
+<ul id="submodul" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Sub Bank Soal</li>
+  <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Modul</span>
+  </a></li>
+  <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Modul</span>
+  </a></li>
+
+
+</ul>
+</li>
+
+</ul>
+</li>
 </ul>
 <!--/ END Template Navigation/Menu -->
 </section>
@@ -636,6 +720,11 @@
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
 <script type="text/javascript">
+
+function add_modul() {
+$('#modalmodul').modal('show'); // show bootstrap modal
+}
+
 //panggil modal
 function add_soal() {
 $('#modalsoal').modal('show'); // show bootstrap modal
@@ -899,4 +988,4 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 <!--/ END JAVASCRIPT SECTION -->
 </body>
 <!--/ END Body -->
-</html>
+</htmlf

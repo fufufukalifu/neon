@@ -72,16 +72,16 @@
                         <h3 class="panel-title">Daftar Semua Modul</h3>
                          <!-- Start menu tambah soal -->
                         <div class="panel-toolbar text-right">
-                            <a class="btn btn-inverse btn-outline" href="<?= base_url(); ?>index.php/banksoal/formsoal" title="Tambah Data" ><i class="ico-plus"></i></a>
+                            <a class="btn btn-inverse btn-outline" href="<?= base_url(); ?>index.php/modulonline/formmodul" title="Tambah Data" ><i class="ico-plus"></i></a>
                         </div>
                          <!-- END menu tambah soal -->
                     </div>
                     <table class="table table-striped table-bordered" id="tb_allSoal" style="font-size: 13px" width="100%">
                         <thead>
                             <tr>
-                                <th >ID</th>
+                                <th>ID</th>
                                 <th>Judul Soal</th>
-                                <th>Sumber</th>
+                                <th>Deksripsi</th>
                                 <th>Mata Pelajaran</th>
                                 <th>Tingkat Kesulitan</th>
                                 <th>Soal</th>
@@ -89,7 +89,7 @@
                                 <th>Publish</th>
                                 <!-- <th>Random</th> -->
                                 <th> </th>
-                                <th ></th>
+                                <th></th>
 
                             </tr>
                         </thead>
@@ -131,7 +131,7 @@
     $(document).ready(function() {
         tb_allSoal = $('#tb_allSoal').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/banksoal/ajax_listAllSoal/",
+                    "url": base_url+"index.php/modulonline/ajax_listAllSoal/",
                     "type": "POST"
                     },
             "processing": true,

@@ -117,6 +117,12 @@
 								</li>
 
 								<li>
+
+									<a href="<?=base_url('tesonline/daftarlatihan') ?>">Modul</a>
+
+								</li>
+
+								<li>
 									<a href="#">Hallo <?= $this->session->userdata['USERNAME']?></a>
 									<ul>
 										<li><a href="<?=base_url('siswa/profilesetting') ?>" class="active">Pengaturan Profil</a></li>
