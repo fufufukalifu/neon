@@ -382,7 +382,22 @@ class Mmatapelajaran extends CI_Model {
         return $query->result_array();
     }
 
-
+    function get_bab_by_id($data){
+        $query = "SELECT 
+        bab.id, namaTingkat, `namaMataPelajaran`, `judulBab`
+        FROM
+        (SELECT  * FROM  `tb_bab`
+        WHERE 
+        id =  $data ) AS bab JOIN 
+        `tb_tingkat-pelajaran` AS tingkatpel 
+        ON tingkatpel.`id` = bab.tingkatPelajaranID
+        JOIN `tb_tingkat` AS tingkat
+        ON `tingkat`.`id` = `tingkatpel`.`tingkatID`
+        JOIN `tb_mata-pelajaran` AS mapel
+        ON mapel.`id` = `tingkatpel`.`mataPelajaranID`";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
 
 }
 
