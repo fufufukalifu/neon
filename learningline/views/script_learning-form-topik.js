@@ -71,48 +71,60 @@ function load_bab(mapelID) {
 
 /*## ------------------------------saat button simpan diklik-------------------------------##*/
 /*## ------------------------------ SIMPAN TOPIK-------------------------------##*/
+$('input[name=urutan]').keyup(function () {
+    if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+       this.value = this.value.replace(/[^0-9\.]/g, '');
+    }
+});
 
 $('.simpanlearning').click(function(){
-  var data = 
-  {babID:$('select[name=select_bab]').val(),
-  statusLearning:$('input[name=status]').val(),
+  data = 
+  {babID:$('input[name=select_bab]').val(),
+  statusLearning:$('input[name=status]:checked'),
   deskripsi:$('textarea[name=deskripsi]').val(),
-  namaTopik:$('input[name=nama_topik]').val()};
-
-  var url = base_url+"learningline/ajax_insert_line_topik";
-  $.ajax({
-    data:data,
-    datatType:"text",
-    url:url,
-    type:"POST",
-    success:function(){
-      swal('Topik berhasil ditambahkan');
-      $('.form-topik')[0].reset();
-      swal({
-        title: "Topik berhasil ditambahkan!",
-        text: "Tambahkan baru, atau selesai?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Selesai",
-        cancelButtonText: "Tambah",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm) {
-          swal("selesai", "Anda akan dialihkan ke daftar topik", "success");
-          window.location = base_url+"learningline";
-        } else {
+  namaTopik:$('input[name=nama_topik]').val(),
+  urutan:$('input[name=urutan]').val()
+};
+  if (data.statusLearning=="kosongundefined" || data.namaTopik=="") {
+    swal('Silahkan lengkapi data');
+  }else{
+    var url = base_url+"learningline/ajax_insert_line_topik";
+    $.ajax({
+      data:data,
+      datatType:"text",
+      url:url,
+      type:"POST",
+      success:function(){
+        swal('Topik berhasil ditambahkan');
+        $('.form-topik')[0].reset();
+        swal({
+          title: "Topik berhasil ditambahkan!",
+          text: "Tambahkan baru, atau selesai?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Selesai",
+          cancelButtonText: "Tambah",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            swal("selesai", "Anda akan dialihkan ke daftar topik", "success");
+            window.location = base_url+"learningline";
+          } else {
           // swal("Cancelled", "Your imaginary file is safe :)", "error");
         }
       });
 
-    },
-    error:function(){
-      sweetAlert('Data gagal disimpan','error');
-    }
-  })
+      },
+      error:function(){
+        sweetAlert('Data gagal disimpan','error');
+      }
+    });
+  }
+
+
 });
 /*## ------------------------------saat button simpan diklik-------------------------------##*/
 </script>
