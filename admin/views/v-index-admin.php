@@ -417,6 +417,53 @@
 </li>
 
 <li>
+  <a href="javascript:void(0);" data-target="#gallery" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-images"></i></span>
+    <span class="text">Gallery</span>
+    <span class="arrow"></span>
+  </a>
+
+  <ul id="gallery" class="submenu collapse ">
+    <li class="submenu-header ellipsis">gallery</li>
+        <li >
+      <a href="<?=base_url('index.php/gallery')?>">
+        <span class="text">Gallery</span>
+      </a>
+    </li>
+    <li >
+      <a href="<?=base_url('index.php/gallery/formGallery')?>" onclick="add_soal()">
+        <span class="text">Tambahkan gallery</span> 
+      </a>
+    </li>
+
+  </ul>
+</li>
+
+<li>
+  <a href="javascript:void(0);" data-target="#materi" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-files"></i></span>
+    <span class="text">Materi</span>
+    <span class="arrow"></span>
+  </a>
+
+  <ul id="materi" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Materi</li>
+
+    <li >
+      <a href="<?=base_url('index.php/materi/form_materi')?>" onclick="add_soal()">
+        <span class="text">Form Materi</span> 
+      </a>
+    </li>
+    <li >
+      <a href="<?=base_url('index.php/materi/list_all_materi')?>">
+        <span class="text">Tambah Materi</span>
+      </a>
+    </li>
+
+  </ul>
+</li>
+
+<li>
   <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-clipboard2"></i></span>
     <span class="text">Bank Soal</span>
