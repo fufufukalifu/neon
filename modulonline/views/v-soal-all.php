@@ -80,17 +80,17 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Judul Soal</th>
+                                <th>Judul Modul</th>
                                 <th>Deksripsi</th>
-                                <th>Mata Pelajaran</th>
-                                <th>Tingkat Kesulitan</th>
-                                <th>Soal</th>
-                                <th>Jawaban</th>
+                                <!-- <th>Create By</th> -->
                                 <th>Publish</th>
-                                <!-- <th>Random</th> -->
-                                <th> </th>
+                                <th>Download</th>
                                 <th></th>
-
+                                <th></th>
+                                <!-- <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -142,12 +142,12 @@
        
     });
 
-    function dropSoal(id_soal) {
+    function dropSoal(id) {
         if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
                // ajax delete data to database
                
                $.ajax({
-                     url : base_url+"index.php/banksoal/deletebanksoal/"+id_soal,
+                     url : base_url+"index.php/modulonline/deletebanksoal/"+id,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)

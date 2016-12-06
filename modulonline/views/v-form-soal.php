@@ -1,6 +1,7 @@
  <!-- START Template Main -->
 
 <section id="main" role="main">
+        <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
     <div class="container-fluid">
 <!-- Start Modal salah upload gambar -->
@@ -12,8 +13,8 @@
         <h2 class="modal-title text-center text-danger">Peringatan</h2>
       </div>
       <div class="modal-body">
-        <h3 class="text-center">Silahkan cek type extension gambar! </h3>
-        <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5>
+        <h3 class="text-center">Silahkan cek type extension file! </h3>
+        <h5 class="text-center">Type yang bisa di upload hanya ".doc", ".docx", ".ppt", ".pptx", ".pdf"</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -22,24 +23,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Start Modal salah upload video -->
-<div class="modal fade" id="warningupload2" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h2 class="modal-title text-center text-danger">Peringatan</h2>
-      </div>
-      <div class="modal-body">
-        <h3 class="text-center">Silahkan cek type extension video!</h3>
-        <h5 class="text-center">Type yang bisa di upload hanya .mp4</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
         <!-- START row -->
 
         <div class="row">
@@ -128,7 +111,30 @@
 
                             <label class="control-label col-sm-2">File Modul</label>
 
-                             <div class="col-sm-8 " >                                         
+                             <div class="col-sm-8 " >                                            
+
+                                <div class="col-sm-12">
+
+                                    <div class="col-md-5 left"> 
+
+                                            <h6>Name: <span id="filenameSoal"></span></h6> 
+
+                                    </div> 
+
+                                    <div class="col-md-4 left"> 
+
+                                            <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
+
+                                    </div> 
+
+                                    <div class="col-md-3 bottom"> 
+
+                                            <h6>Type: <span id="filetypeSoal"></span></h6> 
+
+                                    </div>
+
+                                </div>
+                                      
 
                                 <div class="col-sm-12">
 
@@ -218,30 +224,6 @@ function ValidateSingleInput(oInput) {
 }
 // validation upload video
     
-function ValidateInputVideo(oInput) {
-  var _validFileExtensions = [".mp4"]; 
-    if (oInput.type == "file") {
-        var sFileName = oInput.value;
-         if (sFileName.length > 0) {
-            var blnValid = false;
-            for (var j = 0; j < _validFileExtensions.length; j++) {
-                var sCurExtension = _validFileExtensions[j];
-                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                    blnValid = true;
-                    break;
-                }
-            }
-             
-            if (!blnValid) {
-                $('#warningupload2').modal('show');
-                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-                // oInput.value = "";
-                return false;
-            }
-        }
-    }
-    return true;
-}
 </script>
 <!-- END -->
 
@@ -443,6 +425,95 @@ function ValidateInputVideo(oInput) {
 <!--END Script drop down depeden  -->
  
 
+    <!-- Start script untuk priview gambar soal -->
+
+    <script type="text/javascript">
+
+        $(function () {
+
+
+
+            // Start event priview gambar Soal
+
+            $('#fileSoal').on('change',function () {
+
+                var file = this.files[0];
+
+                var reader = new FileReader();
+
+                reader.onload = viewerSoal.load;
+
+                reader.readAsDataURL(file);
+
+                viewerSoal.setProperties(file);
+
+            });
+
+            var viewerSoal = {
+
+                load : function(e){
+
+                    // $('#previewSoal').attr('src', e.target.result);
+
+                },
+
+                setProperties : function(file){
+
+                    $('#filenameSoal').text(file.name);
+
+                    $('#filetypeSoal').text(file.type);
+
+                    $('#filesizeSoal').text(Math.round(file.size/1024));
+
+                },
+
+            }
+
+            // End event priview gambar Soal
+
+            // Start event priview gambar Pembahasan
+
+            $('#filePembahasan').on('change',function () {
+
+              console.log('pembahasan');
+                var file = this.files[0];
+
+                var reader = new FileReader();
+
+                reader.onload = viewerPembahasan.load;
+
+                reader.readAsDataURL(file);
+
+                viewerPembahasan.setProperties(file);
+
+            });
+
+            var viewerPembahasan = {
+
+                load : function(e){
+
+                    $('#previewPembahasan').attr('src', e.target.result);
+
+                },
+
+                setProperties : function(file){
+
+                    $('#filenamePembahasan').text(file.name);
+
+                    $('#filetypePembahasan').text(file.type);
+
+                    $('#filesizePembahasan').text(Math.round(file.size/1024));
+
+                },
+
+            }
+
+            // End event priview gambar Soal
+        });
+
+    </script>
+
+     <!-- End script untuk priview gambar soal -->
 </section>
 
 

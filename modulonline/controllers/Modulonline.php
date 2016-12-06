@@ -15,7 +15,7 @@ class Modulonline extends MX_Controller {
     public function index() {
        
         $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/test.php',
+            APPPATH . 'modules/modulonline/views/test.php',
         );
         $data['judul_halaman'] = "test";
         $this->load->view('templating/index-b-guru', $data);
@@ -29,10 +29,10 @@ class Modulonline extends MX_Controller {
         $data['tingkatID'] = $tingkatID;
 
         $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-list-mp.php',
+            APPPATH . 'modules/modalonline/views/v-list-mp.php',
             );
 
-        $data['judul_halaman'] = "List  Mata Pelajaran";
+        $data['judul_halaman'] = "List Mata Pelajaran";
 
         $hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
@@ -63,391 +63,79 @@ class Modulonline extends MX_Controller {
        
     }
 
-    public function listbab() {
-        $mpID = htmlspecialchars($this->input->get('mpID'));
-        $data['bab'] = $this->Mmodulonline->get_bab($mpID);
-        $data['judul_halaman'] = "List Bab";
-        $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-list-bab.php',
-            );
-                #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-            // jika admin
-            if ($mpID == null) {
-                redirect(site_url('admin'));
-            } else {
-               $this->parser->parse('admin/v-index-admin', $data);
-            }
-            
-        } elseif($hakAkses=='guru'){
-             // jika guru
-            if ($mpID == null) {
-                 redirect(site_url('guru/dashboard/'));
-            } else {
-               $this->parser->parse('templating/index-b-guru', $data);
-            }
-            
-        }else{
-                        // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-                #END Cek USer#
-    }
-
-    public function listsubbab() {
-        $babID = htmlspecialchars($this->input->get('bab'));
-
-        $data['subbab'] = $this->Mmodulonline->get_subbab($babID);
-        $data['judul_halaman'] = "List Sub Bab";
-        $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-list-subbab.php',
-            );
-         #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-            // jika admin
-            if ($babID == null) {
-                redirect(site_url('admin'));
-            } else {
-                $this->parser->parse('admin/v-index-admin', $data);
-            }
-            
-        } elseif($hakAkses=='guru'){
-            // jika guru
-             if ($babID == null) {
-                redirect(site_url('guru/dashboard/'));
-            } else {
-                $this->parser->parse('templating/index-b-guru', $data);
-            }
-            
-        }else{
-                        // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-        #END Cek USer#
-    }
-    ## START FUNCTION UNTUK HALAMAN SOAL PERSUB-BAB
-    // Functon menampilkan halaman list soal per sub--bab
-    public function subsoal($subBab ) {
-        $data ['subBab'] = $subBab;
-        $datSub=$this->Mmodulonline->dat_sub($subBab);
-        $babID=$datSub->babID;
-        $datBab=$this->Mmodulonline->get_judulBab($babID);
-        $judulBab=$datBab->judulBab;
-        $tingkatPelajaranID=$datBab->tingkatPelajaranID;
-        $namaMp=$this->Mmodulonline->get_namaMp($tingkatPelajaranID);
-        $data ['judulSub'] =$datSub->judulSubBab;
-        $data['judul_halaman'] = "Bank Soal ".$namaMp."/".$judulBab;
-        $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-soal-sub.php',
-            );
-        #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-            // jika admin
-            if ($subBab == null) {
-                redirect(site_url('admin'));
-            } else {
-                $this->parser->parse('admin/v-index-admin', $data);
-            }
-            
-        } elseif($hakAkses=='guru'){
-             // jika guru
-            if ($subBab == null) {
-                 redirect(site_url('guru/dashboard/'));
-            } else {
-               $this->parser->parse('templating/index-b-guru', $data);
-            }
-            
-        }else{
-            // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-        #END Cek USer#
-    }
-    // function untuk mengambil data soal
-    function ajax_soalPerSub($subBab) {
-        $list  = $this->Mmodulonline->get_soal($subBab);
-         $pilihan = $this->Mmodulonline->get_pilihan($subBab);
-
-        // $list = $this->load->mToBack->paket_by_toID($idTO);
-        $data = array();
-
-        $baseurl = base_url();
-        foreach ( $list as $list_soal ) {
-            $jawabanBenar= "";
-            $jawaban=$list_soal['jawaban'];
-            $tingkat=$list_soal['kesulitan'];
-            $id_soal=$list_soal['id_soal'];
-            $random=$list_soal['random'];
-            $publish=$list_soal['publish'];
-            $soal=$list_soal['soal'];
-            $ckRandom="";
-            $ckPublish="";
-
-            
-             // menentukan tingkat kesulitan dengan indeks 1 - 3
-            if ($tingkat == '3') {
-                $kesulitan = 'Sulit';
-            } elseif ($tingkat == '2') {
-                $kesulitan = 'Sedang';
-            }else {
-               $kesulitan = 'Mudah';
-            }
-            // menentukan jawaban benar
-            foreach ( $pilihan as $piljawaban ) {
-                $id_soal_fk=$piljawaban['id_soal'];
-                $op=$piljawaban['pilihan'];
-                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-                    $jawabanBenar=$piljawaban['jawabanBenar'];
-                } 
-                
-            }
-            // menentukan checked random
-            if ($random =='1') {
-                $ckRandom="checked";
-            } 
-            //mnentukan checked publish
-              if ($publish =='1') {
-                $ckPublish="checked";
-            } 
-            
-            $row = array();
-            $row[] = $id_soal;
-            $row[] = $list_soal['judul_soal'];
-            $row[] = $list_soal['sumber'];
-            $row[] = $kesulitan;
-             $valSoal=$this->cek_soal_tabel($soal);
-            if ($valSoal == true) {
-                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            } else if (strlen($soal)>160 ) {
-           
-                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            } else {
-                $row[] = $soal;
-            }
-            
-           
-            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-           $row[] ='
-                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
-                                <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
-                                <label for="ckRand" >&nbsp;&nbsp;</label>
-                    </span>';
-
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
-            $row[] = '
-            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
-
-                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
-                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
-
-            </form>';
-
-            $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
-
-            $data[] = $row;
-
-        }
-    
-        $output = array(
-            
-            "data"=>$data,
-        );
-
-        echo json_encode( $output );
-    } 
-    ## END START FUNCTION UNTUK HALAMAN SOAL PERSUB-BAB#
-
-    ##Start Function untuk halaman soal perBab##
-     // function untuk mengambil data soal
-    function ajax_soalPerbab($bab) {
-        $list  = $this->Mmodulonline->get_soal_bab($bab);
-        $pilihan = $this->Mmodulonline->get_pilihan_bab($bab);
-        $data = array();
-        $baseurl = base_url();
-        foreach ( $list as $list_soal ) {
-            $jawabanBenar= "";
-            $jawaban=$list_soal['jawaban'];
-            $tingkat=$list_soal['kesulitan'];
-            $id_soal=$list_soal['id_soal'];
-            $random=$list_soal['random'];
-            $publish=$list_soal['publish'];
-            $soal=$list_soal['soal'];
-            $ckRandom="";
-            $ckPublish="";
-
-             // menentukan tingkat kesulitan dengan indeks 1 - 3
-            if ($tingkat == '3') {
-                $kesulitan = 'Sulit';
-            } elseif ($tingkat == '2') {
-                $kesulitan = 'Sedang';
-            }else {
-               $kesulitan = 'Mudah';
-            }
-            // menentukan jawaban benar
-            foreach ( $pilihan as $piljawaban ) {
-                $id_soal_fk=$piljawaban['id_soal'];
-                $op=$piljawaban['pilihan'];
-                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-                    $jawabanBenar=$piljawaban['jawabanBenar'];
-                } 
-                
-            }
-            // menentukan checked random
-            if ($random =='1') {
-                $ckRandom="checked";
-            } 
-            //mnentukan checked publish
-              if ($publish =='1') {
-                $ckPublish="checked";
-            } 
-            
-            $row = array();
-            $row[] = $id_soal;
-            $row[] = $list_soal['judul_soal'];
-            $row[] = $list_soal['sumber'];
-            $row[] = $list_soal['judulSubBab'];
-            $row[] = $kesulitan;
-               $valSoal=$this->cek_soal_tabel($soal);
-            if ($valSoal == true) {
-                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            } else if (strlen($soal)>160 ) {
-           
-                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            } else {
-                $row[] = $soal;
-            }
-            
-           
-            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-           $row[] ='
-                    <span class="checkbox custom-checkbox custom-checkbox-inverse">
-                                <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
-                                <label for="ckRand" >&nbsp;&nbsp;</label>
-                    </span>';
-
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
-            $row[] = '
-            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
-
-                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
-                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
-                                                <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
-
-            </form>';
-
-            $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
-
-            $data[] = $row;
-
-        }
-    
-        $output = array(
-            
-            "data"=>$data,
-        );
-
-        echo json_encode( $output );
-    } 
-
+  
     ##
  ##Start Function untuk halaman soal per mata pelajaran##
      // function untuk mengambil data soal
     function ajax_soalPerMp($idMp) {
-      $list  = $this->Mmodulonlinel->get_soal_mp($idMp);
-        $pilihan = $this->Mmodulonline->get_pilihan_mp($idMp);
-        $data = array();
-        $baseurl = base_url();
-        foreach ( $list as $list_soal ) {
-            $jawabanBenar= "";
-            $jawaban=$list_soal['jawaban'];
-            $tingkat=$list_soal['kesulitan'];
-            $id_soal=$list_soal['id_soal'];
-            $random=$list_soal['random'];
-            $publish=$list_soal['publish'];
-            $ckRandom="";
-            $ckPublish="";
+      $list  = $this->Mmodulonline->get_soal_mp($idMp);
+      //   $pilihan = $this->Mmodulonline->get_pilihan_mp($idMp);
 
-             // menentukan tingkat kesulitan dengan indeks 1 - 3
-            if ($tingkat == '3') {
-                $kesulitan = 'Sulit';
-            } elseif ($tingkat == '2') {
-                $kesulitan = 'Sedang';
-            }else {
-               $kesulitan = 'Mudah';
-            }
-            // menentukan jawaban benar
-            foreach ( $pilihan as $piljawaban ) {
-                $id_soal_fk=$piljawaban['id_soal'];
-                $op=$piljawaban['pilihan'];
-                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-                    $jawabanBenar=$piljawaban['jawabanBenar'];
-                } 
-                
-            }
-            // menentukan checked random
-            if ($random =='1') {
-                $ckRandom="checked";
-            } 
+       $data = array();
+
+        $baseurl = base_url();
+        foreach ($list as $list_soal ) {
+            $id=$list_soal['id'];
+            $judul=$list_soal['judul'];
+            $deskripsi=$list_soal['deskripsi'];
+            // $url=$list_soal['url_file'];
+            $publish=$list_soal['publish'];
+            $ckPublish="";
+             
             //mnentukan checked publish
-              if ($publish =='1') {
+            if ($publish =='1') {
                 $ckPublish="checked";
             } 
             
             $row = array();
-            $row[] = $id_soal;
-            $row[] = $list_soal['judul_soal'];
-            $row[] = $list_soal['sumber'];
-            $row[] = $list_soal['judulBab'];
-            $row[] = $kesulitan;
-            $soal=$list_soal['soal'];
-              $valSoal=$this->cek_soal_tabel($soal);
-            if ($valSoal == true) {
-                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            } else if (strlen($soal)>160 ) {
-           
-                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            } else {
-                $row[] = $soal;
-            }
-            
-           
-            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-           $row[] ='
+            $row[] = $id;
+            $row[] = $list_soal['judul'];
+            $row[] = $list_soal['deskripsi'];
+            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
                                 <label for="ckRand" >&nbsp;&nbsp;</label>
                     </span>';
+            $row[] = '<a href="'.base_url("assets/modul/".$list_soal['url_file']).'" class="btn btn-sm btn-primary">
+                                <i class="ico-download"></i>
+                    </a>';
+                    
 
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
+            // $row[] = $kesulitan;
+            // if ($valSoal == true) {
+            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            // } else if (strlen($soal)>160 ) {
+            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+            //   // data-id='."'".json_encode($list_video)."'".'
+            //   // onclick="detail('."'".$list_video['videoID']."'".')"
+            //   // >
+            //   // <i class=" ico-play3"></i>
+            //   //   </a> 
+            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            // } else {
+            //     $row[] = $soal;
+            // }
+            
+           
+           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
+         
+
+           //  // $row[] ='
+           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+           //  //         </span>';
             $row[] = '
-            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+            <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
-                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
-                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                
+                                                <input type="text" name="subBab" value="'.$list_soal['id'].'" hidden="true">
                                                 <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
             $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
 
@@ -459,91 +147,78 @@ class Modulonline extends MX_Controller {
         );
 
         echo json_encode( $output );
+     
     } 
  ##Start Function untuk halaman soal per mata pelajaran##
      // function untuk mengambil data soal
     function ajax_soalPerTkt($tingkatID) {
       $list  = $this->Mmodulonline->get_soal_tkt($tingkatID);
-        $pilihan = $this->Mmodulonline->get_pilihan_tkt($tingkatID);
+        // $pilihan = $this->Mmodulonline->get_pilihan_tkt($tingkatID);
         $data = array();
-        $baseurl = base_url();
-        foreach ( $list as $list_soal ) {
-            $jawabanBenar= "";
-            $jawaban=$list_soal['jawaban'];
-            $tingkat=$list_soal['kesulitan'];
-            $id_soal=$list_soal['id_soal'];
-            $random=$list_soal['random'];
-            $publish=$list_soal['publish'];
-            $ckRandom="";
-            $ckPublish="";
 
-             // menentukan tingkat kesulitan dengan indeks 1 - 3
-            if ($tingkat == '3') {
-                $kesulitan = 'Sulit';
-            } elseif ($tingkat == '2') {
-                $kesulitan = 'Sedang';
-            }else {
-               $kesulitan = 'Mudah';
-            }
-            // menentukan jawaban benar
-            foreach ( $pilihan as $piljawaban ) {
-                $id_soal_fk=$piljawaban['id_soal'];
-                $op=$piljawaban['pilihan'];
-                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-                    $jawabanBenar=$piljawaban['jawabanBenar'];
-                } 
-                
-            }
-            // menentukan checked random
-            if ($random =='1') {
-                $ckRandom="checked";
-            } 
+        $baseurl = base_url();
+        foreach ($list as $list_soal ) {
+            $id=$list_soal['id'];
+            $judul=$list_soal['judul'];
+            $deskripsi=$list_soal['deskripsi'];
+            // $url=$list_soal['url_file'];
+            $publish=$list_soal['publish'];
+            $ckPublish="";
+             
             //mnentukan checked publish
-              if ($publish =='1') {
+            if ($publish =='1') {
                 $ckPublish="checked";
             } 
             
             $row = array();
-            $row[] = $id_soal;
-            $row[] = $list_soal['judul_soal'];
-            $row[] = $list_soal['sumber'];
-            $row[] = $list_soal['keterangan'];
-            $row[] = $kesulitan;
-            $soal=$list_soal['soal'];
-            $valSoal=$this->cek_soal_tabel($soal);
-            if ($valSoal == true) {
-                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            } else if (strlen($soal)>160 ) {
-           
-                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            } else {
-                $row[] = $soal;
-            }
-            
-           
-            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-           $row[] ='
+            $row[] = $id;
+            $row[] = $list_soal['judul'];
+            $row[] = $list_soal['deskripsi'];
+            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
                                 <label for="ckRand" >&nbsp;&nbsp;</label>
                     </span>';
+            $row[] = '<a href="'.base_url("assets/modul/".$list_soal['url_file']).'" class="btn btn-sm btn-primary">
+                                <i class="ico-download"></i>
+                    </a>';
+                    
 
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
+            // $row[] = $kesulitan;
+            // if ($valSoal == true) {
+            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            // } else if (strlen($soal)>160 ) {
+            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+            //   // data-id='."'".json_encode($list_video)."'".'
+            //   // onclick="detail('."'".$list_video['videoID']."'".')"
+            //   // >
+            //   // <i class=" ico-play3"></i>
+            //   //   </a> 
+            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            // } else {
+            //     $row[] = $soal;
+            // }
+            
+           
+           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
+         
+
+           //  // $row[] ='
+           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+           //  //         </span>';
             $row[] = '
-            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+            <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
-                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
-                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                
+                                                <input type="text" name="subBab" value="'.$list_soal['id'].'" hidden="true">
                                                 <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
             $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
 
@@ -561,8 +236,6 @@ class Modulonline extends MX_Controller {
     //function untuk menampilkan halaman all soal
     public function allsoal()
     {
-        // $data['soal'] = $this->Mbanksoal->get_allsoal();
-        // $data['pilihan'] = $this->Mbanksoal->get_allpilihan();
        
         $data['judul_halaman'] = "Modul Online";
         $data['files'] = array(
@@ -591,96 +264,74 @@ class Modulonline extends MX_Controller {
     // function untuk mengambil data soal
     function ajax_listAllSoal() {
         $list = $this->Mmodulonline->get_allsoal();
-        $pilihan = $this->Mmodulonline->get_allpilihan();
+        // $pilihan = $this->Mmodulonline->get_allpilihan();
 
         // $list = $this->load->mToBack->paket_by_toID($idTO);
         $data = array();
 
         $baseurl = base_url();
-        foreach ( $list as $list_soal ) {
-             $jawabanBenar= "";
-            $jawaban=$list_soal['jawaban'];
-            $tingkat=$list_soal['kesulitan'];
-            $id_soal=$list_soal['id_soal'];
-            $random=$list_soal['random'];
+        foreach ($list as $list_soal ) {
+            $id=$list_soal['id'];
+            $judul=$list_soal['judul'];
+            $deskripsi=$list_soal['deskripsi'];
+            // $url=$list_soal['url_file'];
             $publish=$list_soal['publish'];
-            $ckRandom="";
             $ckPublish="";
-            $soal=$list_soal['soal'];
-            // pengecekan soal jika ada tabel
-            $valSoal=$this->cek_soal_tabel($soal);
-             // menentukan tingkat kesulitan dengan indeks 1 - 3
-            if ($tingkat == '3') {
-                $kesulitan = 'Sulit';
-            } elseif ($tingkat == '2') {
-                $kesulitan = 'Sedang';
-            }else {
-               $kesulitan = 'Mudah';
-            }
-            // menentukan jawaban benar
-            foreach ( $pilihan as $piljawaban ) {
-                $id_soal_fk=$piljawaban['id_soal'];
-                $op=$piljawaban['pilihan'];
-                if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-                    $jawabanBenar=$piljawaban['jawabanBenar'];
-
-                } 
-
-                
-            }
-            // menentukan checked random
-            if ($random =='1') {
-                $ckRandom="checked";
-            } 
+             
             //mnentukan checked publish
-              if ($publish =='1') {
+            if ($publish =='1') {
                 $ckPublish="checked";
             } 
             
             $row = array();
-            $row[] = $id_soal;
-            $row[] = $list_soal['judul_soal'];
-            $row[] = $list_soal['sumber'];
-            $row[] = $list_soal['keterangan'];
-            $row[] = $kesulitan;
-            if ($valSoal == true) {
-                $row[] = '<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            } else if (strlen($soal)>160 ) {
-              // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
-              // data-id='."'".json_encode($list_video)."'".'
-              // onclick="detail('."'".$list_video['videoID']."'".')"
-              // >
-              // <i class=" ico-play3"></i>
-              //   </a> 
-                 $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            } else {
-                $row[] = $soal;
-            }
-            
-           
-            $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-           $row[] ='
+            $row[] = $id;
+            $row[] = $list_soal['judul'];
+            $row[] = $list_soal['deskripsi'];
+            $row[] ='
                     <span class="checkbox custom-checkbox custom-checkbox-inverse">
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
                                 <label for="ckRand" >&nbsp;&nbsp;</label>
                     </span>';
+            $row[] = '<a href="'.base_url("assets/modul/".$list_soal['url_file']).'" class="btn btn-sm btn-primary">
+                                <i class="ico-download"></i>
+                    </a>';
+                    
 
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
+            // $row[] = $kesulitan;
+            // if ($valSoal == true) {
+            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
+            // } else if (strlen($soal)>160 ) {
+            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
+            //   // data-id='."'".json_encode($list_video)."'".'
+            //   // onclick="detail('."'".$list_video['videoID']."'".')"
+            //   // >
+            //   // <i class=" ico-play3"></i>
+            //   //   </a> 
+            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
+            // } else {
+            //     $row[] = $soal;
+            // }
+            
+           
+           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
+         
+
+           //  // $row[] ='
+           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
+           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
+           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
+           //  //         </span>';
             $row[] = '
-            <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
+            <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
-                                                <input type="text" name="UUID" value="'.$list_soal['UUID'].'"  hidden="true">
-                                                <input type="text" name="subBab" value="'.$list_soal['id_subbab'].'" hidden="true">
+                                                
+                                                <input type="text" name="subBab" value="'.$list_soal['id'].'" hidden="true">
                                                 <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
 
             $row[]=' 
-            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
+            <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
 

@@ -103,58 +103,39 @@ class Mmodulonline extends CI_Model {
     }
     // get soal per matapelajaran
     public function get_soal_mp($idMp) {
-        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab,judulBab');
-        $this->db->from('tb_tingkat-pelajaran tp');
-        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
-        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
-        $this->db->where('tp.id', $idMp);
-        $this->db->where('soal.status','1');
+
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish');
+        $this->db->from('tb_modul as mdl');
+        $this->db->where('mdl.status','1');
+        $this->db->where('mdl.id_tingkatpelajaran', $idMp);
+
+
+        // $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab,judulBab');
+        // $this->db->from('tb_tingkat-pelajaran tp');
+        // $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        // $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        // $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
+       
+        // $this->db->where('soal.status','1');
         $query = $this->db->get();
         return $query->result_array();
      
-    }
-      //get pilihan berdasarkan bab
-    public function get_pilihan_mp($tingkatID) {
-        $this->db->select('*,pil.id_soal as pilID, soal.id_soal as soalID, pil.jawaban as jawabanBenar');
-        $this->db->from('tb_banksoal soal');
-        $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
-        $this->db->join('tb_subbab sub', 'sub.id = soal.id_subbab');
-        $this->db->join('tb_bab bab','sub.babID = bab.id');
-        $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_tingkat tkt','tp.tingkatID = tkt.id');
-        $this->db->where('tkt.id', $tingkatID);
-        $query = $this->db->get();
-        return $query->result_array();
     }
       // get soal per tingkat
     public function get_soal_tkt($tingkatID) {
-        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab');
-        $this->db->from('tb_tingkat-pelajaran tp');
-        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
-        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
-        $this->db->join('tb_tingkat tkt','tp.tingkatID = tkt.id');
-        $this->db->where('tkt.id', $tingkatID);
-        $this->db->where('soal.status','1');
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish');
+        $this->db->from('tb_modul as mdl');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.id = mdl.id_tingkatpelajaran');
+        // $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        // $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        // $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
+        $this->db->where('mdl.status','1');
+        $this->db->where('tp.tingkatID', $tingkatID);
+
         $query = $this->db->get();
         return $query->result_array();
      
     }
-      //get pilihan berdasarkan tingkat
-    public function get_pilihan_tkt($idMp) {
-        $this->db->select('*,pil.id_soal as pilID, soal.id_soal as soalID, pil.jawaban as jawabanBenar');
-        $this->db->from('tb_banksoal soal');
-        $this->db->join('tb_piljawaban pil', ' pil.id_soal= soal.id_soal');
-        $this->db->join('tb_subbab sub', 'sub.id = soal.id_subbab');
-        $this->db->join('tb_bab bab','sub.babID = bab.id');
-        $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
-        $this->db->where('tp.id', $idMp);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    # Start Function untuk form update soal#
-
     public function ch_soal($data) {
         $this->db->set($data['dataSoal']);
         $this->db->where('UUID', $data['UUID']);
@@ -209,9 +190,9 @@ class Mmodulonline extends CI_Model {
     //dalam pengahapusan data bank soal tidak benar2 di hapus tetapi status di rubah dari 1 -> 0
 
     public function del_banksoal($data) {
-        $this->db->where('id_soal', $data);
+        $this->db->where('id', $data);
         $this->db->set('status', '0');
-        $this->db->update('tb_banksoal');
+        $this->db->update('tb_modul');
     }
 
     # END Function untuk form delete bank soal#
@@ -219,12 +200,11 @@ class Mmodulonline extends CI_Model {
     //
     public function get_allsoal()
     {
-        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab');
-        $this->db->from('tb_tingkat-pelajaran tp');
-        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
-        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
-        $this->db->where('soal.status','1');
+
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish');
+        $this->db->from('tb_modul as mdl');
+        $this->db->where('mdl.status','1');
+
         $query = $this->db->get();
         return $query->result_array();
     }

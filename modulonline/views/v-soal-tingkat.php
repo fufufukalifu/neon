@@ -55,7 +55,7 @@
                 <div class="panel panel-teal">
                     <div class="panel-heading">
 
-                        <h3 class="panel-title ">Daftar Soal Berdasarkan Tingkat '<?=$tingkat;?>'</h3>
+                        <h3 class="panel-title ">Daftar Modul Berdasarkan Tingkat '<?=$tingkat;?>'</h3>
                         <!-- Start menu tambah soal -->
                         <div class="panel-toolbar text-right">
                          <input type="text" name="tingkatID" id="tingkatID" value="<?= $tingkatID; ?>" hidden="true" >
@@ -66,18 +66,19 @@
                     </div>
                     <table class="table table-striped" id="tb_soalsub" style="font-size: 13px" width="100%">
                         <thead>
-                            <tr>
-                               <th>ID</th>
-                                <th>Judul Soal</th>
-                                <th>Sumber</th>
-                                <th>Mata Pelajaran</th>
-                                <th>Tingkat Kesulitan</th>
-                                <th>Soal</th>
-                                <th>Jawaban</th>
+                             <tr>
+                                <th>ID</th>
+                                <th>Judul Modul</th>
+                                <th>Deksripsi</th>
+                                <!-- <th>Create By</th> -->
                                 <th>Publish</th>
-                                <!-- <th>Random</th> -->
+                                <th>Download</th>
                                 <th></th>
                                 <th></th>
+                                <!-- <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -117,7 +118,7 @@ MathJax.Hub.Config({
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/banksoal/ajax_soalPerTkt/"+tingkatID,
+                    "url": base_url+"index.php/modulonline/ajax_soalPerTkt/"+tingkatID,
                     "type": "POST"
                     },
             "processing": true,
@@ -131,7 +132,7 @@ MathJax.Hub.Config({
                // ajax delete data to database
                console.log(id_soal);
                $.ajax({
-                     url : base_url+"index.php/banksoal/deletebanksoal/"+id_soal,
+                     url : base_url+"index.php/modulonline/deletebanksoal/"+id_soal,
                      type: "POST",
                      dataType: "TEXT",
                      success: function(data,respone)
