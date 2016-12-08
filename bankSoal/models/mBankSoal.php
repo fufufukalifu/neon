@@ -176,13 +176,30 @@ class Mbanksoal extends CI_Model {
     }
 
     //get old gambar soal
-
     public function get_oldgambar_soal($UUID)
     {
         $this->db->where('UUID', $UUID);
         $this->db->select('id_soal,gambar_soal')->from('tb_banksoal');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    //get old gambar pembahasn
+    public function get_oldimg_pembahasan($UUID)
+    {
+        $this->db->where('UUID', $UUID);
+        $this->db->select('gambar_pembahasan')->from('tb_banksoal');
+        $query = $this->db->get();
+        return $query->result_array()[0]['gambar_pembahasan'];
+    }
+
+    //get old gambar pembahasn
+    public function get_oldvideo_pembahasan($UUID)
+    {
+        $this->db->where('UUID', $UUID);
+        $this->db->select('video_pembahasan')->from('tb_banksoal');
+        $query = $this->db->get();
+        return $query->result_array()[0]['video_pembahasan'];
     }
 
     //get old gambar pilihan jawaban

@@ -17,8 +17,9 @@
 						<!-- toolbar overlay -->
 						<div class="overlay">
 							<div class="toolbar">
-								<a href="<?=base_url('/assets/image/gallery/').$key['file_name'] ;?>" class="btn btn-default magnific" title="view picture"><i class="ico-search"></i></a>
-								<!-- <a href="#" class="btn btn-default" title="love this picture"><i class="ico-heart6"></i></a> -->
+								<input type="text" value="<?=$key['file_name']?>" id="name_img" hidden="true">
+								<a href="<?=base_url('/assets/image/gallery/').$key['file_name'] ;?>" target="_blank" class="btn btn-teal magnific" title="view picture"><i class="ico-search"></i></a>
+								<a href="javascript:void(0);" class="btn btn-danger" title="Hapus Gambar" onclick='hapusImg("<?=$key["UUID"]?>")'><i class="ico-trash"></i></a>
 							</div>
 						</div>
 						<!--/ toolbar overlay -->
@@ -44,3 +45,32 @@
 	</div>
 	<!-- END Container -->
 </section>
+
+<script type="text/javascript">
+	function hapusImg(UUID) {
+		var name = $('#name_img').val();
+		if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
+               // ajax delete data to database
+               
+               $.ajax({
+                     url : base_url+"index.php/gallery/remove_img/",
+                     type: "POST",
+                     data: { file: name,
+                     		  UUID : UUID},
+                     dataType: "TEXT",
+                     success: function(data,respone)
+                     {  
+                       
+                           alert('Berhasil Dihapus');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                            alert('Error deleting data');
+                            // console.log(jqXHR);
+                            // console.log(textStatus);
+                            // console.log(errorThrown);
+                    }
+                });
+             }
+	}
+</script>

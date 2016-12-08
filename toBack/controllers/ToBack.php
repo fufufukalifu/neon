@@ -19,6 +19,8 @@ class Toback extends MX_Controller
 				redirect('welcome');
 			}else if($this->session->userdata('HAKAKSES')=='guru'){
                // redirect('guru/dashboard');
+			}else if($this->session->userdata('HAKAKSES')=='admin'){
+               // redirect('guru/dashboard');
 			}else{
 				redirect('login');
 			}
@@ -28,7 +30,7 @@ class Toback extends MX_Controller
 	#START Function buat TO#
 	public function buatTo()
 	{
-		echo "masuk controller";
+		
 		$nmpaket=htmlspecialchars($this->input->post('nmpaket'));
 		$tglMulai=htmlspecialchars($this->input->post('tglmulai'));
 		$tglAkhir=htmlspecialchars($this->input->post('tglakhir'));
@@ -63,7 +65,29 @@ class Toback extends MX_Controller
 				APPPATH . 'modules/templating/views/v-data-notfound.php',
 				);
 			$data['judul_halaman'] = "Bundle Paket";
-			$this->load->view('templating/index-b-guru', $data);
+			 #START cek hakakses#
+	        $hakAkses=$this->session->userdata['HAKAKSES'];
+	        if ($hakAkses =='admin') {
+	            // jika admin
+	            if ($babID == null) {
+	                redirect(site_url('admin'));
+	            } else {
+	                $this->parser->parse('admin/v-index-admin', $data);
+	            }
+	            
+	        } elseif($hakAkses=='guru'){
+	             // jika guru
+	            if ($babID == null) {
+	                 redirect(site_url('guru/dashboard/'));
+	            } else {
+	               $this->parser->parse('templating/index-b-guru', $data);
+	            }
+	            
+	        }else{
+	            // jika siswa redirect ke welcome
+	            redirect(site_url('welcome'));
+	        }
+	        #END Cek USer#
 		}
 		
 	}
@@ -87,7 +111,20 @@ class Toback extends MX_Controller
 				);
 			$data['judul_halaman'] = "Bundle Paket";
 		}
-		$this->load->view('templating/index-b-guru', $data);
+
+		 #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses =='admin') {
+            // jika admin 
+            $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+             // jika guru     
+            $this->parser->parse('templating/index-b-guru', $data);
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
 	}
 	//add paket ke TO
 	public function addPaketToTO()
@@ -191,7 +228,22 @@ class Toback extends MX_Controller
 			APPPATH . 'modules/toback/views/v-list-to.php',
 			);
 		$data['judul_halaman'] = "List Try Out";
-		$this->load->view('templating/index-b-guru', $data);
+		 $hakAkses=$this->session->userdata['HAKAKSES'];
+		 if ($hakAkses=='admin') {
+        // jika admin
+         $this->parser->parse('admin/v-index-admin', $data);
+
+
+        } elseif($hakAkses=='guru'){
+                    // jika guru
+             $this->load->view('templating/index-b-guru', $data);  
+            
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+	
 	}
 	// menampilkan list to
 	public function ajax_listsTO()
