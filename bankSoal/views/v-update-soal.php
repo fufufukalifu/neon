@@ -343,11 +343,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <label class="control-label col-sm-2">Soal</label>
                              <div class="col-sm-10">
 
-                                 <textarea  name="editor1" class="form-control" id="">
-
-                                     <?=$banksoal['soal'];?>
-
-                                 </textarea>
+                                 <textarea  name="editor1" class="form-control" id=""><?=$banksoal['soal'];?></textarea>
 
                              </div>
                             </div>
@@ -357,8 +353,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                               <label class="control-label col-sm-2">Buat rumus</label>
                               <div class="col-sm-10">
 
-                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" >
-                               </textarea>
+                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
 
                               </div>
                               <label class="control-label col-sm-2"></label>
@@ -418,7 +413,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <!-- Start input text A -->
                             <div class="col-sm-8 piltext">
                                 <input type="text" name="idpilA" value="<?=$piljawaban['0']['id_pilihan'];?>" hidden="true">
-                               <textarea name="a"  class="form-control"> <?=$piljawaban['0']['jawaban'];?> </textarea>
+                               <textarea name="a"  class="form-control"> <?=$piljawaban['0']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text A -->
                             <!-- Start input gambar A -->
@@ -492,7 +487,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <!-- Start input text C -->
                             <div class="col-sm-8 piltext" >
                                 <input type="text" value="<?=$piljawaban['2']['id_pilihan'];?>" name="idpilC" hidden="true">
-                               <textarea name="c" class="form-control"> <?=$piljawaban['2']['jawaban'];?> </textarea>
+                               <textarea name="c" class="form-control"> <?=$piljawaban['2']['jawaban'];?></textarea>
                             </div>
                             <!-- END input text C -->
                             <!-- Start input gambar C -->
@@ -758,11 +753,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                               <label class="control-label col-sm-2">Pembahasan</label>
                               <div class="col-sm-10">
 
-                               <textarea  name="editor2" class="form-control" id="">
-
-                                    <?=$banksoal['pembahasan'];?>
-
-                               </textarea>
+                               <textarea  name="editor2" class="form-control" id=""><?=$banksoal['pembahasan'];?></textarea>
 
                              </div>
                            </div>

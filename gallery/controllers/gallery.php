@@ -21,8 +21,8 @@
             APPPATH . 'modules/gallery/views/v-gallery.php',
             );
 
-        $data['judul_halaman'] = "Upload Image Gallery";
-
+        $data['judul_halaman'] = "Gallery";
+        $data['judul_panel'] ="Semua Gambar";
         $hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
 
@@ -100,7 +100,8 @@
         $tingkatPelajaranID=$tingkatID;
         $tingkat=$this->Mbanksoal->get_namaTingkat($tingkatPelajaranID);
         $data['tingkat']=$tingkat;
-        $data['judul_halaman'] = "Upload Image Gallery ".$tingkat;
+                $data['judul_halaman'] = "Gallery";
+        $data['judul_panel'] ="Gallery Berdasarkan Tingkat".$tingkat;
         $data['files'] = array(
             APPPATH . 'modules/gallery/views/v-gallery.php',
             );
@@ -127,7 +128,8 @@
         $tingkatPelajaranID=$mpID;
         $namaMp=$this->Mbanksoal->get_namaMp($mpID);
         $data['namaMp']=$namaMp;
-                $data['judul_halaman'] = "Upload Image Gallery ".$namaMp;
+                $data['judul_halaman'] = "Gallery ";
+                $data['judul_panel'] ="Gallery Berdasarkan Mata Pelajaran".$namaMp;
         $data['files'] = array(
           APPPATH . 'modules/gallery/views/v-gallery.php',
             );
@@ -155,7 +157,8 @@
         $data['judulBab']=$datBab->judulBab;
         $tingkatPelajaranID=$datBab->tingkatPelajaranID;
         $namaMp=$this->Mbanksoal->get_namaMp($tingkatPelajaranID);
-        $data['judul_halaman'] = "Upload Image Gallery ".$namaMp;
+        $data['judul_halaman'] = "Gallery ";
+            $data['judul_panel'] ="Gallery Berdasarkan Mata Pelajaran".$namaMp;
         $data['files'] = array(
            APPPATH . 'modules/gallery/views/v-gallery.php',
             );
@@ -211,21 +214,25 @@
 		}	
 }
 
-	// public function list_files()
-	// {
-	// 	$this->load->helper("file");
-	// 	$files = get_filenames($this->upload_path);
-	// 	// we need name and size for dropzone mockfile
-	// 	foreach ($files as &$file) {
-	// 		$file = array(
-	// 			'name' => $file,
-	// 			'size' => filesize($this->upload_path . "/" . $file)
-	// 		);
-	// 	}
 
-	// 	header("Content-type: text/json");
-	// 	header("Content-type: application/json");
-	// 	echo json_encode($files);
-	// }
+	public function search_gallery()
+    {
+        $namafile = $_GET['term'];
+          // var_dump($namapertanyaan);
+          $result = $data['datImg']=$this->Mgallery->get_gallery($namafile);
+
+          // var_dump($result);
+          $gallery = array();
+          foreach ($result as $key) {
+            $gallery[] = array(
+              'value'=>$key['file_name'],
+              'url'=>base_url('/assets/image/gallery/').$key['file_name'],
+              'icon'=>base_url('/assets/image/gallery/').$key['file_name']
+
+              );
+            // $pertanyaan[] = $key->judulPertanyaan  
+          }
+          echo json_encode($gallery);
+    }
 
  } ?>

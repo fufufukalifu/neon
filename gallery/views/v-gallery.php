@@ -1,8 +1,26 @@
-
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
 <section class="id="main" role="main"">
 	<!-- Start Container -->
 	<div class="container-fluid">
-		<!-- Start row -->
+		<!-- Start Pnel -->
+		<div class="panel panel-teal">
+			<!-- Start Pnel Heading -->
+			<div class="panel-heading">
+				<h3 class="panel-title"><?=$judul_panel;?></h3>
+				 <div class="panel-toolbar text-right">
+                           <form class="form-group">
+							<p class="input-icon">
+								<!-- <i class="fa fa-search"></i> -->
+								<input class="form-control" type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
+							</p>
+						</form>
+                 </div>
+			</div>
+			<!-- End Panel Heading -->
+			<!-- Start Pnel body -->
+			<div class="panel-body">
+				<!-- Start row -->
 		<div class="row" id="id="shuffle-grid"">
 		<?php foreach ($datImg as $key ): ?>
 			<div class="col-md-3 shuffle" data-groups='["nature"]' data-date-created="2014-01-02" data-title="background1">
@@ -42,11 +60,25 @@
 			
 		</div>
 		<!-- END row -->
+			</div>
+			<!-- End Panel Body -->
+			
+		</div>
+		<!-- End Pnel -->
 	</div>
 	<!-- END Container -->
 </section>
 
 <script type="text/javascript">
+	$(document).ready(function() {  
+
+		$('#search1').autocomplete({
+			source:  base_url +"gallery/search_gallery",
+			select: function (event, ui) {
+				window.location = ui.item.url;
+			}
+		});
+	});
 	function hapusImg(UUID) {
 		var name = $('#name_img').val();
 		if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {

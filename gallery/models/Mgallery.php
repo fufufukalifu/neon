@@ -21,6 +21,16 @@
 
  	}
 
+    // get hasil pencarian
+    public function get_gallery($namafile)
+    {
+       $this->db->select('id,file_name,date_created,UUID');
+        $this->db->from('tb_gallery');
+        $this->db->like('file_name',$namafile);
+         $query = $this->db->get();
+        return $query->result_array();
+    }
+
  	 	// get semua gallery
  	public function get_datImg_tingkat($tingkatID)
  	{
@@ -73,5 +83,7 @@
         $query = $this->db->get();
         return $query->result_array()[0];
  	}
+
+
  	
  } ?>
