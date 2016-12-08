@@ -188,7 +188,7 @@
 
 <!-- START PESAN ERROR EMPTY INPUT -->
 
-<div class="alert alert-dismissable alert-danger" id="emptyinput_op" hidden="true">
+<div class="swal swal-dismissable swal-danger" id="emptyinput_op" hidden="true">
 
   <button type="button" class="close" onclick="hide_msg_empty()" >×</button>
 
@@ -200,7 +200,7 @@
 
 <!--START PESAN BERHASIL PAKET DI ADD KE TO -->
 
-<div class="alert alert-dismissable alert-success" id="msg_s_soal" hidden="true" >
+<div class="swal swal-dismissable swal-success" id="msg_s_soal" hidden="true" >
 
   <button type="button" class="close" onclick="hide_msg_s_soal()" >×</button>
 
@@ -460,8 +460,6 @@ function loadTingkat(){
 
      return idTingkat=data.id;
 
-     alert("asd");
-
    });
 
   }
@@ -524,7 +522,7 @@ $('#subBabId').change(function(){
 
  if (idSubBab=="") {
 
-  alert('Pilih Bab Matapelajaran');
+  swal('Pilih Bab Matapelajaran');
 
 }else{
 
@@ -678,7 +676,7 @@ function tambahkansoal(){
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
-       alert('Error adding / update data');
+       swal('Error adding / update data');
      }
    });
   } else {
@@ -732,7 +730,7 @@ function drop_soal(id){
     },
     error: function (jqXHR, textStatus, errorThrown)
     {
-      alert('Error deleting data');
+      swal('Error deleting data');
     }
   });
   }
@@ -748,7 +746,7 @@ function cek_soal(){
   } ,
   error: function (jqXHR, textStatus, errorThrown)
   {
-    alert('Error data');
+    swal('Error data');
   }
 });
 }

@@ -322,7 +322,7 @@
 
      {
 
-      console.log("gagal");
+      swal("gagal");
 
     }
 
@@ -335,7 +335,6 @@
 
     var data_to = $(kelas).data('todo');
 
-    console.log(data_to);
 
     $('.modal-title').text('Grafik Paket Soal Tryout');
 

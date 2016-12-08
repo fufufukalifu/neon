@@ -629,7 +629,7 @@ function edit_paket(id)
 
         {
 
-            alert('Error get data from ajax');
+            swal('Error get data from ajax');
 
         }
 

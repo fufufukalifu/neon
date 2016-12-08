@@ -26,53 +26,52 @@
 </div>
 
 <script type="text/javascript">
-var  tblist_video;
-$(document).ready(function() {
+	var  tblist_video;
+	$(document).ready(function() {
 		//#get list by id guru
 		tblist_video = $('#zero-configuration').DataTable({ 
-         "processing": true,
-         "ajax": {
-          "url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
-          "type": "POST"
-        },
-      });
+			"processing": true,
+			"ajax": {
+				"url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
+				"type": "POST"
+			},
+		});
 		//##
 
-      });
+	});
 
 //# ketika tombol di klik
-		function detail(id){console.log(id);
-			var kelas ='.detail-'+id;
-			var data = $(kelas).data('id');
-			console.log(data);
-		}
+function detail(id){console.log(id);
+	var kelas ='.detail-'+id;
+	var data = $(kelas).data('id');
+}
 //##
 
 //# fungsi menghapus video
-	function drop_video(videoID){
-		if(confirm('Are you sure delete this data?')){
-	  $.ajax({
-	            url : base_url+"index.php/videoback/del_file_video/"+videoID,
-	            type: "POST",
-	            dataType: "JSON",
-	            success: function(data)
-	            {
-	            	console.log('success');
-	              reload_tblist();
-					    },
-					    error: function (jqXHR, textStatus, errorThrown)
-					    {
-					      alert('Error deleting data');
-					    }
-	    });
-  	}
+function drop_video(videoID){
+	if(confirm('Are you sure delete this data?')){
+		$.ajax({
+			url : base_url+"index.php/videoback/del_file_video/"+videoID,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+				swal('success');
+				reload_tblist();
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				swal('Error deleting data');
+			}
+		});
 	}
+}
 // fungsi updt
 
 
 //fungsi reload table
 function  reload_tblist(){
-  tblist_video.ajax.reload(null,false);
+	tblist_video.ajax.reload(null,false);
 }
 
 </script>

@@ -1520,7 +1520,6 @@ function ValidateInputVideo(oInput) {
 
                 $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
 
-                console.log(data);
 
                 $.each(data, function (i, data) {
 
