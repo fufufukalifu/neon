@@ -16,8 +16,8 @@
  <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
  <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
-    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
+ <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+ <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
 
  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
  <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
@@ -47,7 +47,7 @@
 <!-- START Body -->
 <body>
 
-   <!-- START Modal ADD BANK SOAL -->
+ <!-- START Modal ADD BANK SOAL -->
  <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
    <div class="modal-content">
@@ -110,8 +110,8 @@
 </div><!-- /.modal -->
 <!-- END  Modal ADD BANK SOAL-->
 
- <!-- START Modal ADD BANK SOAL -->
- <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
+<!-- START Modal ADD BANK SOAL -->
+<div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
    <div class="modal-content">
     <div class="modal-header">
@@ -484,10 +484,10 @@
    <ul class="topmenu topmenu-responsive" data-toggle="menu">
     <li >
      <a href="<?= base_url('index.php/guru/dashboard/') ?>">
-        <span class="figure"><i class="ico-trophy"></i></span>
-        <span class="text">Dashboard</span>
-      </a>
-    </li>
+      <span class="figure"><i class="ico-trophy"></i></span>
+      <span class="text">Dashboard</span>
+    </a>
+  </li>
 
   <li>
    <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
@@ -502,8 +502,8 @@
     <li >
      <a href="<?=base_url('index.php/videoback/formupvideo')?>">
       <span class="text">Upload Video</span>
-      </a>
-    </li>
+    </a>
+  </li>
 
   <li>
     <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
@@ -522,13 +522,13 @@
       <li >
        <a href="<?=base_url('/index.php/videoback/listvideo')?>">
         <span class="text">Daftar Semua video</span>
-        </a>
-      </li>
+      </a>
+    </li>
 
-      <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span></a></li>
-    </ul>
-  </li>
+    <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span></a></li>
   </ul>
+</li>
+</ul>
 </li>
 
 <li>
@@ -630,6 +630,8 @@
 </li>
 <!--END menu konsultasi -->
 
+
+
 <li>
  <a href="javascript:void(0);" data-target="#modulonline" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard2"></i></span>
@@ -652,6 +654,12 @@
 </li>
 
 </ul>
+</li>
+<li>
+ <a href="<?= base_url('learningline') ?>">
+  <span class="figure"><i class="ico-list-ol"></i></span>
+  <span class="text">Learningline</span>
+</a>
 </li>
 </ul>
 <!--/ END Template Navigation/Menu -->
@@ -711,7 +719,7 @@
 
 <script type="text/javascript">
 
-function add_modul() {
+  function add_modul() {
 $('#modalmodul').modal('show'); // show bootstrap modal
 }
 
@@ -744,7 +752,7 @@ function add_to() {
    url: "<?= base_url() ?>guru/get_avatar_guru",
    success: function (data) { 
     console.log(data);
-      $('span.avatar').html(data);
+    $('span.avatar').html(data);
   }
 });
 

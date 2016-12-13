@@ -688,7 +688,12 @@
 
   </ul>
 </li>
-
+<li>
+ <a href="<?= base_url('learningline') ?>">
+  <span class="figure"><i class="ico-list-ol"></i></span>
+  <span class="text">Learningline</span>
+</a>
+</li>
 <li>
  <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard"></i></span>
