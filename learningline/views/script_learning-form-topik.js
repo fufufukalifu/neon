@@ -111,7 +111,9 @@ $('.simpanlearning').click(function(){
         function(isConfirm){
           if (isConfirm) {
             swal("selesai", "Anda akan dialihkan ke daftar topik", "success");
-            window.location.href = base_url+"learningline";
+            link = base_url+"learningline/topik/"+data.babID;
+            window.location.href = link;
+            console.log(link);
           } else {
           // swal("Cancelled", "Your imaginary file is safe :)", "error");
         }

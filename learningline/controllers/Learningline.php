@@ -50,6 +50,27 @@ class Learningline extends MX_Controller {
 		$this->loadparser($data);
 	}
 	// FUNGSI INDEX
+	
+	// DAFTAR TOPIK
+	//AMBIL TOPIK BY BABID
+	function topik($byid){
+		$metadata = $this->mmatapelajaran->get_bab_by_id($byid)[0];
+		// var_dump($metadata);
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Topik",
+			'tingkat' =>$metadata['namaTingkat'],
+			'mapel'=>$metadata['namaMataPelajaran'],
+			'bab'=>$metadata['judulBab'],
+			);
+
+		$data['files'] = array(
+			APPPATH . 'modules/learningline/views/v-daftar-topik-single.php',
+			APPPATH . 'modules/learningline/views/script_learning-single-topik.js',
+			);
+
+		$this->loadparser($data);
+	}
+	// DAFTAR TOPIK
 
 
 	//FUNGSI TAMBAHKAN LINE STEP

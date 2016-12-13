@@ -1,8 +1,4 @@
 <main class="container">
-<!-- Start page content -->
-<div class="page-content">
-<section>
-	   <!-- content -->
     <div class="grid-row">
         <div class="page-content grid-col-row clear-fix">
             <div class="grid-col grid-col-8">
@@ -11,30 +7,20 @@
                     <div class="blog-post">
                         <article>
                         <div class="post-info">
-                            <!-- <div class="date-post"><div class="day">15</div><div class="month">Feb</div></div> -->
+                            <div class="date-post"><div class="day"><?=$tgl?></div><div class="month"><?=$bulan?></div></div>
                             <div class="post-info-main">
-                                <div class="author-post">nama Topik:' <?=$namaTopik;?> '</div>
+                                <div class="author-post">nama Materi:' <?= $datMateri['judulMateri']; ?> '</div>
                             </div>
-                            <div class="comments-post"><i class="fa fa-comment"></i>Line</div>
+                            <div class="comments-post">Materi</div>
                         </div>
-                         <h3>nama Topik:' <?=$deskripsi;?> '</h3>
-                            <ul>
-                            <?php foreach ($datline as $key ): ?>
-                                <li>
-                                    <a><?=$key['namaStep']?></a>
-                                    <ul>        
-                                    <li>Jenis <?=$key['jenisStep']?></li>
-                                    <li><a href="<?=$key['link'];?>">Link <?=$key['link'];?></a> </li>
-                                    <li>ICon <?=$key['icon']?></li>
-                                    </ul>
-                                </li>       
-                            <?php endforeach ?>
-                            </ul>
+                         <p><?= $datMateri['isiMateri']; ?></p>
+                           
                         </article>
                         <div class="tags-post">
                             <a href="#" rel="tag">Tingkat</a><!-- 
                          --><a href="#" rel="tag">Mapel</a>
                             <a href="#" rel="tag">Bab</a>
+                            <a href="#" rel="tag">Topik : <?= $datMateri['namaTopik']; ?> </a>
                         </div>
                     </div>
                     <!-- / post item -->
@@ -71,7 +57,5 @@
     </div>
     <!-- / content -->
 
-</section>
-</div>
-<!-- ENd Page Content -->
+	<!-- END Page Content -->
 </main>
