@@ -54,12 +54,16 @@ class Learningline extends MX_Controller {
 
 	//FUNGSI TAMBAHKAN LINE STEP
 	public function formstep($data){
-		$metadata = $this->learning_model->get_meta_data_step($data)[0];
+		$metadata = $this->learning_model->get_topik_byid($data);
+		// var_dump($metadata);
 		$data = array(
 			'judul_halaman' => 'Dashboard '.$this->hakakses." - Add Learning Line Step untuk ".$metadata['namaTopik'],
 			'namaTopik' => $metadata['namaTopik'],
-			'id'=>$metadata['id'],
-			'babID'=>$metadata['babID']
+			'id'=>$metadata['TopikID'],
+			'babID'=>$metadata['babID'],
+			'tingkat' =>$metadata['namaTingkat'],
+			'mapel'=>$metadata['namaMataPelajaran'],
+			'bab'=>$metadata['judulBab'],
 			);
 		$data['files'] = array(
 			APPPATH . 'modules/learningline/views/v-form-step.php',
@@ -90,31 +94,57 @@ class Learningline extends MX_Controller {
 	}
 	//FUNGSI MENAMBAHKAN TOPIK
 
-		//FUNGSI MENAMBAHKAN TOPIK
+		//FUNGSI MENGEDIT TOPIK
 	public function edit_topik($data){
 		$metatopik = $this->learning_model->get_topik_byid($data);
+
 		if ($metatopik==false) {
 			echo "Forbiden acces";
 		} else {
 			$data = array(
-			'judul_halaman' => 'Dashboard '.ucfirst($this->hakakses)." - Update Learning Line Topik Berjudul ".$metatopik['namaTopik'],
-			'judul'=>$metatopik['namaTopik'],
-			'statusLearning'=>$metatopik['statusLearning'],
-			'urutan'=>$metatopik['urutan'],
-			'deskripsi'=>$metatopik['deskripsi'],
-			);
+				'judul_halaman' => 'Dashboard '.ucfirst($this->hakakses)." - Update Learning Line Topik Berjudul ".$metatopik['namaTopik'],
+				'judul'=>$metatopik['namaTopik'],
+				'statusLearning'=>$metatopik['statusLearning'],
+				'urutan'=>$metatopik['urutan'],
+				'deskripsi'=>$metatopik['deskripsi'],
+				'tingkat'=>$metatopik['namaTingkat'],
+				'mapel'=>$metatopik['namaMataPelajaran'],
+				'bab'=>$metatopik['judulBab'],
+				'topikID'=>$metatopik['TopikID']
+				);
 
-		$data['files'] = array(
-			APPPATH . 'modules/learningline/views/v-form-edit-topik.php',
-			APPPATH . 'modules/learningline/views/script_learning-edit-topik.js',
-			);
+			$data['files'] = array(
+				APPPATH . 'modules/learningline/views/v-form-edit-topik.php',
+				APPPATH . 'modules/learningline/views/script_learning-edit-topik.js',
+				);
 
-		$this->loadparser($data);
+			$this->loadparser($data);
 		}
 		
 		// 
 	}
-	//FUNGSI MENAMBAHKAN TOPIK
+	//FUNGSI MENGEDIT TOPIK
+
+	//FUNGSI MENGEDIT STEP
+	public function edit_step($data){
+		$metadata = $this->learning_model->meta_step_update($data)[0];
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Edit Learning Line Step untuk ".$metadata['namaTopik'],
+			'namaTopik' => $metadata['namaTopik'],
+			'id'=>$metadata['id'],
+			'babid'=>$metadata['babid'],
+			'urutan'=>$metadata['urutan'],
+			'namastep'=>$metadata['namaStep'],
+
+			);
+		$data['files'] = array(
+			APPPATH . 'modules/learningline/views/v-form-edit-step.php',
+			APPPATH . 'modules/learningline/views/script_learning-edit-step.js',
+			);
+
+		$this->loadparser($data);
+	}
+	//FUNGSI MENGEDIT STEP
 
 
 
@@ -143,7 +173,8 @@ class Learningline extends MX_Controller {
 			$row[] = '<a class="btn btn-sm btn-warning"  
 			title="Edit" 
 			href="'.base_url().'learningline/edit_topik/'.$list_item['id'].'"><i class="ico-edit"></i></a>
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_topik('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
+			<a class="btn btn-sm btn-success topik-'.$list_item['id'].'"  title="Detail" 
+			data-todo='."'".json_encode($list_item)."'".' onclick="detail_topik('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_topik('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -159,7 +190,7 @@ class Learningline extends MX_Controller {
 	// GET LIST TOPIK
 
 	// GET LIST STEP BERDASARKAN ID TOPIK
-	public function ajax_list_ge_step($id_topik){
+	public function ajax_list_get_step($id_topik){
 		$list = $this->learning_model->get_step_by_id_topik($id_topik);
 		$data = array();
 
@@ -167,12 +198,13 @@ class Learningline extends MX_Controller {
 		foreach ( $list as $list_item ) {
 			// $no++;
 			$row = array();
-			$row[] = $list_item['urutan'];
-			$row[] = $list_item['namaTopik'];
+			$row[] = $list_item['id'];
+			$row[] = $list_item['namaStep'];
 			$row[] = $list_item['jenisStep'];
-
-			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_step('."'".$list_item['id']."'".')"><i class="ico-edit"></i></a>
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
+			$row[] = '<a class="btn btn-sm btn-warning"  
+			title="Edit" 
+			href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+			<a class="btn btn-sm btn-success"  title="Detail" data-todo='."'".json_encode($list_item)."'".' onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -210,7 +242,9 @@ class Learningline extends MX_Controller {
 			
 			
 			$row[] = '
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_bab('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>';
+			<a class="btn btn-sm btn-success bab-'.$list_item['id'].'" title="Detail" 
+			data-todo='."'".json_encode($list_item)."'".'
+			onclick="detail_bab('."'".$list_item['id']."'".') "><i class="ico-file-plus2"></i></a>';
 
 			$data[] = $row;
 
@@ -307,6 +341,22 @@ function ajax_insert_line_topik(){
 		);
 	$this->learning_model->insert_line_topik ($data);
 }
+
+
+// update
+function ajax_update_line_topik(){
+	$data = array(
+		'statusLearning'=>$this->input->post('statusLearning'),
+		'deskripsi'=>$this->input->post('deskripsi'),
+		'namaTopik'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan'),
+		'id'=>$this->input->post('topikID'),
+		);
+
+	// var_dump($data['topikID']);
+	$this->learning_model->update_topik ($data);
+}
 	// TB-TOPIK //
 
 	// TB-STEP //
@@ -322,6 +372,22 @@ function ajax_insert_line_step(){
 		'topikID'=>$this->input->post('topikID'),
 		);
 	$this->learning_model->insert_line_step($data);
+}
+
+function ajax_update_learning_step(){
+	$data = array(
+		'namaStep'=>$this->input->post('namastep'),
+		'jenisStep'=>$this->input->post('select_jenis'),
+		'videoID'=>$this->input->post('videoID'),
+		'MateriID'=>$this->input->post('materiID'),
+		'latihanID'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan'),
+		'id'=>$this->input->post('id'),
+		);
+	$this->learning_model->update_learning_step($data);
+
+
 }
 	// TB-STEP //
 

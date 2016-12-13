@@ -60,14 +60,27 @@ class Learning_model extends CI_Model{
 	}
 	//ambil topik  berdasarkkan id topik
 	function get_topik_byid($data){
-		$this->db->select('*');
-		$this->db->where('id',$data);
-		$this->db->from('tb_line_topik');
-		$query = $this->db->get();
-		if ($query->result_array()==array()) {
+		$query = "
+		SELECT 
+		topik.id AS TopikID,bab.id as babID, namaTopik, statusLearning,topik.urutan,
+		deskripsi,`namaTingkat`, `namaMataPelajaran`, `judulBab`
+		FROM
+		(SELECT  *  FROM  `tb_line_topik` WHERE  id =  $data ) AS topik
+		JOIN `tb_bab` AS bab ON
+		topik.babID = bab.id
+		JOIN `tb_tingkat-pelajaran` tingpel ON
+		bab.tingkatPelajaranID = tingpel.id
+		JOIN `tb_mata-pelajaran` mapel ON
+		mapel.id = tingpel.mataPelajaranID
+		JOIN `tb_tingkat` tingkat ON
+		tingkat.id = tingpel.tingkatID
+		";
+
+		$result = $this->db->query($query);
+		if ($result->result_array()==array()) {
 			return false;
 		} else {
-			return $query->result_array()[0];
+			return $result->result_array()[0];
 		}
 		
 
@@ -89,11 +102,12 @@ class Learning_model extends CI_Model{
 	}
 	// update line topik passive
 
-
+	#insert line topik
 	function insert_line_topik($data){
 		$this->db->insert( 'tb_line_topik', $data );
 	}
 
+	# drop topik
 	function drop_topik($data){
 		$this->db->where('id', $data['id']);
 		$this->db->set('status', 0);
@@ -127,6 +141,22 @@ class Learning_model extends CI_Model{
 	}
 	/*GET META DATA UNTUK STEP*/
 
+	/*GET META DATA UNTUK update STEP*/
+	function meta_step_update($data){
+		$query = "SELECT step.id, namaTopik, step.urutan, namaStep, bab.id as babid FROM  (SELECT * FROM  `tb_line_step` WHERE id =  $data ) AS step
+		 JOIN `tb_line_topik` topik ON topik.id = step.topikID
+		JOIN `tb_bab` AS bab ON
+		topik.babID = bab.id
+		 ";
+		$result = $this->db->query($query);
+		if ($result->result_array()==array()) {
+			return false;
+		} else {
+			return $result->result_array();
+		}
+	}
+	/*GET META DATA UNTUK STEP*/
+
 
 	/*insert DATA UNTUK STEP*/
 	function insert_line_step($data){
@@ -134,6 +164,11 @@ class Learning_model extends CI_Model{
 	}
 	/*insert DATA UNTUK STEP*/
 	// -------------------------------------------------------------------
+		function update_learning_step($data){
+		$this->db->where('id', $data['id']);
+		$this->db->set($data);
+		$this->db->update('tb_line_step');
+	}
 
 	/*GET META DATA UNTUK STEP*/
 	function get_materi_babID($data){
@@ -148,5 +183,13 @@ class Learning_model extends CI_Model{
 	}
 	/*GET META DATA UNTUK STEP*/
 
+
+
+	// ------------------------------------TOPIK
+	function update_topik($data){
+		$this->db->where('id', $data['id']);
+		$this->db->set($data);
+		$this->db->update('tb_line_topik');
+	}
 }
 ?>

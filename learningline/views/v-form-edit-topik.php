@@ -3,14 +3,23 @@
  <div class="col-md-12">
   <div class="panel panel-default">
    <div class="panel-heading">
-    <h3 class="panel-title">Tambah Learning Topik</h3>
-    <div class="panel-toolbar text-right">
-      <a class="btn btn-success" 
-      href="<?= base_url(); ?>index.php/learningline/learningline" 
-      title="Daftar Learning Line" ><i class="ico-list"></i></a>
-    </div> 
+    <!-- <h3 class="panel-title">Tambah Learning Topik</h3> -->
+     <div class="toolbar">
+    <br>
+
+      <ol class="breadcrumb breadcrumb-transparent nm">
+        <li><span><a href="<?=base_url('learningline')?>"><i class="ico-list"></i></a></span></li>
+
+        <li><span>{tingkat}</span></li>
+        <li>{mapel}</li>
+        <li>{bab}</li>   
+        <li class="active"><a href="#">{judul}</a></li>        
+
+      </ol><br>
+    </div>
   </div>
   <div class="panel-body">
+  <input type="hidden" name="topikID" value="{topikID}">
     <!-- Start Body modal -->
     <form  class="panel panel-default form-horizontal form-bordered form-topik"  method="post" >
      <div  class="form-group">
@@ -78,7 +87,7 @@
 <div class="form-group no-border">
   <label class="col-sm-3 control-label"></label>
   <div class="col-sm-9">
-   <a class="btn btn-primary simpanlearning">Simpan</a>
+   <a class="btn btn-primary update_topik">Update</a>
    <button type="reset" class="btn btn-danger reset">Reset</button>
  </div>
 </div>

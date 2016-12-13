@@ -52,15 +52,15 @@
     label > input{ /* HIDE RADIO */
       visibility: hidden;  
       position: absolute; /* Remove input from document flow */
-    }
+  }
 
-    label:hover{ /* HIDE RADIO */
+  label:hover{ /* HIDE RADIO */
       background-color: #63d3e9;
-    }
+  }
 
-    .terpilih{
-        background-color: #63d3e9;
-    }
+  .terpilih{
+    background-color: #63d3e9;
+}
 
 </style>
 <!-- START Body -->
@@ -121,7 +121,7 @@
                                                                 <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
                                                                 <div class="col-md-2"></div>
                                                                 <div class="col-md-4 text-right" style="margin-top:5"><a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp<a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a></div>
-                                                                                                                     </div>
+                                                            </div>
                                                         </div>
                                                         <div class="panel-collapse">
                                                             <div class="panel-body">
@@ -131,7 +131,7 @@
                                                                     </div>
                                                                     <div class="col-md-11">
                                                                         <?php if (!empty($key['gambar'])) { ?>       
-                                                                            <img src="<?= base_url('./assets/image/soal/' . $key['gambar']) ?>">   
+                                                                        <img src="<?= base_url('./assets/image/soal/' . $key['gambar']) ?>">   
                                                                         <?php } ?>
                                                                         <h5><?= $key['soal'] ?></h5>
                                                                         <br>
@@ -147,22 +147,22 @@
 
                                                                         <?php foreach ($pil as $row): ?>
                                                                             <?php if ($row['pilid'] == $k) { ?>
-                                                                                <div class="mb10">
-                                                                                        <!-- <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% "> -->
-                                                                                        <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
-                                                                                        <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'].$pilihan[$indexpil]; ?>" name="pil[<?= $row['pilid']; ?>]" onclick="updateColor(<?= $i ?>)">
-                                                                                            <div class ="btn"><?=  $pilihan[$indexpil];?>.
-                                                                                            </div>
-                                                                                             <?php
-                                                                                            if (empty($row['pilgam'])) {
-                                                                                            echo '';
-                                                                                            } else {
-                                                                                            ?>
-                                                                                            <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
-                                                                                            <?php } ?>
-                                                                                            <?= $row['piljaw'] ?>
-                                                                                            <?php $indexpil++;?>
-                                                                                        </label>  
+                                                                            <div class="mb10">
+                                                                                <!-- <label id="pil[<?= $row['pilid']; ?>]" onclick="changeColor('pil[<?= $row['pilid']; ?>]')" style="border:1px solid #63d3e9; padding: 5px;width:100% "> -->
+                                                                                <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
+                                                                                    <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'].$pilihan[$indexpil]; ?>" name="pil[<?= $row['pilid']; ?>]" onclick="updateColor(<?= $i ?>)">
+                                                                                    <div class ="btn"><?=  $pilihan[$indexpil];?>.
+                                                                                    </div>
+                                                                                    <?php
+                                                                                    if (empty($row['pilgam'])) {
+                                                                                        echo '';
+                                                                                    } else {
+                                                                                        ?>
+                                                                                        <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
+                                                                                        <?php } ?>
+                                                                                        <?= $row['piljaw'] ?>
+                                                                                        <?php $indexpil++;?>
+                                                                                    </label>  
                                                                                 </div>
                                                                                 <?php
                                                                             } else {
@@ -273,30 +273,30 @@
             $('a[alt="' + id + '"]').css({"background-color": "#ffd66a", "color": "#fff", "border": "none"});
         }
 
-	
+        
         function bataljawab(idsoal,idpil,grouppil){
-             clearRadioGroup(idsoal);
-             clearpiljaw(idpil,grouppil);
-        }
+           clearRadioGroup(idsoal);
+           clearpiljaw(idpil,grouppil);
+       }
 
 
-        function clearRadioGroup(GroupName)
-        {
+       function clearRadioGroup(GroupName)
+       {
           var ele = document.getElementsByName(GroupName);
-            for(var i=0;i<ele.length;i++)
+          for(var i=0;i<ele.length;i++)
             ele[i].checked = false;
-        }
+    }
 
-        function clearpiljaw(id,groupname){
-            $(".jwb" + id).html("");
-            $('a[alt="' + id + '"]').css({"background-color": "#fff", "color": "#00b1e1", "border": "1px solid #63d3e9"});
-            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
-        }
+    function clearpiljaw(id,groupname){
+        $(".jwb" + id).html("");
+        $('a[alt="' + id + '"]').css({"background-color": "#fff", "color": "#00b1e1", "border": "1px solid #63d3e9"});
+        $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
+    }
 
-        function changeColor(pilid,groupname){
-            console.log(pilid,groupname);
-            $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
-            var d = document.getElementById(pilid);
-            d.className = "terpilih";
-        }
-    </script>
+    function changeColor(pilid,groupname){
+        console.log(pilid,groupname);
+        $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
+        var d = document.getElementById(pilid);
+        d.className = "terpilih";
+    }
+</script>

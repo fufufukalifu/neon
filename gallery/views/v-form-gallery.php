@@ -34,8 +34,7 @@
 			<!-- Start Panel -->
 			<form class="form-horizontal form-bordered panel panel-teal">
 				<!-- Start Pnel Heading -->
-				<input type="text" name="tampBabID" id="tampBabID"   >
-				<button id="test" type="button">test</button>
+				<input type="text" name="tampBabID" id="tampBabID" value="<?=$idBab?>"  hidden="true"  >
 				<div class="panel-heading">
 					<h3 class="panel-title">Form Upload Imgae Gallery</h3>
 				</div>
@@ -49,13 +48,7 @@
 
 						<div class="col-sm-2">
 
-							<select class="form-control" name="tingkat" id="tingkat">
-
-								<option>-Pilih Tingkat-</option>
-
-
-
-							</select>
+							<div class="note note-success mb15"><?=$datAttr['aliasTingkat']?></div>
 
 						</div>
 
@@ -65,11 +58,7 @@
 
 						<div class="col-sm-3">
 
-							<select class="form-control" name="mataPelajaran" id="pelajaran">
-
-
-
-							</select>
+							<div class="note note-info mb15"><?=$datAttr['mp']?></div>
 
 						</div>
 
@@ -78,25 +67,12 @@
 
 						<div class="col-sm-3">
 
-							<select class="form-control" name="bab" id="bab">
-
-
-
-							</select>
+							<div class="note note-inverse mb15"><?=$datAttr['judulBab']?></div>
 
 						</div>
 
 
 					</div>
-
-					<div class="form-group" id="hidecontent">
-						<div  class="dropzone">
-							<div class="dz-message">
-								<h3>Silahkan Isi dulu data di atas!</h3>  <strong>click</strong> to upload
-							</div>
-						</div>
-					</div>
-
 
 					<!-- Start Field Upload Image -->
 					<div class="form-group" id="content">
@@ -120,139 +96,12 @@
 	<script src="<?php echo base_url(); ?>assets/library/dropzone/dropzone.min.js"></script>
 <!--Start Scriot Dropdown depeden -->
 <script type="text/javascript">
-	 //buat load tingkat
-
-    function loadTingkat() {
-
-        jQuery(document).ready(function () {
-        		$('#content').hide();
-            var tingkat_id = {"tingkat_id": $('#tingkat').val()};
-
-            var idTingkat;
-
-            $.ajax({
-
-                type: "POST",
- 								dataType: "json",
-                data: tingkat_id,
-
-                url: "<?= base_url() ?>index.php/videoback/getTingkat",
-
-                success: function (data) {
-
-                    console.log("Data" + data);
-
-                    $('#tingkat').html('<option value="">-- Pilih Tingkat  --</option>');
-
-                    $.each(data, function (i, data) {
-
-                        $('#tingkat').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
-
-                        return idTingkat = data.id;
-
-                    });
-
-                }
-
-            });
-
-            $('#tingkat').change(function () {
-
-                tingkat_id = {"tingkat_id": $('#tingkat').val()};
-
-                loadPelajaran($('#tingkat').val());
-
-            })
-
-            $('#pelajaran').change(function () {
-
-                pelajaran_id = {"pelajaran_id": $('#pelajaran').val()};
-
-                load_bab($('#pelajaran').val());
-
-            })
-
-            $('#bab').change(function () {
-            	$('#content').show();
-            	$('#hidecontent').hide();
-            			var babaID = $('#bab').val();
-									console.log(babaID);
-									$('#tampBabID').val(babaID);
-            })
-
-           
-
-        })
-
-    };
-
-    //buat load pelajaran
-
-    function loadPelajaran(tingkatID) {
-
-        $.ajax({
-
-            type: "POST",
- 						dataType: "json",
-            data: tingkatID.tingkat_id,
-
-            url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
-
-            success: function (data) {
-
-                $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
-
-                $.each(data, function (i, data) {
-
-                    $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
-
-                });
-
-            }
-
-        });
-
-    }
-
-    //buat load bab
-
-    function load_bab(mapelID) {
-
-        $.ajax({
-
-            type: "POST",
- 						dataType: "json",
-            data: mapelID.mapel_id,
-
-            url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
-
-            success: function (data) {
-
-                $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-
-                //console.log(data);
-
-                $.each(data, function (i, data) {
-
-                    $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-                });
-            }
 
 
-        });
-
-    }
-    //load sub bab
-    loadTingkat();
-</script>
-<!-- End Script dropdown depeden-->
-
-	<script>
-
-
+	var babaID = $('#tampBabID').val();;					
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("#my-dropzone", {
-			url: "<?php echo site_url("gallery/upload/") ?>",
+			url: "<?php echo site_url("gallery/upload/")?>"+babaID,
 			acceptedFiles: "image/*",
 			addRemoveLinks: true,
 

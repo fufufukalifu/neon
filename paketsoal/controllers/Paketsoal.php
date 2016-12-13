@@ -14,14 +14,16 @@ class paketsoal extends MX_Controller
 		$this->load->model('templating/mtemplating');
 		parent::__construct();
 		if ($this->session->userdata('loggedin')==true) {
-            if ($this->session->userdata('HAKAKSES')=='siswa'){
-               redirect('welcome');
-            }else if($this->session->userdata('HAKAKSES')=='guru'){
+			if ($this->session->userdata('HAKAKSES')=='siswa'){
+				redirect('welcome');
+			}else if($this->session->userdata('HAKAKSES')=='guru'){
                // redirect('guru/dashboard');
-            }else{
-            	redirect('login');
-            }
-    }
+			}else if($this->session->userdata('HAKAKSES')=='admin'){
+               // redirect('guru/dashboard');
+			}else{
+				redirect('login');
+			}
+		}
 	}
 
 	##ajax untuk melakukan update pada paket soal
@@ -125,7 +127,22 @@ class paketsoal extends MX_Controller
 		$data['files'] = array(
 			APPPATH.'modules/paketsoal/views/v-create-paket-soal.php',
 		);
-		$this->load->view( 'templating/index-b-guru', $data );
+		
+		 $hakAkses=$this->session->userdata['HAKAKSES'];
+		 if ($hakAkses=='admin') {
+        // jika admin
+         $this->parser->parse('admin/v-index-admin', $data);
+
+
+        } elseif($hakAkses=='guru'){
+                    // jika guru
+             $this->load->view('templating/index-b-guru', $data);  
+            
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
 	}
 	##
 
@@ -137,7 +154,21 @@ class paketsoal extends MX_Controller
 		$data['files'] = array(
 			APPPATH.'modules/paketsoal/views/v-create-paket-soal.php',
 		);
-		$this->load->view( 'templating/index-b-guru', $data );
+		 $hakAkses=$this->session->userdata['HAKAKSES'];
+		 if ($hakAkses=='admin') {
+        // jika admin
+         $this->parser->parse('admin/v-index-admin', $data);
+
+
+        } elseif($hakAkses=='guru'){
+                    // jika guru
+             $this->load->view('templating/index-b-guru', $data);  
+            
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
 	}
 	##
 
@@ -186,9 +217,27 @@ class paketsoal extends MX_Controller
 	##
 
 	#menambahkan soal ada paket tertentu.
+
+	function get_validasi($idpaket){
+		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
+		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
+		$jumlah_soal_paket = $this->load->mpaketsoal->get_jumlah_soal($idpaket);
+
+		if ($jumlah_soal>=$jumlah_soal_paket) {
+			// gaboleh inputin
+			echo json_encode(false);
+		}else{
+			// boleh inputin
+			echo json_encode(true);
+		}
+
+	}
+
 	function addbanksoal( $idpaket ) {
 		
 		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
+		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
+
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		if (!$paket_soal==array()) {
 			$data['listadd_soal']=$this->load->mpaketsoal->soal_by_paketID($idpaket);
@@ -197,15 +246,28 @@ class paketsoal extends MX_Controller
 			
 			$data['files'] = array(
 				APPPATH.'modules/paketsoal/views/v-add-soal.php',
-			);
-			
+			);	
 		} else {
 			$data['files'] = array(
 	            APPPATH . 'modules/templating/views/v-data-notfound.php',
 	        );
 		}
 		
-		$this->load->view( 'templating/index-b-guru', $data );
+		 $hakAkses=$this->session->userdata['HAKAKSES'];
+		 if ($hakAkses=='admin') {
+        // jika admin
+        $this->parser->parse('admin/v-index-admin', $data);
+
+
+        } elseif($hakAkses=='guru'){
+                    // jika guru
+            $this->load->view('templating/index-b-guru', $data);  
+            
+            
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
 	}
 	##
 

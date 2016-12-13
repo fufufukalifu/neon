@@ -54,7 +54,7 @@
                 <div class="panel panel-teal">
                     <div class="panel-heading">
 
-                        <h3 class="panel-title ">Daftar Soal Berdasarkan Mata Pelajaran '<?=$namaMp;?>'</h3>
+                        <h3 class="panel-title ">Daftar Modul Berdasarkan Mata Pelajaran '<?=$namaMp;?>'</h3>
                         <!-- Start menu tambah soal -->
                         <div class="panel-toolbar text-right">
                         <input type="text" name="mp" id="mpID" value="<?= $mpID; ?>" hidden="true" >
@@ -66,17 +66,18 @@
                     <table class="table table-striped" id="tb_soalsub" style="font-size: 13px" width="100%">
                         <thead>
                             <tr>
-                               <th>ID</th>
-                                <th>Judul Soal</th>
-                                <th>Sumber</th>
-                                <th>Judul Bab</th>
-                                <th>Tingkat Kesulitan</th>
-                                <th>Soal</th>
-                                <th>Jawaban</th>
+                                <th>ID</th>
+                                <th>Judul Modul</th>
+                                <th>Deksripsi</th>
+                                <!-- <th>Create By</th> -->
                                 <th>Publish</th>
-                                <!-- <th>Random</th> -->
+                                <th>Download</th>
+                                <th>Edit</th>
+                                <th>Hapus</th>
+                                <!-- <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -117,7 +118,7 @@ MathJax.Hub.Config({
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
            "ajax": {
-                    "url": base_url+"index.php/banksoal/ajax_soalPerMp/"+idMp,
+                    "url": base_url+"index.php/modulonline/ajax_soalPerMp/"+idMp,
                     "type": "POST"
                     },
             "processing": true,

@@ -120,7 +120,6 @@ $(document).ready(function() {
 			var kelas ='.detail-'+id;
 			var data = $(kelas).data('id');
 			var links;
-			console.log(data);
 
 			$('h3.modal-title').html(data.judulVideo);
 			if (data.namaFile != null) {
@@ -147,12 +146,12 @@ $(document).ready(function() {
 	            dataType: "JSON",
 	            success: function(data)
 	            {
-	            	console.log('success');
+	            	swal('Berhasil Menghapus video');
 	              reload_tblist();
 					    },
 					    error: function (jqXHR, textStatus, errorThrown)
 					    {
-					      alert('Error deleting data');
+					      swal('Error deleting data');
 					    }
 	    });
   	}

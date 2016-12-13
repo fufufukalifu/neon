@@ -111,8 +111,6 @@ MathJax.Hub.Config({
 
     var tblist_TO;
     var subBab =$('#subBabID').val();
-    console.log(subBab);
-    // var idTo =$('#id_to').val();
   
     $(document).ready(function() {
         tblist_TO = $('#tb_soalsub').DataTable({ 
@@ -141,7 +139,7 @@ MathJax.Hub.Config({
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
-                            alert('Error deleting data');
+                            swal('Error deleting data');
                             // console.log(jqXHR);
                             // console.log(textStatus);
                             console.log(errorThrown);

@@ -130,10 +130,10 @@
 
 
                         $.ajax({
-                         type: "POST",
-                         dataType:"JSON",
-                         url: "<?= base_url() ?>video/ajax_get_last_video",
-                         success: function (data,i) {
+                           type: "POST",
+                           dataType:"JSON",
+                           url: "<?= base_url() ?>video/ajax_get_last_video",
+                           success: function (data,i) {
             // console.log(data.data[0]);
             $('#video_last').append(data.data[0]);
             $('#video_last').append(data.data[1]);

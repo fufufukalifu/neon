@@ -157,7 +157,7 @@ MathJax.Hub.Config({
         var kelas ='.detail-'+id_soal;
         var data = $(kelas).data('id');
         var jawaban=$('#jawaban-'+id_soal).val();
-        console.log(data);
+
         $('h3.semibold').html(data.judul_soal);
 
         $('p#dsoal').html(data.soal);

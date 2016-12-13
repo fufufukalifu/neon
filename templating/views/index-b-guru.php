@@ -646,19 +646,9 @@
   </a>
 </li>
 <li >
- <a href="javascript:void(0);" data-target="#submodul" data-toggle="submenu"  >
+ <a href="<?=base_url('index.php/modulonline/allsoal')?>" data-target="#submodul" data-toggle="submenu"  >
   <span class="text">Daftar Modul</span>
-  <span class="arrow"></span>
 </a>
-<ul id="submodul" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Sub Bank Soal</li>
-  <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Modul</span>
-  </a></li>
-  <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Modul</span>
-  </a></li>
-
-
-</ul>
 </li>
 
 </ul>

@@ -26,7 +26,7 @@ class Materi extends MX_Controller
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif($hakAkses=='guru'){
                  // jika guru
-			$this->parser->parse('templating/index-b-guru', $data);          
+			 redirect(site_url('guru/dashboard/'));       
 		}else{
             // jika siswa redirect ke welcome
 			redirect(site_url('welcome'));
@@ -69,7 +69,7 @@ class Materi extends MX_Controller
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif($hakAkses=='guru'){
                  // jika guru
-			$this->parser->parse('templating/index-b-guru', $data);          
+			 redirect(site_url('guru/dashboard/'));           
 		}else{
             // jika siswa redirect ke welcome
 			redirect(site_url('welcome'));

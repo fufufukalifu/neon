@@ -24,7 +24,7 @@
   </div>
 
   <div class="modal-footer">
-    <a href="" class="btn btn-primary">Cancel</a>
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Close</a>
   </div>
 
 </div>
@@ -111,11 +111,11 @@
 
  </tbody>
  <tfoot>
- <th><i class="ico-search2 text-center"></i></th>
- <th><input class="form-control" type="text" placeholder="ID" /></th>
-  <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
-  <th><input class="form-control" type="text" placeholder="Cabang" /></th>
-</tfoot>
+   <th><i class="ico-search2 text-center"></i></th>
+   <th><input class="form-control" type="text" placeholder="ID" /></th>
+   <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+   <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+ </tfoot>
 </table>
 <!-- END TABEL SISWA -->
 <!-- START PESAN ERROR EMPTY INPUT -->
@@ -250,6 +250,8 @@
  var tblist_paketAdd;
  var tblist_siswaAdd;
  var idTo =$('#id_to').val();
+ var listsoal;
+
     // Script for getting the dynamic values from database using jQuery and AJAX
 
 
@@ -284,6 +286,7 @@
         "type": "POST"
       },
       "processing": true,
+      "bDestroy": true,
     });
 
       tblist_paket = $('#paket table').DataTable({ 
@@ -292,6 +295,7 @@
         "type": "POST"
       },
       "processing": true,
+      "bDestroy": true,
     });
 
         // tabel paket yang sudah di add ke to
@@ -301,6 +305,7 @@
           "type": "POST"
         },
         "processing": true,
+        "bDestroy": true,
       });
 
 
@@ -311,6 +316,7 @@
           "type": "POST"
         },
         "processing": true,
+        "bDestroy": true,
       });
 
     // Setup - add a text input to each footer cell
@@ -319,27 +325,27 @@
     //     $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
     // } );
 
-    tblist_siswa.columns().every( function () {
-      var that = this;
-      $( 'input', this.footer() ).on( 'keyup change', function () {
-        if ( that.search() !== this.value ) {
-          that
-          .search( this.value )
-          .draw();
-        }
-      } );
-    } );
+tblist_siswa.columns().every( function () {
+  var that = this;
+  $( 'input', this.footer() ).on( 'keyup change', function () {
+    if ( that.search() !== this.value ) {
+      that
+      .search( this.value )
+      .draw();
+    }
+  } );
+} );
 
 
 
 
-  });
+});
 
-    function reload_tblist(){
-     tblist_siswaAdd.ajax.reload(null,false);
-     tblist_paketAdd.ajax.reload(null,false); 
-     tblist_paket.ajax.reload();
-     tblist_siswa.ajax.reload();
+function reload_tblist(){
+ tblist_siswaAdd.ajax.reload(null,false);
+ tblist_paketAdd.ajax.reload(null,false); 
+ tblist_paket.ajax.reload();
+ tblist_siswa.ajax.reload();
 
         //reload datatable ajax 
        // 
@@ -450,7 +456,7 @@
              {
 
 
-               alert('Error adding / update data');
+               swal('Error adding / update data');
              }
            });
        } else {
@@ -465,17 +471,18 @@
 
      }
      function get_data_json(data){
-      tableku = $('.modal-body table').dataTable();
+      // tableku = $('.modal-body table').dataTable();
+      $('#myModal').modal('show');  
 
-      $('#myModal').modal('show');
       
-      $('.listsoal').dataTable({
+      listsoal = $('.listsoal').dataTable({
         data:data.data,
         "language": {
           "emptyTable": "Tidak Ada Soal",
-          "bDestroy": true,
+          
         },
-      })
+        "bDestroy": true,
+      });
     }
     function lihatsoal(id){
       // var hasil_ajax = new Object();
@@ -485,12 +492,13 @@
         dataType:"JSON",
         success: function(data,respone)
         {  
-         get_data_json(data);
-       },
-       error: function (jqXHR, textStatus, errorThrown)
-       {
-        alert('Error Retrieve');
-      }});
+          // alert(data);
+          get_data_json(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          swal('Error Retrieve');
+        }});
     }
     // function delete paket to to
     function dropPaket(idKey) {
@@ -509,7 +517,7 @@
                       },
                       error: function (jqXHR, textStatus, errorThrown)
                       {
-                        alert('Error deleting data');
+                        swal('Error deleting data');
                         // console.log(jqXHR);
                         // console.log(textStatus);
                         console.log(errorThrown);
@@ -533,7 +541,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                  alert('Error deleting data');
+                  swal('Error deleting data');
                         // console.log(jqXHR);
                         // console.log(textStatus);
                         console.log(errorThrown);

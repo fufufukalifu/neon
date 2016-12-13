@@ -3,12 +3,21 @@
  <div class="col-md-12">
   <div class="panel panel-default">
    <div class="panel-heading">
-    <h3 class="panel-title">Tambah Learning Topik</h3>
-    <div class="panel-toolbar text-right">
+     <!-- <h3 class="panel-title">Tambah Learning Topik</h3> --><br>
+     <div class="toolbar">
+      <ol class="breadcrumb breadcrumb-transparent nm">
+        <li><span><a href="<?=base_url('learningline')?>"><i class="ico-list"></i></a></span></li>
+      
+        <li><span>{tingkat}</span></li>
+        <li>{mapel}</li>
+        <li class="active"><a href="#">{bab}</a></li>        
+      </ol><br>
+    </div>
+<!--     <div class="panel-toolbar text-right">
       <a class="btn btn-success" 
       href="<?= base_url(); ?>index.php/learningline/learningline" 
       title="Daftar Learning Line" ><i class="ico-list"></i></a>
-    </div> 
+    </div>  -->
   </div>
   <div class="panel-body">
     <!-- Start Body modal -->

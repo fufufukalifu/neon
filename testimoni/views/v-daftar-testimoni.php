@@ -72,12 +72,12 @@
                 dataType: "TEXT",
                 success: function (data, respone)
                 {
-                    alert('Testimoni dihilangkan dari tampilan utama');
+                    swal('Testimoni dihilangkan dari tampilan utama');
                     reload_tblist();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                    alert('Error publish testimoni');
+                    swal('Error publish testimoni');
                     // console.log(jqXHR);
                     // console.log(textStatus);
                     console.log(errorThrown);
@@ -115,7 +115,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                    alert('Error deleting data');
+                    swal('Error deleting data');
                     // console.log(jqXHR);
                     // console.log(textStatus);
                     console.log(errorThrown);

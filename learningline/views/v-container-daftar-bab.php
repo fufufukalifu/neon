@@ -18,6 +18,7 @@
                              <div class="panel-toolbar text-right">
                                 <a class="btn btn-success" 
                                 href="<?= base_url(); ?>index.php/learningline/formlearning" 
+                                target="_blank"
                                 title="Tambah Data" ><i class="ico-plus"></i></a>
                             </div>
 
@@ -26,6 +27,7 @@
                             <table class="daftartopik table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                                 <thead>
                                     <tr>
+                                    
                                         <th width="50%">Topik</th>
                                         <th>Urutan Tampil</th>
                                         <th>Status</th>
@@ -63,6 +65,7 @@
                      <div class="panel-toolbar text-right">
                         <a class="btn btn-success" 
                         href="" 
+                        target="_blank"
                         title="Tambah Data" ><i class="ico-plus"></i></a>
                     </div>
 
@@ -71,7 +74,7 @@
                     <table class="daftarstep table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                         <thead>
                             <tr>
-                                <th width="10%">No Urut</th>
+                                <th width="10%">Id</th>
                                 <th>Step</th>
                                 <th>jenis</th>
                                 <th width="20%">Aksi</th>

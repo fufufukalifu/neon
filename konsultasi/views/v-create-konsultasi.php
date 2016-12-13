@@ -117,7 +117,7 @@
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-            	alert('Error adding / update data');
+            	swal('Error adding / update data');
             }
         });
 		}

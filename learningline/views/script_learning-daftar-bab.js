@@ -52,12 +52,21 @@ function updatestatus(id,status){
 	});
 }
 function detail_topik(data){
+	kelas = '.topik-'+data;
+	meta = $(kelas).data('todo');
+	console.log(meta);
+	console.log(kelas)
 	$('.detail_step').modal('show');
-	judul = " <h4 class='modal-title' style='display: inline'>Daftar Step</h4>";
+	judul = " <h4 class='modal-title' style='display: inline'>Daftar Step : "+
+	"<span class='text-info'>"+meta.namaTingkat+" -> "
+	+meta.namaMataPelajaran+" -> "
+	+meta.judulBab+"<span>-> "
+	+meta.namaTopik+"<span></h4>";
+	
 	$('.detail_step .modal-header').html(judul);
 	$(".detail_step a").attr("href", base_url+"learningline/formstep/"+data);
 
-	var url = base_url+"learningline/ajax_list_ge_step/"+data;
+	var url = base_url+"learningline/ajax_list_get_step/"+data;
 	dataTableLearning = $('.daftarstep').DataTable({
 		"ajax": {
 			"url": url,
@@ -72,8 +81,11 @@ function detail_topik(data){
 
 //detail bab
 function detail_bab(data){
+	kelas = ".bab-"+data;
+	var meta = $(kelas).data('todo');
+	console.log(meta);
 	$('.detail_topik').modal('show');
-	judul = " <h4 class='modal-title' style='display: inline'>Daftar Topik</h4>";
+	judul = " <h4 class='modal-title' style='display: inline'>Daftar Topik : <span class='text-info'>"+meta.namaTingkat+" -> "+meta.namaMataPelajaran+" -> "+meta.judulBab+"<span></h4>";
 	$('.detail_topik .modal-header').html(judul);
 	$(".detail_topik a").attr("href", base_url+"learningline/formtopik/"+data);
 	var url = base_url+"learningline/ajax_get_list_topik/"+data;
@@ -112,7 +124,7 @@ function drop_topik(idtopik){
 			url:url,
 			success:function(){
 				swal("Terhapus!", "Topik berhasil dihapus.", "success");
- reload();
+				reload();
 			},
 			error:function(){
 				sweetAlert("Oops...", "Data gagal terhapus!", "error");
@@ -124,7 +136,7 @@ function drop_topik(idtopik){
 
 function reload(){
 	tabel.ajax.reload(null,false);
-				dataTableLearning.ajax.reload(null,false);
+	dataTableLearning.ajax.reload(null,false);
 }
 /*## -----------------------------Drop Learning-------------------------------##*/
 

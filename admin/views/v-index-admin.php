@@ -104,8 +104,194 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- END  Modal Filter Video -->
+<!-- Start Modal Tambah Gallery -->
+  <div class="modal fade" id="modalgallery" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h4 class="modal-title">Tambah Gallery</h4>
+     </div>
+
+
+     <!-- Start Body modal -->
+     <div class="modal-body">
+       <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/gallery/formGallery" method="post" >
+        <div  class="form-group">
+         <label class="col-sm-3 control-label">Tingkat</label>
+         <div class="col-sm-8">
+           <!-- vtkt = video tingkat -->
+           <select class="form-control gettkt" name="tingkat" id="galtkt">
+             <option>-Pilih Tingkat-</option>
+           </select>
+         </div>
+       </div>
+
+       <div  class="form-group">
+         <label class="col-sm-3 control-label">Mata Pelajaran</label>
+         <div class="col-sm-8">
+          <select class="form-control getpel" name="mataPelajaran" id="galpel">
+
+          </select>
+        </div>
+      </div>
+
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Bab</label>
+       <div class="col-sm-8">
+        <select class="form-control getbb" name="bab" id="galbab">
+
+        </select>
+      </div>
+    </div>
+
+
+
+</div>
+<!-- END BODY modla-->
+<div class="modal-footer">
+  <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+</div>
+</form> 
+</div><!-- /.modal-content -->
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END Modal Tambah Gallery -->
+<!-- Satart Modal Filter Gallery  -->
+  <div class="modal fade" id="modalfilter-gallery" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h4 class="modal-title">Filter Gallery</h4>
+     </div>
+
+
+     <!-- Start Body modal -->
+     <div class="modal-body">
+       <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/gallery/filtergallery" method="post" >
+        <div  class="form-group">
+         <label class="col-sm-3 control-label">Tingkat</label>
+         <div class="col-sm-8">
+           <!-- vtkt = video tingkat -->
+           <select class="form-control gettkt" name="tingkat" id="fgaltkt">
+             <option>-Pilih Tingkat-</option>
+           </select>
+         </div>
+       </div>
+
+       <div  class="form-group">
+         <label class="col-sm-3 control-label">Mata Pelajaran</label>
+         <div class="col-sm-8">
+          <select class="form-control getpel" name="mataPelajaran" id="fgalpel">
+
+          </select>
+        </div>
+      </div>
+
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Bab</label>
+       <div class="col-sm-8">
+        <select class="form-control getbb" name="bab" id="fgalbab">
+
+        </select>
+      </div>
+    </div>
+
+
+
+</div>
+<!-- END BODY modla-->
+<div class="modal-footer">
+  <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+</div>
+</form> 
+</div><!-- /.modal-content -->
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END Modal Filter Gallery -->
+<!-- START Modal ADD TO -->
+<div class="modal fade" id="modalto" tabindex="-1" role="dialog">
+  <!--START modal dialog  -->
+  <div class="modal-dialog" role="document">
+   <!-- STRAT MOdal Content -->
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title">Buat TO</h4>
+   </div>
+
+   <!-- START Modal Body -->
+   <div class="modal-body">
+
+     <!-- START PESAN ERROR EMPTY INPUT -->
+     <div class="alert alert-dismissable alert-danger" id="e_crtTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_crtTo()" >×</button>
+      <strong>O.M.G.!</strong> Tolong di ISI semua.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <!-- START PESAN ERROR EMPTY INPUT -->
+    <div class="alert alert-dismissable alert-danger" id="e_tglTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_tglTo()" >×</button>
+      <strong>Silahkan cek kembali!</strong> Tanggal mulai dan tanggal akhir tidak sesuai.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <form class="panel panel-default form-horizontal form-bordered" action="javascript:void(0);" method="post" id="form_to">
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Nama Tryout</label>
+       <div class="col-sm-8">
+        <input type="text" class="form-control" name="nmpaket" id="to_nm">
+      </div>
+    </div>
+    <div  class="form-group">
+     <label class="col-sm-3 control-label">Tanggal Mulai</label>
+     <div class="col-sm-4">
+      <input type="date" class="form-control" name="tglmulai" id="to_tglmulai">
+    </div >
+    <div class="col-sm-4">
+      <input type="time" class="form-control" name="wktmulai" id="to_wktmulai" >
+    </div>
+  </div>
+  <div  class="form-group">
+   <label class="col-sm-3 control-label">Tanggal Berakhir</label>
+   <div class="col-sm-4">
+    <input type="date" class="form-control" name="tglakhir" id="to_tglakhir">
+  </div>
+  <div class="col-sm-4">
+    <input type="time" class="form-control" name="wktakhir" id="to_wktakhir" >
+  </div>
+</div>
+
+<div class="form-group">
+ <label class="col-sm-3 control-label">Publish</label>
+ <div class="col-sm-8">
+  <div class="checkbox custom-checkbox">  
+   <input type="checkbox" name="publish" id="to_publish" value="1">  
+   <label for="to_publish" >&nbsp;&nbsp;</label>   
+ </div>
+</div>
+</div> 
+
+</div>
+<!-- END Modal Body -->
+<!-- START Modal Footer -->
+<div class="modal-footer">
+  <button type="submit" id="myFormSubmit" class="btn btn-primary" onclick="crtTo()"  >Proses</button>
+</div>
+</form>
+<!-- START Modal Footer -->
+
+</div>
+<!-- END MOdal Content -->
+
+</div>
+<!--END modal dialog  -->
+</div>
+<!-- END Modal ADD TO -->
 <!-- START Modal ADD BANK SOAL -->
-<div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
+ <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
    <div class="modal-content">
     <div class="modal-header">
@@ -116,7 +302,8 @@
 
    <!-- Start Body modal -->
    <div class="modal-body">
-     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
+    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
+    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal" method="post" >
       <div  class="form-group">
        <label class="col-sm-3 control-label">Tingkat</label>
        <div class="col-sm-8">
@@ -425,13 +612,18 @@
 
   <ul id="gallery" class="submenu collapse ">
     <li class="submenu-header ellipsis">gallery</li>
-        <li >
+      <li >
       <a href="<?=base_url('index.php/gallery')?>">
         <span class="text">Gallery</span>
       </a>
     </li>
     <li >
-      <a href="<?=base_url('index.php/gallery/formGallery')?>" onclick="add_soal()">
+      <a href="javascript:void(0)" onclick="filter_gallery()">
+        <span class="text">Filter Gallery</span>
+      </a>
+    </li>
+    <li >
+      <a href="javascript:void(0)" onclick="add_gallery()">
         <span class="text">Tambahkan gallery</span> 
       </a>
     </li>
@@ -487,7 +679,7 @@
         <li class="submenu-header ellipsis">Sub Bank Soal</li>
         <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Soal</span>
         </a></li>
-        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Daftar Soal per-SUb-bab</span>
+        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Daftar Soal</span>
         </a></li>
 
 
@@ -498,27 +690,33 @@
 </li>
 
 <li>
-  <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-clipboard"></i></span>
-    <span class="text">Try Out</span>
-    <span class="arrow"></span>
+ <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard"></i></span>
+  <span class="text">Try Outs</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="tryout" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Try Out</li>
+
+  <li >
+   <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
+    <span class="text">Paket Soal</span>
   </a>
+</li>
 
-  <ul id="tryout" class="submenu collapse ">
-    <li class="submenu-header ellipsis">Try Out</li>
+<li >
+ <a href="javascript:void(0);" onclick="add_to()">
+  <span class="text">Tambahkan Try Out</span>
+</a>
+</li>
+<li >
+ <a href="<?= base_url('index.php/toback/listTo');?>">
+  <span class="text">Daftar Try Out</span>
+</a>
+</li>
 
-    <li >
-      <a href="">
-        <span class="text">Tambahkan Try Out</span>
-      </a>
-    </li>
-    <li >
-      <a href="">
-        <span class="text">Daftar Try Out</span>
-      </a>
-    </li>
-
-  </ul>
+</ul>
 </li>
 
 
@@ -685,7 +883,12 @@
 function add_soal() {
 $('#modalsoal').modal('show'); // show bootstrap modal
 }
-
+function add_gallery() {
+  $('#modalgallery').modal('show'); // show bootstrap modal
+}
+function filter_gallery() {
+  $('#modalfilter-gallery').modal('show'); // show bootstrap modal
+}
 function filter_video() {
 $('#modalvideo').modal('show'); // show bootstrap modal
 }
@@ -822,6 +1025,30 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
                // loadPel(idTingkat);
              });
                // ##############################
+
+               // event untuk modal tambah Gallery
+              // ##############################
+              $('#galtkt').change(function () {
+               tingkat_id = {"tingkat_id": $('#galtkt').val()};
+               loadPelgal($('#galtkt').val());
+             });
+              $('#galpel').change(function () {
+               pelajaran_id = {"pelajaran_id": $('#galpel').val()};
+               loadBbgal($('#galpel').val());
+             });
+               // ##############################
+                // event untuk modal tambah Gallery
+              // ##############################
+              $('#fgaltkt').change(function () {
+               tingkat_id = {"tingkat_id": $('#fgaltkt').val()};
+               loadPelfgal($('#fgaltkt').val());
+             });
+              $('#fgalpel').change(function () {
+               pelajaran_id = {"pelajaran_id": $('#fgalpel').val()};
+               loadBbfgal($('#fgalpel').val());
+             });
+               // ##############################
+
              })
            }
            ;
@@ -850,6 +1077,36 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
                $('#vpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
                $.each(data, function (i, data) {
                 $('#vpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+              });
+             }
+           });
+           }
+
+            //buat load pelajaran untuk  modal tambah gallery video
+            function loadPelgal(tingkatID) {
+             $.ajax({
+              type: "POST",
+              data: tingkatID.tingkat_id,
+              url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+              success: function (data) {
+               $('#galpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+               $.each(data, function (i, data) {
+                $('#galpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+              });
+             }
+           });
+           }
+
+            //buat load pelajaran untuk  modal filter gallery
+            function loadPelfgal(tingkatID) {
+             $.ajax({
+              type: "POST",
+              data: tingkatID.tingkat_id,
+              url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+              success: function (data) {
+               $('#fgalpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+               $.each(data, function (i, data) {
+                $('#fgalpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
               });
              }
            });
@@ -888,6 +1145,43 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 
              });
              }
+
+             //load bab untuk modal tambah gallery
+             function loadBbgal(mapelID) {
+               $.ajax({
+                type: "POST",
+                data: mapelID.mapel_id,
+                url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                success: function (data) {
+
+                 $('#galbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+
+                 $.each(data, function (i, data) {
+                  $('#galbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                });
+               }
+
+             });
+             }
+
+             //load bab untuk modal filter gallery
+             function loadBbfgal(mapelID) {
+               $.ajax({
+                type: "POST",
+                data: mapelID.mapel_id,
+                url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                success: function (data) {
+
+                 $('#fgalbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+
+                 $.each(data, function (i, data) {
+                  $('#fgalbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                });
+               }
+
+             });
+             }
+
 
             //load sub bab untuk modal soal
             function loadSubb(babID){
@@ -933,8 +1227,8 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
 });
 </script>
             <!-- Cometchat -->
-<link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
-<script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
+<!-- <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
+<script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script> -->
 <!--/ App and page level script -->
 <!--/ END JAVASCRIPT SECTION -->
 </body>
