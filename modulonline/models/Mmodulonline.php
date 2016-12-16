@@ -138,13 +138,13 @@ class Mmodulonline extends CI_Model {
     }
     public function ch_soal($data) {
         $this->db->set($data['dataSoal']);
-        $this->db->where('UUID', $data['UUID']);
+        $this->db->where('uuid', $data['uuid']);
         $this->db->update('tb_modul');
     }
 
-    public function get_onesoal($UUID) {
-        $this->db->where('UUID', $UUID);
-        $this->db->select('*')->from('tb_banksoal');
+    public function get_onesoal($uuid) {
+        $this->db->where('uuid', $uuid);
+        $this->db->select('*')->from('tb_modul');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -160,8 +160,8 @@ class Mmodulonline extends CI_Model {
 
     public function get_oldgambar_soal($UUID)
     {
-        $this->db->where('UUID', $UUID);
-        $this->db->select('id_soal,gambar_soal')->from('tb_banksoal');
+        $this->db->where('uuid', $UUID);
+        $this->db->select('id,url_file')->from('tb_modul');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -201,7 +201,7 @@ class Mmodulonline extends CI_Model {
     public function get_allsoal()
     {
 
-        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish');
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran');
         $this->db->from('tb_modul as mdl');
         $this->db->where('mdl.status','1');
 
@@ -307,14 +307,12 @@ class Mmodulonline extends CI_Model {
         return $query->result()[0]->aliasTingkat;
     }
     // mengetahui info tingkat soal
-    public function get_info_soal($subBabID)
+    public function get_info_soal($tingkatID)
     {
-        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp,bab.id as id_bab, judulBab, subbab.id as id_subbab ,judulSubBab,');
-         $this->db->from('tb_tingkat tkt' );
-         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
-        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
-        $this->db->where('subbab.id',$subBabID);
+        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp');
+        $this->db->from('tb_tingkat tkt' );
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->where('tp.id',$tingkatID);
         $query = $this->db->get();
         return $query->result_array()[0];
     }
