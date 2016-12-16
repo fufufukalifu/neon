@@ -361,11 +361,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <label class="control-label col-sm-2">Soal</label>
                              <div class="col-sm-10">
 
-                                 <textarea  name="editor1" class="form-control" id="">
-
-                                     
-
-                                 </textarea>
+                                 <textarea  name="editor1" class="form-control" id=""></textarea>
 
                              </div>
                             </div>
@@ -375,8 +371,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                               <label class="control-label col-sm-2">Buat rumus</label>
                               <div class="col-sm-10">
 
-                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" >
-                               </textarea>
+                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
 
                               </div>
                               <label class="control-label col-sm-2"></label>
@@ -469,7 +464,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext">
 
-                               <textarea name="a"  class="form-control"> </textarea>
+                               <textarea name="a"  class="form-control"></textarea>
 
                             </div>
 
@@ -543,7 +538,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext">
 
-                               <textarea name="b" class="form-control"> </textarea>
+                               <textarea name="b" class="form-control"></textarea>
 
                             </div>
 
@@ -613,7 +608,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext" >
 
-                               <textarea name="c" class="form-control"> </textarea>
+                               <textarea name="c" class="form-control"></textarea>
 
                             </div>
 
@@ -687,7 +682,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext" >
 
-                               <textarea name="d" class="form-control"> </textarea>
+                               <textarea name="d" class="form-control"></textarea>
 
                             </div>
 
@@ -761,7 +756,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext" >
 
-                               <textarea name="e" class="form-control"> </textarea>
+                               <textarea name="e" class="form-control"></textarea>
 
                             </div>
 
@@ -1004,11 +999,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                               <label class="control-label col-sm-2">Pembahasan</label>
                               <div class="col-sm-10">
 
-                               <textarea  name="editor2" class="form-control" id="">
-
-
-
-                               </textarea>
+                               <textarea  name="editor2" class="form-control" id=""></textarea>
 
                              </div>
                            </div>

@@ -125,7 +125,7 @@ function drop_materi(UUID){
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{
-				alert('Error deleting data');
+				swal('Error deleting data');
 			}
 		});
 	}

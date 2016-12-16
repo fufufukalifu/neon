@@ -33,7 +33,7 @@
 
 	</div>
 	<!-- End Modal Detail Video -->
-		<!-- Start Modal Detail Video dari link -->
+	<!-- Start Modal Detail Video dari link -->
 	<div class="modal fade" id="mvideolink">
 
 		<div class="modal-dialog" role="document">
@@ -52,8 +52,8 @@
 
 				</div>
 
-									<iframe class=" modal-body img-tumbnail image" src=""  controls id="video-ply-link" width="100%" height="315" style="background:grey;">
-										</iframe>
+				<iframe class=" modal-body img-tumbnail image" src=""  controls id="video-ply-link" width="100%" height="315" style="background:grey;">
+				</iframe>
 
 				<div class="modal-footer">
 
@@ -70,11 +70,11 @@
 	<div class="panel panel-teal">
 		<div class="panel-heading">
 			<h5 class="panel-title">Video Yang Telah Anda Upload</h5>
-			 <!-- Start menu upload video -->
-                        <div class="panel-toolbar text-right">
-                            <a class="btn btn-inverse btn-outline" href="<?=base_url('index.php/videoback/formupvideo')?>" title="Tambah Data" ><i class="ico-plus"></i></a>
-                        </div>
-                         <!-- END menu upload video -->
+			<!-- Start menu upload video -->
+			<div class="panel-toolbar text-right">
+				<a class="btn btn-inverse btn-outline" href="<?=base_url('index.php/videoback/formupvideo')?>" title="Tambah Data" ><i class="ico-plus"></i></a>
+			</div>
+			<!-- END menu upload video -->
 		</div>
 		<table class="table table-striped" id="zero-configuration" style="font-size: 12px" width="100%">
 			<thead>
@@ -99,68 +99,67 @@
 </div>
 
 <script type="text/javascript">
-var  tblist_video;
-$(document).ready(function() {
+	var  tblist_video;
+	$(document).ready(function() {
 		//#get list by id guru
 		tblist_video = $('#zero-configuration').DataTable({ 
-         "processing": true,
-         "ajax": {
-          "url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
-          "type": "POST"
-        },
-      });
+			"processing": true,
+			"ajax": {
+				"url": base_url+"index.php/videoback/ajax_get_video_by_id_guru",
+				"type": "POST"
+			},
+		});
 		//##
 
-      });
+	});
 
 //# ketika tombol di klik
-		function detail(id){console.log(id);
-			var kelas ='.detail-'+id;
-			var data = $(kelas).data('id');
-			var links;
-			console.log(data);
+function detail(id){console.log(id);
+	var kelas ='.detail-'+id;
+	var data = $(kelas).data('id');
+	var links;
+	console.log(data);
 
-			$('h3.modal-title').html(data.judulVideo);
-			if (data.namaFile != null) {
-								links = '<?=base_url();?>assets/video/' + data.namaFile;
-					$('#video-ply').attr('src',links); 
-					$('#mdetailvideo').modal('show');
-			}else if(data.link != null){
-				links =  data.link;
-				$('#video-ply-link').attr('src',links); 
-				$('#mvideolink').modal('show');
-			}else{
+	$('h3.modal-title').html(data.judulVideo);
+	if (data.namaFile != null) {
+		links = '<?=base_url();?>assets/video/' + data.namaFile;
+		$('#video-ply').attr('src',links); 
+		$('#mdetailvideo').modal('show');
+	}else if(data.link != null){
+		links =  data.link;
+		$('#video-ply-link').attr('src',links); 
+		$('#mvideolink').modal('show');
+	}else{
 
-			}
-		
-		}
+	}
+
+}
 //##
 
 //# fungsi menghapus video
-	function drop_video(videoID){
-		if(confirm('Are you sure delete this data?')){
-	  $.ajax({
-	            url : base_url+"index.php/videoback/del_file_video/"+videoID,
-	            type: "POST",
-	            dataType: "TEXT",
-	            success: function(data)
-	            {
-	            	console.log('success');
-	              reload_tblist();
-					    },
-					    error: function (jqXHR, textStatus, errorThrown)
-					    {
-					      alert('Error deleting data');
-					    }
-	    });
-  	}
+function drop_video(videoID){
+	if(confirm('Are you sure delete this data?')){
+		$.ajax({
+			url : base_url+"index.php/videoback/del_file_video/"+videoID,
+			type: "POST",
+			dataType: "TEXT",
+			success: function(data)
+			{
+				reload_tblist();
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				swal('Error deleting data');
+			}
+		});
 	}
+}
 // fungsi updt
 
 
 //fungsi reload table
 function  reload_tblist(){
-  tblist_video.ajax.reload(null,false);
+	tblist_video.ajax.reload(null,false);
 }
 
 </script>

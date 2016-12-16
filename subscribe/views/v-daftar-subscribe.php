@@ -57,7 +57,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                    alert('Error deleting data');
+                    swal('Error deleting data');
                     // console.log(jqXHR);
                     // console.log(textStatus);
                     console.log(errorThrown);

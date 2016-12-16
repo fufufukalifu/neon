@@ -26,7 +26,7 @@ class Learningline extends MX_Controller {
 	public function loadparser($data){
 		$this->hakakses = $this->gethakakses();
 		if ($this->hakakses=='admin') {
-			$this->parser->parse('v-index-admin', $data);
+			$this->parser->parse('admin/v-index-admin', $data);
 		} else if($this->hakakses=='guru'){
 			$this->parser->parse('templating/index-b-guru', $data);
 		}else{
@@ -50,17 +50,42 @@ class Learningline extends MX_Controller {
 		$this->loadparser($data);
 	}
 	// FUNGSI INDEX
+	
+	// DAFTAR TOPIK
+	//AMBIL TOPIK BY BABID
+	function topik($byid){
+		$metadata = $this->mmatapelajaran->get_bab_by_id($byid)[0];
+		// var_dump($metadata);
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Topik",
+			'tingkat' =>$metadata['namaTingkat'],
+			'mapel'=>$metadata['namaMataPelajaran'],
+			'bab'=>$metadata['judulBab'],
+			);
+
+		$data['files'] = array(
+			APPPATH . 'modules/learningline/views/v-daftar-topik-single.php',
+			APPPATH . 'modules/learningline/views/script_learning-single-topik.js',
+			);
+
+		$this->loadparser($data);
+	}
+	// DAFTAR TOPIK
 
 
 	//FUNGSI TAMBAHKAN LINE STEP
 	public function formstep($data){
-		$metadata = $this->learning_model->get_meta_data_step($data)[0];
+		$metadata = $this->learning_model->get_topik_byid($data);
+		// var_dump($metadata);
 		$data = array(
 			'judul_halaman' => 'Dashboard '.$this->hakakses." - Add Learning Line Step untuk ".$metadata['namaTopik'],
 			'namaTopik' => $metadata['namaTopik'],
-			'id'=>$metadata['id']
+			'id'=>$metadata['TopikID'],
+			'babID'=>$metadata['babID'],
+			'tingkat' =>$metadata['namaTingkat'],
+			'mapel'=>$metadata['namaMataPelajaran'],
+			'bab'=>$metadata['judulBab'],
 			);
-
 		$data['files'] = array(
 			APPPATH . 'modules/learningline/views/v-form-step.php',
 			APPPATH . 'modules/learningline/views/script_learning-form-step.js',
@@ -90,6 +115,58 @@ class Learningline extends MX_Controller {
 	}
 	//FUNGSI MENAMBAHKAN TOPIK
 
+		//FUNGSI MENGEDIT TOPIK
+	public function edit_topik($data){
+		$metatopik = $this->learning_model->get_topik_byid($data);
+
+		if ($metatopik==false) {
+			echo "Forbiden acces";
+		} else {
+			$data = array(
+				'judul_halaman' => 'Dashboard '.ucfirst($this->hakakses)." - Update Learning Line Topik Berjudul ".$metatopik['namaTopik'],
+				'judul'=>$metatopik['namaTopik'],
+				'statusLearning'=>$metatopik['statusLearning'],
+				'urutan'=>$metatopik['urutan'],
+				'deskripsi'=>$metatopik['deskripsi'],
+				'tingkat'=>$metatopik['namaTingkat'],
+				'mapel'=>$metatopik['namaMataPelajaran'],
+				'bab'=>$metatopik['judulBab'],
+				'topikID'=>$metatopik['TopikID']
+				);
+
+			$data['files'] = array(
+				APPPATH . 'modules/learningline/views/v-form-edit-topik.php',
+				APPPATH . 'modules/learningline/views/script_learning-edit-topik.js',
+				);
+
+			$this->loadparser($data);
+		}
+		
+		// 
+	}
+	//FUNGSI MENGEDIT TOPIK
+
+	//FUNGSI MENGEDIT STEP
+	public function edit_step($data){
+		$metadata = $this->learning_model->meta_step_update($data)[0];
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Edit Learning Line Step untuk ".$metadata['namaTopik'],
+			'namaTopik' => $metadata['namaTopik'],
+			'id'=>$metadata['id'],
+			'babid'=>$metadata['babid'],
+			'urutan'=>$metadata['urutan'],
+			'namastep'=>$metadata['namaStep'],
+
+			);
+		$data['files'] = array(
+			APPPATH . 'modules/learningline/views/v-form-edit-step.php',
+			APPPATH . 'modules/learningline/views/script_learning-edit-step.js',
+			);
+
+		$this->loadparser($data);
+	}
+	//FUNGSI MENGEDIT STEP
+
 
 
 	## --------------------------AJAX PROCESSING-------------------------- ##
@@ -114,8 +191,11 @@ class Learningline extends MX_Controller {
 			
 			
 
-			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_topik('."'".$list_item['id']."'".')"><i class="ico-edit"></i></a>
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_topik('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
+			$row[] = '<a class="btn btn-sm btn-warning"  
+			title="Edit" 
+			href="'.base_url().'learningline/edit_topik/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+			<a class="btn btn-sm btn-success topik-'.$list_item['id'].'"  title="Detail" 
+			data-todo='."'".json_encode($list_item)."'".' onclick="detail_topik('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_topik('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -131,7 +211,7 @@ class Learningline extends MX_Controller {
 	// GET LIST TOPIK
 
 	// GET LIST STEP BERDASARKAN ID TOPIK
-	public function ajax_list_ge_step($id_topik){
+	public function ajax_list_get_step($id_topik){
 		$list = $this->learning_model->get_step_by_id_topik($id_topik);
 		$data = array();
 
@@ -139,12 +219,13 @@ class Learningline extends MX_Controller {
 		foreach ( $list as $list_item ) {
 			// $no++;
 			$row = array();
-			$row[] = $list_item['urutan'];
-			$row[] = $list_item['namaTopik'];
+			$row[] = $list_item['id'];
+			$row[] = $list_item['namaStep'];
 			$row[] = $list_item['jenisStep'];
-
-			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_step('."'".$list_item['id']."'".')"><i class="ico-edit"></i></a>
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
+			$row[] = '<a class="btn btn-sm btn-warning"  
+			title="Edit" 
+			href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+			<a class="btn btn-sm btn-success"  title="Detail" data-todo='."'".json_encode($list_item)."'".' onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
@@ -182,7 +263,9 @@ class Learningline extends MX_Controller {
 			
 			
 			$row[] = '
-			<a class="btn btn-sm btn-success"  title="Detail" onclick="detail_bab('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>';
+			<a class="btn btn-sm btn-success bab-'.$list_item['id'].'" title="Detail" 
+			data-todo='."'".json_encode($list_item)."'".'
+			onclick="detail_bab('."'".$list_item['id']."'".') "><i class="ico-file-plus2"></i></a>';
 
 			$data[] = $row;
 
@@ -208,7 +291,7 @@ class Learningline extends MX_Controller {
 			$row[] = $list_item['judulSubBab'];
 			$row[] = $list_item['judulVideo'];
 			
-			$row[] = "<input type='radio' name='video' value=".$list_item['videoID']."class='switchery' unchecked'>";
+			$row[] = "<input type='radio' name='video' value=".$list_item['videoID']." ' class='switchery' unchecked'>";
 
 			$data[] = $row;
 
@@ -222,69 +305,130 @@ class Learningline extends MX_Controller {
 
 	}
 
+	function ajax_get_materi($data){
+		$list = $this->learning_model->get_materi_babID($data);
+		$data = array();
+
+		$baseurl = base_url();
+		foreach ( $list as $list_item ) {
+			// $no++;
+			$row = array();
+			$row[] = $list_item['id'];			
+			$row[] = $list_item['judulMateri'];
+			$row[] = '<a class="btn btn-sm btn-primary btn-outline detail-'.$list_item['id'].'"  title="Lihat"
+			data-id='."'".json_encode($list_item)."'".'
+			onclick="detail('."'".$list_item['id']."'".')"
+			>
+			<i class=" ico-eye "></i>
+		</a> ';
+
+		$row[] = "<input type='radio' name='materi' value=".$list_item['id']." ' class='switchery' unchecked'>";
+
+		$data[] = $row;
+
+	}
+
+	$output = array(
+		"data"=>$data,
+		);
+
+	echo json_encode( $output );	
+
+}
 
 	## --------------------------AJAX PROCESSING-------------------------- ##
 
 
 
 	## --------------------------CRUD PROCESSING-------------------------- ##
-	function updateaktiv($data){
-		$this->learning_model->updateaktiv($data);
-	}
+function updateaktiv($data){
+	$this->learning_model->updateaktiv($data);
+}
 
-	function updatepasive($data){
-		$this->learning_model->updatepasive($data);
-	}
+function updatepasive($data){
+	$this->learning_model->updatepasive($data);
+}
 
 	// TB-TOPIK //
-	function ajax_insert_line_topik(){
+function ajax_insert_line_topik(){
 			// $data = $this->input->post();
-		$data = array(
-			'babID'=>$this->input->post('babID'),
-			'statusLearning'=>$this->input->post('statusLearning'),
-			'deskripsi'=>$this->input->post('deskripsi'),
-			'namaTopik'=>$this->input->post('namaTopik'),
-			'status'=>1,
-			'urutan'=>$this->input->post('urutan')
-			);
-		$this->learning_model->insert_line_topik ($data);
-	}
+	$data = array(
+		'babID'=>$this->input->post('babID'),
+		'statusLearning'=>$this->input->post('statusLearning'),
+		'deskripsi'=>$this->input->post('deskripsi'),
+		'namaTopik'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan')
+		);
+	$this->learning_model->insert_line_topik ($data);
+}
+
+
+// update
+function ajax_update_line_topik(){
+	$data = array(
+		'statusLearning'=>$this->input->post('statusLearning'),
+		'deskripsi'=>$this->input->post('deskripsi'),
+		'namaTopik'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan'),
+		'id'=>$this->input->post('topikID'),
+		);
+
+	// var_dump($data['topikID']);
+	$this->learning_model->update_topik ($data);
+}
 	// TB-TOPIK //
 
 	// TB-STEP //
-	function ajax_insert_line_step(){
-			// $data = $this->input->post();
-		$data = array(
-			'babID'=>$this->input->post('babID'),
-			'namaStep'=>$this->input->post('statusLearning'),
-			'jenisStep'=>$this->input->post('deskripsi'),
-			'videoID'=>$this->input->post('namaTopik'),
-			'MateriID'=>$this->input->post('namaTopik'),
-			'latihanID'=>$this->input->post('namaTopik'),
-			'status'=>1,
-			'urutan'=>$this->input->post('urutan')
-			);
-		$this->learning_model->insert_line_STEP ($data);
-	}
+function ajax_insert_line_step(){
+	$data = array(
+		'namaStep'=>$this->input->post('namastep'),
+		'jenisStep'=>$this->input->post('select_jenis'),
+		'videoID'=>$this->input->post('videoID'),
+		'MateriID'=>$this->input->post('materiID'),
+		'latihanID'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan'),
+		'topikID'=>$this->input->post('topikID'),
+		);
+	$this->learning_model->insert_line_step($data);
+}
+
+function ajax_update_learning_step(){
+	$data = array(
+		'namaStep'=>$this->input->post('namastep'),
+		'jenisStep'=>$this->input->post('select_jenis'),
+		'videoID'=>$this->input->post('videoID'),
+		'MateriID'=>$this->input->post('materiID'),
+		'latihanID'=>$this->input->post('namaTopik'),
+		'status'=>1,
+		'urutan'=>$this->input->post('urutan'),
+		'id'=>$this->input->post('id'),
+		);
+	$this->learning_model->update_learning_step($data);
+
+
+}
 	// TB-STEP //
 
-	function drop_topik(){
-		$data = array(
-			'id'=>$this->input->post('id')
-			);
-		$this->learning_model->drop_topik($data);
-	}
+function drop_topik(){
+	$data = array(
+		'id'=>$this->input->post('id')
+		);
+	$this->learning_model->drop_topik($data);
+}
 
 
 	## --------------------------RUBAH STATUS LEARNING LINE AT BAB PROCESSING-------------------------- ##
 
-	function updateaktiv_bab($data){
-		$this->learning_model->updateaktiv_bab($data);
-	}
+function updateaktiv_bab($data){
+	$this->learning_model->updateaktiv_bab($data);
+}
 
-	function updatepasive_bab($data){
-		$this->learning_model->updatepasive_bab($data);
-	}
+function updatepasive_bab($data){
+	$this->learning_model->updatepasive_bab($data);
+}
 	## --------------------------RUBAH STATUS LEARNING LINE AT BAB PROCESSING-------------------------- ##
 
 

@@ -397,7 +397,7 @@ function simpan_jawaban(){
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-            	alert('Error adding / update data');
+            	swal('Error adding / update data');
             }
         });
 		}
@@ -436,7 +436,7 @@ function komen(data){
 		},
 		error: function (jqXHR, textStatus, errorThrown)
 		{
-			alert('Error adding / update data');
+			swal('Error adding / update data');
 		}
 	});
 
@@ -446,7 +446,7 @@ function get_data(data, datas){
 	status = data;
 	postingan = datas;
 	if (status==1) {
-		alert("Tidak Dapat Memberikan Point")
+		swal("Tidak Dapat Memberikan Point")
 	}else{
 		console.log(postingan.idJawaban);
 		url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
@@ -457,7 +457,7 @@ function get_data(data, datas){
 			dataType: "text",
 			success: function()
 			{
-				alert("sudah ditambahkan");
+				swal("sudah ditambahkan");
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{

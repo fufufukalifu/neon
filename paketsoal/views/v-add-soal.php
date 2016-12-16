@@ -188,7 +188,7 @@
 
 <!-- START PESAN ERROR EMPTY INPUT -->
 
-<div class="alert alert-dismissable alert-danger" id="emptyinput_op" hidden="true">
+<div class="swal swal-dismissable swal-danger" id="emptyinput_op" hidden="true">
 
   <button type="button" class="close" onclick="hide_msg_empty()" >×</button>
 
@@ -200,7 +200,7 @@
 
 <!--START PESAN BERHASIL PAKET DI ADD KE TO -->
 
-<div class="alert alert-dismissable alert-success" id="msg_s_soal" hidden="true" >
+<div class="swal swal-dismissable swal-success" id="msg_s_soal" hidden="true" >
 
   <button type="button" class="close" onclick="hide_msg_s_soal()" >×</button>
 
@@ -345,7 +345,7 @@
 <script>
 
   //declare global variable
-
+  console.log(base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>);
   var tblist_soal;
 
   var list_soal;
@@ -356,52 +356,52 @@
 
 
 
-    $(document).ready(function() {
+  $(document).ready(function() {
 
-     var id_paket =$('#id_paket').val();
+   var id_paket =$('#id_paket').val();
 
      //# ketika tingkat di change
 
-        $('#TingkatID').change(function() {
+     $('#TingkatID').change(function() {
 
-         var form_data = {
+       var form_data = {
 
-          name: $('#TingkatID').val()
+        name: $('#TingkatID').val()
 
-        };
+      };
 
 
 
-        $.ajax({
+      $.ajax({
 
-          url: "<?php echo site_url('videoback/getPelajaran'); ?>",
+        url: "<?php echo site_url('videoback/getPelajaran'); ?>",
 
-          type: 'POST',
-          dataType: "json",
+        type: 'POST',
+        dataType: "json",
 
-          data: form_data,
+        data: form_data,
 
-          dataType:'text',
+        dataType:'text',
 
-          success: function(msg) {
+        success: function(msg) {
 
-           var sc='';
+         var sc='';
 
-           $.each(msg, function(key, val) {
+         $.each(msg, function(key, val) {
 
-            sc+='<option value="'+val.id+'">'+val.keterangan+'</option>';
+          sc+='<option value="'+val.id+'">'+val.keterangan+'</option>';
 
-          });
+        });
 
-           $("#pelajaranID option").remove();
+         $("#pelajaranID option").remove();
 
-           $("#pelajaranID").append(sc);
+         $("#pelajaranID").append(sc);
 
-         }
+       }
 
-       });
+     });
 
-      });
+    });
 
 
 
@@ -460,8 +460,6 @@ function loadTingkat(){
 
      return idTingkat=data.id;
 
-     alert("asd");
-
    });
 
   }
@@ -474,63 +472,63 @@ function loadTingkat(){
 
 // # ketika option di ganti
 
-  $('#tingkatID').change(function(){
+$('#tingkatID').change(function(){
 
-   tingkat_id={"tingkat_id" : $('#tingkat').val()};
+ tingkat_id={"tingkat_id" : $('#tingkat').val()};
 
-   load_pelajaran($('#tingkatID').val());
+ load_pelajaran($('#tingkatID').val());
 
-   $('.soal').empty();
+ $('.soal').empty();
 
-   $('pelajaranID').empty();
+ $('pelajaranID').empty();
 
- });
-
-
-
-  $('#pelajaranID').change(function(){
-
-   pelajaran_id = {"pelajaran_id":$('#pelajaranID').val()};
-
-   loadbab($('#pelajaranID').val());
-
-   $('.soal').empty();
-
- });
+});
 
 
 
-  $('#babID').change(function(){
+$('#pelajaranID').change(function(){
 
-   bab_id = {"bab_id":$('#babID').val()};
+ pelajaran_id = {"pelajaran_id":$('#pelajaranID').val()};
 
-   loadsubbab($('#babID').val());
+ loadbab($('#pelajaranID').val());
 
-   $('.soal').empty();
+ $('.soal').empty();
 
-
-
- });
+});
 
 
 
-  $('#subBabId').change(function(){
+$('#babID').change(function(){
 
-   $('.soal').empty();
+ bab_id = {"bab_id":$('#babID').val()};
+
+ loadsubbab($('#babID').val());
+
+ $('.soal').empty();
 
 
 
-   var idSubBab = $('#subBabId').val();
+});
 
-   if (idSubBab=="") {
 
-    alert('Pilih Bab Matapelajaran');
 
-  }else{
+$('#subBabId').change(function(){
 
-    addsoal(idSubBab);
+ $('.soal').empty();
 
-  };
+
+
+ var idSubBab = $('#subBabId').val();
+
+ if (idSubBab=="") {
+
+  swal('Pilih Bab Matapelajaran');
+
+}else{
+
+  addsoal(idSubBab);
+
+};
 
 });
 
@@ -542,9 +540,9 @@ function loadTingkat(){
 
 $('.tambahsoal').click(function(){
 
-   tambahkansoal();
+ tambahkansoal();
 
- });
+});
 
 })};
 
@@ -556,32 +554,32 @@ $('.tambahsoal').click(function(){
 
  function load_pelajaran(tingkatID){
 
-     $.ajax({
+   $.ajax({
 
-      type: "POST",
-      dataType: "json",
+    type: "POST",
+    dataType: "json",
 
-      data: tingkatID.tingkat_id,
+    data: tingkatID.tingkat_id,
 
 
 
-      url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
+    url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
 
-      success: function(data){
+    success: function(data){
 
-       $('#pelajaranID').html('<option value="">Mata Pelajaran</option>');
+     $('#pelajaranID').html('<option value="">Mata Pelajaran</option>');
 
-       $.each(data, function(i, data){
+     $.each(data, function(i, data){
 
-        $('#pelajaranID').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
+      $('#pelajaranID').append("<option value='"+data.id+"'>"+data.keterangan+"</option>");
 
-      });
-
-     }
-
-   });
+    });
 
    }
+
+ });
+
+ }
 
 //##
 
@@ -590,30 +588,17 @@ $('.tambahsoal').click(function(){
 //#buat load bab
 
 function loadbab(mapelID){
-
   $.ajax({
-
     type: "POST",
     dataType: "json",
-
     url: "<?php echo base_url() ?>index.php/videoback/getBab/"+mapelID,
-
     success: function(data){
-
-
-
-    $('#babID').html('<option value="">Bab Pelajaran</option>');
-
-    $.each(data, function(i, data){
-
-      $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
-
-    });
-
-  } 
-
-});
-
+      $('#babID').html('<option value="">Bab Pelajaran</option>');
+      $.each(data, function(i, data){
+        $('#babID').append("<option value='"+data.id+"'>"+data.judulBab+"</option>");
+      });
+    } 
+  });
 }
 
 //##
@@ -623,33 +608,21 @@ function loadbab(mapelID){
 // # load sub bab
 
 function loadsubbab(babID) {
-
-     $.ajax({
-
-      type: "POST",
-      dataType: "json",
-
-      data: babID.bab_id,
-
-      url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
-
-      success: function (data) {
+ $.ajax({
+  type: "POST",
+  dataType: "json",
+  data: babID.bab_id,
+  url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
+  success: function (data) {
 
 
-
-       $('#subBabId').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-
-       $.each(data, function (i, data) {
-
-        $('#subBabId').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
-
-      });
-
-     }
-
-   });
-
-   }
+   $('#subBabId').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+   $.each(data, function (i, data) {
+    $('#subBabId').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
+  });
+ }
+});
+}
 
 // ##
 
@@ -660,27 +633,17 @@ function loadsubbab(babID) {
 //# Load soal ke tabel yang belum ada
 
 function addsoal(subBabId){
-
-    var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
-
-    console.log(url);
-
-    list_soal = $('#oplistsoal').DataTable({ 
-
-     "ajax": {
-
-      "url": url,
-
-      "type": "POST"
-
-    },
-        destroy: true,
-    searching: false
-
-  });
-
-  }
-
+  var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
+  console.log(url);
+  list_soal = $('#oplistsoal').DataTable({ 
+   "ajax": {
+    "url": url,
+    "type": "POST"
+  },
+  destroy: true,
+  searching: false
+});
+}
 // ##
 
 
@@ -688,83 +651,38 @@ function addsoal(subBabId){
 //#menambahkan soal ke paket tertentu.
 
 function tambahkansoal(){
+  var idsoal = [];
+  var idSubBab = $('#subBabId').val();
+  var id_paket =$('#id_paket').val();
 
-    var idsoal = [];
-
-    var idSubBab = $('#subBabId').val();
-
-    var id_paket =$('#id_paket').val();
-
-
-
-    $(':checkbox:checked').each(function(i){
-
-     idsoal[i] = $(this).val();
-
-
-
-   }); 
-
-
-
-    if (idsoal.length > 0) {
-
-      var url = base_url+"index.php/paketsoal/addsoaltopaket";
-
-
-
-      $.ajax({
-
-       url : url,
-
-       type: "POST",
-
-       dataType:'text',
-
-       data: {data:idsoal,
-
-        idSubBab:idSubBab,
-
-        id_paket:id_paket},
-
-
-
-        success: function(data,respone)
-
-        {   
-
-
-
-          reload_tblist();
-
-          $(':checkbox').attr('checked',false);
-
-          $("#emptyinput_op").hide();
-
-          $("#msg_s_soal").show();
-
-
-
-        },
-
-        error: function (jqXHR, textStatus, errorThrown)
-
-        {
-
-         alert('Error adding / update data');
-
-       }
-
-     });
-
-    } else {
-
-      $("#msg_s_soal").hide();
-
-      $("#emptyinput_op").show();
-
-    }
-
+  $(':checkbox:checked').each(function(i){
+   idsoal[i] = $(this).val();
+ }); 
+  if (idsoal.length > 0) {
+    var url = base_url+"index.php/paketsoal/addsoaltopaket";
+    $.ajax({
+     url : url,
+     type: "POST",
+     dataType:'text',
+     data: {data:idsoal,
+      idSubBab:idSubBab,
+      id_paket:id_paket},
+      success: function(data,respone)
+      {   
+        reload_tblist();
+        $(':checkbox').attr('checked',false);
+        $("#emptyinput_op").hide();
+        $("#msg_s_soal").show();
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+       swal('Error adding / update data');
+     }
+   });
+  } else {
+    $("#msg_s_soal").hide();
+    $("#emptyinput_op").show();
+  }
 }
 
 //###
@@ -772,37 +690,25 @@ function tambahkansoal(){
 
 
 //#fungsi hide message empty
-
 function hide_msg_empty(){
-
-   $("#emptyinput_op").hide();
-
- }
-
+ $("#emptyinput_op").hide();
+}
 // ##
 
 
 
 //# fungsi hide msg soal
-
- function hide_msg_s_soal() {
-
+function hide_msg_s_soal() {
   $("#msg_s_soal").hide();
-
 }
-
 // ##
 
 
 
 //#fungsi reload
-
 function reload_tblist(){
-
   tblist_soal.ajax.reload();
-
         list_soal.ajax.reload(); //reload datatable ajax 
-
       }
 
 //##
@@ -812,38 +718,41 @@ function reload_tblist(){
 //# Drop soal from paket.
 
 function drop_soal(id){
-console.log(base_url+"index.php/paketsoal/dropsoalpaket/"+id);
-if(confirm('Are you sure delete this data?')){
-
-  $.ajax({
-
-             url : base_url+"index.php/paketsoal/dropsoalpaket/"+id,
-
-             type: "POST",
-
-             dataType: "TEXt",
-
-             success: function(data)
-             {
-              reload_tblist();
-
+  console.log(base_url+"index.php/paketsoal/dropsoalpaket/"+id);
+  if(confirm('Are you sure delete this data?')){
+    $.ajax({
+     url : base_url+"index.php/paketsoal/dropsoalpaket/"+id,
+     type: "POST",
+     dataType: "TEXt",
+     success: function(data)
+     {
+      reload_tblist();
     },
-
-      error: function (jqXHR, textStatus, errorThrown)
+    error: function (jqXHR, textStatus, errorThrown)
     {
-
-      alert('Error deleting data');
-
+      swal('Error deleting data');
     }
-
-    });
-
+  });
   }
-
 }
 
+
+function cek_soal(){
+  $.ajax({
+   url : base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>,
+   type: "POST",
+   success: function(data){
+      console.log(data);
+  } ,
+  error: function (jqXHR, textStatus, errorThrown)
+  {
+    swal('Error data');
+  }
+});
+}
 //##
 
 loadTingkat();
-
+// console.log(cek_soal());
+cek_soal();
 </script>

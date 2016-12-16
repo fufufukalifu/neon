@@ -146,12 +146,12 @@ function drop_video(videoID){
 			dataType: "TEXT",
 			success: function(data)
 			{
-				console.log('success');
+				swal('success');
 				reload_tblist();
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{
-				alert('Error deleting data');
+				swal('Error deleting data');
 			}
 		});
 	}

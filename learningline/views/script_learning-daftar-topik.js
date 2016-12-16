@@ -54,6 +54,7 @@ function updatestatus(id,status){
 
 //detail topik
 function detail_topik(data){
+
 	$('.detail_learning').modal('show');
 	button = "<a href="+base_url+"learningline/formstep/"+data+" class='close' aria-label='Close' title='Step Baru'><span aria-hidden='true'><i class='ico-plus'></i></span></a>";
 	judul = " <h4 class='modal-title' style='display: inline'>Daftar Step Yang Harus Dikerjakan</h4>";
@@ -96,6 +97,7 @@ function drop_topik(idtopik){
 			success:function(){
 				swal("Terhapus!", "Topik berhasil dihapus.", "success");
 				tabel.ajax.reload(null,false);
+				dataTableLearning.ajax.reload(null,false);
 			},
 			error:function(){
 				sweetAlert("Oops...", "Data gagal terhapus!", "error");

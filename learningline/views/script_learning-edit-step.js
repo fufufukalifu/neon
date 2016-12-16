@@ -14,49 +14,22 @@ $('select[name=select_jenis]').change(function(){
 	}
 });
 
-
-$('.simpan_step').click(function(){
-	var form = {
-		urutan:$('input[name=urutan]').val(),
-		namastep:$('input[name=namastep]').val(),
-		select_jenis:$('select[name=select_jenis]').val()
-	};
-	var url = base_url+"learningline/ajax_insert_line_step/";
-	var data;
-	if (value==1) {
-		data = {
-			videoID:$('input[name=video]:checked').val(),
-			urutan:form.urutan,
-			namastep:form.namastep,
-			select_jenis:form.select_jenis,
-			topikID:<?=$this->uri->segment(3)?>
-		};
-	}else if(value==2){
-		data = {
-			materiID:$('input[name=materi]:checked').val(),
-			urutan:form.urutan,
-			namastep:form.namastep,
-			select_jenis:form.select_jenis,
-			topikID:<?=$this->uri->segment(3)?>
-		};
-	}else if(value==3){
-	}else{
-	}
+function update(data){
+	var url = base_url+"learningline/ajax_update_learning_step/";
 
 	if (data.urutan=="" || data.namastep=="" || data.select_jenist) {
 		swal('Silahkan lengkapi data');
 	}else{
-		console.log(data);
 		$.ajax({
 			data:data,
 			datatType:"text",
 			url:url,
 			type:"POST",
 			success:function(){
-				swal('Topik berhasil ditambahkan');
-				$('.form-line')[0].reset();
+				swal('step berhasil Diperbaharui');
+				// $('.form-line')[0].reset();
 				swal({
-					title: "Topik berhasil ditambahkan!",
+					title: "step berhasil Diperbaharui!",
 					text: "Tambahkan baru, atau selesai?",
 					type: "warning",
 					showCancelButton: true,
@@ -69,7 +42,7 @@ $('.simpan_step').click(function(){
 				function(isConfirm){
 					if (isConfirm) {
 						swal("selesai", "Anda akan dialihkan ke daftar step", "success");
-						window.location.href = base_url+"learningline";
+						// window.location.href = base_url+"learningline";
 					} else {
 						swal("Tambah Data", "silahkan ambahkan data");
 						$('.jenis').html("<h4 class='text-center animation animating pulse'>Pilih Jenis Terlebih Dahulu</h4>");	
@@ -82,6 +55,39 @@ $('.simpan_step').click(function(){
 			}
 		});
 	}
+}
+$('.update_step').click(function(){
+	var form = {
+		urutan:$('input[name=urutan]').val(),
+		namastep:$('input[name=namastep]').val(),
+		select_jenis:$('select[name=select_jenis]').val()
+	};
+	var data;
+	if (value==1) {
+		data = {
+			videoID:$('input[name=video]:checked').val(),
+			urutan:form.urutan,
+			namastep:form.namastep,
+			select_jenis:form.select_jenis,
+			id:$('input[name=id]').val()
+		};
+		update(data);
+	}else if(value==2){
+		data = {
+			materiID:$('input[name=materi]:checked').val(),
+			urutan:form.urutan,
+			namastep:form.namastep,
+			select_jenis:form.select_jenis,
+			id:$('input[name=id]').val()
+		};
+		update(data);
+	}else if(value==3){
+
+	}else{
+		swal('Silahkan Pilih Jenis Step!');
+	}
+
+
 });
 //biar inputin number aja
 $('input[name=urutan]').keyup(function () {

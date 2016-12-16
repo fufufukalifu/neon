@@ -141,7 +141,7 @@ MathJax.Hub.Config({
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
-                            alert('Error deleting data');
+                            swal('Error deleting data');
                             // console.log(jqXHR);
                             // console.log(textStatus);
                             console.log(errorThrown);
@@ -156,7 +156,6 @@ function detailSoal(id_soal) {
         var kelas ='.detail-'+id_soal;
         var data = $(kelas).data('id');
         var jawaban=$('#jawaban-'+id_soal).val();
-        console.log(data);
         $('h3.semibold').html(data.judul_soal);
 
         $('p#dsoal').html(data.soal);
