@@ -8,7 +8,7 @@ $('select[name=select_jenis]').change(function(){
 		load_materi();
 		// $('.jenis').html("<h4 class='text-center animation animating pulse'>Materi</h4>");
 	}else if(value==3){
-		$('.jenis').html("<h4 class='text-center animation animating pulse'>Latihan</h4>");		
+		load_soal();	
 	}else{
 		$('.jenis').html("<h4 class='text-center animation animating pulse'>Error</h4>");
 	}
@@ -40,6 +40,14 @@ $('.simpan_step').click(function(){
 			topikID:<?=$this->uri->segment(3)?>
 		};
 	}else if(value==3){
+		data = {
+			materiID:$('input[name=materi]:checked').val(),
+			urutan:form.urutan,
+			namastep:form.namastep,
+			select_jenis:form.select_jenis,
+			latihanID:<?=$this->session->userdata('id_latihan')?>,
+			topikID:<?=$this->uri->segment(3)?>
+		};
 	}else{
 	}
 
@@ -53,10 +61,10 @@ $('.simpan_step').click(function(){
 			url:url,
 			type:"POST",
 			success:function(){
-				swal('Topik berhasil ditambahkan');
+				swal('Step berhasil ditambahkan');
 				$('.form-line')[0].reset();
 				swal({
-					title: "Topik berhasil ditambahkan!",
+					title: "Step berhasil ditambahkan!",
 					text: "Tambahkan baru, atau selesai?",
 					type: "warning",
 					showCancelButton: true,
@@ -69,7 +77,7 @@ $('.simpan_step').click(function(){
 				function(isConfirm){
 					if (isConfirm) {
 						swal("selesai", "Anda akan dialihkan ke daftar step", "success");
-						window.location.href = base_url+"learningline";
+						window.location.href = base_url+"learningline/step/"+data.topikID;
 					} else {
 						swal("Tambah Data", "silahkan ambahkan data");
 						$('.jenis').html("<h4 class='text-center animation animating pulse'>Pilih Jenis Terlebih Dahulu</h4>");	
@@ -111,7 +119,7 @@ function load_video(){
 	$('.jenis').html("<h4 class='text-center animation animating pulse'>Daftar Video</h4>");
 	$('.jenis').append('<div class="panel panel-default">'+
 		'<div class="panel-heading">'+
-		'<h3 class="panel-title">Tabel Topik Line</h3> '+
+		'<h3 class="panel-title">Tabel Video</h3> '+
 		'<div class="panel-toolbar text-right">'+
 		'</div>'+
 
@@ -158,7 +166,7 @@ function load_materi(){
 	$('.jenis').html("<h4 class='text-center animation animating pulse'>Daftar Materi</h4>");
 	$('.jenis').append('<div class="panel panel-default">'+
 		'<div class="panel-heading">'+
-		'<h3 class="panel-title">Tabel Topik Line</h3> '+
+		'<h3 class="panel-title">Tabel Materi</h3> '+
 		'<div class="panel-toolbar text-right">'+
 		'</div>'+
 
@@ -185,7 +193,6 @@ function load_materi(){
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
 	var url = base_url+"learningline/ajax_get_materi/"+babID;
-	console.log(url);	
 
 	tabel = $('.daftarvideo').DataTable({
 		"ajax": {
@@ -196,6 +203,135 @@ function load_materi(){
 		"info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
 	});
 }
+
+function load_soal(){
+	var tabel;
+	$('.jenis').html("<h4 class='text-center animation animating pulse'>Daftar Soal</h4>");
+	$('.jenis').append('<div class="panel panel-default">'+
+		'<div class="panel-heading">'+
+		'<h3 class="panel-title">Tabel Soal</h3> '+
+		'<div class="panel-toolbar text-right">'+
+		'</div>'+
+
+		'</div>'+
+		'<div class="panel-body">'+
+		'<table class="daftarsoal table table-striped display responsive nowrap" style="font-size: 13px" width=100%>'+
+		'<thead>'+
+		'<tr>'+
+		'<th></th>'+
+		'<th>Judul Soal</th>'+
+		'<th>Sumber</th>'+
+		'<th width="10%">Soal</th>'+
+		'<th width="10%">Kesulitan</th>'+
+
+		'</tr>'+
+		'</thead>'+
+
+		'<tbody>'+
+
+		'</tbody>'+
+		'</table>'+
+		'<div class="panel-footer">'+
+		'<div class="form-group no-border">'+
+		'<label class="col-sm-1 control-label"></label>'+
+		'<div class="col-sm-9">'+
+		'<a onclick="tambahkan_soal()" class="btn btn-primary tambahkan">Tambahkan</a>'+
+		'</div>'+
+		'</div>'+
+		'</div>'+
+		'</div>'+
+
+		'</div>'
+		
+
+
+		);
+
+	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
+	babID = $('input[name=babID]').val();	
+	var url = base_url+"paketsoal/ajax_get_soal_byid/"+babID;
+	console.log(url);
+	tabel = $('.daftarsoal').DataTable({
+		"ajax": {
+			"url": url,
+			"type": "POST"
+		},
+		"emptyTable": "Tidak Ada Data Pesan",
+		"info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+		"pageLength": 5,
+	});
+}
+
+function tambahkan_soal(){
+	var idsoal = [];
+
+	$(':checkbox:checked').each(function(i){
+		idsoal[i] = $(this).val();
+	}); 
+	var idsoal = [];
+	babID = $('input[name=babID]').val();
+	$(':checkbox:checked').each(function(i){
+		idsoal[i] = $(this).val();
+	}); 
+	data=[bab=babID,
+	id_soal=idsoal]
+
+	if (idsoal.length > 0) {
+		var url = base_url+"index.php/latihan/tambah_latihan_ajax_bab_step";
+		$.ajax({
+			url : url,
+			type: "POST",
+			dataType:'text',
+			data: {bab:babID,
+				id_soal:idsoal},
+				success: function(data,respone)
+				{   
+					swal('Berhasil menambahkan soal');
+				},
+				error: function (jqXHR, textStatus, errorThrown)
+				{
+					swal('Error adding / update data');
+				}
+			});
+	} else {
+		swal('error');
+	}
+	console.log(data);
+}
 // load video pada saat dipilih jenis video
 
+
+
+// FUNGSI MELIHAT VIDEO
+function play(data){
+	kelas = '.video-'+data;
+	meta = $(kelas).data('todo');
+	$('.detail_video').modal('show');
+	judul = " <h4 class='modal-title' style='display: inline'>Preview Video "+meta.judulVideo;
+	if (meta.namaFile==null) {
+		console.log(meta.link);
+		video = '<iframe width="100%" height="400"'+
+		'src="'+meta.link+'">'+
+		'</iframe>';
+		$('.detail_video .modal-body').html(video);
+	}else{
+		file = base_url+"assets/video/"+meta.namaFile;
+		video = '<video width="100%" height="400" controls>'+
+		'<source src="'+file+'" type="video/mp4">'+
+		'<source src="movie.ogg" type="video/ogg">Your browser does not support the video tag.'+
+		'</video>';
+		$('.detail_video .modal-body').html(video);
+	}
+	$('.detail_video .modal-header').html(judul);
+}
+
+
+
+// dESTROY KETIKA MODAL DICLOSE
+$('.detail_video').on('hide.bs.modal', function(e) {    
+	var $if = $(e.delegateTarget).find('iframe');
+	var src = $if.attr("src");
+	$if.attr("src", '/empty.html');
+	$if.attr("src", src);
+});
 </script>

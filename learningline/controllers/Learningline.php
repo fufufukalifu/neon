@@ -72,6 +72,30 @@ class Learningline extends MX_Controller {
 	}
 	// DAFTAR TOPIK
 
+	// DAFTAR STEP
+	//AMBIL STEP BY BABID
+	function step($topikID){
+		$metadata = $this->learning_model->get_topik_byid($topikID);
+		// $metadata = $this->learning_model->get_step_by_id_topik($topikID)[0];
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Step",
+			'namaTopik' => $metadata['namaTopik'],
+			'id'=>$metadata['TopikID'],
+			'babID'=>$metadata['babID'],
+			'tingkat' =>$metadata['namaTingkat'],
+			'mapel'=>$metadata['namaMataPelajaran'],
+			'bab'=>$metadata['judulBab'],
+			);
+
+		$data['files'] = array(
+			APPPATH . 'modules/learningline/views/v-daftar-step-single.php',
+			APPPATH . 'modules/learningline/views/script_learning-single-step.js',
+			);
+
+		$this->loadparser($data);
+	}
+	// DAFTAR STEP
+
 
 	//FUNGSI TAMBAHKAN LINE STEP
 	public function formstep($data){
@@ -214,20 +238,35 @@ class Learningline extends MX_Controller {
 	public function ajax_list_get_step($id_topik){
 		$list = $this->learning_model->get_step_by_id_topik($id_topik);
 		$data = array();
-
+		
 		$baseurl = base_url();
 		foreach ( $list as $list_item ) {
 			// $no++;
 			$row = array();
 			$row[] = $list_item['id'];
 			$row[] = $list_item['namaStep'];
-			$row[] = $list_item['jenisStep'];
-			$row[] = '<a class="btn btn-sm btn-warning"  
-			title="Edit" 
-			href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
-			<a class="btn btn-sm btn-success"  title="Detail" data-todo='."'".json_encode($list_item)."'".' onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-file-plus2"></i></a>
-			<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
-
+			if ($list_item['jenisStep']==1) {
+				$row[] = "Video";
+				$row[] = '<a class="btn btn-sm btn-warning"  
+				title="Edit" 
+				href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+				<a class="btn btn-sm btn-success video-"  title="Play" data-todo='."'".json_encode($list_item)."'".' onclick="play('."'".$list_item['id']."'".')"><i class="ico-play"></i></a>
+				<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
+			} else if ($list_item['jenisStep']==2) {
+				$row[] = "Materi";
+				$row[] = '<a class="btn btn-sm btn-warning"  
+				title="Edit" 
+				href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+				<a class="btn btn-sm btn-success"  title="Prevew Materi" data-todo='."'".json_encode($list_item)."'".' onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-eye-open"></i></a>
+				<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
+			}else{
+				$row[] = "Latihan";
+				$row[] = '<a class="btn btn-sm btn-warning"  
+				title="Edit" 
+				href="'.base_url().'learningline/edit_step/'.$list_item['id'].'"><i class="ico-edit"></i></a>
+				<a class="btn btn-sm btn-success"  title="Daftar latihan" data-todo='."'".json_encode($list_item)."'".' onclick="detail_step('."'".$list_item['id']."'".')"><i class="ico-th-list"></i></a>
+				<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_step('."'".$list_item['id']."'".')"><i class="ico-remove"></i></a>';
+			}
 			$data[] = $row;
 
 		}
@@ -289,7 +328,10 @@ class Learningline extends MX_Controller {
 			$row = array();
 			$row[] = $list_item['videoID'];			
 			$row[] = $list_item['judulSubBab'];
-			$row[] = $list_item['judulVideo'];
+
+			$row[] = $list_item['judulVideo'].' <a class="video-'.$list_item['videoID'].'" title="Preview" 
+			data-todo='."'".json_encode($list_item)."'".'
+			onclick="play('."'".$list_item['videoID']."'".') "><i class="ico-play"></i></a>';
 			
 			$row[] = "<input type='radio' name='video' value=".$list_item['videoID']." ' class='switchery' unchecked'>";
 
@@ -387,7 +429,7 @@ function ajax_insert_line_step(){
 		'jenisStep'=>$this->input->post('select_jenis'),
 		'videoID'=>$this->input->post('videoID'),
 		'MateriID'=>$this->input->post('materiID'),
-		'latihanID'=>$this->input->post('namaTopik'),
+		'latihanID'=>$this->input->post('latihanID'),
 		'status'=>1,
 		'urutan'=>$this->input->post('urutan'),
 		'topikID'=>$this->input->post('topikID'),
@@ -417,6 +459,13 @@ function drop_topik(){
 		'id'=>$this->input->post('id')
 		);
 	$this->learning_model->drop_topik($data);
+}
+
+function drop_step(){
+	$data = array(
+		'id'=>$this->input->post('id')
+		);
+	$this->learning_model->drop_step($data);
 }
 
 

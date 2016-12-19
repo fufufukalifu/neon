@@ -183,4 +183,40 @@ function update_learning_bab(id,status){
 }
 /*## -----------------------------Update Status bab Learning-------------------------------##*/
 
+
+
+/*## ----------------------------drop Step Learning-------------------------------##*/
+function drop_step(idtopik){
+	url = base_url+"learningline/drop_step";
+	swal({
+		title: "Yakin akan hapus Topik?",
+		text: "Jika anda menghapus topik, step juga akan terhapus",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Ya,Tetap hapus!",
+		closeOnConfirm: false
+	},
+	function(){
+		var datas = {id:idtopik};
+		$.ajax({
+			dataType:"text",
+			data:datas,
+			type:"POST",
+			url:url,
+			success:function(){
+				swal("Terhapus!", "Topik berhasil dihapus.", "success");
+				reload();
+			},
+			error:function(){
+				sweetAlert("Oops...", "Data gagal terhapus!", "error");
+			dataTableLearning.ajax.reload(null,false);
+
+			}
+
+		});
+	});
+}
+/*## ----------------------------drop Step Learning-------------------------------##*/
+
 </script>

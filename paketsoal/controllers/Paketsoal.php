@@ -9,6 +9,8 @@ class paketsoal extends MX_Controller
 		$this->load->library( 'parser' );
 		$this->load->model( 'mpaketsoal' );
 		$this->load->model( 'banksoal/mbanksoal' );
+		$this->load->model( 'latihan/mlatihan' );
+
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
 		$this->load->model('templating/mtemplating');
@@ -394,5 +396,47 @@ class paketsoal extends MX_Controller
 		echo json_encode( $output );
 	
 	}
+
+		#
+	function ajax_get_soal_byid( $bab ) {
+
+		$list = $soal=$this->mlatihan->get_soal_bybab( $bab );
+		$data = array();
+
+
+		//mengambil nilai list
+		$baseurl = base_url();
+		foreach ( $list as $list_soal ) {
+			$n='1';
+			$row = array();
+
+			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+								<input type='checkbox' name="."soal".$n." id="."soal".$list_soal['id_soal']." value=".$list_soal['id_soal'].">
+								<label for="."soal".$list_soal['id_soal'].">&nbsp;&nbsp;</label>
+							</span>";
+			$row[] = $list_soal['judul_soal'];
+			$row[] = $list_soal['sumber'];
+
+			$row[] = $list_soal['soal'];
+
+			if ($list_soal['kesulitan']=='0') {
+		$row[] = "Mudah";
+	} else if($list_soal['kesulitan']=='1'){
+		$row[] = "Sedang";
+	}else{
+		$row[] = "Sulit";
+	}
+			$data[] = $row;
+			$n++;
+
+		}
+
+		$output = array(
+			"data"=>$data,
+		);
+		echo json_encode( $output );
+		
+	}
+
 }
 ?>

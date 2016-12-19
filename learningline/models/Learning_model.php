@@ -41,6 +41,8 @@ class Learning_model extends CI_Model{
 		$this->db->from('`tb_line_topik` tp');
 		$this->db->join('`tb_line_step` ls','tp.`id`=ls.`topikID`');
 		$this->db->where('tp.id',$data);
+		$this->db->where('ls.status',1);
+
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -112,6 +114,12 @@ class Learning_model extends CI_Model{
 		$this->db->where('id', $data['id']);
 		$this->db->set('status', 0);
 		$this->db->update('tb_line_topik');
+	}
+	#dropstep
+	function drop_step($data){
+		$this->db->where('id', $data['id']);
+		$this->db->set('status', 0);
+		$this->db->update('tb_line_step');
 	}
 
 	// update line bab aktiv
