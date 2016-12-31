@@ -317,6 +317,140 @@ class Mmodulonline extends CI_Model {
         return $query->result_array()[0];
     }
 
+    /*
+     * get rows from the posts table
+     */
+    function getRows($params = array()){
+
+        // $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran');
+        // $this->db->from('tb_modul as mdl');
+        // $this->db->where('mdl.status','1');
+
+        // $query = $this->db->get();
+        // return $query->result_array();
+
+        $this->db->select('*');
+        $this->db->from('tb_modul');
+
+        //filter data by searched keywords
+        if(!empty($params['search']['keywords'])){
+            $this->db->like('judul',$params['search']['keywords']);
+        }
+
+        //sort data by ascending or desceding order
+        if(!empty($params['search']['sortBy'])){
+            switch ($params['search']['sortBy']) {
+                case 'date_created':
+                    $this->db->order_by($params['search']['sortBy'],'desc');
+                    break;
+                case 'asc':
+                    $this->db->order_by('judul','asc');
+                    break;
+                case 'desc':
+                    $this->db->order_by('judul','desc');
+                    break;
+                echo $output; // The output should be: 0.7
+            }
+        }else{
+            $this->db->order_by('id','desc');
+        }
+
+        //set start and limit
+        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit'],$params['start']);
+        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit']);
+        }
+        //get records
+        $query = $this->db->get();
+        //return fetched data
+        return ($query->num_rows() > 0)?$query->result_array():FALSE;
+    }
+    
+    public function tambahdownload($id,$temp){
+
+        $this->db->set('download',$temp);
+
+        $this->db->where('id', $id);
+
+        $this->db->update('tb_modul');
+    }
+
+    public function ambilnilai($id)
+    {
+        $this->db->select('download');
+        $this->db->from('tb_modul');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        return $query->result_array()[0];
+    }
+
+     public function get_modulteratas(){
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,mdl.download');
+        $this->db->from('tb_modul as mdl');
+        $this->db->where('mdl.status','1');
+        $this->db->order_by('download desc'); 
+        $this->db->limit(2);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function modulsd(){
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,tp.id');
+        $this->db->from('tb_modul as mdl');
+        $this->db->join('tb_tingkat-pelajaran as tp','tp.id = mdl.id_tingkatpelajaran');
+        $this->db->where('mdl.status','1');
+        $this->db->where('tp.tingkatID','1');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+      function getRowssd($params = array()){
+
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,tp.id');
+        $this->db->from('tb_modul as mdl');
+        $this->db->join('tb_tingkat-pelajaran as tp','tp.id = mdl.id_tingkatpelajaran');
+        $this->db->where('mdl.status','1');
+        $this->db->where('tp.tingkatID','1');
+        
+        //filter data by searched keywords
+        if(!empty($params['search']['keywords'])){
+            $this->db->like('judul',$params['search']['keywords']);
+            $this->db->where('mdl.status','1');
+            $this->db->where('tp.tingkatID','1');
+        }
+
+        //sort data by ascending or desceding order
+        if(!empty($params['search']['sortBy'])){
+            switch ($params['search']['sortBy']) {
+                case 'date_created':
+                    $this->db->order_by($params['search']['sortBy'],'desc');
+                    break;
+                case 'asc':
+                    $this->db->order_by('mdl.judul','asc');
+                    break;
+                case 'desc':
+                    $this->db->order_by('mdl.judul','desc');
+                    break;
+                echo $output; // The output should be: 0.7
+            }
+        }else{
+            $this->db->order_by('mdl.id','desc');
+        }
+
+        //set start and limit
+        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit'],$params['start']);
+        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit']);
+        }
+        //get records
+
+        $query = $this->db->get();
+        //return fetched data
+        return ($query->num_rows() > 0)?$query->result_array():FALSE;
+    }
+
 
 }
 
