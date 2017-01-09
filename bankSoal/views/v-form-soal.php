@@ -934,11 +934,12 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                       </label>
 
-                                      <label class="btn btn-teal btn-outline" id="m-vido">
+                                      <!-- di hilangkan dulu untuk sementara -->
+                                      <!-- <label class="btn btn-teal btn-outline" id="m-vido">
 
                                         <input type="radio" name="opmedia" value="video" autocomplete="off"> Video
 
-                                      </label>
+                                      </label> -->
 
                                  </div>
 

@@ -98,7 +98,7 @@ class Msiswa extends CI_Model {
         SELECT ss.`id` FROM tb_siswa ss
         JOIN `tb_hakakses-to` ho ON
         ho.`id_siswa` = ss.`id`
-        WHERE ho.`id_tryout` = $id)
+        WHERE ho.`id_tryout` = $id) AND s.`status`=1
         ";
         $result = $this->db->query($query);
         return $result->result_array();
