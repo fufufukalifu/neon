@@ -85,8 +85,8 @@
                                 <!-- <th>Create By</th> -->
                                 <th>Publish</th>
                                 <th>Download</th>
-                                <th></th>
-                                <th></th>
+                                <th>Edit</th>
+                                <th>Hapus</th>
                                 <!-- <th></th>
                                 <th></th>
                                 <th></th>
