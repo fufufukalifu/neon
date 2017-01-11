@@ -1,7 +1,26 @@
 <script>
 var value;
-$('select[name=select_jenis]').change(function(){
-	value = $('select[name=select_jenis]').val();
+
+
+
+
+$(document).ready(function(){
+
+
+	relasi = $('input[name=relasi]').val();
+	value = $('input[name=jenis_step]').val();
+
+	if (value==1) {
+	$('select[name=select_jenis]').html("<option value='1'>Video</option>");
+	}else if(value==2){
+	$('select[name=select_jenis]').html("<option value='2'>Materi</option>");
+	}else{
+	$('select[name=select_jenis]').html("<option value='3'>Latihan</option>");
+
+	}
+
+
+	// 
 	if (value==1) {
 		load_video();
 	}else if(value==2){
@@ -12,7 +31,7 @@ $('select[name=select_jenis]').change(function(){
 	}else{
 		$('.jenis').html("<h4 class='text-center animation animating pulse'>Error</h4>");
 	}
-});
+})
 
 function update(data){
 	var url = base_url+"learningline/ajax_update_learning_step/";
@@ -144,7 +163,7 @@ function load_video(){
 
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
-	var url = base_url+"learningline/ajax_get_video/"+babID;
+	var url = base_url+"learningline/ajax_get_video_edit/"+babID+"/"+relasi;
 	console.log(url);	
 
 	tabel = $('.daftarvideo').DataTable({
@@ -155,6 +174,7 @@ function load_video(){
 		"emptyTable": "Tidak Ada Data Pesan",
 		"info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
 	});
+
 }
 // load video pada saat dipilih jenis video
 
@@ -190,8 +210,8 @@ function load_materi(){
 
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
-	var url = base_url+"learningline/ajax_get_materi/"+babID;
-	console.log(url);	
+	var url = base_url+"learningline/ajax_get_materi_edit/"+babID+"/"+relasi;
+	console.log(url);
 
 	tabel = $('.daftarvideo').DataTable({
 		"ajax": {
@@ -203,5 +223,26 @@ function load_materi(){
 	});
 }
 // load video pada saat dipilih jenis video
+$(".video_checkbox").change(function(){
+		alert(',asdu');
+});
 
+// the selector will match all input controls of type :checkbox
+// and attach a click event handler 
+/*$("input['name=video']").on('click', function() {
+  // in the handler, 'this' refers to the box clicked on
+  var $box = $(this);
+  alert('nasyj');
+  if ($box.is(":checked")) {
+    // the name of the box is retrieved using the .attr() method
+    // as it is assumed and expected to be immutable
+    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    // the checked state of the group/box on the other hand will change
+    // and the current value is retrieved using .prop() method
+    $(group).prop("checked", false);
+    $box.prop("checked", true);
+  } else {
+    $box.prop("checked", false);
+  }
+});*/
 </script>

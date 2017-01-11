@@ -1,4 +1,18 @@
 <script>
+$('.lihat_step').click(function(){
+	$('.daftar_step').modal('show');
+	var url = base_url+"learningline/ajax_list_get_step/"+<?=$this->uri->segment(3)?>;
+	tabel = $('.daftarsteptable').DataTable({
+		"ajax": {
+			"url": url,
+			"type": "POST"
+		},
+		destroy: true,
+		searching: false,
+		"emptyTable": "Tidak Ada Data Pesan",
+		"info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+	});
+})
 var value;
 $('select[name=select_jenis]').change(function(){
 	value = $('select[name=select_jenis]').val();
@@ -6,11 +20,10 @@ $('select[name=select_jenis]').change(function(){
 		load_video();
 	}else if(value==2){
 		load_materi();
-		// $('.jenis').html("<h4 class='text-center animation animating pulse'>Materi</h4>");
 	}else if(value==3){
 		load_soal();	
 	}else{
-		$('.jenis').html("<h4 class='text-center animation animating pulse'>Error</h4>");
+		$('.jenis').html("<h4 class='text-center animation animating pulse'>Silahkan pilih jenis</h4>");
 	}
 });
 
@@ -19,7 +32,12 @@ $('.simpan_step').click(function(){
 	var form = {
 		urutan:$('input[name=urutan]').val(),
 		namastep:$('input[name=namastep]').val(),
-		select_jenis:$('select[name=select_jenis]').val()
+		select_jenis:$('select[name=select_jenis]').val(),
+		jumlah_benar:$('input[name=jumlahBenar]').val(),
+		jumlah_soal_sedang:$('input[name=sedang]').val(),
+		jumlah_soal_mudah:$('input[name=mudah]').val(),
+		jumlah_soal_sulit:$('input[name=sulit]').val(),
+		status_depedensi:$('input[name=dependensi]').val()
 	};
 	var url = base_url+"learningline/ajax_insert_line_step/";
 	var data;
@@ -29,7 +47,9 @@ $('.simpan_step').click(function(){
 			urutan:form.urutan,
 			namastep:form.namastep,
 			select_jenis:form.select_jenis,
-			topikID:<?=$this->uri->segment(3)?>
+			topikID:<?=$this->uri->segment(3)?>,
+			status_depedensi:form.status_depedensi
+
 		};
 	}else if(value==2){
 		data = {
@@ -37,24 +57,31 @@ $('.simpan_step').click(function(){
 			urutan:form.urutan,
 			namastep:form.namastep,
 			select_jenis:form.select_jenis,
-			topikID:<?=$this->uri->segment(3)?>
+			topikID:<?=$this->uri->segment(3)?>,
+			status_depedensi:form.status_depedensi
+
 		};
 	}else if(value==3){
 		data = {
-			materiID:$('input[name=materi]:checked').val(),
+			latihanID:"ada",
 			urutan:form.urutan,
 			namastep:form.namastep,
 			select_jenis:form.select_jenis,
-			latihanID:<?=$this->session->userdata('id_latihan')?>,
-			topikID:<?=$this->uri->segment(3)?>
+			topikID:<?=$this->uri->segment(3)?>,
+			jumlah_benar:form.jumlah_benar,
+			jumlah_soal_sedang:form.jumlah_soal_sedang,
+			jumlah_soal_mudah:form.jumlah_soal_mudah,
+			jumlah_soal_sulit:form.jumlah_soal_sulit,
+			status_depedensi:form.status_depedensi
+
 		};
+		console.log(data);
 	}else{
 	}
 
-	if (data.urutan=="" || data.namastep=="" || data.select_jenist) {
+	if (data.urutan=="" || data.namastep=="" || data.select_jenis=="") {
 		swal('Silahkan lengkapi data');
 	}else{
-		console.log(data);
 		$.ajax({
 			data:data,
 			datatType:"text",
@@ -81,6 +108,7 @@ $('.simpan_step').click(function(){
 					} else {
 						swal("Tambah Data", "silahkan ambahkan data");
 						$('.jenis').html("<h4 class='text-center animation animating pulse'>Pilih Jenis Terlebih Dahulu</h4>");	
+						console.log(data);
 					}
 				});
 
@@ -92,7 +120,7 @@ $('.simpan_step').click(function(){
 	}
 });
 //biar inputin number aja
-$('input[name=urutan]').keyup(function () {
+$('.nomor').keyup(function () {
 	if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
 		this.value = this.value.replace(/[^0-9\.]/g, '');
 	}
@@ -147,7 +175,6 @@ function load_video(){
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
 	var url = base_url+"learningline/ajax_get_video/"+babID;
-	console.log(url);	
 
 	tabel = $('.daftarvideo').DataTable({
 		"ajax": {
@@ -207,6 +234,28 @@ function load_materi(){
 function load_soal(){
 	var tabel;
 	$('.jenis').html("<h4 class='text-center animation animating pulse'>Daftar Soal</h4>");
+	$('.jenis').append('<div  class="form-group">'+
+		'<label class="col-sm-3 control-label">Minimal Jumlah Benar</label>'+
+		'<div class="col-sm-8">'+
+		'<input type="text" placeholder="Jumlah Soal Benar" class="form-control nomor" name="jumlahBenar">'+
+		'</div>'+
+		'</div>');
+
+	$('.jenis').append('<div  class="form-group">'+
+		'<label class="col-sm-3 control-label">Pemilihan Soal</label>'+
+		'<div class="col-sm-3">'+
+		'<input type="text" placeholder="Jumlah Soal Mudah" class="form-control nomor" name="mudah">'+
+		'</div>'+
+
+		'<div class="col-sm-3">'+
+		'<input type="text" placeholder="Jumlah Soal Sedang" class="form-control nomor" name="sedang">'+
+		'</div>'+
+
+		'<div class="col-sm-3">'+
+		'<input type="text" placeholder="Jumlah Soal Sulit" class="form-control nomor" name="sulit">'+
+		'</div>'+
+		'</div>');
+
 	$('.jenis').append('<div class="panel panel-default">'+
 		'<div class="panel-heading">'+
 		'<h3 class="panel-title">Tabel Soal</h3> '+
@@ -223,6 +272,7 @@ function load_soal(){
 		'<th>Sumber</th>'+
 		'<th width="10%">Soal</th>'+
 		'<th width="10%">Kesulitan</th>'+
+		'<th width="5%">Aksi</th>'+
 
 		'</tr>'+
 		'</thead>'+
@@ -250,7 +300,6 @@ function load_soal(){
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
 	var url = base_url+"paketsoal/ajax_get_soal_byid/"+babID;
-	console.log(url);
 	tabel = $('.daftarsoal').DataTable({
 		"ajax": {
 			"url": url,
@@ -263,6 +312,7 @@ function load_soal(){
 }
 
 function tambahkan_soal(){
+	latSession = "";
 	var idsoal = [];
 
 	$(':checkbox:checked').each(function(i){
@@ -273,30 +323,30 @@ function tambahkan_soal(){
 	$(':checkbox:checked').each(function(i){
 		idsoal[i] = $(this).val();
 	}); 
-	data=[bab=babID,
-	id_soal=idsoal]
-
+	
+	data = {
+		bab:babID,id_soal:idsoal
+	};
 	if (idsoal.length > 0) {
 		var url = base_url+"index.php/latihan/tambah_latihan_ajax_bab_step";
 		$.ajax({
 			url : url,
 			type: "POST",
-			dataType:'text',
-			data: {bab:babID,
-				id_soal:idsoal},
-				success: function(data,respone)
-				{   
-					swal('Berhasil menambahkan soal');
-				},
-				error: function (jqXHR, textStatus, errorThrown)
-				{
-					swal('Error adding / update data');
-				}
-			});
+			dataType:'TEXT',
+			data: data,
+			success: function()
+			{   
+				swal('Berhasil menambahkan soal');
+
+			},
+			error: function ()
+			{
+				swal('Error adding / update data');
+			}
+		});
 	} else {
-		swal('error');
+		swal('Silahkan Pilih Soal!');
 	}
-	console.log(data);
 }
 // load video pada saat dipilih jenis video
 
@@ -325,8 +375,6 @@ function play(data){
 	$('.detail_video .modal-header').html(judul);
 }
 
-
-
 // dESTROY KETIKA MODAL DICLOSE
 $('.detail_video').on('hide.bs.modal', function(e) {    
 	var $if = $(e.delegateTarget).find('iframe');
@@ -334,4 +382,15 @@ $('.detail_video').on('hide.bs.modal', function(e) {
 	$if.attr("src", '/empty.html');
 	$if.attr("src", src);
 });
+
+function detail_soal(data){
+	console.log(data);
+	kelas = '.soal-'+data;
+	meta = $(kelas).data('todo');
+	$('.mdetailsoal').modal('show');
+	$('.mdetailsoal h3.semibold').html(meta.judul_soal);
+
+	$('.mdetailsoal p#dsoal').html(meta.soal);
+	$('.mdetailsoal p#djawaban').html(meta.jawaban);
+}
 </script>

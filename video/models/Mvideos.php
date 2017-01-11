@@ -17,6 +17,8 @@ class Mvideos extends CI_Model
     return $query->result_array(); 
   }
 
+  
+
     //get nama subab berdasarkan id video
   function get_nama_sub_by_id_video($id_video){
     $this->db->select( 'judulSubBab,subbab.id, babID');

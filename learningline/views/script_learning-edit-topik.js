@@ -1,7 +1,7 @@
 <script>
 $('.update_topik').click(function(){
 	data = 
-	{babID:$('input[name=select_bab]').val(),
+	{babID:$('#bab').val(),
 	statusLearning:1,
 	deskripsi:$('textarea[name=deskripsi]').val(),
 	namaTopik:$('input[name=nama_topik]').val(),
@@ -19,8 +19,7 @@ if (data.statusLearning=="kosongundefined" || data.namaTopik=="") {
 		url:url,
 		type:"POST",
 		success:function(){
-			swal('Topik berhasil ditambahkan');
-			// $('.form-topik')[0].reset();
+			swal('Topik berhasil diperbaharui');
 			swal({
 				title: "Topik berhasil Diperbaharui!",
 				text: "Edit lagi, atau selesai?",
@@ -28,14 +27,14 @@ if (data.statusLearning=="kosongundefined" || data.namaTopik=="") {
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Selesai",
-				cancelButtonText: "Tambah",
+				cancelButtonText: "Edit",
 				closeOnConfirm: false,
 				closeOnCancel: false
 			},
 			function(isConfirm){
 				if (isConfirm) {
 					swal("selesai", "Anda akan dialihkan ke daftar topik", "success");
-					// window.location.href = base_url+"learningline";
+					window.location.href = base_url+"learningline/topik/"+data.babID;
 				} else {
           // swal("Cancelled", "Your imaginary file is safe :)", "error");
       }

@@ -136,11 +136,10 @@ class Latihan extends MX_Controller {
         public function tambah_latihan_ajax_bab_step() {
         // uuid untuk soal
         $uuid_latihan = uniqid();
-        $bab = $this->input->post['bab'];
-        $idsoal = $this->input->post['id_soal'];
-
+        $bab = $this->input->post('bab');
+        $idsoal = $this->input->post('id_soal');
         // $bab = 82;
-        // $idsoal = ['26','27'];
+        // $idsoal = ['24','25'];
 
         // $jumlah_soal = $_POST['jumlahsoal'];
         // $kesulitan = $_POST['kesulitan'];
