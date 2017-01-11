@@ -138,13 +138,13 @@ class Mmodulonline extends CI_Model {
     }
     public function ch_soal($data) {
         $this->db->set($data['dataSoal']);
-        $this->db->where('UUID', $data['UUID']);
+        $this->db->where('uuid', $data['uuid']);
         $this->db->update('tb_modul');
     }
 
-    public function get_onesoal($UUID) {
-        $this->db->where('UUID', $UUID);
-        $this->db->select('*')->from('tb_banksoal');
+    public function get_onesoal($uuid) {
+        $this->db->where('uuid', $uuid);
+        $this->db->select('*')->from('tb_modul');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -160,8 +160,8 @@ class Mmodulonline extends CI_Model {
 
     public function get_oldgambar_soal($UUID)
     {
-        $this->db->where('UUID', $UUID);
-        $this->db->select('id_soal,gambar_soal')->from('tb_banksoal');
+        $this->db->where('uuid', $UUID);
+        $this->db->select('id,url_file')->from('tb_modul');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -201,7 +201,7 @@ class Mmodulonline extends CI_Model {
     public function get_allsoal()
     {
 
-        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish');
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran');
         $this->db->from('tb_modul as mdl');
         $this->db->where('mdl.status','1');
 
@@ -307,16 +307,148 @@ class Mmodulonline extends CI_Model {
         return $query->result()[0]->aliasTingkat;
     }
     // mengetahui info tingkat soal
-    public function get_info_soal($subBabID)
+    public function get_info_soal($tingkatID)
     {
-        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp,bab.id as id_bab, judulBab, subbab.id as id_subbab ,judulSubBab,');
-         $this->db->from('tb_tingkat tkt' );
-         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
-        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
-        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
-        $this->db->where('subbab.id',$subBabID);
+        $this->db->select('tkt.id as id_tingkat ,aliasTingkat,tp.id as id_mp,tp.keterangan as mp');
+        $this->db->from('tb_tingkat tkt' );
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->where('tp.id',$tingkatID);
         $query = $this->db->get();
         return $query->result_array()[0];
+    }
+
+    /*
+     * get rows from the posts table
+     */
+    function getRows($params = array()){
+
+        // $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran');
+        // $this->db->from('tb_modul as mdl');
+        // $this->db->where('mdl.status','1');
+
+        // $query = $this->db->get();
+        // return $query->result_array();
+
+        $this->db->select('*');
+        $this->db->from('tb_modul');
+
+        //filter data by searched keywords
+        if(!empty($params['search']['keywords'])){
+            $this->db->like('judul',$params['search']['keywords']);
+        }
+
+        //sort data by ascending or desceding order
+        if(!empty($params['search']['sortBy'])){
+            switch ($params['search']['sortBy']) {
+                case 'date_created':
+                    $this->db->order_by($params['search']['sortBy'],'desc');
+                    break;
+                case 'asc':
+                    $this->db->order_by('judul','asc');
+                    break;
+                case 'desc':
+                    $this->db->order_by('judul','desc');
+                    break;
+                echo $output; // The output should be: 0.7
+            }
+        }else{
+            $this->db->order_by('id','desc');
+        }
+
+        //set start and limit
+        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit'],$params['start']);
+        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit']);
+        }
+        //get records
+        $query = $this->db->get();
+        //return fetched data
+        return ($query->num_rows() > 0)?$query->result_array():FALSE;
+    }
+    
+    public function tambahdownload($id,$temp){
+
+        $this->db->set('download',$temp);
+
+        $this->db->where('id', $id);
+
+        $this->db->update('tb_modul');
+    }
+
+    public function ambilnilai($id)
+    {
+        $this->db->select('download');
+        $this->db->from('tb_modul');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        return $query->result_array()[0];
+    }
+
+     public function get_modulteratas(){
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,mdl.download');
+        $this->db->from('tb_modul as mdl');
+        $this->db->where('mdl.status','1');
+        $this->db->order_by('download desc'); 
+        $this->db->limit(2);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function modulsd(){
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,tp.id');
+        $this->db->from('tb_modul as mdl');
+        $this->db->join('tb_tingkat-pelajaran as tp','tp.id = mdl.id_tingkatpelajaran');
+        $this->db->where('mdl.status','1');
+        $this->db->where('tp.tingkatID','1');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+      function getRowssd($params = array()){
+
+        $this->db->select('mdl.id, mdl.judul, mdl.deskripsi, mdl.url_file, mdl.publish,mdl.uuid,mdl.id_tingkatpelajaran,tp.id');
+        $this->db->from('tb_modul as mdl');
+        $this->db->join('tb_tingkat-pelajaran as tp','tp.id = mdl.id_tingkatpelajaran');
+        $this->db->where('mdl.status','1');
+        $this->db->where('tp.tingkatID','1');
+        
+        //filter data by searched keywords
+        if(!empty($params['search']['keywords'])){
+            $this->db->like('judul',$params['search']['keywords']);
+            $this->db->where('mdl.status','1');
+            $this->db->where('tp.tingkatID','1');
+        }
+
+        //sort data by ascending or desceding order
+        if(!empty($params['search']['sortBy'])){
+            switch ($params['search']['sortBy']) {
+                case 'date_created':
+                    $this->db->order_by($params['search']['sortBy'],'desc');
+                    break;
+                case 'asc':
+                    $this->db->order_by('mdl.judul','asc');
+                    break;
+                case 'desc':
+                    $this->db->order_by('mdl.judul','desc');
+                    break;
+                echo $output; // The output should be: 0.7
+            }
+        }else{
+            $this->db->order_by('mdl.id','desc');
+        }
+
+        //set start and limit
+        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit'],$params['start']);
+        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit']);
+        }
+        //get records
+
+        $query = $this->db->get();
+        //return fetched data
+        return ($query->num_rows() > 0)?$query->result_array():FALSE;
     }
 
 

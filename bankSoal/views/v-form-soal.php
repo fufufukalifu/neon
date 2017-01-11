@@ -9,15 +9,6 @@
 
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
-<!-- Strat Script Matjax -->
-     <script type="text/x-mathjax-config">
-       MathJax.Hub.Config({
-         showProcessingMessages: false,
-         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
-       });
-     </script>
-<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
-
 <script>
 var Preview = {
   delay: 150,        // delay after keystroke before updating
@@ -934,11 +925,12 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                                       </label>
 
-                                      <label class="btn btn-teal btn-outline" id="m-vido">
+                                      <!-- di hilangkan dulu untuk sementara -->
+                                      <!-- <label class="btn btn-teal btn-outline" id="m-vido">
 
                                         <input type="radio" name="opmedia" value="video" autocomplete="off"> Video
 
-                                      </label>
+                                      </label> -->
 
                                  </div>
 

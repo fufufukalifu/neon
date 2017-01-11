@@ -1,135 +1,3 @@
-<!-- Start pengecekan jika pilihan 5 atau 4 pilihan -->
-<?php 
-
-if (!isset($piljawaban['0']['id_pilihan']) || !isset($piljawaban['1']['id_pilihan']) || !isset($piljawaban['2']['id_pilihan']) || !isset($piljawaban['3']['id_pilihan'])) {
-    $piljawaban['0']['id_pilihan']="";
-    $piljawaban['0']['jawaban']="";
-    $piljawaban['0']['gambar']="";
-    // 
-      $piljawaban['1']['id_pilihan']="";
-    $piljawaban['1']['jawaban']="";
-    $piljawaban['1']['gambar']="";
-    // ====
-
-      $piljawaban['2']['id_pilihan']="";
-    $piljawaban['2']['jawaban']="";
-    $piljawaban['2']['gambar']="";
-
-      $piljawaban['3']['id_pilihan']="";
-    $piljawaban['3']['jawaban']="";
-    $piljawaban['3']['gambar']="";
-
-      $piljawaban['4']['id_pilihan']="";
-    $piljawaban['4']['jawaban']="";
-    $piljawaban['4']['gambar']="";
-}
-if (!isset($piljawaban['4']['id_pilihan'])) {
-    $piljawaban['4']['id_pilihan']="";
-    $piljawaban['4']['jawaban']="";
-    $piljawaban['4']['gambar']="";
-} 
-
-
-?>
-<!-- Strat Script Matjax -->
-     <script type="text/x-mathjax-config">
-       MathJax.Hub.Config({
-         showProcessingMessages: false,
-         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
-       });
-     </script>
-<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
-
-<script>
-var Preview = {
-  delay: 150,        // delay after keystroke before updating
-
-  preview: null,     // filled in by Init below
-  buffer: null,      // filled in by Init below
-
-  timeout: null,     // store setTimout id
-  mjRunning: false,  // true when MathJax is processing
-  mjPending: false,  // true when a typeset has been queued
-  oldText: null,     // used to check if an update is needed
-
-  //
-  //  Get the preview and buffer DIV's
-  //
-  Init: function () {
-    this.preview = document.getElementById("MathPreview");
-    this.buffer = document.getElementById("MathBuffer");
-  },
-
-  //
-  //  Switch the buffer and preview, and display the right one.
-  //  (We use visibility:hidden rather than display:none since
-  //  the results of running MathJax are more accurate that way.)
-  //
-  SwapBuffers: function () {
-    var buffer = this.preview, preview = this.buffer;
-    this.buffer = buffer; this.preview = preview;
-    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
-    preview.style.position = ""; preview.style.visibility = "";
-  },
-
-  //
-  //  This gets called when a key is pressed in the textarea.
-  //  We check if there is already a pending update and clear it if so.
-  //  Then set up an update to occur after a small delay (so if more keys
-  //    are pressed, the update won't occur until after there has been 
-  //    a pause in the typing).
-  //  The callback function is set up below, after the Preview object is set up.
-  //
-  Update: function () {
-    if (this.timeout) {clearTimeout(this.timeout)}
-    this.timeout = setTimeout(this.callback,this.delay);
-  },
-
-  //
-  //  Creates the preview and runs MathJax on it.
-  //  If MathJax is already trying to render the code, return
-  //  If the text hasn't changed, return
-  //  Otherwise, indicate that MathJax is running, and start the
-  //    typesetting.  After it is done, call PreviewDone.
-  //  
-  CreatePreview: function () {
-    Preview.timeout = null;
-    if (this.mjPending) return;
-    var text = document.getElementById("MathInput").value;
-    if (text === this.oldtext) return;
-    if (this.mjRunning) {
-      this.mjPending = true;
-      MathJax.Hub.Queue(["CreatePreview",this]);
-    } else {
-      this.buffer.innerHTML = this.oldtext = text;
-      this.mjRunning = true;
-      MathJax.Hub.Queue(
- ["Typeset",MathJax.Hub,this.buffer],
- ["PreviewDone",this]
-      );
-    }
-  },
-
-  //
-  //  Indicate that MathJax is no longer running,
-  //  and swap the buffers to show the results.
-  //
-  PreviewDone: function () {
-    this.mjRunning = this.mjPending = false;
-    this.SwapBuffers();
-  }
-
-};
-
-//
-//  Cache a callback to the CreatePreview action
-//
-Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
-Preview.callback.autoReset = true;  // make sure it can run more than once
-
-</script>
-     <!-- END Script Matjax -->
-<!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
 <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
@@ -149,30 +17,31 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       </div>
       <div class="modal-body">
         <h3 class="text-center">Silahkan cek type extension gambar! </h3>
-        <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5>
+        <h5 class="text-center">Type yang bisa di upload hanya ".doc", ".docx", ".ppt", ".pptx", ".pdf"</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+                <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/modulonline/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Update Soal</h3>
                         <!-- untuk menampung bab id -->
-                        <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
-                        <input type="text" name="soalID" value="<?=$banksoal['id_soal'];?>" hidden="true">
-                        <input type="text" name="UUID" value="<?=$banksoal['UUID'];?>"  hidden="true">
+                        <!-- <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true"> -->
+                        <input type="text" name="soalID" value="<?=$banksoal['id'];?>" hidden="true">
+                        <input type="text" name="UUID" value="<?=$banksoal['uuid'];?>"  hidden="true">
                         <!-- Start old info data soal -->
                         <input type="text" id="oldtkt" value="<?=$infosoal['id_tingkat'];?>" hidden="true">
                         <input type="text"  id="oldmp"  value="<?=$infosoal['id_mp'];?>" hidden="true">
-                        <input type="text" id="oldbab"  value="<?=$infosoal['id_bab'];?>" hidden="true">
-                        <input type="text" id="oldsub"  value="<?=$infosoal['id_subbab'];?>" hidden="true">
+                        <!-- <input type="text" id="oldbab"  value="<?=$infosoal['id_bab'];?>" hidden="true"> -->
+                        <!-- <input type="text" id="oldsub"  value="<?=$infosoal['id_subbab'];?>" hidden="true"> -->
                         <!-- END old info data soal -->
                     </div>               
                     <div class="panel-body">
@@ -187,8 +56,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                           <select class="form-control" name="tingkat" id="tingkat">
 
                             <option>-Pilih Tingkat-</option>
-
-
 
                           </select>
 
@@ -210,416 +77,113 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                       </div>
 
-
-
-                      <div class="form-group jenissoal">
-
-                        <label class="col-sm-1 control-label">Bab</label>
-
-                        <div class="col-sm-4">
-
-                          <select class="form-control" name="bab" id="bab">
-
-
-
-                          </select>
-
-                        </div>
-
-
-
-                        <label class="col-sm-2 control-label">Subab</label>
-
-                        <div class="col-sm-4">
-
-                          <select class="form-control" name="subBabID" id="subbab">
-
-
-
-                          </select>
-
-                          <span class="text-danger"><?php echo form_error('subBab'); ?></span>
-
-                        </div>
-
-                      </div>
-
                       <!-- END Drop Down depeden -->
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Judul Soal</label>
+                            <label class="control-label col-sm-2">Judul Modul</label>
                             <div class="col-sm-8">
-                                <input type="text" name="judul" value="<?=$banksoal['judul_soal'];?>" class="form-control">
+                                <input type="text" name="judul" value="<?=$banksoal['judul'];?>" class="form-control">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Kesulitan</label>
-                            <div class="col-sm-8">
-                                    <input type="text" name="tampkesulitan" value="<?=$banksoal['kesulitan'];?>" id='tampkesulitan' hidden="true">
-                                <select name="kesulitan" class="form-control">
-                                    <option value="">--Silahkan Pilih Tingkat Kesulitan--</option>
-                                    <option value="1" id="lvl1">Mudah</option>
-                                    <option value="2" id="lvl2">Sedang</option>
-                                    <option value="3" id="lvl3">Sulit</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Sumber</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="sumber" value="<?=$banksoal['sumber'];?>" class="form-control">
-                            </div>
-                        </div>
+
                          <div class="form-group">
-                            <label class="control-label col-sm-2">Gambar Soal</label>
-                             <div class="col-sm-8 " >
-                                <div class="col-sm-12">
-                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/soal/<?=$banksoal['gambar_soal'];?>" alt="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameSoal"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeSoal"></span></h6> 
-                                    </div>
-                                </div>
 
-                                <div class="col-sm-12">
-                                    <label for="fileSoal" class="btn btn-sm btn-default">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
+                            <label class="control-label col-sm-2">Deskripsi Modul</label>
 
-                            <label class="control-label col-sm-2">Jenis Editor</label>
-
-                            <div class="col-sm-8">
-
-                                <div class="btn-group" data-toggle="buttons" >
-
-                                      <label class="btn btn-teal btn-outline active " id="in-soal">
-
-                                        <input type="radio" name="options"  autocomplete="off" checked="true"> Input Soal
-
-                                      </label>
-
-                                      <label class="btn btn-teal btn-outline" id="pr-rumus">
-
-                                        <input type="radio" name="options"   autocomplete="off"> Rumus Matematika
-
-                                      </label>
-
-                                 </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                           <!-- Start Editor Soal -->
-                           <div id="editor-soal">
-                            <label class="control-label col-sm-2">Soal</label>
-                             <div class="col-sm-10">
-
-                                 <textarea  name="editor1" class="form-control" id="">
-
-                                     <?=$banksoal['soal'];?>
-
-                                 </textarea>
-
-                             </div>
-                            </div>
-                            <!-- End Editor Soal -->
-                            <!-- Start Math jax -->
-                            <div id="editor-rumus" hidden="true">
-                              <label class="control-label col-sm-2">Buat rumus</label>
-                              <div class="col-sm-10">
-
-                               <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" >
-                               </textarea>
-
-                              </div>
-                              <label class="control-label col-sm-2"></label>
-                               <div class="col-sm-10">
-                               <p>
-                               Configured delimiters:
-                                <ul>
-                               <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
-                               <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
-                               <li>Asciimath: <code>`...`</code>.</li>
-                               </ul>
-                               </p>
-                               </div>
-                               
-                              <label class="control-label col-sm-2"></label>
-                              <div class="col-sm-10">
-                              <label class="control-label" >Preview is shown here:</label>
-                               <div class="form-control" id="MathPreview" ></div>
-                               <div class="form-control" id="MathBuffer" style=" 
-                               visibility:hidden; position:absolute; top:0; left: 0"></div>
-                              </div>
-                            </div>
-                            <script>
-                            Preview.Init();
-                            </script>
-                            <!-- End MathJax -->
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Jumlah Pilihan</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group" data-toggle="buttons" >
-                                      <label class="btn btn-teal btn-outline " id="empatpil">
-                                        <input type="radio" name="opjumlah" value="4" autocomplete="off" id="radio4"> 4 Pilihan
-                                      </label>
-                                      <label class="btn btn-teal btn-outline" id="limapil">
-                                        <input type="radio" name="opjumlah"  value="5" autocomplete="off" id="radio5"> 5 Pilihan
-                                      </label>
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Jenis Pilihan</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group" data-toggle="buttons" >
-                                      <label class="btn btn-teal btn-outline active " id="text">
-                                        <input type="radio" name="options" value="text" autocomplete="off" checked="true"> Text
-                                      </label>
-                                      <label class="btn btn-teal btn-outline" id="gambar">
-                                        <input type="radio" name="options"  value="gambar" autocomplete="off"> Gambar
-                                      </label>
-                                 </div>
-                            </div>
-                        </div>
-                        <!-- Start input jawaban A -->
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Pilihan A</label>
                             <!-- Start input text A -->
+
                             <div class="col-sm-8 piltext">
-                                <input type="text" name="idpilA" value="<?=$piljawaban['0']['id_pilihan'];?>" hidden="true">
-                               <textarea name="a"  class="form-control"> <?=$piljawaban['0']['jawaban'];?> </textarea>
+
+                               <textarea name="deskripsi"  class="form-control">  <?=$banksoal['deskripsi'];?> </textarea>
+
                             </div>
-                            <!-- END input text A -->
-                            <!-- Start input gambar A -->
-                            <div class="col-sm-8 pilgambar" hidden="true">
-                                <div class="col-sm-12">
-                                     <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['0']['gambar'];?>" alt="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameA"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeA"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeA"></span></h6> 
-                                    </div>
-                                </div>
 
-                                <div class="col-sm-12">
-                                    <label for="fileA" class="btn btn-sm btn-default ">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                            <!-- END input Gambar A -->
-                        </div>
-                        <!-- END input jawaban A -->
+                          </div>
 
-                        <!-- Start input jawaban B -->
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Pilihan B</label>
-                            <!-- Start input text B -->
-                            <div class="col-sm-8 piltext">
-                                <input type="text" name="idpilB" value="<?=$piljawaban['1']['id_pilihan'];?>" hidden="true">
-                               <textarea name="b" class="form-control"> <?=$piljawaban['1']['jawaban'];?></textarea>
-                            </div>
-                            <!-- END input text B -->
-                            <div class="col-sm-8 pilgambar" hidden="true">
-                                <div class="col-sm-12">
-                                     <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['1']['gambar'];?>" alt="" width="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameB"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeB"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeB"></span></h6> 
-                                    </div>
-                                </div>
+                           <div class="form-group">
+                           <label class="control-label col-sm-2">Publish File</label>
 
-                                <div class="col-sm-12">
-                                    <label for="fileB" class="btn btn-sm btn-default ">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END input jawaban  -->
+                            <div class="col-sm-3">
 
-                        <!-- Start input jawaban C -->
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Pilihan C</label>
-                            <!-- Start input text C -->
-                            <div class="col-sm-8 piltext" >
-                                <input type="text" value="<?=$piljawaban['2']['id_pilihan'];?>" name="idpilC" hidden="true">
-                               <textarea name="c" class="form-control"> <?=$piljawaban['2']['jawaban'];?> </textarea>
-                            </div>
-                            <!-- END input text C -->
-                            <!-- Start input gambar C -->
-                            <div class="col-sm-8 pilgambar" hidden="true">
-                                <div class="col-sm-12">
-                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['2']['gambar'];?>" alt="" width="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameC"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeC"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeC"></span></h6> 
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <label for="fileC" class="btn btn-sm btn-default">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                            <!-- END input Gambar C -->                       
-                        </div>
-                        <!-- END input Jawaban C -->
-
-                        <!-- Start input jawaban D -->
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Pilihan D</label>
-                            <!-- Start input text D -->
-                            <div class="col-sm-8 piltext" >
-                                <input type="text" name="idpilD" value="<?=$piljawaban['3']['id_pilihan'];?>" hidden="true">
-                               <textarea name="d" class="form-control"> <?=$piljawaban['3']['jawaban'];?></textarea>
-                            </div>
-                            <!-- END input text D -->
-                            <!-- Start input gambar D -->
-                            <div class="col-sm-8 pilgambar" hidden="true">
-                                <div class="col-sm-12">
-                                     <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['3']['gambar'];?>" alt="" width="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameD"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeD"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeD"></span></h6> 
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <label for="fileD" class="btn btn-sm btn-default ">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                            <!-- END input Gambar D -->                       
-                        </div>
-                        <!-- END input Jawaban D -->
-                        
-                        <!-- Start input jawaban E -->
-                        <div class="form-group" id="pilihan">
-                            <label class="control-label col-sm-2">Pilihan E</label>
-                            <!-- Start input text E -->
-                            <div class="col-sm-8 piltext" >
-
-                                <input type="text" name="idpilE" value="<?=$piljawaban['4']['id_pilihan'];?>" hidden="true" id="pilE">
-                               <textarea name="e" class="form-control"> <?=$piljawaban['4']['jawaban'];?></textarea>
-                            </div>
-                            <!-- END input text E -->
-                            <!-- Start input gambar E -->
-                            <div class="col-sm-8 pilgambar" hidden="true">
-                                <div class="col-sm-12">
-                                     <img id="previewE" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['4']['gambar'];?>" alt="" width="" />
-                                 </div>
-                                         
-                                <div class="col-sm-12">
-                                    <div class="col-md-5 left"> 
-                                            <h6>Name: <span id="filenameE"></span></h6> 
-                                    </div> 
-                                    <div class="col-md-4 left"> 
-                                            <h6>Size: <span id="filesizeE"></span>Kb</h6> 
-                                    </div> 
-                                    <div class="col-md-3 bottom"> 
-                                            <h6>Type: <span id="filetypeE"></span></h6> 
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <label for="fileE" class="btn btn-sm btn-default">
-                                        Pilih Gambar
-                                    </label>
-                                    <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
-                                </div>
-                            </div>
-                            <!-- END input Gambar C -->                       
-                        </div>
-                        <!-- END input Jawaban E -->
-
-
-                  
-                       
-
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Jawaban Benar</label>
-                            <div class="col-sm-8">
-                                <input type="text" id="tampjawaban" value="<?=$banksoal['jawaban'];?>" hidden="true"> 
-                                <select name="jawaban" class="form-control" id="opjawaban">
-                                     <option value="">--Silahkan Pilih Jawaban Benar--</option>
-                                    <option value="A" >A</option>
-                                    <option value="B" >B</option>
-                                    <option value="C" >C</option>
-                                    <option value="D" >D</option>
-                                    <option value="E" id="pilihanop">E</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-1 col-sm-offset-4">
                                 <div class="checkbox custom-checkbox">  
                                     <input type="text" id="tamppublish" value="<?=$banksoal['publish'];?>" hidden="true">
                                     <input type="checkbox" name="publish" id="gift" value="1">  
-                                    <label for="gift"> Publish?</label>   
+
+                                    <label for="gift"><small>&nbsp;&nbsp;Check = Yes</small></label>   
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-sm-offset-1">
-                                <div class="checkbox custom-checkbox">
-                                    <input type="text" id="tamprandom" value="<?=$banksoal['random'];?>" hidden="true">  
-                                    <input type="checkbox" name="random" id="idrand" value="1">  
-                                    <label for="idrand">Random?</label>   
+                        </div>    
+                       
+                        <?php
+                            if ($banksoal['url_file'] == null) { ?>
+                                 <div class="form-group">
+                                    <label class="control-label col-sm-2">File Modul</label>
+                                        <div class="col-sm-8"> 
+                                             <div class="col-sm-12">
+                                                 <div class="col-md-5 left"> 
+                                                        <h6>Name: <span id="filenameSoal"></span></h6> 
+                                                </div> 
+                                                <div class="col-md-4 left"> 
+                                                        <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
+                                                </div> 
+                                                <div class="col-md-3 bottom"> 
+                                                        <h6>Type: <span id="filetypeSoal"></span></h6> 
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-12">
+                                                <input class="btn btn-default" required="true" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
+                                            </div>
+                                        </div>
+                                 </div>
+                         <?php       
+                            }else{ ?>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">File Modul</label>
+                                        <div class="col-sm-8"> 
+                                             <div class="col-md-5 left"> 
+                                            <h6><span id="filenameSoal1"><?=$banksoal['url_file'];?></span></h6> 
+                                            </div> 
+                                            <div class="col-md-4 left"> 
+                                                    <a href="<?= base_url('assets/modul/'.$banksoal['url_file'])?>" class="btn btn-sm btn-default" target="_blank" >Download</a>
+                                            </div> 
+                                        </div>
+                                 </div>
+
+                        <?php
+                            }
+                        ?>
+                          <div class="form-group">
+                            <label class="control-label col-sm-2">File Baru</label>
+                             <div class="col-sm-8 " >                                            
+                               
+                                    <div class="col-sm-12">
+
+                                    <div class="col-md-5 left"> 
+
+                                            <h6>Name: <span id="filenameSoal"></span></h6> 
+
+                                    </div> 
+
+                                    <div class="col-md-4 left"> 
+
+                                            <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
+
+                                    </div> 
+
+                                    <div class="col-md-3 bottom"> 
+
+                                            <h6>Type: <span id="filetypeSoal"></span></h6> 
+
+                                    </div>
+
                                 </div>
+                                      
+
+                                <div class="col-sm-12">
+                                    <input class="btn btn-default" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
+                                </div>                                                            
                             </div>
                         </div>
+                        
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -633,49 +197,20 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         <!--/ END row -->
     </div>
 
-    <script>
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace( 'editor1' );
-    </script>
-
     <!-- script untuk option hide and show -->
     <script type="text/javascript">
        
         $(document).ready(function(){
         
-
             //set opton dropdown mp
               loadPelajaran($('#oldtkt').val());
             // #########################
 
-            // set option dropdown bab
-              load_bab($('#oldmp').val());
-            // ##################
-            // set optopn dropdown sub
-            load_sub_bab($('#oldbab').val());
-            // ###############
 
-          // set option kesulitan ################
-           var tampkesulitan=$('#tampkesulitan').val();
-          if (tampkesulitan ==3) {
-            $('#lvl3').attr('selected','selected');
-          }else if (tampkesulitan==2) {
-            $('#lvl2').attr('selected','selected');
-          }else if (tampkesulitan==1) {
-            $('#lvl1').attr('selected','selected');
-          }else{
-
-          }
+     
           // ########################
 
-          // Set option Jawaban ###########
-          var tampjawaban =  $('#tampjawaban').val();
-          if (tampjawaban != '') {
-              var tamid ='#opjawaban option[value='+tampjawaban+']';
-             $(tamid).attr('selected','selected');
-          }else{
-          }
+      
           // set option publish################
            var tamppublish=$('#tamppublish').val();
           if (tamppublish ==1) {
@@ -684,66 +219,11 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
           }
           // ########################
 
-          // set option random################
-           var tamprandom=$('#tamprandom').val();
-          if (tamprandom ==1) {
-             $('#idrand').attr('checked','checked');
-          }else{
-          }
+    
           // ########################
 
-          // set option jum piljawab################
-           var pilE=$('#pilE').val();
-          if (pilE=='') {
-            // hide input pilihan E
-            $("#pilihan").hide();
-            $("#pilihanop").hide();
-            $("#empatpil").addClass('active');
-            $("#radio4").attr('checked',true);
-            
-          }else{
-            $("#limapil").addClass('active');
-            $("#radio5").attr('checked',true);
-          }
-          // ########################
 
-          // Start event untuk jenis editor
-            $("#in-soal").click(function(){
-
-                $("#editor-soal").show();
-
-                 $("#editor-rumus").hide();
-
-            });
-
-            $("#pr-rumus").click(function(){
-
-                $("#editor-rumus").show();
-
-                 $("#editor-soal").hide();
-
-            });
-           // End event untuk jenis editor
-            // Strat  event untuk pilihan jenis input  
-            $("#text").click(function(){
-                $(".piltext").show();
-                 $(".pilgambar").hide();
-            });
-            $("#gambar").click(function(){
-                $(".pilgambar").show();
-                $(".piltext").hide();     
-            });
-            //END  event untuk pilihan jenis input  
-            // Strat  event untuk jumlah pilihan  
-           $("#empatpil").click(function(){   
-                 $("#pilihan").hide();
-                  $("#pilihanop").hide();
-            });
-            $("#limapil").click(function(){
-                $("#pilihan").show();
-                 $("#pilihanop").show();
-            });
-            // END  event untuk jumlah pilihan
+       
 
         });
     </script>
@@ -885,7 +365,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <!-- End script untuk priview gambar soal -->
 <!-- start script js validation extension -->
 <script type="text/javascript">
- var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+ var _validFileExtensions = [".doc", ".docx", ".ppt", ".pptx", ".pdf"];    
 function ValidateSingleInput(oInput) {
     if (oInput.type == "file") {
         var sFileName = oInput.value;
@@ -1049,14 +529,6 @@ function ValidateSingleInput(oInput) {
 
             })
 
-
-
-            $('#bab').change(function () {
-
-                load_sub_bab($('#bab').val());
-
-            })
-
         })
 
     }
@@ -1099,77 +571,8 @@ function ValidateSingleInput(oInput) {
 
     //buat load bab
 
-    function load_bab(mapelID) {
-        var oldbab = $('#oldbab').val();
-        $.ajax({
-
-            type: "POST",
-            dataType: "json",
-            data: mapelID.mapel_id,
-
-            url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
-
-            success: function (data) {
-
-
-
-                $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-
-                //console.log(data);
-
-                $.each(data, function (i, data) {
-                    if (data.id==oldbab) {
-                       $('#bab').append("<option value='" + data.id + "' selected>" + data.judulBab + "</option>");
-                    } else {
-                       $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-                    }
-                   
-
-                });
-
-            }
-
-
-
-        });
-
-    }
-
-    //load sub bab
-
-    function load_sub_bab(babID) {
-      var oldsub = $('#oldsub').val();
-        $.ajax({
-
-            type: "POST",
-            dataType: "json",
-            data: babID.bab_id,
-
-            url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
-
-            success: function (data) {
-
-                $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-
-                console.log(data);
-
-                $.each(data, function (i, data) {
-
-                   if (data.id==oldsub) {
-                     $('#subbab').append("<option value='" + data.id + "' selected>" + data.judulSubBab + "</option>");
-                   } else {
-                     $('#subbab').append("<option value='" + data.id + "' >" + data.judulSubBab + "</option>");
-                   }
-
-                });
-
-            }
-
-
-
-        });
-
-    }
+    
+    
 
 
 

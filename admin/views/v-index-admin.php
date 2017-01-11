@@ -31,7 +31,7 @@
   <!-- Application stylesheet : mandatory -->
   <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/stylesheet/layout.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/stylesheet/uielement.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/stylesheet/uielement.css') ?>">
   <!--/ Application stylesheet -->
   <!-- END STYLESHEETS -->
 

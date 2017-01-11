@@ -8,17 +8,129 @@ class Modulonline extends MX_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Mmodulonline');
+        $this->load->library('Ajax_pagination');
+        $this->perPage = 6;
+
         $this->load->model('templating/Mtemplating');
+        $this->load->model( 'matapelajaran/mmatapelajaran' );
+        $this->load->model( 'tingkat/MTingkat' );
         $this->load->library('parser');
     }
 
-    public function index() {
+    // public function index() {
        
-        $data['files'] = array(
-            APPPATH . 'modules/modulonline/views/test.php',
-        );
-        $data['judul_halaman'] = "test";
-        $this->load->view('templating/index-b-guru', $data);
+    //     $data['files'] = array(
+    //         APPPATH . 'modules/modulonline/views/test.php',
+    //     );
+    //     $data['judul_halaman'] = "test";
+    //     $this->load->view('templating/index-b-guru', $data);
+    // }
+
+    public function index(){
+        $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRows());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
+        
+        //load the view
+        $this->load->view('modulonline/index', $data);
+    }
+    
+    function ajaxPaginationData(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRows($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRows($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
+    }
+
+    function ajaxPaginationDataSD(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssd($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationDataSD';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRowssd($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
     }
 
     public function listmp() {
@@ -101,30 +213,6 @@ class Modulonline extends MX_Controller {
                     </a>';
                     
 
-            // $row[] = $kesulitan;
-            // if ($valSoal == true) {
-            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            // } else if (strlen($soal)>160 ) {
-            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
-            //   // data-id='."'".json_encode($list_video)."'".'
-            //   // onclick="detail('."'".$list_video['videoID']."'".')"
-            //   // >
-            //   // <i class=" ico-play3"></i>
-            //   //   </a> 
-            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            // } else {
-            //     $row[] = $soal;
-            // }
-            
-           
-           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-         
-
-           //  // $row[] ='
-           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-           //  //         </span>';
             $row[] = '
             <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
@@ -184,30 +272,6 @@ class Modulonline extends MX_Controller {
                     </a>';
                     
 
-            // $row[] = $kesulitan;
-            // if ($valSoal == true) {
-            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            // } else if (strlen($soal)>160 ) {
-            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
-            //   // data-id='."'".json_encode($list_video)."'".'
-            //   // onclick="detail('."'".$list_video['videoID']."'".')"
-            //   // >
-            //   // <i class=" ico-play3"></i>
-            //   //   </a> 
-            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            // } else {
-            //     $row[] = $soal;
-            // }
-            
-           
-           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-         
-
-           //  // $row[] ='
-           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-           //  //         </span>';
             $row[] = '
             <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
@@ -292,40 +356,15 @@ class Modulonline extends MX_Controller {
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
                                 <label for="ckRand" >&nbsp;&nbsp;</label>
                     </span>';
-            $row[] = '<a href="'.base_url("assets/modul/".$list_soal['url_file']).'" class="btn btn-sm btn-primary">
+            $row[] = '<a href="'.base_url("assets/modul/".$list_soal['url_file']).'" class="btn btn-sm btn-primary" target="_blank">
                                 <i class="ico-download"></i>
                     </a>';
                     
-
-            // $row[] = $kesulitan;
-            // if ($valSoal == true) {
-            //     $row[] = '<a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Soal</a>';
-            // } else if (strlen($soal)>160 ) {
-            //   // <a class="btn btn-sm btn-primary detail-'.$list_video['videoID'].'"  title="Play"
-            //   // data-id='."'".json_encode($list_video)."'".'
-            //   // onclick="detail('."'".$list_video['videoID']."'".')"
-            //   // >
-            //   // <i class=" ico-play3"></i>
-            //   //   </a> 
-            //      $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
-            // } else {
-            //     $row[] = $soal;
-            // }
-            
-           
-           //  $row[] = $jawabanBenar.'<input type="text" id="jawaban-'.$id_soal.'" value="'.$jawabanBenar.'" hidden="true">';
-         
-
-           //  // $row[] ='
-           //  //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-           //  //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-           //  //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-           //  //         </span>';
             $row[] = '
             <form action="'.base_url().'index.php/modulonline/formUpdate" method="get">
 
-                                                
-                                                <input type="text" name="subBab" value="'.$list_soal['id'].'" hidden="true">
+                                                <input type="text" name="uuid" value="'.$list_soal['uuid'].'"  hidden="true">
+                                                <input type="text" name="id_tingkatmapel" value="'.$list_soal['id_tingkatpelajaran'].'" hidden="true">
                                                 <button type="submit" title="edit" class="btn btn-sm btn-warning"><i class="ico-file5"></i></button>
 
             </form>';
@@ -390,7 +429,7 @@ class Modulonline extends MX_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $mapelID = htmlspecialchars($this->input->post('mataPelajaran'));
-        $gambarSoal = $this->input->post('gambarSoal');
+        // $gambarSoal = $this->input->post('gambarSoal');
         //syarat pengisian form upload soal
         $this->form_validation->set_rules('judul', 'Judul Modul', 'trim|required|is_unique[tb_modul.judul]');
            $UUID = uniqid();
@@ -402,15 +441,16 @@ class Modulonline extends MX_Controller {
            $dataSoal = array(
                'judul' => $judul,
                'deskripsi' => $deskripsi,
-               // 'url_file' => $,
+               // 'url_file' => $gambarSoal,
                'publish' => $publish,
                'UUID' => $UUID,
                'create_by' => $create_by,
                'id_tingkatpelajaran' => $mapelID
            );
 
+           // var_dump($dataSoal);
            //call fungsi insert soal
-           $this->Mmodulonline->insert_soal($dataSoal);
+            $this->Mmodulonline->insert_soal($dataSoal);
             $this->up_img_soal($UUID);
            // // mengambil id soal untuk fk di tb_piljawaban
            // $data['tb_banksoal'] = $this->Mmodulonline->get_soalID($UUID)[0];
@@ -426,155 +466,68 @@ class Modulonline extends MX_Controller {
         $config['upload_path'] = './assets/modul/';
         $config['allowed_types'] = 'doc|docx|ppt|pptx|pdf';
         $config['max_size'] = 10000;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
+        // $config['max_width'] = 1024;
+        // $config['max_height'] = 768;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
         $this->upload->do_upload($gambar);
         $file_data = $this->upload->data();
         $file_name = $file_data['file_name'];
-        $data['UUID']=$UUID;
+        $data['uuid']=$UUID;
         $data['dataSoal']=  array(
             'url_file' => $file_name);
 
+        // print_r($data);
             $this->Mmodulonline->ch_soal($data);
     }
-    //function upload gambar pembahasan
-    public function up_img_pembahasan($UUID)
-    {   
-         // echo "img pembahasan";
-         $configpmb['upload_path'] = './assets/image/pembahasan/';
-        $configpmb['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
-        $configpmb['max_size'] = 100;
-        $configpmb['max_width'] = 1024;
-        $configpmb['max_height'] = 768;
-        $this->load->library('upload', $configpmb);
-        $this->upload->initialize($configpmb);
-        $gambar = "gambarPembahasan";
-        $this->upload->do_upload($gambar);
-        $file_data = $this->upload->data();
-        $file_name = $file_data['file_name'];
-        $data['UUID']=$UUID;
-        $data['dataSoal']=  array(
-            'gambar_pembahasan' => $file_name
-            );
+   
 
-            $this->Mmodulonline->ch_soal($data);
-    }
-    public function up_video_pembahasan($UUID)
-    {
-        // echo "video pembahasan";
-          $configvideo['upload_path'] = './assets/video/videoPembahasan';
-        $configvideo['allowed_types'] = 'mp4';
-        $configvideo['max_size'] = 90000;
-        $this->load->library('upload', $configvideo);
-        $this->upload->initialize($configvideo);
-             // pengecekan upload
-        if (!$this->upload->do_upload('video')) {
-                // jika upload video gagal
-            $error = array('error' => $this->upload->display_errors());
-
-        } else {
-                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
-              $file_data = $this->upload->data();
-           $file_name = $file_data['file_name'];
-        $data['UUID']=$UUID;
-        $data['dataSoal']=  array(
-            'video_pembahasan' => $file_name,
-            'pembahasan'=>'');
-
-            $this->Mmodulonline->ch_soal($data);
-
-
-           
-        }
-    }
     public function ch_img_soal($UUID) {
-        $config['upload_path'] = './assets/image/soal/';
-        $config['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
-        $config['max_size'] = 100;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
+        $config['upload_path'] = './assets/modul/';
+        $config['allowed_types'] = 'doc|docx|ppt|pptx|pdf';
+        $config['max_size'] = 10000;
+        // $config['max_width'] = 1024;
+        // $config['max_height'] = 768;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
         $oldgambar = $this->Mmodulonline->get_oldgambar_soal($UUID);
         if ($this->upload->do_upload($gambar)) {
          foreach ($oldgambar as $rows) {
-            unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
+            unlink(FCPATH . "./assets/modul/" . $rows['url_file']);
          }
          $file_data = $this->upload->data();
          $file_name = $file_data['file_name'];
-         $data['UUID']=$UUID;
+         $data['uuid']=$UUID;
          $data['dataSoal']=  array(
-          'gambar_soal' => $file_name);
+          'url_file' => $file_name);
          $this->Mmodulonline->ch_soal($data);
         }
         // $this->Mbanksoal->insert_gambar($datagambar);
-    }
-    //function untuk mengupload gambar pilihan jawaban
-    public function up_img_jawaban($soalID) {
-        $config2['upload_path'] = './assets/image/jawaban/';
-        $config2['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
-        $config2['max_size'] = 100;
-        $config2['max_width'] = 1024;
-        $config2['max_height'] = 768;
-        $this->load->library('upload', $config2);
-        $this->upload->initialize($config2);
-        $n = '1';
-        $datagambar = array();
-        for ($x = 1; $x <= 5; $x++) {
-            $gambar = "gambar" . $n;
-            
-            if ($this->upload->do_upload($gambar)) {
-              $file_data = $this->upload->data();
-              $file_name = $file_data['file_name'];
-              if ($n == '1') {
-                  $pilihan = "A";
-              } else if ($n == '2') {
-                  $pilihan = "B";
-              } else if ($n == '3') {
-                  $pilihan = "C";
-              } else if ($n == '4') {
-                  $pilihan = 'D';
-              } else {
-                  $pilihan = 'E';
-              }
-
-              $datagambar[] = array('pilihan' => $pilihan,
-                'gambar' => $file_name,
-                'id_soal' => $soalID);
-            } else {
-              # code...
-            }
-            $n++;
-        }
-
-        $this->Mmodulonline->insert_gambar($datagambar);
     }
 
     #ENDFunction untuk form upload soal#
     #START Function untuk form update bank soal #
 
     public function formUpdate() {
-        $subBabID =htmlspecialchars($this->input->get('subBab'));
-        $data['subBabID'] = $subBabID;
-        $data['infosoal']=$this->Mmodulonline->get_info_soal($subBabID);
-        $UUID = htmlspecialchars($this->input->get('UUID'));
-
+        $tingkatmapel =htmlspecialchars($this->input->get('id_tingkatmapel'));
+        // echo "<script> console.log($tingkatmapel)</script>";
+        $data['id_tingkatpelajaran'] = $tingkatmapel;
+        $data['infosoal']=$this->Mmodulonline->get_info_soal($tingkatmapel);
+        $uuid = htmlspecialchars($this->input->get('uuid'));
         //get data soan where==UUID
-        $data['banksoal'] = $this->Mmodulonline->get_onesoal($UUID)[0];
-        $id_soal = $data['banksoal']['id_soal'];
+        $data['banksoal'] = $this->Mmodulonline->get_onesoal($uuid)[0];
+        // $id_soal = $data['modul']['id'];
             //get piljawaban == id soal
-        $data['piljawaban'] = $this->Mmodulonline->get_piljawaban($id_soal);
-        $data['judul_halaman'] = "Bank Soal";
+        // $data['piljawaban'] = $this->Mmodulonline->get_piljawaban($id_soal);
+        $data['judul_halaman'] = "Modul Online";
         $data['files'] = array(
-            APPPATH . 'modules/banksoal/views/v-update-soal.php',
+            APPPATH . 'modules/modulonline/views/v-update-soal.php',
             );
         #START cek hakakses#
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
             // jika admin
-            if ($data['subBabID'] == null || $UUID == null) {
+            if ($data['id_tingkatpelajaran'] == null || $UUID == null) {
                 redirect(site_url('admin'));
             } else {
                 $this->parser->parse('admin/v-index-admin', $data);
@@ -582,7 +535,7 @@ class Modulonline extends MX_Controller {
             
         } elseif($hakAkses=='guru'){
             // jika guru
-            if ($data['subBabID'] == null || $UUID == null) {
+            if ($data['id_tingkatpelajaran'] == null || $uuid == null) {
                 redirect(site_url('guru/dashboard/'));
             } else {
                 $this->parser->parse('templating/index-b-guru', $data);
@@ -599,225 +552,32 @@ class Modulonline extends MX_Controller {
     public function updatebanksoal() {
        
         #Start post data soal#
-        $judul_soal = htmlspecialchars($this->input->post('judul'));
-        $jum_pilihan = htmlspecialchars($this->input->post('opjumlah'));
-        $options = htmlspecialchars($this->input->post('options'));
-        $soal = ($this->input->post('editor1'));
-        $soalID = htmlspecialchars($this->input->post('soalID'));
-        $UUID = htmlspecialchars($this->input->post('UUID'));
-        $subBabID = htmlspecialchars($this->input->post('subBabID'));
-        $jawaban = htmlspecialchars($this->input->post('jawaban'));
-        $kesulitan = htmlspecialchars($this->input->post('kesulitan'));
-        $sumber = htmlspecialchars($this->input->post('sumber'));
+        $id_tingkatpelajaran = htmlspecialchars($this->input->post('mataPelajaran'));
+        $judul = htmlspecialchars($this->input->post('judul'));
+        $deskripsi = htmlspecialchars($this->input->post('deskripsi'));
         $publish = htmlspecialchars($this->input->post('publish'));
-         $random = htmlspecialchars($this->input->post('random'));
+
+        $UUID = htmlspecialchars($this->input->post('UUID'));
         $create_by = $this->session->userdata['id'];
 
         #END post data soal#
+        $data['uuid'] = $UUID;
 
-        #Start post data pilihan jawaban#
-        $idA = htmlspecialchars($this->input->post('idpilA'));
-        $idB = htmlspecialchars($this->input->post('idpilB'));
-        $idC = htmlspecialchars($this->input->post('idpilC'));
-        $idD = htmlspecialchars($this->input->post('idpilD'));
-        $idE = htmlspecialchars($this->input->post('idpilE'));
-        $data['a'] = $this->input->post('a');
-        $data['b'] = $this->input->post('b');
-        $data['c']= $this->input->post('c');
-        $data['d'] = $this->input->post('d');
-        $data['e'] = $this->input->post('e');
-        #END post data pilihan jawaban#
-        //keterangan *kesulitan index 1-3
-// var_dump(jum_pilihan);
-
-        $data['UUID'] = $UUID;
         $data['dataSoal'] = array(
-            'judul_soal' => $judul_soal,
-            'soal' => $soal,
-            'jawaban' => $jawaban,
-            'sumber' => $sumber,
-            'kesulitan' => $kesulitan,
+            'judul' => $judul,
+            'deskripsi' => $deskripsi,
+            // 'jawaban' => $jawaban,
             'publish' => $publish,
             'create_by' => $create_by,
-            'random' => $random
+            'id_tingkatpelajaran' =>  $id_tingkatpelajaran
         );
 
         //call fungsi insert soal
         $this->Mmodulonline->ch_soal($data);
         $this->ch_img_soal($UUID);
-
-        #data yg dilempar ke function count_pilihan#
-        // data['id_soal'] digunakan untuk function pengecekan jumlah pilihan
-        $data['id_soal']=$soalID;
-        $data['jum_pilihan']=$jum_pilihan;
-       
-        ######################
-        // cek jumlah pilihan jawaban di db
-       $this->count_pilihan($data);
-        #Start pengecekan jenis inputan jawaban#
-        //pengkondisian untuk jenis inputan text atau gambar
-        if ($options == 'text') {
-            #jika inputan text
-              if ($jum_pilihan=='4') {
-
-               $data['dataJawaban']  = array(
-                  array(
-                    'pilihan' => 'A',
-                    'jawaban' => $data['a'],
-                ),
-                array(
-                    'pilihan' => 'B',
-                    'jawaban' => $data['b'],
-                ),
-                array(
-                    'pilihan' => 'C',
-                    'jawaban' => $data['c'],
-                ),
-                array(
-                    'pilihan' => 'D',
-                    'jawaban' => $data['d'],
-                )
-               );
-            } else {
-                $data['dataJawaban']  = array(
-                   array(
-                    'pilihan' => 'A',
-                    'jawaban' => $data['a'],
-                ),
-                array(
-                    'pilihan' => 'B',
-                    'jawaban' => $data['b'],
-                ),
-                array(
-                    'pilihan' => 'C',
-                    'jawaban' => $data['c'],
-                ),
-                array(
-                    'pilihan' => 'D',
-                    'jawaban' => $data['d'],
-                ),
-                array(
-                    'pilihan' => 'E',
-                    'jawaban' => $data['e'],
-                )
-               );
-            }
-             
-            //call function insert jawaban tet
-            $this->Mmodulonline->ch_jawaban($data);
-            // $this->Mbanksoal->ch_jawaban($data);
-        } else {
-            #jika inputan gambar
-            // call functiom upload gamabar
-            $this->ch_img_jawaban($soalID);
-        }
-        #END pengecekan jenis inputan jawaban#
-        redirect(site_url('banksoal/allsoal'));
+        redirect(site_url('modulonline/allsoal'));
     }
 
-
-
-    // pengecekan jumlaha pilihan
-    public function count_pilihan($data){
-
-      $id_soal=$data['id_soal'];
-      $count_dat=$this->Mmodulonline->get_count_pilihan($id_soal);
-      $a = $count_dat;
-      if ( $count_dat>$data['jum_pilihan']) {
-        $this->Mmodulonline->del_oneJawaban( $id_soal);
-      } else if ($count_dat < 2 && $data['jum_pilihan'] == 4 ) {
-        echo
-          $dataJawaban = array(
-            array('pilihan' => 'A',
-             'id_soal' => $id_soal),
-            array('pilihan' => 'B',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'C',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'D',
-                'id_soal' => $id_soal));
-          $this->Mmodulonlinel->insert_jawaban($dataJawaban);
-      }else if ($count_dat < 2 && $data['jum_pilihan'] == 5 ) {
-          $dataJawaban = array(
-            array('pilihan' => 'A',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'B',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'C',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'D',
-                'id_soal' => $id_soal),
-            array('pilihan' => 'E',
-                'id_soal' => $id_soal));
-           $this->Mmodulonline->insert_jawaban($dataJawaban);
-      }else if ($count_dat<$data['jum_pilihan']) {
-        // insert pilihan jawaban option E
-        $pil_E = array(
-          'pilihan' => 'E',
-          'id_soal' => $id_soal
-        );
-        $this->Mmodulonline->add_oneJawaban($pil_E);
-
-      }
-
-    }
-
-    public function ch_img_jawaban($soalID) {
-
-        // unlink( FCPATH . "./assets/image/jawaban/".$xxxx );
-        $config2['upload_path'] = './assets/image/jawaban/';
-        $config2['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
-        $config2['max_size'] = 100;
-        $config2['max_width'] = 1024;
-        $config2['max_height'] = 768;
-        $this->load->library('upload', $config2);
-        $this->upload->initialize($config2);
-
-        $oldgambar = $this->Mmodulonline->get_oldgambar($soalID);
-
-        $n = '1';
-        $datagambar = array();
-        // pengulngan untuk mendapat kan data gambar lama
-        foreach ($oldgambar as $rows) {
-            // remove old gambar   		
-            $gambar = "gambar" . $n;
-            // pengecekan upload
-            if ($this->upload->do_upload($gambar)) {
-              // jika upload berhasil hapus gambar sebelumnya
-                unlink(FCPATH . "./assets/image/jawaban/" . $rows['gambar']);
-
-                $file_data = $this->upload->data();
-                $file_name = $file_data['file_name'];
-                if ($n == '1') {
-                    $pilihan = "A";
-                } else if ($n == '2') {
-                    $pilihan = "B";
-                } else if ($n == '3') {
-                    $pilihan = "C";
-                } else if ($n == '4') {
-                    $pilihan = 'D';
-                } else {
-                    $pilihan = 'E';
-                }
-                // tampung nama gambar yg berhasil di upload ke array
-                $datagambar[] = array('pilihan' => $pilihan,
-                    'gambar' => $file_name,
-                    'id_soal' => $soalID,
-                    'id_pilihan' => $rows['id_pilihan']);
-           
-            }else{
-              //  $error = array('error' => $this->upload->display_errors());
-              // var_dump( $error);
-            }
-
-            $n++;
-        }
-        // pengecekan jika array kosong
-        if ($datagambar!=array()) {
-          // jika array tidak kosong panggil function ch_gambar
-         $this->Mmodulonline->ch_gambar($datagambar);
-        }
-    }
 
     #END Function untuk form update bank soal #
     #END Function untuk delete bank soal #
@@ -916,6 +676,114 @@ class Modulonline extends MX_Controller {
         }
         #END Cek USer#
     }
+
+    public function allmodul() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edudrive.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->get_allsoal();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRows());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/allmodul/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+    public function modulsd() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edusd.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->modulsd();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssd());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/modulsd/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRowssd(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+    public function tambahdownload($idmodul) {
+      // $this->dropVideo($videoID);
+        $download = $this->Mmodulonline->ambilnilai($idmodul);
+        $temp= $download['download']+1;       
+        $this->Mmodulonline->tambahdownload($idmodul,$temp);
+    }
+
 }
 
 ?>
