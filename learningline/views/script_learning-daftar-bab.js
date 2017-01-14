@@ -64,7 +64,8 @@ function detail_topik(data){
 	+meta.namaTopik+"<span></h4>";
 	
 	$('.detail_step .modal-header').html(judul);
-	$(".detail_step a").attr("href", base_url+"learningline/formstep/"+data);
+	$(".detail_step a.add").attr("href", base_url+"learningline/formstep/"+data);
+	$(".detail_step a.list").attr("href", base_url+"learningline/step/"+data);
 
 	var url = base_url+"learningline/ajax_list_get_step/"+data;
 	dataTableLearning = $('.daftarstep').DataTable({
@@ -87,7 +88,9 @@ function detail_bab(data){
 	$('.detail_topik').modal('show');
 	judul = " <h4 class='modal-title' style='display: inline'>Daftar Topik : <span class='text-info'>"+meta.namaTingkat+" -> "+meta.namaMataPelajaran+" -> "+meta.judulBab+"<span></h4>";
 	$('.detail_topik .modal-header').html(judul);
-	$(".detail_topik a").attr("href", base_url+"learningline/formtopik/"+data);
+	$(".detail_topik a.add").attr("href", base_url+"learningline/formtopik/"+data);
+	$(".detail_topik a.list").attr("href", base_url+"learningline/topik/"+data);
+
 	var url = base_url+"learningline/ajax_get_list_topik/"+data;
 	dataTableLearning = $(kelasDTLearning).DataTable({
 		"ajax": {
@@ -182,5 +185,41 @@ function update_learning_bab(id,status){
 	});
 }
 /*## -----------------------------Update Status bab Learning-------------------------------##*/
+
+
+
+/*## ----------------------------drop Step Learning-------------------------------##*/
+function drop_step(idstep){
+	url = base_url+"learningline/drop_step";
+	swal({
+		title: "Yakin akan hapus Step?",
+		text: "Jika anda menghapus Step",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Ya,Tetap hapus!",
+		closeOnConfirm: false
+	},
+	function(){
+		var datas = {id:idstep};
+		$.ajax({
+			dataType:"text",
+			data:datas,
+			type:"POST",
+			url:url,
+			success:function(){
+				swal("Terhapus!", "Step berhasil dihapus.", "success");
+				reload();
+			},
+			error:function(){
+				sweetAlert("Oops...", "Data gagal terhapus!", "error");
+			dataTableLearning.ajax.reload(null,false);
+
+			}
+
+		});
+	});
+}
+/*## ----------------------------drop Step Learning-------------------------------##*/
 
 </script>

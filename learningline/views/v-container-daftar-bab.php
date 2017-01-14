@@ -16,10 +16,14 @@
                          <div class="panel-heading">
                              <h3 class="panel-title">Tabel Topik Line</h3> 
                              <div class="panel-toolbar text-right">
-                                <a class="btn btn-success" 
+                                <a class="btn btn-success add" 
                                 href="<?= base_url(); ?>index.php/learningline/formlearning" 
                                 target="_blank"
                                 title="Tambah Data" ><i class="ico-plus"></i></a>
+                                   <a class="btn btn-success list" 
+                                href="<?= base_url(); ?>index.php/learningline/formlearning" 
+                                target="_blank"
+                                title="Lihat Data" ><i class="ico-list"></i></a>
                             </div>
 
                         </div>
@@ -63,10 +67,15 @@
                  <div class="panel-heading">
                      <h3 class="panel-title">Tabel Step Line</h3> 
                      <div class="panel-toolbar text-right">
-                        <a class="btn btn-success" 
+                        <a class="btn btn-success add" 
                         href="" 
                         target="_blank"
                         title="Tambah Data" ><i class="ico-plus"></i></a>
+
+                         <a class="btn btn-success list" 
+                        href="" 
+                        target="_blank"
+                        title="Lihat Data" ><i class="ico-list"></i></a>
                     </div>
 
                 </div>

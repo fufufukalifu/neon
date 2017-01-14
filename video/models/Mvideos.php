@@ -7,7 +7,7 @@ class Mvideos extends CI_Model
 
   //get  semua video by sub
   function get_all_video_by_bab($idbab){
-    $this->db->select('video.id as videoID, subbab.id as subabID, judulSubBab, judulVideo,subbab.babID');
+    $this->db->select('video.id as videoID, namaFile, link, subbab.id as subabID, judulSubBab, judulVideo,subbab.babID');
     $this->db->from( 'tb_subbab subbab' );
     $this->db->join('tb_video video','subbab.id = video.subBabID');
     $this->db->where('babID',$idbab);
@@ -16,6 +16,8 @@ class Mvideos extends CI_Model
     $query = $this->db->get();
     return $query->result_array(); 
   }
+
+  
 
     //get nama subab berdasarkan id video
   function get_nama_sub_by_id_video($id_video){

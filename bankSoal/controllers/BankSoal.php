@@ -597,6 +597,7 @@ class Banksoal extends MX_Controller {
         $data = array();
 
         $baseurl = base_url();
+        $no=1;
         foreach ( $list as $list_soal ) {
              $jawabanBenar= "";
             $jawaban=$list_soal['jawaban'];
@@ -624,9 +625,7 @@ class Banksoal extends MX_Controller {
                 if ($id_soal==$id_soal_fk && $jawaban == $op ) {
                     $jawabanBenar=$piljawaban['jawabanBenar'];
 
-                } 
-
-                
+                }    
             }
             // menentukan checked random
             if ($random =='1') {
@@ -638,7 +637,7 @@ class Banksoal extends MX_Controller {
             } 
             
             $row = array();
-            $row[] = $id_soal;
+            $row[] = $no;
             $row[] = $list_soal['judul_soal'];
             $row[] = $list_soal['sumber'];
             $row[] = $list_soal['keterangan'];
@@ -683,6 +682,7 @@ class Banksoal extends MX_Controller {
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSoal('."'".$list_soal['id_soal']."'".')"><i class="ico-remove"></i></a>';
 
             $data[] = $row;
+            $no++;
 
         }
     
@@ -948,7 +948,7 @@ class Banksoal extends MX_Controller {
         
         if ($this->upload->do_upload($gambar)) {
              // unlink
-            unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+            // unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
              $file_data = $this->upload->data();
             $file_name = $file_data['file_name'];
             $data['UUID']=$UUID;
@@ -979,7 +979,8 @@ class Banksoal extends MX_Controller {
 
         } else {
                 // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
-             unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
+            //di komen dulu karena sedang dalam perbaikan
+             //unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
               $file_data = $this->upload->data();
            $file_name = $file_data['file_name'];
         $data['UUID']=$UUID;
@@ -1001,7 +1002,7 @@ class Banksoal extends MX_Controller {
         $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID);
         if ($this->upload->do_upload($gambar)) {
          foreach ($oldgambar as $rows) {
-            unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
+            // unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
          }
          $file_data = $this->upload->data();
          $file_name = $file_data['file_name'];
@@ -1220,7 +1221,7 @@ class Banksoal extends MX_Controller {
         # Start pengecekan media pembahasan
            if ($opmedia=='video') {
                 $oldImgPembahasan = $this->Mbanksoal->get_oldimg_pembahasan($UUID);
-                 unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+                 // unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
                  $data['dataSoal']=  array(
                     'pembahasan' => ' ',
                     'gambar_pembahasan' => ' '
@@ -1233,12 +1234,13 @@ class Banksoal extends MX_Controller {
             // var_dump($opmedia);
                 // call funtion upload gambar pembahasan
                 $oldVidePembahasan = $this->Mbanksoal->get_oldvideo_pembahasan($UUID);
-                unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
+                // unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
                 $data['dataSoal']=  array(
                     'video_pembahasan' => ' ',
                     'link' => ''
                     );
                 $this->ch_img_pembahasan($UUID);
+               
            }
            #END pengecekan media pembahasan
         redirect(site_url('banksoal/allsoal'));
@@ -1313,7 +1315,7 @@ class Banksoal extends MX_Controller {
             // pengecekan upload
             if ($this->upload->do_upload($gambar)) {
               // jika upload berhasil hapus gambar sebelumnya
-                unlink(FCPATH . "./assets/image/jawaban/" . $rows['gambar']);
+                // unlink(FCPATH . "./assets/image/jawaban/" . $rows['gambar']);
 
                 $file_data = $this->upload->data();
                 $file_name = $file_data['file_name'];

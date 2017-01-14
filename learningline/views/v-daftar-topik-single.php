@@ -13,12 +13,12 @@
                 <div class="modal-body">
                     <table class="daftarsteptable table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                         <thead>
-                            <tr>
-                                <th width="50%">Topik</th>
-                                <th>Urutan Tampil</th>
-                                <th>Status</th>
-                                <th width="20%">Aksi</th>
-                            </tr>
+                    <tr>
+                        <th width="10%">Id</th>
+                        <th>Step</th>
+                        <th>jenis</th>
+                        <th width="20%">Aksi</th>
+                    </tr>
                         </thead>
 
                         <tbody>

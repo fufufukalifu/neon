@@ -168,6 +168,34 @@ class Mlatihan extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	//random buat bab
+	public function get_soal_bybab( $param ) {
+		$this->db->where( 'bab.id', $param );
+		// $this->db->where( 'kesulitan', $param['kesulitan'] );
+		$this->db->from( 'tb_banksoal b' );
+		$this->db->join('tb_subbab sub',
+			'b.id_subbab = sub.id');
+
+		$this->db->join('tb_bab bab',
+			'bab.id = sub.babID');
+
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	function get_soal_by_id_latihan($id_latihan){
+		$this->db->select('*');
+		$this->db->from('tb_mm_sol_lat as sollat');
+		$this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
+		$this->db->where('sollat.id_latihan', $id_latihan);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
+
+
 }
 
 ?>

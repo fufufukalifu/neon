@@ -41,6 +41,8 @@ class Learning_model extends CI_Model{
 		$this->db->from('`tb_line_topik` tp');
 		$this->db->join('`tb_line_step` ls','tp.`id`=ls.`topikID`');
 		$this->db->where('tp.id',$data);
+		$this->db->where('ls.status',1);
+
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -62,7 +64,7 @@ class Learning_model extends CI_Model{
 	function get_topik_byid($data){
 		$query = "
 		SELECT 
-		topik.id AS TopikID,bab.id as babID, namaTopik, statusLearning,topik.urutan,
+		tingkat.id tingkatID,topik.id AS TopikID,bab.id as babID,tingpel.id as tingpelID, mapel.id as mapelID, namaTopik, statusLearning,topik.urutan,
 		deskripsi,`namaTingkat`, `namaMataPelajaran`, `judulBab`
 		FROM
 		(SELECT  *  FROM  `tb_line_topik` WHERE  id =  $data ) AS topik
@@ -113,6 +115,12 @@ class Learning_model extends CI_Model{
 		$this->db->set('status', 0);
 		$this->db->update('tb_line_topik');
 	}
+	#dropstep
+	function drop_step($data){
+		$this->db->where('id', $data['id']);
+		$this->db->set('status', 0);
+		$this->db->update('tb_line_step');
+	}
 
 	// update line bab aktiv
 	function updateaktiv_bab($data){
@@ -143,11 +151,11 @@ class Learning_model extends CI_Model{
 
 	/*GET META DATA UNTUK update STEP*/
 	function meta_step_update($data){
-		$query = "SELECT step.id, namaTopik, step.urutan, namaStep, bab.id as babid FROM  (SELECT * FROM  `tb_line_step` WHERE id =  $data ) AS step
-		 JOIN `tb_line_topik` topik ON topik.id = step.topikID
+		$query = "SELECT jenisStep, step.id, namaTopik, step.urutan, namaStep, bab.id as babid, materiID, latihanID, videoID FROM  (SELECT * FROM  `tb_line_step` WHERE id =  $data ) AS step
+		JOIN `tb_line_topik` topik ON topik.id = step.topikID
 		JOIN `tb_bab` AS bab ON
 		topik.babID = bab.id
-		 ";
+		";
 		$result = $this->db->query($query);
 		if ($result->result_array()==array()) {
 			return false;
@@ -164,7 +172,7 @@ class Learning_model extends CI_Model{
 	}
 	/*insert DATA UNTUK STEP*/
 	// -------------------------------------------------------------------
-		function update_learning_step($data){
+	function update_learning_step($data){
 		$this->db->where('id', $data['id']);
 		$this->db->set($data);
 		$this->db->update('tb_line_step');
@@ -172,6 +180,19 @@ class Learning_model extends CI_Model{
 
 	/*GET META DATA UNTUK STEP*/
 	function get_materi_babID($data){
+		$this->db->select('m.id, judulMateri, isiMateri');
+		$this->db->from('tb_line_materi m');
+		$this->db->JOIN('tb_subbab s','s.id = m.subBabID'); 
+		$this->db->JOIN('tb_bab b','b.id = s.babID'); 
+		$this->db->where('b.id', $data);
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	/*GET META DATA UNTUK STEP*/
+
+	/*GET META DATA UNTUK STEP*/
+	function get_materi_babID_edit($data){
 		$this->db->select('m.id, judulMateri, isiMateri');
 		$this->db->from('tb_line_materi m');
 		$this->db->JOIN('tb_subbab s','s.id = m.subBabID'); 
@@ -191,5 +212,62 @@ class Learning_model extends CI_Model{
 		$this->db->set($data);
 		$this->db->update('tb_line_topik');
 	}
+
+
+ //============ Get step yang bertopik dan ber uuid tertentu ===============
+	function get_step_urutan_idtopik($idtopik, $urutan){
+		$this->db->order_by('urutan','asc');
+		$this->db->where('topikID', $idtopik);
+		$this->db->where('urutan >=', $urutan);
+		$this->db->select('*');
+		$this->db->from('tb_line_step');
+
+		$result = $this->db->get();
+		if ($result->result_array()==array()) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+ //============ Get step yang berurutan lebih dari urutan yang diinsert ===============
+	function get_step_urutan($idtopik, $urutan){
+		$this->db->where('topikID', $idtopik);
+		$this->db->where('urutan >=', $urutan);
+		$this->db->select('*');
+		$this->db->from('tb_line_step');
+
+		$result = $this->db->get();
+		if ($result->result_array()==array()) {
+			return false;
+		} else {
+			return $result->result_array();
+		}
+
+	}
+
+		function get_step_sama_urutan($idtopik, $urutan){
+		$this->db->where('topikID', $idtopik);
+		$this->db->where('urutan =', $urutan);
+		$this->db->select('*');
+		$this->db->from('tb_line_step');
+
+		$result = $this->db->get();
+		if ($result->result_array()==array()) {
+			return false;
+		} else {
+			return $result->result_array();
+		}
+
+	}
+
+	//========== update batch  ==================
+	    //function untuk update pilihan jawaban text
+    public function update_step_urutan($data) {
+        $this->db->where('id',$data['id']);
+        $this->db->set($data);
+		$this->db->update('tb_line_step');
+    }
 }
 ?>

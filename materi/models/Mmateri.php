@@ -24,14 +24,26 @@
         return $query->result_array();
  	}
  	// get materi berdasarkan UUID
- 	public function get_single_materi($UUID)
- 	{
- 		$this->db->select('id,UUID,judulMateri,isiMateri,publish,subBabID');
- 		$this->db->from('tb_line_materi');
- 		$this->db->where('UUID',$UUID);
- 		$query= $this->db->get();
- 		return $query->result_array()[0];
- 	}
+    public function get_single_materi($UUID)
+    {
+        $this->db->select('id,UUID,judulMateri,isiMateri,publish,subBabID');
+        $this->db->from('tb_line_materi');
+        $this->db->where('UUID',$UUID);
+        $query= $this->db->get();
+        return $query->result_array()[0];
+    }
+
+    // get materi berdasarkan UUID
+    public function get_single_materi_byid($id)
+    {
+        $this->db->select('id,judulMateri,isiMateri,publish,subBabID');
+        $this->db->from('tb_line_materi');
+        $this->db->where('id',$id);
+        $query= $this->db->get();
+        return $query->result();
+    }
+
+
  	public function ch_materi($data)
  	{
  		$this->db->set($data['datMateri']);

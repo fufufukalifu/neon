@@ -21,6 +21,9 @@
   </div>
   <input type="hidden" name="id" value={id}>
   <input type="hidden" name="babID" value={babid}>
+  <input type="hidden" name="jenis_step" value="{id_relasi}">
+  <input type="hidden" name="relasi" value="{relasi_step}">
+
   <!-- TABEL KONTEN 1 . FORM LEARNINGNLINE -->
   <div class="row">
    <div class="col-md-12">
