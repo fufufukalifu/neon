@@ -194,11 +194,11 @@ function searchFilter(page_num) {
                         <h2>Kategori</h2>
                         <hr class="divider-big" />
                         <ul>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Sekolah Dasar<span> (SD) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Sekolah Menengah Pertama<span> (SMP) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Sekolah Menengah Atas <span> (SMA) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Sekolah Menengah Atas - IPA</a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Sekolah Menengah Atas - IPS</a></li>
+                              <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsd') ?>">Sekolah Dasar<span> (SD) </span></a></li>
+                            <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsmp') ?>">Sekolah Menengah Pertama<span> (SMP) </span></a></li>
+                            <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsma') ?>">Sekolah Menengah Atas <span> (SMA) </span></a></li>
+                            <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsmaipa') ?>">Sekolah Menengah Atas - IPA</a></li>
+                            <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsmaips') ?>">Sekolah Menengah Atas - IPS</a></li>
                         </ul>
                     </aside>
                     <!-- widget categories -->

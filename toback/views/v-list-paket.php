@@ -46,7 +46,7 @@
 										<td><?=$peserta['namaDepan'] ." ".$peserta['namaBelakang']?></td>
 										<td>-</td>
 										<td>-</td>
-										<td><a href="<?= base_url('index.php/toback/detailpaketsiswa/'.$peserta['id_tryout'].'/'.$peserta['penggunaID'])?>" onclick="detail_paket(<?=$peserta['penggunaID'] ?>,<?= $peserta['id_tryout']?>)" class="btn btn-info">Lihat Detail</a></td>
+										<td><a href="#" class="btn btn-info">Lihat Detail</a></td>
 										<!-- <td>
 											<form action="<?=base_url('toBack/reportPaketSiswa')?>" method="get">
 												<input type="text" value="<?=$peserta['id_to'] ?>" name="id_to" hidden='true'>
