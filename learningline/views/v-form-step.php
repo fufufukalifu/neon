@@ -73,9 +73,12 @@
             <table class="daftarsteptable table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
               <thead>
                 <tr>
-                  <th width="50%">Topik</th>
-                  <th>Urutan Tampil</th>
-                  <th>Status</th>
+                  <th width="3%">ID Step</th>
+                  <th width="3%">Urutan</th>
+
+                  <th>Nama step</th>
+
+                  <th>Jenis Materi</th>
                   <th width="20%">Aksi</th>
                 </tr>
               </thead>

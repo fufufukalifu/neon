@@ -97,6 +97,21 @@ public function addkomen() {
 
 }
 
+
+  // LOAD PARSER SESUAI HAK AKSES
+  public function loadparser($data){
+    $this->hakakses = $this->gethakakses();
+    if ($this->hakakses=='admin') {
+      $this->parser->parse('admin/v-index-admin', $data);
+    } else if($this->hakakses=='guru'){
+      $this->parser->parse('templating/index-b-guru', $data);
+    }else{
+      echo "forbidden access";        
+    }
+  }
+  // LOAD PARSER SESUAI HAK AKSES
+
+
 function seevideo($idvideo){
         //data untuk templating
   $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
@@ -159,10 +174,16 @@ function seevideo($idvideo){
       $data['files'] = array(
         APPPATH . 'modules/komenback/views/v-single-video-komen.php',
         );
-      $this->parser->parse('admin/v-index-admin', $data);
+
+
+     $this->loadparser($data);
 
     }
   }
-
+//GET HAK AKSES
+  function gethakakses(){
+    return $this->session->userdata('HAKAKSES');
+  }
+  //GET HAK AKSES
 }
 ?>

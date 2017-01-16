@@ -57,7 +57,7 @@ class MPaketsoal extends CI_Model {
 	#ambil semua paket soal yang berstatus 1
 
 	public function getpaketsoal() { 
-
+	$this->db->order_by('id_paket','desc');
 	  $this->db->select( '*' )->from( 'tb_paket' ); 
 
 	  $this->db->where( 'status', 1 ); 

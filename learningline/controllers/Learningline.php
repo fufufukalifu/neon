@@ -260,6 +260,8 @@ class Learningline extends MX_Controller {
 			// $no++;
 			$row = array();
 			$row[] = $list_item['id'];
+			$row[] = $list_item['urutan'];
+
 			$row[] = $list_item['namaStep'];
 			if ($list_item['jenisStep']==1) {
 				$row[] = "Video";

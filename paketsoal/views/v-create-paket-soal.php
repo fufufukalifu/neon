@@ -20,9 +20,9 @@
 
                     <div class="panel-body">
 
-                       <!-- START PESAN ERROR EMPTY INPUT -->
+                     <!-- START PESAN ERROR EMPTY INPUT -->
 
-                       <div class="form-group alert alert-dismissable alert-danger" id="e_paket" hidden="true" >
+                     <div class="form-group alert alert-dismissable alert-danger" id="e_paket" hidden="true" >
 
                         <button type="button" class="close" onclick="hide_e_paket()" >×</button>
 
@@ -106,75 +106,75 @@
 
                                     if ($i % 5 ==0) { ?>
 
-                                        <option value=<?=$i ?>><?=$i ?></option>
+                                    <option value=<?=$i ?>><?=$i ?></option>
 
-                                        <?php } endfor ?>
+                                    <?php } endfor ?>
 
-                                    </select>
-
-                                </div>
+                                </select>
 
                             </div>
 
                         </div>
 
-                        <div class="form-group">
+                    </div>
 
-                            <div class="row">
+                    <div class="form-group">
 
-                                <div class="col-sm-6">
-
-                                    <label class="control-label">Durasi <span class="text-danger">*</span></label>
-
-                                    <!-- <input type="text" name="durasi"  class="form-control" id="durasi" required> -->
-
-                                    <select name="durasi"  class="form-control" id="durasi" required="true">
-
-                                      <option value="">-Pilih Durasi-</option>
-
-                                      <option value="15">15</option>
-
-                                      <option value="30">30</option>
-
-                                      <option value="45">45</option>
-
-                                      <option value="60">60</option>
-
-                                      <option value="75">75</option>
-
-                                      <option value="90">90</option>
-
-                                      <option value="105">105</option>
-
-                                      <option value="120">120</option>
-
-                                      <option value="135">135</option>
-
-                                  </select>
-
-                              </div>
-
-                          </div>
-
-
-
-                      </div>
-
-                      <div class="form-group">
                         <div class="row">
 
                             <div class="col-sm-6">
+
+                                <label class="control-label">Durasi <span class="text-danger">*</span></label>
+
+                                <!-- <input type="text" name="durasi"  class="form-control" id="durasi" required> -->
+
+                                <select name="durasi"  class="form-control" id="durasi" required="true">
+
+                                  <option value="">-Pilih Durasi-</option>
+
+                                  <option value="15">15</option>
+
+                                  <option value="30">30</option>
+
+                                  <option value="45">45</option>
+
+                                  <option value="60">60</option>
+
+                                  <option value="75">75</option>
+
+                                  <option value="90">90</option>
+
+                                  <option value="105">105</option>
+
+                                  <option value="120">120</option>
+
+                                  <option value="135">135</option>
+
+                              </select>
+
+                          </div>
+
+                      </div>
+
+
+
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-sm-6">
                             <label class="control-label">Apakah soal akan di random?</label>
-                               <div class="checkbox custom-checkbox">  
-                                    <input type="checkbox" name="random" id="idrand" value="1">  
-                                    <label for="idrand"> Random
-                                    </label> 
-                                 </div>
-                             </div>
+                            <div class="checkbox custom-checkbox">  
+                                <input type="checkbox" name="random" id="idrand" value="1">  
+                                <label for="idrand"> Random
+                                </label> 
+                            </div>
                         </div>
+                    </div>
 
 
-                     </div>
+                </div>
 
             </div>
             <div class="panel-footer">
@@ -282,7 +282,7 @@
 
                                 <div class="panel-body">
 
-                                    <table class="table table-striped table-bordered" style="font-size: 13px" id="datatable" >
+                                    <table class="table table-striped table-bordered" style="font-size: 13px" id="datatable" width="100%">
 
                                         <thead>
 
@@ -360,7 +360,7 @@
 
         table = $('#datatable').DataTable({ 
 
-         "ajax": {
+           "ajax": {
 
             "url": base_url+"index.php/paketsoal/ajax_list",
 
@@ -392,128 +392,67 @@
 //panggil modal
 
 function hide_e_paket() {
-
     $("#e_paket").hide();
-
 }
 
 function add_paket(){
-
     save_method = 'add';
-
     $('#form')[0].reset(); // reset form on modals
-
     $('.form-group').removeClass('has-error'); // clear error class
-
     $('.help-block').empty(); // clear error string
-
     $('#modal_form').modal('show'); // show bootstrap modal
-
     $('.modal-title').text('Tambah Paket Baru'); // Set Title to Bootstrap modal title
-
 }
 
 //fungsi simpan
 
 function save(){
-
-
-
-
-
     var nama_paket= $('[name="nama_paket"]').val();
-
     var jumlah_soal  = $('[name="jumlah_soal"]').val();
-
     var durasi = $('[name="durasi"]').val();
-
     var random = $('[name="random"]').val();
-
-    
-
     var url;
 
-
-
     if(save_method == 'add') {
-
         url = base_url+"index.php/paketsoal/addpaketsoal";
-
     } else {
-
         url = base_url+"index.php/paketsoal/updatepaketsoal";
-
     }
 
 
 
     if (nama_paket != "" && jumlah_soal != ""  && durasi != ""  ) {
-
          $('#btnSave').text('saving...'); //change button text
-
          $('#btnSave').attr('disabled',true); //set button disable 
-
              // ajax adding data to database
-
              $.ajax({
-
                 url : url,
-
                 type: "POST",
-
                 data: $('#form').serialize(),
-
-                dataType: "JSON",
-
+                dataType: "TEXT",
                 success: function(data)
-
                 {
+                    swal('Berhasil Di Simpan');
 
-                   $('#modal_form').modal('hide');
-
+                    $('#modal_form').modal('hide');
                 $('#btnSave').text('save'); //change button text
-
                 $('#btnSave').attr('disabled',false); //set button enable
-
                 reload_table(); 
-
             },
-
             error: function (jqXHR, textStatus, errorThrown)
-
             {
-
-                alert('Error adding / update data');
-
+                swal('Error adding / update data');
                 $('#btnSave').text('save'); //change button text
-
                 $('#btnSave').attr('disabled',false); //set button enable 
-
-
-
             }
 
         });
-
-
-
          } else {
+             $("#e_paket").show();
+         }
+     }
 
-           $("#e_paket").show();
-
-       }
-
-
-
-
-
-
-
-
-
-   }
-
-   function reload_table(){
+     function reload_table(){
 
     table.ajax.reload(null,false); //reload datatable ajax 
 
@@ -532,33 +471,19 @@ function delete_paket(id)
         // ajax delete data to database
 
         $.ajax({
-
             url : base_url+"index.php/paketsoal/droppaketsoal/"+id,
-
-            type: "POST",
-
-            dataType: "JSON",
-
+            type: "GET",
+            dataType: "TEXT",
             success: function(data)
-
             {
-
-                //if success reload ajax table
-
+                swal('Berhasil Dihapus');
                 $('#modal_form').modal('hide');
-
                 reload_table();
-
             },
-
             error: function (jqXHR, textStatus, errorThrown)
-
             {
-
-                alert('Error deleting data');
-
+                swal('Error deleting data');
             }
-
         });
 
 
@@ -570,17 +495,10 @@ function delete_paket(id)
 
 
 function edit_paket(id)
-
 {
-
-
-
     save_method = 'update';
-
     $('#form')[0].reset(); // reset form on modals
-
     $('.form-group').removeClass('has-error'); // clear error class
-
     $('.help-block').empty(); // clear error string
 
 
@@ -588,48 +506,29 @@ function edit_paket(id)
     //Ajax Load data from ajax
 
     $.ajax({
-
         url : base_url+"index.php/paketsoal/ajax_edit/" + id,
-
         type: "GET",
-
         dataType: "JSON",
-
         success: function(data)
-
         {
-
             $('[name="id_paket"]').val(data.id_paket);
-
             $('[name="nama_paket"]').val(data.nm_paket);
-
             $('[name="deskripsi"]').val(data.deskripsi);
-           $('[name="jumlah_soal"]').val(data.jumlah_soal);
+            $('[name="jumlah_soal"]').val(data.jumlah_soal);
             $('[name="durasi"]').val(data.durasi);
-           if (data.random ==1) {
-             $('#idrand').attr('checked', true);
+            if (data.random ==1) {
+               $('#idrand').attr('checked', true);
            } else {
-             $('#idrand').attr('unchecked', true);
+               $('#idrand').attr('unchecked', true);
            }
-           
-
-
-
-
-
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-
             $('.modal-title').text('Edit Paket Soal'); // Set title to Bootstrap modal title
-
-
-
         },
 
         error: function (jqXHR, textStatus, errorThrown)
-
         {
 
-            swal('Error get data from ajax');
+            error('Error get data from ajax');
 
         }
 

@@ -42,6 +42,8 @@ class Learning_model extends CI_Model{
 		$this->db->join('`tb_line_step` ls','tp.`id`=ls.`topikID`');
 		$this->db->where('tp.id',$data);
 		$this->db->where('ls.status',1);
+		$this->db->order_by('tp.urutan','asc');
+
 
 		$query = $this->db->get();
 		return $query->result_array();
