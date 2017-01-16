@@ -103,6 +103,42 @@ class Token extends MX_Controller {
 		echo json_encode( $output );
 		// var_dump($list);
 	}
+
+
+	function ajax_rekap_penggunaan_token(){
+		$list = $this->token_model->get_token($data="all",1);
+		$data = array();
+		$no = 1;
+		foreach ( $list as $list ) {
+			$date1 = new DateTime($list->tanggal_diaktifkan);
+			$date_diaktifkan = $date1->format('d-M-Y');
+			$date_kadaluarsa =  date("d-M-Y", strtotime($date_diaktifkan)+ (24*3600*$list->masaAktif));
+
+			$date1 = new DateTime(date("d-M-Y"));
+			$date2 = new DateTime($date_kadaluarsa);
+			$sisa_aktif = $date2->diff($date1);
+			
+			$row = array();
+			$row[] = $no;
+			$row[] = $list->namaDepan." ".$list->namaBelakang;
+			$row[] = $list->nomorToken;
+			$row[] = $list->masaAktif;
+			$row[] = $date_diaktifkan;
+			$row[] = $date_kadaluarsa;
+			$row[] = $sisa_aktif->days." Hari";
+			$row[] = "Selesai";
+			$data[] = $row;
+			$no = $no+1;
+		}
+
+		$output = array(
+			"data"=>$data,
+			);
+		echo json_encode( $output );
+		
+		
+	}
+
 	function add_token(){
 		// kalo ada yang post
 		$jumlah_token = $this->input->post('jumlah_token');
@@ -132,7 +168,7 @@ class Token extends MX_Controller {
 			$param_token = array("jenis_token"=>$post['masa_aktif'],
 				"jumlah_token"=>$post['jumlah_mahasiswa']);
 			$token_kosong = $this->token_model->token_kosong($param_token);
-				$i = 0;
+			$i = 0;
 			foreach ($token_kosong as $value) {
 			//masukan ke array, ambil id tokenya update sama id mahasiswa
 				$token_update = array("id_token"=>$value->id,
@@ -147,6 +183,7 @@ class Token extends MX_Controller {
 	
 
 	function tes(){
+		$sekarang = date('Y-m-d h:m:s');
 		
 		var_dump($sekarang);
 

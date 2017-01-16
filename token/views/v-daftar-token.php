@@ -2,82 +2,121 @@
 <div class="row">
 
 
-<div class="col-md-12 form-token" style="display: none">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Tambah Token</h3> 
-    </div>
-    <div class="panel-body">
-      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-       <div  class="form-group">
-         <label class="col-sm-2 control-label">Jumlah Token</label>
-         <div class="col-sm-3">
-           <!-- stkt = soal tingkat -->
-           <input type="text" class="form-control" name="jumlah_token">
-         </div>
-
-         <label class="col-sm-2 control-label">Masa aktif</label>
-         <div class="col-sm-3">
-           <!-- stkt = soal tingkat -->
-           <select class="form-control" name="masa_aktif">
-            <option value="0">-- Pilih Masa Aktif --</option>
-            <option value="30">30 Hari</option>
-            <option value="100">100 Hari</option>
-            <option value="365">365 Hari</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group no-border">
-        <div class="col-sm-6 ml10">
-         <a class="btn btn-primary simpan_token">Generate Token</a>
-       </div>
-     </div>
-
-   </form>
- </div>
-</div>
-</div>
-  <div class="col-md-12" ">
+  <div class="col-md-12 form-token" style="display: none">
     <div class="panel panel-default">
       <div class="panel-heading">
-       <h3 class="panel-title">Daftar Token 
-
-       </h3>
-
-
-       <div class="panel-toolbar text-right">
-         <div class="col-sm-4">
-           <span><b>Filter: </b></span>
-           <input name="status_token" value="1" type="radio" class="mt10" title="Aktif"> 
-           <i class="ico-file-check mr10"></i>  
-           <input name="status_token" value="0" type="radio" title="Tidak Aktif"> <i class="ico-file-remove "></i>
-         </div>
-         <div class="col-sm-4">
-
-           <!-- stkt = soal tingkat -->
-           <select class="form-control" name="masa_aktif" id="masa_aktif_select">
-            <option value="all">Semua</option>
-            <option value="30">30 Hari</option>
-            <option value="100">100 Hari</option>
-            <option value="365">365 Hari</option>
-          </select>
-
-
-        </div>
-        <a class="btn btn-inverse btn-outline add-token" title="Tambah Token" ><i class="ico-plus"></i></a>
-        <a class="btn btn-inverse btn-outline send-token" title="Kirim Token" ><i class="ico-user-plus2"></i></a>
-        <a class="btn btn-inverse btn-outline send-token" title="Rekap Token" ><i class="ico-notebook"></i></a>
+        <h3 class="panel-title">Tambah Token</h3> 
       </div>
+      <div class="panel-body">
+        <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
+         <div  class="form-group">
+           <label class="col-sm-2 control-label">Jumlah Token</label>
+           <div class="col-sm-3">
+             <!-- stkt = soal tingkat -->
+             <input type="text" class="form-control" name="jumlah_token">
+           </div>
+
+           <label class="col-sm-2 control-label">Masa aktif</label>
+           <div class="col-sm-3">
+             <!-- stkt = soal tingkat -->
+             <select class="form-control" name="masa_aktif">
+              <option value="0">-- Pilih Masa Aktif --</option>
+              <option value="30">30 Hari</option>
+              <option value="100">100 Hari</option>
+              <option value="365">365 Hari</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group no-border">
+          <div class="col-sm-6 ml10">
+           <a class="btn btn-primary simpan_token">Generate Token</a>
+         </div>
+       </div>
+
+     </form>
+   </div>
+ </div>
+</div>
+<div class="col-md-12" ">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+     <h3 class="panel-title">Daftar Token 
+
+     </h3>
+
+
+     <div class="panel-toolbar text-right">
+       <div class="col-sm-4">
+         <span><b>Filter: </b></span>
+         <input name="status_token" value="1" type="radio" class="mt10" title="Aktif"> 
+         <i class="ico-file-check mr10"></i>  
+         <input name="status_token" value="0" type="radio" title="Tidak Aktif"> <i class="ico-file-remove "></i>
+       </div>
+       <div class="col-sm-4">
+
+         <!-- stkt = soal tingkat -->
+         <select class="form-control" name="masa_aktif" id="masa_aktif_select">
+          <option value="all">Semua</option>
+          <option value="30">30 Hari</option>
+          <option value="100">100 Hari</option>
+          <option value="365">365 Hari</option>
+        </select>
+
+
+      </div>
+      <a class="btn btn-inverse btn-outline add-token" title="Tambah Token" ><i class="ico-plus"></i></a>
+      <a class="btn btn-inverse btn-outline send-token" title="Kirim Token" ><i class="ico-user-plus2"></i></a>
+      <a class="btn btn-inverse btn-outline send-token" title="Rekap Token" ><i class="ico-notebook"></i></a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table class="daftartoken table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nomor Token</th>
+          <th>Masa Aktif</th>
+          <th>Digunakan Oleh</th>
+          <th width="15%">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="col-md-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Penggunaan Token</h3>
+      <!-- panel toolbar -->
+      <div class="panel-toolbar text-right">
+        <!-- option -->
+        <div class="option">
+          <button class="btn up" data-toggle="panelcollapse"><i class="arrow"></i></button>
+          <button class="btn" data-toggle="panelremove"><i class="remove"></i></button>
+        </div>
+        <!--/ option -->
+      </div>
+      <!--/ panel toolbar -->
     </div>
     <div class="panel-body">
-      <table class="daftartoken table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+      <table class="rekap_token table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
         <thead>
           <tr>
-            <th>id</th>
+            <th>No</th>
+            <th>Nama Siswa</th>
             <th>Nomor Token</th>
             <th>Masa Aktif</th>
-            <th>Digunakan Oleh</th>
+            <th>Mulai</th>
+
+            <th>Finish</th>
+            <th>Sisa Aktif</th>
+
             <th width="15%">Aksi</th>
           </tr>
         </thead>
@@ -86,16 +125,6 @@
 
         </tbody>
       </table>
-    </div>
-  </div>
-</div>
-<div class="col-md-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Rekap Token</h3> 
-    </div>
-    <div class="panel-body">
-
     </div>
   </div>
 </div>
@@ -180,6 +209,7 @@
 <script type="text/javascript">
  var dataTableToken;
  var dataTableSiswa;
+ var dataRekapToken
 
 
  $(document).ready(function(){
@@ -206,9 +236,20 @@
     "bDestroy": true,
   });
 
+    // TABLE REKAP
+    dataTableSiswa = $('.rekap_token').DataTable({
+      "ajax": {
+        "url": base_url+"token/ajax_rekap_penggunaan_token",
+        "type": "POST"
+      },
+      "emptyTable": "Tidak Ada Data Pesan",
+      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+      "bDestroy": true,
+    });
 
 
-});
+
+  });
 // onclick action
 $('.add-token').click(function(){
   $('.form-token').toggle('show');
@@ -238,7 +279,7 @@ $('input[name=status_token]').click(function(){
   data = $('#masa_aktif_select').val();
   url = base_url+"token/ajax_data_token/"+data+"/"+status_token;
 
-    dataTableToken = $('.daftartoken').DataTable({
+  dataTableToken = $('.daftartoken').DataTable({
     "ajax": {
       "url": url,
       "type": "POST",
@@ -317,9 +358,9 @@ function get_filtered_token(data){
   if (status_token) {
   //kalo tidak undfined
   url = base_url+"token/ajax_data_token/"+data+"/"+status_token;
-  }else{
+}else{
     //kalo undefined
-  url = base_url+"token/ajax_data_token/"+data;
+    url = base_url+"token/ajax_data_token/"+data;
   }
 
   console.log(url);

@@ -59,7 +59,7 @@ class Token_model extends CI_Model{
 	}
 	// update token untuk mahasiswa
 	function set_token_to_mahasiswa($param){
-		$sekarang = date('Y-m-d H:i:s');
+		$sekarang = date('Y-m-d h:m:s');
 		$this->db->where('id', $param['id_token']);
 		$this->db->set('siswaID', $param['siswaID']);
 		$this->db->set('tanggal_diaktifkan', $sekarang);
