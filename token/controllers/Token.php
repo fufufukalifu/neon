@@ -31,18 +31,8 @@ class Token extends MX_Controller {
 	// LOAD PARSER SESUAI HAK AKSES
 
 	public function index(){
-		$jumlah_semua_stok = $this->token_model->get_jumlah_token_stok();
-		$jumlah_30_stok = $this->token_model->get_jumlah_token_stok(30);
-		$jumlah_100_stok = $this->token_model->get_jumlah_token_stok(100);
-		$jumlah_365_stok = $this->token_model->get_jumlah_token_stok(365);
-
-
 		$data = array(
 			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Token",
-			'jumlah_semua_stok' => $jumlah_semua_stok,
-			'jumlah_30_stok'  => $jumlah_30_stok, 
-			'jumlah_100_stok'  => $jumlah_100_stok,
-			'jumlah_365_stok'  => $jumlah_365_stok,
 			);
 
 		$data['files'] = array(
@@ -68,7 +58,7 @@ class Token extends MX_Controller {
 			}else{
 				$row[] = $token_item->namaDepan." ".$token_item->namaBelakang;
 			}
-			$row[] = "aksi";
+			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->id."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
 		}
 
@@ -126,7 +116,7 @@ class Token extends MX_Controller {
 			$row[] = $date_diaktifkan;
 			$row[] = $date_kadaluarsa;
 			$row[] = $sisa_aktif->days." Hari";
-			$row[] = "Selesai";
+			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$list->id."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
 			$no = $no+1;
 		}
@@ -150,7 +140,7 @@ class Token extends MX_Controller {
 					"masaAktif"=>$this->input->post('masa_aktif'));
 				$this->token_model->insert_token($data);
 			}else{
-				for ($i=1; $i < $jumlah_token   ; $i++) { 
+				for ($i=0; $i < $jumlah_token   ; $i++) { 
 					$kode_voucher = strtoupper(uniqid());
 					$data = array("nomorToken"=>$kode_voucher,
 						"masaAktif"=>$masa_aktif);
@@ -182,10 +172,39 @@ class Token extends MX_Controller {
 	}
 	
 
-	function tes(){
-		$sekarang = date('Y-m-d h:m:s');
-		
-		var_dump($sekarang);
+	function ajax_get_stock(){
+		$jumlah_semua_stok = $this->token_model->get_jumlah_token_stok();
+		$jumlah_30_stok = $this->token_model->get_jumlah_token_stok(30);
+		$jumlah_100_stok = $this->token_model->get_jumlah_token_stok(100);
+		$jumlah_365_stok = $this->token_model->get_jumlah_token_stok(365);
 
+		$data = array(
+			'jumlah_semua_stok' => $jumlah_semua_stok,
+			'jumlah_30_stok'  => $jumlah_30_stok, 
+			'jumlah_100_stok'  => $jumlah_100_stok,
+			'jumlah_365_stok'  => $jumlah_365_stok,
+			);
+
+		echo json_encode($data);
+
+
+	}
+
+	function settoken(){
+		$data = array(
+			'judul_halaman' => 'Neon - Halaman Token',
+			'judul_header' =>'Welcome',
+			'judul_header2' =>'Video Belajar'
+			);
+
+
+
+		$data['files'] = array( 
+			APPPATH.'modules/homepage/views/v-header-login.php',
+			APPPATH.'modules/token/views/v-set-token.php',
+			APPPATH.'modules/testimoni/views/v-footer.php',
+			);
+
+		$this->parser->parse( 'templating/index', $data );
 	}
 }

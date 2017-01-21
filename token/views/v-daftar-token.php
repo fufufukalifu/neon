@@ -1,5 +1,81 @@
 
 <div class="row">
+<div class="col-md-12 kirim_token"  style="display: none">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Kirim Token</h3> 
+    </div>
+    <div class="panel-body">
+      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
+       <div  class="form-group">
+         <label class="col-sm-2 control-label">Masa aktif</label>
+         <div class="col-sm-9">
+           <!-- stkt = soal tingkat -->
+           <select class="form-control" name="masa_aktif_set">
+            <option value="0">-- Pilih Masa Aktif --</option>
+            <option value="30">30 Hari</option>
+            <option value="100">100 Hari</option>
+            <option value="365">365 Hari</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div  class="form-group">
+      <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+        <thead>
+          <tr>
+            <th> </th>
+            <th>No</th>
+            <th>Nama Mahasiswa</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+      </table>
+      <hr>
+      <a class="btn btn-primary set_token">Kirim Token</a>
+
+    </div>
+    <div class="panel-footer">
+      <ul class="nav nav-section nav-justified">
+        <li>
+          <div class="section">
+          <input type="hidden" name="jumlah_semua_stok">
+            <input type="hidden" name="jumlah_30_stok">
+            <input type="hidden" name="jumlah_100_stok">
+            <input type="hidden" name="jumlah_365_stok">  
+            <h5 class="nm jumlah_semua_stok"></h5>
+            <span>Semua</span>
+          </div>
+        </li>
+
+        <li>
+          <div class="section">
+            <h5 class="nm jumlah_30_stok"></h5>
+            <span>30 Hari</span>
+          </div>
+        </li>
+
+        <li>
+          <div class="section">
+            <h5 class="nm jumlah_100_stok"></h5>
+            <span>100 Hari</span>
+          </div>
+        </li>
+
+        <li>
+          <div class="section">
+            <h5 class="nm jumlah_365_stok"></h5>
+            <span>365 Hari</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
 
 
   <div class="col-md-12 form-token" style="display: none">
@@ -113,7 +189,6 @@
             <th>Nomor Token</th>
             <th>Masa Aktif</th>
             <th>Mulai</th>
-
             <th>Finish</th>
             <th>Sisa Aktif</th>
 
@@ -129,78 +204,6 @@
   </div>
 </div>
 
-<div class="col-md-12 kirim_token">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Kirim Token</h3> 
-    </div>
-    <div class="panel-body">
-      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-       <div  class="form-group">
-         <label class="col-sm-2 control-label">Masa aktif</label>
-         <div class="col-sm-9">
-           <!-- stkt = soal tingkat -->
-           <select class="form-control" name="masa_aktif_set">
-            <option value="0">-- Pilih Masa Aktif --</option>
-            <option value="30">30 Hari</option>
-            <option value="100">100 Hari</option>
-            <option value="365">365 Hari</option>
-          </select>
-        </div>
-      </div>
-    </form>
-    <div  class="form-group">
-      <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-        <thead>
-          <tr>
-            <th> </th>
-            <th>No</th>
-            <th>Nama Mahasiswa</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        </tbody>
-      </table>
-      <hr>
-      <a class="btn btn-primary set_token">Kirim Token</a>
-
-    </div>
-    <div class="panel-footer">
-      <ul class="nav nav-section nav-justified">
-        <li>
-          <div class="section">
-            <h5 class="nm">Stok : {jumlah_semua_stok}</h5>
-            <span>Semua</span>
-          </div>
-        </li>
-
-        <li>
-          <div class="section">
-            <h5 class="nm">Stok : {jumlah_30_stok}</h5>
-            <span>30 Hari</span>
-          </div>
-        </li>
-
-        <li>
-          <div class="section">
-            <h5 class="nm">Stok : {jumlah_100_stok}</h5>
-            <span>100 Hari</span>
-          </div>
-        </li>
-
-        <li>
-          <div class="section">
-            <h5 class="nm">Stok : {jumlah_365_stok}</h5>
-            <span>365 Hari</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</div>
 
 
 
@@ -289,9 +292,11 @@ $('input[name=status_token]').click(function(){
     "bDestroy": true,
   });
 
-
+  console.log(url);
 });
 
+
+// ketika masa aktif radio button di klik
 $('#masa_aktif_select').on('change', function() {
   masa_aktif = this.value ;
   get_filtered_token(masa_aktif);
@@ -307,51 +312,67 @@ function addtoken(){
     dataType:"TEXT",
     success:function(){
       swal('Token Berhasil Di Tambahkan');
+      reload();
     },error:function(){
       swal('Gagal membuat Token');
     }
   })
 }
 
+
+//fungsi set token ke mahasiswa
 function set_token_to_mahasiswa(){
-  id_mahasiswa = [];
+  //tampung id mahasiswa
+  id_siswa = [];
+  //tampung masa aktif
   masa_aktif = $('select[name=masa_aktif_set]').val();
+  //cek kalo belum set masa aktif
   if (masa_aktif==0) {
     swal('silahkan tentukan masa aktif terlebih dahulu');
     $('select[name=masa_aktif_set]').focus();
   }else{
    $(':checkbox:checked').each(function(i){
-     id_mahasiswa[i] = $(this).val();
+     id_siswa[i] = $(this).val();
    }); 
-   jumlah_mahasiswa = id_mahasiswa.length;
+   jumlah_mahasiswa = id_siswa.length;
+   jumlah_stok = $('input[name=jumlah_'+masa_aktif+'_stok]').val();
 
+   // cek jumlah mahasiswa yang dipilih
    if (jumlah_mahasiswa==0) {
     swal('Silahkan tentukan mahasiswa terlebih dahulu');
   }else{
-    data = {
-      id:id_mahasiswa,
-      jumlah_mahasiswa:jumlah_mahasiswa,
-      masa_aktif:masa_aktif
-    };
-    console.log(data);
+    if (jumlah_mahasiswa>jumlah_stok) {
+      swal('Jumlah stok kurang');
+    }else{
+      data = {
+        id:id_siswa,
+        jumlah_mahasiswa:jumlah_mahasiswa,
+        masa_aktif:masa_aktif
+      };
+      $.ajax({
+        url:base_url+"token/set_token_to_mahasiswa",
+        data:data,
+        type:"POST",
+        dataType:"TEXT",
+        success:function(){
+          swal('Token Berhasil Di Kirim');
+          reload();
+        },error:function(){
+          swal('Gagal mengirim Token');
+        }
+      });
+    }
+    
 
-    $.ajax({
-      url:base_url+"token/set_token_to_mahasiswa",
-      data:data,
-      type:"POST",
-      dataType:"TEXT",
-      success:function(){
-        swal('Token Berhasil Di Kirim');
-      },error:function(){
-        swal('Gagal mengirim Token');
-      }
-    });
+    
+
   }
-  
 }
 
 }
 
+
+//fungsi untuk filter token
 function get_filtered_token(data){
   status_token = $('input[name=status_token]:checked').val();
   console.log(status_token);
@@ -375,4 +396,30 @@ function get_filtered_token(data){
     "bDestroy": true,
   });
 }
+
+
+function get_stok(){
+  $.ajax({
+    url:base_url+"token/ajax_get_stock",
+    type:"POST",
+    dataType:"json",
+    success:function(data, key){
+      $.each(data, function(key, value){
+        $("."+key).html("Stok : "+value);
+        $('input[name='+key+']').val(value);
+      });
+    },error:function(){
+      swal('Gagal mengirim Token');
+    }
+  });
+}
+
+
+function reload(){
+  get_stok();
+  dataTableToken.reload(null,false); 
+  dataTableSiswa.reload(null,false); 
+  dataRekapToken.reload(null,false); 
+}
+get_stok();
 </script>

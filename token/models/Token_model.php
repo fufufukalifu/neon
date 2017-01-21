@@ -5,12 +5,15 @@ class Token_model extends CI_Model{
 
 	function get_token($data,$status){
 		$this->db->order_by('tb_token.id');
+
 		if ($data!="all") {
 			$this->db->where('masaAktif',$data);
 		}
 		if ($status==1) {
 			$this->db->where('siswaID is not null');
-			
+		}else{
+			$this->db->where('siswaID is null');
+
 		}
 		$this->db->select( '*,tb_token.id as tokenid' )->from( 'tb_token' ); 
 		$this->db->join('tb_siswa', 'tb_token.siswaID = tb_siswa.id', 'left outer');
