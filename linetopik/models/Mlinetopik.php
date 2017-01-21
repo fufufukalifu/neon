@@ -97,7 +97,10 @@
         $this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
         $this->db->like('topik.namaTopik',$kunciCari
             );
+        $this->db->order_by('topik.namaTopik');
         $this->db->order_by('step.urutan', 'asc');
+        $query=$this->db->get();
+        return  $query->result_array();
     }
 
     // get UUID Topik by Step.UUID
@@ -112,7 +115,7 @@
  		return  $query->result_array()[0]['UUID'];
 	}
 
-	// get topik untuk side bar
+	// get topik untuk side bar by babiD
  	public function get_topik($babID)
  	{
  		$this->db->select('id,UUID,namaTopik');
@@ -124,6 +127,18 @@
  		$query=$this->db->get();
  		return $query->result_array();
  	}
+    // get topik untuk side bar by namatopik
+    public function get_topik_bynama($kunciCari)
+    {
+        $this->db->select('id,UUID,namaTopik');
+        $this->db->from('tb_line_topik');
+        $this->db->like('namaTopik',$kunciCari);
+        $this->db->where('status',1);
+        $this->db->where('statusLearning',1);
+        $this->db->order_by('namaTopik');
+        $query=$this->db->get();
+        return $query->result_array();
+    }
 
  	//mengambil data step line quize 
  	public function get_datQuiz($latihanID)

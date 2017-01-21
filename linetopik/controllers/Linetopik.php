@@ -639,10 +639,94 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     //PENCARIAN TOPIK
     public function cariTopik()
     {   
+        $data = array(
+            'judul_halaman' => 'Netjoo - Step Line',
+            'judul_header' => 'Hasil Pencarian',
+             'judul_header2' =>'Hasil Pencarian Topik'
+        );
         $kunciCari=htmlspecialchars($this->input->get('keycari'));
         
-        $dat=$this->Mlinetopik->get_cariTopik();
-        var_dump($dat);
+        $dat=$this->Mlinetopik->get_cariTopik($kunciCari);
+        
+         $data['topik']=$this->Mlinetopik->get_topik_bynama($kunciCari);
+        $data['datline']=array();
+        // Start step line
+          $step=false;
+        foreach ($dat as $rows) {
+            $tampJenis = $rows['jenisStep'];
+            $UUID = $rows['stepUUID'];
+            $stepID = $rows['stepID'];
+            $urutan = $rows ['urutan'];
+            // pengecekan jenis step line
+            if ($tampJenis == '1') {
+                // jika step line video
+                $jenis='Video';
+                // pengecekan disable atau enable step
+                if ($step == true || $urutan == '1' ) {
+                    $icon='ico-movie ';
+                    $link = base_url('index.php/linetopik/step_video/').$UUID;
+                    $status ="enable";
+                } else {
+                    $icon='ico-movie';
+                    $link = 'javascript:void(0)';
+                    $status ="disable";
+                }
+
+            }else if ($tampJenis == '2') {
+                // jika step line Materi atau modul
+                $jenis='Materi';
+                // pengecekan disable atau enable step
+                if ($step == true || $urutan == '1' ) {
+                    $icon ='ico-file6';
+                    $link = base_url('index.php/linetopik/step_materi/').$UUID;
+                    $status ="enable";
+                } else {
+                   $icon='ico-file6';
+                   $link = 'javascript:void(0)';
+                   $status ="disable";
+                }
+            }else{
+                // jika step line latihan atau quiz
+                $jenis='Latihan';
+                // pengecekan disable atau enable step
+                if ($step == true || $urutan == '1' ) {
+                   $icon ='ico-pencil';
+                  $latihanID = $rows['latihanID'];
+                   $link = base_url('index.php/linetopik/create_session_id_latihan/').$latihanID;
+                   $status ="enable";
+                } else {
+                  $icon='ico-pencil';
+                 $link = 'javascript:void(0)';
+                 $status ="disable";
+                }
+            }
+            $data['datline'][]=array(
+                'namaTopik'=>$rows['namaTopik'],
+                'deskripsi'=>$rows['deskripsi'],
+                'namaStep'=> $rows['namaStep'],
+                'bab'=>$rows['judulBab'],
+                'mapel'=>$rows['keterangan'],
+                'tingkat'=>$rows['aliasTingkat'],
+                'jenisStep'=>$jenis,
+                'icon' =>$icon,
+                'link' => $link,
+                'status'=>$status);
+            $log=$this->Mlinetopik->get_log($stepID);
+            $step = $log;
+
+        }
+        $data['files'] = array(
+
+            APPPATH . 'modules/homepage/views/v-header-login.php',
+
+            APPPATH . 'modules/linetopik/views/v-line-topik.php',
+
+            APPPATH . 'modules/homepage/views/v-footer.php',
+
+        );
+
+        $this->parser->parse('templating/index', $data);
+        // END step line
     }
  
 

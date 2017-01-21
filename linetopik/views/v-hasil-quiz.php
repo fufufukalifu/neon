@@ -11,17 +11,17 @@
     <div class="page-content grid-row">
         <div class=" grid-col-row clear-fix" >
             <div class="grid-col grid-col-3 sidebar" >
-            <!-- Pencarian -->
-                <aside class="widget-search">
-                    <form method="get" class="search-form" action="#">
-                        <label>
-                            <span class="screen-reader-text">Search for:</span>
-                            <input type="search" class="search-field" placeholder="Search" value="" name="s" title="Search for:">
-                        </label>
-                        <input type="submit" class="search-submit" value="GO">
-                    </form>
-                </aside>
-           <!-- /Pencarian -->
+           <!-- Pencarian -->
+                            <aside class="widget-search">
+                                <form method="get" class="search-form" action="<?=base_url()?>index.php/linetopik/cariTopik"  accept-charset="utf-8" enctype="multipart/form-data">
+                                    <label>
+                                        <span class="screen-reader-text">Search for:</span>
+                                        <input type="search" class="search-field" placeholder="Search"  name="keycari" title="Search for:">
+                                    </label>
+                                    <input type="submit" class="search-submit" value="GO">
+                                </form>
+                            </aside>
+                       <!-- /Pencarian -->
                           <h2><a href="<?=base_url('index.php/linetopik/timeLine/').$topikUUID?>"><?=$namaTopik; ?></a></h2> 
                           <hr class="divider-big">
                                                   <!-- Start Time Line -->
