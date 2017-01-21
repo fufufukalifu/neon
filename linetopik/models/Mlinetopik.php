@@ -66,6 +66,7 @@
         $this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
  		$this->db->where('topik.UUID',$UUID
  			);
+        $this->db->order_by('topik.namaTopik');
  		$this->db->order_by('step.urutan', 'asc');
  		$query=$this->db->get();
  		return  $query->result_array();
@@ -82,6 +83,7 @@
  		$this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
  		$this->db->where('topik.UUID',$UUIDTopik
  			);
+        $this->db->order_by('topik.namaTopik');
  		$this->db->order_by('step.urutan', 'asc');
  		$query=$this->db->get();
  		return  $query->result_array();
@@ -269,6 +271,15 @@
     	return $query->result_array()[0];
 
     }
+
+    //get soal untuk quiz
+    public function get_soqlQuiz($value='')
+    {
+        # code...
+    }
+
+
+
 
 
  } ?>
