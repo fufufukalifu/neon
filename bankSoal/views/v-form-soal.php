@@ -313,7 +313,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
 
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
 
                                     <label for="fileSoal" class="btn btn-sm btn-default">
 
@@ -322,8 +322,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     </label>
 
                                     <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-
+                                    <label class="btn btn-sm btn-danger"  onclick="restImgSoal()">Reset</label>
                                 </div>
+
 
                             </div>
 
@@ -1909,6 +1910,15 @@ function ValidateInputVideo(oInput) {
 
 
     loadTingkat();
+
+    function restImgSoal() {
+      console.log("reset");
+      $("input[name=gambarSoal]").val("");
+      $('#previewSoal').attr('src', "");
+      $('#filenameSoal').text("");
+      $('#filetypeSoal').text("");
+      $('#filesizeSoal').text("");
+    }
 
 </script>
 <!--END Script drop down depeden  -->

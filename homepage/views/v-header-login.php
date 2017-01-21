@@ -123,6 +123,16 @@
 								</li>
 
 								<li>
+									<a href="">Step Line</a>
+									<ul>
+										<li><a href="<?=base_url()?>/index.php/linetopik/lineMapel/1/">SD</a></li>
+										<li><a href="<?=base_url()?>/index.php/linetopik/lineMapel/2/">SMP</a></li>
+										<li><a href="<?=base_url()?>/index.php/linetopik/lineMapel/3/">SMA</a></li>
+										<li><a href="<?=base_url()?>/index.php/linetopik/lineMapel/4/">SMA IPA</a></li>
+									</ul>
+								</li>
+
+								<li>
 									<a href="#">Hallo <?= $this->session->userdata['USERNAME']?></a>
 									<ul>
 										<li><a href="<?=base_url('siswa/profilesetting') ?>" class="active">Pengaturan Profil</a></li>

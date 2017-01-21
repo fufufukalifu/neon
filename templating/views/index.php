@@ -42,7 +42,7 @@
 
 <body>
 
-<script type="text/javascript">var base_url = "<?= base_url() ?>"</script>
+    <script type="text/javascript">var base_url = "<?= base_url() ?>"</script>
 
     <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
 
