@@ -11,7 +11,8 @@ class Tesonline extends MX_Controller {
         $this->load->model('latihan/mlatihan');
         $this->load->library('parser');
         parent::__construct();
-
+    $this->load->library('sessionchecker');
+    $this->sessionchecker->cek_token();
         if ($this->session->userdata('loggedin')==true) {
          if ($this->session->userdata('HAKAKSES')=='siswa'){
                // redirect('welcome');
