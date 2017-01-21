@@ -481,7 +481,8 @@ function ajax_insert_line_topik(){
 		'deskripsi'=>$this->input->post('deskripsi'),
 		'namaTopik'=>$this->input->post('namaTopik'),
 		'status'=>1,
-		'urutan'=>$this->input->post('urutan')
+		'urutan'=>$this->input->post('urutan'),
+		'UUID'=>uniqid(),
 		);
 	$this->learning_model->insert_line_topik ($data);
 }

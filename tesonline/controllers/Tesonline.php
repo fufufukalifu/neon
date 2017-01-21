@@ -15,7 +15,7 @@ class Tesonline extends MX_Controller {
     $this->sessionchecker->cek_token();
         if ($this->session->userdata('loggedin')==true) {
          if ($this->session->userdata('HAKAKSES')=='siswa'){
-               // redirect('welcome');
+               redirect('welcome');
          }else if($this->session->userdata('HAKAKSES')=='guru'){
              redirect('guru/dashboard');
          }else{
