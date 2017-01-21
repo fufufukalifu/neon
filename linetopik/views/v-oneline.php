@@ -38,7 +38,7 @@
                    
                       <?php   $x=0; ?>
                     <?php foreach ($topik as $rows): ?>
-                        <li class="cat-item cat-item-1 current-cat"><a href="#topik<?=$x?>"><?=$rows['namaTopik']?><span></span></a>
+                        <li class="cat-item cat-item-1 current-cat"><a href="javascript:void(0)"><?=$rows['namaTopik']?><span></span></a>
                         <?php $x++; ?>
                     <?php endforeach ?>
                     </ul>
@@ -50,60 +50,28 @@
                
       </div>
             <div class="grid-col grid-col-9">
-                <main> <?php   $i=0; 
-                                    $namaTopik=''; ?>
-                            <?php foreach ($datline as $key ): ?>
-                                
-                                <?php if ($namaTopik != $key['namaTopik'] && $i==0): ?>
-                <!-- start header line-->
-                    <!-- post item -->
-                    <div class="blog-post">
-                        <article>
-                        <div class="post-info">
-                            
-                            <div class="post-info-main">
-                                <div class="author-post" >nama Topik:' <?=$key['namaTopik']?> '</div>
-                            </div>
-                            <div class="comments-post"><i class="fa fa-comment"></i>Line</div>
-                        </div>
-                         <h3>Deskripsi:' <?=$key['deskripsi']?> '</h3>
-                         <!-- Start Time Line -->
-                         <h4>Time Line</h4>
-                         <hr>
-                            <ul class="media-list media-list-feed " >
-                <!-- end header line-->
-                                <?php elseif($namaTopik != $key['namaTopik']) : ?>
-                <!-- END body line -->
-                            </ul>
-                            <!-- END Tieme line -->
-                        </article>
-                        <div class="tags-post">
-                            <a href="#" rel="tag"><?=$key['tingkat']?></a><!-- 
-                         --><a href="#" rel="tag"><?=$key['mapel']?></a>
-                            <a href="#" rel="tag"><?=$key['bab']?></a>
-                        </div>
-                    </div>
-                    <!-- / post item -->
-                    <hr class="divider-color" />
-                <!-- END body line -->
-                <!-- start header line-->
+                <main>
+                    <!-- start header line-->
                     <!-- post item -->
                     <div class="blog-post" id="topik1">
                         <article>
                         <div class="post-info">
                             
                             <div class="post-info-main">
-                                <div class="author-post" >nama Topik:' <?=$key['namaTopik']?> '</div>
+                                <div class="author-post" >nama Topik:' <?=$namaTopik?> '</div>
                             </div>
                             <div class="comments-post"><i class="fa fa-comment"></i>Line</div>
                         </div>
-                         <h3>Deskripsi:' <?=$key['deskripsi']?> '</h3>
+                         <h3>Deskripsi:' <?=$deskripsi?> '</h3>
                          <!-- Start Time Line -->
                          <h4>Time Line</h4>
                          <hr>
                             <ul class="media-list media-list-feed " >
                 <!-- end header line-->
-                                <?php endif ?>
+                             <?php  $i=0; 
+                             ?>
+                            <?php foreach ($datline as $key ): ?>
+                
                                 <li for class="media">
                                      <div class="media-object pull-left " >
                                         <i  class="<?=$key['icon']?> " id="ico-<?=$i;?>"></i>
@@ -120,10 +88,6 @@
                                 </li> 
                                 <!-- </a>       -->
                                  <?php $i++;  ?>
-                                <?php  $namaTopik=$key['namaTopik'];  ?>
-                                
-
-                                
                             <?php endforeach ?>
                             
                             </ul>
