@@ -827,6 +827,14 @@
   </a>
 </li>
 
+<li>
+<a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-qrcode"></i></span>
+    <span class="text">Token</span>
+    <span class="arrow"></span>
+  </a>
+</li>
+
 </ul>
 <!--/ END Template Navigation/Menu -->
 </section>
