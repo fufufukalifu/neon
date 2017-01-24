@@ -68,6 +68,30 @@ class Token_model extends CI_Model{
 		$this->db->set('tanggal_diaktifkan', $sekarang);
 		$this->db->update('tb_token');
 	}
+
+	// get token untuk diset ke mahasiswa
+	function get_token_to_set($data){
+		$this->db->select( '*' )->from( 'tb_token' );
+		$this->db->where('siswaID',NULL);
+		$this->db->where('nomorToken',$data['kode_token']);
+		$query = $this->db->get(); 
+		return $query->result();  	
+	}
+
+	//update token untuk siswa
+	function set_token_single($data){
+		$this->db->where('nomorToken', $data['kode_token']);
+		$this->db->set('siswaID', $data['id_siswa']);
+		$this->db->set('tanggal_diaktifkan', date('Y-m-d h:m:s'));
+
+		$this->db->update('tb_token');
+	}
+
+	//drop token
+	function drop_token($data){
+		$this->db->where('id', $data['id']);
+        $this->db->delete('tb_token');
+	}
 	
 }
 ?>

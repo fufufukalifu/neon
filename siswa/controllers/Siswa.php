@@ -483,6 +483,29 @@ class Siswa extends MX_Controller {
         echo json_encode($output);
     }
 
+
+        public function test() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Welcome',
+            'judul_header' =>'Welcome',
+            'judul_header2' =>'Welcome'
+        );
+
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header-login.php',
+            APPPATH.'modules/siswa/views/headersiswa.php',
+            APPPATH.'modules/siswa/views/v-dashboard.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
+        );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa()[0];
+        $data['token'] = $this->session->userdata('token');
+        var_dump($data['token']);
+        $this->parser->parse( 'templating/index', $data );
+    }
+
+
 }
 
 ?>

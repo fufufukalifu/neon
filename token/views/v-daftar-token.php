@@ -240,7 +240,7 @@
   });
 
     // TABLE REKAP
-    dataTableSiswa = $('.rekap_token').DataTable({
+    dataRekapToken = $('.rekap_token').DataTable({
       "ajax": {
         "url": base_url+"token/ajax_rekap_penggunaan_token",
         "type": "POST"
@@ -271,6 +271,7 @@ $('.simpan_token').click(function(){
 $('.send-token').click(function(){
   $('.kirim_token').toggle('show');
   dataTableToken.ajax.reload(null,false); 
+  dataTableSiswa.ajax.reload(null,false); 
 });
 
 $('.set_token').click(function(){
@@ -417,9 +418,37 @@ function get_stok(){
 
 function reload(){
   get_stok();
-  dataTableToken.reload(null,false); 
-  dataTableSiswa.reload(null,false); 
-  dataRekapToken.reload(null,false); 
+}
+
+
+function drop_token(data){
+    url = base_url+"token/drop_token";
+  swal({
+    title: "Yakin akan hapus Token?",
+    text: "Anda tidak dapat membatalkan ini.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Ya,Tetap hapus!",
+    closeOnConfirm: false
+  },
+  function(){
+    var datas = {id:data};
+    $.ajax({
+      dataType:"text",
+      data:datas,
+      type:"POST",
+      url:url,
+      success:function(){
+        swal("Terhapus!", "Token berhasil dihapus.", "success");
+        dataRekapToken.ajax.reload(null,false)
+      },
+      error:function(){
+        sweetAlert("Oops...", "Data gagal terhapus!", "error");
+      }
+
+    });
+  });
 }
 get_stok();
 </script>

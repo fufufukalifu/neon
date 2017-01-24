@@ -9,6 +9,8 @@ class Token extends MX_Controller {
 		parent::__construct();
 		$this->load->library('parser');
 		$this->load->model('token_model');
+		$this->load->model('siswa/msiswa');
+
 		$this->load->helper('string');
 		$this->hakakses = $this->gethakakses();
 	}
@@ -58,7 +60,7 @@ class Token extends MX_Controller {
 			}else{
 				$row[] = $token_item->namaDepan." ".$token_item->namaBelakang;
 			}
-			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->id."'".')"><i class="ico-remove"></i></a>';
+			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->tokenid."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
 		}
 
@@ -116,7 +118,7 @@ class Token extends MX_Controller {
 			$row[] = $date_diaktifkan;
 			$row[] = $date_kadaluarsa;
 			$row[] = $sisa_aktif->days." Hari";
-			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$list->id."'".')"><i class="ico-remove"></i></a>';
+			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$list->tokenid."'".')"><i class="ico-remove"></i></a>';
 			$data[] = $row;
 			$no = $no+1;
 		}
@@ -171,7 +173,32 @@ class Token extends MX_Controller {
 		}
 	}
 	
+	function isi_token(){
+		if ($this->input->post()) {
+			$post =$this->input->post();
+			$data = array("kode_token" => $post['kode_token']);
+			$hasil_token = $this->token_model->get_token_to_set($data);
+			if($hasil_token){
+				//kalo tokenya ada.
+				$data_update = array("kode_token"=> $post['kode_token'],
+					"id_siswa" => $this->msiswa-> get_siswaid());
+				$this->token_model->set_token_single($data_update);
+				$report_ajax = 1;
+				$this->session->set_userdata('token',30);
+				echo json_encode($report_ajax);
+			}else{
+				//kalo tokenya enggak ada.
+				$report_ajax = 0;
+				echo json_encode($report_ajax);
+			}
+		}
+	}
 
+	function test(){
+			var_dump($this->session->userdata());
+		// print_r(date('Y-m-d h:m:s'));
+
+	}
 	function ajax_get_stock(){
 		$jumlah_semua_stok = $this->token_model->get_jumlah_token_stok();
 		$jumlah_30_stok = $this->token_model->get_jumlah_token_stok(30);
@@ -206,5 +233,12 @@ class Token extends MX_Controller {
 			);
 
 		$this->parser->parse( 'templating/index', $data );
+	}
+
+	function drop_token(){
+		if ($this->input->post()) {
+			$post = $this->input->post();
+			$this->token_model->drop_token($post);
+		}
 	}
 }
