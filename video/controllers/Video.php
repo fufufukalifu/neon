@@ -11,8 +11,7 @@ class Video extends MX_Controller {
         $this->load->model('guru/mguru');
         $this->load->model('komen/mkomen');
         $this->load->library('parser');
-            $this->load->library('sessionchecker');
-    $this->sessionchecker->cek_token();
+    // 
     }
 
     //########## FRONT END  ####################
@@ -33,6 +32,7 @@ class Video extends MX_Controller {
 
     //halaman tampilkan semua video dalam 1 subab
     public function videobysub($sub_bab_id) {
+        $this->sessionchecker->cek_token();
         //tampilkan seluruh video yang diklik bab
         $data['judulbab'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
 
@@ -68,7 +68,7 @@ class Video extends MX_Controller {
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
     public function daftarvideo($tingpelID) {
-
+$this->sessionchecker->cek_token();
 // tampilkan ini matapelajaran apa dan untuk tingkat apa.
         $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
         // print_r($data['meta']);
@@ -95,6 +95,7 @@ class Video extends MX_Controller {
     }
 
     public function daftarallvideo($tingpelID) {
+        $this->sessionchecker->cek_token();
         // tampilkan ini matapelajaran apa dan untuk tingkat apa.
         $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
         // print_r($data['meta']);
@@ -125,6 +126,7 @@ class Video extends MX_Controller {
     }
 
     public function seevideo($idvideo) {
+        $this->sessionchecker->cek_token();
         //data untuk templating
         $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
         $metaMapel = $this->Mvideos->get_meta_mapel($data['videosingle'][0]->subBabID);
@@ -250,6 +252,7 @@ class Video extends MX_Controller {
     }
 
     function timeline($sub_bab_id){
+        $this->sessionchecker->cek_token();
                 //tampilkan seluruh video yang diklik bab
         $data['judulbab'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
 

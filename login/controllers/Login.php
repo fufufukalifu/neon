@@ -22,7 +22,6 @@ class Login extends MX_Controller {
         $this->load->library('session');
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
-               $this->cek_token();
                // redirect('welcome');
             }else if($this->session->userdata('HAKAKSES')=='guru'){
                redirect('guru/dashboard');
@@ -132,6 +131,8 @@ public function validasiLogin() {
                 redirect(site_url('guru/dashboard/'));
 
             } elseif ($hakAkses == 'siswa') {
+               $this->cek_token();
+                
 
                 redirect(site_url('welcome'));
 

@@ -18,7 +18,7 @@ class Tryout extends MX_Controller {
         # check session
         if ($this->session->userdata('loggedin') == true) {
             if ($this->session->userdata('HAKAKSES') == 'siswa') {
-                
+
             } else if ($this->session->userdata('HAKAKSES') == 'guru') {
                 redirect('guru/dashboard');
             } else {
@@ -67,23 +67,62 @@ class Tryout extends MX_Controller {
     }
 
     public function daftarpaket() {
+
+        //kalo tanggal mulai < hari ini 
+        # TO belum aktif
+
+        //kalo tanggal mulainya > hari ini
+        #to nya kadaluarsa, tampil pembahasan
+
+        // kalo tanggal mulainya >= hari ini dan < hari akhir
+        # to bisa diakses
+
+
+
         $id_to = $this->session->userdata('id_tryout');
         $datas['id_tryout'] = $id_to;
         $datas['id_pengguna'] = $this->session->userdata('id');
         $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
+        $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
+        
+        $date = new DateTime(date("Y-m-d H:i:s"));
+        
+        var_dump($this->session->userdata());
+        echo "<br>";
+        // concat tanggal mlai dan tanggai akhir
+        $mulai = date("Y-m-d H:i:s ", strtotime($data_to['tgl_mulai']." ".$data_to['wkt_mulai']));
+        $akhir = date("Y-m-d H:i:s ", strtotime($data_to['tgl_berhenti']." ".$data_to['wkt_berakhir']));
+
+        //buat date
+        $date_mulai =  new DateTime($mulai);
+        $date_berhenti =  new DateTime($akhir);
 
 
-
+        // kalo tanggal mulainya lebih dari hari ini dan kurang dari sama dengan tanggal berhenti
+        if (($date>= $date_mulai) && ($date <= $date_berhenti)) {
+            //TO BISA DI AKSES
+            $status = 'doing';
+        }else{
+            //TO TIDAK BISA DI AKSES
+            if ($date>=$date_berhenti) {
+                // SELESAI
+                $status = 'done';             
+            }else{
+                // BELUM DIMULAI
+                $status = 'yet';             
+            }
+        }
 
         if (isset($id_to)) {
             $data = array(
                 'judul_halaman' => 'Neon - Daftar Paket',
                 'judul_header' => 'Tryout : ' . $data['nama_to'],
                 'judul_tingkat' => '',
+                'nama_to' => $data_to['nm_tryout']
                 );
 
+            // FILES
             $konten = 'modules/tryout/views/v-daftar-paket.php';
-
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -91,12 +130,13 @@ class Tryout extends MX_Controller {
                 // APPPATH . 'modules/homepage/views/v-footer.php',
                 APPPATH . 'modules/testimoni/views/v-footer.php',
                 );
-
+            // DAFTAR PAKET
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
             $data['paket'] = $this->Mtryout->get_paket_undo($id_to);
 
 
-            $this->parser->parse('templating/index', $data);
+            // $this->parser->parse('templating/index', $data);
+            //unset session
             $this->session->unset_userdata('id_paketpembahasan');
             $this->session->unset_userdata('id_tryoutpembahasan');
             $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
@@ -104,7 +144,7 @@ class Tryout extends MX_Controller {
             //kalo gak ada session
             // redirect('tryout');
         }
-        // var_dump($data['paket_dikerjakan']);
+        // var_dump($data['paket_dikerjakan']);*/
     }
 
 //# fungsi indeks

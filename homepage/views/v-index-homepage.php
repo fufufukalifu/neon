@@ -55,13 +55,11 @@
 
     <div id="home" class="page-content padding-none">
 
-        <?php include 'v-last-courses.php'; ?>
-
         <hr class="divider-color" id="service" />
 
         <!-- section -->
 
-        <section class="fullwidth-background padding-section" >
+        <section class="fullwidth-background padding-section bg-color-1" >
 
             <div class="grid-row clear-fix">
 
@@ -104,6 +102,7 @@
             </div>
 
         </section>
+        <hr class="divider-color" />
 
         <!-- / section -->
 
@@ -193,9 +192,9 @@
 
 
 
-        <hr class="divider-color"/>
 
         <?php include 'v-about-us.php' ?>
+        <hr class="divider-color" />
 
         <!-- parallax section -->
 
@@ -207,7 +206,7 @@
 
             </div>
 
-            <div class="them-mask bg-color-2" id="subs"></div>
+            <div class="them-mask bg-color-1" id="subs"></div>
 
             <div class="grid-row center-text">
 
@@ -226,52 +225,10 @@
             </div>
 
             <!-- parallax section -->
+        <hr class="divider-color" />
 
             <?php include 'v-favorite-guru.php' ?>
 
-            <hr class="divider-color" />
-
-            <!-- section -->
-
-            <section class="padding-section">
-
-                <div class="grid-row clear-fix">
-
-                    <div class="grid-col-row">
-
-                        <div class="grid-col grid-col-6">
-
-                            <div class="video-player">
-
-                                <iframe src="https://www.youtube.com/embed/gcKzTfCsFSM"></iframe>
-
-                            </div>
-
-                        </div>
-
-                        <div class="grid-col grid-col-6 clear-fix">
-
-                            <h2>Yuk, kenali lebih mengenal neon lewat video pendek disamping.</h2>
-
-                            <p>Untuk lebih dapat mengenal neon itu apa, silahkan klik tombol mulai pada video disamping ini. semoga teman-teman bisa tambah kenal sama neon yah.</p>
-
-                            <br/>
-
-                            <br/>
-
-                            <br/>
-
-                            <br/>
-
-                            <!-- <a href="page-about-us.html" class="cws-button bt-color-3 border-radius alt icon-right float-right">Watch More<i class="fa fa-angle-right"></i></a> -->
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
 
             <!-- / section -->
 
@@ -279,31 +236,9 @@
 
 
 
-            <?php include 'v-pricing-table.php'; ?>
 
             <!-- parallax section -->
 
-            <div class="parallaxed">
-
-                <div class="parallax-image" data-parallax-left="0.5" data-parallax-top="0.3" data-parallax-scroll-speed="0.5">
-
-                    <img src="<?= base_url('assets/back/img/parallax.png') ?>" alt="">
-
-                </div>
-
-                <div class="them-mask bg-color-3"></div>
-
-                <div class="grid-row center-text">
-
-                    <!-- twitter -->
-
-                    <div class="twitter-1"></div>
-
-                    <!-- / twitter -->
-
-                </div>
-
-            </div>
             <section class="fullwidth-background testimonial padding-section" id="testimonials">
 
                 <div class="grid-row">

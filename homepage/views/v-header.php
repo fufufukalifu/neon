@@ -2,45 +2,19 @@
 
 	<header class="only-color">
 
-		<!-- header top panel -->
-
-		<div class="page-header-top">
-
-			<div class="grid-row clear-fix">
-
-				<address>
-
-					<a href="tel:(0274) 450300 " class="phone-number"><i class="fa fa-phone"></i>(0274) 450300 </a>
-
-					<a href="mailto:info@neonjogja.com  " class="email"><i class="fa fa-envelope-o"></i>info@neonjogja.com </a>
-
-				</address>
-
-
-
-			</div>
-
-		</div>
-
-		<!-- / header top panel -->
 
 		<!-- sticky menu -->
 
 		<div class="sticky-wrapper">
-
 			<div class="sticky-menu">
-
 				<div class="grid-row clear-fix">
-
 					<!-- logo -->
-
 					<a href="<?=base_url() ?>" class="logo">
-
 						<img src="<?=base_url('assets/back/img/logo.png')?>"  
 
 						data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>"
 
-						 >
+						>
 
 						<h1> </h1>
 
@@ -48,7 +22,7 @@
 
 					<!-- / logo -->
 
-					<nav class="main-nav">
+					<nav class="main-nav switch-menu">
 
 						<ul class="clear-fix">
 
@@ -72,7 +46,7 @@
 
 							</li>
 
-														<li>
+							<li>
 
 								<a href="<?=base_url('index.php/register')?>">Daftar</a>
 
@@ -85,7 +59,7 @@
 							</li>
 
 						</ul>
-
+						<a class="menu-bar" href="#"><span class="ham"></span></a>
 					</nav>
 
 				</div>
