@@ -43,37 +43,7 @@
 
 
 
-<!-- ucapan selamat datang -->
 
-<main>
-
-    <div class="page-content grid-row">
-
-        <div class="porfolio-item">
-
-            <div class="col-md-3"><img src="<?=base_url('assets/image/logo/logo-text-inverse.png')?>"  data-at2x="<?=base_url('assets/image/logo/logo-text-inverse.png')?>" width="90%" alt></div>
-
-            <div class="col-md-9">
-
-                <h4>Selamat Datang Di neon!</h4>
-
-                <p>Sudah siap memulai belajar dengan cara asyik dan santai? mulailah dengan memilih mata pelajaran yang sesuai dengan tingkatanmu.</p>
-
-            </div>
-
-            <br><br>
-
-            <br><br>
-
-
-
-        </div>
-
-    </div>
-
-</main>
-
-<!-- ucapan selamat datang -->
 
 
 

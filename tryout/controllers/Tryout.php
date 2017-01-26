@@ -87,8 +87,6 @@ class Tryout extends MX_Controller {
         
         $date = new DateTime(date("Y-m-d H:i:s"));
         
-        var_dump($this->session->userdata());
-        echo "<br>";
         // concat tanggal mlai dan tanggai akhir
         $mulai = date("Y-m-d H:i:s ", strtotime($data_to['tgl_mulai']." ".$data_to['wkt_mulai']));
         $akhir = date("Y-m-d H:i:s ", strtotime($data_to['tgl_berhenti']." ".$data_to['wkt_berakhir']));
@@ -101,15 +99,15 @@ class Tryout extends MX_Controller {
         // kalo tanggal mulainya lebih dari hari ini dan kurang dari sama dengan tanggal berhenti
         if (($date>= $date_mulai) && ($date <= $date_berhenti)) {
             //TO BISA DI AKSES
-            $status = 'doing';
+            $status_to = 'doing';
         }else{
             //TO TIDAK BISA DI AKSES
             if ($date>=$date_berhenti) {
                 // SELESAI
-                $status = 'done';             
+                $status_to = 'done';             
             }else{
                 // BELUM DIMULAI
-                $status = 'yet';             
+                $status_to = 'yet';             
             }
         }
 
@@ -118,7 +116,8 @@ class Tryout extends MX_Controller {
                 'judul_halaman' => 'Neon - Daftar Paket',
                 'judul_header' => 'Tryout : ' . $data['nama_to'],
                 'judul_tingkat' => '',
-                'nama_to' => $data_to['nm_tryout']
+                'nama_to' => $data_to['nm_tryout'],
+
                 );
 
             // FILES
@@ -133,16 +132,17 @@ class Tryout extends MX_Controller {
             // DAFTAR PAKET
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
             $data['paket'] = $this->Mtryout->get_paket_undo($id_to);
+            $data['status_to'] = $status_to;
 
 
-            // $this->parser->parse('templating/index', $data);
+            $this->parser->parse('templating/index', $data);
             //unset session
             $this->session->unset_userdata('id_paketpembahasan');
             $this->session->unset_userdata('id_tryoutpembahasan');
             $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
         } else {
             //kalo gak ada session
-            // redirect('tryout');
+            redirect('tryout');
         }
         // var_dump($data['paket_dikerjakan']);*/
     }

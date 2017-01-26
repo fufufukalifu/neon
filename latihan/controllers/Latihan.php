@@ -3,9 +3,7 @@
 
 
 /**
-
  *
-
  */
 
 class Latihan extends MX_Controller {
@@ -141,11 +139,11 @@ class Latihan extends MX_Controller {
         // $bab = 82;
         // $idsoal = ['24','25'];
 
-        // $jumlah_soal = $_POST['jumlahsoal'];
-        // $kesulitan = $_POST['kesulitan'];
+        $jumlah_soal = $_POST['jumlahsoal'];
+        $kesulitan = $_POST['kesulitan'];
 
-        $jumlah_soal = 1;
-        $kesulitan = 1;
+        // $jumlah_soal = count($idsoal);
+        // $kesulitan = 1;
 
         //get nama mata pelajaran untuk nama paket
         $nama_matapelajaran = $this->mlatihan->get_nama_bab($bab)[0]['judulBab'];

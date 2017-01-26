@@ -80,15 +80,26 @@
 
 							<div class="gallery-item picture">
 
-								<img src="http://placehold.it/570x380" data-at2x="http://placehold.it/570x380" alt>
+								<img src="<?=base_url('assets/back/img/about/1.jpg') ?>" data-at2x="<?=base_url('assets/img/about/1.jpg') ?>" alt>
+
+							</div>
+<div class="gallery-item picture">
+
+								<img src="<?=base_url('assets/back/img/about/3.jpg') ?>" data-at2x="<?=base_url('assets/img/about/3.jpg') ?>" alt>
+
+							</div>
+<div class="gallery-item picture">
+
+								<img src="<?=base_url('assets/back/img/about/2.jpg') ?>" data-at2x="<?=base_url('assets/img/about/2.jpg') ?>" alt>
+
+							</div>
+<div class="gallery-item picture">
+
+								<img src="<?=base_url('assets/back/img/about/4.jpg') ?>" data-at2x="<?=base_url('assets/img/about/4.jpg') ?>" alt>
 
 							</div>
 
-							<div class="gallery-item picture">
-
-								<img src="http://placehold.it/570x380" data-at2x="http://placehold.it/570x380" alt>
-
-							</div>
+							
 
 						</div>
 

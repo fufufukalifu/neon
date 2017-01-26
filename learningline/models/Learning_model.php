@@ -13,7 +13,7 @@ class Learning_model extends CI_Model{
 		$this->db->join('`tb_tingkat-pelajaran` tp ',' b.`tingkatPelajaranID` = tp.`id`');
 		$this->db->join('`tb_tingkat` tn',' tn.`id` = tp.`tingkatID`');
 		$this->db->join('tb_mata-pelajaran` m',' m.`id` = tp.`mataPelajaranID`');
-
+		$this->db->order_by('t.urutan asc');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -30,6 +30,7 @@ class Learning_model extends CI_Model{
 		$this->db->join('`tb_tingkat` tn',' tn.`id` = tp.`tingkatID`');
 		$this->db->join('tb_mata-pelajaran` m',' m.`id` = tp.`mataPelajaranID`');
 		$this->db->where('b.id',$data);
+		$this->db->order_by('t.urutan asc');
 
 		$query = $this->db->get();
 		return $query->result_array();
@@ -42,7 +43,7 @@ class Learning_model extends CI_Model{
 		$this->db->join('`tb_line_step` ls','tp.`id`=ls.`topikID`');
 		$this->db->where('tp.id',$data);
 		$this->db->where('ls.status',1);
-		$this->db->order_by('tp.urutan','asc');
+		$this->db->order_by('ls.urutan','asc');
 
 
 		$query = $this->db->get();
