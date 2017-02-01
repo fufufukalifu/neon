@@ -376,12 +376,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  	// view step Quiz
  	 public function step_quiz($UUID)
  	{
-        
+       
  		if (!empty($this->session->userdata['id_latihan'])) {
-            $id = $this->session->userdata['id_latihan'];
+            $data['limitQuiz']=$this->Mlinetopik->get_limitQuiz($UUID);
+           $data['id_latihan'] = $this->session->userdata['id_latihan'];
             $this->load->view('templating/t-headersoal');
 
-            $query = $this->load->mtesonline->get_soal($id);
+            $query = $this->load->Mlinetopik->get_soqlQuiz($data);
             $data['soal'] = $query['soal'];
             $data['pil'] = $query['pil'];
             // $this->parser->parse('templating/index', $data);

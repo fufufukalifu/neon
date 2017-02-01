@@ -9,6 +9,15 @@
 
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
+<!-- Strat Script Matjax -->
+     <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({
+         showProcessingMessages: false,
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+       });
+     </script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 <script>
 var Preview = {
   delay: 150,        // delay after keystroke before updating
