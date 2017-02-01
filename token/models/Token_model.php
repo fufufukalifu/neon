@@ -15,7 +15,7 @@ class Token_model extends CI_Model{
 			$this->db->where('siswaID is null');
 
 		}
-		$this->db->select( '*,tb_token.id as tokenid' )->from( 'tb_token' ); 
+		$this->db->select( '*,tb_token.id as tokenid,tb_token.status as tokenStatus' )->from( 'tb_token' ); 
 		$this->db->join('tb_siswa', 'tb_token.siswaID = tb_siswa.id', 'left outer');
 		$query = $this->db->get(); 
 		return $query->result(); 
@@ -37,61 +37,70 @@ class Token_model extends CI_Model{
 
 	//get mahasiswa yang belum memiliki voucher
 	function get_siswa_unvoucher(){
-		$query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang` FROM tb_siswa s 
+		$query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,p.`namaPengguna` FROM tb_siswa s 
 		LEFT JOIN `tb_cabang` c
 		ON s.`cabangID` = c.id
+		JOIN `tb_pengguna` p ON
+		p.`id` = s.`penggunaID`
 		WHERE s.id NOT IN
 		(
-		SELECT t.`siswaID` FROM `tb_token` t
-		JOIN tb_siswa s ON s.`id` = t.`siswaID`
-		) AND s.`status`=1";
+			SELECT t.`siswaID` FROM `tb_token` t
+			JOIN tb_siswa s ON s.`id` = t.`siswaID`
+			) AND s.`status`=1";
 
-		$result = $this->db->query($query);
-		return $result->result_array();
-	}
+$result = $this->db->query($query);
+return $result->result_array();
+}
 
 	// get token kosong yang mau di set ke mahasiswa
-	function token_kosong($data){
-		$this->db->select( 'id' )->from( 'tb_token' );
-		$this->db->where('masaAktif',$data['jenis_token']);
-		$this->db->where('siswaID',NULL);
-		$this->db->limit($data['jumlah_token']);
-		$this->db->order_by('id','desc');
-		$query = $this->db->get(); 
-		return $query->result();  	
-	}
+function token_kosong($data){
+	$this->db->select( 'id' )->from( 'tb_token' );
+	$this->db->where('masaAktif',$data['jenis_token']);
+	$this->db->where('siswaID',NULL);
+	$this->db->limit($data['jumlah_token']);
+	$this->db->order_by('id','desc');
+	$query = $this->db->get(); 
+	return $query->result();  	
+}
 	// update token untuk mahasiswa
-	function set_token_to_mahasiswa($param){
-		$sekarang = date('Y-m-d h:m:s');
-		$this->db->where('id', $param['id_token']);
-		$this->db->set('siswaID', $param['siswaID']);
-		$this->db->set('tanggal_diaktifkan', $sekarang);
-		$this->db->update('tb_token');
-	}
+function set_token_to_mahasiswa($param){
+	$sekarang = date('Y-m-d h:m:s');
+	$this->db->where('id', $param['id_token']);
+	$this->db->set('siswaID', $param['siswaID']);
+	$this->db->update('tb_token');
+}
 
 	// get token untuk diset ke mahasiswa
-	function get_token_to_set($data){
-		$this->db->select( '*' )->from( 'tb_token' );
-		$this->db->where('siswaID',NULL);
-		$this->db->where('nomorToken',$data['kode_token']);
-		$query = $this->db->get(); 
-		return $query->result();  	
-	}
+function get_token_to_set($data){
+	$this->db->select('*')->from( 'tb_token' );
+	$this->db->where('siswaID',$data['id_siswa']);
+	$this->db->where('nomorToken',$data['kode_token']);
+	$query = $this->db->get(); 
+	return $query->result();  	
+}
 
 	//update token untuk siswa
-	function set_token_single($data){
-		$this->db->where('nomorToken', $data['kode_token']);
-		$this->db->set('siswaID', $data['id_siswa']);
-		$this->db->set('tanggal_diaktifkan', date('Y-m-d h:m:s'));
+function set_token_single($data){
+	$this->db->where('nomorToken', $data['kode_token']);
+	$this->db->where('siswaID', $data['id_siswa']);
+	$this->db->set('tanggal_diaktifkan', date('Y-m-d h:m:s'));
+	$this->db->set('status', 1);
 
-		$this->db->update('tb_token');
-	}
+
+	$this->db->update('tb_token');
+}
 
 	//drop token
-	function drop_token($data){
-		$this->db->where('id', $data['id']);
-        $this->db->delete('tb_token');
-	}
-	
+function drop_token($data){
+	$this->db->where('id', $data['id']);
+	$this->db->delete('tb_token');
+}
+
+function update_token($data){
+	$this->db->where('id', $data['id']);
+	$this->db->set('tanggal_diaktifkan', date('Y-m-d h:m:s'));
+	$this->db->set('status', 1);
+	$this->db->update('tb_token');
+}
 }
 ?>

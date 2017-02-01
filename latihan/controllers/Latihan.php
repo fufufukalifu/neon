@@ -139,8 +139,8 @@ class Latihan extends MX_Controller {
         // $bab = 82;
         // $idsoal = ['24','25'];
 
-        $jumlah_soal = $_POST['jumlahsoal'];
-        $kesulitan = $_POST['kesulitan'];
+        // $jumlah_soal = $_POST['jumlahsoal'];
+        // $kesulitan = $_POST['kesulitan'];
 
         // $jumlah_soal = count($idsoal);
         // $kesulitan = 1;
@@ -154,8 +154,8 @@ class Latihan extends MX_Controller {
         // $nama_bab = "Bab";
 
         $data['post'] = array(
-            "jumlahSoal" => $jumlah_soal,
-            "tingkatKesulitan" => $kesulitan,
+            // "jumlahSoal" => $jumlah_soal,
+            // "tingkatKesulitan" => $kesulitan,
             "nm_latihan" => "Latihan - ".$nama_matapelajaran,
             "create_by" => $this->session->userdata['USERNAME'],
             "uuid_latihan" => $uuid_latihan,

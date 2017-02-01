@@ -83,6 +83,13 @@ class Token extends MX_Controller {
 			<label for="."soal".$list_siswa['id'].">&nbsp;&nbsp;</label></span>";
 			$row[] = $n;
 			$row[] = $list_siswa['namaDepan']." ".$list_siswa['namaBelakang'];
+			$row[] = $list_siswa['namaPengguna'];
+			if ($list_siswa['namaCabang']=="") {
+			$row[] = "non-neutron";
+			}else{
+			$row[] = $list_siswa['namaCabang'];
+			}
+
 
 			$data[] = $row;
 			$n++;
@@ -118,7 +125,16 @@ class Token extends MX_Controller {
 			$row[] = $date_diaktifkan;
 			$row[] = $date_kadaluarsa;
 			$row[] = $sisa_aktif->days." Hari";
+			if ($list->tokenStatus==1) {
+				$row[] = "Aktif";
 			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$list->tokenid."'".')"><i class="ico-remove"></i></a>';
+
+			}else{
+				$row[] = "non-aktif";
+			$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$list->tokenid."'".')"><i class="ico-remove"></i></a>'.' <a class="btn btn-sm btn-info"  title="Aktifkan" onclick="update_token('."'".$list->tokenid."'".')"><i class="ico-file-check"></i></a>';
+
+			}
+
 			$data[] = $row;
 			$no = $no+1;
 		}
@@ -176,15 +192,15 @@ class Token extends MX_Controller {
 	function isi_token(){
 		if ($this->input->post()) {
 			$post =$this->input->post();
-			$data = array("kode_token" => $post['kode_token']);
+			$data = array("kode_token" => $post['kode_token'],
+				"id_siswa"=>$this->msiswa-> get_siswaid());
+
 			$hasil_token = $this->token_model->get_token_to_set($data);
 			if($hasil_token){
 				//kalo tokenya ada.
-				$data_update = array("kode_token"=> $post['kode_token'],
-					"id_siswa" => $this->msiswa-> get_siswaid());
-				$this->token_model->set_token_single($data_update);
+				$this->token_model->set_token_single($data);
 				$report_ajax = 1;
-				$this->session->set_userdata('token',30);
+				$this->session->set_userdata('token','Aktif');
 				echo json_encode($report_ajax);
 			}else{
 				//kalo tokenya enggak ada.
@@ -195,7 +211,7 @@ class Token extends MX_Controller {
 	}
 
 	function test(){
-			var_dump($this->session->userdata());
+		var_dump($this->session->userdata());
 		// print_r(date('Y-m-d h:m:s'));
 
 	}
@@ -218,12 +234,21 @@ class Token extends MX_Controller {
 	}
 
 	function settoken(){
+		$token = $this->session->userdata('token');
+		if ($token=='BelumAktif') {
+			$pesan = "<span>Maaf Token belum aktif,</span><br> silahkan aktifkan dengan cara memasukan nomor token yang sudah dikirim admin";
+		}elseif ($token=='Habis') {
+			$pesan = "<span>Maaf Token anda sudah habis,</span><br> silahkan isi terlebih dahulu token anda";
+		}else{
+			$pesan = "<span>Maaf anda tidak memiliki Token,</span><br> silahkan lakukan permintaan pada admin untuk mengirim token";
+
+		}
 		$data = array(
 			'judul_halaman' => 'Neon - Halaman Token',
 			'judul_header' =>'Welcome',
-			'judul_header2' =>'Video Belajar'
+			'judul_header2' =>'Video Belajar',
+			'pesan'=>$pesan
 			);
-
 
 
 		$data['files'] = array( 
@@ -239,6 +264,13 @@ class Token extends MX_Controller {
 		if ($this->input->post()) {
 			$post = $this->input->post();
 			$this->token_model->drop_token($post);
+		}
+	}
+
+	function aktifkan_token(){
+		if ($this->input->post()) {
+			$post = $this->input->post();
+			$this->token_model->update_token($post);
 		}
 	}
 }

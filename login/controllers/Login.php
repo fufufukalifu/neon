@@ -1,15 +1,6 @@
 <?php
-
-
-
 class Login extends MX_Controller {
-
-
-
     //put your code here
-
-
-
     public function __construct() {
 
         parent::__construct();
@@ -24,17 +15,17 @@ class Login extends MX_Controller {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
                // redirect('welcome');
             }else if($this->session->userdata('HAKAKSES')=='guru'){
-               redirect('guru/dashboard');
-           }else{
-           }
+             redirect('guru/dashboard');
+         }else{
+         }
 
-       }
+     }
 
-   }
+ }
 
 
 
-   public function index() {
+ public function index() {
 
     $data = array(
 
@@ -131,34 +122,34 @@ public function validasiLogin() {
                 redirect(site_url('guru/dashboard/'));
 
             } elseif ($hakAkses == 'siswa') {
-               $this->cek_token();
-                
+             $this->cek_token();
 
-                redirect(site_url('welcome'));
 
-            } elseif ($hakAkses == 'user') {
+             redirect(site_url('welcome'));
 
-//                   	redirect(site_url('welcome'));
+         } elseif ($hakAkses == 'user') {
 
-            } else {
+//                      redirect(site_url('welcome'));
 
-                echo 'tidak ada hak akses';
+         } else {
 
-            }
+            echo 'tidak ada hak akses';
 
         }
 
-        return TRUE;
-
-    } else {
-
-        $this->session->set_flashdata('notif', ' Username atau password salah');
-
-        redirect(site_url('login'));
-
-        return FALSE;
-
     }
+
+    return TRUE;
+
+} else {
+
+    $this->session->set_flashdata('notif', ' Username atau password salah');
+
+    redirect(site_url('login'));
+
+    return FALSE;
+
+}
 
 }
 
@@ -332,7 +323,7 @@ public function createSession($userID) {
 
             } elseif ($hakAkses == 'user') {
 
-//                   	redirect(site_url('welcome'));
+//                      redirect(site_url('welcome'));
 
             } else {
 
@@ -354,27 +345,34 @@ function cek_token(){
     if ($token) {
         //memiliki token
         $date1 = new DateTime($token['tanggal_diaktifkan']);
-        $date_diaktifkan = $date1->format('d-M-Y');
-        $date_kadaluarsa =  date("d-M-Y", strtotime($date_diaktifkan)+ (24*3600*$token['masaAktif']));
+        // cek dulu statusna udah di aktivin atau belum
+        if ($token['status']==1) {
+            # udah diaktifin
+           $date_diaktifkan = $date1->format('d-M-Y');
+           $date_kadaluarsa =  date("d-M-Y", strtotime($date_diaktifkan)+ (24*3600*$token['masaAktif']));
 
-        $date1 = new DateTime(date("d-M-Y"));
-        $date2 = new DateTime($date_kadaluarsa);
-        $sisa_aktif = $date2->diff($date1)->days;
-        if ($sisa_aktif != 0) {
-            $this->session->set_userdata(array('token'=>TRUE,'sisa'=>$sisa_aktif));
+           $date1 = new DateTime(date("d-M-Y"));
+           $date2 = new DateTime($date_kadaluarsa);
+           $sisa_aktif = $date2->diff($date1)->days;
+           if ($sisa_aktif != 0) {
+            //token aktif
+            $this->session->set_userdata(array('token'=>'Aktif','sisa'=>$sisa_aktif));
         }else{
             //token habis
-            $this->session->set_userdata(array('token'=>FALSE));
+            $this->session->set_userdata(array('token'=>'Habis'));
         }
     }else{
-        //tidak memiliki token
-        $this->session->set_userdata(array('token'=>0));
+        // token belum diaktifkan
+        $this->session->set_userdata(array('token'=>'BelumAktif'));
     }
+}else{
+    // belum terdaftar di token
+    $this->session->set_userdata(array('token'=>'TidakAda'));
 }
 
 
 }
 
-
+}
 
 ?>

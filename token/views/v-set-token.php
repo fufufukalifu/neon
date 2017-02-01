@@ -1,7 +1,7 @@
 <main>
     <div class="page-content container clear-fix">
         <div class="container-404">
-            <p><span>Maaf:(</span><br>untuk mengakses halaman, silahkan tambahkan Token Terlebih dahulu!</p>
+            <p>{pesan}</p>
             <center>    <input type="text" name="kode_token" style="width: 40%;margin-bottom: 10px" placeholder="Masukan Kode Token"><a class="cws-button bt-color-3 alt isi_button">Isi!</a></center>
         </div>
     </div>
@@ -20,7 +20,8 @@
             success:function(data){
                 console.log(data);
                 if (data=="1") {     
-                    swal('Token Berhasil di tambahkan, silahkan menikmati layanan kami !');
+                    swal('Token Berhasil di aktifkan, silahkan menikmati layanan kami !');
+                   window.location = base_url+"welcome";
                 }else{
                     swal('Kode Token salah');
                 }
