@@ -11,24 +11,6 @@
                   </div>
                   <div class="modal-body">
                    <input type="hidden" class="form-control" name="idCabang">
-                   <form  class="panel panel-default form-horizontal form-bordered form-kelas"  method="post" >
-                     <div  class="form-group">
-                       <label class="col-sm-2 control-label">Kelas</label>
-                       <div class="col-sm-5">
-                         <input type="text" class="form-control" name="kelas">
-
-                       </div>
-                       <div class="col-sm-4">
-                         <a class="btn btn-primary buat_kk" onclick="add_kk()">Simpan</a>
-                       </div>
-
-                     </div>
-
-                     <div  class="form-group">
-                       <label class="col-sm-1 control-label"></label>
-                     </div>
-
-                   </form>
                    <table class="daftar_kelompok_kelas table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                       <tr>
@@ -42,8 +24,6 @@
 
                     </tbody>
                   </table>
-
-
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -69,17 +49,20 @@
                        <!-- stkt = soal tingkat -->
                        <input type="text" class="form-control" name="kota">
                        <input type="hidden" class="form-control" name="id">
+
                      </div>
                      <label class="col-sm-2 control-label">Alamat</label>
                      <div class="col-sm-4">
                        <!-- stkt = soal tingkat -->
                        <textarea class="form-control" name="alamat"></textarea>
                      </div>
+
                      <label class="col-sm-2 control-label">Kode Cabang</label>
                      <div class="col-sm-2">
                        <!-- stkt = soal tingkat -->
                        <input type="text" class="form-control" name="kodecabang">
                      </div>
+
                    </div>
 
                    <div  class="form-group">
@@ -204,14 +187,12 @@
             $('input[name=idCabang]').val(meta.id);
             dataTableKelompokKelas = $('.daftar_kelompok_kelas').DataTable({
               "ajax": {
-                "url": base_url+"kelompokkelas/ajax_data/"+meta.id,
-                "type": "POST",
+                // "url": base_url+"cabang/ajax_data",
+                "type": "POST"
               },
               "emptyTable": "Tidak Ada Data Pesan",
               "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
               "bDestroy": true,
-              "pageLength": 3,
-
             });
 
           }
@@ -226,28 +207,4 @@
             $('.buat_cabang').html('Perbaharui');
           }
 
-// KELOMPOK KELAS
-function add_kk(){
-  kelas = $('input[name=kelas]').val();
-  if (kelas) {
-    datas = {kk:kelas,cabang:$('input[name=idCabang]').val()};
-    url = base_url+"kelompokkelas/insert_kelompokkelas_ajax";
-    $.ajax({
-      dataType:"text",
-      data:datas,
-      type:"POST",
-      url:url,
-      success:function(){
-        swal("Tersimpan!", "kelompok kelas berhasil disimpan.", "success");
-        dataTableKelompokKelas.ajax.reload(null,false);
-        $('.form-kelas')[0].reset();
-      },
-      error:function(){
-        sweetAlert("Oops...", "Data gagal disimpan!", "error");
-      }
-    });
-  }else{
-    swal('Isi kelas terlebih dahulu!');
-  }
-}
-</script>
+          </script>
