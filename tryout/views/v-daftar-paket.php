@@ -92,7 +92,7 @@
 
 
           <tbody>
-
+            <?php   echo $status_to; ?>
             <?php foreach ($paket as $paketitem):?>
 
               <tr>
@@ -105,37 +105,45 @@
 
                 <td>
 
-                  <a onclick="kerjakan(<?=$paketitem['id_paket']?>)" 
-
-                   class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
-
-                   data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
-
-
-
-                 </td>
-
-               </tr>
-
-             <?php endforeach ?>
-
-           </tbody>
-
-         </table>
-
-       <?php endif ?>
-
-     </div>
+                  <?php if ($status_to=='doing'): ?>
+                   <a onclick="kerjakan(<?=$paketitem['id_paket']?>)" 
+                     class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
+                     data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
+                   <?php elseif ($status_to=='done'): ?>
+                     <a onclick="habis()" disable
+                     class="btn btn-danger border-radius modal-on<?=$paketitem['id_paket']?>"
+                     data-todo='<?=json_encode($paketitem)?>'><i class="fa fa-times"></i></a>
+                   <?php else: ?>
+                    <a onclick="forbiden()" disable
+                    class="btn btn-danger border-radius modal-on<?=$paketitem['id_paket']?>"
+                    data-todo='<?=json_encode($paketitem)?>'><i class="fa fa-times"></i></a>
+                  <?php endif ?>
 
 
 
-   </div>
+                </td>
+
+              </tr>
+
+            <?php endforeach ?>
+
+          </tbody>
+
+        </table>
+
+      <?php endif ?>
+
+    </div>
+
+
+
+  </div>
 
 
 
 
 
-   <div class="col-md-12">
+  <div class="col-md-12">
 
     <section>
 
@@ -161,15 +169,18 @@
                 <td><?=$paketitem['id'] ?></td>
                 <td><?=$paketitem['nm_paket'] ?></td>
                 <td>
-                  <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
-                  class="cws-button border-radius bt-color-2 modal-on<?=$paketitem['id_paket']?>"
-                  data-todo='<?=json_encode($paketitem)?>'>Lihat Score</a>
 
+                 <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
+                  class="btn btn-primary modal-on<?=$paketitem['id_paket']?>"
+                  data-todo='<?=json_encode($paketitem)?>' title="Lihat Score"><i class="glyphicon glyphicon-list-alt"></i></a>
 
-                  <a onclick="pembahasanto(<?=$paketitem['id_paket']?>)" 
-                  class="cws-button border-radius bt-color-2"
-                  data-todo='<?=json_encode($paketitem)?>'>Lihat Pembahasan</a>
-                </td>
+                  <?php if ($status_to=="done"): ?>
+                    <a onclick="pembahasanto(<?=$paketitem['id_paket']?>)" 
+                      class="btn btn-primary"
+                      data-todo='<?=json_encode($paketitem)?>' title="Pembahasan"><i class="glyphicon glyphicon-book"></i></a>
+
+                    <?php endif ?>
+                  </td>
                 </tr>
               <?php endforeach ?>
             </tbody>
@@ -440,8 +451,13 @@ $(document).ready(function() {
 
 });
 
+function forbiden(){
+  swal('Maaf, to belum bisa di kerjakan!');
+}
 
-
+function habis(){
+  swal('Waktu pengerjaan to sudah habis!, anda tidak dapat mengerjakan to.');
+}
 </script>
 
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>

@@ -274,7 +274,7 @@ class Mmatapelajaran extends CI_Model {
 
     public function daftarsubBab($id) {
 
-        $this->db->select('*');
+        $this->db->select('*,tb_subbab.id as subID');
 
         $this->db->from('tb_subbab');
 

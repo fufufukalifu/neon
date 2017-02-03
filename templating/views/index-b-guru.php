@@ -555,6 +555,8 @@
   <li class="submenu-header ellipsis">Sub Bank Soal</li>
   <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Semua Soal</span>
   </a></li>
+    <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">View full Soal</span>
+  </a></li>
   <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
   </a></li>
 

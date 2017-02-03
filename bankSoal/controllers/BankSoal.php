@@ -7,6 +7,7 @@ class Banksoal extends MX_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->helper(array('url'));
         $this->load->model('Mbanksoal');
         $this->load->model('templating/Mtemplating');
         $this->load->library('parser');
@@ -19,6 +20,173 @@ class Banksoal extends MX_Controller {
         );
         $data['judul_halaman'] = "test";
         $this->load->view('templating/index-b-guru', $data);
+    }
+
+    //pagination list soal
+    public function listsoal()
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mbanksoal->jumlah_data();
+
+        $this->load->library('pagination');
+        $config['base_url'] = base_url().'index.php/banksoal/listsoal/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data($config['per_page'],$from);
+      
+        $this->tampSoal($list);
+    }
+
+    //tampung list semua soal u/ ke view
+    public function tampSoal($list)
+    {
+         $data['judul_halaman'] = "Bank Soal";
+        $data['files'] = array(
+            APPPATH . 'modules/banksoal/views/v-soal-all2.php',
+            );
+         // $pilihan = $this->Mbanksoal->get_allpilihan();
+        // ekstrak data db ke new arrat
+          $data['datSoal']=array();
+          foreach ( $list as $list_soal ) {
+            $id_soal=$list_soal['id_soal'];
+            $jawaban=$list_soal['jawaban'];
+            $tingkat=$list_soal['kesulitan'];
+            $id_soal=$list_soal['id_soal'];
+            $random=$list_soal['random'];
+            $publish=$list_soal['publish'];
+            $judulSoal = $list_soal['judul_soal'];
+            $soal=$list_soal['soal'];
+            $sumber=$list_soal['sumber'];
+            $UUID=$list_soal['UUID'];
+            $id_subbab=$list_soal['id_subbab'];
+            $tingkat = $list_soal['aliasTingkat'];
+            $mapel= $list_soal['keterangan'];
+            $bab = $list_soal['judulBab'];
+            $subBab = $list_soal['judulSubBab'];
+            $tampBahas=$list_soal['pembahasan'];
+            $pembahasan = '<a style="color:red;">Maaf Pembahasan Belum Tersedia !! </a>';
+            $tampVideo = $list_soal['video_pembahasan'];
+            $videoBahas ='';
+            $tampImgSoal= $list_soal['gambar_soal'];
+            $imgSoal='';
+            $tampimgbahas=$list_soal['gambar_pembahasan'];
+            $imgBahas='';
+            $jawaban=$list_soal['jawaban'];
+            $isiJawaban = '';
+
+            if ($jawaban != '' && $jawaban != ' ') {
+                $isiJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+            }
+            // foreach ( $pilihan as $piljawaban ) {
+            //     $id_soal_fk=$piljawaban['id_soal'];
+            //     $op=$piljawaban['pilihan'];
+            //     if ($id_soal==$id_soal_fk && $jawaban == $op ) {
+            //         $isiJawaban=$piljawaban['jawabanBenar'];
+
+            //     }    
+            // }
+
+            // pengecekan gambar pembahasan
+            if ($tampimgbahas!= '' && $tampimgbahas != ' ' ) {
+                $imgBahas = base_url().'/assets/image/pembahasan/'.$tampimgbahas;
+            }
+
+            // pengecekan pembahsan
+            if ($tampBahas != '' && $tampBahas != ' ') {
+                $pembahasan=$tampBahas;
+            } else if($tampVideo !='' && $tampVideo !=' ') {
+                $videoBahas=base_url().'/assets/video/videoPembahasan/'.$tampVideo;
+                $pembahasan='';
+            }
+            
+            // Pengecekan gambar Soal
+            if ($tampImgSoal!='' && $tampImgSoal != ' ') {
+                // jika gambar tidak null 
+                $imgSoal=base_url().'/assets/image/soal/'.$tampImgSoal;
+            } 
+
+
+            if ($tingkat == '3') {
+                $kesulitan = 'Sulit';
+            } elseif ($tingkat == '2') {
+                $kesulitan = 'Sedang';
+            }else {
+               $kesulitan = 'Mudah';
+            }
+
+            $data['datSoal'][]=array(
+                'judulSoal'=>$judulSoal,
+                'soal'=>$soal,
+                'imgSoal'=>$imgSoal,
+                'kesulitan'=>$kesulitan,
+                'publish'=>$publish,
+                'random'=>$random,
+                'sumber'=>$sumber,
+                'tingkat'=>$tingkat,
+                'mapel'=>$mapel,
+                'bab'=> $bab,
+                'subBab' => $subBab,
+                'pembahasan' => $pembahasan,
+                'imgBahas'=> $imgBahas,
+                'videoBahas'=>$videoBahas,
+                'UUID'=>$UUID,
+                'id_subbab'=>$id_subbab,
+                'jawaban'=>$jawaban,
+                'isiJawaban'=>$isiJawaban,
+                );
+          }
+        // 
+
+         #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+                $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+             // jika guru
+               $this->parser->parse('templating/index-b-guru', $data);
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
     }
 
     public function listmp() {
@@ -572,15 +740,12 @@ class Banksoal extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
 
-                $this->parser->parse('admin/v-index-admin', $data);
-           
+                $this->parser->parse('admin/v-index-admin', $data);  
             
         } elseif($hakAkses=='guru'){
              // jika guru
+            $this->parser->parse('templating/index-b-guru', $data);
 
-               $this->parser->parse('templating/index-b-guru', $data);
-
-            
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -653,7 +818,7 @@ class Banksoal extends MX_Controller {
               //   </a> 
                  $row[] = substr($soal,  0, 140). '... <a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
             } else {
-                $row[] = $soal;
+                $row[] = $soal.'<a class="label label-info   detail-'.$id_soal.'"  title="lihat detail" data-id='."'".json_encode($list_soal)."'".'onclick="detailSoal('."'".$id_soal."'".')"><i class="ico-eye" ><i>Lihat Detail</a>';
             }
             
            
@@ -685,7 +850,6 @@ class Banksoal extends MX_Controller {
             $no++;
 
         }
-    
         $output = array(
             
             "data"=>$data,
@@ -697,7 +861,6 @@ class Banksoal extends MX_Controller {
     #Start Function untuk form upload bank soal#\
 
 
-
     // pengecekan soal jika ada tabel
     public function cek_soal_tabel($soal)
     {
@@ -706,8 +869,6 @@ class Banksoal extends MX_Controller {
         }else{
             return false;
         }
-
-    
     }
 
     public function formsoal() {
@@ -854,13 +1015,12 @@ class Banksoal extends MX_Controller {
                 // call funtion upload video pembahasan
                 $this->up_video_pembahasan($UUID);
            } else {
-            var_dump($opmedia);
                 // call funtion upload gambar pembahasan
                 $this->up_img_pembahasan($UUID);
            }
            #END pengecekan media pembahasan
 
-           redirect(site_url('banksoal/allsoal'));
+           redirect(site_url('banksoal/listsoal'));
          // END SINTX UPLOAD SOAL  
     }
 
@@ -999,10 +1159,10 @@ class Banksoal extends MX_Controller {
         $config['max_height'] = 768;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
-        $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID);
+        $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID)[0]['gambar_soal'];
         if ($this->upload->do_upload($gambar)) {
-         foreach ($oldgambar as $rows) {
-            // unlink(FCPATH . "./assets/image/soal/" . $rows['gambar_soal']);
+         if ($oldgambar!='' && $oldgambar!=' ') {
+            unlink(FCPATH . "./assets/image/soal/" . $oldgambar );
          }
          $file_data = $this->upload->data();
          $file_name = $file_data['file_name'];
@@ -1132,7 +1292,6 @@ class Banksoal extends MX_Controller {
         $data['e'] = $this->input->post('e');
         #END post data pilihan jawaban#
         //keterangan *kesulitan index 1-3
-// var_dump(jum_pilihan);
 
         $data['UUID'] = $UUID;
         $data['dataSoal'] = array(
@@ -1219,9 +1378,11 @@ class Banksoal extends MX_Controller {
         #END pengecekan jenis inputan jawaban#
 
         # Start pengecekan media pembahasan
-           if ($opmedia=='video') {
+           if ($opmedia=='video' ) {
                 $oldImgPembahasan = $this->Mbanksoal->get_oldimg_pembahasan($UUID);
-                 // unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+                if ($oldImgPembahasan != '' && $oldImgPembahasan != ' ') {
+                    unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+                }
                  $data['dataSoal']=  array(
                     'pembahasan' => ' ',
                     'gambar_pembahasan' => ' '
@@ -1230,11 +1391,14 @@ class Banksoal extends MX_Controller {
             $this->Mbanksoal->ch_soal($data);
                 // call funtion upload video pembahasan
                 $this->ch_video_pembahasan($UUID);
-           } else {
+            }else{
             // var_dump($opmedia);
                 // call funtion upload gambar pembahasan
                 $oldVidePembahasan = $this->Mbanksoal->get_oldvideo_pembahasan($UUID);
-                // unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
+                if ($oldVidePembahasan != '' && $oldVidePembahasan != ' ')  {
+                    unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
+                }
+                
                 $data['dataSoal']=  array(
                     'video_pembahasan' => ' ',
                     'link' => ''
@@ -1242,8 +1406,10 @@ class Banksoal extends MX_Controller {
                 $this->ch_img_pembahasan($UUID);
                
            }
+
+
            #END pengecekan media pembahasan
-        redirect(site_url('banksoal/allsoal'));
+        redirect(site_url('banksoal/listsoal'));
     }
 
 
@@ -1310,7 +1476,7 @@ class Banksoal extends MX_Controller {
         $datagambar = array();
         // pengulngan untuk mendapat kan data gambar lama
         foreach ($oldgambar as $rows) {
-            // remove old gambar   		
+            // remove old gambar        
             $gambar = "gambar" . $n;
             // pengecekan upload
             if ($this->upload->do_upload($gambar)) {

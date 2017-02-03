@@ -260,6 +260,8 @@ class Learningline extends MX_Controller {
 			// $no++;
 			$row = array();
 			$row[] = $list_item['id'];
+			$row[] = $list_item['urutan'];
+
 			$row[] = $list_item['namaStep'];
 			if ($list_item['jenisStep']==1) {
 				$row[] = "Video";
@@ -479,7 +481,8 @@ function ajax_insert_line_topik(){
 		'deskripsi'=>$this->input->post('deskripsi'),
 		'namaTopik'=>$this->input->post('namaTopik'),
 		'status'=>1,
-		'urutan'=>$this->input->post('urutan')
+		'urutan'=>$this->input->post('urutan'),
+		'UUID'=>uniqid(),
 		);
 	$this->learning_model->insert_line_topik ($data);
 }

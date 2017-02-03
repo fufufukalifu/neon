@@ -118,8 +118,18 @@
 
 								<li>
 
-									<a href="<?=base_url('tesonline/daftarlatihan') ?>">Modul</a>
+									<a href="<?=base_url('modulonline/allmodul') ?>">Edu Drive</a>
 
+								</li>
+
+								<li>
+									<a href="">Learning Line</a>
+									<ul>
+										<li><a href="<?=base_url()?>linetopik/lineMapel/1/">SD</a></li>
+										<li><a href="<?=base_url()?>linetopik/lineMapel/2/">SMP</a></li>
+										<li><a href="<?=base_url()?>linetopik/lineMapel/3/">SMA</a></li>
+										<li><a href="<?=base_url()?>linetopik/lineMapel/4/">SMA IPA</a></li>
+									</ul>
 								</li>
 
 								<li>

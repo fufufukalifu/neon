@@ -300,6 +300,7 @@ function load_soal(){
 	// var url = base_url+"learningline/ajax_get_video/"+<?=$this->uri->segment(3)?>+"";
 	babID = $('input[name=babID]').val();	
 	var url = base_url+"paketsoal/ajax_get_soal_byid/"+babID;
+	console.log(url);
 	tabel = $('.daftarsoal').DataTable({
 		"ajax": {
 			"url": url,

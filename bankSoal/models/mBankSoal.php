@@ -236,8 +236,9 @@ class Mbanksoal extends CI_Model {
     //
     public function get_allsoal()
     {
-        $this->db->select('id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,tp.keterangan,soal.id_subbab');
-        $this->db->from('tb_tingkat-pelajaran tp');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+        $this->db->from('tb_tingkat tkt');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
@@ -245,6 +246,25 @@ class Mbanksoal extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    // test paginataion
+    function data($number,$offset){
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+        // $this->db->from('tb_tingkat tkt');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
+        $this->db->where('soal.status','1');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+ 
+    function jumlah_data(){
+        $this->db->where('status','1');
+        return $this->db->get('tb_banksoal')->num_rows();
+    }
+
+    // 
 
     public function get_allpilihan()
     {
@@ -356,7 +376,17 @@ class Mbanksoal extends CI_Model {
         return $query->result_array()[0];
     }
 
+    // get piljawaban by id soal and pilihan
+    public function get_jawaban($jawaban,$id_soal)
+    {
+        $this->db->select('jawaban');
+        $this->db->from('tb_piljawaban');
+        $this->db->where('id_soal',$id_soal);
+         $this->db->where('pilihan',$jawaban);
+         $query = $this->db->get();
+        return $query->result_array()[0]['jawaban'];
 
+    }
 }
 
 ?>

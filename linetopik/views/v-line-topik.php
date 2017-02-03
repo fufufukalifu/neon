@@ -15,27 +15,45 @@
 	   <!-- content -->
     <div class="page-content grid-row" >
         <div class="grid-col-row clear-fix" >
-         <div class="grid-col grid-col-3 sidebar" style="border-right:10px black; ">
-
-                <!-- widget Topik -->
+          <div class="grid-col grid-col-3 " >
+              <!-- Pencarian -->
+              <aside class="widget-search">
+                <form method="get" class="search-form" action="<?=base_url()?>index.php/linetopik/cariTopik"  accept-charset="utf-8" enctype="multipart/form-data">
+                    <label>
+                        <span class="screen-reader-text">Search for:</span>
+                        <input type="search" class="search-field" placeholder="Search"  name="keycari" title="Search for:">
+                    </label>
+                    <input type="submit" class="search-submit" value="GO">
+                </form>
+            </aside>
+            <!-- /Pencarian -->
+                <!-- Pengecekan jika step line tidak ada -->
                 <aside class="widget-categories">
+                <?php if ($datline!='' || $datline!=''): ?>
+                     <!-- widget Topik -->
+                
                     <h2>Topik</h2>
                     <hr class="divider-big" />
                     <ul>
+                   
+                      <?php   $x=0; ?>
                     <?php foreach ($topik as $rows): ?>
-                        <li class="cat-item cat-item-1 current-cat"><a href=""><?=$rows['namaTopik']?><span></span></a>
+                        <li class="cat-item cat-item-1 current-cat"><a href="#topik<?=$x?>"><?=$rows['namaTopik']?><span></span></a>
+                        <?php $x++; ?>
                     <?php endforeach ?>
                     </ul>
                   
-                </aside>
+              
                 <!--/ widget Topik -->
+                <?php endif ?>
+                  </aside>
+               
       </div>
             <div class="grid-col grid-col-9">
-                <main>
-
-                            <?php   $i=0; 
+                <main> <?php   $i=0; 
                                     $namaTopik=''; ?>
                             <?php foreach ($datline as $key ): ?>
+                                
                                 <?php if ($namaTopik != $key['namaTopik'] && $i==0): ?>
                 <!-- start header line-->
                     <!-- post item -->
@@ -54,7 +72,6 @@
                          <hr>
                             <ul class="media-list media-list-feed " >
                 <!-- end header line-->
-                               
                                 <?php elseif($namaTopik != $key['namaTopik']) : ?>
                 <!-- END body line -->
                             </ul>
@@ -71,12 +88,12 @@
                 <!-- END body line -->
                 <!-- start header line-->
                     <!-- post item -->
-                    <div class="blog-post">
+                    <div class="blog-post" id="topik1">
                         <article>
                         <div class="post-info">
                             
                             <div class="post-info-main">
-                                <div class="author-post">nama Topik:' <?=$key['namaTopik']?> '</div>
+                                <div class="author-post" >nama Topik:' <?=$key['namaTopik']?> '</div>
                             </div>
                             <div class="comments-post"><i class="fa fa-comment"></i>Line</div>
                         </div>
@@ -88,45 +105,72 @@
                 <!-- end header line-->
                                 <?php endif ?>
                                 <li for class="media">
-                                     <div class="media-object pull-left">
-                                        <i  class="<?=$key['icon']?> bg-color-3alt" ></i>
+                                     <div class="media-object pull-left " >
+                                        <i  class="<?=$key['icon']?> " id="ico-<?=$i;?>"></i>
                                     </div>
                                     <div class="media-body">
-                                        <a  href="<?=$key['link'];?>" class="media-heading"><?=$key['namaStep']?></a>
-                                      <!--   <p class="media-text"><span class="text-primary semibold">Service Page</span> has been edited by Tamara Moon.</p>
-                                        <p class="media-meta">Just Now</p> -->
+                                    <!-- Untuk menampung staus step disable or enable -->
+                                     <input type="text" id="status-<?=$i;?>" value="<?=$key["status"];?>" hidden="true">
+                                     <!-- // Untuk menampung staus step disable or enable  -->
+                                        <a  href="<?=$key['link'];?>" class="media-heading" id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
+                                
                                     </div>
-                                    <!-- <a><?=$key['namaStep']?></a> -->
-                                  <!--   <ul>        
-                                    <li>Jenis <?=$key['jenisStep']?></li>
-                                    <li><a href="<?=$key['link'];?>">Link <?=$key['link'];?></a> </li>
-                                    <li>ICon <?=$key['icon']?></li>
-                                    </ul> -->
+                             
                                     <hr>
                                 </li> 
                                 <!-- </a>       -->
                                  <?php $i++;  ?>
                                 <?php  $namaTopik=$key['namaTopik'];  ?>
+                                
+
+                                
                             <?php endforeach ?>
+                            
                             </ul>
                             <!-- END Tieme line -->
+                        <!-- menampung nilai panjang array -->
+                      <input id="n" type="text"  value="<?=$i;?>" hidden="true">
+                            <?php if ($datline!= array()): ?>
                         </article>
                         <div class="tags-post">
-                            <a href="#" rel="tag"><?=$key['tingkat']?></a> 
-                            <a href="#" rel="tag"><?=$key['mapel']?></a>
-                            <a href="#" rel="tag"><?=$key['bab']?></a>
-                        </div>
-                    </div>
+                                <a href="#" rel="tag"><?=$key['tingkat']?></a> 
+                                <a href="#" rel="tag"><?=$key['mapel']?></a>
+                                <a href="#" rel="tag"><?=$key['bab']?></a>
+                          </div>
+                          </div>
                     <!-- / post item -->
                     <hr class="divider-color" />
+                            <?php else: ?>
+                                <div class="container-404">
+                                <div class="number">U<span>P</span>S</div>
+                                    <p><span>Maaf:(</span><br>Step Line Belum Tersedia.</p>
+                                   
+                                </div>
+                            <?php endif ?>
+                        
 
 
                 </main>
             </div>
-           
+          
         </div>
     </div>
     <!-- / content -->
-
+<script type="text/javascript">
+    $(document).ready(function() { 
+        var n = $("#n").val();
+        // console.log(n);
+        // $("#ico-0").css("background","black");
+        for (i = 0; i < n; i++) {
+        var status = $("#status-"+i).val();
+        
+            if (status=="disable") {
+                 $("#ico-"+i).css("background","#b0b0b0");
+                 $("#font-"+i).css("color","#b0b0b0");
+            } 
+           
+        }
+    });
+</script>
 
 

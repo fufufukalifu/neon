@@ -9,6 +9,15 @@
 
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
+<!-- Strat Script Matjax -->
+     <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({
+         showProcessingMessages: false,
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+       });
+     </script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 <script>
 var Preview = {
   delay: 150,        // delay after keystroke before updating
@@ -313,7 +322,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
 
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
 
                                     <label for="fileSoal" class="btn btn-sm btn-default">
 
@@ -322,8 +331,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     </label>
 
                                     <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-
+                                    <label class="btn btn-sm btn-danger"  onclick="restImgSoal()">Reset</label>
                                 </div>
+
 
                             </div>
 
@@ -1909,6 +1919,15 @@ function ValidateInputVideo(oInput) {
 
 
     loadTingkat();
+
+    function restImgSoal() {
+      console.log("reset");
+      $("input[name=gambarSoal]").val("");
+      $('#previewSoal').attr('src', "");
+      $('#filenameSoal').text("");
+      $('#filetypeSoal').text("");
+      $('#filesizeSoal').text("");
+    }
 
 </script>
 <!--END Script drop down depeden  -->

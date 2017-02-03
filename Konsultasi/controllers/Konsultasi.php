@@ -11,13 +11,18 @@ class Konsultasi extends MX_Controller{
 
 
     parent::__construct();
+    $this->load->library('sessionchecker');
+    $this->sessionchecker->cek_token();
   }
 
   function get_id_siswa(){
    return $this->mtryout->get_id_siswa();
+
  }
 
  public function index() {
+
+
   $data = array(
     'judul_halaman' => 'Neon - Konsultasi',
     'judul_header'=> 'Daftar Pertanyaan'
@@ -225,7 +230,7 @@ function search_mine(){
 }
 
 
-  function search_tingkat(){
+function search_tingkat(){
   $namapertanyaan = $_GET['term'];
   // var_dump($namapertanyaan);
   $result = $data['questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$namapertanyaan);
