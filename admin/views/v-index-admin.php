@@ -624,6 +624,15 @@
 
 </ul>
 </li>
+
+<li>
+<a href="<?=base_url('cabang') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-home11"></i></span>
+    <span class="text">Cabang</span>
+    <span class="arrow"></span>
+  </a>
+</li>
+
 <li>
  <a href="<?=base_url('bug') ?>" data-target="" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-bug"></i></span>

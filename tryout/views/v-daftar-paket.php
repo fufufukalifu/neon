@@ -234,45 +234,25 @@
 
 
   function kerjakan(id_to){
-
     var kelas = ".modal-on"+id_to;
-
     var data_to = $(kelas).data('todo');
-
     url = base_url+"index.php/tryout/buatto";
-
-
-
-    
+    console.log(data_to);
 
     var datas = {
-
       id_paket:data_to.id_paket,
-
       id_tryout:data_to.id_tryout,
-
-      id_mm_tryoutpaket:data_to.id
-
+      id_mm_tryoutpaket:data_to.mmid
     }
 
-
-
     $.ajax({
-
       url : url,
-
       type: "POST",
-
       data: datas,
-
       dataType: "TEXT",
-
       success: function(data)
-
       {
-
        window.location.href = base_url + "index.php/tryout/mulaitest";
-
      },
 
      error: function (jqXHR, textStatus, errorThrown)
@@ -284,7 +264,6 @@
     }
 
   });
-
   }
 
   function pembahasanto(id_to){
@@ -343,9 +322,8 @@
   function detail_paket(id_to){
 
     var kelas = ".modal-on"+id_to;
-
     var data_to = $(kelas).data('todo');
-
+    console.log(data_to);
 
     $('.modal-title').text('Grafik Paket Soal Tryout');
 
