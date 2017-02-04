@@ -14,6 +14,7 @@ class Toback extends MX_Controller
 		$this->load->model('siswa/msiswa');
 		$this->load->model('templating/mtemplating');
 		parent::__construct();
+
 		if ($this->session->userdata('loggedin')==true) {
 			if ($this->session->userdata('HAKAKSES')=='siswa'){
 				redirect('welcome');
@@ -21,6 +22,8 @@ class Toback extends MX_Controller
                // redirect('guru/dashboard');
 			}else if($this->session->userdata('HAKAKSES')=='admin'){
                // redirect('guru/dashboard');
+			}else if($this->session->userdata('HAKAKSES')=='admin_cabang'){
+
 			}else{
 				redirect('login');
 			}
@@ -66,27 +69,27 @@ class Toback extends MX_Controller
 				);
 			$data['judul_halaman'] = "Bundle Paket";
 			 #START cek hakakses#
-	        $hakAkses=$this->session->userdata['HAKAKSES'];
-	        if ($hakAkses =='admin') {
+			$hakAkses=$this->session->userdata['HAKAKSES'];
+			if ($hakAkses =='admin') {
 	            // jika admin
-	            if ($babID == null) {
-	                redirect(site_url('admin'));
-	            } else {
-	                $this->parser->parse('admin/v-index-admin', $data);
-	            }
-	            
-	        } elseif($hakAkses=='guru'){
+				if ($babID == null) {
+					redirect(site_url('admin'));
+				} else {
+					$this->parser->parse('admin/v-index-admin', $data);
+				}
+
+			} elseif($hakAkses=='guru'){
 	             // jika guru
-	            if ($babID == null) {
-	                 redirect(site_url('guru/dashboard/'));
-	            } else {
-	               $this->parser->parse('templating/index-b-guru', $data);
-	            }
-	            
-	        }else{
+				if ($babID == null) {
+					redirect(site_url('guru/dashboard/'));
+				} else {
+					$this->parser->parse('templating/index-b-guru', $data);
+				}
+
+			}else{
 	            // jika siswa redirect ke welcome
-	            redirect(site_url('welcome'));
-	        }
+				redirect(site_url('welcome'));
+			}
 	        #END Cek USer#
 		}
 		
@@ -113,17 +116,17 @@ class Toback extends MX_Controller
 		}
 
 		 #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses =='admin') {
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		if ($hakAkses =='admin') {
             // jika admin 
-            $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
+			$this->parser->parse('admin/v-index-admin', $data);
+		} elseif($hakAkses=='guru'){
              // jika guru     
-            $this->parser->parse('templating/index-b-guru', $data);
-        }else{
+			$this->parser->parse('templating/index-b-guru', $data);
+		}else{
             // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
+			redirect(site_url('welcome'));
+		}
         #END Cek USer#
 	}
 	//add paket ke TO
@@ -228,22 +231,25 @@ class Toback extends MX_Controller
 			APPPATH . 'modules/toback/views/v-list-to.php',
 			);
 		$data['judul_halaman'] = "List Try Out";
-		 $hakAkses=$this->session->userdata['HAKAKSES'];
-		 if ($hakAkses=='admin') {
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		if ($hakAkses=='admin') {
         // jika admin
-         $this->parser->parse('admin/v-index-admin', $data);
+			$this->parser->parse('admin/v-index-admin', $data);
 
 
-        } elseif($hakAkses=='guru'){
+		} elseif($hakAkses=='guru'){
                     // jika guru
-             $this->load->view('templating/index-b-guru', $data);  
-            
-            
-        }else{
+			$this->load->view('templating/index-b-guru', $data);  
+		} elseif($hakAkses=='admin_cabang'){
+                    // jika guru
+			$this->load->view('admincabang/v-index-admincabang', $data);  
+
+
+		}else{
             // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-	
+			redirect(site_url('welcome'));
+		}
+
 	}
 	// menampilkan list to
 	public function ajax_listsTO()
@@ -268,179 +274,179 @@ class Toback extends MX_Controller
 			$row[] = $publish;
 			$row[] = '
 			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
-				<i class="ico-file5"></i></a>
-				<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
-					<i class="ico-file-plus2"></i></a>
+			<i class="ico-file5"></i></a>
+			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
+			<i class="ico-file-plus2"></i></a>
 
-					<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
-						<i class="ico-user"></i></a>
+			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
+			<i class="ico-user"></i></a>
 
-						<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')">
-							<i class="ico-remove"></i></a>
-							'
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-remove"></i></a>
+			'
 
-							;
+			;
 
-							$data[] = $row;
+			$data[] = $row;
 
-						}
+		}
 
-						$output = array(
+		$output = array(
 
-							"data"=>$data,
-							);
+			"data"=>$data,
+			);
 
-						echo json_encode( $output );
+		echo json_encode( $output );
 
-					}
-					public function dropTO($id_tryout)
-					{
-						$this->Mtoback->drop_TO($id_tryout);
-					}
+	}
+	public function dropTO($id_tryout)
+	{
+		$this->Mtoback->drop_TO($id_tryout);
+	}
 
-					public function ajax_edit( $id_tryout) {
-						$data = $this->Mtoback->get_TO_by_id( $id_tryout );
-						echo json_encode( $data );
-					}
+	public function ajax_edit( $id_tryout) {
+		$data = $this->Mtoback->get_TO_by_id( $id_tryout );
+		echo json_encode( $data );
+	}
 	#END Function di halaman daftar TO#
 
 	// Drop paketb to TO
-					public function dropPaketTo($idKey)
-					{
-						$this->Mtoback->drop_paket_toTO($idKey);
-					}
+	public function dropPaketTo($idKey)
+	{
+		$this->Mtoback->drop_paket_toTO($idKey);
+	}
 
 	// Drop siswa to to
-					public function dropSiswaTo($idKey)
-					{
-						$this->Mtoback->drop_siswa_toTO($idKey);
-					}
+	public function dropSiswaTo($idKey)
+	{
+		$this->Mtoback->drop_siswa_toTO($idKey);
+	}
 
 
-					public function editTryout()
-					{
-						$data['id_tryout']=htmlspecialchars($this->input->post('id_tryout'));
-						$nm_tryout=htmlspecialchars($this->input->post('nama_tryout'));
-						$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
-						$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
-						$publish=htmlspecialchars($this->input->post('publish'));
+	public function editTryout()
+	{
+		$data['id_tryout']=htmlspecialchars($this->input->post('id_tryout'));
+		$nm_tryout=htmlspecialchars($this->input->post('nama_tryout'));
+		$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
+		$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
+		$publish=htmlspecialchars($this->input->post('publish'));
 
-						$data['tryout']=array(
-							'nm_tryout'=>$nm_tryout,
-							'tgl_mulai'=>$tglMulai,
-							'tgl_berhenti'=>$tglAkhir,
-							'publish'=>$publish,
-							);
+		$data['tryout']=array(
+			'nm_tryout'=>$nm_tryout,
+			'tgl_mulai'=>$tglMulai,
+			'tgl_berhenti'=>$tglAkhir,
+			'publish'=>$publish,
+			);
 
-						$this->Mtoback->ch_To($data);
-					}
+		$this->Mtoback->ch_To($data);
+	}
 
 	#####OPIK#########################################
 
-					public function reportto($uuid){
-						$data['tryout'] = $this->Mtoback->get_to_byuuid($uuid);
+	public function reportto($uuid){
+		$data['tryout'] = $this->Mtoback->get_to_byuuid($uuid);
 
-						if (!$data['tryout']==array()) {
-							$id_to  = $data['tryout'][0]['id_tryout'];
-							$data['daftar_peserta'] =$this->Mtoback->get_all_report($id_to);
-							$data['files'] = array(
-								APPPATH . 'modules/toback/views/v-list-peserta.php',
-								);
-							$data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
+		if (!$data['tryout']==array()) {
+			$id_to  = $data['tryout'][0]['id_tryout'];
+			$data['daftar_peserta'] =$this->Mtoback->get_all_report($id_to);
+			$data['files'] = array(
+				APPPATH . 'modules/toback/views/v-list-peserta.php',
+				);
+			$data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
 
-						} else {
-							$data['files'] = array(
-								APPPATH . 'modules/templating/views/v-data-notfound.php',
-								);
-							$data['judul_halaman'] = "Daftar Peserta";
-							$this->load->view('templating/v-data-notfound');
-						}
+		} else {
+			$data['files'] = array(
+				APPPATH . 'modules/templating/views/v-data-notfound.php',
+				);
+			$data['judul_halaman'] = "Daftar Peserta";
+			$this->load->view('templating/v-data-notfound');
+		}
 
-						$this->load->view('templating/index-b-guru', $data);
-					}
+		$this->load->view('templating/index-b-guru', $data);
+	}
 
 		##menampilkan paket yang belum ada di TO.
-					function ajax_list_all_paket($id_to){
-						$list = $this->mpaketsoal->get_paket_unregistered($id_to);
-						$data = array();
-						$baseurl = base_url();
-						$n = 1;
-						foreach ( $list as $list_paket ) {
-							$row = array();
-							$row[] = "<input type='checkbox' value=".$list_paket['id_paket']." id=".$list_paket['nm_paket'].$list_paket['id_paket']." name=".$list_paket['nm_paket'].$n.">";
-							$row[] = $list_paket['id_paket'];
-							$row[] = $list_paket['nm_paket'];
-							$row[] = $list_paket['deskripsi'];
-							$row[] = "<a onclick="."lihatsoal(".$list_paket['id_paket'].")"." class='btn btn-primary'>Lihat</a>";
-							$data[] = $row;
-							$n++;
-						}
+	function ajax_list_all_paket($id_to){
+		$list = $this->mpaketsoal->get_paket_unregistered($id_to);
+		$data = array();
+		$baseurl = base_url();
+		$n = 1;
+		foreach ( $list as $list_paket ) {
+			$row = array();
+			$row[] = "<input type='checkbox' value=".$list_paket['id_paket']." id=".$list_paket['nm_paket'].$list_paket['id_paket']." name=".$list_paket['nm_paket'].$n.">";
+			$row[] = $list_paket['id_paket'];
+			$row[] = $list_paket['nm_paket'];
+			$row[] = $list_paket['deskripsi'];
+			$row[] = "<a onclick="."lihatsoal(".$list_paket['id_paket'].")"." class='btn btn-primary'>Lihat</a>";
+			$data[] = $row;
+			$n++;
+		}
 
-						$output = array(
-							"data"=>$data,
-							);
-						echo json_encode( $output );
-					}
+		$output = array(
+			"data"=>$data,
+			);
+		echo json_encode( $output );
+	}
 			###menampilkan paket yang belum ada di TO.
 
 	##menampilkan siswa yang belum ikutan TO.
-					function ajax_list_siswa_belum_to($id){
-						$list = $this->msiswa->get_siswa_blm_ikutan_to($id);
-						$data = array();
-						$baseurl = base_url();
-						foreach ( $list as $list_siswa ) {
-							$row = array();
-							$row[] = "<input type='checkbox' value=".$list_siswa['id']." >";
-							$row[] = $list_siswa ['id'];
-							$row[] = $list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'];
-							if($list_siswa['namaCabang']!=null){
-								$row[] = $list_siswa['namaCabang'];
-							}else{
-								$row[] = "Non-neutron";
+	function ajax_list_siswa_belum_to($id){
+		$list = $this->msiswa->get_siswa_blm_ikutan_to($id);
+		$data = array();
+		$baseurl = base_url();
+		foreach ( $list as $list_siswa ) {
+			$row = array();
+			$row[] = "<input type='checkbox' value=".$list_siswa['id']." >";
+			$row[] = $list_siswa ['id'];
+			$row[] = $list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'];
+			if($list_siswa['namaCabang']!=null){
+				$row[] = $list_siswa['namaCabang'];
+			}else{
+				$row[] = "Non-neutron";
 
-							}
+			}
 							// $row[] = '
 							// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
-							$data[] = $row;
-						}
-						$output = array(
-							"data"=>$data,
-							);
-						echo json_encode( $output );
-					}
+			$data[] = $row;
+		}
+		$output = array(
+			"data"=>$data,
+			);
+		echo json_encode( $output );
+	}
 		###menampilkan siswa yang belum ikutan TO.
 					// menampilkan list Pkaet by to for Report
-					public function reportPaketSiswa()
-					{
-						$data['id_to']=htmlspecialchars($this->input->get('id_to'));
-						$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
-						$data['idPengguna']=$penggunaID;
-						$data['siswa']=$this->Mtoback->get_nama_siswa($penggunaID)[0];
-						$data['reportPaket']=$this->Mtoback->get_report_paket($data);
-						$data['files'] = array(
-							APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
-							);
-						$data['judul_halaman'] = "Report Siswa Perpaket";
-						$this->load->view('templating/index-b-guru', $data);
-					}
+	public function reportPaketSiswa()
+	{
+		$data['id_to']=htmlspecialchars($this->input->get('id_to'));
+		$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
+		$data['idPengguna']=$penggunaID;
+		$data['siswa']=$this->Mtoback->get_nama_siswa($penggunaID)[0];
+		$data['reportPaket']=$this->Mtoback->get_report_paket($data);
+		$data['files'] = array(
+			APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
+			);
+		$data['judul_halaman'] = "Report Siswa Perpaket";
+		$this->load->view('templating/index-b-guru', $data);
+	}
 					//menampilkan report paket 
-					public function reportpaket($idpaket)
-					{
-						$data['report']=$this->Mtoback->get_all_report_paket($idpaket);
-						
-						$data['files'] = array(
-							APPPATH . 'modules/paketsoal/views/v-report-paket.php',
-							);
-						$data['judul_halaman'] = "Report Siswa Perpaket";
-						$this->load->view('templating/index-b-guru', $data);
+	public function reportpaket($idpaket)
+	{
+		$data['report']=$this->Mtoback->get_all_report_paket($idpaket);
 
-					}
+		$data['files'] = array(
+			APPPATH . 'modules/paketsoal/views/v-report-paket.php',
+			);
+		$data['judul_halaman'] = "Report Siswa Perpaket";
+		$this->load->view('templating/index-b-guru', $data);
 
-					function get_cabang_all_cabang(){
-						$data = $this->output
-						->set_content_type( "application/json" )
-						->set_output( json_encode( $this->mcabang->get_all_cabang() ) );
-					}
+	}
 
-				}
-				?>
+	function get_cabang_all_cabang(){
+		$data = $this->output
+		->set_content_type( "application/json" )
+		->set_output( json_encode( $this->mcabang->get_all_cabang() ) );
+	}
+
+}
+?>

@@ -1,12 +1,6 @@
-    <?php
-
-    defined('BASEPATH') or exit('No direct script access allowed');
-
-/**
- *
- */
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Tryout extends MX_Controller {
-
     public function __construct() {
         $this->load->library('parser');
         $this->load->model('Mtryout');

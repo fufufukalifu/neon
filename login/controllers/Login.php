@@ -126,7 +126,7 @@ public function validasiLogin() {
                redirect(site_url('welcome'));
 
            } elseif ($hakAkses == 'admin_cabang') {
-               redirect(site_url('Admincabang'));
+               redirect(site_url('admincabang'));
            } else {
 
             echo 'tidak ada hak akses';
