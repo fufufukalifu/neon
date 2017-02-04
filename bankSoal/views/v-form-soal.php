@@ -936,11 +936,11 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                       </label>
 
                                       <!-- di hilangkan dulu untuk sementara -->
-                                      <!-- <label class="btn btn-teal btn-outline" id="m-vido">
+                                      <label class="btn btn-teal btn-outline" id="m-vido">
 
                                         <input type="radio" name="opmedia" value="video" autocomplete="off"> Video
 
-                                      </label> -->
+                                      </label>
 
                                  </div>
 
@@ -996,6 +996,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             </label>
 
                             <input style="display:none;" type="file" id="filePembahasan" name="gambarPembahasan" onchange="ValidateSingleInput(this);"/>
+                             <label class="btn btn-sm btn-danger"  onclick="restImgPembahasan()">Reset</label>
 
                           </div>
 
@@ -1921,12 +1922,19 @@ function ValidateInputVideo(oInput) {
     loadTingkat();
 
     function restImgSoal() {
-      console.log("reset");
       $("input[name=gambarSoal]").val("");
       $('#previewSoal').attr('src', "");
       $('#filenameSoal').text("");
       $('#filetypeSoal').text("");
       $('#filesizeSoal').text("");
+    }
+
+     function restImgPembahasan() {
+      $("input[name=gambarPembahasan]").val("");
+      $('#previewPembahasan').attr('src', "");
+      $('#filenamePembahasan').text("");
+      $('#filetypePembahasan').text("");
+      $('#filesizePembahasan').text("");
     }
 
 </script>

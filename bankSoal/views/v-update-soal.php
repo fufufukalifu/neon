@@ -740,7 +740,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             </label>
 
                             <input style="display:none;" type="file" id="filePembahasan" name="gambarPembahasan" onchange="ValidateSingleInput(this);"/>
-
+                             <label class="btn btn-sm btn-danger"  onclick="restImgPembahasan()">Reset</label>
                           </div>
 
                         </div>
@@ -1553,6 +1553,13 @@ function ValidateInputVideo(oInput) {
       $('#filenameSoal').text("");
       $('#filetypeSoal').text("");
       $('#filesizeSoal').text("");
+    }
+     function restImgPembahasan() {
+      $("input[name=gambarPembahasan]").val("");
+      $('#previewPembahasan').attr('src', "");
+      $('#filenamePembahasan').text("");
+      $('#filetypePembahasan').text("");
+      $('#filesizePembahasan').text("");
     }
 </script>
 <!--END Script drop down depeden  -->

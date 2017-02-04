@@ -10,6 +10,7 @@
  		$this->db->select('tp.keterangan as mapel, bab.judulBab, bab.id as babID');
  		$this->db->from('tb_tingkat-pelajaran tp');
  		$this->db->join('tb_bab bab','bab.tingkatPelajaranID = tp.id');
+        $this->db->join('tb_line_topik topik','topik.babID=bab.id');
  		$this->db->order_by('tp.keterangan');
  		$this->db->order_by('bab.judulBab');
  		$this->db->where('tingkatID',$tingkatID);

@@ -258,6 +258,12 @@
     </div>
     <!-- END PESAN ERROR EMPTY INPUT -->
     <!-- START PESAN ERROR EMPTY INPUT -->
+     <div class="alert alert-dismissable alert-danger" id="e_wktTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_wktTo()" >×</button>
+      <strong>ilahkan cek kembali!</strong> Waktu mulai dan tanggal waktu tidak sesuai.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <!-- START PESAN ERROR EMPTY INPUT -->
     <div class="alert alert-dismissable alert-danger" id="e_tglTo" hidden="true" >
       <button type="button" class="close" onclick="hide_e_tglTo()" >×</button>
       <strong>Silahkan cek kembali!</strong> Tanggal mulai dan tanggal akhir tidak sesuai.
@@ -764,12 +770,15 @@ function add_to() {
   function hide_e_tglTo() {
     $("#e_tglTo").hide();
   }
+  function hide_e_wktTo() {
+    $("#e_wktTo").hide();
+  }
   function crtTo() {
     var nm_paket   =   $('#to_nm').val();
     var tgl_mulai  =   $('#to_tglmulai').val();
     var tgl_akhir  =   $('#to_tglakhir').val();
-    var wkt_mulai  =   $('#to_wktakhir').val();
-    var wkt_akhir  =   $('#to_wktmulai').val();
+    var wkt_mulai  =   $('#to_wktmulai').val();
+    var wkt_akhir  =   $('#to_wktakhir').val();
     var publish;
     if ($('#to_publish:checked')==true) {
      publish = 1;
@@ -781,6 +790,8 @@ function add_to() {
 if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
     // validasi tanggal mulai dan tanggal akhir
     if (tgl_mulai<tgl_akhir) {
+
+      
      var url = base_url+"index.php/toback/buatTo";
      $.ajax({
       url : url,
@@ -793,25 +804,61 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
        publish :publish 
 
      },
-                        // cache: false,
-                      // dataType: "JSON",
-                      success: function(data,respone)
-                      {   
-                       reload_tblist();  
-                       $("#e_crtTo").hide(); 
-                       $('#modalto').modal('hide'); 
-                            $('#form_to')[0].reset(); // reset form on modals
-                            $('#modalto').removeClass('has-error'); // clear error class  
+       // cache: false,
+       // dataType: "JSON",
+       success: function(data,respone)
+      {   
+        reload_tblist();  
+        $("#e_crtTo").hide(); 
+        $('#modalto').modal('hide'); 
+        $('#form_to')[0].reset(); // reset form on modals
+        $('#modalto').removeClass('has-error'); // clear error class  
 
-                          },
-                          error: function (jqXHR, textStatus, errorThrown)
-                          {
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
 
                             // $("#e_crtTo").show();
-                            alert('Error adding / update data');
-                          }
-                        });
-   } else {
+        lert('Error adding / update data');
+        }
+        });
+   }else if(tgl_mulai==tgl_akhir) {
+    if (wkt_mulai>=wkt_akhir) {
+      $("#e_wktTo").show();
+    }else{
+          var url = base_url+"index.php/toback/buatTo";
+     $.ajax({
+      url : url,
+      type: "POST",
+      data: { nmpaket : nm_paket,
+       tglmulai:tgl_mulai,
+       tglakhir:tgl_akhir,
+       wktmulai:wkt_mulai,
+       wktakhir:wkt_akhir,
+       publish :publish 
+
+     },
+       // cache: false,
+       // dataType: "JSON",
+       success: function(data,respone)
+      {   
+        reload_tblist();  
+        $("#e_crtTo").hide(); 
+        $('#modalto').modal('hide'); 
+        $('#form_to')[0].reset(); // reset form on modals
+        $('#modalto').removeClass('has-error'); // clear error class  
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+                            // $("#e_crtTo").show();
+        lert('Error adding / update data');
+        }
+        });
+    }
+    
+   }else {
      $("#e_tglTo").show();
    }
    

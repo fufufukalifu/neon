@@ -223,6 +223,7 @@ class Mbanksoal extends CI_Model {
 
     # END Function untuk form update soal#
     # Start Function untuk form delete bank soal#
+
     //dalam pengahapusan data bank soal tidak benar2 di hapus tetapi status di rubah dari 1 -> 0
 
     public function del_banksoal($data) {
@@ -243,6 +244,7 @@ class Mbanksoal extends CI_Model {
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
         $this->db->where('soal.status','1');
+         $this->db->order_by('soal.id_soal', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -256,6 +258,7 @@ class Mbanksoal extends CI_Model {
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
         $this->db->where('soal.status','1');
+         $this->db->order_by('soal.id_soal', 'desc');
         return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
     }
  
@@ -384,7 +387,12 @@ class Mbanksoal extends CI_Model {
         $this->db->where('id_soal',$id_soal);
          $this->db->where('pilihan',$jawaban);
          $query = $this->db->get();
-        return $query->result_array()[0]['jawaban'];
+        // cek jika hasil query null
+        if($query->num_rows() == 1) {
+            return $query->result_array()[0]['jawaban'];
+        }else{
+             return $result='';
+        }
 
     }
 }

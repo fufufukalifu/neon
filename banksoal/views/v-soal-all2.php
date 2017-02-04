@@ -21,9 +21,11 @@
                             <li class="dropdown-header">Pilih Aksi :</li>
                             <li ><a href="javascript:void(0)" data-toggle="panelcollapse">Pembahasan (hide/unhide)</a></li>
                             <li><a href="<?=base_url()?>banksoal/formUpdate?UUID=<?=$key['UUID']?>&subBab=<?=$key['id_subbab']?>">Edit</a></li>
-                            <li><a href="#">Hapus</a></li>
+                            <li><a href="javascript:void(0)" onclick="drop_soal(<?=$key['id_soal'];?>)">Hapus</a></li>
 
                         </ul>
+                        <!-- tambah soal -->
+                         <a class="btn btn-sm  btn-inverse btn-outline" href="<?= base_url(); ?>index.php/banksoal/formsoal" title="Tambah Data Soal" ><i class="ico-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -136,5 +138,42 @@
                     src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
                 </script> 
                 <!-- end Math jax -->
-<!-- End javascript
-                       
+<!-- End javascrip>-->
+<script type="text/javascript">
+    function drop_soal(id_soal){
+  url = base_url+"banksoal/deletebanksoal2/"+id_soal;
+  swal({
+    title: "Yakin akan hapus Token?",
+    text: "Anda tidak dapat membatalkan ini.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Ya,Tetap hapus!",
+    closeOnConfirm: false
+  },
+  function(){
+    var datas = {id:id_soal};
+    $.ajax({
+      dataType:"text",
+      data:datas,
+      type:"POST",
+      url:url,
+      success:function(){
+        swal("Terhapus!", "Token berhasil dihapus.", "success");
+       window.location.href =base_url+"banksoal/listsoal";
+      },
+      error:function(){
+        sweetAlert("Oops...", "Data gagal terhapus!", "error");
+      }
+
+    });
+  });
+}
+
+function a(argument) {
+    // body...
+}
+// function drop_soal(id_soal) {
+//     console.log(id_soal);
+// }
+</script>

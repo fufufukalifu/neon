@@ -153,6 +153,7 @@ class Banksoal extends MX_Controller {
             }
 
             $data['datSoal'][]=array(
+                'id_soal'=>$id_soal,
                 'judulSoal'=>$judulSoal,
                 'soal'=>$soal,
                 'imgSoal'=>$imgSoal,
@@ -1518,11 +1519,18 @@ class Banksoal extends MX_Controller {
 
     #END Function untuk form update bank soal #
     #END Function untuk delete bank soal #
-
+    //untuk fungsi hapus di view list soal tabel ajax
     public function deletebanksoal($data) {
         $this->Mbanksoal->del_banksoal($data);
     }
-
+    //untuk fungsi hapus di list soal bukan ajax
+    public function deletebanksoal2() {
+        if ($this->input->post()) {
+            $post = $this->input->post();
+             $this->Mbanksoal->del_banksoal($post['id']);
+        }
+           redirect(site_url('banksoal/listsoal'));
+    }
     // fungsi untuk memfilter video yang akan di tampilkan
     public function filtersoal()
     {
