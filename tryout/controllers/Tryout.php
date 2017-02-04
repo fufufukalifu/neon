@@ -10,6 +10,8 @@ class Tryout extends MX_Controller {
     public function __construct() {
         $this->load->library('parser');
         $this->load->model('Mtryout');
+        $this->load->model('siswa/msiswa');
+
         $this->load->model('tesonline/Mtesonline');
         parent::__construct();
         $this->load->library('sessionchecker');
@@ -67,21 +69,11 @@ class Tryout extends MX_Controller {
     }
 
     public function daftarpaket() {
-
-        //kalo tanggal mulai < hari ini 
-        # TO belum aktif
-
-        //kalo tanggal mulainya > hari ini
-        #to nya kadaluarsa, tampil pembahasan
-
-        // kalo tanggal mulainya >= hari ini dan < hari akhir
-        # to bisa diakses
-
-
-
         $id_to = $this->session->userdata('id_tryout');
         $datas['id_tryout'] = $id_to;
         $datas['id_pengguna'] = $this->session->userdata('id');
+        $datas['id_siswa'] = $this->msiswa->get_siswaid();
+
         $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
         $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
         
@@ -131,7 +123,7 @@ class Tryout extends MX_Controller {
                 );
             // DAFTAR PAKET
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
-            $data['paket'] = $this->Mtryout->get_paket_undo($id_to);
+            $data['paket'] = $this->Mtryout->get_paket_undo($datas);
             $data['status_to'] = $status_to;
 
 
@@ -156,7 +148,7 @@ class Tryout extends MX_Controller {
         $this->session->set_userdata('id_paket', $data['id_paket']);
         $this->session->set_userdata('id_tryout', $data['id_tryout']);
         $this->session->set_userdata('id_mm-tryoutpaket', $data['id_mm-tryoutpaket']);
-        $insert = array("id_pengguna" => $this->session->userdata('id'),
+        $insert = array("siswaID" => $this->msiswa->get_siswaid(),
             "id_mm-tryout-paket" => $this->session->userdata('id_mm-tryoutpaket'),
             "status_pengerjaan" => '2'
             );
@@ -269,7 +261,7 @@ class Tryout extends MX_Controller {
            // echo 'Salah = ' . $salah;
            // echo 'benar = ' . $benar;
         //
-        $hasil['id_pengguna'] = $this->session->userdata['id'];
+        $hasil['siswaID'] = $this->msiswa->get_siswaid();
         $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
         ;
         $hasil['jmlh_kosong'] = $kosong;
