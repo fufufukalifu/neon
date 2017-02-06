@@ -115,8 +115,7 @@ $('.simpanlearning').click(function(){
             window.location.href = link;
             console.log(link);
           } else {
-          swal("Silahkan tambahkan lagi topik!");
-          $('.form-topik')[0].reset();
+          // swal("Cancelled", "Your imaginary file is safe :)", "error");
         }
       });
 

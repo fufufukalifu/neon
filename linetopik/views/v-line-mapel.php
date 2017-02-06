@@ -49,6 +49,10 @@
 								<!-- </li> -->
 							<?php $oldMpalel=$mapel; ?>
 							<?php endforeach ?>
+
+							<?php if ($datMapel==array()): ?>
+								<h4 class="text-center" style="color:#f27c66;">Maaf,Pada Tingkat ini belum tersedia learning line!</h4>
+							<?php endif ?>
 						
 
 				</div>

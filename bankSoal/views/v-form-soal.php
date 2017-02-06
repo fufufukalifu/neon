@@ -109,6 +109,51 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <!-- END Script Matjax -->
 
     <div class="container-fluid">
+<!-- Priview -->
+ <div class="modal fade" id="modalpriview" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title">Priview Soal</h4>
+   </div>
+
+
+   <!-- Start Body modal -->
+   <div class="modal-body">
+    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
+    <form  class="panel panel-default form-horizontal form-bordered" action="" method="post" >
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Tingkat</label>
+       <div class="col-sm-8">
+         <p ></p>
+       </div>
+     </div>
+
+     <div  class="form-group">
+       <label class="col-sm-3 control-label">Mata Pelajaran</label>
+       <div class="col-sm-8">
+        <select class="form-control getpel" name="mataPelajaran" id="">
+
+        </select>
+      </div>
+    </div>
+
+
+
+</div>
+<!-- END BODY modla-->
+<div class="modal-footer">
+  <button type="submit" id="" class="btn btn-primary">Proses</button>                
+</div>
+</form> 
+</div><!-- /.modal-content -->
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Priew -->
+
 <!-- Start Modal salah upload gambar -->
 <div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -157,41 +202,26 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                 <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
 
                     <div class="panel-heading">
-
                         <h3 class="panel-title">Form Soal</h3>
-
-                        <!-- untuk menampung bab id -->
-
+                       <!-- untuk menampung bab id -->
                         <!-- <input type="text" name="subBabID" value="<?=$subBab;?>"  hidden="true"> -->
-
                     </div>               
 
                     <div class="panel-body">
                       <!-- Start Dropd Down depeden -->
                       <div  class="form-group">
-
                         <label class="col-sm-1 control-label">Tingkat</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="tingkat" id="tingkat">
-
                             <option>-Pilih Tingkat-</option>
 
-
-
                           </select>
-
                         </div>
 
 
-
                         <label class="col-sm-2 control-label">Mata Pelajaran</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="mataPelajaran" id="pelajaran">
-
 
 
                           </select>
@@ -278,7 +308,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8">
 
-                                <input type="text" name="sumber" class="form-control">
+                                <input type="text" name="sumber" class="form-control" id="sumberp">
 
                             </div>
 
@@ -1163,7 +1193,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="col-sm-7">
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
-
+                            <a class="btn btn-info" onclick="priview()">Priview</a>
                         </div>
 
                         
@@ -1569,14 +1599,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                 },
 
             }
-
-
-
             // End event priview gambar pilihan E
-
-
-
-
         });
 
     </script>
@@ -1899,7 +1922,7 @@ function ValidateInputVideo(oInput) {
 
                 $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
 
-                console.log(data);
+             
 
                 $.each(data, function (i, data) {
 
@@ -1937,6 +1960,17 @@ function ValidateInputVideo(oInput) {
       $('#filesizePembahasan').text("");
     }
 
+    
+
+</script>
+
+<script type="text/javascript">
+  var valSoal=$("#sumberp").val();
+    // fungsi priview $("input[name=text]").val()
+      function priview() {
+         $('#modalpriview').modal('show'); // show bootstrap modal
+         console.log("hh"+valSoal);
+      }
 </script>
 <!--END Script drop down depeden  -->
  
