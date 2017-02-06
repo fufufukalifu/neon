@@ -40,6 +40,8 @@
  <!--/ Application stylesheet -->
  <!-- END STYLESHEETS -->
 
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/steps/css/jquery-steps.min.css') ?>">
+
  <!-- START JAVASCRIPT SECTION - Load only modernizr script here -->
  <script src="<?= base_url('assets//library/modernizr/js/modernizr.min.js') ?>"></script>
  <!--/ END JAVASCRIPT SECTION -->
@@ -125,12 +127,12 @@
    <!-- Start Body modal -->
    <div class="modal-body">
     <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
-    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal" method="post" >
+    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal2" method="get" >
       <div  class="form-group">
        <label class="col-sm-3 control-label">Tingkat</label>
        <div class="col-sm-8">
          <!-- stkt = soal tingkat -->
-         <select class="form-control gettkt" name="tingkat" id="stkt">
+         <select class="form-control gettkt2" name="tingkat" id="stkt2">
            <option>-Pilih Tingkat-</option>
          </select>
        </div>
@@ -139,7 +141,7 @@
      <div  class="form-group">
        <label class="col-sm-3 control-label">Mata Pelajaran</label>
        <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="spel">
+        <select class="form-control getpel2" name="mataPelajaran" id="spel2">
 
         </select>
       </div>
@@ -148,7 +150,7 @@
     <div  class="form-group">
      <label class="col-sm-3 control-label">Bab</label>
      <div class="col-sm-8">
-      <select class="form-control getbb" name="bab" id="sbab">
+      <select class="form-control getbb2" name="bab" id="sbab2">
 
       </select>
     </div>
@@ -157,7 +159,7 @@
   <div class="form-group">
    <label class="col-sm-3 control-label">Subab</label>
    <div class="col-sm-8">
-    <select class="form-control subb" name="subbab" id="ssub">
+    <select class="form-control subb2" name="subbab" id="ssub2">
 
     </select>
   </div>
@@ -727,6 +729,12 @@
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
+   <script type="text/javascript" src="<?=base_url('assets/javascript/forms/wizard.js')?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/plugins/parsley/js/parsley.min.js')?>"></script>
+        
+        <script type="text/javascript" src="<?=base_url('assets/plugins/steps/js/jquery.steps.min.js')?>"></script>
+        
+        <script type="text/javascript" src="<?=base_url('assets/plugins/inputmask/js/inputmask.min.js')?>"></script>
 <script type="text/javascript">
 
   function add_modul() {
@@ -877,7 +885,7 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
             // load tingkat untuk modal bank soal
             function loadTkt() {
              jQuery(document).ready(function () {
-              var tingkat_id = {"tingkat_id": $('#stkt').val()};
+              var tingkat_id = {"tingkat_id": $('#stkt2').val()};
               // tingkat id untuk modal video
               // var tingkat_idv = {"tingkat_id": $('vstkt').val()}
               var idTingkat;
@@ -888,25 +896,25 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
                url: "<?= base_url() ?>index.php/videoback/getTingkat",
                success: function (data) {
 
-                $('.gettkt').html('<option value="">-- Pilih Tingkat  --</option>');
+                $('.gettkt2').html('<option value="">-- Pilih Tingkat  --</option>');
                 $.each(data, function (i, data) {
-                 $('.gettkt').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+                 $('.gettkt2').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
                  return idTingkat = data.id;
                });
               }
             });
               // event untuk modal bank soal
               // #############################
-              $('#stkt').change(function () {
-               tingkat_id = {"tingkat_id": $('#stkt').val()};
-               loadPel($('#stkt').val());
+              $('#stkt2').change(function () {
+               tingkat_id = {"tingkat_id": $('#stkt2').val()};
+               loadPel($('#stkt2').val());
              });
-              $('#spel').change(function () {
-               pelajaran_id = {"pelajaran_id": $('#spel').val()};
-               loadBb($('#spel').val());
+              $('#spel2').change(function () {
+               pelajaran_id = {"pelajaran_id": $('#spel2').val()};
+               loadBb($('#spel2').val());
              });
-              $('#sbab').change(function () {
-               loadSubb($('#sbab').val());
+              $('#sbab2').change(function () {
+               loadSubb($('#sbab2').val());
                // loadPel(idTingkat);
              });
               // #############################
@@ -937,9 +945,9 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
               data: tingkatID.tingkat_id,
               url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
               success: function (data) {
-               $('#spel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+               $('#spel2').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
                $.each(data, function (i, data) {
-                $('#spel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+                $('#spel2').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
               });
              }
            });
@@ -966,10 +974,10 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
               url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
               success: function (data) {
 
-               $('#sbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+               $('#sbab2').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
 
                $.each(data, function (i, data) {
-                $('#sbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                $('#sbab2').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
               });
              }
 
@@ -1000,10 +1008,10 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
               data: babID.bab_id,
               url: "<?php echo base_url() ?>index.php/videoback/getSubbab/"+babID,
               success: function(data){
-               $('#ssub').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
+               $('#ssub2').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
 
                $.each(data, function(i, data){
-                $('#ssub').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
+                $('#ssub2').append("<option value='"+data.id+"'>"+data.judulSubBab+"</option>");
               });
              }
 

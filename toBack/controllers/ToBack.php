@@ -270,7 +270,9 @@ class Toback extends MX_Controller
 			$row[] = $list_to ['id_tryout'];
 			$row[] = $list_to ['nm_tryout'];
 			$row[] = $list_to['tgl_mulai'];
+			$row[] = $list_to['wkt_mulai'];
 			$row[] = $list_to['tgl_berhenti'];
+			$row[] = $list_to['wkt_berakhir'];
 			$row[] = $publish;
 			$row[] = '
 			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
@@ -330,11 +332,15 @@ class Toback extends MX_Controller
 		$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
 		$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
 		$publish=htmlspecialchars($this->input->post('publish'));
+		$wktMulai=htmlspecialchars($this->input->post('wkt_mulai'));
+		$wktAkhir=htmlspecialchars($this->input->post('wkt_akhir'));
 
 		$data['tryout']=array(
 			'nm_tryout'=>$nm_tryout,
 			'tgl_mulai'=>$tglMulai,
 			'tgl_berhenti'=>$tglAkhir,
+			'wkt_mulai'=>$wktMulai,
+			'wkt_berakhir'=>$wktAkhir,
 			'publish'=>$publish,
 			);
 

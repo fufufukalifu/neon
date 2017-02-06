@@ -120,6 +120,36 @@ class Welcome extends MX_Controller {
     }
 
 
+    public function faq()
+    {
+
+         $data = array(
+
+            'judul_halaman' => 'Neon - FAQ',
+
+            'judul_header' =>'FAQ HASIL DETECTION',
+
+            'judul_header2' =>'Video Belajar'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/welcome/views/v-faq.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+        $this->parser->parse( 'templating/index', $data );
+    }
+
+
 
 }
 
