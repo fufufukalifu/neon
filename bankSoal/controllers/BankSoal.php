@@ -34,7 +34,7 @@ class Banksoal extends MX_Controller {
        
         $config['base_url'] = base_url().'index.php/banksoal/listsoal/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';

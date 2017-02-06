@@ -288,7 +288,7 @@ class Mbanksoal extends CI_Model {
     public function jumlah_soal_mp($mpID)
     {
       $this->db->where('soal.status','1');
-      $this->db->where('tp.mataPelajaranID',$mpID);
+      $this->db->where('tp.id',$mpID);
       $this->db->join('tb_subbab sub','sub.id=soal.id_subbab');
       $this->db->join('tb_bab bab','bab.id=sub.babID');
       $this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
@@ -326,7 +326,7 @@ class Mbanksoal extends CI_Model {
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
-          $this->db->where('tp.mataPelajaraID',$mpID);
+          $this->db->where('tp.id',$mpID);
         $this->db->where('soal.status','1');
          $this->db->order_by('soal.id_soal', 'desc');
         return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
