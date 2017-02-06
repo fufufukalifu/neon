@@ -110,44 +110,60 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
     <div class="container-fluid">
 <!-- Priview -->
- <div class="modal fade" id="modalpriview" tabindex="-1" role="dialog">
+ <div class="modal fade " id="modalpriview" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Priview Soal</h4>
-   </div>
 
-
-   <!-- Start Body modal -->
-   <div class="modal-body">
-    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
-    <form  class="panel panel-default form-horizontal form-bordered" action="" method="post" >
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Tingkat</label>
-       <div class="col-sm-8">
-         <p ></p>
-       </div>
-     </div>
-
-     <div  class="form-group">
-       <label class="col-sm-3 control-label">Mata Pelajaran</label>
-       <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="">
-
-        </select>
+   <!-- Start Panel Priview -->
+   <div class="panel panel-teal">
+    <!-- Start heading -->
+    <div class="panel-heading ">
+      <div class="panel-toolbar">
+       <h4 class="modal-title ">Priview Soal</h4>
+      </div>
+       <div class="panel-toolbar text-right">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
     </div>
+    <!-- End heading -->
+    <!-- Start body priview -->
+    <div class="panel-body ">
+    <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
+    <label> judul  :</label> <a id="prevJudul" ></a> <br>
+    <label>Soal   : </label>
+    <!-- img -->
+    <div class="col-sm-12">
+      <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
+    </div>
+    <!-- img -->
+    <div class="prevSoal col-sm-12">
 
+    </div>
+    <!-- pilihan jawaban -->
+    <div class="col-sm-12">
+      <ol type="A">
+        <li id="a"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+        <li id="d"></li>
+        <li id="e"></li>
+      </ol>
+    </div>
+    <!-- jawaban -->
+    <div class="col-sm-12"> 
+      <label>Jawaban : </label> <a id="prevJawaban"></a>
+    </div>
+    
+    </div>
+    <!-- END body priview -->
 
+    <!-- Start footer priview -->
+    <div class="panel-footer hidden-xs">
+     <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
+    </div>
+    <!-- end footer priview -->
 
-</div>
-<!-- END BODY modla-->
-<div class="modal-footer">
-  <button type="submit" id="" class="btn btn-primary">Proses</button>                
-</div>
-</form> 
-</div><!-- /.modal-content -->
+   </div>
+    <!-- END panel Priview -->
 
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -308,7 +324,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8">
 
-                                <input type="text" name="sumber" class="form-control" id="sumberp">
+                                <input type="text" name="sumber" class="form-control" id="sumberp" >
 
                             </div>
 
@@ -401,7 +417,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <label class="control-label col-sm-2">Soal</label>
                              <div class="col-sm-10">
 
-                                 <textarea  name="editor1" class="form-control" id=""></textarea>
+                                 <textarea  name="editor1" class="form-control" id="editor1"></textarea>
 
                              </div>
                             </div>
@@ -504,7 +520,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <div class="col-sm-8 piltext">
 
-                               <textarea name="a"  class="form-control"></textarea>
+                               <textarea name="a" id="pilA"  class="form-control"></textarea>
 
                             </div>
 
@@ -1193,7 +1209,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="col-sm-7">
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a class="btn btn-info" onclick="priview()">Priview</a>
+                            <a class="btn btn-info" onclick="priview()">Priview Soal</a>
                         </div>
 
                         
@@ -1329,6 +1345,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                 load : function(e){
 
                     $('#previewSoal').attr('src', e.target.result);
+                     $('#previewSoal2').attr('src', e.target.result);
 
                 },
 
@@ -1339,6 +1356,8 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                     $('#filetypeSoal').text(file.type);
 
                     $('#filesizeSoal').text(Math.round(file.size/1024));
+
+                   
 
                 },
 
@@ -1965,11 +1984,30 @@ function ValidateInputVideo(oInput) {
 </script>
 
 <script type="text/javascript">
-  var valSoal=$("#sumberp").val();
-    // fungsi priview $("input[name=text]").val()
+
+    // priview soal sebelum di upload
       function priview() {
-         $('#modalpriview').modal('show'); // show bootstrap modal
-         console.log("hh"+valSoal);
+        var tingkat = $('select#tingkat').text();
+        var judul = $("input[name=judul]").val();
+        var sumber  = $("input[name=sumber]").val();
+        var soal  = CKEDITOR.instances.editor1.getData();
+        var jawaban = $('select[name=jawaban]').val();
+        var a  =$("textarea[name=a]").val();
+        var b  =$("textarea[name=b]").val();
+        var c  =$("textarea[name=c]").val();
+        var d  =$("textarea[name=d]").val();
+        var e  =$("textarea[name=e]").val();
+        $("#prevSumber").text(sumber);
+        $("#prevJudul").text(judul);
+        $('li#a').text(a);
+        $('li#b').text(b);
+        $('li#c').text(c);
+        $('li#d').text(d);
+        $('li#e').text(e);
+        $('div.prevSoal').html(soal);
+        $('a#prevJawaban').text(jawaban);
+        $('#modalpriview').modal('show'); // show bootstrap modal
+      
       }
 </script>
 <!--END Script drop down depeden  -->
