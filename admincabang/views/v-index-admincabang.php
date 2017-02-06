@@ -509,6 +509,12 @@
   </a>
 </li>
 
+  <li >
+   <a href="<?= base_url('index.php/admincabang/infograph');?>">
+    <span class="text">Infografics Tryout</span>
+  </a>
+</li>
+
  
 
 

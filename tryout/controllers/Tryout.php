@@ -1,7 +1,10 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+    defined('BASEPATH') or exit('No direct script access allowed');
 class Tryout extends MX_Controller {
+
     public function __construct() {
+        date_default_timezone_set('Asia/Jakarta');
+        
         $this->load->library('parser');
         $this->load->model('Mtryout');
         $this->load->model('siswa/msiswa');
@@ -35,6 +38,7 @@ class Tryout extends MX_Controller {
 
     //# fungsi indeks, mampilin to yang dikasih hak akses.
     public function index() {
+        $this->session->unset_userdata('id_tryout');
         $data = array(
             'judul_halaman' => 'Neon - Tryout',
             'judul_header' => 'Daftar Tryout',
@@ -103,7 +107,6 @@ class Tryout extends MX_Controller {
                 'judul_header' => 'Tryout : ' . $data['nama_to'],
                 'judul_tingkat' => '',
                 'nama_to' => $data_to['nm_tryout'],
-
                 );
 
             // FILES
@@ -234,7 +237,7 @@ class Tryout extends MX_Controller {
         $idSalah = array();
         for ($i = 0; $i < sizeOf($result); $i++) {
             $id = $result[$i]['soalid'];
-            $data[$id];
+            // $data[$id];
             // echo $data[$id][0];
             // echo "<br>";
             // echo $result[$i]['jawaban'];
@@ -255,6 +258,8 @@ class Tryout extends MX_Controller {
            // echo 'Salah = ' . $salah;
            // echo 'benar = ' . $benar;
         //
+
+        $hasil['id_pengguna'] = $this->session->userdata['id'];
         $hasil['siswaID'] = $this->msiswa->get_siswaid();
         $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
         ;
@@ -288,5 +293,4 @@ class Tryout extends MX_Controller {
         }
     }
 }
-
 ?>

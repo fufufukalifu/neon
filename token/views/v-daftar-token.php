@@ -189,6 +189,8 @@
           <tr>
             <th>No</th>
             <th>Nama Siswa</th>
+            <th>Nama Pengguna</th>
+
             <th>Nomor Token</th>
             <th>Masa Aktif</th>
             <th>Mulai</th>
