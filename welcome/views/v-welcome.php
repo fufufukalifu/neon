@@ -19,8 +19,6 @@
 
     <main>
 
-
-
         <div class="grid-col-row clear-fix" >
             <div class="grid-col col-md-2">
                 <div class="hover-effect"></div>

@@ -72,8 +72,7 @@ public function validasiLogin() {
         $sess_array = array();
 
         foreach ($result as $row) {
-
-
+             $idPengguna = $row->id;
 
             $hakAkses = $row->hakAkses;
 
@@ -83,7 +82,7 @@ public function validasiLogin() {
 
             $sess_array = array(
 
-                'id' => $row->id,
+                'id' => $idPengguna,
 
                 'USERNAME' => $row->namaPengguna,
 
@@ -122,6 +121,10 @@ public function validasiLogin() {
                 redirect(site_url('guru/dashboard/'));
 
             } elseif ($hakAkses == 'siswa') {
+                $tampSiswa=$this->Mlogin->get_namaSiswa($idPengguna);
+                $namaSiswa = $tampSiswa['namaDepan'] . ' '  . $tampSiswa['namaBelakang']  ;
+                     //set session nama Siswa
+               $this->session->set_userdata('NAMASISWA', $namaSiswa);
                $this->cek_token();
                redirect(site_url('welcome'));
 

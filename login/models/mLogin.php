@@ -24,10 +24,9 @@ class Mlogin extends CI_Model {
 
         $this->db->select('*');
 
-        $this->db->from('tb_pengguna');
-
+        $this->db->from('tb_pengguna pengguna');
         $this->db->where('kataSandi', $password);
-        $this->db->where('status','1');
+        $this->db->where('pengguna.status','1');
         $this->db->where("(namaPengguna='$username' OR eMail='$username')", NULL, FALSE);
         
         $this->db->limit(1);
@@ -190,6 +189,22 @@ class Mlogin extends CI_Model {
 
         return $userID ? $userID : FALSE;
 
+    }
+
+
+    public function get_namaSiswa($idPengguna)
+    {
+       $this->db->select('namaDepan, namaBelakang');
+       $this->db->from('tb_siswa');
+       $this->db->where('penggunaID',$idPengguna);
+       $query = $this->db->get();
+
+       if ($query->num_rows() == 1) {
+            return  $query->result_array()[0]; //if data is true
+        } else {
+            return array(); //if data is wrong
+        }
+       
     }
 
 

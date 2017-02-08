@@ -30,7 +30,7 @@ class Mbanksoal extends CI_Model {
     public function insert_gambar($datagambar) {
         $this->db->insert_batch('tb_piljawaban', $datagambar);
         echo "masuk insert gambar";
-        var_dump($datagambar);
+       
     }
 
     # END Function untuk form soal#
