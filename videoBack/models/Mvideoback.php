@@ -15,6 +15,7 @@ class Mvideoback extends CI_Model
 	// untuk mengambil get value tingkatan seperti sd, smo dll u/
 	public function scTingkat()
 	{
+		$this->db->where('status','1');
 		$this->db->select('id,aliasTingkat')->from('tb_tingkat');
 		$query = $this->db->get();
 		return $query->result_array();
@@ -24,6 +25,7 @@ class Mvideoback extends CI_Model
 	public function scPelajaran($tingkatID)
 	{
 		$this->db->where('tingkatID', $tingkatID);
+		$this->db->where('status','1');
 		$this->db->select('id, keterangan')->from('tb_tingkat-pelajaran');
 		$query = $this->db->get();
 		return $query->result_array();
@@ -33,6 +35,7 @@ class Mvideoback extends CI_Model
 	public function scBab($tpelajaranID)
 	{
 		$this->db->where('tingkatPelajaranID', $tpelajaranID);
+		$this->db->where('status','1');
 		$this->db->select('id, keterangan, judulBab')->from('tb_bab');
 		$query = $this->db->get();
 		return $query->result_array();
@@ -42,6 +45,7 @@ class Mvideoback extends CI_Model
 	public function scSubbab($babID)
 	{
 		$this->db->where('babID', $babID);
+		$this->db->where('status','1');
 		$this->db->select('id, judulSubBab')->from('tb_subbab');
 		$query = $this->db->get();
 		return $query->result_array();
