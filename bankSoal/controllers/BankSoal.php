@@ -34,7 +34,7 @@ class Banksoal extends MX_Controller {
        
         $config['base_url'] = base_url().'index.php/banksoal/listsoal/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 10;
+        $config['per_page'] = 2;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -70,7 +70,7 @@ class Banksoal extends MX_Controller {
         $config['last_tag_close'] = '</li>';
          // END Customizing the last_link Link
         
-        $from = $this->uri->segment(4);
+        $from = $this->uri->segment(3);
         $this->pagination->initialize($config);     
         $list = $this->Mbanksoal->data_soal($config['per_page'],$from);
 
