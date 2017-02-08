@@ -109,22 +109,23 @@ class Banksoal extends MX_Controller {
             $videoBahas ='';
             $tampImgSoal= $list_soal['gambar_soal'];
             $imgSoal='';
+            $imgJawaban='';
             $tampimgbahas=$list_soal['gambar_pembahasan'];
             $imgBahas='';
             $jawaban=$list_soal['jawaban'];
             $isiJawaban = '';
 
             if ($jawaban != '' && $jawaban != ' ') {
-                $isiJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+                //untuk menampung data sementara jawaban
+                $tampJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+                $isiJawaban = $tampJawaban['jawaban'];
+                $tampImgJawaban = $tampJawaban['imgJawaban'];
+                if ($tampImgJawaban != '' && $tampImgJawaban != ' ' ) {
+                     $imgJawaban=base_url().'/assets/image/jawaban/'.$tampImgJawaban;
+                }
             }
-            // foreach ( $pilihan as $piljawaban ) {
-            //     $id_soal_fk=$piljawaban['id_soal'];
-            //     $op=$piljawaban['pilihan'];
-            //     if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-            //         $isiJawaban=$piljawaban['jawabanBenar'];
 
-            //     }    
-            // }
+
 
             // pengecekan gambar pembahasan
             if ($tampimgbahas!= '' && $tampimgbahas != ' ' ) {
@@ -174,6 +175,7 @@ class Banksoal extends MX_Controller {
                 'id_subbab'=>$id_subbab,
                 'jawaban'=>$jawaban,
                 'isiJawaban'=>$isiJawaban,
+                'imgJawaban'=>$imgJawaban
                 );
           }
         // 
@@ -1261,6 +1263,7 @@ class Banksoal extends MX_Controller {
 
     }
 
+
     public function updatebanksoal() {
        
         #Start post data soal#
@@ -1306,7 +1309,8 @@ class Banksoal extends MX_Controller {
             'publish' => $publish,
             'create_by' => $create_by,
             'random' => $random,
-            'pembahasan' => $pembahasan
+            'pembahasan' => $pembahasan,
+            'id_subbab' => $subBabID
         );
 
         //call fungsi insert soal

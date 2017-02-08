@@ -136,6 +136,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
     <div class="container-fluid">
+
 <!-- Start Modal salah upload gambar -->
 <div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -172,6 +173,66 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- Priview Soal-->
+ <div class="modal fade " id="modalpriview" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+
+   <!-- Start Panel Priview -->
+   <div class="panel panel-teal">
+    <!-- Start heading -->
+    <div class="panel-heading ">
+      <div class="panel-toolbar">
+       <h4 class="modal-title ">Priview Soal</h4>
+      </div>
+       <div class="panel-toolbar text-right">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    </div>
+    <!-- End heading -->
+    <!-- Start body priview -->
+    <div class="panel-body ">
+    <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
+    <label> judul  :</label> <a id="prevJudul" ></a> <br>
+    <label>Soal   : </label>
+    <!-- img -->
+    <div class="col-sm-12">
+      <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
+    </div>
+    <!-- img -->
+    <div class="prevSoal col-sm-12">
+
+    </div>
+    <!-- pilihan jawaban -->
+    <div class="col-sm-12">
+      <ol type="A">
+        <li id="a"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+        <li id="d"></li>
+        <li id="e"></li>
+      </ol>
+    </div>
+    <!-- jawaban -->
+    <div class="col-sm-12"> 
+      <label>Jawaban : </label> <a id="prevJawaban"></a>
+    </div>
+    
+    </div>
+    <!-- END body priview -->
+
+    <!-- Start footer priview -->
+    <div class="panel-footer hidden-xs">
+     <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
+    </div>
+    <!-- end footer priview -->
+
+   </div>
+    <!-- END panel Priview -->
+
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END Priew -->
         <!-- START row -->
         <div class="row">
             <div class="col-md-12">
@@ -194,69 +255,35 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                      <!-- Start Dropd Down depeden -->
                     
                       <div  class="form-group " >
-
                         <label class="col-sm-1 control-label">Tingkat</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="tingkat" id="tingkat">
-
                             <option>-Pilih Tingkat-</option>
-
-
-
                           </select>
-
                         </div>
-
-
-
-                        <label class="col-sm-2 control-label">Mata Pelajaran</label>
-
+                      <label class="col-sm-2 control-label">Mata Pelajaran</label>
                         <div class="col-sm-4">
-
                           <select class="form-control" name="mataPelajaran" id="pelajaran">
 
-
-
                           </select>
-
                         </div>
-
                       </div>
 
-
-
                       <div class="form-group jenissoal">
-
                         <label class="col-sm-1 control-label">Bab</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="bab" id="bab">
 
-
-
                           </select>
-
                         </div>
-
-
 
                         <label class="col-sm-2 control-label">Subab</label>
-
                         <div class="col-sm-4">
+                         <select class="form-control" name="subBabID" id="subbab">
 
-                          <select class="form-control" name="subBabID" id="subbab">
-
-
-
-                          </select>
-
+                        </select>
                           <span class="text-danger"><?php echo form_error('subBab'); ?></span>
-
                         </div>
-
                       </div>
 
                       <!-- END Drop Down depeden -->
@@ -898,7 +925,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                       
+                        <a class="btn btn-info" onclick="priview()">Priview Soal</a>
                     </div>
                 </form>
                 <!--/ Form horizontal layout bordered -->
@@ -1564,7 +1591,33 @@ function ValidateInputVideo(oInput) {
 </script>
 <!--END Script drop down depeden  -->
     
+<script type="text/javascript">
 
+    // priview soal sebelum di upload
+      function priview() {
+        var tingkat = $('select#tingkat').text();
+        var judul = $("input[name=judul]").val();
+        var sumber  = $("input[name=sumber]").val();
+        var soal  = CKEDITOR.instances.editor1.getData();
+        var jawaban = $('select[name=jawaban]').val();
+        var a  =$("textarea[name=a]").val();
+        var b  =$("textarea[name=b]").val();
+        var c  =$("textarea[name=c]").val();
+        var d  =$("textarea[name=d]").val();
+        var e  =$("textarea[name=e]").val();
+        $("#prevSumber").text(sumber);
+        $("#prevJudul").text(judul);
+        $('li#a').text(a);
+        $('li#b').text(b);
+        $('li#c').text(c);
+        $('li#d').text(d);
+        $('li#e').text(e);
+        $('div.prevSoal').html(soal);
+        $('a#prevJawaban').text(jawaban);
+        $('#modalpriview').modal('show'); // show bootstrap modal
+      
+      }
+</script>
 
 </section>
         <!--/ END Template Main

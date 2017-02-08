@@ -67,8 +67,11 @@
                 <?php endif ?>
                 <!-- END Video Pembahasan -->
                 <p><?=$key['pembahasan'];?></p>
-                <h6 class="col-sm-6 pl0">Jawaban : <?=$key['jawaban'];?>. <?=$key['isiJawaban'];?></h6>
-                <div class="text-right col-sm-6">
+                <p class="col-sm-6 pl0">Jawaban : <?=$key['jawaban'];?>. <?=$key['isiJawaban'];?> 
+                    <img src="<?=$key['imgJawaban'];?>" style="max-width: 200px; max-height: 125px; ">
+                </p>
+                
+                <div class="text-right col-md-6" ">
                     <button type="button" class="btn btn-sm btn-inverse mb5" data-toggle="panelcollapse" title="Sembunyikan"><i class="ico-arrow-up12"></i> </button></div>
 
                 </div>

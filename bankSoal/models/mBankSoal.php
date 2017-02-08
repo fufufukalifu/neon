@@ -473,14 +473,14 @@ class Mbanksoal extends CI_Model {
     // get piljawaban by id soal and pilihan
     public function get_jawaban($jawaban,$id_soal)
     {
-        $this->db->select('jawaban');
+        $this->db->select('jawaban,gambar as imgJawaban');
         $this->db->from('tb_piljawaban');
         $this->db->where('id_soal',$id_soal);
          $this->db->where('pilihan',$jawaban);
          $query = $this->db->get();
         // cek jika hasil query null
         if($query->num_rows() == 1) {
-            return $query->result_array()[0]['jawaban'];
+            return $query->result_array()[0];
         }else{
              return $result='';
         }
