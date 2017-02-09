@@ -64,11 +64,6 @@ class Register extends MX_Controller {
 
     public function index() {
 
-//        $this->load->view('templating/t-header');
-
-//        $this->load->view('vRegisterSiswa');
-
-//        $this->load->view('templating/t-footer');
 
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['cabang'] = $this->mcabang->get_all_cabang();
@@ -92,17 +87,12 @@ class Register extends MX_Controller {
             APPPATH . 'modules/homepage/views/v-footer.php',
 
         );
-$data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+    $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
         $data['cabang'] = $this->mcabang->get_all_cabang();
 
 
         $this->parser->parse('templating/index', $data);
 
-        // $this->load->view('templating/v-navbarregister');
-
-        // $this->load->view('vRegisterSiswa');
-
-        // $this->load->view('homepage/v-footer');
 
     }
 

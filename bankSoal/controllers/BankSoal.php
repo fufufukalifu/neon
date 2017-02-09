@@ -1211,7 +1211,7 @@ class Banksoal extends MX_Controller {
                 'gambar' => $file_name,
                 'id_soal' => $soalID);
             } else {
-              # code...
+                
             }
             $n++;
         }

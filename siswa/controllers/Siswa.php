@@ -9,6 +9,7 @@ class Siswa extends MX_Controller {
         parent::__construct();
         $this->load->model('msiswa');
         $this->load->model('register/mregister');
+         $this->load->model('cabang/mcabang');
         $this->load->helper('session');
         $this->load->library('parser');
 
@@ -282,7 +283,10 @@ class Siswa extends MX_Controller {
         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-form-siswa.php',
         );
-        // jika admin
+
+        $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['cabang'] = $this->mcabang->get_all_cabang();
+        
         $this->parser->parse('admin/v-index-admin', $data);
     }
 
@@ -390,6 +394,8 @@ class Siswa extends MX_Controller {
         if ($idsiswa == null || $idpengguna == 0) {
             echo 'kosong';
         } else {
+             $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+        $data['cabang'] = $this->mcabang->get_all_cabang();
             $idsiswa = $idsiswa;
             $idpengguna = $idpengguna;
 

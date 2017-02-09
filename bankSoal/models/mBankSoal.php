@@ -29,7 +29,6 @@ class Mbanksoal extends CI_Model {
     //insert pilihan jawaban berupa gambar
     public function insert_gambar($datagambar) {
         $this->db->insert_batch('tb_piljawaban', $datagambar);
-        echo "masuk insert gambar";
        
     }
 

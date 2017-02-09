@@ -92,9 +92,11 @@
 
 							<ul class="clear-fix">
 								<li>
-
 									<a href="<?=base_url('welcome') ?>">Home</a>
+								</li>
 
+								<li>
+									<a href="<?=base_url('welcome') ?>">Video</a>
 								</li>
 
 								<li>

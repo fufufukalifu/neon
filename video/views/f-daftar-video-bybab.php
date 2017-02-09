@@ -79,15 +79,15 @@
     <div class="col-md-6">
      <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
-       <label class="btn active cws-button alt btn-primary bg-color-2" onclick="semua()"> 
+       <label class="btn active cws-button alt btn-primary bg-color-2 small" onclick="semua()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
       </label>
 
-      <label class="btn cws-button alt btn-primary bg-color-2" title="Tampilkan Jenis Video Room" onclick="justroom()"> 
+      <label class="btn cws-button alt btn-primary bg-color-2 small" title="Tampilkan Jenis Video Room" onclick="justroom()"> 
         <input type="radio" name="options" autocomplete="off"> Room
       </label> 
 
-      <label class="btn cws-button alt btn-primary bg-color-2" title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
+      <label class="btn cws-button alt btn-primary bg-color-2 small" title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
         <input type="radio" name="options" autocomplete="off"> Screen
       </label> 
 
@@ -97,11 +97,11 @@
   <div class="col-md-6">
    <h5>Video : <div class="btn-group" data-toggle="buttons" > 
 
-     <label class="btn cws-button alt active btn-primary bg-color-2" id="in-soal"> 
+     <label class="btn cws-button alt active btn-primary bg-color-2 small" id="in-soal"> 
       <input type="radio" name="options"  autocomplete="off" checked="true"> By Video
     </label> 
 
-    <label class="btn cws-button alt btn-primary bg-color-2 " id="pr-rumus" onclick="direct()"> 
+    <label class="btn cws-button alt btn-primary bg-color-2 small" id="pr-rumus" onclick="direct()"> 
       <input type="radio" name="options"   autocomplete="off"> By Sub Bab
     </label> 
 
@@ -133,12 +133,12 @@
               ?></div> <?php
             } ?>
             <!-- Start div demo -->
-            <div class="demo">
+            <div class="demo" style="list-style: none;">
               <strong><?=$judulbab ?></strong><br>
               <?php if ($bab_video_items->jenis_video == 1): ?>
-                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>
-                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
               <?php endif ?>
 
 
@@ -149,9 +149,9 @@
 
 
               <?php if ($bab_video_items->jenis_video == 1): ?>
-                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>
-                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
                 <?php endif ?>
                 <?php } ?>
                 <?php   $cekjudulbab=$judulbab;
@@ -168,7 +168,7 @@
     </div>
 
     <!-- ucapan selamat datang -->
-    <main>
+   <!--  <main>
       <div class="page-content grid-row">
         <div class="porfolio-item">
           <div class="col-md-2"><img src="<?=base_url('assets/back/img/logo.png')?>"  width="200px" data-at2x="<?=base_url('assets/back/img/logo@2x.png')?>" alt></div>
@@ -180,7 +180,7 @@
           <br><br>
         </div>
       </div>
-    </main>
+    </main> -->
 
     <!-- ucapan selamat datang -->
     <script src="http://macyjs.com/assets/js/macy.min.js"></script>
