@@ -250,8 +250,7 @@ class Mbanksoal extends CI_Model {
 
     // data paginataion all soal
     function data_soal($number,$offset){
-        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
-        // $this->db->from('tb_tingkat tkt');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -307,7 +306,7 @@ class Mbanksoal extends CI_Model {
     }
 
     function data_soal_sub($number,$offset,$subbab){
-        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
         // $this->db->from('tb_tingkat tkt');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
@@ -320,7 +319,7 @@ class Mbanksoal extends CI_Model {
     }
 
      function data_soal_mp($number,$offset,$mpID){
-        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -333,7 +332,7 @@ class Mbanksoal extends CI_Model {
 
 
     function data_soal_tingkat($number,$offset,$tingkatID){
-        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -346,7 +345,7 @@ class Mbanksoal extends CI_Model {
 
     function data_soal_bab($number,$offset,$bab='')
     {
-       $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab');
+       $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');

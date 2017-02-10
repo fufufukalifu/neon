@@ -114,6 +114,7 @@ class Banksoal extends MX_Controller {
             $imgBahas='';
             $jawaban=$list_soal['jawaban'];
             $isiJawaban = '';
+            $create_by = $list_soal['create_by'];
 
             if ($jawaban != '' && $jawaban != ' ') {
                 //untuk menampung data sementara jawaban
@@ -175,7 +176,9 @@ class Banksoal extends MX_Controller {
                 'id_subbab'=>$id_subbab,
                 'jawaban'=>$jawaban,
                 'isiJawaban'=>$isiJawaban,
-                'imgJawaban'=>$imgJawaban
+                'imgJawaban'=>$imgJawaban,
+                'create_by'=>$create_by
+
                 );
           }
         // 

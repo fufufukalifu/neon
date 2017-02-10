@@ -78,10 +78,10 @@
   <div class="row">
     <div class="col-md-6">
      <h5>Video : <div class="btn-group" data-toggle="buttons" > 
-       <label class="btn cws-button alt btn-primary bg-color-2" onclick="direct()"> 
+       <label class="btn cws-button alt btn-primary bg-color-2 small" onclick="direct()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
       </label> 
-      <label class="btn cws-button alt btn-primary bg-color-2 active" id="pr-rumus" active> 
+      <label class="btn cws-button alt btn-primary bg-color-2 active small" id="pr-rumus" active> 
         <input type="radio" name="bysub" autocomplete="off"> By Sub Bab
       </label> 
     </div></h5>
@@ -110,13 +110,13 @@
             <!-- Start div demo -->
             <div class="demo">
               <strong><?=$judulbab ?></strong><br>
-              <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></span><br>
+              <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini"><?php echo $subbab ;?></a></span><br>
             
 
             <?php }else{ ?>
 
             
-            <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $subbab ;?></a></span><br>
+            <span><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini"><?php echo $subbab ;?></a></span><br>
             <?php } ?>
             <?php   $cekjudulbab=$judulbab;
   $i='1'; ?>
@@ -130,7 +130,7 @@
       </section>
     </main>
     <!-- ucapan selamat datang -->
-    <hr class="divider-color">
+  <!--   <hr class="divider-color">
     <main>
       <div class="page-content grid-row">
         <div class="porfolio-item">
@@ -143,7 +143,7 @@
           <br><br>
         </div>
       </div>
-    </main>
+    </main> -->
   </div>
 
 

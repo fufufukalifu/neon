@@ -113,8 +113,9 @@ public function validasiLogin() {
                 $guru = $this->Mlogin->cekGuru($this->session->userdata['id']);
 
                 foreach ($guru as $value) {
-
+                    $namaGuru = $value->namaDepan .' '.$value->namaBelakang;
                     $this->session->set_userdata('id_guru', $value->id);
+                    $this->session->set_userdata('NAMAGURU', $namaGuru);
 
                 }
 

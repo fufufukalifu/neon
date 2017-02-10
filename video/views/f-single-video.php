@@ -111,12 +111,12 @@
           <!-- Start div demo -->
           <div class="demo">
               <strong><?=$subbab ?></strong><br>
-              <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
+              <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>#ini" title="Room" >
                <?=$bab_video_items['judulVideo'];?>           
            </a></span><br>
            <?php }else{ ?>
 
-           <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>" title="Room" >
+           <span><a href="<?=base_url('video/seevideo/')?><?=$bab_video_items['videoID']?>#ini" title="Room" >
                <?=$bab_video_items['judulVideo'];?>           
            </a></span><br>
 
@@ -135,25 +135,25 @@
 
 
 <hr class="divider-color" />
-<div class="grid-col-row row" >
+<div class="grid-col-row row" id="ini" >
     <div class="container">
-        <div class="grid-col grid-col-3 container">
+        <div class="grid-col grid-col-3 container" style="list-style: none;">
             <aside class="project-details">
                 <br><br>
                 <h5>{nama_sub}<a title="Timeline View" href="{sub_id}"><i class="glyphicon glyphicon-calendar"></i></a></h5>
                 <hr class="divider-big" />
-                <ul>
+                <!-- <ul > -->
                     <?php foreach ($videobysub as $videobysub_item): ?>
-                        <li><a href="<?= base_url('index.php/video/seevideo/') ?><?= $videobysub_item->id ?>"><?= $videobysub_item->judulVideo ?></a></li>
+                        <li ><a href="<?= base_url('index.php/video/seevideo/') ?><?= $videobysub_item->id ?>#ini"><?= $videobysub_item->judulVideo ?></a></li>
                     <?php endforeach ?>
-                </ul>
+                <!-- </ul> -->
             </aside>
         </div>
 
         <div class="grid-col grid-col-8 container" >
             <main>
                 <section class="clear-fix">
-                    <h5 class="center">{judul_video}</h5>
+                    <h5 class="center" >{judul_video}</h5>
                     <hr class="divide-color">
                     <iframe width="760" height="430" src="{file}"></iframe>
                     <!-- <video preload controls src="{file}" width="750px" ></video> -->

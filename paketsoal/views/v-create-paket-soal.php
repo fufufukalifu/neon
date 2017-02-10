@@ -251,7 +251,7 @@
 
     <div class="col-md-12">
 
-        <div class="panel panel-inverse">
+        <div class="panel panel-inverse mr10 ml10">
 
             <div class="panel-heading">
 
@@ -288,7 +288,7 @@
 
                                             <tr>
 
-                                                <th class="text-center">ID</th>
+                                                <th class="text-center">No</th>
 
                                                 <th>Nama Paket Soal</th>
 
@@ -314,7 +314,7 @@
 
                                             <tr>
 
-                                                <th class="text-center">ID</th>
+                                                <th class="text-center">No</th>
 
                                                 <th>Nama Paket Soal</th>
 

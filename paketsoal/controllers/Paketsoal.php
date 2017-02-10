@@ -56,16 +56,24 @@ class paketsoal extends MX_Controller
 		$data = array();
 
 		$baseurl = base_url();
+			$no = 0;
 		foreach ( $list as $paket_soal ) {
-			// $no++;
+			$no++;
+			$penggunaID = $paket_soal['penggunaID'];
+			$sesId = $this->session->userdata['id'];
 			$row = array();
-			$row[] = $paket_soal['id_paket'];
+			$row[] = $no;
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
-			$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
+			if ($penggunaID == $sesId) {
+				$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
 			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
+			}else{
+				$row[] = '';
+			}
+			
 
 			$data[] = $row;
 
@@ -177,14 +185,15 @@ class paketsoal extends MX_Controller
 	#menambahkan paket soal ke dalam database
 	function addpaketsoal() {
 		$this->form_validation->set_rules( 'nama_paket', "Error Nama Paket", 'required' );
-		//$this->form_validation->set_message('required',"You can't allowed empty");
 
 		$data = array(
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' ),
-			'random'=>$this->input->post('random')
+			'random'=>$this->input->post('random'),
+			'penggunaID'=>$this->session->userdata['id']
+
 			);
 
 		$this->mpaketsoal->insertpaketsoal( $data );

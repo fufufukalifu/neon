@@ -62,6 +62,10 @@
   .btn:hover {
     background-color: #4CA8B9
   }
+  .btn:active {
+    background-color: white;
+    color: white;
+  }
   .btn.has-icon::before {
     margin-right: 18px;
     padding: 0 18px;
@@ -136,9 +140,9 @@
             <div class="demo" style="list-style: none;">
               <strong><?=$judulbab ?></strong><br>
               <?php if ($bab_video_items->jenis_video == 1): ?>
-                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+                <li class="room"><a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>#ini"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>
-                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
               <?php endif ?>
 
 
@@ -149,9 +153,9 @@
 
 
               <?php if ($bab_video_items->jenis_video == 1): ?>
-                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
+                <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>
-                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
+                <li class="screen"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini" ><?php echo $bab_video_items->judulVideo ;?>(R)</a></li>
                 <?php endif ?>
                 <?php } ?>
                 <?php   $cekjudulbab=$judulbab;
