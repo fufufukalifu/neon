@@ -51,7 +51,6 @@
             <th>Nama Tryout</th>
             <th>Tanggal Mulai</th>
             <th>Tanggal Berakhir</th>
-            <th>Waktu</th>
 
             <th>Masa berlaku TO</th>
             <th>Keaktivan</th>
@@ -63,9 +62,8 @@
           <tr>
             <td><?=$tryout_item['id_tryout'] ?></td>
             <td><?=$tryout_item['nm_tryout'] ?></td>
-            <td><?=$tryout_item['tgl_mulai'] ?></td>
-            <td><?=$tryout_item['tgl_berhenti'] ?></td>
-            <td><?=$tryout_item['wkt_mulai'].' - '.$tryout_item['wkt_berakhir'] ?></td>
+            <td><?=$tryout_item['tgl_mulai']." ".$tryout_item['wkt_mulai'] ?></td>
+            <td><?=$tryout_item['tgl_berhenti']." ".$tryout_item['wkt_berakhir']?></td>
 
             <?php 
             $date1 = new DateTime($tryout_item['tgl_mulai']);

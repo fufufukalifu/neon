@@ -17,6 +17,7 @@ class Token_model extends CI_Model{
 		}
 		$this->db->select( '*,tb_token.id as tokenid,tb_token.status as tokenStatus' )->from( 'tb_token' ); 
 		$this->db->join('tb_siswa', 'tb_token.siswaID = tb_siswa.id', 'left outer');
+		$this->db->join('tb_pengguna', 'tb_pengguna.id = tb_siswa.penggunaID');
 		$query = $this->db->get(); 
 		return $query->result(); 
 	}

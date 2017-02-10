@@ -13,6 +13,7 @@ class Toback extends MX_Controller{
 		$this->load->model('siswa/msiswa');
 		$this->load->model('templating/mtemplating');
 		parent::__construct();
+
 		if ($this->session->userdata('loggedin')==true) {
 			if ($this->session->userdata('HAKAKSES')=='siswa'){
 				redirect('welcome');
@@ -20,6 +21,8 @@ class Toback extends MX_Controller{
                // redirect('guru/dashboard');
 			}else if($this->session->userdata('HAKAKSES')=='admin'){
                // redirect('guru/dashboard');
+			}else if($this->session->userdata('HAKAKSES')=='admin_cabang'){
+
 			}else{
 				redirect('login');
 			}
@@ -65,27 +68,27 @@ class Toback extends MX_Controller{
 				);
 			$data['judul_halaman'] = "Bundle Paket";
 			 #START cek hakakses#
-	        $hakAkses=$this->session->userdata['HAKAKSES'];
-	        if ($hakAkses =='admin') {
+			$hakAkses=$this->session->userdata['HAKAKSES'];
+			if ($hakAkses =='admin') {
 	            // jika admin
-	            if ($babID == null) {
-	                redirect(site_url('admin'));
-	            } else {
-	                $this->parser->parse('admin/v-index-admin', $data);
-	            }
-	            
-	        } elseif($hakAkses=='guru'){
+				if ($babID == null) {
+					redirect(site_url('admin'));
+				} else {
+					$this->parser->parse('admin/v-index-admin', $data);
+				}
+
+			} elseif($hakAkses=='guru'){
 	             // jika guru
-	            if ($babID == null) {
-	                 redirect(site_url('guru/dashboard/'));
-	            } else {
-	               $this->parser->parse('templating/index-b-guru', $data);
-	            }
-	            
-	        }else{
+				if ($babID == null) {
+					redirect(site_url('guru/dashboard/'));
+				} else {
+					$this->parser->parse('templating/index-b-guru', $data);
+				}
+
+			}else{
 	            // jika siswa redirect ke welcome
-	            redirect(site_url('welcome'));
-	        }
+				redirect(site_url('welcome'));
+			}
 	        #END Cek USer#
 		}
 		
@@ -112,17 +115,17 @@ class Toback extends MX_Controller{
 		}
 
 		 #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses =='admin') {
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		if ($hakAkses =='admin') {
             // jika admin 
-            $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
+			$this->parser->parse('admin/v-index-admin', $data);
+		} elseif($hakAkses=='guru'){
              // jika guru     
-            $this->parser->parse('templating/index-b-guru', $data);
-        }else{
+			$this->parser->parse('templating/index-b-guru', $data);
+		}else{
             // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
+			redirect(site_url('welcome'));
+		}
         #END Cek USer#
 	}
 	//add paket ke TO
@@ -227,22 +230,25 @@ class Toback extends MX_Controller{
 			APPPATH . 'modules/toback/views/v-list-to.php',
 			);
 		$data['judul_halaman'] = "List Try Out";
-		 $hakAkses=$this->session->userdata['HAKAKSES'];
-		 if ($hakAkses=='admin') {
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		if ($hakAkses=='admin') {
         // jika admin
-         $this->parser->parse('admin/v-index-admin', $data);
+			$this->parser->parse('admin/v-index-admin', $data);
 
 
-        } elseif($hakAkses=='guru'){
+		} elseif($hakAkses=='guru'){
                     // jika guru
-             $this->load->view('templating/index-b-guru', $data);  
-            
-            
-        }else{
+			$this->load->view('templating/index-b-guru', $data);  
+		} elseif($hakAkses=='admin_cabang'){
+                    // jika guru
+			$this->load->view('admincabang/v-index-admincabang', $data);  
+
+
+		}else{
             // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
-	
+			redirect(site_url('welcome'));
+		}
+
 	}
 	// menampilkan list to
 	public function ajax_listsTO(){
@@ -262,22 +268,39 @@ class Toback extends MX_Controller{
 			$row[] = $list_to ['id_tryout'];
 			$row[] = $list_to ['nm_tryout'];
 			$row[] = $list_to['tgl_mulai'];
+			$row[] = $list_to['wkt_mulai'];
 			$row[] = $list_to['tgl_berhenti'];
+			$row[] = $list_to['wkt_berakhir'];
 			$row[] = $publish;
 			$row[] = '
-					<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')"> <i class="ico-file5"></i></a>
-					<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' ><i class="ico-file-plus2"></i></a>
-					<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')"><i class="ico-user"></i></a>
-					<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')"><i class="ico-remove"></i></a>
-					';
+			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-file5"></i></a>
+			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
+			<i class="ico-file-plus2"></i></a>
+
+			<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
+			<i class="ico-user"></i></a>
+
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropTO('."'".$list_to['id_tryout']."'".')">
+			<i class="ico-remove"></i></a>
+			'
+
+			;
+
 			$data[] = $row;
+
 		}
 
-		$output = array("data"=>$data,);
-		echo json_encode( $output );
-	}
+		$output = array(
 
-	public function dropTO($id_tryout){
+			"data"=>$data,
+			);
+
+		echo json_encode( $output );
+
+	}
+	public function dropTO($id_tryout)
+	{
 		$this->Mtoback->drop_TO($id_tryout);
 	}
 
@@ -298,19 +321,25 @@ class Toback extends MX_Controller{
 		$this->Mtoback->drop_siswa_toTO($idKey);
 	}
 	
-	public function editTryout(){
+	public function editTryout()
+	{
 		$data['id_tryout']=htmlspecialchars($this->input->post('id_tryout'));
 		$nm_tryout=htmlspecialchars($this->input->post('nama_tryout'));
 		$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
 		$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
 		$publish=htmlspecialchars($this->input->post('publish'));
 
+		$wktMulai=htmlspecialchars($this->input->post('wkt_mulai'));
+		$wktAkhir=htmlspecialchars($this->input->post('wkt_akhir'));
+
 		$data['tryout']=array(
-						'nm_tryout'=>$nm_tryout,
-						'tgl_mulai'=>$tglMulai,
-						'tgl_berhenti'=>$tglAkhir,
-						'publish'=>$publish,
-						);
+			'nm_tryout'=>$nm_tryout,
+			'tgl_mulai'=>$tglMulai,
+			'tgl_berhenti'=>$tglAkhir,
+			'wkt_mulai'=>$wktMulai,
+			'wkt_berakhir'=>$wktAkhir,
+			'publish'=>$publish,
+			);
 
 		$this->Mtoback->ch_To($data);
 	}
@@ -346,7 +375,6 @@ class Toback extends MX_Controller{
 			// jika siswa redirect ke welcome
 			redirect(site_url('welcome'));
 		}
-	}
 
 		##menampilkan paket yang belum ada di TO.
 	function ajax_list_all_paket($id_to){
@@ -391,32 +419,36 @@ class Toback extends MX_Controller{
 			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
 				$data[] = $row;
 			}
+		}
 		$output = array(
 			"data"=>$data,
 			);
 		echo json_encode( $output );
 	}
-	
+
 	###menampilkan siswa yang belum ikutan TO.
 	// menampilkan list Pkaet by to for Report
-	public function reportPaketSiswa(){
-	$data['id_to']=htmlspecialchars($this->input->get('id_to'));
-	$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
-	$data['idPengguna']=$penggunaID;
-	$data['siswa']=$this->Mtoback->get_nama_siswa($penggunaID)[0];
-	$data['reportPaket']=$this->Mtoback->get_report_paket($data);
-	$data['files'] = array(
-		APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
-	);
-	$data['judul_halaman'] = "Report Siswa Perpaket";
-	$this->load->view('templating/index-b-guru', $data);
+	public function reportPaketSiswa()
+	{
+		$data['id_to']=htmlspecialchars($this->input->get('id_to'));
+		$penggunaID=htmlspecialchars($this->input->get('id_pengguna'));
+		$data['idPengguna']=$penggunaID;
+		$data['siswa']=$this->Mtoback->get_nama_siswa($penggunaID)[0];
+		$data['reportPaket']=$this->Mtoback->get_report_paket($data);
+		$data['files'] = array(
+			APPPATH . 'modules/toback/views/v-report-paket-siswa.php',
+			);
+		$data['judul_halaman'] = "Report Siswa Perpaket";
+		$this->load->view('templating/index-b-guru', $data);
 	}
 					//menampilkan report paket 
-	public function reportpaket($idpaket){
+	public function reportpaket($idpaket)
+	{
 		$data['report']=$this->Mtoback->get_all_report_paket($idpaket);
+
 		$data['files'] = array(
-		APPPATH . 'modules/paketsoal/views/v-report-paket.php',
-		);
+			APPPATH . 'modules/paketsoal/views/v-report-paket.php',
+			);
 		$data['judul_halaman'] = "Report Siswa Perpaket";
 		$this->load->view('templating/index-b-guru', $data);
 	}
@@ -455,5 +487,4 @@ class Toback extends MX_Controller{
 
 
 }
-	
 ?>

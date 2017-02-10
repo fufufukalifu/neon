@@ -31,6 +31,17 @@ class Mmatapelajaran extends CI_Model
 		return $query->result();
 	}
 
+	public function gettingkat() {
+
+		$this->db->select( '*' )->from( 'tb_tingkat' );
+		
+		$this->db->where( 'status', 1 );
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
 	
 
 

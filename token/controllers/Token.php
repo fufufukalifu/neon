@@ -120,6 +120,8 @@ class Token extends MX_Controller {
 			$row = array();
 			$row[] = $no;
 			$row[] = $list->namaDepan." ".$list->namaBelakang;
+			$row[] = $list->namaPengguna;
+
 			$row[] = $list->nomorToken;
 			$row[] = $list->masaAktif;
 			$row[] = $date_diaktifkan;

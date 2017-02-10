@@ -27,7 +27,7 @@ class MTingkat extends CI_Model {
 	public function gettingkat() {
 
 		$this->db->select( '*' )->from( 'tb_tingkat' );
-
+		
 		$this->db->where( 'status', 1 );
 
 		$query = $this->db->get();
@@ -35,6 +35,8 @@ class MTingkat extends CI_Model {
 		return $query->result_array();
 
 	}
+
+	
 
 
 

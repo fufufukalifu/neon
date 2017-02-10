@@ -9,10 +9,10 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-										<div class="alert alert-dismissable alert-danger" id="info" hidden="true" >
-							<button type="button" class="close" onclick="hideme()" >×</button>
-							<strong>Terjadi Kesalahan</strong> <br>isi tanggapan anda.
-						</div>
+					<div class="alert alert-dismissable alert-danger" id="info" hidden="true" >
+						<button type="button" class="close" onclick="hideme()" >×</button>
+						<strong>Terjadi Kesalahan</strong> <br>isi tanggapan anda.
+					</div>
 
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h2 class="modal-title text-center text-danger">Preview Postingan</h2>
@@ -33,7 +33,7 @@
 
 	<div class="page-content">
 		<section>
-		<input type="hidden" name="idsub" value="{idsub}">
+			<input type="hidden" name="idsub" value="{idsub}">
 
 			<div class="form-group">
 				<div class="container">
@@ -67,35 +67,35 @@
 	</div>
 </main>
 <script>
-	var ckeditor = CKEDITOR.replace( 'editor1' );
-	
-	function preview(){
-		var desc = ckeditor.getData();
-		var data = {
-			namapertanyaan : $('input[name=namaPertanyaan]').val(),
-			isi : desc,
-		}
-					
-		$('.modal-body .judul').append("<h5>Judul</h5>");		
-		$('.modal-body .judul').append(data.namapertanyaan);
-		$('.modal-body .isi').append("<h5>Isi Pertanyaan</h5>	");
-		$('.modal-body .isi').append(data.isi);
+var ckeditor = CKEDITOR.replace( 'editor1' );
 
-
-		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
-			$('#info').show();
-		}else{
-			$('#preview').modal('show');
-		}
+function preview(){
+	var desc = ckeditor.getData();
+	var data = {
+		namapertanyaan : $('input[name=namaPertanyaan]').val(),
+		isi : desc,
 	}
+	
+	$('.modal-body .judul').append("<h5>Judul</h5>");		
+	$('.modal-body .judul').append(data.namapertanyaan);
+	$('.modal-body .isi').append("<h5>Isi Pertanyaan</h5>	");
+	$('.modal-body .isi').append(data.isi);
 
-	function save(){
-		var desc = ckeditor.getData();
-		var data = {
-			namapertanyaan : $('input[name=namaPertanyaan]').val(),
-			isi : desc+"<br>",
-			idsub : $('input[name=idsub]').val()
-		}
+
+	if (data.namapertanyaan == "" || data.namapertanyaan == "") {
+		$('#info').show();
+	}else{
+		$('#preview').modal('show');
+	}
+}
+
+function save(){
+	var desc = ckeditor.getData();
+	var data = {
+		namapertanyaan : $('input[name=namaPertanyaan]').val(),
+		isi : desc+"<br>",
+		idsub : $('input[name=idsub]').val()
+	}
 
 		// console.log(data);
 
@@ -126,4 +126,4 @@
 	function hideme(){
 		$('#info').hide();
 	}
-</script>
+	</script>

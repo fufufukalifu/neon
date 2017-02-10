@@ -5,12 +5,15 @@
  */
 class Banksoal extends MX_Controller {
 
+
+
     function __construct() {
         parent::__construct();
         $this->load->helper(array('url'));
         $this->load->model('Mbanksoal');
         $this->load->model('templating/Mtemplating');
         $this->load->library('parser');
+         $this->load->library('pagination');
     }
 
     public function index() {
@@ -28,8 +31,7 @@ class Banksoal extends MX_Controller {
         // code u/pagination
        $this->load->database();
         $jumlah_data = $this->Mbanksoal->jumlah_data();
-
-        $this->load->library('pagination');
+       
         $config['base_url'] = base_url().'index.php/banksoal/listsoal/';
         $config['total_rows'] = $jumlah_data;
         $config['per_page'] = 2;
@@ -70,8 +72,8 @@ class Banksoal extends MX_Controller {
         
         $from = $this->uri->segment(3);
         $this->pagination->initialize($config);     
-        $list = $this->Mbanksoal->data($config['per_page'],$from);
-      
+        $list = $this->Mbanksoal->data_soal($config['per_page'],$from);
+
         $this->tampSoal($list);
     }
 
@@ -107,22 +109,23 @@ class Banksoal extends MX_Controller {
             $videoBahas ='';
             $tampImgSoal= $list_soal['gambar_soal'];
             $imgSoal='';
+            $imgJawaban='';
             $tampimgbahas=$list_soal['gambar_pembahasan'];
             $imgBahas='';
             $jawaban=$list_soal['jawaban'];
             $isiJawaban = '';
 
             if ($jawaban != '' && $jawaban != ' ') {
-                $isiJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+                //untuk menampung data sementara jawaban
+                $tampJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+                $isiJawaban = $tampJawaban['jawaban'];
+                $tampImgJawaban = $tampJawaban['imgJawaban'];
+                if ($tampImgJawaban != '' && $tampImgJawaban != ' ' ) {
+                     $imgJawaban=base_url().'/assets/image/jawaban/'.$tampImgJawaban;
+                }
             }
-            // foreach ( $pilihan as $piljawaban ) {
-            //     $id_soal_fk=$piljawaban['id_soal'];
-            //     $op=$piljawaban['pilihan'];
-            //     if ($id_soal==$id_soal_fk && $jawaban == $op ) {
-            //         $isiJawaban=$piljawaban['jawabanBenar'];
 
-            //     }    
-            // }
+
 
             // pengecekan gambar pembahasan
             if ($tampimgbahas!= '' && $tampimgbahas != ' ' ) {
@@ -153,6 +156,7 @@ class Banksoal extends MX_Controller {
             }
 
             $data['datSoal'][]=array(
+                'id_soal'=>$id_soal,
                 'judulSoal'=>$judulSoal,
                 'soal'=>$soal,
                 'imgSoal'=>$imgSoal,
@@ -171,6 +175,7 @@ class Banksoal extends MX_Controller {
                 'id_subbab'=>$id_subbab,
                 'jawaban'=>$jawaban,
                 'isiJawaban'=>$isiJawaban,
+                'imgJawaban'=>$imgJawaban
                 );
           }
         // 
@@ -1258,6 +1263,7 @@ class Banksoal extends MX_Controller {
 
     }
 
+
     public function updatebanksoal() {
        
         #Start post data soal#
@@ -1303,7 +1309,8 @@ class Banksoal extends MX_Controller {
             'publish' => $publish,
             'create_by' => $create_by,
             'random' => $random,
-            'pembahasan' => $pembahasan
+            'pembahasan' => $pembahasan,
+            'id_subbab' => $subBabID
         );
 
         //call fungsi insert soal
@@ -1518,11 +1525,18 @@ class Banksoal extends MX_Controller {
 
     #END Function untuk form update bank soal #
     #END Function untuk delete bank soal #
-
+    //untuk fungsi hapus di view list soal tabel ajax
     public function deletebanksoal($data) {
         $this->Mbanksoal->del_banksoal($data);
     }
-
+    //untuk fungsi hapus di list soal bukan ajax
+    public function deletebanksoal2() {
+        if ($this->input->post()) {
+            $post = $this->input->post();
+             $this->Mbanksoal->del_banksoal($post['id']);
+        }
+           redirect(site_url('banksoal/listsoal'));
+    }
     // fungsi untuk memfilter video yang akan di tampilkan
     public function filtersoal()
     {
@@ -1544,6 +1558,7 @@ class Banksoal extends MX_Controller {
             // $this->listsoal($subbab);
         }    
     }
+
 
     // list soal per bab
     public function soalBab($babID)
@@ -1655,6 +1670,236 @@ class Banksoal extends MX_Controller {
             redirect(site_url('welcome'));
         }
         #END Cek USer#
+    }
+
+    public function filtersoal2()
+    {
+        $tingkatID = $this->input->get('tingkat');
+        $mpID = $this->input->get('mataPelajaran');
+        $bab=$this->input->get('bab');
+        $subbab=$this->input->get('subbab');
+        if ($subbab != null) {
+            //list soal
+            $this->listsoalSub($subbab);
+        } else if ($bab != null) {
+            $this->listsoalBab($bab);
+        } else if ($mpID != null) {
+            $this->listsoalMp($mpID);
+        } else if ($tingkatID != null) {
+            $this->listsoalTingkat($tingkatID);
+        } else {
+           $this->listsoal();
+            // $this->listsoal($subbab);
+        }    
+    }
+
+    //menampilkan list soal sub (tidak menggunkan datatable)
+    public function listsoalSub($subbab='')
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mbanksoal->jumlah_soal_sub($subbab);
+
+        
+        $config['base_url'] = base_url().'index.php/banksoal/listsoalSub/'.$subbab.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soal_sub($config['per_page'],$from,$subbab);
+      
+        $this->tampSoal($list);
+    }
+
+     //menampilkan list soal bab (tidak menggunkan datatable)
+    public function listsoalBab($bab="")
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mbanksoal->jumlah_soal_bab($bab);
+
+        
+        $config['base_url'] = base_url().'index.php/banksoal/listsoalBab/'.$bab.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soal_bab($config['per_page'],$from,$bab);
+      
+        $this->tampSoal($list);
+    }
+
+    public function listsoalMp($mpID='')
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mbanksoal->jumlah_soal_mp($mpID);
+        
+        $config['base_url'] = base_url().'index.php/banksoal/listsoalMp/'.$mpID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soal_mp($config['per_page'],$from,$mpID);
+
+        $this->tampSoal($list);
+    }
+
+    //menampilkan list soal tingkat (tidak menggunkan datatable)
+     public function listsoalTingkat($tingkatID="")
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mbanksoal->jumlah_soal_tingkat($tingkatID);
+        
+        $config['base_url'] = base_url().'index.php/banksoal/listsoalTingkat/'.$tingkatID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soal_tingkat($config['per_page'],$from,$tingkatID);
+
+        $this->tampSoal($list);
     }
 }
 

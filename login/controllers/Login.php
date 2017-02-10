@@ -15,17 +15,17 @@ class Login extends MX_Controller {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
                // redirect('welcome');
             }else if($this->session->userdata('HAKAKSES')=='guru'){
-             redirect('guru/dashboard');
-         }else{
-         }
+               redirect('guru/dashboard');
+           }else{
+           }
 
-     }
+       }
 
- }
+   }
 
 
 
- public function index() {
+   public function index() {
 
     $data = array(
 
@@ -72,8 +72,7 @@ public function validasiLogin() {
         $sess_array = array();
 
         foreach ($result as $row) {
-
-
+             $idPengguna = $row->id;
 
             $hakAkses = $row->hakAkses;
 
@@ -83,7 +82,7 @@ public function validasiLogin() {
 
             $sess_array = array(
 
-                'id' => $row->id,
+                'id' => $idPengguna,
 
                 'USERNAME' => $row->namaPengguna,
 
@@ -122,16 +121,16 @@ public function validasiLogin() {
                 redirect(site_url('guru/dashboard/'));
 
             } elseif ($hakAkses == 'siswa') {
-             $this->cek_token();
+                $tampSiswa=$this->Mlogin->get_namaSiswa($idPengguna);
+                $namaSiswa = $tampSiswa['namaDepan'] . ' '  . $tampSiswa['namaBelakang']  ;
+                     //set session nama Siswa
+               $this->session->set_userdata('NAMASISWA', $namaSiswa);
+               $this->cek_token();
+               redirect(site_url('welcome'));
 
-
-             redirect(site_url('welcome'));
-
-         } elseif ($hakAkses == 'user') {
-
-//                      redirect(site_url('welcome'));
-
-         } else {
+           } elseif ($hakAkses == 'admin_cabang') {
+               redirect(site_url('admincabang'));
+           } else {
 
             echo 'tidak ada hak akses';
 
@@ -348,13 +347,13 @@ function cek_token(){
         // cek dulu statusna udah di aktivin atau belum
         if ($token['status']==1) {
             # udah diaktifin
-           $date_diaktifkan = $date1->format('d-M-Y');
-           $date_kadaluarsa =  date("d-M-Y", strtotime($date_diaktifkan)+ (24*3600*$token['masaAktif']));
+         $date_diaktifkan = $date1->format('d-M-Y');
+         $date_kadaluarsa =  date("d-M-Y", strtotime($date_diaktifkan)+ (24*3600*$token['masaAktif']));
 
-           $date1 = new DateTime(date("d-M-Y"));
-           $date2 = new DateTime($date_kadaluarsa);
-           $sisa_aktif = $date2->diff($date1)->days;
-           if ($sisa_aktif != 0) {
+         $date1 = new DateTime(date("d-M-Y"));
+         $date2 = new DateTime($date_kadaluarsa);
+         $sisa_aktif = $date2->diff($date1)->days;
+         if ($sisa_aktif != 0) {
             //token aktif
             $this->session->set_userdata(array('token'=>'Aktif','sisa'=>$sisa_aktif));
         }else{

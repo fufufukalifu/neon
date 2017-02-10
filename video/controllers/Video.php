@@ -11,6 +11,8 @@ class Video extends MX_Controller {
         $this->load->model('guru/mguru');
         $this->load->model('komen/mkomen');
         $this->load->library('parser');
+        $this->load->library('sessionchecker');
+
     // 
     }
 

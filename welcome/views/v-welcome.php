@@ -19,8 +19,6 @@
 
     <main>
 
-
-
         <div class="grid-col-row clear-fix" >
             <!-- <div class="grid-col col-md-2">
                 <div class="hover-effect"></div>
@@ -29,6 +27,9 @@
                     <?php foreach ($pelajaran_sd as $pelajaran_items): ?>
                         <a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a><br>
                     <?php endforeach ?>
+                     <?php if ($pelajaran_sd == array()): ?>
+                        <h6 style="color:orange;">Belum Tersedia Video Pembelajaran !</h6>
+                    <?php endif ?>
                
             </div>
 
@@ -40,6 +41,9 @@
                     <?php foreach ($pelajaran_smp as $pelajaran_items): ?>
                         <a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a><br>
                     <?php endforeach ?>
+                     <?php if ($pelajaran_smp == array()): ?>
+                        <h6 style="color:orange;">Belum Tersedia Video Pembelajaran !</h6>
+                    <?php endif ?>
           
             </div>
 
@@ -50,6 +54,10 @@
                     <?php foreach ($pelajaran_sma as $pelajaran_items): ?>
                        <a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a><br>
                     <?php endforeach ?>
+
+                    <?php if ($pelajaran_sma == array()): ?>
+                        <h6 style="color:orange;">Belum Tersedia Video Pembelajaran !</h6>
+                    <?php endif ?>
                
             </div>
 
@@ -60,7 +68,9 @@
                     <?php foreach ($pelajaran_sma_ipa as $pelajaran_items): ?>
                         <a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a><br>
                     <?php endforeach ?>
-               
+                    <?php if ($pelajaran_sma_ipa == array()): ?>
+                        <h6 style="color:orange;">Belum Tersedia Video Pembelajaran !</h6>
+                    <?php endif ?>
             </div>
 
 
@@ -71,6 +81,9 @@
                     <?php foreach ($pelajaran_sma_ips as $pelajaran_items): ?>
                         <a href="<?=base_url('video/daftarallvideo/') ?><?=$pelajaran_items->id ?>"  class="text-info"><?= $pelajaran_items->namaMataPelajaran ?></a><br>
                     <?php endforeach ?>
+                    <?php if ($pelajaran_sma_ips == array()): ?>
+                        <h6 style="color:orange;">Belum Tersedia Video Pembelajaran !</h6>
+                    <?php endif ?>
               
             </div>
  -->
