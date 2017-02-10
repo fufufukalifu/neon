@@ -4,7 +4,7 @@
 
             <div class="grid-col-row clear-fix">
 
-                <div class="row">
+               <!--  <div class="row">
 
                     <div class="container"><h1 class="text-center">Silahkan pilih tingkat untuk melakukan latihan online!</h1><br></div>
 
@@ -58,6 +58,13 @@
                 <?php $i = $i+1; ?>
 
                 <?php endforeach ?>
+ -->
+
+                <div class="grid-col col-md-12">
+                    <div class="hover-effect"></div>
+                    <h3 class="center"><strong>Latihan Online Sedang dipersiapkan</strong></h3>              
+                </div>
+
 
             </div>
 

@@ -93,6 +93,3 @@
 </div>
 
 <hr class="divider-color">
-
-
-

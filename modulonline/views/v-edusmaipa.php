@@ -119,7 +119,7 @@ function searchFilter(page_num) {
     var sortBy = $('#sortBy').val();
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url(); ?>index.php/modulonline/ajaxPaginationData/'+page_num,
+        url: '<?php echo base_url(); ?>index.php/modulonline/ajaxPaginationDataSMAIPA/'+page_num,
         data:'page='+page_num+'&keywords='+keywords+'&sortBy='+sortBy,
         beforeSend: function () {
             $('.loading').show();
@@ -135,7 +135,7 @@ function searchFilter(page_num) {
         <div class="container">
             <div class="">
                 <div class="grid-col" style="width:70%">
-                    <h2>Semua Kategori</h2>
+                    <h2>Modul Sekolah Menengah Atas - IPA</h2>
                     <!-- Shop -->
                     <div id="page-meta" class="group">
                         <div class="woocommerce-result-count" style="width:40%;padding:10px">

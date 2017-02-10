@@ -27,24 +27,26 @@ class Modulonline extends MX_Controller {
     // }
 
     public function index(){
-        $data = array();
+        // $data = array();
         
-        //total rows count
-        $totalRec = count($this->Mmodulonline->getRows());
+        // //total rows count
+        // $totalRec = count($this->Mmodulonline->getRows());
         
-        //pagination configuration
-        $config['target']      = '#postList';
-        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
-        $config['total_rows']  = $totalRec;
-        $config['per_page']    = $this->perPage;
-        $config['link_func']   = 'searchFilter';
-        $this->ajax_pagination->initialize($config);
+        // //pagination configuration
+        // $config['target']      = '#postList';
+        // $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
+        // $config['total_rows']  = $totalRec;
+        // $config['per_page']    = $this->perPage;
+        // $config['link_func']   = 'searchFilter';
+        // $this->ajax_pagination->initialize($config);
         
-        //get the posts data
-        $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
+        // //get the posts data
+        // $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
         
-        //load the view
-        $this->load->view('modulonline/index', $data);
+        // //load the view
+        // $this->load->view('modulonline/index', $data);
+
+        $this->allmodul();
     }
     
     function ajaxPaginationData(){
@@ -128,6 +130,180 @@ class Modulonline extends MX_Controller {
         
         //get posts data
         $data['posts'] = $this->Mmodulonline->getRowssd($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
+    }
+
+
+    function ajaxPaginationDataSMP(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmp($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationDataSMP';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmp($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
+    }
+
+     function ajaxPaginationDataSMA(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssma($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationDataSMA';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRowssma($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
+    }
+
+     function ajaxPaginationDataSMAIPA(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmaipa($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationDataSMAIPA';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmaipa($conditions);
+        
+        //load the view
+        $this->load->view('modulonline/ajax-pagination-data', $data, false);
+    }
+
+
+ function ajaxPaginationDataSMAIPS(){
+        $conditions = array();
+        
+        //calc offset number
+        $page = $this->input->post('page');
+        if(!$page){
+            $offset = 0;
+        }else{
+            $offset = $page;
+        }
+        
+        //set conditions for search
+        $keywords = $this->input->post('keywords');
+        $sortBy = $this->input->post('sortBy');
+        if(!empty($keywords)){
+            $conditions['search']['keywords'] = $keywords;
+        }
+        if(!empty($sortBy)){
+            $conditions['search']['sortBy'] = $sortBy;
+        }
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmaips($conditions));
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationDataSMAIPS';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //set start and limit
+        $conditions['start'] = $offset;
+        $conditions['limit'] = $this->perPage;
+        
+        //get posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmaips($conditions);
         
         //load the view
         $this->load->view('modulonline/ajax-pagination-data', $data, false);
@@ -776,6 +952,204 @@ class Modulonline extends MX_Controller {
         $this->parser->parse( 'templating/index', $data );
 
     }
+
+     public function modulsmp() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edusmp.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->modulsmp();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmp());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/modulsmp/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmp(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+    public function modulsma() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edusma.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->modulsma();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssma());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/modulsma/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRowssma(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+    public function modulsmaipa() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edusmaipa.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->modulsmaipa();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmaipa());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/modulsmaipa/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmaipa(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+    public function modulsmaips() {
+
+        $data = array(
+
+            'judul_halaman' => 'Neon - Edu Drive',
+
+            'judul_header' =>'Welcome',
+
+            'judul_header2' =>'Modul Belajar'
+
+        );
+
+
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/homepage/views/v-header-login.php',
+
+            APPPATH.'modules/modulonline/views/v-edusmaips.php',
+
+            // APPPATH.'modules/welcome/views/v-tampil-tes.php',
+
+            APPPATH.'modules/testimoni/views/v-footer.php',
+
+        );
+
+        $data['modul'] = $this->Mmodulonline->modulsmaips();
+        $data['downloads'] = $this->Mmodulonline->get_modulteratas();
+
+        // $data = array();
+        
+        //total rows count
+        $totalRec = count($this->Mmodulonline->getRowssmaips());
+        
+        //pagination configuration
+        $config['target']      = '#postList';
+        $config['base_url']    = base_url().'index.php/modulonline/modulsmaips/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        $config['link_func']   = 'searchFilter';
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['posts'] = $this->Mmodulonline->getRowssmaips(array('limit'=>$this->perPage));
+  
+        $this->parser->parse( 'templating/index', $data );
+
+    }
+
+
 
     public function tambahdownload($idmodul) {
       // $this->dropVideo($videoID);

@@ -143,6 +143,7 @@ class Mtoback extends CI_Model {
 		$this->db->where('hto.id_tryout',$id_tryout);
 		$query = $this->db->get();
         return $query->result_array();
+
 	}
 
 	public function get_report_paket($data)
@@ -176,19 +177,6 @@ class Mtoback extends CI_Model {
 		$this->db->join('tb_pengguna user','user.id=rp.id_pengguna');
 		$this->db->join('tb_siswa siswa','siswa.penggunaID=user.id');
 		$this->db->where('paket.id_paket',$idpaket);
-		$query = $this->db->get();
-        return $query->result_array();
-	}
-
-	public function get_report_peserta_to($data){
-		$this->db->select('hto.id_tryout, hto.id_siswa, siswa.namaDepan, siswa.namaBelakang,siswa.penggunaID,rp.id_pengguna,pengguna.namaPengguna, mmto.id_tryout,COUNT(rp.id_pengguna) AS jumlah ');
-		$this->db->from('tb_hakakses-to as hto');
-		$this->db->join('tb_siswa as siswa', 'hto.id_siswa = siswa.id');
-		$this->db->join('tb_pengguna as pengguna', 'siswa.penggunaID = pengguna.id');
-		$this->db->join('tb_report-paket as rp', 'rp.id_pengguna = pengguna.id');
-		$this->db->join('tb_mm-tryoutpaket as mmto', 'rp.id_mm-tryout-paket = mmto.id');
-		$this->db->where('mmto.id_tryout',$data);
-		$this->db->group_by('rp.id_pengguna'); 
 		$query = $this->db->get();
         return $query->result_array();
 	}

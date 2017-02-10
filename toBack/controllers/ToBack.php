@@ -3,8 +3,7 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 /**
  *
  */
-class Toback extends MX_Controller
-{
+class Toback extends MX_Controller{
 	public function __construct() {
 		$this->load->library( 'parser' );
 		$this->load->model('Mtoback');
@@ -252,8 +251,7 @@ class Toback extends MX_Controller
 
 	}
 	// menampilkan list to
-	public function ajax_listsTO()
-	{
+	public function ajax_listsTO(){
 		$list =$this->Mtoback->get_To();
 		$data = array();
 
@@ -310,21 +308,19 @@ class Toback extends MX_Controller
 		$data = $this->Mtoback->get_TO_by_id( $id_tryout );
 		echo json_encode( $data );
 	}
+	
 	#END Function di halaman daftar TO#
 
 	// Drop paketb to TO
-	public function dropPaketTo($idKey)
-	{
+	public function dropPaketTo($idKey){
 		$this->Mtoback->drop_paket_toTO($idKey);
 	}
 
 	// Drop siswa to to
-	public function dropSiswaTo($idKey)
-	{
+	public function dropSiswaTo($idKey){
 		$this->Mtoback->drop_siswa_toTO($idKey);
 	}
-
-
+	
 	public function editTryout()
 	{
 		$data['id_tryout']=htmlspecialchars($this->input->post('id_tryout'));
@@ -332,6 +328,7 @@ class Toback extends MX_Controller
 		$tglMulai=htmlspecialchars($this->input->post('tgl_mulai'));
 		$tglAkhir=htmlspecialchars($this->input->post('tgl_berhenti'));
 		$publish=htmlspecialchars($this->input->post('publish'));
+
 		$wktMulai=htmlspecialchars($this->input->post('wkt_mulai'));
 		$wktAkhir=htmlspecialchars($this->input->post('wkt_akhir'));
 
@@ -353,23 +350,31 @@ class Toback extends MX_Controller
 		$data['tryout'] = $this->Mtoback->get_to_byuuid($uuid);
 
 		if (!$data['tryout']==array()) {
-			$id_to  = $data['tryout'][0]['id_tryout'];
-			$data['daftar_peserta'] =$this->Mtoback->get_all_report($id_to);
-			$data['files'] = array(
-				APPPATH . 'modules/toback/views/v-list-peserta.php',
-				);
-			$data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
-
+		$id_to  = $data['tryout'][0]['id_tryout'];
+		$data['daftar_peserta'] =$this->Mtoback->get_report_peserta_to($id_to);
+		$data['files'] = array(
+						APPPATH . 'modules/toback/views/v-list-peserta.php',
+						);
+		$data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
 		} else {
-			$data['files'] = array(
-				APPPATH . 'modules/templating/views/v-data-notfound.php',
-				);
-			$data['judul_halaman'] = "Daftar Peserta";
-			$this->load->view('templating/v-data-notfound');
+		$data['files'] = array(
+						APPPATH . 'modules/templating/views/v-data-notfound.php',
+						);
+		$data['judul_halaman'] = "Daftar Peserta";
+		$this->load->view('templating/v-data-notfound');
 		}
-
-		$this->load->view('templating/index-b-guru', $data);
-	}
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		
+		if ($hakAkses=='admin') {
+		// jika admin
+		$this->parser->parse('admin/v-index-admin', $data);
+		} elseif($hakAkses=='guru'){
+			 // jika guru
+		 	$this->load->view('templating/index-b-guru', $data);  
+		}else{
+			// jika siswa redirect ke welcome
+			redirect(site_url('welcome'));
+		}
 
 		##menampilkan paket yang belum ada di TO.
 	function ajax_list_all_paket($id_to){
@@ -389,8 +394,8 @@ class Toback extends MX_Controller
 		}
 
 		$output = array(
-			"data"=>$data,
-			);
+				"data"=>$data,
+				);
 		echo json_encode( $output );
 	}
 			###menampilkan paket yang belum ada di TO.
@@ -409,19 +414,20 @@ class Toback extends MX_Controller
 				$row[] = $list_siswa['namaCabang'];
 			}else{
 				$row[] = "Non-neutron";
-
 			}
-							// $row[] = '
-							// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
-			$data[] = $row;
+			// $row[] = '
+			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
+				$data[] = $row;
+			}
 		}
 		$output = array(
 			"data"=>$data,
 			);
 		echo json_encode( $output );
 	}
-		###menampilkan siswa yang belum ikutan TO.
-					// menampilkan list Pkaet by to for Report
+
+	###menampilkan siswa yang belum ikutan TO.
+	// menampilkan list Pkaet by to for Report
 	public function reportPaketSiswa()
 	{
 		$data['id_to']=htmlspecialchars($this->input->get('id_to'));
@@ -445,7 +451,6 @@ class Toback extends MX_Controller
 			);
 		$data['judul_halaman'] = "Report Siswa Perpaket";
 		$this->load->view('templating/index-b-guru', $data);
-
 	}
 
 	function get_cabang_all_cabang(){
@@ -453,6 +458,33 @@ class Toback extends MX_Controller
 		->set_content_type( "application/json" )
 		->set_output( json_encode( $this->mcabang->get_all_cabang() ) );
 	}
+
+	public function detailpaketsiswa(){
+          $idto = $this->uri->segment(3);
+          $idpengguna =  $this->uri->segment(4);
+            // $idto = $this->uri->segmen(3);
+          $data['reportpaket'] = $this->msiswa->get_reportpaket_to($idpengguna,$idto);
+          $data['ratarata'] = $this->msiswa->ratarata_to($idpengguna,$idto);
+
+          $data['judul_halaman'] = "Report Siswa";
+          $data['files'] = array(
+               APPPATH . 'modules/siswa/views/v-report-paket.php',
+          );
+          
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		
+		if ($hakAkses=='admin') {
+		// jika admin
+		$this->parser->parse('admin/v-index-admin', $data);
+		} elseif($hakAkses=='guru'){
+			 // jika guru
+		 	$this->load->view('templating/index-b-guru', $data);  
+		}else{
+			// jika siswa redirect ke welcome
+			redirect(site_url('welcome'));
+		}
+	}
+
 
 }
 ?>

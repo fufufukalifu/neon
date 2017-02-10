@@ -32,11 +32,10 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<th>Username</th>
 									<th>Nama Peserta</th>
-									<th>Cabang</th>
-									<th>Status Pengerjaan</th>
+									<th>Nilai akhir</th>
 									<th>Report Paket</th>
+									<th>Report Try Out</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -44,12 +43,9 @@
 								<?php foreach ($daftar_peserta as $peserta): ?>
 									<tr>
 										<td><?=$i ?></td>
-										<td><?= $peserta['namaPengguna']?></td>
 										<td><?=$peserta['namaDepan'] ." ".$peserta['namaBelakang']?></td>
-										<td>-</td>
-										<td>x dari x Paket</td>
-										<td><a href="<?= base_url('index.php/toback/detailpaketsiswa/'.$peserta['id_tryout'].'/'.$peserta['penggunaID'])?>" onclick="detail_paket(<?=$peserta['penggunaID'] ?>,<?= $peserta['id_tryout']?>)" class="btn btn-info">Lihat Detail</a></td>
-										<!-- <td>
+										<td><?=$peserta['total_nilai'] ?></td>
+										<td>
 											<form action="<?=base_url('toBack/reportPaketSiswa')?>" method="get">
 												<input type="text" value="<?=$peserta['id_to'] ?>" name="id_to" hidden='true'>
 												<input type="text" value="<?=$peserta['idPengguna'] ?>" name="id_pengguna"  hidden='true'>
@@ -57,7 +53,7 @@
 											</form></td>
 										<td>
 											<a href="#" class="report-<?=$peserta['idReport'] ?>" data-todo='<?= json_encode($peserta) ?>'onclick="lihat_hasil_to(<?=$peserta['idReport'] ?>);"><i class="ico-file2" title="Lihat Detail TO"></i></a>
-										</td> -->
+										</td>
 									</tr>
 									<?php $i=$i+1; ?>
 								<?php endforeach ?>
@@ -80,9 +76,7 @@
             // api.$('td').click( function () {
             //     api.search( this.innerHTML ).draw();
             // } );
-        },"oLanguage": {
-                "sSearch": "Search all columns:"
-            }
+        }
     } );
 
 	} );

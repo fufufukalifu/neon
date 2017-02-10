@@ -119,7 +119,7 @@ function searchFilter(page_num) {
     var sortBy = $('#sortBy').val();
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url(); ?>index.php/modulonline/ajaxPaginationData/'+page_num,
+        url: '<?php echo base_url(); ?>index.php/modulonline/ajaxPaginationDataSMAIPS/'+page_num,
         data:'page='+page_num+'&keywords='+keywords+'&sortBy='+sortBy,
         beforeSend: function () {
             $('.loading').show();
@@ -135,7 +135,7 @@ function searchFilter(page_num) {
         <div class="container">
             <div class="">
                 <div class="grid-col" style="width:70%">
-                    <h2>Semua Kategori</h2>
+                    <h2>Modul Sekolah Menengah Atas - IPS</h2>
                     <!-- Shop -->
                     <div id="page-meta" class="group">
                         <div class="woocommerce-result-count" style="width:40%;padding:10px">
@@ -194,7 +194,7 @@ function searchFilter(page_num) {
                         <h2>Kategori</h2>
                         <hr class="divider-big" />
                         <ul>
-                            <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsd') ?>">Sekolah Dasar<span> (SD) </span></a></li>
+                              <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsd') ?>">Sekolah Dasar<span> (SD) </span></a></li>
                             <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsmp') ?>">Sekolah Menengah Pertama<span> (SMP) </span></a></li>
                             <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsma') ?>">Sekolah Menengah Atas <span> (SMA) </span></a></li>
                             <li class="cat-item cat-item-1 current-cat"><a href="<?= base_url('index.php/modulonline/modulsmaipa') ?>">Sekolah Menengah Atas - IPA</a></li>

@@ -15,7 +15,7 @@
 
 <main class="container">
 	<div class="page-content">
-		<section>
+		<!--<section>
 			<h2><a onclick="showmodal()" class="cws-button bt-color-3 border-radius icon-left"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2>
 			<!-- tabs -->
 			<div class="tabs">
@@ -185,7 +185,7 @@
 	<!--/tabs keeper -->
 </div>
 <!-- /tabs -->
-</section>
+</section>-->
 </div>
 </div>
 </main>
