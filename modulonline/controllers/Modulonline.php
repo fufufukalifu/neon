@@ -27,24 +27,26 @@ class Modulonline extends MX_Controller {
     // }
 
     public function index(){
-        $data = array();
+        // $data = array();
         
-        //total rows count
-        $totalRec = count($this->Mmodulonline->getRows());
+        // //total rows count
+        // $totalRec = count($this->Mmodulonline->getRows());
         
-        //pagination configuration
-        $config['target']      = '#postList';
-        $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
-        $config['total_rows']  = $totalRec;
-        $config['per_page']    = $this->perPage;
-        $config['link_func']   = 'searchFilter';
-        $this->ajax_pagination->initialize($config);
+        // //pagination configuration
+        // $config['target']      = '#postList';
+        // $config['base_url']    = base_url().'index.php/modulonline/ajaxPaginationData';
+        // $config['total_rows']  = $totalRec;
+        // $config['per_page']    = $this->perPage;
+        // $config['link_func']   = 'searchFilter';
+        // $this->ajax_pagination->initialize($config);
         
-        //get the posts data
-        $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
+        // //get the posts data
+        // $data['posts'] = $this->Mmodulonline->getRows(array('limit'=>$this->perPage));
         
-        //load the view
-        $this->load->view('modulonline/index', $data);
+        // //load the view
+        // $this->load->view('modulonline/index', $data);
+
+        $this->allmodul();
     }
     
     function ajaxPaginationData(){

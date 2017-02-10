@@ -22,7 +22,7 @@
 
 
         <div class="grid-col-row clear-fix" >
-            <div class="grid-col col-md-2">
+            <!-- <div class="grid-col col-md-2">
                 <div class="hover-effect"></div>
                 <h5><strong>Sekolah Dasar<hr></strong></h5>
                 
@@ -73,10 +73,14 @@
                     <?php endforeach ?>
               
             </div>
+ -->
+            <div class="grid-col col-md-12">
+                <div class="hover-effect"></div>
+                <h3 class="center"><strong>Video Sedang dipersiapkan</strong></h3>              
+            </div>
 
         </div>
-    </div>
-</main>
+    </main>
 </div>
 
 <hr class="divider-color">

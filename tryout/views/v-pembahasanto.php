@@ -189,7 +189,8 @@
                                                                 <div class="row">      
                                                                     <div class="col-md-10 col-md-offset-1">
                                                                         <?php
-                                                                            if ($key['status_pembahasan'] == 0) {
+                                                                            // if ($key['status_pembahasan'] == 0) {
+                                                                            if ($key['gambar_pembahasan'] == null && $key['pembahasan'] == null && $key['video_pembahasan'] == null && $key['link'] == null) {
                                                                                 echo "<h5><strong>Tidak ada pembahasan pada soal ini</strong></h5>";
                                                                             }else{
                                                                                 echo "<h5><strong>Pembahasan :</strong></h5>";
@@ -198,7 +199,9 @@
                                                                     </div>
 
                                                                     <?php
-                                                                            if ($key['status_pembahasan'] == 1) { ?>
+                                                                            // if ($key['status_pembahasan'] == 1) { 
+                                                                            if ($key['gambar_pembahasan'] != null || $key['pembahasan'] != null || $key['video_pembahasan'] != null || $key['link'] != null) {
+                                                                    ?>
                                                                                 <div class="col-md-10 col-md-offset-1" style="border: 1px solid #63d3e9;min-height: 100px;padding:10px;text-align:justify">
                                                                             <?php 
                                                                                 if ($key['gambar_pembahasan'] != null) { ?>

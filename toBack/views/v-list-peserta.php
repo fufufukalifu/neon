@@ -32,9 +32,10 @@
 							<thead>
 								<tr>
 									<th>No</th>
+									<th>Username</th>
 									<th>Nama Peserta</th>
-									<th>Rata Rata</th>
-									<th>Rangking Try Out</th>
+									<th>Cabang</th>
+									<th>Status Pengerjaan</th>
 									<th>Report Paket</th>
 								</tr>
 							</thead>
@@ -43,9 +44,10 @@
 								<?php foreach ($daftar_peserta as $peserta): ?>
 									<tr>
 										<td><?=$i ?></td>
+										<td><?= $peserta['namaPengguna']?></td>
 										<td><?=$peserta['namaDepan'] ." ".$peserta['namaBelakang']?></td>
 										<td>-</td>
-										<td>-</td>
+										<td>x dari x Paket</td>
 										<td><a href="<?= base_url('index.php/toback/detailpaketsiswa/'.$peserta['id_tryout'].'/'.$peserta['penggunaID'])?>" onclick="detail_paket(<?=$peserta['penggunaID'] ?>,<?= $peserta['id_tryout']?>)" class="btn btn-info">Lihat Detail</a></td>
 										<!-- <td>
 											<form action="<?=base_url('toBack/reportPaketSiswa')?>" method="get">

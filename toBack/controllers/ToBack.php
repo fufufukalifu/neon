@@ -438,24 +438,7 @@ class Toback extends MX_Controller{
           $data['files'] = array(
                APPPATH . 'modules/siswa/views/v-report-paket.php',
           );
-//            // jika admin
-          // $this->parser->parse('admin/v-index-admin', $data);
-        
-
-		// if (!$data['tryout']==array()) {
-		// $id_to  = $data['tryout'][0]['id_tryout'];
-		// $data['daftar_peserta'] =$this->Mtoback->get_report_peserta_to($id_to);
-		// $data['files'] = array(
-		// 				APPPATH . 'modules/toback/views/v-list-peserta.php',
-		// 				);
-		// $data['judul_halaman'] = "Laporan Untuk TO : ".$data['tryout'][0]['nm_tryout'];
-		// } else {
-		// $data['files'] = array(
-		// 				APPPATH . 'modules/templating/views/v-data-notfound.php',
-		// 				);
-		// $data['judul_halaman'] = "Daftar Peserta";
-		// $this->load->view('templating/v-data-notfound');
-		// }
+          
 		$hakAkses=$this->session->userdata['HAKAKSES'];
 		
 		if ($hakAkses=='admin') {
