@@ -135,10 +135,6 @@ $this->sessionchecker->cek_token();
         $judul_header = ($metaMapel['namaMataPelajaran']."->".$metaMapel['judulBab']);
         if ($data['videosingle'] == array()) {
             $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
-            // $this->load->view( 'templating/t-header' );
-            // $this->load->view( 'templating/t-navbarUser' );
-            // $this->load->view( 'v-banner-videoBelajar', $data );
-            // $this->load->view( 'templating/t-footer' );
         } else {
             //ambil id bab.
             $idbab = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['babID'];

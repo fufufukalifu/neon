@@ -263,7 +263,9 @@ class Toback extends MX_Controller{
 			} else {
 				$publish='Tidak Publish';
 			}
-			
+			$penggunaID = $list_to ['penggunaID'];
+			$sesPenggunaID = $this->session->userdata['id'];
+
 			$row = array();
 			$row[] = $list_to ['id_tryout'];
 			$row[] = $list_to ['nm_tryout'];
@@ -272,7 +274,8 @@ class Toback extends MX_Controller{
 			$row[] = $list_to['tgl_berhenti'];
 			$row[] = $list_to['wkt_berakhir'];
 			$row[] = $publish;
-			$row[] = '
+			if ($penggunaID==$sesPenggunaID) {
+				$row[] = '
 			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
 			<i class="ico-file5"></i></a>
 			<a class="btn btn-sm btn-success"  title="ADD PAKET to TO" href='."addPaketTo/".$list_to['UUID'].' >
@@ -286,6 +289,12 @@ class Toback extends MX_Controller{
 			'
 
 			;
+			} else {
+				$row[] ='<a class="btn btn-sm btn-primary"  title="Daftar Peserta TO" onclick="show_peserta('."'".$list_to['UUID']."'".')">
+			<i class="ico-user"></i></a>';
+			}
+			
+			
 
 			$data[] = $row;
 
