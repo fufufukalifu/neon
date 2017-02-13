@@ -583,8 +583,12 @@ class Videoback extends MX_Controller {
             $hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
         if ($hakAkses=='admin') {
+           $data['files'] = array(
+            APPPATH.'modules/templating/views/maintenance.php',
+        );
                     // jika admin
             $this->parser->parse('admin/v-index-admin', $data);
+
         } elseif($hakAkses=='guru'){
                     // jika guru
              $this->parser->parse('templating/index-b-guru', $data);

@@ -93,13 +93,13 @@
                     <ul class="nav nav-section nav-justified">
 
                          <!-- ico-cancel-circle2 -->
-                        <li>
+                      <!--   <li>
                             <div class="section">
                              <a > <span class="meta"> <span class="icon"> <i class="ico-bell"></i></span>
                                </span> </a> 
                                 
                             </div>
-                        </li>
+                        </li> -->
                         <li>
                             <div class="section">
                                 <i class="ico-file"></i>
@@ -147,7 +147,6 @@
     </nav>
 
     </div>
-
 </div>
                         <!--/ Website States
                         <!-- Start javascript -->

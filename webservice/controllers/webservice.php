@@ -2,7 +2,7 @@
 /**
  * 
  */
- class ClassName extends AnotherClass
+ class Webservice extends MX_Controller
  {
  	
  	public function __construct()
@@ -17,8 +17,8 @@
 
 
 }
-$params= array('uri'=>'http://localhost/test/server.php');
-$Server = new SoapServer(null,$params);
-$server->setClass('server');
+$params= array('uri'=>base_url()."Webservice.php");
+$server = new webservice(null,$params);
+$server->setClass('Webservice');
 $server->hendle();
  ?>
