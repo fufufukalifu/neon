@@ -11,7 +11,7 @@
                             </div>
                             <div class="panel-body text-center">
                                 <h1 class="semibold longshadow text-center text-default fsize32 mb10 mt0">WHOOPS!!</h1>
-                                <h4 class="semibold text-primary text-center nm">...</h4>
+                                <h4 class="semibold text-primary text-center nm">Maaf, menu ini sedang diperbaiki, harap bersabar!</h4>
                             </div>
                             <!--/ Upper Text -->
 
