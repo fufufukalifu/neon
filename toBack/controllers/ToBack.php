@@ -118,6 +118,9 @@ class Toback extends MX_Controller{
 		$hakAkses=$this->session->userdata['HAKAKSES'];
 		if ($hakAkses =='admin') {
             // jika admin 
+            $data['files'] = array(
+				APPPATH . 'modules/toback/views/v-bundlepaket-admin.php',
+				);
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif($hakAkses=='guru'){
              // jika guru     
@@ -464,7 +467,7 @@ class Toback extends MX_Controller{
 		echo json_encode( $output );
 	}
 			###menampilkan paket yang belum ada di TO.
-	## menampilkan pengawas
+	## menampilkan pengawas yg belum di beri hak akses to
 	function ajax_list_all_pengawas($id_to){
 		$list = $this->Mtoback->get_pengawas_blm_to($id_to);
 		$data = array();
