@@ -11,12 +11,6 @@ class Mtoback extends CI_Model {
 	public function insert_to($dat_to)
 	{
 		$this->db->insert('tb_tryout',$dat_to);
-
-
-
-
-
-
 		
 	}
 
@@ -38,6 +32,12 @@ class Mtoback extends CI_Model {
 	public function insert_addSiswa($dat_siswa)
 	{
 		$this->db->insert_batch('tb_hakakses-to',$dat_siswa);
+	}
+
+	//add pengawas
+	public function insert_addPengawas($dat_pengawas)
+	{
+		$this->db->insert_batch('tb_hakakses-pengawas',$dat_pengawas);
 	}
 
 	
@@ -192,6 +192,20 @@ class Mtoback extends CI_Model {
 		$query = $this->db->get();
         return $query->result_array();
 	}
+
+	// get pengawas yg belum diberi akses to
+	public function get_pengawas_blm_to($id) {
+        $query = "SELECT p.`id`, p.`nama`, p.`alamat` FROM tb_pengawas p
+        WHERE p.id NOT IN
+        (
+        SELECT pp.`id` FROM tb_pengawas pp
+        JOIN `tb_hakakses-pengawas` hp ON
+        hp.`id_pengawas` = pp.`id`
+        WHERE hp.`id_tryout` = $id) AND p.`status`=1
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
 }
 ?>
 

@@ -55,12 +55,12 @@
          <ul class="nav nav-tabs">
           <li class="active"><a href="#paket" data-toggle="tab">Paket</a></li>
           <li><a href="#siswa" data-toggle="tab">Siswa</a></li>
+          <li><a href="#pengawas" data-toggle="tab">Pengawas</a></li>
         </ul>
       </div>
       <!-- Star Tab Content -->
       <div class="tab-content">
        <!-- Start Tab pane Paket -->
-
        <div class="tab-pane active"  id="paket">
 
         <table class="table table-bordered" style="font-size: 13px">
@@ -132,7 +132,39 @@
 <!--END PESAN BERHASIL SISWA DI ADD KE TO  -->
 
 </div>
-<!-- Start Tab pane Paket -->
+<!-- Start Tab pane Siswa -->
+<!-- Start Tab pane Pengawas -->
+<div class="tab-pane "  id="pengawas">
+
+  <table class="table table-bordered" style="font-size: 13px">
+   <thead>
+    <tr>
+     <th> <input type="checkbox" name="checkall"></th>
+     <th >ID</th>
+     <th>Nama Pengwas</th>
+   </tr>
+ </thead>
+ <form>
+  <tbody id="tbpengawas">
+
+  </tbody>                                   
+</form>
+</table>
+<!-- end -->
+<!-- START PESAN ERROR EMPTY INPUT -->
+<div class="alert alert-dismissable alert-danger" id="msg_e_pengawas" hidden="true">
+ <button type="button" class="close" onclick="hide_msg_e_pengawas()" >×</button>
+ <strong>O.M.G.!</strong> Silahkan pilih pengawas.
+</div>
+<!-- END PESAN ERROR EMPTY INPUT -->
+<!--START PESAN BERHASIL PAKET DI ADD KE TO -->
+<div class="alert alert-dismissable alert-success" id="msg_s_pengawas" hidden="true" >
+ <button type="button" class="close" onclick="hide_msg_s_pengawas()" >×</button>
+ <strong>Well done!</strong> Pengawas telah di tambahkan ke Try Out.
+</div>
+<!--END PESAN BERHASIL PAKET DI ADD KE TO  -->
+</div>
+<!-- End Tab pane pengawas -->
 </div>
 <!-- END Tab Content -->
 <!-- Start Footer -->
@@ -160,6 +192,7 @@
      <ul class="nav nav-tabs">
       <li class="active"><a href="#paketadd" data-toggle="tab">Paket</a></li>
       <li><a href="#siswaadd" data-toggle="tab">Siswa</a></li>
+       <li><a href="#pengawasadd" data-toggle="tab">pengawas</a></li>
     </ul>
   </div>
 
@@ -227,6 +260,40 @@
 <!-- END tabel siswa add to -->
 </div>
 <!-- LIST Siswa yang sudah di ADD -->
+<!-- List pengawas yg di beri akses -->
+<div class="tab-pane" id="pengawasadd">
+  <!-- Start tabel siswa add to -->
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3 class="panel-title">Siswa yang akan mengikuti TO</h3>
+  </div>
+  <div class="panel-body soaltambah">
+    <!-- START TABEL SISWA YG SUDAH DI ADD -->
+    <form action="" id="">
+     <table class="table table-striped" id="tblist_pengawas" style="font-size: 13px" width="100%">
+      <thead>
+       <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Alamat</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
+  </table>
+
+</form>
+<!-- END TABEL Pengawas YG SUDAH DI ADD  -->
+
+</div>
+</div>
+<!-- END tabel Pengawas add to -->
+</div>
+
+<!-- End List pengawas yg di beri akses -->
 </div>
 
 </div>
@@ -247,8 +314,10 @@
 <script type="text/javascript">
  var tblist_paket;
  var tblist_siswa;
+ var tblist_pengawas;
  var tblist_paketAdd;
  var tblist_siswaAdd;
+  var tblist_pengawasAdd;
  var idTo =$('#id_to').val();
  var listsoal;
 
@@ -298,6 +367,15 @@
       "bDestroy": true,
     });
 
+      tblist_paket = $('#pengawas table').DataTable({ 
+       "ajax": {
+        "url": base_url+"index.php/toback/ajax_list_all_pengawas/"+idTo,
+        "type": "POST"
+      },
+      "processing": true,
+      "bDestroy": true,
+    });
+
         // tabel paket yang sudah di add ke to
         tblist_paketAdd = $('#listaddpaket').DataTable({ 
          "ajax": {
@@ -311,6 +389,16 @@
 
         // tabel siswa yang akan mengokuti ujian
         tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
+         "ajax": {
+          "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
+          "type": "POST"
+        },
+        "processing": true,
+        "bDestroy": true,
+      });
+
+       // tabel pengawas yang diberi akses TO
+        tblist_pengawasAdd = $('#tblist_pengawas').DataTable({ 
          "ajax": {
           "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
           "type": "POST"
@@ -346,6 +434,7 @@ function reload_tblist(){
  tblist_paketAdd.ajax.reload(null,false); 
  tblist_paket.ajax.reload();
  tblist_siswa.ajax.reload();
+ tblist_pengawas.ajax.reload();
 
         //reload datatable ajax 
        // 
@@ -359,6 +448,7 @@ function reload_tblist(){
      $('.add').click(function(){ 
       addPaket();
       addSiswa();
+      addPengawas();
     });
 
    }
@@ -454,8 +544,6 @@ function reload_tblist(){
              },
              error: function (jqXHR, textStatus, errorThrown)
              {
-
-
                swal('Error adding / update data');
              }
            });
@@ -463,12 +551,46 @@ function reload_tblist(){
          $("#msg_s_siswa").hide();
          $("#msg_e_siswa").show();
        }
-
-
-
-
        idsiswa=null;
+     }
+     // add pengawas
+      function addPengawas(){
+        var idpengawas = [];
+        var id_to =$('#id_to').val();
+        $('#tbpengawas input:checked').each(function(i){
+         idpengawas[i] = $(this).val();
+       });
+        $('#tbpengaws input').attr('checked',false);
 
+        if (idpengawas.length > 0) {
+         var url = base_url+"index.php/toback/addpengawasToTO";
+
+         $.ajax({
+          url : url,
+          type: "POST",
+          data: {idpengawas : idpengawas,
+           id_to:id_to 
+         },
+                // cache: false,
+              // dataType: "JSON",
+              success: function(data,respone)
+              {   
+               reload_tblist();
+               $(':checkbox').attr('checked',false);
+               $("#msg_s_siswa").show();
+               $("#msg_e_siswa").hide();
+
+             },
+             error: function (jqXHR, textStatus, errorThrown)
+             {
+               swal('Error adding / update data');
+             }
+           });
+       } else {
+         $("#msg_s_siswa").hide();
+         $("#msg_e_siswa").show();
+       }
+       idpengawas=null;
      }
      function get_data_json(data){
       // tableku = $('.modal-body table').dataTable();

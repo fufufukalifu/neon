@@ -328,13 +328,13 @@
       </li>
 
       <li>
-        <a href="javascript:void(0);" data-target="#siswa" data-toggle="submenu" data-parent=".topmenu">
+        <a href="javascript:void(0);" data-target="#msiswa" data-toggle="submenu" data-parent=".topmenu">
           <span class="figure"><i class="ico-users3"></i></span>
           <span class="text">Siswa</span>
           <span class="arrow"></span>
         </a>
 
-        <ul id="siswa" class="submenu collapse ">
+        <ul id="msiswa" class="submenu collapse ">
           <li class="submenu-header ellipsis">Siswa</li>
           <li>
             <a href="<?=base_url('siswa/daftarsiswa') ?>">
@@ -526,6 +526,36 @@
 <li >
  <a href="javascript:void(0);" onclick="add_to()">
   <span class="text">Tambahkan Try Out</span>
+</a>
+</li>
+<li >
+ <a href="<?= base_url('index.php/toback/listTo');?>">
+  <span class="text">Daftar Try Out</span>
+</a>
+</li>
+
+</ul>
+</li>
+
+<li>
+ <a href="javascript:void(0);" data-target="#mpengawas" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard"></i></span>
+  <span class="text">Pengawas</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="mpengawas" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Pengawas</li>
+
+  <li >
+   <a href="<?= base_url('index.php/pengawas/formPengawas');?>">
+    <span class="text">Register Pengawas</span>
+  </a>
+</li>
+
+<li >
+ <a href="<?= base_url('index.php/pengawas/listpengawas');?>" >
+  <span class="text">Daftar Pengawas</span>
 </a>
 </li>
 <li >
