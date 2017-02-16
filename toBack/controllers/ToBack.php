@@ -145,6 +145,7 @@ class Toback extends MX_Controller{
 		$this->Mtoback->insert_addPaket($dat_paket);
 		// var_dump(expression)
 	}
+
 	// add hak akses to siswa 
 	public function addsiswaToTO()
 	{
@@ -308,6 +309,8 @@ class Toback extends MX_Controller{
 		echo json_encode( $output );
 
 	}
+
+
 	public function dropTO($id_tryout)
 	{
 		$this->Mtoback->drop_TO($id_tryout);
@@ -384,6 +387,7 @@ class Toback extends MX_Controller{
 			// jika siswa redirect ke welcome
 			redirect(site_url('welcome'));
 		}
+	}
 
 		##menampilkan paket yang belum ada di TO.
 	function ajax_list_all_paket($id_to){
@@ -428,7 +432,7 @@ class Toback extends MX_Controller{
 			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
 				$data[] = $row;
 			}
-		}
+		
 		$output = array(
 			"data"=>$data,
 			);
@@ -493,6 +497,21 @@ class Toback extends MX_Controller{
 			redirect(site_url('welcome'));
 		}
 	}
+
+
+	# insert paket dari webservice
+	public function inserpaket(){
+		try {
+			if ($this->input->post()) {
+			$post = $this->input->post();
+			echo json_encode($post);
+			}
+		} catch (Exception $e) {
+			echo $e;
+		}
+	}
+
+
 
 
 }

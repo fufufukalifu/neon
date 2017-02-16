@@ -224,6 +224,8 @@ public function inputreport($data) {
     $this->db->insert('tb_report-paket', $data);
 }
 
+
+
 public function datatopaket($id) {
     $this->db->select('try.nm_tryout as namato, p.nm_paket as namapa');
     $this->db->from('tb_mm-tryoutpaket as tp');
@@ -233,6 +235,20 @@ public function datatopaket($id) {
     $query = $this->db->get();
     return $query->result_array();
 }
+
+
+public function get_paket_by_toid($id) {
+    $query = "SELECT t.`id_tryout`,p.id_paket,nm_paket,deskripsi,p.status,jumlah_soal,durasi,random,p.`penggunaID` FROM `tb_paket` p
+    JOIN `tb_mm-tryoutpaket` mm
+    ON p.`id_paket` = mm.`id_paket`
+    JOIN `tb_tryout` t ON t.`id_tryout` = mm.`id_tryout`
+    WHERE t.`id_tryout` = '$id' ";
+    $result = $this->db->query($query);
+    return $result->result_array();
+}
+
+
+
 }
 
 ?>
