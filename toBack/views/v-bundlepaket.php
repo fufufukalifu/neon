@@ -239,7 +239,7 @@
      <table class="table table-striped" id="tblist_siswa" style="font-size: 13px" width="100%">
       <thead>
        <tr>
-        <th>ID</th>
+        <th>No</th>
         <th>Nama</th>
         <th>Tingkat</th>
         <th>Aksi</th>
@@ -276,6 +276,7 @@
         <th>No</th>
         <th>Nama</th>
         <th>Alamat</th>
+        <th>Aksi</th>
       </tr>
     </thead>
 
@@ -400,7 +401,7 @@
        // tabel pengawas yang diberi akses TO
         tblist_pengawasAdd = $('#tblist_pengawas').DataTable({ 
          "ajax": {
-          "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
+          "url": base_url+"index.php/toback/ajax_listpengawas_by_To/"+idTo,
           "type": "POST"
         },
         "processing": true,
@@ -424,14 +425,12 @@ tblist_siswa.columns().every( function () {
   } );
 } );
 
-
-
-
 });
 
 function reload_tblist(){
  tblist_siswaAdd.ajax.reload(null,false);
  tblist_paketAdd.ajax.reload(null,false); 
+ tblist_pengawasAdd.ajax.reload(null,false); 
  tblist_paket.ajax.reload();
  tblist_siswa.ajax.reload();
  tblist_pengawas.ajax.reload();
@@ -655,6 +654,28 @@ function reload_tblist(){
                // ajax delete data to database
                $.ajax({
                 url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
+                type: "POST",
+                dataType: "TEXT",
+                success: function(data,respone)
+                {  
+                  reload_tblist();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                  swal('Error deleting data');
+                        // console.log(jqXHR);
+                        // console.log(textStatus);
+                        console.log(errorThrown);
+                      }
+                    });
+             }
+           }
+          function dropPengawas(idKey) {
+            var id_to =$('#id_to').val();
+            if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+               // ajax delete data to database
+               $.ajax({
+                url : base_url+"index.php/toback/dropPengawasTo/"+idKey,
                 type: "POST",
                 dataType: "TEXT",
                 success: function(data,respone)

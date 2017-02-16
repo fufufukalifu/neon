@@ -216,17 +216,18 @@ class Toback extends MX_Controller{
 		$data = array();
 
 		$baseurl = base_url();
+		$no=1;
 		foreach ( $list as $list_siswa ) {
 			// $no++;
 			$row = array();
-			$row[] = $list_siswa ['siswaID'];
+			$row[] = $no;
 			$row[] = $list_siswa ['namaDepan'];
 			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
-
+			$no++;
 		}
 
 		$output = array(
@@ -240,21 +241,22 @@ class Toback extends MX_Controller{
 	//list pengawas yg diberi akses TO
 	function ajax_listpengawas_by_To($idTO) {
 		
-		$list = $this->load->Mtoback->siswa_by_totID($idTO);
+		$list = $this->load->Mtoback->pengawas_by_totID($idTO);
 		$data = array();
 
 		$baseurl = base_url();
-		foreach ( $list as $list_siswa ) {
+		$no=1;
+		foreach ( $list as $list_pengawas ) {
 			// $no++;
 			$row = array();
-			$row[] = $list_siswa ['siswaID'];
-			$row[] = $list_siswa ['namaDepan'];
-			$row[] = $list_siswa['aliasTingkat'];
+			$row[] = $no;
+			$row[] = $list_pengawas ['nama'];
+			$row[] = $list_pengawas['alamat'];
 			$row[] = '
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPengawas('."'".$list_pengawas['hakaksesID']."'".')"><i class="ico-remove"></i></a>';
 
 			$data[] = $row;
-
+			$no++;
 		}
 
 		$output = array(
@@ -377,6 +379,10 @@ class Toback extends MX_Controller{
 	// Drop siswa to to
 	public function dropSiswaTo($idKey){
 		$this->Mtoback->drop_siswa_toTO($idKey);
+	}
+	//drop pengawas
+	public function dropPengawasTo($idKey){
+		$this->Mtoback->drop_Pengawas_toTO($idKey);
 	}
 	
 	public function editTryout()
