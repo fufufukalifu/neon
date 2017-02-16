@@ -2,7 +2,7 @@
 class Webservice_model extends CI_Model
 {
 
-
+//  GET SISWA YANG AKAN IKUTAN TRYOUT	
 	function get_siswa_on_tryout($data){
 		$query = "SELECT `id`, `namaDepan`, `namaBelakang`, `alamat`, `noKontak`, `penggunaID`, `photo`, `biografi`, `status` FROM tb_siswa s WHERE s.`id` IN( 
 			SELECT id_siswa FROM `tb_hakakses-to` WHERE id_tryout = $data )";
@@ -10,6 +10,7 @@ $result = $this->db->query($query);
 return $result->result_array();
 }
 
+//  GET PENGGUNA YANG AKAN TRYOUT
 function get_pengguna_on_tryout($data){
 	$query = "SELECT p.id,namaPengguna, kataSandi, eMail, regTime, aktivasi, avatar
 	, `oauth_uid`, `oauth_uid`,hakAkses,p.status, last_akses
@@ -21,6 +22,7 @@ function get_pengguna_on_tryout($data){
 	return $result->result_array();	
 }
 
+// GET HAK AKSES DI TRYOUT TERTENTU
 function get_hak_akses_on_tryout($data){
 	$this->db->select('*');
 	$this->db->from('tb_hakakses-to ha');
@@ -29,6 +31,7 @@ function get_hak_akses_on_tryout($data){
 	return $query->result_array();
 }
 
+// GET SOAL DI TO TERTENTU
 function get_soal_on_tryout($data){
 	$query = "SELECT p.id_soal,judul_soal, soal, jawaban, 
 	kesulitan, sumber,
@@ -44,6 +47,7 @@ function get_soal_on_tryout($data){
 	return $result->result_array();	
 }
 
+// GET RELASI MM PAKET
 function get_mm_paket($data){
 	$query = "SELECT mm.id,mm.`id_paket`,mm.id_soal
 	FROM `tb_mm-paketbank` mm
@@ -51,6 +55,21 @@ function get_mm_paket($data){
 	JOIN tb_paket p ON p.`id_paket` = mm.`id_paket`
 	JOIN `tb_mm-tryoutpaket` mmp ON mmp.`id_paket` = p.`id_paket`
 	JOIN `tb_tryout` t ON t.`id_tryout` = mmp.`id_tryout`
+	WHERE t.`id_tryout` = $data";
+	$result = $this->db->query($query);
+	return $result->result_array();	
+}
+
+
+// GET PILIHAN JAWABAN YANG ADA DI TO TERTENTU
+function get_pilihan_jawaban($data){
+	$query = "SELECT pj.`id_pilihan`,pj.`pilihan`,pj.`jawaban`,pj.`id_soal`,pj.`gambar`
+	FROM `tb_mm-paketbank` mm
+	JOIN `tb_banksoal` b ON mm.`id_soal` = b.`id_soal`
+	JOIN tb_paket p ON p.`id_paket` = mm.`id_paket`
+	JOIN `tb_mm-tryoutpaket` mmp ON mmp.`id_paket` = p.`id_paket`
+	JOIN `tb_tryout` t ON t.`id_tryout` = mmp.`id_tryout`
+	JOIN `tb_piljawaban` pj ON pj.`id_soal` = b.`id_soal`
 	WHERE t.`id_tryout` = $data";
 	$result = $this->db->query($query);
 	return $result->result_array();	
