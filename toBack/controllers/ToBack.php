@@ -40,7 +40,7 @@ class Toback extends MX_Controller{
 		$UUID = uniqid();
 		$wktMulai=htmlspecialchars($this->input->post('wktmulai'));
 		$wktAkhir=htmlspecialchars($this->input->post('wktakhir'));
-
+		$penggunaID = $this->session->userdata['id'];
 		$dat_To=array(
 			'nm_tryout'=>$nmpaket,
 			'tgl_mulai'=>$tglMulai,	
@@ -48,6 +48,7 @@ class Toback extends MX_Controller{
 			'wkt_mulai'=>$wktMulai,	
 			'wkt_berakhir'=>$wktAkhir,	
 			'publish'=>$publish,
+			'penggunaID'=>$penggunaID,
 			'UUID' =>$UUID
 			);
 
@@ -283,6 +284,8 @@ class Toback extends MX_Controller{
 		$data = array();
 
 		$baseurl = base_url();
+		$hakAkses=$this->session->userdata['HAKAKSES'];
+		$sesPenggunaID = $this->session->userdata['id'];
 		foreach ( $list as $list_to ) {
 			// $no++;
 			if ($list_to['publish']=='1') {
@@ -291,7 +294,7 @@ class Toback extends MX_Controller{
 				$publish='Tidak Publish';
 			}
 			$penggunaID = $list_to ['penggunaID'];
-			$sesPenggunaID = $this->session->userdata['id'];
+			
 
 			$row = array();
 			$row[] = $list_to ['id_tryout'];
@@ -301,7 +304,7 @@ class Toback extends MX_Controller{
 			$row[] = $list_to['tgl_berhenti'];
 			$row[] = $list_to['wkt_berakhir'];
 			$row[] = $publish;
-			if ($penggunaID==$sesPenggunaID) {
+			if ($penggunaID==$sesPenggunaID || $hakAkses=='admin' ) {
 				$row[] = '
 			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
 			<i class="ico-file5"></i></a>

@@ -383,6 +383,11 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                         </div>
 
+                        <div class="form-group">
+                          <label class="control-label col-sm-2">Voice</label>
+                          <input type="file" name="listening">
+                        </div>
+
                          <div class="form-group">
 
                             <label class="control-label col-sm-2">Gambar Soal</label>

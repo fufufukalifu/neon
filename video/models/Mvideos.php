@@ -33,12 +33,14 @@ class Mvideos extends CI_Model
   //mengambil matapelajaran berdasarkan tingkat dan matapelajaranya
   function get_video_as_bab( $tingpelID ) {
     //select from 5 table di join semuanya
+    $this->db->distinct('judulSubBab');
     $this->db->select( 'bab.id as babid,subbab.id as subbabID,aliasMataPelajaran,judulBab,judulSubBab,aliasTingkat ' );
     $this->db->from( 'tb_subbab subbab' );
     $this->db->join( 'tb_bab bab', 'subbab.babID=bab.id' );
     $this->db->join( 'tb_tingkat-pelajaran tingpel', 'tingpel.id=bab.tingkatPelajaranID' );
     $this->db->join( 'tb_tingkat tingkat', 'tingpel.tingkatID=tingkat.id' );
     $this->db->join( 'tb_mata-pelajaran mapel', 'tingpel.mataPelajaranID=mapel.id' );
+    $this->db->join('tb_video video','video.subbabID= subbab.id');
     //where
     $this->db->where( 'tingpel.id', $tingpelID );
     $query = $this->db->get();

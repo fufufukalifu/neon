@@ -82,7 +82,7 @@
         <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
       </label> 
       <label class="btn cws-button  btn-primary  active small" id="pr-rumus" active> 
-        <input type="radio" name="bysub" autocomplete="off"> By Sub Bab
+        <input type="radio" name="bysub" autocomplete="off"> By Sub Bab 
       </label> 
     </div></h5>
 
