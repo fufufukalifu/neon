@@ -1039,19 +1039,24 @@ class Banksoal extends MX_Controller {
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
+        //random name
         $config['encrypt_name'] = TRUE;
-        $new_name = time().$_FILES["userfiles"]['name'];
+        $new_name = time().$_FILES["gambarSoal"]['name'];
         $config['file_name'] = $new_name;
+
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
-        $this->upload->do_upload($gambar);
-        $file_data = $this->upload->data();
+        
+        if ($this->upload->do_upload($gambar)) {
+           $file_data = $this->upload->data();
         $file_name = $file_data['file_name'];
         $data['UUID']=$UUID;
         $data['dataSoal']=  array(
             'gambar_soal' => $file_name);
 
             $this->Mbanksoal->ch_soal($data);
+        }
+       
     }
     //function upload gambar pembahasan
     public function up_img_pembahasan($UUID)
@@ -1062,18 +1067,26 @@ class Banksoal extends MX_Controller {
         $configpmb['max_size'] = 100;
         $configpmb['max_width'] = 1024;
         $configpmb['max_height'] = 768;
+                //random name
+        $configpmb['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["gambarPembahasan"]['name'];
+        $configpmb['file_name'] = $new_name;
+
         $this->load->library('upload', $configpmb);
         $this->upload->initialize($configpmb);
         $gambar = "gambarPembahasan";
-        $this->upload->do_upload($gambar);
-        $file_data = $this->upload->data();
-        $file_name = $file_data['file_name'];
-        $data['UUID']=$UUID;
-        $data['dataSoal']=  array(
+       
+        if ($this->upload->do_upload($gambar)) {
+            $file_data = $this->upload->data();
+            $file_name = $file_data['file_name'];
+            $data['UUID']=$UUID;
+            $data['dataSoal']=  array(
             'gambar_pembahasan' => $file_name
             );
 
             $this->Mbanksoal->ch_soal($data);
+        } 
+       
     }
     // fungsi upload video
     public function up_video_pembahasan($UUID)
@@ -1113,6 +1126,10 @@ class Banksoal extends MX_Controller {
         $configpmb['max_size'] = 100;
         $configpmb['max_width'] = 1024;
         $configpmb['max_height'] = 768;
+                        //random name
+        $configpmb['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["gambarPembahasan"]['name'];
+        $configpmb['file_name'] = $new_name;
         $this->load->library('upload', $configpmb);
         $this->upload->initialize($configpmb);
         $gambar = "gambarPembahasan";
@@ -1120,6 +1137,9 @@ class Banksoal extends MX_Controller {
         if ($this->upload->do_upload($gambar)) {
              // unlink
             // unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+                if ($oldImgPembahasan!='' && $oldImgPembahasan!=' ') {
+                   unlink(FCPATH . "./assets/image/pembahasan/" . $oldImgPembahasan);
+                 }
              $file_data = $this->upload->data();
             $file_name = $file_data['file_name'];
             $data['UUID']=$UUID;
@@ -1151,7 +1171,7 @@ class Banksoal extends MX_Controller {
         } else {
                 // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
             //di komen dulu karena sedang dalam perbaikan
-             //unlink(FCPATH . "./assets/video/videoPembahasan/" . $oldVidePembahasan);
+            
               $file_data = $this->upload->data();
            $file_name = $file_data['file_name'];
         $data['UUID']=$UUID;
@@ -1168,9 +1188,14 @@ class Banksoal extends MX_Controller {
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
+                        //random name
+        $config['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["gambarSoal"]['name'];
+        $config['file_name'] = $new_name;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
         $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID)[0]['gambar_soal'];
+        //hapus gambar lama di server
         if ($this->upload->do_upload($gambar)) {
          if ($oldgambar!='' && $oldgambar!=' ') {
             unlink(FCPATH . "./assets/image/soal/" . $oldgambar );
@@ -1191,13 +1216,18 @@ class Banksoal extends MX_Controller {
         $config2['max_size'] = 100;
         $config2['max_width'] = 1024;
         $config2['max_height'] = 768;
-        $this->load->library('upload', $config2);
-        $this->upload->initialize($config2);
+
         $n = '1';
         $datagambar = array();
         for ($x = 1; $x <= 5; $x++) {
             $gambar = "gambar" . $n;
-            
+                    //random name
+        $config2['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES[$gambar]['name'];
+        $config2['file_name'] = $new_name;
+        $this->load->library('upload', $config2);
+        $this->upload->initialize($config2);
+
             if ($this->upload->do_upload($gambar)) {
               $file_data = $this->upload->data();
               $file_name = $file_data['file_name'];
@@ -1480,8 +1510,9 @@ class Banksoal extends MX_Controller {
         $config2['max_size'] = 100;
         $config2['max_width'] = 1024;
         $config2['max_height'] = 768;
-        $this->load->library('upload', $config2);
-        $this->upload->initialize($config2);
+         //random name
+        $config2['encrypt_name'] = TRUE;
+       
 
         $oldgambar = $this->Mbanksoal->get_oldgambar($soalID);
 
@@ -1491,11 +1522,21 @@ class Banksoal extends MX_Controller {
         foreach ($oldgambar as $rows) {
             // remove old gambar        
             $gambar = "gambar" . $n;
+
+             $new_name = time().$_FILES[$gambar]['name'];
+             $config2['file_name'] = $new_name;
+            $this->load->library('upload', $config2);
+            $this->upload->initialize($config2);
+
+            //name old gambar
+            $oldImg = $rows['gambar'];
             // pengecekan upload
             if ($this->upload->do_upload($gambar)) {
               // jika upload berhasil hapus gambar sebelumnya
-                // unlink(FCPATH . "./assets/image/jawaban/" . $rows['gambar']);
-
+                if ($oldImg!='' || $oldImg != ' ') {
+                   unlink(FCPATH . "./assets/image/jawaban/" . $oldImg);
+                }
+                
                 $file_data = $this->upload->data();
                 $file_name = $file_data['file_name'];
                 if ($n == '1') {
