@@ -166,23 +166,6 @@ class Toback extends MX_Controller{
 		// var_dump(expression)
 	}
 
-	// add hak akses to pengawas 
-	public function addpengawasToTO()
-	{
-		$id_pengawas=$this->input->post('idpengawas');
-		$id_tryout=$this->input->post('id_to');
-		//menampung array id siswa
-		$dat_pengawas=array();
-		foreach ($id_pengawas as $key) {
-			$dat_pengawas[] = array(
-				'id_tryout'=>$id_tryout,
-				'id_pengawas'=>$key);
-			
-		}
-		//add pengawas ke paket 
-		$this->Mtoback->insert_addPengawas($dat_pengawas);
-	}
-
 
 	//menampikan paket yg sudah di add
 	function ajax_listpaket_by_To($idTO) {
@@ -212,34 +195,7 @@ class Toback extends MX_Controller{
 
 	function ajax_listsiswa_by_To($idTO) {
 		
-		$list = $this->load->Mtoback->siswa_by_totID($idTO);
-		$data = array();
 
-		$baseurl = base_url();
-		foreach ( $list as $list_siswa ) {
-			// $no++;
-			$row = array();
-			$row[] = $list_siswa ['siswaID'];
-			$row[] = $list_siswa ['namaDepan'];
-			$row[] = $list_siswa['aliasTingkat'];
-			$row[] = '
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';
-
-			$data[] = $row;
-
-		}
-
-		$output = array(
-			
-			"data"=>$data,
-			);
-
-		echo json_encode( $output );
-	}
-
-	//list pengawas yg diberi akses TO
-	function ajax_listpengawas_by_To($idTO) {
-		
 		$list = $this->load->Mtoback->siswa_by_totID($idTO);
 		$data = array();
 
@@ -301,8 +257,6 @@ class Toback extends MX_Controller{
 		$data = array();
 
 		$baseurl = base_url();
-		$hakAkses=$this->session->userdata['HAKAKSES'];
-		$sesPenggunaID = $this->session->userdata['id'];
 		foreach ( $list as $list_to ) {
 			// $no++;
 			if ($list_to['publish']=='1') {
@@ -311,7 +265,7 @@ class Toback extends MX_Controller{
 				$publish='Tidak Publish';
 			}
 			$penggunaID = $list_to ['penggunaID'];
-			
+			$sesPenggunaID = $this->session->userdata['id'];
 
 			$row = array();
 			$row[] = $list_to ['id_tryout'];
@@ -321,7 +275,7 @@ class Toback extends MX_Controller{
 			$row[] = $list_to['tgl_berhenti'];
 			$row[] = $list_to['wkt_berakhir'];
 			$row[] = $publish;
-			if ($penggunaID==$sesPenggunaID || $hakAkses=='admin' ) {
+			if ($penggunaID==$sesPenggunaID) {
 				$row[] = '
 			<a class="btn btn-sm btn-primary"  title="Ubah" onclick="edit_TO('."'".$list_to['id_tryout']."'".')">
 			<i class="ico-file5"></i></a>
@@ -458,27 +412,6 @@ class Toback extends MX_Controller{
 		echo json_encode( $output );
 	}
 			###menampilkan paket yang belum ada di TO.
-	## menampilkan pengawas
-	function ajax_list_all_pengawas($id_to){
-		$list = $this->Mtoback->get_pengawas_blm_to($id_to);
-		$data = array();
-		$baseurl = base_url();
-		$n = 1;
-		foreach ( $list as $list_pengawas ) {
-			$row = array();
-			$row[] = "<input type='checkbox' value=".$list_pengawas['id']." >";
-			$row[] = $list_pengawas['nama'];
-			$row[] = $list_pengawas['alamat'];
-			$data[] = $row;
-			$n++;
-		}
-		$output = array(
-				"data"=>$data,
-				);
-		echo json_encode( $output );
-	}
-
-	## end pengawas
 
 	##menampilkan siswa yang belum ikutan TO.
 	function ajax_list_siswa_belum_to($id){
@@ -578,6 +511,7 @@ class Toback extends MX_Controller{
 		}
 	}
 
+	# 
 
 
 

@@ -74,5 +74,38 @@ function get_pilihan_jawaban($data){
 	$result = $this->db->query($query);
 	return $result->result_array();	
 }
+
+// GET PAKET BERDASARKAN ID TO
+public function get_paket_by_toid($id) {
+	$query = "SELECT p.id_paket,nm_paket,deskripsi,p.status,jumlah_soal,durasi,random,p.`penggunaID` FROM `tb_paket` p
+	JOIN `tb_mm-tryoutpaket` mm
+	ON p.`id_paket` = mm.`id_paket`
+	JOIN `tb_tryout` t ON t.`id_tryout` = mm.`id_tryout`
+	WHERE t.`id_tryout` = '$id' ";
+	$result = $this->db->query($query);
+	return $result->result_array();
+}
+
+// GET ADMIN OFFLINE
+function check_user_admin_offline($username, $password){
+	$this->db->select('*');
+
+	$this->db->from('tb_pengguna pengguna');
+	$this->db->where('kataSandi', $password);
+	$this->db->where('pengguna.status','1');
+	$this->db->where('pengguna.hakAkses','adminOffline');
+
+	$this->db->where("(namaPengguna='$username' OR eMail='$username')", NULL, FALSE);
+	$this->db->limit(1);
+
+	$query = $this->db->get();
+	if ($query->num_rows() == 1) {
+            return $query->result(); //if data is true
+        } else {
+            return false; //if data is wrong
+        }
+    }
+
+// GET TO YANG HAK AKSESNYA ID PENGGUNA TERTENTU
 }
 ?>

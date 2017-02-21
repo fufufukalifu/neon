@@ -8,6 +8,7 @@ class Webservice extends MX_Controller
 	public function __construct()
 	{
 		$this->load->model('tryout/mtryout');
+		$this->load->model('login/Mlogin');
 		$this->load->model('Webservice_model');
 	}
 
@@ -19,7 +20,7 @@ class Webservice extends MX_Controller
 
 	//GET PAKET OFFLINE
 	public function paketoffline($id){
-		$data = $this->mtryout->get_paket_by_toid($id);
+		$data = $this->Webservice_model->get_paket_by_toid($id);
 		$datas = json_encode($data);
 		echo $datas;
 	}
@@ -67,5 +68,33 @@ class Webservice extends MX_Controller
 	}
 
 
+	// LOGIN KE CONTROLLER PUNYA ORANG.
+	public function login(){
+		if ($this->input->post()) {
+			$post = $this->input->post();
+			$hasil_login = $this->Webservice_model->check_user_admin_offline($post['username'], md5($post['password']));
+			// $hasil_login = $this->Webservice_model->check_user_admin_offline('user_admin', '401e9969e47a57558eb6638bc0544e3e');
+
+			if ($hasil_login) {
+				$row = $hasil_login[0];
+				$verifikasiCode = md5($row->regTime);
+				$data_login = array(
+					'id' => $row->id,
+					'USERNAME' => $row->namaPengguna,
+					'HAKAKSES' => $row->hakAkses,
+					'AKTIVASI' => $row->aktivasi,
+					'eMail' => $row->eMail,
+					'verifikasiCode' => $verifikasiCode,
+					'loggedin' => TRUE,
+					'status' => 'berhasil'
+					);
+			}else{
+				$data_login = ['status'=>"Gagal"];
+			}
+
+			echo json_encode($data_login);
+		}
+
+	}
 }
-?>
+	?>
