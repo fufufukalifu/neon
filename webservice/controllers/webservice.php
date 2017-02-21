@@ -14,8 +14,12 @@ class Webservice extends MX_Controller
 
 	//GET TRYOUT OFFLINE
 	public function tryoutoffline(){
-		$data = $this->mtryout->get_tryout_by_id(81);
-		echo json_encode($data);
+		if ($this->input->post()) {
+			$post = $this->input->post();
+			// var_dump($post);
+			$data = $this->mtryout->get_tryout_by_id($post['id_tryout']);
+			echo json_encode($data);
+		}
 	}
 
 	//GET PAKET OFFLINE
@@ -96,5 +100,11 @@ class Webservice extends MX_Controller
 		}
 
 	}
+
+	// get semua to
+	function get_all_to($penggunaID){
+		$data = $this->Webservice_model->get_all_to($penggunaID);
+		echo json_encode($data);
+	}
 }
-	?>
+?>
