@@ -69,7 +69,7 @@ class Video extends MX_Controller {
     }
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
-    public function daftarvideo($tingpelID) {
+public function daftarvideo($tingpelID) {
 $this->sessionchecker->cek_token();
 // tampilkan ini matapelajaran apa dan untuk tingkat apa.
         $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);

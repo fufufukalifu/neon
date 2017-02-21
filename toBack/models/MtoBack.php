@@ -89,6 +89,12 @@ class Mtoback extends CI_Model {
 		$this->db->where('id',$idKey);
 		$this->db->delete('tb_hakakses-to');
 	}
+		//drop relasi Pengawas to
+	public function drop_Pengawas_toTO($idKey)
+	{
+		$this->db->where('id',$idKey);
+		$this->db->delete('tb_hakakses-pengawas');
+	}
 
 	//drop  to
 	public function drop_TO($id_tryout)
@@ -206,6 +212,18 @@ class Mtoback extends CI_Model {
         $result = $this->db->query($query);
         return $result->result_array();
     }
+
+	public function pengawas_by_totID ($id_to)
+	{
+		$this->db->select('p.id,p.nama,p.alamat,hp.id as hakaksesID');
+		$this->db->from('tb_pengawas p');
+		$this->db->join('tb_hakakses-pengawas hp','hp.id_pengawas=p.id');
+		$this->db->where('hp.id_tryout',$id_to);
+		$this->db->where('p.status',1);
+		$query = $this->db->get();
+        return $query->result_array();
+
+	}
 }
 ?>
 
