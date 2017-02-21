@@ -49,7 +49,7 @@
     margin-right: 7px
   }
   .btn {
-    background-color: #54b9cb;
+    background-color: white;
     line-height: 53px;
     padding: 0 18px 0 0;
     display: inline-block;
@@ -63,8 +63,8 @@
     background-color: #4CA8B9
   }
   .btn:active {
-    background-color: white;
-    color: white;
+    background-color: black;
+    color: black;
   }
   .btn.has-icon::before {
     margin-right: 18px;
@@ -83,15 +83,15 @@
     <div class="col-md-6">
      <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
-       <label class="btn active cws-button alt btn-primary bg-color-2 small" onclick="semua()"> 
+       <label class="btn active cws-button  btn-primary small" onclick="semua()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
       </label>
 
-      <label class="btn cws-button alt btn-primary bg-color-2 small" title="Tampilkan Jenis Video Room" onclick="justroom()"> 
+      <label class="btn cws-button  btn-primary  small" title="Tampilkan Jenis Video Room" onclick="justroom()"> 
         <input type="radio" name="options" autocomplete="off"> Room
       </label> 
 
-      <label class="btn cws-button alt btn-primary bg-color-2 small" title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
+      <label class="btn cws-button  btn-primary  small"  title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
         <input type="radio" name="options" autocomplete="off"> Screen
       </label> 
 
@@ -101,11 +101,11 @@
   <div class="col-md-6">
    <h5>Video : <div class="btn-group" data-toggle="buttons" > 
 
-     <label class="btn cws-button alt active btn-primary bg-color-2 small" id="in-soal"> 
+     <label class="btn cws-button  active btn-primary  small" id="in-soal"> 
       <input type="radio" name="options"  autocomplete="off" checked="true"> By Video
     </label> 
 
-    <label class="btn cws-button alt btn-primary bg-color-2 small" id="pr-rumus" onclick="direct()"> 
+    <label class="btn cws-button  btn-primary  small" id="pr-rumus" onclick="direct()"> 
       <input type="radio" name="options"   autocomplete="off"> By Sub Bab
     </label> 
 
@@ -123,6 +123,7 @@
   <section class="section">
     <!-- Start Div container -->
     <div class="container">
+
       <!-- Start div macy-container -->
       <div id="macy-container">
 
@@ -138,7 +139,11 @@
             } ?>
             <!-- Start div demo -->
             <div class="demo" style="list-style: none;">
-              <strong><?=$judulbab ?></strong><br>
+
+              
+                 
+                    <strong><?=$judulbab ?></strong><br>
+  
               <?php if ($bab_video_items->jenis_video == 1): ?>
                 <li class="room"><a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>#ini"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>
@@ -146,12 +151,7 @@
               <?php endif ?>
 
 
-              
-
-
               <?php }else{ ?>
-
-
               <?php if ($bab_video_items->jenis_video == 1): ?>
                 <li class="room"><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>#ini"><?php echo $bab_video_items->judulVideo ;?>(S)</a></li>
               <?php else: ?>

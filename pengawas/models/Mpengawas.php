@@ -12,7 +12,7 @@ class Mpengawas extends CI_Model
 
     public function get_allPengawas()
     {
-    	$this->db->select('pengawas.id as idPengawas,nama,alamat,noKontak,namaPengguna,email,uuid');
+    	$this->db->select('pengawas.id as idPengawas,nama,alamat,noKontak,namaPengguna,email,uuid,penggunaID');
     	$this->db->from('tb_pengawas pengawas');
     	$this->db->join('tb_pengguna pengguna','pengguna.id=pengawas.penggunaID');
     	$this->db->where('pengawas.status',1);
@@ -22,7 +22,7 @@ class Mpengawas extends CI_Model
 
     public function get_pengawas_by_uuid($uuid='')
     {
-    	$this->db->select('pengawas.id as idPengawas,nama,alamat,noKontak,namaPengguna,email,uuid');
+    	$this->db->select('pengawas.id as idPengawas,nama,alamat,noKontak,namaPengguna,email,uuid,penggunaID');
     	$this->db->from('tb_pengawas pengawas');
     	$this->db->join('tb_pengguna pengguna','pengguna.id=pengawas.penggunaID');
     	$this->db->where('uuid',$uuid);
@@ -57,6 +57,22 @@ class Mpengawas extends CI_Model
         $this->db->update('tb_pengawas');
     }
 
+    public function get_namaPengguna($penggunaID)
+    {
+        echo $penggunaID;
+        $this->db->where('id',$penggunaID);
+        $this->db->select('namaPengguna');
+        $this->db->from('tb_pengguna');
+        $query = $this->db->get();
+        return $query->result_array()[0]['namaPengguna'];
+
+    }
+    public function reset_password($kataSandi,$penggunaID)
+    {
+        $this->db->where('id', $penggunaID);
+        $this->db->set('kataSandi',$kataSandi);
+        $this->db->update('tb_pengguna');
+    }
     
 }
  ?>

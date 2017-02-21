@@ -143,6 +143,7 @@ class Pengawas extends MX_Controller
 
             $row[]=' 
             <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPengawas('."'".$list_pengawas['uuid']."'".')"><i class="ico-remove"></i></a>
+             <a class="btn btn-sm btn-danger"  title="Reset Password" onclick="resetPassword('."'".$list_pengawas['penggunaID']."'".')"><i class="ico-key"></i></a>
             <a href="pengawas/ubahPengawas/'.$list_pengawas["uuid"].'" class="btn btn-sm btn-warning"  title="Ubah" ><i class="ico-file"></i></a>';
 
             $data[] = $row;
@@ -218,10 +219,23 @@ class Pengawas extends MX_Controller
         // }
 	}
 
-	public function deletePengawas($uuid)
+	public function deletePengawas()
 	{
-		$this->Mpengawas->del_pengawas($uuid);
+          if ($this->input->post()) {
+            $post = $this->input->post();
+             $this->Mpengawas->del_pengawas($post['uuid']);
+        }
 	}
+
+    public function resetPassword()
+    {
+      if ($this->input->post()) {
+            $post = $this->input->post();
+            $nama = $this->Mpengawas->get_namaPengguna($post['penggunaID']);
+            $kataSandi = md5($nama );
+            $this->Mpengawas->reset_password($kataSandi,$post['penggunaID']);
+        }
+    }
 
 
 }

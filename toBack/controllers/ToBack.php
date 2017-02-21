@@ -76,7 +76,6 @@ class Toback extends MX_Controller{
 				} else {
 					$this->parser->parse('admin/v-index-admin', $data);
 				}
-
 			} elseif($hakAkses=='guru'){
 	             // jika guru
 				if ($babID == null) {
@@ -84,14 +83,12 @@ class Toback extends MX_Controller{
 				} else {
 					$this->parser->parse('templating/index-b-guru', $data);
 				}
-
 			}else{
 	            // jika siswa redirect ke welcome
 				redirect(site_url('welcome'));
 			}
 	        #END Cek USer#
 		}
-		
 	}
 
 	public function cek_PaketTo($UUID)
@@ -113,7 +110,6 @@ class Toback extends MX_Controller{
 				);
 			$data['judul_halaman'] = "Bundle Paket";
 		}
-
 		 #START cek hakakses#
 		$hakAkses=$this->session->userdata['HAKAKSES'];
 		if ($hakAkses =='admin') {

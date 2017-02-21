@@ -259,7 +259,22 @@ class Mbanksoal extends CI_Model {
          $this->db->order_by('soal.id_soal', 'desc');
         return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
     }
- 
+
+        // data paginataion all soal
+    function data_soalSaya($number,$offset){
+         $idPengguna = $this->session->userdata['id'];
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
+        $this->db->where('soal.status','1');
+        $this->db->where('soal.create_by', $idPengguna);
+         $this->db->order_by('soal.id_soal', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+    
+    //jumlah semua soal dengan status 1
     function jumlah_data(){
         $this->db->where('status','1');
         return $this->db->get('tb_banksoal')->num_rows();
@@ -303,6 +318,12 @@ class Mbanksoal extends CI_Model {
         $this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
         $this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
         return $this->db->get('tb_banksoal soal')->num_rows();
+    }
+    //jumlah semua soal milik saya dengan status 1
+    function jumlah_soalSaya($idPengguna){
+        $this->db->where('status','1');
+        $this->db->where('create_by',$idPengguna);
+        return $this->db->get('tb_banksoal')->num_rows();
     }
 
     function data_soal_sub($number,$offset,$subbab){
@@ -484,6 +505,47 @@ class Mbanksoal extends CI_Model {
         }
 
     }
+
+    public function get_cari($data)
+    {   
+        $this->db->select('judul_soal');
+        $this->db->from('tb_banksoal');
+        $this->db->like('judul_soal',$data);
+        $this->db->where('status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_cari2($data)
+    {   
+        $this->db->select('judul_soal');
+        $this->db->from('tb_banksoal');
+        $this->db->like('judul_soal',$data);
+        $this->db->where('status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function jumlah_soalCari($keyword)
+    {
+        $this->db->where('status','1');
+        $this->db->like('judul_soal',$keyword);
+        return $this->db->get('tb_banksoal')->num_rows();
+    }
+
+         // data paginataion all soal
+    function data_soalCari($keyword,$number,$offset){
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_banksoal soal', 'subbab.id = soal.id_subbab');
+        $this->db->where('soal.status','1');
+        $this->db->like('soal.judul_soal', $keyword);
+         $this->db->order_by('soal.id_soal', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
 }
 
 ?>

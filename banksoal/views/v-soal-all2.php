@@ -1,12 +1,23 @@
 
 <div class="row">
-      <div class="col-sm-7">
-                <div class="note note-warning mb15"><a href="javascript:void(0)" style="color:white;" onclick="hidePesan()"><i class="ico-close"> </i></a><span>catatan: Anda hanya diperkenankan mengubah atau menghapus soal yang anda buat!!</span></div>
-            </div>
-    <div class="col-sm-12">
-        <div>
-         
+    <div class="col-sm-5">
+       <form class="mb15" action="<?=base_url()?>index.php/banksoal/cari" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+
+        <div class="input-group">
+            <input id="carisoal" type="text" name="keyword" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit"><i class="ico-search"></i></button>
+            </span>
         </div>
+    </form>
+</div>
+        <div class="col-sm-7 ">
+            <div class="note note-warning mb15">
+                <a href="javascript:void(0)" style="color:white;" onclick="hidePesan()"><i class="ico-close"> </i></a><span>catatan: Anda hanya diperkenankan mengubah atau menghapus soal yang anda buat!!</span>
+            </div>
+        </div>
+    <div class="col-sm-12">
+        
         <!--Pengulangan list soal  -->
         <?php 
         $no = $this->uri->segment('3') + 1;
@@ -28,9 +39,10 @@
                             <li ><a href="javascript:void(0)" data-toggle="panelcollapse">Pembahasan (hide/unhide)</a></li>
                             <?php 
                             $idPengguna = $this->session->userdata['id'];
+                              $hakakses = $this->session->userdata['HAKAKSES'];
                             $create_by = $key['create_by'];
                              ?>
-                            <?php if ($idPengguna == $create_by): ?>
+                            <?php if ($idPengguna == $create_by || $hakakses == 'admin' ): ?>
                                 <li><a href="<?=base_url()?>banksoal/formUpdate?UUID=<?=$key['UUID']?>&subBab=<?=$key['id_subbab']?>">Edit</a></li>
                             <li><a href="javascript:void(0)" onclick="drop_soal(<?=$key['id_soal'];?>)">Hapus</a></li>
                             <?php endif ?>  
@@ -198,4 +210,14 @@ function hidePesan() {
 // function drop_soal(id_soal) {
 //     console.log(id_soal);
 // }
+</script>
+
+<!-- on keypres cari soal -->
+<script type="text/javascript">
+var site = "<?php echo site_url();?>";
+  $(function() {
+    $( "#carisoal" ).autocomplete({
+        serviceUrl: site+'/banksoal/autocomplete',
+    });
+});
 </script>

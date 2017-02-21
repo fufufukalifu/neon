@@ -1,5 +1,6 @@
 <!-- START Template Main -->
-<section id="main" role="main">
+<section id="main" role="main"> 
+
 	<!-- START Template Container -->
 	<div class="container-fluid">
 		<!-- START row -->
@@ -59,27 +60,60 @@
     });
 
     function dropPengawas(uuid) {
-    	if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
-               // ajax delete data to database
-               
-               $.ajax({
-                     url : base_url+"index.php/pengawas/deletePengawas/"+uuid,
-                     type: "POST",
-                     dataType: "TEXT",
-                     success: function(data,respone)
-                     {  
-                       
-                            reload_tblist();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                            alert('Error deleting data');
-                            // console.log(jqXHR);
-                            // console.log(textStatus);
-                            // console.log(errorThrown);
-                    }
-                });
-             }
+	  swal({
+	    title: "Yakin akan menghapus data ini?",
+	    text: "Anda tidak dapat membatalkan ini.",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonColor: "#DD6B55",
+	    confirmButtonText: "Ya,Tetap hapus!",
+	    closeOnConfirm: false
+	  },
+	  function(){
+	    var datas = {uuid:uuid};
+	    $.ajax({
+	      dataType:"text",
+	      data:datas,
+	      type:"POST",
+	      url:base_url+"index.php/pengawas/deletePengawas/",
+	      success:function(){
+	        swal("Terhapus!", "Token berhasil dihapus.", "success");
+	         reload_tblist();
+	      },
+	      error:function(){
+	        sweetAlert("Oops...", "Data gagal terhapus!", "error");
+	      }
+
+	    });
+	  });
+    }
+    function resetPassword(penggunaID) {
+    	swal({
+	    title: "Yakin akan meresset kata sandi data ini?",
+	    text: "Anda tidak dapat membatalkan ini.",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonColor: "#DD6B55",
+	    confirmButtonText: "Ya,Tetap hapus!",
+	    closeOnConfirm: false
+	  },
+	  function(){
+	     var datas = {penggunaID:penggunaID};
+	    $.ajax({
+	      dataType:"text",
+	      data:datas,
+	      type:"POST",
+	      url:base_url+"index.php/pengawas/resetPassword/",
+	      success:function(){
+	        swal("Terhapus!", "Password berhasil direset menjadi default.", "success");
+	   
+	      },
+	      error:function(){
+	        sweetAlert("Oops...", "Password gagal direset!", "error");
+	      }
+
+	    });
+	  });
     }
     function reload_tblist(){
       tb_pengawas.ajax.reload(null,false); 

@@ -1039,6 +1039,9 @@ class Banksoal extends MX_Controller {
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
+        $config['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["userfiles"]['name'];
+        $config['file_name'] = $new_name;
         $this->load->library('upload', $config);
         $gambar = "gambarSoal";
         $this->upload->do_upload($gambar);
@@ -1904,6 +1907,134 @@ class Banksoal extends MX_Controller {
 
         $this->tampSoal($list);
     }
+
+    // menampilkan soal saya
+    public function mysoal()
+    {
+        
+         // code u/pagination
+       $this->load->database();
+       $idPengguna = $this->session->userdata['id'];
+        $jumlah_data = $this->Mbanksoal->jumlah_soalSaya($idPengguna);
+       
+        $config['base_url'] = base_url().'index.php/banksoal/mysoal/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soalSaya($config['per_page'],$from);
+
+        $this->tampSoal($list);
+    }
+
+    public function autocomplete()
+    {
+     $keyword = $this->uri->segment(3);
+        // cari di database
+     $data = $this->Mbanksoal->get_cari($keyword);  
+
+        // format keluaran di dalam array
+     foreach($data as $row)
+     {
+        $arr['query'] = $keyword;
+        $arr['suggestions'][] = array(
+            'value' =>$row['judul_soal'],
+            );
+    }
+        // minimal PHP 5.2
+    echo json_encode($arr);
+  }
+
+  public function cari()
+  {
+
+      // code u/pagination
+       $this->load->database();
+           $keyword = $this->input->post('keyword');
+      $datCari = $this->Mbanksoal->get_cari2($keyword);
+        $jumlah_data = $this->Mbanksoal->jumlah_soalCari($keyword);
+       
+        $config['base_url'] = base_url().'index.php/banksoal/cari/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->Mbanksoal->data_soalCari($keyword,$config['per_page'],$from);
+
+        // var_dump($list);
+        $this->tampSoal($list);
+
+  }
 }
 
 ?>

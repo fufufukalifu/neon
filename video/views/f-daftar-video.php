@@ -49,7 +49,7 @@
     margin-right: 7px
   }
   .btn {
-    background-color: #54b9cb;
+    background-color: white;
     line-height: 53px;
     padding: 0 18px 0 0;
     display: inline-block;
@@ -78,10 +78,10 @@
   <div class="row">
     <div class="col-md-6">
      <h5>Video : <div class="btn-group" data-toggle="buttons" > 
-       <label class="btn cws-button alt btn-primary bg-color-2 small" onclick="direct()"> 
+       <label class="btn cws-button  btn-primary  small" onclick="direct()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" > By Video
       </label> 
-      <label class="btn cws-button alt btn-primary bg-color-2 active small" id="pr-rumus" active> 
+      <label class="btn cws-button  btn-primary  active small" id="pr-rumus" active> 
         <input type="radio" name="bysub" autocomplete="off"> By Sub Bab
       </label> 
     </div></h5>

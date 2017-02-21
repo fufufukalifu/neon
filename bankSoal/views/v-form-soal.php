@@ -10,13 +10,62 @@
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
 <!-- Strat Script Matjax -->
-     <script type="text/x-mathjax-config">
+<!--      <script type="text/x-mathjax-config">
        MathJax.Hub.Config({
          showProcessingMessages: false,
-         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] },
+         "CHTML-preview": {
+        disabled: true
+      },
+      MathMenu: {
+      styles: {
+        ".MathJax_Menu": {"z-index":10001}
+      }
+      },
+      AuthorInit: function () {
+        MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {
+          MathJax.Menu.BGSTYLE["z-index"] = 10000;
+        });
+      }
+
        });
-     </script>
-<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+     </script> -->
+<!--      <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript">
+      window.MathJax = {
+        showProcessingMessages: false,
+        messageStyle: "none",
+        tex2jax: {
+          inlineMath: [['$', '$'], ["\\(", "\\)"]],
+          processEscapes: true
+        },
+        "fast-preview": {disabled: true},
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } },
+        TeX: { noErrors: { disabled: true } },
+        MathMenu: {
+          styles: {
+            ".MathJax_Menu": {"z-index":2001}
+          }
+        },
+        AuthorInit: function () {
+          MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {MathJax.Menu.BGSTYLE["z-index"] = 2000;});
+          MathJax.Hub.processSectionDelay = 0;
+        }
+      }
+    </script> -->
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
+<!--  <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script> -->
+
 <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 <script>
 var Preview = {
@@ -129,7 +178,10 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     <div class="panel-body ">
     <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
     <label> judul  :</label> <a id="prevJudul" ></a> <br>
-    <label>Soal   : </label>
+    <label>Soal   : $E^0$ </label>
+    <p style="text-align:center">
+  `x = (-b +- sqrt(b^2-4ac))/(2a) .`
+</p>
     <!-- img -->
     <div class="col-sm-12">
       <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
@@ -140,6 +192,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div>
     <!-- pilihan jawaban -->
     <div class="col-sm-12">
+
       <ol type="A">
         <li id="a"></li>
         <li id="b"></li>
@@ -404,6 +457,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                         <input type="radio"   autocomplete="off"> Rumus Matematika
 
                                       </label>
+                                     
 
                                  </div>
 
@@ -582,8 +636,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                         <!-- END input jawaban A -->
 
-
-
                         <!-- Start input jawaban B -->
 
                         <div class="form-group">
@@ -593,47 +645,26 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <!-- Start input text B -->
 
                             <div class="col-sm-8 piltext">
-
                                <textarea name="b" class="form-control"></textarea>
-
                             </div>
-
                             <!-- END input text B -->
-
                             <div class="col-sm-8 pilgambar" hidden="true">
-
                                 <div class="col-sm-12">
-
                                      <img id="previewB" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
-
-                                 </div>
-
-                                         
+                                 </div>                                     
 
                                 <div class="col-sm-12">
 
                                     <div class="col-md-5 left"> 
-
                                             <h6>Name: <span id="filenameB"></span></h6> 
-
                                     </div> 
-
                                     <div class="col-md-4 left"> 
-
                                             <h6>Size: <span id="filesizeB"></span>Kb</h6> 
-
                                     </div> 
-
                                     <div class="col-md-3 bottom"> 
-
                                             <h6>Type: <span id="filetypeB"></span></h6> 
-
                                     </div>
-
                                 </div>
-
-
-
                                 <div class="col-sm-12">
 
                                     <label for="fileB" class="btn btn-sm btn-default">
@@ -655,153 +686,78 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
 
                         <!-- Start input jawaban C -->
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Pilihan C</label>
-
                             <!-- Start input text C -->
-
                             <div class="col-sm-8 piltext" >
-
                                <textarea name="c" class="form-control"></textarea>
-
                             </div>
-
                             <!-- END input text C -->
-
                             <!-- Start input gambar C -->
-
                             <div class="col-sm-8 pilgambar" hidden="true">
-
                                 <div class="col-sm-12">
-
-                                     <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
-
-                                 </div>
-
-                                         
-
+                                    <img id="previewC" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
+                                 </div>                                       
                                 <div class="col-sm-12">
-
                                     <div class="col-md-5 left"> 
-
                                             <h6>Name: <span id="filenameC"></span></h6> 
-
                                     </div> 
-
                                     <div class="col-md-4 left"> 
-
                                             <h6>Size: <span id="filesizeC"></span>Kb</h6> 
-
                                     </div> 
-
                                     <div class="col-md-3 bottom"> 
-
                                             <h6>Type: <span id="filetypeC"></span></h6> 
-
                                     </div>
-
                                 </div>
-
-
-
                                 <div class="col-sm-12">
-
                                     <label for="fileC" class="btn btn-sm btn-default">
-
                                         Pilih Gambar
-
                                     </label>
-
                                     <input style="display:none;" type="file" id="fileC" name="gambar3" onchange="ValidateSingleInput(this);"/>
-
                                 </div>
-
                             </div>
-
                             <!-- END input Gambar C -->                       
-
                         </div>
-
                         <!-- END input Jawaban C -->
 
-
-
                         <!-- Start input jawaban D -->
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Pilihan D</label>
-
                             <!-- Start input text D -->
-
                             <div class="col-sm-8 piltext" >
-
                                <textarea name="d" class="form-control"></textarea>
-
                             </div>
-
                             <!-- END input text D -->
 
                             <!-- Start input gambar D -->
-
                             <div class="col-sm-8 pilgambar" hidden="true">
-
                                 <div class="col-sm-12">
-
                                      <img id="previewD" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" width="" />
-
                                  </div>
-
-                                         
-
                                 <div class="col-sm-12">
-
                                     <div class="col-md-5 left"> 
-
                                             <h6>Name: <span id="filenameD"></span></h6> 
-
                                     </div> 
-
                                     <div class="col-md-4 left"> 
-
-                                            <h6>Size: <span id="filesizeD"></span>Kb</h6> 
-
+                                          <h6>Size: <span id="filesizeD"></span>Kb</h6> 
                                     </div> 
-
                                     <div class="col-md-3 bottom"> 
-
                                             <h6>Type: <span id="filetypeD"></span></h6> 
-
                                     </div>
-
                                 </div>
-
-
 
                                 <div class="col-sm-12">
-
                                     <label for="fileD" class="btn btn-sm btn-default">
-
                                         Pilih Gambar
-
                                     </label>
-
                                     <input style="display:none;" type="file" id="fileD" name="gambar4" onchange="ValidateSingleInput(this);"/>
-
                                 </div>
-
                             </div>
-
                             <!-- END input Gambar D -->                       
-
                         </div>
-
                         <!-- END input Jawaban D -->
 
-                        
-
+                    
                         <!-- Start input jawaban E -->
 
                         <div class="form-group" id="pilihan">
@@ -1198,6 +1154,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <!-- End Panel Pembahasan -->
                       </div>
                         <!-- End Form Pembahasan -->
+
                        
 
                     </div>
@@ -1210,6 +1167,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <a class="btn btn-info" onclick="priview()">Priview Soal</a>
+
                         </div>
 
                         
@@ -1223,12 +1181,14 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             </div>
 
 
-
         </div>
 
         <!--/ END row -->
 
     </div>
+
+
+
 
 
 
@@ -1369,7 +1329,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             $('#filePembahasan').on('change',function () {
 
-              console.log('pembahasan');
+            
                 var file = this.files[0];
 
                 var reader = new FileReader();
@@ -1541,7 +1501,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             $('#fileD').on('change',function () {
 
-                console.log('test');
+
 
                 var file = this.files[0];
 
@@ -1991,6 +1951,7 @@ function ValidateInputVideo(oInput) {
         var judul = $("input[name=judul]").val();
         var sumber  = $("input[name=sumber]").val();
         var soal  = CKEDITOR.instances.editor1.getData();
+        var soal2 = " $E^0$";
         var jawaban = $('select[name=jawaban]').val();
         var a  =$("textarea[name=a]").val();
         var b  =$("textarea[name=b]").val();
@@ -2004,7 +1965,8 @@ function ValidateInputVideo(oInput) {
         $('li#c').text(c);
         $('li#d').text(d);
         $('li#e').text(e);
-        $('div.prevSoal').html(soal);
+        $('div.prevSoal').text(soal2);
+        $('#toge').attr("data-content","aaaaaaaaaaaaaa");
         $('a#prevJawaban').text(jawaban);
         $('#modalpriview').modal('show'); // show bootstrap modal
       

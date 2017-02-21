@@ -405,52 +405,102 @@ function add_paket(){
 }
 
 //fungsi simpan
-
+// dari sini 
 function save(){
     var nama_paket= $('[name="nama_paket"]').val();
     var jumlah_soal  = $('[name="jumlah_soal"]').val();
     var durasi = $('[name="durasi"]').val();
-    var random = $('[name="random"]').val();
+var deskripsi= $('[name="deskripsi"]').val();
+    var random = $('input[name=random]:checked').val();
+    if (!random) {
+        random = 0;
+    };
+    
     var url;
 
     if(save_method == 'add') {
+
         url = base_url+"index.php/paketsoal/addpaketsoal";
+
     } else {
+
         url = base_url+"index.php/paketsoal/updatepaketsoal";
+
     }
 
 
 
     if (nama_paket != "" && jumlah_soal != ""  && durasi != ""  ) {
-         $('#btnSave').text('saving...'); //change button text
-         $('#btnSave').attr('disabled',true); //set button disable 
-             // ajax adding data to database
-             $.ajax({
-                url : url,
-                type: "POST",
-                data: $('#form').serialize(),
-                dataType: "TEXT",
-                success: function(data)
-                {
-                    swal('Berhasil Di Simpan');
 
-                    $('#modal_form').modal('hide');
+         $('#btnSave').text('saving...'); //change button text
+
+         $('#btnSave').attr('disabled',true); //set button disable 
+
+             // ajax adding data to database
+             var datas = {nama_paket:nama_paket,
+                          jumlah_soal:jumlah_soal,
+                          deskripsi:deskripsi,
+                          durasi:durasi,
+                          random:random};
+             console.log(datas);
+             $.ajax({
+
+                url : url,
+
+                type: "POST",
+
+                data: datas,
+
+                dataType: "TEXT",
+
+                success: function(data)
+
+                {
+
+                   $('#modal_form').modal('hide');
+
                 $('#btnSave').text('save'); //change button text
+
                 $('#btnSave').attr('disabled',false); //set button enable
+
                 reload_table(); 
+
             },
+
             error: function (jqXHR, textStatus, errorThrown)
+
             {
-                swal('Error adding / update data');
+
+                alert('Error adding / update data');
+
                 $('#btnSave').text('save'); //change button text
+
                 $('#btnSave').attr('disabled',false); //set button enable 
+
+
+
             }
 
         });
+
+
+
          } else {
-             $("#e_paket").show();
-         }
-     }
+
+           $("#e_paket").show();
+
+       }
+
+
+
+
+
+
+
+
+
+   }
+// sampai sini
 
      function reload_table(){
 
