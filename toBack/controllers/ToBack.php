@@ -165,6 +165,22 @@ class Toback extends MX_Controller{
 		$this->Mtoback->insert_addSiswa($dat_siswa);
 		// var_dump(expression)
 	}
+	// add hak akses to pengawas 
+	public function addpengawasToTO()
+	{
+		$id_pengawas=$this->input->post('idpengawas');
+		$id_tryout=$this->input->post('id_to');
+		//menampung array id siswa
+		$dat_pengawas=array();
+		foreach ($id_pengawas as $key) {
+			$dat_pengawas[] = array(
+				'id_tryout'=>$id_tryout,
+				'id_pengawas'=>$key);
+			
+		}
+		//add pengawas ke paket 
+		$this->Mtoback->insert_addPengawas($dat_pengawas);
+	}
 
 
 	//menampikan paket yg sudah di add
