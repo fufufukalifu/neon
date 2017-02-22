@@ -115,7 +115,8 @@ class Banksoal extends MX_Controller {
             $jawaban=$list_soal['jawaban'];
             $isiJawaban = '';
             $create_by = $list_soal['create_by'];
-
+            $audio = $list_soal['audio'];
+            
             if ($jawaban != '' && $jawaban != ' ') {
                 //untuk menampung data sementara jawaban
                 $tampJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
@@ -160,6 +161,7 @@ class Banksoal extends MX_Controller {
                 'id_soal'=>$id_soal,
                 'judulSoal'=>$judulSoal,
                 'soal'=>$soal,
+                'audio'=>$audio,
                 'imgSoal'=>$imgSoal,
                 'kesulitan'=>$kesulitan,
                 'publish'=>$publish,
@@ -947,6 +949,8 @@ class Banksoal extends MX_Controller {
            //call fungsi insert soal
            $this->Mbanksoal->insert_soal($dataSoal);
             $this->up_img_soal($UUID);
+             //call fungsi upload soal listening
+            $this->up_listening($UUID);
            // // mengambil id soal untuk fk di tb_piljawaban
            $data['tb_banksoal'] = $this->Mbanksoal->get_soalID($UUID)[0];
            $soalID = $data['tb_banksoal']['id_soal'];
@@ -1030,6 +1034,7 @@ class Banksoal extends MX_Controller {
 
            redirect(site_url('banksoal/listsoal'));
          // END SINTX UPLOAD SOAL  
+    
     }
 
     //function upload gambar soal
@@ -1182,27 +1187,35 @@ class Banksoal extends MX_Controller {
             $this->Mbanksoal->ch_soal($data);
         }
     }
+
+    // update image soal
     public function ch_img_soal($UUID) {
+        // config upload file img soal
         $config['upload_path'] = './assets/image/soal/';
         $config['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
-                        //random name
+        //config random name
         $config['encrypt_name'] = TRUE;
         $new_name = time().$_FILES["gambarSoal"]['name'];
         $config['file_name'] = $new_name;
         $this->load->library('upload', $config);
+        //menampung value input name imgae soal
         $gambar = "gambarSoal";
+        //menampung img lama 
         $oldgambar = $this->Mbanksoal->get_oldgambar_soal($UUID)[0]['gambar_soal'];
-        //hapus gambar lama di server
+        // melakukan upload img soal
         if ($this->upload->do_upload($gambar)) {
+            // cek jika img lama null
          if ($oldgambar!='' && $oldgambar!=' ') {
+            // jiaka imga lama ada maka hapus gambar lama di server
             unlink(FCPATH . "./assets/image/soal/" . $oldgambar );
          }
          $file_data = $this->upload->data();
          $file_name = $file_data['file_name'];
          $data['UUID']=$UUID;
+         //menampung data img lama ke array untuk diupdate ke db
          $data['dataSoal']=  array(
           'gambar_soal' => $file_name);
          $this->Mbanksoal->ch_soal($data);
@@ -1290,18 +1303,14 @@ class Banksoal extends MX_Controller {
             } else {
                 $this->parser->parse('templating/index-b-guru', $data);
             }
-            
         }else{
                         // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
         }
          #END Cek USer#
-
     }
 
-
     public function updatebanksoal() {
-       
         #Start post data soal#
         $judul_soal = htmlspecialchars($this->input->post('judul'));
         $jum_pilihan = htmlspecialchars($this->input->post('opjumlah'));
@@ -1352,7 +1361,8 @@ class Banksoal extends MX_Controller {
         //call fungsi insert soal
         $this->Mbanksoal->ch_soal($data);
         $this->ch_img_soal($UUID);
-
+        //update audio u/ soal listening
+        $this->ch_listening($UUID);
         #data yg dilempar ke function count_pilihan#
         // data['id_soal'] digunakan untuk function pengecekan jumlah pilihan
         $data['id_soal']=$soalID;
@@ -1512,10 +1522,7 @@ class Banksoal extends MX_Controller {
         $config2['max_height'] = 768;
          //random name
         $config2['encrypt_name'] = TRUE;
-       
-
         $oldgambar = $this->Mbanksoal->get_oldgambar($soalID);
-
         $n = '1';
         $datagambar = array();
         // pengulngan untuk mendapat kan data gambar lama
@@ -1536,7 +1543,6 @@ class Banksoal extends MX_Controller {
                 if ($oldImg!='' || $oldImg != ' ') {
                    unlink(FCPATH . "./assets/image/jawaban/" . $oldImg);
                 }
-                
                 $file_data = $this->upload->data();
                 $file_name = $file_data['file_name'];
                 if ($n == '1') {
@@ -1557,8 +1563,7 @@ class Banksoal extends MX_Controller {
                     'id_pilihan' => $rows['id_pilihan']);
            
             }else{
-              //  $error = array('error' => $this->upload->display_errors());
-              // var_dump( $error);
+              //  
             }
 
             $n++;
@@ -1945,14 +1950,12 @@ class Banksoal extends MX_Controller {
         $from = $this->uri->segment(4);
         $this->pagination->initialize($config);     
         $list = $this->Mbanksoal->data_soal_tingkat($config['per_page'],$from,$tingkatID);
-
         $this->tampSoal($list);
     }
 
     // menampilkan soal saya
     public function mysoal()
     {
-        
          // code u/pagination
        $this->load->database();
        $idPengguna = $this->session->userdata['id'];
@@ -2002,7 +2005,7 @@ class Banksoal extends MX_Controller {
 
         $this->tampSoal($list);
     }
-
+    //search autocomplete soal berdasarkan judul soal
     public function autocomplete()
     {
      $keyword = $this->uri->segment(3);
@@ -2021,9 +2024,9 @@ class Banksoal extends MX_Controller {
     echo json_encode($arr);
   }
 
+  // cari soal berdasarkan nama
   public function cari()
   {
-
       // code u/pagination
        $this->load->database();
            $keyword = $this->input->post('keyword');
@@ -2076,6 +2079,74 @@ class Banksoal extends MX_Controller {
         $this->tampSoal($list);
 
   }
+  //function upload gambar soal
+     public function up_listening($UUID) {
+        // echo "masuk listening";
+        $configvoice['upload_path'] = './assets/audio/soal/';
+        $configvoice['allowed_types'] = 'mp3';
+                $configvoice['max_size'] = 30000;
+        //random name
+        $configvoice['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["listening"]['name'];
+        $configvoice['file_name'] = $new_name;
+
+        $this->load->library('upload', $configvoice);
+        $this->upload->initialize($configvoice);
+        $listening = "listening";
+        
+        if ($this->upload->do_upload($listening)) {
+           $file_data = $this->upload->data();
+        $file_name = $file_data['file_name'];
+        $data['UUID']=$UUID;
+        $data['dataSoal']=  array(
+            'audio' => $file_name);
+            $this->Mbanksoal->ch_soal($data);
+        }else{
+            // $error = array('error' => $this->upload->display_errors());
+            // var_dump( $error);
+        }
+       
+    }
+
+    public function ch_listening($UUID)
+    {
+      echo "masuk listening ch";
+         // config upload file audio soal
+        $configvoice['upload_path'] = './assets/audio/soal/';
+        $configvoice['allowed_types'] = 'mp3';
+                $configvoice['max_size'] = 30000;
+        //config random name
+        $configvoice['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["gambarSoal"]['name'];
+        $configvoice['file_name'] = $new_name;
+        $this->load->library('upload', $configvoice);
+        //menampung value input name imgae soal
+        $listening = "listening";
+        //menampung audio lama 
+        $oldAudio= $this->Mbanksoal->get_oldAudio_soal($UUID)[0]['audio'];
+        // melakukan upload audio soal
+            $this->upload->initialize($configvoice);
+        if ($this->upload->do_upload($listening)) {
+          // echo "masuk listening ch22"." ".$oldAudio."<br> ";
+            // cek jika audio lama null
+         if ($oldAudio!='' && $oldAudio!=' ') {
+            // jiaka audio lama ada maka hapus gambar lama di server
+            unlink(FCPATH . "./assets/audio/soal/" . $oldAudio );
+         }
+         //get nama file yg di upload ke server
+         $file_data = $this->upload->data();
+         $file_name = $file_data['file_name'];
+         $data['UUID']=$UUID;
+         //menampung data audio lama ke array untuk diupdate ke db
+         $data['dataSoal']=  array(
+          'audio' => $file_name);
+         $this->Mbanksoal->ch_soal($data);
+        }else{
+           $error = array('error' => $this->upload->display_errors());
+            var_dump( $error);
+        }
+        // $this->Mbanksoal->insert_gambar($datagambar);
+    }
 }
 
 ?>

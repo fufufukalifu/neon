@@ -173,6 +173,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- Start Modal salah upload audio -->
+<div class="modal fade" id="warning-upload-audio" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek type extension Audio!</h3>
+        <h5 class="text-center">Type yang bisa di upload hanya .mp3</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- Priview Soal-->
  <div class="modal fade " id="modalpriview" tabindex="-1" role="dialog">
@@ -310,6 +328,34 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <div class="col-sm-8">
                                 <input type="text" name="sumber" value="<?=$banksoal['sumber'];?>" class="form-control">
                             </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-2">Audio</label>
+                          <div class="col-sm-8">
+                            <div class="col-sm-12 hidden-audio " hidden="true"> 
+                              <div class="col-md-5 left"> 
+                              <h6>Name: <span id="filenameAudio"></span></h6> 
+                              </div> 
+                              <div class="col-md-4 left"> 
+                                <h6>Size: <span id="filesizeAudio"></span>Kb</h6> 
+                              </div> 
+                              <div class="col-md-3 bottom"> 
+                                <h6>Type: <span id="filetypeAudio"></span></h6> 
+                              </div>
+                            </div>
+                            <div class="col-sm-12 hidden-audio" >
+                              <audio class="col-sm-12" id="previewAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
+                              </audio>
+                            </div>
+                            <div class="col-sm-6 mt10">
+                                    <label for="fileAudio" class="btn btn-sm btn-default">
+                                        Pilih Audio
+                                    </label>
+                                    <input  id="fileAudio" style="display:none;" type="file" name="listening" onchange="ValidateAudioInput(this);">
+                                    <label class="btn btn-sm btn-danger"  onclick="restAudioSoal()">Reset</label>
+                                </div>
+
+                          </div>
                         </div>
                          <div class="form-group">
                             <label class="control-label col-sm-2">Gambar Soal</label>
@@ -1103,7 +1149,26 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                 },
             }
             // End event priview gambar soal
-
+             // Start event priview gambar Audio
+            $('#fileAudio').on('change',function () {
+                 $('.hidden-audio').show();
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerAudio.load;
+                reader.readAsDataURL(file);
+                viewerAudio.setProperties(file);
+            });
+            var viewerAudio = {
+                load : function(e){
+                    $('#previewAudio').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameAudio').text(file.name);
+                    $('#filetypeAudio').text(file.type);
+                    $('#filesizeAudio').text(Math.round(file.size/1024));
+                },
+            }
+            // End event priview gambar Audio
              // Start event priview gambar Pembahasan
 
             $('#filePembahasan').on('change',function () {
@@ -1588,6 +1653,41 @@ function ValidateInputVideo(oInput) {
       $('#filetypePembahasan').text("");
       $('#filesizePembahasan').text("");
     }
+
+     //reset form input audio soal
+    function restAudioSoal(){
+      $("input[name=listening]").val("");
+      $('#previewAudio').attr('src', "");
+      $('#filenameAudio').text("");
+      $('#filetypeAudio').text("");
+      $('#filesizeAudio').text("");
+    }
+
+    //validasi upload audio
+function ValidateAudioInput(oInput){
+  var _validFileExtensions = [".mp3"]; 
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+                $('#warning-upload-audio').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
 </script>
 <!--END Script drop down depeden  -->
     

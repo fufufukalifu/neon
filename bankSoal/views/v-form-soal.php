@@ -260,6 +260,28 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- Start Modal salah upload audio -->
+<div class="modal fade" id="warning-upload-audio" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek type extension Audio!</h3>
+        <h5 class="text-center">Type yang bisa di upload hanya .mp3</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
         <!-- START row -->
 
         <div class="row">
@@ -346,86 +368,71 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             </div>
 
                             
-
                         </div>
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2 ">Kesulitan</label>
-
                             <div class="col-sm-8">
-
                                 <select name="kesulitan" class="form-control">
-
                                     <option value="">--Silahkan Pilih Tingkat Kesulitan--</option>
-
                                     <option value="0">Mudah</option>
-
                                     <option value="1">Sedang</option>
-
                                     <option value="2">Sulit</option>
-
                                 </select>
-
                             </div>
-
                         </div>
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Sumber</label>
-
                             <div class="col-sm-8">
-
                                 <input type="text" name="sumber" class="form-control" id="sumberp" >
-
                             </div>
-
                         </div>
 
                         <div class="form-group">
                           <label class="control-label col-sm-2">Voice</label>
-                          <input type="file" name="listening">
+                          <div class="col-sm-8">
+                            <div class="col-sm-12 hidden-audio " hidden="true"> 
+                              <div class="col-md-5 left"> 
+                              <h6>Name: <span id="filenameAudio"></span></h6> 
+                              </div> 
+                              <div class="col-md-4 left"> 
+                                <h6>Size: <span id="filesizeAudio"></span>Kb</h6> 
+                              </div> 
+                              <div class="col-md-3 bottom"> 
+                                <h6>Type: <span id="filetypeAudio"></span></h6> 
+                              </div>
+                            </div>
+                            <div class="col-sm-12 hidden-audio" hidden="true">
+                              <audio class="col-sm-12" id="previewAudio" src="" type="audio/mpeg" controls >
+                              </audio>
+                            </div>
+                            <div class="col-sm-6 mt10">
+                                    <label for="fileAudio" class="btn btn-sm btn-default">
+                                        Pilih Audio
+                                    </label>
+                                    <input  id="fileAudio" style="display:none;" type="file" name="listening" onchange="ValidateAudioInput(this);">
+                                    <label class="btn btn-sm btn-danger"  onclick="restAudioSoal()">Reset</label>
+                                </div>
+
+                          </div>
                         </div>
 
                          <div class="form-group">
-
                             <label class="control-label col-sm-2">Gambar Soal</label>
-
                              <div class="col-sm-8 " >
-
                                 <div class="col-sm-12">
-
-                                     <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
-
-                                 </div>
-
-                                         
-
+                                    <img id="previewSoal" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
+                                 </div>    
                                 <div class="col-sm-12">
-
                                     <div class="col-md-5 left"> 
-
                                             <h6>Name: <span id="filenameSoal"></span></h6> 
-
                                     </div> 
-
                                     <div class="col-md-4 left"> 
-
                                             <h6>Size: <span id="filesizeSoal"></span>Kb</h6> 
-
                                     </div> 
-
                                     <div class="col-md-3 bottom"> 
-
                                             <h6>Type: <span id="filetypeSoal"></span></h6> 
-
                                     </div>
-
                                 </div>
-
-
-
                                 <div class="col-sm-6">
 
                                     <label for="fileSoal" class="btn btn-sm btn-default">
@@ -1217,219 +1224,140 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         $(document).ready(function(){
            // Start event untuk jenis editor
             $("#in-soal").click(function(){
-
                 $("#editor-soal").show();
-
                  $("#editor-rumus").hide();
-
             });
 
             $("#pr-rumus").click(function(){
-
                 $("#editor-rumus").show();
-
                  $("#editor-soal").hide();
-
             });
            // End event untuk jenis editor
 
             // Strat  event untuk pilihan jenis input  
-
             $("#text").click(function(){
-
                 $(".piltext").show();
-
                  $(".pilgambar").hide();
-
             });
 
             $("#gambar").click(function(){
-
                 $(".pilgambar").show();
-
                 $(".piltext").hide();     
-
             });
-
             //END  event untuk pilihan jenis input  
 
             // Strat  event untuk jumlah pilihan  
-
             $("#empatpil").click(function(){   
-
-                 $("#pilihan").hide();
-
-                  $("#pilihanop").hide();
-
+                $("#pilihan").hide();
+                $("#pilihanop").hide();
             });
 
             $("#limapil").click(function(){
-
                 $("#pilihan").show();
-
-                 $("#pilihanop").show();
-
+                $("#pilihanop").show();
             });
-
             // END  event untuk jumlah pilihan
-
-
-
         });
 
     </script>
 
 
-
     <!-- Start script untuk priview gambar soal -->
-
     <script type="text/javascript">
-
         $(function () {
-
-
-
             // Start event priview gambar Soal
-
             $('#fileSoal').on('change',function () {
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
                 reader.onload = viewerSoal.load;
-
                 reader.readAsDataURL(file);
-
                 viewerSoal.setProperties(file);
-
             });
 
             var viewerSoal = {
-
                 load : function(e){
-
                     $('#previewSoal').attr('src', e.target.result);
                      $('#previewSoal2').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameSoal').text(file.name);
-
                     $('#filetypeSoal').text(file.type);
-
                     $('#filesizeSoal').text(Math.round(file.size/1024));
-
-                   
-
                 },
-
             }
-
             // End event priview gambar Soal
 
-            // Start event priview gambar Pembahasan
-
-            $('#filePembahasan').on('change',function () {
-
-            
+             // Start event priview gambar Audio
+            $('#fileAudio').on('change',function () {
+                 $('.hidden-audio').show();
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
-                reader.onload = viewerPembahasan.load;
-
+                reader.onload = viewerAudio.load;
                 reader.readAsDataURL(file);
+                viewerAudio.setProperties(file);
+            });
 
+            var viewerAudio = {
+                load : function(e){
+                    $('#previewAudio').attr('src', e.target.result);
+                },
+                setProperties : function(file){
+                    $('#filenameAudio').text(file.name);
+                    $('#filetypeAudio').text(file.type);
+                    $('#filesizeAudio').text(Math.round(file.size/1024));
+                },
+            }
+            // End event priview gambar Audio
+            
+            // Start event priview gambar Pembahasan
+            $('#filePembahasan').on('change',function () {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewerPembahasan.load;
+                reader.readAsDataURL(file);
                 viewerPembahasan.setProperties(file);
-
             });
 
             var viewerPembahasan = {
-
                 load : function(e){
-
                     $('#previewPembahasan').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenamePembahasan').text(file.name);
-
                     $('#filetypePembahasan').text(file.type);
-
                     $('#filesizePembahasan').text(Math.round(file.size/1024));
-
                 },
-
             }
-
             // End event priview gambar Soal
 
-
-
-
             // Start event priview gambar pilihan A
-
             $('#fileA').on('change',function () {
-
-                console.log('test');
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
                 reader.onload = viewerA.load;
-
                 reader.readAsDataURL(file);
-
                 viewerA.setProperties(file);
-
             });
 
             var viewerA = {
-
                 load : function(e){
-
                     $('#previewA').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameA').text(file.name);
-
                     $('#filetypeA').text(file.type);
-
                     $('#filesizeA').text(Math.round(file.size/1024));
-
                 },
-
             }
-
             // End event priview gambar pilihan A
 
-
-
             // Start event priview gambar pilihan B
-
             $('#fileB').on('change',function () {
-
-                console.log('test');
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
                 reader.onload = viewerB.load;
-
                 reader.readAsDataURL(file);
-
                 viewerB.setProperties(file);
-
             });
 
             var viewerB = {
@@ -1642,6 +1570,31 @@ function ValidateInputVideo(oInput) {
     }
     return true;
 }
+//validasi upload audio
+function ValidateAudioInput(oInput){
+  var _validFileExtensions = [".mp3"]; 
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+                $('#warning-upload-audio').modal('show');
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true;
+}
 </script>
 <!-- END -->
 
@@ -1652,75 +1605,42 @@ function ValidateInputVideo(oInput) {
     // Script for getting the dynamic values from database using jQuery and AJAX
 
     $(document).ready(function () {
-
         $('#eTingkat').change(function () {
-
-
-
             var form_data = {
-
                 name: $('#eTingkat').val()
-
             };
 
 
 
             $.ajax({
-
                 url: "<?php echo site_url('videoback/getPelajaran'); ?>",
-
                 type: 'POST',
                  dataType: "json",
-
                 data: form_data,
-
                 success: function (msg) {
-
                     var sc = '';
-
                     $.each(msg, function (key, val) {
-
                         sc += '<option value="' + val.id + '">' + val.keterangan + '</option>';
-
                     });
-
                     $("#ePelajaran option").remove();
-
                     $("#ePelajaran").append(sc);
-
                 }
-
             });
-
         });
 
         // Strat  event untuk pilihan jenis input  
-
         $("#up_server").click(function () {
-
             $(".server").show();
-
             $(".link").hide();
-
         });
-
         $("#up_link").click(function () {
-
             $(".link").show();
-
             $(".server").hide();
-
             $(".prv_video").hide();
-
         });
-
         $("#file").click(function () {
-
             $(".prv_video").show();
-
         });
-
-
         // Start Eveb Show Hide Form Pembahasan
         $("#show-pembahasan").click(function(){
            $(".pembahasan").show();
@@ -1728,7 +1648,6 @@ function ValidateInputVideo(oInput) {
         $("#hide-pembahasan").click(function(){
            $(".pembahasan").hide();
         });
-
         $("#m-tex").click(function(){
            $(".vido").hide();
            $(".tex").show();
@@ -1740,36 +1659,19 @@ function ValidateInputVideo(oInput) {
         $("#m-vido").click(function(){
            $(".tex").hide();
            $(".vido").show();
-            $(".server").show();
-
-            
+            $(".server").show();  
         });
         // End Even Show Hide Form Pembahasan
-
-
-
     });
 
-
-
-
-
     //buat load tingkat
-
     function loadTingkat() {
-
         jQuery(document).ready(function () {
-
             var tingkat_id = {"tingkat_id": $('#tingkat').val()};
-
             var idTingkat;
-
-
-
             $.ajax({
-
                 type: "POST",
- dataType: "json",
+                dataType: "json",
                 data: tingkat_id,
 
                 url: "<?= base_url() ?>index.php/videoback/getTingkat",
@@ -1928,6 +1830,7 @@ function ValidateInputVideo(oInput) {
 
     loadTingkat();
 
+    // reset form input img soal
     function restImgSoal() {
       $("input[name=gambarSoal]").val("");
       $('#previewSoal').attr('src', "");
@@ -1936,12 +1839,22 @@ function ValidateInputVideo(oInput) {
       $('#filesizeSoal').text("");
     }
 
+      // reset form input img pembahasan
      function restImgPembahasan() {
       $("input[name=gambarPembahasan]").val("");
       $('#previewPembahasan').attr('src', "");
       $('#filenamePembahasan').text("");
       $('#filetypePembahasan').text("");
       $('#filesizePembahasan').text("");
+    }
+
+    //reset form input audio soal
+    function restAudioSoal(){
+      $("input[name=listening]").val("");
+      $('#previewAudio').attr('src', "");
+      $('#filenameAudio').text("");
+      $('#filetypeAudio').text("");
+      $('#filesizeAudio').text("");
     }
 
     

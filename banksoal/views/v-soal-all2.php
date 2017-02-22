@@ -70,6 +70,13 @@
                     <?=$key['soal']; ?>
                 </p>
                 <!-- END start Content -->
+                <!-- Start audio -->
+                                <?php $audio =$key['audio'] ?>
+                <?php if ($audio != '' && $audio != ' '): ?>
+                    <audio class="col-sm-12" controls>
+                         <source src="<?=base_url()?>assets/audio/soal/<?=$audio?>" type="audio/mpeg">
+                    </audio>
+                <?php endif ?>
             </div>
             <!--/ panel-body -->
             <div class="panel-body pt10 table-responsive panel-collapse pull in ">
@@ -104,14 +111,6 @@
                 <div class="panel-footer hidden-xs">
                     <ul class="nav nav-section nav-justified">
 
-                         <!-- ico-cancel-circle2 -->
-                      <!--   <li>
-                            <div class="section">
-                             <a > <span class="meta"> <span class="icon"> <i class="ico-bell"></i></span>
-                               </span> </a> 
-                                
-                            </div>
-                        </li> -->
                         <li>
                             <div class="section">
                                 <i class="ico-file"></i>

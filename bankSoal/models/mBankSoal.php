@@ -250,7 +250,7 @@ class Mbanksoal extends CI_Model {
 
     // data paginataion all soal
     function data_soal($number,$offset){
-        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by');
+        $this->db->select('tkt.aliasTingkat,id_soal,sumber,kesulitan,judul_soal,jawaban,UUID,publish,random,soal,gambar_soal,pembahasan,gambar_pembahasan,video_pembahasan,tp.keterangan,bab.judulBab,subbab.judulSubBab,soal.id_subbab,soal.create_by,soal.audio');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -544,6 +544,17 @@ class Mbanksoal extends CI_Model {
         $this->db->like('soal.judul_soal', $keyword);
          $this->db->order_by('soal.id_soal', 'desc');
         return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    //get audio untuk update file audio di server
+
+    public function get_oldAudio_soal($UUID)
+    {
+        $this->db->select("audio");
+        $this->db->from("tb_banksoal");
+        $this->db->where('UUID',$UUID);
+        $query=$this->db->get();
+        return $query->result_array();
     }
 
 }
