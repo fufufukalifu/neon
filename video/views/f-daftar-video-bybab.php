@@ -56,6 +56,7 @@
     text-decoration: none;
     color: #fff;
     border-radius: 4px;
+    border-color: #1D4B66; 
     transition: all .25s ease-in-out;
     font-size: 18px
   }
@@ -72,6 +73,7 @@
     border-right: 1px solid #4daabb;
     line-height: 53px
   }
+
 </style>
 <form>
   <input type="hidden" name="tingkat" value="{alias_tingkat}">
@@ -83,7 +85,7 @@
     <div class="col-md-6">
      <h5>Type : <div class="btn-group" data-toggle="buttons" > 
 
-       <label class="btn active cws-button  btn-primary small" onclick="semua()"> 
+       <label class="btn active cws-button  btn-primary  small" onclick="semua()"> 
         <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video"> All
       </label>
 
@@ -91,7 +93,7 @@
         <input type="radio" name="options" autocomplete="off"> Room
       </label> 
 
-      <label class="btn cws-button  btn-primary  small"  title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
+      <label class="btn cws-button  btn-primary   small"  title="Tampilkan Jenis Video Screen" onclick="justscreen()"> 
         <input type="radio" name="options" autocomplete="off"> Screen
       </label> 
 

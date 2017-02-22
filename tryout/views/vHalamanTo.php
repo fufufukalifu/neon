@@ -126,13 +126,24 @@
                                                         <div class="panel-collapse">
                                                             <div class="panel-body">
                                                                 <div class="row">
+                                                                     <div class="col-md-12">
+                                                                        <!-- Start Audio listening -->
+                                                                        <audio class="col-md-12" controls>
+                                                                             <source src="<?=base_url()?>assets/audio/soal/<?=$key['audio']?>" type="audio/mpeg">
+                                                                        </audio>
+                                                                        <!-- End Audio Listening  -->
+                                                                    </div>
                                                                     <div class="col-md-1 text-right">
                                                                         <p><h4><?= $i ?>.</h4></p>
                                                                     </div>
+                                                                    
+                                                                   
+                                                                    
                                                                     <div class="col-md-11">
                                                                         <?php if (!empty($key['gambar'])) { ?>       
                                                                         <img src="<?= base_url('./assets/image/soal/' . $key['gambar']) ?>">   
                                                                         <?php } ?>
+
                                                                         <h5><?= $key['soal'] ?></h5>
                                                                         <br>
                                                                     </div>  
@@ -158,7 +169,7 @@
                                                                                         echo '';
                                                                                     } else {
                                                                                         ?>
-                                                                                        <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
+                                                                                        <img src="<?= base_url('./assets/image/jawaban/' . $row['pilgam']) ?>">
                                                                                         <?php } ?>
                                                                                         <?= $row['piljaw'] ?>
                                                                                         <?php $indexpil++;?>

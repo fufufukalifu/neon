@@ -56,6 +56,7 @@
     text-decoration: none;
     color: #fff;
     border-radius: 4px;
+    border-color: #1D4B66; 
     transition: all .25s ease-in-out;
     font-size: 18px
   }

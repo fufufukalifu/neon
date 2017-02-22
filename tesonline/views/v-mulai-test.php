@@ -106,7 +106,7 @@
 
             <!-- top -->
 
-            <!-- <div class="col-md-12">
+             <div class="col-md-12">
 
                 <h3>Daftar Latihan <a href="../tesonline" class="cws-button bt-color-4 border-radius icon-left"><i class="fa fa-plus-square"></i>Buat Latihan</a></h3>
 
@@ -194,9 +194,9 @@
 
             </div>
 
- -->
 
-           <!--  <div class="col-md-12">
+
+            <div class="col-md-12">
 
                 <h3>Daftar Report</h3>
 
@@ -282,13 +282,12 @@
                 </div>
 
             </div>
- -->
 
 
-           <div class="grid-col col-md-12">
+<!--            <div class="grid-col col-md-12">
                     <div class="hover-effect"></div>
                     <h3 class="center"><strong>Latihan Online Sedang dipersiapkan</strong></h3>              
-                </div>
+                </div> -->
 
 
 

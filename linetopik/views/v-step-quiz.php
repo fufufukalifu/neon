@@ -136,6 +136,11 @@
                                                     <div class="panel-collapse">
                                                         <div class="panel-body">
                                                             <div class="row">
+                                                                <!-- Start Audio listening -->
+                                                                        <audio class="col-md-12" controls>
+                                                                             <source src="<?=base_url()?>assets/audio/soal/<?=$key['audio']?>" type="audio/mpeg">
+                                                                        </audio>
+                                                                        <!-- End Audio Listening  -->
                                                                 <div class="col-md-1 text-left">
                                                                     <p><h4><?= $i ?>.</h4></p>
                                                                 </div>
@@ -168,7 +173,7 @@
                                                                                             echo '';
                                                                                             } else {
                                                                                             ?>
-                                                                                            <img src="<?= base_url('./assets/image/soal/' . $row['pilgam']) ?>">
+                                                                                            <img src="<?= base_url('./assets/image/jawaban/' . $row['pilgam']) ?>">
                                                                                             <?php } ?>
                                                                                             <?= $row['piljaw'] ?>
                                                                                             <?php $indexpil++;?>

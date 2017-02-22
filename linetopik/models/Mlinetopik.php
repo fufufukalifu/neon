@@ -278,7 +278,7 @@
     {
         $id_latihan = $data['id_latihan'];
         $limitQuiz  = $data['limitQuiz'];
-       $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.jawaban as jaw,, soal.pembahasan, soal.gambar_pembahasan, soal.video_pembahasan, soal.status_pembahasan, soal.link');
+       $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.jawaban as jaw,, soal.pembahasan, soal.gambar_pembahasan, soal.video_pembahasan, soal.status_pembahasan, soal.link,soal.audio');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
         $this->db->where('sollat.id_latihan', $id_latihan);

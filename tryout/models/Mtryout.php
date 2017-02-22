@@ -148,7 +148,7 @@ public function dataPaket($id) {
 
 public function get_soal($id_paket) {
     $this->db->order_by('rand()');
-    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar');
+    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar,soal.audio');
     $this->db->from('tb_mm-paketbank as paban');
     $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
     $this->db->where('paban.id_paket', $id_paket);
