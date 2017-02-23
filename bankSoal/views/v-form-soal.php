@@ -3,10 +3,8 @@
 <section id="main" role="main">
 
     <!-- START Template Container -->
-
     <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
         <!--js buat menampilakan priview video sebelum di upload  -->
-
     <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
 
 <!-- Strat Script Matjax -->
@@ -192,7 +190,6 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div>
     <!-- pilihan jawaban -->
     <div class="col-sm-12">
-
       <ol type="A">
         <li id="a"></li>
         <li id="b"></li>
@@ -255,6 +252,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         <h5 class="text-center">Type yang bisa di upload hanya .mp4</h5>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Start Modal salah upload size img -->
+<div class="modal fade" id="e_size_img" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size Gambar!</h3>
+        <h5 class="text-center">File size audio maksimal 100kb</h5>
+      </div>
+      <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
@@ -279,25 +294,35 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
+<!-- Start Modal salah upload size audio -->
+<div class="modal fade" id="e_size_audio" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size Audio!</h3>
+        <h5 class="text-center">File size audio maksimal 50Mb</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
         <!-- START row -->
-
         <div class="row">
-
             <div class="col-md-12">
-
                 <!-- Form horizontal layout bordered -->
-
                 <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
-
                     <div class="panel-heading">
                         <h3 class="panel-title">Form Soal</h3>
                        <!-- untuk menampung bab id -->
                         <!-- <input type="text" name="subBabID" value="<?=$subBab;?>"  hidden="true"> -->
                     </div>               
-
                     <div class="panel-body">
                       <!-- Start Dropd Down depeden -->
                       <div  class="form-group">
@@ -305,69 +330,37 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                         <div class="col-sm-4">
                           <select class="form-control" name="tingkat" id="tingkat">
                             <option>-Pilih Tingkat-</option>
-
                           </select>
                         </div>
-
-
                         <label class="col-sm-2 control-label">Mata Pelajaran</label>
                         <div class="col-sm-4">
                           <select class="form-control" name="mataPelajaran" id="pelajaran">
-
-
                           </select>
-
                         </div>
-
                       </div>
-
-
 
                       <div class="form-group">
-
                         <label class="col-sm-1 control-label">Bab</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="bab" id="bab">
 
-
-
                           </select>
-
                         </div>
-
-
-
                         <label class="col-sm-2 control-label">Subab</label>
-
                         <div class="col-sm-4">
-
                           <select class="form-control" name="subBabID" id="subbab">
 
-
-
                           </select>
-
                           <span class="text-danger"><?php echo form_error('subBab'); ?></span>
-
                         </div>
-
                       </div>
-
                       <!-- END Drop Down depeden -->
 
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Judul Soal</label>
-
                             <div class="col-sm-8">
-
                                 <input type="text" name="judul" class="form-control" value="<?php echo set_value('judul'); ?>" required="true">
-
                             </div>
-
-                            
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2 ">Kesulitan</label>
@@ -434,47 +427,27 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-
                                     <label for="fileSoal" class="btn btn-sm btn-default">
-
                                         Pilih Gambar
-
                                     </label>
-
                                     <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
                                     <label class="btn btn-sm btn-danger"  onclick="restImgSoal()">Reset</label>
                                 </div>
-
-
                             </div>
-
                         </div>
 
                        <div class="form-group">
-
                             <label class="control-label col-sm-2">Jenis Editor </label>
-
                             <div class="col-sm-8">
-
                                 <div class="btn-group" data-toggle="buttons" >
-
                                       <label class="btn btn-teal btn-outline active " id="in-soal">
-
                                         <input type="radio" autocomplete="off" checked="true"> Input Soal
-
                                       </label>
-
                                       <label class="btn btn-teal btn-outline" id="pr-rumus">
-
                                         <input type="radio"   autocomplete="off"> Rumus Matematika
-
                                       </label>
-                                     
-
                                  </div>
-
                             </div>
-
                         </div>
 
                         <div class="form-group">
@@ -482,9 +455,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                            <div id="editor-soal">
                             <label class="control-label col-sm-2">Soal</label>
                              <div class="col-sm-10">
-
                                  <textarea  name="editor1" class="form-control" id="editor1"></textarea>
-
                              </div>
                             </div>
                             <!-- End Editor Soal -->
@@ -492,9 +463,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                             <div id="editor-rumus" hidden="true">
                               <label class="control-label col-sm-2">Buat rumus</label>
                               <div class="col-sm-10">
-
                                <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
-
                               </div>
                               <label class="control-label col-sm-2"></label>
                                <div class="col-sm-10">
@@ -525,137 +494,75 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                        
 
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Jumlah Pilihan</label>
-
                             <div class="col-sm-8">
-
                                 <div class="btn-group" data-toggle="buttons" >
-
                                       <label class="btn btn-teal btn-outline " id="empatpil">
-
                                         <input type="radio" name="opjumlah" value="4" autocomplete="off" > 4 Pilihan
-
                                       </label>
-
                                       <label class="btn btn-teal btn-outline active" id="limapil">
-
                                         <input type="radio" name="opjumlah"  value="5" autocomplete="off" checked="true"> 5 Pilihan
-
                                       </label>
-
                                  </div>
-
                             </div>
-
                         </div>
 
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Jenis Pilihan</label>
-
                             <div class="col-sm-8">
-
                                 <div class="btn-group" data-toggle="buttons" >
-
                                       <label class="btn btn-teal btn-outline active " id="text">
-
                                         <input type="radio" name="op-jawaban"  value="text" autocomplete="off" checked="true"> Text
-
                                       </label>
-
                                       <label class="btn btn-teal btn-outline" id="gambar">
-
                                         <input type="radio" name="op-jawaban"  value="gambar" autocomplete="off"> Gambar
-
                                       </label>
-
                                  </div>
-
                             </div>
-
                         </div>
 
                         <!-- Start input jawaban A -->
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Pilihan A</label>
-
                             <!-- Start input text A -->
-
                             <div class="col-sm-8 piltext">
-
                                <textarea name="a" id="pilA"  class="form-control"></textarea>
-
                             </div>
-
                             <!-- END input text A -->
 
                             <!-- Start input gambar A -->
-
                             <div class="col-sm-8 pilgambar" hidden="true">
-
                                 <div class="col-sm-12">
-
                                      <img id="previewA" style="max-width: 497px; max-height: 381px;  " class="img" src="" alt="" />
-
-                                 </div>
-
-                                         
-
+                                 </div>                                        
                                 <div class="col-sm-12">
-
                                     <div class="col-md-5 left"> 
-
                                             <h6>Name: <span id="filenameA"></span></h6> 
-
                                     </div> 
-
                                     <div class="col-md-4 left"> 
-
                                             <h6>Size: <span id="filesizeA"></span>Kb</h6> 
-
                                     </div> 
 
                                     <div class="col-md-3 bottom"> 
-
                                             <h6>Type: <span id="filetypeA"></span></h6> 
-
                                     </div>
-
                                 </div>
-
-
 
                                 <div class="col-sm-12">
-
                                     <label for="fileA" class="btn btn-sm btn-default">
-
                                         Pilih Gambar
-
                                     </label>
-
                                     <input style="display:none;" type="file" id="fileA" name="gambar1" onchange="ValidateSingleInput(this);"/>
-
                                 </div>
-
                             </div>
-
                             <!-- END input Gambar A -->
-
                         </div>
-
                         <!-- END input jawaban A -->
 
                         <!-- Start input jawaban B -->
-
                         <div class="form-group">
-
                             <label class="control-label col-sm-2">Pilihan B</label>
-
                             <!-- Start input text B -->
-
                             <div class="col-sm-8 piltext">
                                <textarea name="b" class="form-control"></textarea>
                             </div>
@@ -1269,9 +1176,16 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $('#fileSoal').on('change',function () {
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerSoal.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                  // $('.hidden-audio').hide();
+                }else{
+                  reader.onload = viewerSoal.load;
                 reader.readAsDataURL(file);
                 viewerSoal.setProperties(file);
+                }
             });
 
             var viewerSoal = {
@@ -1292,9 +1206,16 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                  $('.hidden-audio').show();
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerAudio.load;
-                reader.readAsDataURL(file);
-                viewerAudio.setProperties(file);
+                var size=Math.round(file.size/1024);
+                if (size>=50000) {
+                  $('#e_size_audio').modal('show');
+                  $('.hidden-audio').hide();
+                }else{
+                  reader.onload = viewerAudio.load;
+                  reader.readAsDataURL(file);
+                  viewerAudio.setProperties(file);
+                }
+              
             });
 
             var viewerAudio = {
@@ -1305,6 +1226,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                     $('#filenameAudio').text(file.name);
                     $('#filetypeAudio').text(file.type);
                     $('#filesizeAudio').text(Math.round(file.size/1024));
+                    
                 },
             }
             // End event priview gambar Audio
@@ -1313,9 +1235,16 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $('#filePembahasan').on('change',function () {
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerPembahasan.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                  reader.onload = viewerPembahasan.load;
                 reader.readAsDataURL(file);
                 viewerPembahasan.setProperties(file);
+                }
+                
             });
 
             var viewerPembahasan = {
@@ -1334,9 +1263,16 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $('#fileA').on('change',function () {
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerA.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                  reader.onload = viewerA.load;
                 reader.readAsDataURL(file);
                 viewerA.setProperties(file);
+                }
+                
             });
 
             var viewerA = {
@@ -1355,167 +1291,115 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $('#fileB').on('change',function () {
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerB.load;
+                 var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                   reader.onload = viewerB.load;
                 reader.readAsDataURL(file);
                 viewerB.setProperties(file);
+                }
+               
             });
 
             var viewerB = {
-
                 load : function(e){
-
                     $('#previewB').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameB').text(file.name);
-
                     $('#filetypeB').text(file.type);
-
                     $('#filesizeB').text(Math.round(file.size/1024));
-
                 },
-
             }
-
-
-
             // End event priview gambar pilihan B
-
-
 
             // Start event priview gambar pilihan C
 
             $('#fileC').on('change',function () {
-
-                console.log('test');
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
-                reader.onload = viewerC.load;
-
+                 var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                   reader.onload = viewerC.load;
                 reader.readAsDataURL(file);
-
                 viewerC.setProperties(file);
-
+                }                
             });
-
             var viewerC = {
-
                 load : function(e){
-
                     $('#previewC').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameC').text(file.name);
-
                     $('#filetypeC').text(file.type);
-
                     $('#filesizeC').text(Math.round(file.size/1024));
-
                 },
-
             }
-
-
-
             // End event priview gambar pilihan C
 
-
-
             // Start event priview gambar pilihan D
-
             $('#fileD').on('change',function () {
-
-
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
+                 var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
                 reader.onload = viewerD.load;
-
                 reader.readAsDataURL(file);
-
                 viewerD.setProperties(file);
-
+                }
+               
             });
 
             var viewerD = {
-
                 load : function(e){
-
                     $('#previewD').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameD').text(file.name);
-
                     $('#filetypeD').text(file.type);
-
                     $('#filesizeD').text(Math.round(file.size/1024));
-
                 },
-
             }
-
-
 
             // End event priview gambar pilihan D
 
 
-
             // Start event priview gambar pilihan E
-
             $('#fileE').on('change',function () {
-
-                console.log('test');
-
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
                 reader.onload = viewerE.load;
-
                 reader.readAsDataURL(file);
-
                 viewerE.setProperties(file);
-
+                }
+              
             });
-
             var viewerE = {
-
                 load : function(e){
-
                     $('#previewE').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenameE').text(file.name);
-
                     $('#filetypeE').text(file.type);
-
                     $('#filesizeE').text(Math.round(file.size/1024));
-
                 },
-
             }
             // End event priview gambar pilihan E
         });
-
     </script>
-
      <!-- End script untuk priview gambar soal -->
 <!-- start script js validation extension -->
 <script type="text/javascript">
@@ -1737,7 +1621,7 @@ function ValidateAudioInput(oInput){
         $.ajax({
 
             type: "POST",
- dataType: "json",
+            dataType: "json",
             data: tingkatID.tingkat_id,
 
             url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
@@ -1797,39 +1681,20 @@ function ValidateAudioInput(oInput){
     function load_sub_bab(babID) {
 
         $.ajax({
-
             type: "POST",
- dataType: "json",
+            dataType: "json",
             data: babID.bab_id,
-
             url: "<?php echo base_url() ?>index.php/videoback/getSubbab/" + babID,
-
             success: function (data) {
-
-                $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');
-
-             
-
+                $('#subbab').html('<option value="">-- Pilih Sub Bab Pelajaran  --</option>');             
                 $.each(data, function (i, data) {
-
                     $('#subbab').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
-
                 });
-
             }
-
-
-
         });
-
     }
 
-
-
-
-
     loadTingkat();
-
     // reset form input img soal
     function restImgSoal() {
       $("input[name=gambarSoal]").val("");
@@ -1855,6 +1720,7 @@ function ValidateAudioInput(oInput){
       $('#filenameAudio').text("");
       $('#filetypeAudio').text("");
       $('#filesizeAudio').text("");
+      $('.hidden-audio').hide();
     }
 
     
@@ -1862,7 +1728,6 @@ function ValidateAudioInput(oInput){
 </script>
 
 <script type="text/javascript">
-
     // priview soal sebelum di upload
       function priview() {
         var tingkat = $('select#tingkat').text();

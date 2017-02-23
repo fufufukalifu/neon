@@ -155,6 +155,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- Start Modal salah upload size img -->
+<div class="modal fade" id="e_size_img" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size Gambar!</h3>
+        <h5 class="text-center">File size audio maksimal 100kb</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- Start Modal salah upload video -->
 <div class="modal fade" id="warningupload2" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -173,6 +191,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- Start Modal salah upload size video -->
+<div class="modal fade" id="e_size_video" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size video!</h3>
+        <h5 class="text-center">File size video maksimal 90Mb</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- Start Modal salah upload audio -->
 <div class="modal fade" id="warning-upload-audio" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -184,6 +220,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       <div class="modal-body">
         <h3 class="text-center">Silahkan cek type extension Audio!</h3>
         <h5 class="text-center">Type yang bisa di upload hanya .mp3</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Start Modal salah upload size audio -->
+<div class="modal fade" id="e_size_audio" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size Audio!</h3>
+        <h5 class="text-center">File size audio maksimal 50Mb</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -343,7 +397,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                 <h6>Type: <span id="filetypeAudio"></span></h6> 
                               </div>
                             </div>
-                            <div class="col-sm-12 hidden-audio" >
+                            <div class="col-sm-12 hidden-audio" hidden="true">
                               <audio class="col-sm-12" id="previewAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
                               </audio>
                             </div>
@@ -1131,12 +1185,18 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         $(function () {
             // Start event priview gambar Soal
             $('#fileSoal').on('change',function () {
-                console.log('test');
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerSoal.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                  // $('.hidden-audio').hide();
+                }else{
+                  reader.onload = viewerSoal.load;
                 reader.readAsDataURL(file);
                 viewerSoal.setProperties(file);
+                }
             });
             var viewerSoal = {
                 load : function(e){
@@ -1154,9 +1214,15 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                  $('.hidden-audio').show();
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerAudio.load;
-                reader.readAsDataURL(file);
-                viewerAudio.setProperties(file);
+                var size=Math.round(file.size/1024);
+                if (size>=50000) {
+                  $('#e_size_audio').modal('show');
+                  $('.hidden-audio').hide();
+                }else{
+                  reader.onload = viewerAudio.load;
+                  reader.readAsDataURL(file);
+                  viewerAudio.setProperties(file);
+                }
             });
             var viewerAudio = {
                 load : function(e){
@@ -1172,38 +1238,27 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
              // Start event priview gambar Pembahasan
 
             $('#filePembahasan').on('change',function () {
-
-              console.log('pembahasan');
                 var file = this.files[0];
-
                 var reader = new FileReader();
-
-                reader.onload = viewerPembahasan.load;
-
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                  reader.onload = viewerPembahasan.load;
                 reader.readAsDataURL(file);
-
                 viewerPembahasan.setProperties(file);
-
+                }
             });
-
             var viewerPembahasan = {
-
                 load : function(e){
-
                     $('#previewPembahasan').attr('src', e.target.result);
-
                 },
-
                 setProperties : function(file){
-
                     $('#filenamePembahasan').text(file.name);
-
                     $('#filetypePembahasan').text(file.type);
-
                     $('#filesizePembahasan').text(Math.round(file.size/1024));
-
                 },
-
             }
 
             // End event priview gambar Soal
@@ -1212,9 +1267,15 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             $('#fileA').on('change',function () {
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerA.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                  reader.onload = viewerA.load;
                 reader.readAsDataURL(file);
                 viewerA.setProperties(file);
+                }
             
             });
             var viewerA = {
@@ -1231,12 +1292,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             // Start event priview gambar pilihan B
             $('#fileB').on('change',function () {
-                console.log('test');
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerB.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                   reader.onload = viewerB.load;
                 reader.readAsDataURL(file);
                 viewerB.setProperties(file);
+                }
             });
             var viewerB = {
                 load : function(e){
@@ -1253,12 +1319,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             // Start event priview gambar pilihan C
             $('#fileC').on('change',function () {
-                console.log('test');
                 var file = this.files[0];
                 var reader = new FileReader();
-                reader.onload = viewerC.load;
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
+                   reader.onload = viewerC.load;
                 reader.readAsDataURL(file);
                 viewerC.setProperties(file);
+                }
             });
             var viewerC = {
                 load : function(e){
@@ -1275,12 +1346,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             // Start event priview gambar pilihan D
             $('#fileD').on('change',function () {
-                console.log('test');
                 var file = this.files[0];
                 var reader = new FileReader();
+                 var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
                 reader.onload = viewerD.load;
                 reader.readAsDataURL(file);
                 viewerD.setProperties(file);
+                }
             });
             var viewerD = {
                 load : function(e){
@@ -1297,12 +1373,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 
             // Start event priview gambar pilihan E
             $('#fileE').on('change',function () {
-                console.log('test');
                 var file = this.files[0];
                 var reader = new FileReader();
+                var size=Math.round(file.size/1024);
+                 // start pengecekan ukuran file
+                if (size>=100) {
+                  $('#e_size_img').modal('show');
+                }else{
                 reader.onload = viewerE.load;
                 reader.readAsDataURL(file);
                 viewerE.setProperties(file);
+                }
             });
             var viewerE = {
                 load : function(e){
@@ -1424,27 +1505,15 @@ function ValidateInputVideo(oInput) {
             $(".server").show();
 
             $(".link").hide();
-
         });
-
         $("#up_link").click(function () {
-
             $(".link").show();
-
             $(".server").hide();
-
             $(".prv_video").hide();
-
         });
-
         $("#file").click(function () {
-
             $(".prv_video").show();
-
         });
-
-
-
     });
 
 
@@ -1577,7 +1646,7 @@ function ValidateInputVideo(oInput) {
 
                 $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
 
-                //console.log(data);
+           
 
                 $.each(data, function (i, data) {
                     if (data.id==oldbab) {
@@ -1632,14 +1701,9 @@ function ValidateInputVideo(oInput) {
 
     }
 
-
-
-
-
     loadTingkat();
 
     function restImgSoal() {
-      console.log("reset");
       $("input[name=gambarSoal]").val("");
       $('#previewSoal').attr('src', "");
       $('#filenameSoal').text("");
@@ -1661,6 +1725,7 @@ function ValidateInputVideo(oInput) {
       $('#filenameAudio').text("");
       $('#filetypeAudio').text("");
       $('#filesizeAudio').text("");
+      $('.hidden-audio').hide();
     }
 
     //validasi upload audio
