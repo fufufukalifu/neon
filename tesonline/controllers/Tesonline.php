@@ -94,8 +94,6 @@ public function mulai() {
 }
 
 public function daftarlatihan() {
-
-
         // $tingkatID = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME'])[0]->tingkatID;
     $data = array(
         'judul_halaman' => 'Neon - Daftar Latihan',
