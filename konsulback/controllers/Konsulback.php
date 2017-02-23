@@ -406,4 +406,58 @@
        $this->parser->parse('templating/index-b-guru', $data);
     }
 
+    //add jawaban.
+function ajax_add_jawaban(){
+  $data = array(
+    'isiJawaban' => $this->input->post( 'isiJawaban' ),
+    'penggunaID' => $this->input->post( 'penggunaID' ),
+    'pertanyaanID' =>$this->input->post( 'pertanyaanID' ),
+    );
+  $this->mkonsultasi->insert_jawaban($data);
+}
+
+function check_point($id_jawaban){
+  $id_siswa = $this->get_id_siswa();
+  $id_pengguna = $this->get_id_pengguna($id_jawaban);
+  $komentar = "Asd";
+  $id_jawab = $this->input->post('idJawaban');
+  // $id_jawab = "53";
+
+
+  $data = array(
+    'siswaID' => $id_siswa,
+    'penggunaID' => $id_pengguna,
+    'komentar' =>$komentar,
+    'jawabID'=>$id_jawab
+    );
+  
+
+  $check = $this->mkonsultasi->check_postingan($data);
+  echo json_encode($check);
+}
+
+// /add point.
+function ajax_add_point($id_jawaban){
+  //penggunaID
+  //siswaID
+  $id_siswa = $this->get_id_siswa();
+  $id_pengguna = $this->get_id_pengguna($id_jawaban);
+  $komentar = $this->input->post('isiKomentar');
+  $id_jawab = $this->input->post('idJawaban');
+
+  $data = array(
+    'siswaID' => $id_siswa,
+    'penggunaID' => $id_pengguna,
+    'komentar' =>$komentar,
+    'jawabID'=>$id_jawab
+    );
+  // var_dump($data);
+
+  // $check = $this->mkonsultasi->check_postingan($data);
+  $this->mkonsultasi->insert_point($data);
+  // var_dump($check); 
+  // "<script>alert('masuk')</script>";
+
+}
+
   } ?>

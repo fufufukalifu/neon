@@ -128,14 +128,10 @@ function ajax_get_jumlah_postingan($id_pertanyaan){
 
 //add jawaban.
 function ajax_add_jawaban(){
-  $isiJawaban = $this->input->post( 'isiJawaban' ) ;
-  $penggunaID = $this->input->post( 'penggunaID' );
-  $pertanyaanID = $this->input->post( 'pertanyaanID' );
-
   $data = array(
-    'isiJawaban' => $isiJawaban,
-    'penggunaID' => $penggunaID,
-    'pertanyaanID' =>$pertanyaanID,
+    'isiJawaban' => $this->input->post( 'isiJawaban' ),
+    'penggunaID' => $this->input->post( 'penggunaID' ),
+    'pertanyaanID' =>$this->input->post( 'pertanyaanID' ),
     );
   $this->mkonsultasi->insert_jawaban($data);
 }
