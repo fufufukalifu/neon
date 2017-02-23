@@ -14,7 +14,8 @@ class Mlatihan extends CI_Model
 	//random buat subbab
 	public function get_random_for_latihan( $param ) {
 		$this->db->where( 'id_subbab', $param['id_subab'] );
-		$this->db->where('status',1);
+		$this->db->where('status','1');
+		$this->db->where('publish','1');
 		// $this->db->where( 'kesulitan', $param['kesulitan'] );
 		$this->db->order_by( 'rand()' );
 		$this->db->limit( $param['jumlah_soal'] );
@@ -27,7 +28,8 @@ class Mlatihan extends CI_Model
 	//random buat bab
 	public function get_random_for_latihan_bab( $param ) {
 		$this->db->where( 'bab.id', $param['id_bab'] );
-		$this->db->where('status',1);
+		$this->db->where('status','1');
+		$this->db->where('publish','1');
 		// $this->db->where( 'kesulitan', $param['kesulitan'] );
 		$this->db->order_by( 'rand()' );
 		$this->db->limit( $param['jumlah_soal'] );
