@@ -620,7 +620,7 @@ $(function () {
         var reader = new FileReader();
         var size=Math.round(file.size/1024);
         // start pengecekan ukuran file
-        if (size>=90000) {
+        if (size>=98) {
             $('#e_size_video').modal('show');
             $('.prv_video').hide();
         }else{
@@ -675,11 +675,7 @@ function resetVideo(){
       $('#filename').text("");
       $('#filetype').text("");
       $('#filesize').text("");
-    }
+  }
 </script>
 <!-- END -->
-<script type="text/javascript">
-        //reset form input audio soal
-    
-</script>
 

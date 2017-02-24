@@ -17,60 +17,60 @@
 		background: rgba(0,0,0,.1);
 		font-style: italic;
 	}
- blockquote{
-              display:block;
-              background: #fff;
-              padding: 15px 20px 15px 45px;
-              margin: 0 0 20px;
-              position: relative;
+	blockquote{
+		display:block;
+		background: #fff;
+		padding: 15px 20px 15px 45px;
+		margin: 0 0 20px;
+		position: relative;
 
-              /*Font*/
-              font-size: 13px;
-              line-height: 1.2;
-              color: #666;
-              text-align: justify;
+		/*Font*/
+		font-size: 13px;
+		line-height: 1.2;
+		color: #666;
+		text-align: justify;
 
-              /*Borders - (Optional)*/
-              border-left: 10px solid #ccc;
-              border-right: 2px solid #ccc;
+		/*Borders - (Optional)*/
+		border-left: 10px solid #ccc;
+		border-right: 2px solid #ccc;
 
-          }
+	}
 
-          blockquote::before{
-              content: "\201C"; /*Unicode for Left Double Quote*/
+	blockquote::before{
+		content: "\201C"; /*Unicode for Left Double Quote*/
 
-              /*Font*/
-              font-family: Georgia, serif;
-              font-size: 20px;
-              font-weight: bold;
-              color: #999;
+		/*Font*/
+		font-family: Georgia, serif;
+		font-size: 20px;
+		font-weight: bold;
+		color: #999;
 
-              /*Positioning*/
-              position: absolute;
-              left: 10px;
-              top:5px;
-          }
+		/*Positioning*/
+		position: absolute;
+		left: 10px;
+		top:5px;
+	}
 
-          blockquote::after{
-              /*Reset to make sure*/
-              content: "";
-          }
+	blockquote::after{
+		/*Reset to make sure*/
+		content: "";
+	}
 
-          blockquote a{
-              text-decoration: none;
-              background: #eee;
-              cursor: pointer;
-              padding: 0 3px;
-              color: #c76c0c;
-          }
+	blockquote a{
+		text-decoration: none;
+		background: #eee;
+		cursor: pointer;
+		padding: 0 3px;
+		color: #c76c0c;
+	}
 
-          blockquote a:hover{
-             color: #666;
-         }
+	blockquote a:hover{
+		color: #666;
+	}
 
-         blockquote em{
-          font-style: italic;
-      }
+	blockquote em{
+		font-style: italic;
+	}
 
 </style>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
@@ -126,14 +126,13 @@
 				</div><!-- /.modal-dialog -->
 
 			</div>
-	
 
 			<section id="main" role="main">
 				<!-- START Template Container -->
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-						<!-- Start Panel -->
+							<!-- Start Panel -->
 							<div class="panel panel-teal">
 								<!-- panel heading/header -->
 								<div class="panel-heading">
@@ -154,12 +153,13 @@
 												<input type="hidden" value="{id_pengguna}" name="idpengguna">
 												<span class="media-heading">{author}</span>
 												<span class="media-text ellipsis nm"><?=$isi ?></span>
+												<input type="hidden" value="<?=$isi ?>" name="single">
 												<!-- meta icon -->
 												<span></span>
 												<!-- <span class="label label-inverse">{akses}</span> -->
 												<span class="label label-primary"><i class=" ico-book3"></i>{sub}</span>
 												<!-- <span class="label label-success"><i class="ico-bubble2"></i>{jumlah}</span> -->
-												<a href="javascript:void(0);"><span class="label label-success" onclick="quote()" rel="tag">Balas <i class="ico-bubble-dots3"></i></span></a>
+												<a href="javascript:void(0);"><span class="label label-success" onclick="quote(0)" rel="tag">Balas <i class="ico-bubble-dots3"></i></span></a>
 												<a href="javascript:void(0);"><span class="label label-inverse" onclick="quote('single')" >Quote <i class="ico-bubble-quote"></i></span></a>
 												<span class="pull-right">{tanggal}|{bulan}</span>
 												<!--/ meta icon -->
@@ -168,69 +168,69 @@
 										<!-- Stat Media wall -->
 									</div>
 									<!-- END media List -->
-<!-- Start media list Respon -->
-<hr>
-<div class="media-list">
+									<!-- Start media list Respon -->
+									<hr>
+									<div class="media-list">
 
-	<!-- <hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?> -->
-	<?php if ($data_postingan!=array()): ?>
-		<?php foreach ($data_postingan as $item_postingan): ?>
-			<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
-			<div class="blog-post">
-				<article>
-					<!-- Start Respon Guru -->
-					<div class="media border-dotted">
-						<span class="pull-left">
-							<img src="<?=$gbr?>" class="img-circle" width="65px" height="65px" alt="">
-						</span>
-						<div class="media-body">
-						<h5 class="semibold mt0 text-accent"><?=$item_postingan['namaPengguna'] ?></h5>
-							<p class="media-text ellipsis nm"><?=$item_postingan['isiJawaban'] ?>
-								<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
-							</p>
-							<!-- meta icon -->
-							<span></span>
-							<!-- <span class="label label-inverse">{akses}</span> -->
-							<span class="label label-primary"><i class=" ico-book3"></i>{sub}</span>
-							
-							<!-- Start Pengecekan quote  n love -->
-							<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
-						<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
-								Quote <i class="ico-bubble-quote"></i>	
-							</a>
-					<?php else :?>
-						<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
-							<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
-								Quote <i class="ico-bubble-quote"></i>
-							</a>
+										<!-- <hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?> -->
+										<?php if ($data_postingan!=array()): ?>
+											<?php foreach ($data_postingan as $item_postingan): ?>
+												<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
+												<div class="blog-post">
+													<article>
+														<!-- Start Respon Guru -->
+														<div class="media border-dotted">
+															<span class="pull-left">
+																<img src="<?=$gbr?>" class="img-circle" width="65px" height="65px" alt="">
+															</span>
+															<div class="media-body">
+																<h5 class="semibold mt0 text-accent"><?=$item_postingan['namaPengguna'] ?></h5>
+																<p class="media-text ellipsis nm"><?=$item_postingan['isiJawaban'] ?>
+																	<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+																</p>
+																<!-- meta icon -->
+																<span></span>
+																<!-- <span class="label label-inverse">{akses}</span> -->
+																<span class="label label-primary"><i class=" ico-book3"></i>{sub}</span>
 
-						<?php else :?>
-					
-								<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
-							Quote <i class="ico-bubble-quote"></i>
-							</a>
-						<?php endif ?>
+																<!-- Start Pengecekan quote  n love -->
+																<?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
+																	<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+																		Quote <i class="ico-bubble-quote"></i>	
+																	</a>
+																<?php else :?>
+																	<?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+																		<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+																			Quote <i class="ico-bubble-quote"></i>
+																		</a>
 
-					<?php endif ?>
-							<!-- END Pengecekan quote  n love -->
-							<span class="pull-right"><?=$item_postingan['date_created'] ?></span>
-							<!--/ meta icon -->
-						</div>
-						<hr>
-					</div>
+																	<?php else :?>
 
-					<!-- END Respon Guru -->
+																		<a onclick="quote(<?=$item_postingan['jawabID'] ?>)" class="label label-inverse">
+																			Quote <i class="ico-bubble-quote"></i>
+																		</a>
+																	<?php endif ?>
+
+																<?php endif ?>
+																<!-- END Pengecekan quote  n love -->
+																<span class="pull-right"><?=$item_postingan['date_created'] ?></span>
+																<!--/ meta icon -->
+															</div>
+															<hr>
+														</div>
+
+														<!-- END Respon Guru -->
 
 
-					
 
-				</article>
-			</div>
-		<?php endforeach ?>
-	<?php endif ?>
-</div>
-<!-- End media list Respon -->
-						
+
+													</article>
+												</div>
+											<?php endforeach ?>
+										<?php endif ?>
+									</div>
+									<!-- End media list Respon -->
+
 
 								</div>
 								<!-- END panel Body -->
@@ -245,7 +245,7 @@
 
 
 
-	<script type="text/javascript">
+			<script type="text/javascript">
 	// 	var ckeditor;
 	// 	var string;
 	// 	$("blockquote").attr('class', 'media well mb0');
@@ -277,15 +277,16 @@
 	// }
 
 	var ckeditor;
-			var string;
-			var txt = 1;
-			function quote(data){
-				if (data==0) { 	
-					$('#modalJawab .modal-body .quotes p i').html("");
+	var string;
+	var txt = 1;
 
-					$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
-					string = 0;
-					$('#modalJawab').modal('show');
+
+	function quote(data){
+		if (data==0) { 	
+			$('#modalJawab .modal-body .quotes p i').html("");
+			$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
+			string = 0;
+			$('#modalJawab').modal('show');
 			// ckeditor.setData(data);
 		}else{
 			$('#modalJawab .modal-header .modal-title').html("Quote Jawaban");
@@ -297,6 +298,7 @@
 			// ckeditor = CKEDITOR.replace( 'editor1' );
 
 		}
+		
 // 	function save(){
 // 		//kalo kosong
 // 		if (string==0) {
@@ -355,9 +357,9 @@
 // }
 
 function simpan_jawaban(){
-			txt = $('#komenText').val();
-			console.log(txt);
-			console.log(string);
+	txt = $('#komenText').val();
+	console.log(txt);
+	console.log(string);
 		//kalo kosong
 		if (string==0) {
 			var desc = txt;/*ckeditor.getData();*/
@@ -376,12 +378,14 @@ function simpan_jawaban(){
 				penggunaID : $('input[name=idpengguna]').val(),
 				pertanyaanID : $('input[name=idpertanyaan]').val(),
 			}
+
+			console.log(data);
 			idpertanyaan= data.pertanyaanID;
 		}
 		if (data.isiJawaban == "") {
 			$('#info').show();
 		}else{
-			url = base_url+"konsultasi/ajax_add_jawaban/";
+			url = base_url+"konsulback/ajax_add_jawaban/";
 			$.ajax({
 				url : url,
 				type: "POST",
@@ -389,36 +393,35 @@ function simpan_jawaban(){
 				dataType: "TEXT",
 				success: function(data)
 				{
-				// alert('masd');
-                $('.post').text('Posting..'); //change button text
-                $('.post').attr('disabled',false); //set button enable
-                // alert('berhasil');
-                window.location =  base_url+"konsulback/konsultasi/"+idpertanyaan;
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-            	swal('Error adding / update data');
-            }
-        });
+     $('.post').text('Posting..'); //change button text
+     $('.post').attr('disabled',false); //set button enable
+     // alert('berhasil');
+     window.location =  base_url+"konsulback/konsultasi/"+idpertanyaan;
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+    	swal('Error adding / update data');
+    }
+   });
 		}
 	}
-function point(data){
-	elemen = "<textarea class='form-control' name='komentar'></textarea>";
-	$('.modal-body').html(elemen);
-	$('.modal-header .modal-title').html("Berikan Komentar");
-	$('#myModal').modal('show');
-	button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+	function point(data){
+		elemen = "<textarea class='form-control' name='komentar'></textarea>";
+		$('.modal-body').html(elemen);
+		$('.modal-header .modal-title').html("Berikan Komentar");
+		$('#myModal').modal('show');
+		button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
-	$('.modal-footer').html(button);
-	
+		$('.modal-footer').html(button);
 
-}
 
-function komen(data){
-	var isikomentar = $('textarea[name=komentar]').val();
+	}
+
+	function komen(data){
+		var isikomentar = $('textarea[name=komentar]').val();
 
 	// url = base_url+"konsultasi/ajax_add_point/"+data;
-	url = base_url+"konsultasi/check_point/"+data;
+	url = base_url+"konsulback/check_point/"+data;
 
 	datas = {
 		isiKomentar : isikomentar,
@@ -449,7 +452,7 @@ function get_data(data, datas){
 		swal("Tidak Dapat Memberikan Point")
 	}else{
 		console.log(postingan.idJawaban);
-		url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
+		url = base_url+"konsulback/ajax_add_point/"+postingan.idJawaban;
 		$.ajax({
 			url : url,
 			type: "POST",

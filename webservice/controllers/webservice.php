@@ -16,7 +16,6 @@ class Webservice extends MX_Controller
 	public function tryoutoffline(){
 		if ($this->input->post()) {
 			$post = $this->input->post();
-			// var_dump($post);
 			$data = $this->mtryout->get_tryout_by_id($post['id_tryout']);
 			echo json_encode($data);
 		}
@@ -85,7 +84,7 @@ class Webservice extends MX_Controller
 				$data_login = array(
 					'id' => $row->id,
 					'USERNAME' => $row->namaPengguna,
-					'HAKAKSES' => $row->hakAkses,
+					'HAKAKSES' => 'adminOffline',
 					'AKTIVASI' => $row->aktivasi,
 					'eMail' => $row->eMail,
 					'verifikasiCode' => $verifikasiCode,
@@ -105,6 +104,12 @@ class Webservice extends MX_Controller
 	function get_all_to($penggunaID){
 		$data = $this->Webservice_model->get_all_to($penggunaID);
 		echo json_encode($data);
+	}
+
+	// get mm tryout paket
+	function mm_tryout_paket($id){
+		$data = $this->Webservice_model->get_mm_tryout_paket($id);
+		echo json_encode($data);	
 	}
 }
 ?>

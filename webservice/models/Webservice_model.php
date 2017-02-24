@@ -93,7 +93,7 @@ function check_user_admin_offline($username, $password){
 	$this->db->from('tb_pengguna pengguna');
 	$this->db->where('kataSandi', $password);
 	$this->db->where('pengguna.status','1');
-	$this->db->where('pengguna.hakAkses','adminOffline');
+	$this->db->where('pengguna.hakAkses','pengawas');
 
 	$this->db->where("(namaPengguna='$username' OR eMail='$username')", NULL, FALSE);
 	$this->db->limit(1);
@@ -117,5 +117,14 @@ function check_user_admin_offline($username, $password){
     	$result = $this->db->query($query);
     	return $result->result_array();
     }
+
+// get pasangan tryout mm paket
+        function get_mm_tryout_paket($data){
+    	$query = "SELECT mm.id, mm.id_paket, mm.id_tryout FROM `tb_mm-tryoutpaket` mm
+		WHERE `id_tryout` = $data";
+
+    	$result = $this->db->query($query);
+    	return $result->result_array();
+}
 }
 ?>
