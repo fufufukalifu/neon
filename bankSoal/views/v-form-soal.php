@@ -62,7 +62,7 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
   </script>
   <!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
-  <!--  <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script> -->
+   <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
 
   <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
   <script>
@@ -83,6 +83,8 @@
   Init: function () {
     this.preview = document.getElementById("MathPreview");
     this.buffer = document.getElementById("MathBuffer");
+    //     this.preview = document.getElementById("MathPreview2");
+    // this.buffer = document.getElementById("MathBuffer2");
   },
 
   //
@@ -120,7 +122,8 @@
   CreatePreview: function () {
     Preview.timeout = null;
     if (this.mjPending) return;
-    var text = document.getElementById("MathInput").value;
+    var text = CKEDITOR.instances.editor1.getData();
+    console.log(text);
     if (text === this.oldtext) return;
     if (this.mjRunning) {
       this.mjPending = true;
@@ -176,17 +179,17 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
      <div class="panel-body ">
       <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
       <label> judul  :</label> <a id="prevJudul" ></a> <br>
-      <label>Soal   : $E^0$ </label>
-      <p style="text-align:center">
-       
-      </p>
+      <label>Soal   : </label>
+
       <!-- img -->
       <div class="col-sm-12">
         <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
       </div>
       <!-- img -->
       <div class="prevSoal col-sm-12">
-$E^0$ h
+            <!-- <div class="a" id="MathPreview" ></div>
+            <div class="a" id="MathBuffer" style=" 
+            visibility:hidden; position:absolute; top:0; left: 0"></div> -->
       </div>
       <!-- pilihan jawaban -->
       <div class="col-sm-12">
@@ -472,7 +475,7 @@ $E^0$ h
          <div id="editor-soal">
           <label class="control-label col-sm-2">Soal</label>
           <div class="col-sm-10">
-           <textarea  name="editor1" class="form-control" id="editor1"></textarea>
+           <textarea class="editor1 " id="editor1" cols="60" rows="10"  >ss</textarea>
          </div>
        </div>
        <!-- End Editor Soal -->
@@ -480,7 +483,7 @@ $E^0$ h
        <div id="editor-rumus" hidden="true">
         <label class="control-label col-sm-2">Buat rumus</label>
         <div class="col-sm-10">
-         <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
+         <textarea class="form-control " id="" cols="60" rows="10" onkeyup ="Preview.Update()" ></textarea>
        </div>
        <label class="control-label col-sm-2"></label>
        <div class="col-sm-10">
@@ -1157,6 +1160,9 @@ true">
       <script type="text/javascript">
 
         $(document).ready(function(){
+        CKEDITOR.instances.editor1.on( 'keyup', function( event ) {
+           console.log('s');
+        });
            // Start event untuk jenis editor
            $("#in-soal").click(function(){
             $("#editor-soal").show();
@@ -1733,11 +1739,12 @@ function ValidateAudioInput(oInput){
   <script type="text/javascript">
     // priview soal sebelum di upload
     function priview() {
+      Preview.Update();
       var tingkat = $('select#tingkat').text();
       var judul = $("input[name=judul]").val();
       var sumber  = $("input[name=sumber]").val();
       var soal  = CKEDITOR.instances.editor1.getData();
-      var soal2 = '$E^0$';
+      // var soal2 = '$E^0$';
       var jawaban = $('select[name=jawaban]').val();
       var a  =$("textarea[name=a]").val();
       var b  =$("textarea[name=b]").val();
@@ -1751,10 +1758,16 @@ function ValidateAudioInput(oInput){
       $('li#c').text(c);
       $('li#d').text(d);
       $('li#e').text(e);
-      $('div.prevSoal').html(soal2);
+      // $('div.prevSoal').text(soal2);
       $('a#prevJawaban').text(jawaban);
         $('#modalpriview').modal('show'); // show bootstrap modal
       }
+      //
+      // CKEDITOR.instances.editor1.on('keyup', function() {
+      // // $("#editor1").keyup(function(){
+      //     console.log('key up')
+      // });
+
     </script>
     <!--END Script drop down depeden  -->
 
