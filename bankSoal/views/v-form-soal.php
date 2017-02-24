@@ -5,7 +5,6 @@
   <!-- START Template Container -->
   <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
   <!--js buat menampilakan priview video sebelum di upload  -->
-  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
   <script type="text/javascript" src="<?= base_url('assets/javascript/components/button.js') ?>"></script>
 
   <!-- Strat Script Matjax -->
@@ -179,7 +178,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       <label> judul  :</label> <a id="prevJudul" ></a> <br>
       <label>Soal   : $E^0$ </label>
       <p style="text-align:center">
-        `x = (-b +- sqrt(b^2-4ac))/(2a) .`
+       
       </p>
       <!-- img -->
       <div class="col-sm-12">
@@ -187,7 +186,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       </div>
       <!-- img -->
       <div class="prevSoal col-sm-12">
-
+$E^0$ h
       </div>
       <!-- pilihan jawaban -->
       <div class="col-sm-12">
@@ -313,7 +312,24 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<!-- Start Modal salah upload file size video -->
+<div class="modal fade" id="e_size_video" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger">Peringatan</h2>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Silahkan cek file size video!</h3>
+        <h5 class="text-center">File size video maksimal 90Mb</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- START row -->
 <div class="row">
   <div class="col-md-12">
@@ -1411,6 +1427,34 @@ true">
             }
             // End event priview gambar pilihan E
           });
+       // cek size file video
+    
+    $('#file').on('change',function () {
+        var file = this.files[0];
+        var reader = new FileReader();
+        var size=Math.round(file.size/1024);
+        // start pengecekan ukuran file
+        if (size>=90000) {
+            $('#e_size_video').modal('show');
+            $('.prv_video').hide();
+        }else{
+            reader.onload = viewer.load;
+            reader.readAsDataURL(file);
+            viewer.setProperties(file);
+        }
+        
+    });
+    var viewer = {
+        load : function(e){
+            $('#preview').attr('src', e.target.result);
+        },
+        setProperties : function(file){
+            $('#filename').text(file.name);
+            $('#filetype').text(file.type);
+            $('#filesize').text(Math.round(file.size/1024));
+        },
+    }
+
         </script>
         <!-- End script untuk priview gambar soal -->
         <!-- start script js validation extension -->
@@ -1432,6 +1476,7 @@ function ValidateSingleInput(oInput) {
 
       if (!blnValid) {
        $('#warningupload').modal('show');
+
                 // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                 // oInput.value = "";
                 return false;
@@ -1457,7 +1502,9 @@ function ValidateInputVideo(oInput) {
       }
 
       if (!blnValid) {
+
         $('#warningupload2').modal('show');
+
                 // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                 // oInput.value = "";
                 return false;
@@ -1482,6 +1529,7 @@ function ValidateAudioInput(oInput){
       }
 
       if (!blnValid) {
+        restAudioSoal();
         $('#warning-upload-audio').modal('show');
                 // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                 // oInput.value = "";
@@ -1590,108 +1638,57 @@ function ValidateAudioInput(oInput){
 
         });
 
-
-
         $('#tingkat').change(function () {
-
           tingkat_id = {"tingkat_id": $('#tingkat').val()};
-
           loadPelajaran($('#tingkat').val());
-
         })
-
-
 
         $('#pelajaran').change(function () {
-
           pelajaran_id = {"pelajaran_id": $('#pelajaran').val()};
-
           load_bab($('#pelajaran').val());
-
         })
-
-
-
         $('#bab').change(function () {
-
           load_sub_bab($('#bab').val());
-
         })
-
       })
-
     }
-
     ;
 
-
-
     //buat load pelajaran
-
     function loadPelajaran(tingkatID) {
-
       $.ajax({
-
         type: "POST",
         dataType: "json",
         data: tingkatID.tingkat_id,
-
         url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
-
         success: function (data) {
-
           $('#pelajaran').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
-
           $.each(data, function (i, data) {
-
             $('#pelajaran').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
-
           });
-
         }
-
       });
-
     }
 
     //buat load bab
-
     function load_bab(mapelID) {
-
       $.ajax({
-
         type: "POST",
         dataType: "json",
         data: mapelID.mapel_id,
-
         url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
-
         success: function (data) {
-
-
-
           $('#bab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
-
                 //console.log(data);
-
                 $.each(data, function (i, data) {
-
                   $('#bab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-
                 });
-
               }
-
-
-
             });
-
     }
 
     //load sub bab
-
     function load_sub_bab(babID) {
-
       $.ajax({
         type: "POST",
         dataType: "json",
@@ -1705,7 +1702,6 @@ function ValidateAudioInput(oInput){
         }
       });
     }
-
     loadTingkat();
     // reset form input img soal
     function restImgSoal() {
@@ -1715,7 +1711,6 @@ function ValidateAudioInput(oInput){
       $('#filetypeSoal').text("");
       $('#filesizeSoal').text("");
     }
-
       // reset form input img pembahasan
       function restImgPembahasan() {
         $("input[name=gambarPembahasan]").val("");
@@ -1724,7 +1719,6 @@ function ValidateAudioInput(oInput){
         $('#filetypePembahasan').text("");
         $('#filesizePembahasan').text("");
       }
-
     //reset form input audio soal
     function restAudioSoal(){
       $("input[name=listening]").val("");
@@ -1734,9 +1728,6 @@ function ValidateAudioInput(oInput){
       $('#filesizeAudio').text("");
       $('.hidden-audio').hide();
     }
-
-    
-
   </script>
 
   <script type="text/javascript">
@@ -1746,7 +1737,7 @@ function ValidateAudioInput(oInput){
       var judul = $("input[name=judul]").val();
       var sumber  = $("input[name=sumber]").val();
       var soal  = CKEDITOR.instances.editor1.getData();
-      var soal2 = " $E^0$";
+      var soal2 = '$E^0$';
       var jawaban = $('select[name=jawaban]').val();
       var a  =$("textarea[name=a]").val();
       var b  =$("textarea[name=b]").val();
@@ -1760,11 +1751,9 @@ function ValidateAudioInput(oInput){
       $('li#c').text(c);
       $('li#d').text(d);
       $('li#e').text(e);
-      $('div.prevSoal').text(soal2);
-      $('#toge').attr("data-content","aaaaaaaaaaaaaa");
+      $('div.prevSoal').html(soal2);
       $('a#prevJawaban').text(jawaban);
         $('#modalpriview').modal('show'); // show bootstrap modal
-
       }
     </script>
     <!--END Script drop down depeden  -->
