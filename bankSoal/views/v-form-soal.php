@@ -8,14 +8,14 @@
   <script type="text/javascript" src="<?= base_url('assets/javascript/components/button.js') ?>"></script>
 
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-    </script>
-    <script type="text/javascript" async
-    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
   </script>
   <!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
-   <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
+  <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
 
   <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
   <!-- Script priview mathjax form input buat rumus-->
@@ -74,7 +74,7 @@
   CreatePreview: function () {
     Preview.timeout = null;
     if (this.mjPending) return;
-        var text = document.getElementById("MathInput").value;
+    var text = document.getElementById("MathInput").value;
     if (text === this.oldtext) return;
     if (this.mjRunning) {
       this.mjPending = true;
@@ -107,7 +107,7 @@ Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
 </script> 
-  <!--END Script priview mathjax form input buat rumus-->
+<!--END Script priview mathjax form input buat rumus-->
 <!-- Script priview mathjax untuk priview soal-->
 <script>
 var Preview2 = {
@@ -151,7 +151,7 @@ var Preview2 = {
   //
   Update: function () {
     if (this.timeout) {clearTimeout(this.timeout)}
-    this.timeout = setTimeout(this.callback,this.delay);
+      this.timeout = setTimeout(this.callback,this.delay);
   },
 
   //
@@ -164,7 +164,7 @@ var Preview2 = {
   CreatePreview: function () {
     Preview2.timeout = null;
     if (this.mjPending) return;
-        var text = CKEDITOR.instances.editor1.getData();
+    var text = CKEDITOR.instances.editor1.getData();
     // console.log(text);
     if (text === this.oldtext) return;
     if (this.mjRunning) {
@@ -174,9 +174,9 @@ var Preview2 = {
       this.buffer.innerHTML = this.oldtext = text;
       this.mjRunning = true;
       MathJax.Hub.Queue(
-  ["Typeset",MathJax.Hub,this.buffer],
-  ["PreviewDone",this]
-      );
+        ["Typeset",MathJax.Hub,this.buffer],
+        ["PreviewDone",this]
+        );
     }
   },
 
@@ -230,39 +230,39 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       </div>
       <!-- img -->
       <div class="prevSoal col-sm-12">
-            <div class="a" id="MathPreview2" ></div>
-            <div class="a" id="MathBuffer2" style=" 
-            visibility:hidden; position:absolute; top:0; left: 0"></div>
+        <div class="a" id="MathPreview2" ></div>
+        <div class="a" id="MathBuffer2" style=" 
+        visibility:hidden; position:absolute; top:0; left: 0"></div>
       </div>
           <!-- <script>
       Preview2.Init();
     </script> -->
-      <!-- pilihan jawaban -->
-      <div class="col-sm-12">
-        <ol type="A">
-          <li id="a"></li>
-          <li id="b"></li>
-          <li id="c"></li>
-          <li id="d"></li>
-          <li id="e"></li>
-        </ol>
-      </div>
-      <!-- jawaban -->
-      <div class="col-sm-12"> 
-        <label>Jawaban : </label> <a id="prevJawaban"></a>
-      </div>
-
+    <!-- pilihan jawaban -->
+    <div class="col-sm-12">
+      <ol type="A">
+        <li id="a"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+        <li id="d"></li>
+        <li id="e"></li>
+      </ol>
     </div>
-    <!-- END body priview -->
+    <!-- jawaban -->
+    <div class="col-sm-12"> 
+      <label>Jawaban : </label> <a id="prevJawaban"></a>
+    </div>
 
-    <!-- Start footer priview -->
-    <div class="panel-footer hidden-xs">
-     <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
-   </div>
-   <!-- end footer priview -->
+  </div>
+  <!-- END body priview -->
 
+  <!-- Start footer priview -->
+  <div class="panel-footer hidden-xs">
+   <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
  </div>
- <!-- END panel Priview -->
+ <!-- end footer priview -->
+
+</div>
+<!-- END panel Priview -->
 
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -383,7 +383,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <div class="row">
   <div class="col-md-12">
     <!-- Form horizontal layout bordered -->
-    <form class="form-horizontal form-bordered panel panel-teal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+    <form class="form-horizontal form-bordered panel panel-teal form-tambahsoal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
       <div class="panel-heading">
         <h3 class="panel-title">Form Soal</h3>
         <!-- untuk menampung bab id -->
@@ -521,7 +521,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
          <div id="editor-soal">
           <label class="control-label col-sm-2">Soal</label>
           <div class="col-sm-10">
-           <textarea class="editor1 " id="editor1" cols="60" rows="10"  ></textarea>
+           <textarea class="editor1 " name="editor1" id="editor1" cols="60" rows="10"  ></textarea>
          </div>
        </div>
        <!-- End Editor Soal -->
@@ -552,10 +552,10 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       </div>
     </div>
     <script>
-      Preview.Init();
+    Preview.Init();
     </script>
-        <script>
-      Preview2.Init();
+    <script>
+    Preview2.Init();
     </script>
     <!-- End MathJax -->
   </div>
@@ -1150,26 +1150,20 @@ true">
 
 
                   <div class="panel-footer">
-
-                    <div class="col-sm-7">
-
-                      <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
-                      <button type="submit" class="btn btn-primary ladda-button ladda-progress mb5" data-style="expand-right">
-                        <span class="ladda-label">Simpan</span>
-                        <span class="ladda-spinner"></span>
-                        <span class="ladda-spinner"></span>
-                        <div class="ladda-progress" style="width: 147px;"></div></button>
-
-                        <button type="button" class="btn btn-primary ladda-button ladda-progress mb5" data-style="expand-right" onclick="priview()">
-                          <span class="ladda-label">Preview Soal</span><span class="ladda-spinner">
-                        </span><span class="ladda-spinner"></span><div class="ladda-progress" style="width: 147px;"></div>
-                      </button>
-
-                      <!-- <a class="btn btn-info" onclick="priview()">Priview Soal</a> -->
-
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                      <a class="btn btn-info" onclick="priview()">Preview</a>
                     </div>
-
-
+                    <div class="col-md-5"><br><br>
+                      <div class="indicator show">
+                        <!-- <span class="spinner"></span> -->
+                        <div class="progress progress-striped active">
+                          <div class="progress-bar progress-bar-success" style="width: 0%" id="ProgressSOal">
+                            <span class="sr-only">100% Complete (success)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                   </div>
 
@@ -1200,18 +1194,18 @@ true">
         CKEDITOR.replace( 'editor1' );
         CKEDITOR.replace( 'editor2' );
 
-      </script>
+        </script>
 
 
 
-      <!-- script untuk option hide and show -->
+        <!-- script untuk option hide and show -->
 
-      <script type="text/javascript">
+        <script type="text/javascript">
 
         $(document).ready(function(){
-        CKEDITOR.instances.editor1.on( 'keyup', function( event ) {
+          CKEDITOR.instances.editor1.on( 'keyup', function( event ) {
            console.log('s');
-        });
+         });
            // Start event untuk jenis editor
            $("#in-soal").click(function(){
             $("#editor-soal").show();
@@ -1249,12 +1243,12 @@ true">
             // END  event untuk jumlah pilihan
           });
 
-        </script>
+ </script>
 
 
-        <!-- Start script untuk priview gambar soal -->
-        <script type="text/javascript">
-          $(function () {
+ <!-- Start script untuk priview gambar soal -->
+ <script type="text/javascript">
+ $(function () {
             // Start event priview gambar Soal
             $('#fileSoal').on('change',function () {
               var file = this.files[0];
@@ -1483,37 +1477,37 @@ true">
             // End event priview gambar pilihan E
           });
        // cek size file video
-    
-    $('#file').on('change',function () {
+
+       $('#file').on('change',function () {
         var file = this.files[0];
         var reader = new FileReader();
         var size=Math.round(file.size/1024);
         // start pengecekan ukuran file
         if (size>=90000) {
-            $('#e_size_video').modal('show');
-            $('.prv_video').hide();
+          $('#e_size_video').modal('show');
+          $('.prv_video').hide();
         }else{
-            reader.onload = viewer.load;
-            reader.readAsDataURL(file);
-            viewer.setProperties(file);
+          reader.onload = viewer.load;
+          reader.readAsDataURL(file);
+          viewer.setProperties(file);
         }
         
-    });
-    var viewer = {
+      });
+       var viewer = {
         load : function(e){
-            $('#preview').attr('src', e.target.result);
+          $('#preview').attr('src', e.target.result);
         },
         setProperties : function(file){
-            $('#filename').text(file.name);
-            $('#filetype').text(file.type);
-            $('#filesize').text(Math.round(file.size/1024));
+          $('#filename').text(file.name);
+          $('#filetype').text(file.type);
+          $('#filesize').text(Math.round(file.size/1024));
         },
-    }
+      }
 
-        </script>
-        <!-- End script untuk priview gambar soal -->
-        <!-- start script js validation extension -->
-        <script type="text/javascript">
+      </script>
+      <!-- End script untuk priview gambar soal -->
+      <!-- start script js validation extension -->
+      <script type="text/javascript">
 // validasi upload gambar 
 function ValidateSingleInput(oInput) {
   var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]; 
@@ -1594,12 +1588,12 @@ function ValidateAudioInput(oInput){
           }
           return true;
         }
-      </script>
-      <!-- END -->
+        </script>
+        <!-- END -->
 
-      <!--Start  Script drop down depeden -->
+        <!--Start  Script drop down depeden -->
 
-      <script>
+        <script>
 
     // Script for getting the dynamic values from database using jQuery and AJAX
 
@@ -1706,8 +1700,8 @@ function ValidateAudioInput(oInput){
           load_sub_bab($('#bab').val());
         })
       })
-    }
-    ;
+}
+;
 
     //buat load pelajaran
     function loadPelajaran(tingkatID) {
@@ -1783,9 +1777,9 @@ function ValidateAudioInput(oInput){
       $('#filesizeAudio').text("");
       $('.hidden-audio').hide();
     }
-  </script>
+    </script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
     // priview soal sebelum di upload
     function priview() {
       Preview2.Update();
@@ -1817,11 +1811,58 @@ function ValidateAudioInput(oInput){
       //     console.log('key up')
       // });
 
-    </script>
-    <!--END Script drop down depeden  -->
+ </script>
+ <!--END Script drop down depeden  -->
+ <script src="http://malsup.github.com/jquery.form.js"></script>
+ <!-- SCRIPT UNTUK PROGRESS BAR -->
+ <script>
+ (function() {
+  var bar = $('#ProgressSOal');
+  var status = $('#status');
+  $('.form-tambahsoal').ajaxForm({
+    beforeSend: function() {
+      status.empty();
+      var percentVal = '0%';
+      bar.width(percentVal)
+    },
+    uploadProgress: function(event, position, total, percentComplete) {
+      var percentVal = percentComplete + '%';
+      bar.width(percentVal)
+    },
+    success: function() {
+      var percentVal = '100%';
+      bar.width(percentVal);
+      swal({
+        title: "Selesai membuat soal",
+        text: "tambah lagi atau selesai?",
+        type: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Buat Lagi",
+        cancelButtonText: "Selesai Buat Soal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm) {
+         location.reload();
+       } else {
+        uuid = $('input[name=UUID]').val();
+        sub = $('input[name=subBabID]').val();
+        window.location = base_url+"banksoal/banksoal/mysoal";
+      }
+    });
+    },
+    complete: function(xhr) {
+      status.html(xhr.responseText);
+    }
+  }); 
 
+})();       
+</script>
+<!-- ## PROGRES BAR -->
 
-  </section>
+</section>
 
 
         <!--/ END Template Main -->
