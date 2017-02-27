@@ -915,6 +915,7 @@ class Banksoal extends MX_Controller {
            $jum_pilihan = htmlspecialchars($this->input->post('opjumlah'));
            $UUID = uniqid();
            $soal = ($this->input->post('editor1'));
+           var_dump($soal);
            $gambarSoal = $this->input->post('gambarSoal');
            $judul_soal = htmlspecialchars($this->input->post('judul'));
            $jawaban = htmlspecialchars($this->input->post('jawaban'));

@@ -17,8 +17,8 @@
   <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
   <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
-    <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
+  <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
+  <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
   <script>var base_url = '<?php echo base_url() ?>';</script>
   <!--/ END META SECTION -->
 
@@ -43,7 +43,57 @@
   <!--/ END JAVASCRIPT SECTION -->
 </head>
 <!--/ END Head -->
+<!-- Start Modal Tambah Gallery -->
+<div class="modal fade" id="modalgallery" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Tambah Gallery</h4>
+      </div>
 
+
+      <!-- Start Body modal -->
+      <div class="modal-body">
+        <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/gallery/formGallery" method="post" >
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Tingkat</label>
+            <div class="col-sm-8">
+              <!-- vtkt = video tingkat -->
+              <select class="form-control gettkt" name="tingkat" id="galtkt">
+                <option>-Pilih Tingkat-</option>
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Mata Pelajaran</label>
+            <div class="col-sm-8">
+              <select class="form-control getpel" name="mataPelajaran" id="galpel">
+
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Bab</label>
+            <div class="col-sm-8">
+              <select class="form-control getbb" name="bab" id="galbab">
+
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+          </div>
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal-content -->
+<!-- END BODY modla-->
 <!-- START Body -->
 <body>
   <!-- START Modal Filter Video -->
@@ -107,6 +157,10 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- END  Modal Filter Video -->
+
+
+
+
 <!-- START Modal ADD BANK SOAL -->
 <div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -428,7 +482,7 @@
 
   <ul id="gallery" class="submenu collapse ">
     <li class="submenu-header ellipsis">gallery</li>
-      <li >
+    <li >
       <a href="<?=base_url('index.php/gallery')?>">
         <span class="text">Gallery</span>
       </a>
@@ -492,15 +546,15 @@
         <span class="arrow"></span>
       </a>
       <ul id="subbanksoal" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Sub Bank Soal</li>
-    <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
-  </a></li>
-  <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
-  </a></li>
-         <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
-  </a></li>
-  <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
-  </a></li>
+        <li class="submenu-header ellipsis">Sub Bank Soal</li>
+        <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
+        </a></li>
+        <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
+        </a></li>
+        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
+        </a></li>
+        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
+        </a></li>
 
 
       </ul>
@@ -663,7 +717,7 @@
 </li>
 
 <li>
-<a href="<?=base_url('cabang') ?>" data-toggle="submenu" data-parent=".topmenu">
+  <a href="<?=base_url('cabang') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-home11"></i></span>
     <span class="text">Cabang</span>
     <span class="arrow"></span>
@@ -679,7 +733,7 @@
 </li>
 <!--END menu konsultasi -->
 <li>
-<a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
+  <a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-comments"></i></span>
     <span class="text">Komen</span>
     <span class="arrow"></span>
@@ -687,7 +741,7 @@
 </li>
 
 <li>
-<a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
+  <a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-qrcode"></i></span>
     <span class="text">Token</span>
     <span class="arrow"></span>
@@ -993,10 +1047,110 @@ if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wk
            }
 
            loadTkt();
+function add_gallery() {
+  $('#modalgallery').modal('show'); // show bootstrap modal
+}
+function filter_gallery() {
+  $('#modalfilter-gallery').modal('show'); // show bootstrap modal
+}
+
+
+               // event untuk modal tambah Gallery
+              // ##############################
+              $('#galtkt').change(function () {
+               tingkat_id = {"tingkat_id": $('#galtkt').val()};
+               loadPelgal($('#galtkt').val());
+             });
+              $('#galpel').change(function () {
+               pelajaran_id = {"pelajaran_id": $('#galpel').val()};
+               loadBbgal($('#galpel').val());
+             });
+               // ##############################
+                // event untuk modal tambah Gallery
+              // ##############################
+              $('#fgaltkt').change(function () {
+               tingkat_id = {"tingkat_id": $('#fgaltkt').val()};
+               loadPelfgal($('#fgaltkt').val());
+             });
+              $('#fgalpel').change(function () {
+               pelajaran_id = {"pelajaran_id": $('#fgalpel').val()};
+               loadBbfgal($('#fgalpel').val());
+             });
+               // ##############################
+
+
+            //buat load pelajaran untuk  modal tambah gallery video
+            function loadPelgal(tingkatID) {
+             $.ajax({
+              type: "POST",
+              data: tingkatID.tingkat_id,
+              url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+              success: function (data) {
+               $('#galpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+               $.each(data, function (i, data) {
+                $('#galpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+              });
+             }
+           });
+           }
+
+            //buat load pelajaran untuk  modal filter gallery
+            function loadPelfgal(tingkatID) {
+             $.ajax({
+              type: "POST",
+              data: tingkatID.tingkat_id,
+              url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
+              success: function (data) {
+               $('#fgalpel').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+               $.each(data, function (i, data) {
+                $('#fgalpel').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
+              });
+             }
+           });
+           }
+             //load bab untuk modal tambah gallery
+             function loadBbgal(mapelID) {
+               $.ajax({
+                type: "POST",
+                data: mapelID.mapel_id,
+                url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                success: function (data) {
+
+                 $('#galbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+
+                 $.each(data, function (i, data) {
+                  $('#galbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                });
+               }
+
+             });
+             }
+
+             //load bab untuk modal filter gallery
+             function loadBbfgal(mapelID) {
+               $.ajax({
+                type: "POST",
+                data: mapelID.mapel_id,
+                url: "<?php echo base_url() ?>index.php/videoback/getBab/" + mapelID,
+                success: function (data) {
+
+                 $('#fgalbab').html('<option value="">-- Pilih Bab Pelajaran  --</option>');
+
+                 $.each(data, function (i, data) {
+                  $('#fgalbab').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+                });
+               }
+
+             });
+             }
+
+
+
+
 // ####################################################
 
 </script>
-            <!-- Cometchat -->
+<!-- Cometchat -->
 <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
 <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
 <!--/ App and page level script -->
