@@ -7,54 +7,7 @@
   <!--js buat menampilakan priview video sebelum di upload  -->
   <script type="text/javascript" src="<?= base_url('assets/javascript/components/button.js') ?>"></script>
 
-  <!-- Strat Script Matjax -->
-<!--      <script type="text/x-mathjax-config">
-       MathJax.Hub.Config({
-         showProcessingMessages: false,
-         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] },
-         "CHTML-preview": {
-        disabled: true
-      },
-      MathMenu: {
-      styles: {
-        ".MathJax_Menu": {"z-index":10001}
-      }
-      },
-      AuthorInit: function () {
-        MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {
-          MathJax.Menu.BGSTYLE["z-index"] = 10000;
-        });
-      }
 
-       });
-     </script> -->
-<!--      <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script type="text/javascript">
-      window.MathJax = {
-        showProcessingMessages: false,
-        messageStyle: "none",
-        tex2jax: {
-          inlineMath: [['$', '$'], ["\\(", "\\)"]],
-          processEscapes: true
-        },
-        "fast-preview": {disabled: true},
-        CommonHTML: { linebreaks: { automatic: true } },
-        "HTML-CSS": { linebreaks: { automatic: true } },
-        SVG: { linebreaks: { automatic: true } },
-        TeX: { noErrors: { disabled: true } },
-        MathMenu: {
-          styles: {
-            ".MathJax_Menu": {"z-index":2001}
-          }
-        },
-        AuthorInit: function () {
-          MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {MathJax.Menu.BGSTYLE["z-index"] = 2000;});
-          MathJax.Hub.processSectionDelay = 0;
-        }
-      }
-    </script> -->
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
@@ -65,8 +18,9 @@
    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
 
   <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+  <!-- Script priview mathjax form input buat rumus-->
   <script>
-    var Preview = {
+  var Preview = {
   delay: 150,        // delay after keystroke before updating
 
   preview: null,     // filled in by Init below
@@ -83,8 +37,6 @@
   Init: function () {
     this.preview = document.getElementById("MathPreview");
     this.buffer = document.getElementById("MathBuffer");
-    //     this.preview = document.getElementById("MathPreview2");
-    // this.buffer = document.getElementById("MathBuffer2");
   },
 
   //
@@ -122,8 +74,7 @@
   CreatePreview: function () {
     Preview.timeout = null;
     if (this.mjPending) return;
-    var text = CKEDITOR.instances.editor1.getData();
-    console.log(text);
+        var text = document.getElementById("MathInput").value;
     if (text === this.oldtext) return;
     if (this.mjRunning) {
       this.mjPending = true;
@@ -155,7 +106,99 @@
 Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
+</script> 
+  <!--END Script priview mathjax form input buat rumus-->
+<!-- Script priview mathjax untuk priview soal-->
+<script>
+var Preview2 = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+  buffer: null,      // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  //
+  //  Get the preview and buffer DIV's
+  //
+  Init: function () {
+    this.preview = document.getElementById("MathPreview2");
+    this.buffer = document.getElementById("MathBuffer2");
+  },
+
+  //
+  //  Switch the buffer and preview, and display the right one.
+  //  (We use visibility:hidden rather than display:none since
+  //  the results of running MathJax are more accurate that way.)
+  //
+  SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+    preview.style.position = ""; preview.style.visibility = "";
+  },
+
+  //
+  //  This gets called when a key is pressed in the textarea.
+  //  We check if there is already a pending update and clear it if so.
+  //  Then set up an update to occur after a small delay (so if more keys
+  //    are pressed, the update won't occur until after there has been 
+  //    a pause in the typing).
+  //  The callback function is set up below, after the Preview object is set up.
+  //
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //
+  //  Creates the preview and runs MathJax on it.
+  //  If MathJax is already trying to render the code, return
+  //  If the text hasn't changed, return
+  //  Otherwise, indicate that MathJax is running, and start the
+  //    typesetting.  After it is done, call PreviewDone.
+  //  
+  CreatePreview: function () {
+    Preview2.timeout = null;
+    if (this.mjPending) return;
+        var text = CKEDITOR.instances.editor1.getData();
+    // console.log(text);
+    if (text === this.oldtext) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+  ["Typeset",MathJax.Hub,this.buffer],
+  ["PreviewDone",this]
+      );
+    }
+  },
+
+  //
+  //  Indicate that MathJax is no longer running,
+  //  and swap the buffers to show the results.
+  //
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//
+//  Cache a callback to the CreatePreview action
+//
+Preview2.callback = MathJax.Callback(["CreatePreview",Preview2]);
+Preview2.callback.autoReset = true;  // make sure it can run more than once
+
 </script>
+<!-- Script priview mathjax untuk priview soal -->
 <!-- END Script Matjax -->
 
 <div class="container-fluid">
@@ -187,10 +230,13 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       </div>
       <!-- img -->
       <div class="prevSoal col-sm-12">
-            <!-- <div class="a" id="MathPreview" ></div>
-            <div class="a" id="MathBuffer" style=" 
-            visibility:hidden; position:absolute; top:0; left: 0"></div> -->
+            <div class="a" id="MathPreview2" ></div>
+            <div class="a" id="MathBuffer2" style=" 
+            visibility:hidden; position:absolute; top:0; left: 0"></div>
       </div>
+          <!-- <script>
+      Preview2.Init();
+    </script> -->
       <!-- pilihan jawaban -->
       <div class="col-sm-12">
         <ol type="A">
@@ -475,7 +521,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
          <div id="editor-soal">
           <label class="control-label col-sm-2">Soal</label>
           <div class="col-sm-10">
-           <textarea class="editor1 " id="editor1" cols="60" rows="10"  >ss</textarea>
+           <textarea class="editor1 " id="editor1" cols="60" rows="10"  ></textarea>
          </div>
        </div>
        <!-- End Editor Soal -->
@@ -483,7 +529,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
        <div id="editor-rumus" hidden="true">
         <label class="control-label col-sm-2">Buat rumus</label>
         <div class="col-sm-10">
-         <textarea class="form-control " id="" cols="60" rows="10" onkeyup ="Preview.Update()" ></textarea>
+         <textarea class="form-control " id="MathInput" cols="60" rows="10" onkeyup ="Preview.Update()" ></textarea>
        </div>
        <label class="control-label col-sm-2"></label>
        <div class="col-sm-10">
@@ -507,6 +553,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div>
     <script>
       Preview.Init();
+    </script>
+        <script>
+      Preview2.Init();
     </script>
     <!-- End MathJax -->
   </div>
@@ -1739,7 +1788,7 @@ function ValidateAudioInput(oInput){
   <script type="text/javascript">
     // priview soal sebelum di upload
     function priview() {
-      Preview.Update();
+      Preview2.Update();
       var tingkat = $('select#tingkat').text();
       var judul = $("input[name=judul]").val();
       var sumber  = $("input[name=sumber]").val();
