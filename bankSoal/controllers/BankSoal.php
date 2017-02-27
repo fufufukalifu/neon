@@ -34,7 +34,7 @@ class Banksoal extends MX_Controller {
        
         $config['base_url'] = base_url().'index.php/banksoal/listsoal/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -116,10 +116,9 @@ class Banksoal extends MX_Controller {
             $isiJawaban = '';
             $create_by = $list_soal['create_by'];
             $audio = $list_soal['audio'];
-            
-            if ($jawaban != '' && $jawaban != ' ') {
-                //untuk menampung data sementara jawaban
                 $tampJawaban = $this->Mbanksoal->get_jawaban($jawaban,$id_soal);
+            if ($tampJawaban) {
+                //untuk menampung data sementara jawaban
                 $isiJawaban = $tampJawaban['jawaban'];
                 $tampImgJawaban = $tampJawaban['imgJawaban'];
                 if ($tampImgJawaban != '' && $tampImgJawaban != ' ' ) {
@@ -1755,7 +1754,7 @@ class Banksoal extends MX_Controller {
         
         $config['base_url'] = base_url().'index.php/banksoal/listsoalSub/'.$subbab.'/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -1808,7 +1807,7 @@ class Banksoal extends MX_Controller {
         
         $config['base_url'] = base_url().'index.php/banksoal/listsoalBab/'.$bab.'/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -1859,7 +1858,7 @@ class Banksoal extends MX_Controller {
         
         $config['base_url'] = base_url().'index.php/banksoal/listsoalMp/'.$mpID.'/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -1911,7 +1910,7 @@ class Banksoal extends MX_Controller {
         
         $config['base_url'] = base_url().'index.php/banksoal/listsoalTingkat/'.$tingkatID.'/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -1963,7 +1962,7 @@ class Banksoal extends MX_Controller {
        
         $config['base_url'] = base_url().'index.php/banksoal/mysoal/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -2035,7 +2034,7 @@ class Banksoal extends MX_Controller {
        
         $config['base_url'] = base_url().'index.php/banksoal/cari/';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 2;
+        $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
         $config['num_tag_open'] = '<li>';
@@ -2110,7 +2109,6 @@ class Banksoal extends MX_Controller {
 
     public function ch_listening($UUID)
     {
-      echo "masuk listening ch";
          // config upload file audio soal
         $configvoice['upload_path'] = './assets/audio/soal/';
         $configvoice['allowed_types'] = 'mp3';
@@ -2143,9 +2141,22 @@ class Banksoal extends MX_Controller {
          $this->Mbanksoal->ch_soal($data);
         }else{
            $error = array('error' => $this->upload->display_errors());
-            var_dump( $error);
         }
-        // $this->Mbanksoal->insert_gambar($datagambar);
+    }
+
+    // fungsi untuk menghapus
+    public function delImgSoal($UUID)
+    {
+        $oldImg=$this->Mbanksoal->get_oldgambar_soal($UUID);
+        if ($oldImg) {
+            $namaImg=$oldImg[0]['gambar_soal'];
+             unlink(FCPATH . "./assets/image/soal/" . $namaImg);
+             $data['UUID']=$UUID;
+            $data['dataSoal']=  array(
+                'gambar_soal' => ' ',
+            );
+               $this->Mbanksoal->ch_soal($data);
+        }
     }
 }
 

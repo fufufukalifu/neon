@@ -125,6 +125,97 @@ Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
 </script>
+<!-- Script priview mathjax untuk priview soal-->
+<script>
+var Preview2 = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+  buffer: null,      // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  //
+  //  Get the preview and buffer DIV's
+  //
+  Init: function () {
+    this.preview = document.getElementById("MathPreview2");
+    this.buffer = document.getElementById("MathBuffer2");
+  },
+
+  //
+  //  Switch the buffer and preview, and display the right one.
+  //  (We use visibility:hidden rather than display:none since
+  //  the results of running MathJax are more accurate that way.)
+  //
+  SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+    preview.style.position = ""; preview.style.visibility = "";
+  },
+
+  //
+  //  This gets called when a key is pressed in the textarea.
+  //  We check if there is already a pending update and clear it if so.
+  //  Then set up an update to occur after a small delay (so if more keys
+  //    are pressed, the update won't occur until after there has been 
+  //    a pause in the typing).
+  //  The callback function is set up below, after the Preview object is set up.
+  //
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //
+  //  Creates the preview and runs MathJax on it.
+  //  If MathJax is already trying to render the code, return
+  //  If the text hasn't changed, return
+  //  Otherwise, indicate that MathJax is running, and start the
+  //    typesetting.  After it is done, call PreviewDone.
+  //  
+  CreatePreview: function () {
+    Preview2.timeout = null;
+    if (this.mjPending) return;
+        var text = CKEDITOR.instances.editor1.getData();
+    // console.log(text);
+    if (text === this.oldtext) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+  ["Typeset",MathJax.Hub,this.buffer],
+  ["PreviewDone",this]
+      );
+    }
+  },
+
+  //
+  //  Indicate that MathJax is no longer running,
+  //  and swap the buffers to show the results.
+  //
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//
+//  Cache a callback to the CreatePreview action
+//
+Preview2.callback = MathJax.Callback(["CreatePreview",Preview2]);
+Preview2.callback.autoReset = true;  // make sure it can run more than once
+
+</script>
+<!-- Script priview mathjax untuk priview soal -->
      <!-- END Script Matjax -->
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
@@ -273,7 +364,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
     </div>
     <!-- img -->
     <div class="prevSoal col-sm-12">
-
+      <div class="a" id="MathPreview2" ></div>
+            <div class="a" id="MathBuffer2" style=" 
+            visibility:hidden; position:absolute; top:0; left: 0"></div>
     </div>
     <!-- pilihan jawaban -->
     <div class="col-sm-12">
@@ -435,7 +528,8 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                         Pilih Gambar
                                     </label>
                                     <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-                                       <label class="btn btn-sm btn-danger"  onclick="restImgSoal()">Reset</label>
+                                        <?php $UUID=$banksoal['UUID']?>
+                                       <label class="btn btn-sm btn-danger"  onclick='restImgSoal("<?=$UUID?>")'>Reset</label>
                                 </div>
                             </div>
                         </div>
@@ -498,14 +592,21 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
                                
                               <label class="control-label col-sm-2"></label>
                               <div class="col-sm-10">
-                              <label class="control-label" >Preview is shown here:</label>
-                               <div class="form-control" id="MathPreview" ></div>
-                               <div class="form-control" id="MathBuffer" style=" 
-                               visibility:hidden; position:absolute; top:0; left: 0"></div>
+                              <!-- menampilkan hasil  render latex -->
+                              <label class="control-label" >Preview :</label>
+                           <!--    <textarea>
+                                
+                              </textarea> -->
+                               <textarea class="form-control" id="MathPreview" ></textarea>
+                               <textarea class="form-control" id="MathBuffer" style=" 
+                               visibility:hidden; position:absolute; top:0; left: 0" cols="60" rows="10"></textarea>
                               </div>
                             </div>
                             <script>
                             Preview.Init();
+                            </script>
+                                    <script>
+                              Preview2.Init();
                             </script>
                             <!-- End MathJax -->
                         </div>
@@ -1201,6 +1302,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             var viewerSoal = {
                 load : function(e){
                     $('#previewSoal').attr('src', e.target.result);
+                       $('#previewSoal2').attr('src', e.target.result);
                 },
                 setProperties : function(file){
                     $('#filenameSoal').text(file.name);
@@ -1660,8 +1762,6 @@ function ValidateInputVideo(oInput) {
 
             }
 
-
-
         });
 
     }
@@ -1703,14 +1803,48 @@ function ValidateInputVideo(oInput) {
 
     loadTingkat();
 
-    function restImgSoal() {
-      $("input[name=gambarSoal]").val("");
-      $('#previewSoal').attr('src', "");
-      $('#filenameSoal').text("");
-      $('#filetypeSoal').text("");
-      $('#filesizeSoal').text("");
+    function restImgSoal(UUID) {
+
+       url = base_url+"index.php/banksoal/delImgSoal/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "ambar soal berhasil dihapus.", "success");
+            $("input[name=gambarSoal]").val("");
+            $('#previewSoal').attr('src', "");
+            $('#filenameSoal').text("");
+            $('#filetypeSoal').text("");
+            $('#filesizeSoal').text("");
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
     }
+
+    function function_name(argument) {
+      // body...
+    }
+
+
      function restImgPembahasan() {
+
       $("input[name=gambarPembahasan]").val("");
       $('#previewPembahasan').attr('src', "");
       $('#filenamePembahasan').text("");
@@ -1760,10 +1894,10 @@ function ValidateAudioInput(oInput){
 
     // priview soal sebelum di upload
       function priview() {
+         Preview2.Update();
         var tingkat = $('select#tingkat').text();
         var judul = $("input[name=judul]").val();
         var sumber  = $("input[name=sumber]").val();
-        var soal  = CKEDITOR.instances.editor1.getData();
         var jawaban = $('select[name=jawaban]').val();
         var a  =$("textarea[name=a]").val();
         var b  =$("textarea[name=b]").val();
@@ -1777,7 +1911,6 @@ function ValidateAudioInput(oInput){
         $('li#c').text(c);
         $('li#d').text(d);
         $('li#e').text(e);
-        $('div.prevSoal').html(soal);
         $('a#prevJawaban').text(jawaban);
         $('#modalpriview').modal('show'); // show bootstrap modal
       

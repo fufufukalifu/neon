@@ -545,10 +545,10 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
        <label class="control-label col-sm-2"></label>
        <div class="col-sm-10">
-        <label class="control-label" >Preview is shown here:</label>
-        <div class="form-control" id="MathPreview" ></div>
-        <div class="form-control" id="MathBuffer" style=" 
-        visibility:hidden; position:absolute; top:0; left: 0"></div>
+        <label class="control-label" >Preview :</label>
+        <textarea class="form-control" id="MathPreview" ></textarea>
+        <textarea class="form-control" id="MathBuffer" style=" 
+        visibility:hidden; position:absolute; top:0; left: 0" cols="60" rows="10"></textarea>
       </div>
     </div>
     <script>
