@@ -2145,7 +2145,7 @@ class Banksoal extends MX_Controller {
         }
     }
 
-    // fungsi untuk menghapus
+    // fungsi untuk menghapus gambar soal
     public function delImgSoal($UUID)
     {
         $oldImg=$this->Mbanksoal->get_oldgambar_soal($UUID);
@@ -2159,6 +2159,54 @@ class Banksoal extends MX_Controller {
                $this->Mbanksoal->ch_soal($data);
         }
     }
+
+        // fungsi untuk menghapus gambar soal
+    public function delImgpilihan($UUID,$pilihan)
+    {
+        $oldImg=$this->Mbanksoal->get_oldgambar_pilihan($UUID,$pilihan);
+        if ($oldImg != null) {
+            $namaImg=$oldImg[0]['gambar'];
+             unlink(FCPATH . "./assets/image/jawaban/" . $namaImg);
+             $data['id_pilihan']=$oldImg[0]['id_pilihan'];
+            $data['dataJawaban']=  array(
+                'gambar' => ' ',
+            );
+               $this->Mbanksoal->ch_single_img($data);
+        }
+    }
+
+        // fungsi untuk menghapus gambar soal
+    public function delAudioSoal($UUID)
+    {
+     $oldAudio=$this->Mbanksoal->get_oldAudio_soal($UUID);
+        if ($oldAudio) {
+            $namaAudio=$oldAudio[0]['audio'];
+             unlink(FCPATH . "./assets/audio/soal/" . $namaAudio);
+             $data['UUID']=$UUID;
+             $data['dataSoal']=  array(
+                'audio' => ' ',
+            );
+               $this->Mbanksoal->ch_soal($data);
+        }
+    }
+
+        // fungsi untuk menghapus gambar pembahasan
+    public function delImgPembahasan($UUID)
+    {
+        $oldImg=$this->Mbanksoal->get_oldgambar_soal($UUID);
+        if ($oldImg) 
+        {
+            $namaImg=$oldImg[0]['gambar_soal'];
+             unlink(FCPATH . "./assets/image/soal/" . $namaImg);
+             $data['UUID']=$UUID;
+            $data['dataSoal']=  array(
+                'gambar_pembahasan' => ' ',
+            );
+               $this->Mbanksoal->ch_soal($data);
+        }
+    }
+
+
 }
 
 ?>

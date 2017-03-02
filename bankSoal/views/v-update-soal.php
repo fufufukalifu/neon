@@ -225,7 +225,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
   <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
   <div class="container-fluid">
-
+     <?php $UUID=$banksoal['UUID']?>
     <!-- Start Modal salah upload gambar -->
     <div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -489,7 +489,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
             <h6>Type: <span id="filetypeAudio"></span></h6> 
           </div>
         </div>
-        <div class="col-sm-12 hidden-audio" hidden="true">
+        <div class="col-sm-12 hidden-audio" >
           <audio class="col-sm-12" id="previewAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
           </audio>
         </div>
@@ -498,9 +498,8 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
             Pilih Audio
           </label>
           <input  id="fileAudio" style="display:none;" type="file" name="listening" onchange="ValidateAudioInput(this);">
-          <label class="btn btn-sm btn-danger"  onclick="restAudioSoal()">Reset</label>
+          <label class="btn btn-sm btn-danger"  onclick='restAudioSoal("<?=$UUID?>")'>Reset</label>
         </div>
-
       </div>
     </div>
     <div class="form-group">
@@ -527,7 +526,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
           Pilih Gambar
         </label>
         <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-         <?php $UUID=$banksoal['UUID']?>
+        
                                        <label class="btn btn-sm btn-danger"  onclick='restImgSoal("<?=$UUID?>")'>Reset</label>
       </div>
     </div>
@@ -663,6 +662,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
+     <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","A")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar A -->
@@ -700,6 +700,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","B")'>Reset</label>
   </div>
 </div>
 </div>
@@ -737,6 +738,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","C")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar C -->                       
@@ -775,6 +777,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","D")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar D -->                       
@@ -814,6 +817,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","E")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar C -->                       
@@ -928,46 +932,25 @@ true">
          <img id="previewPembahasan" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/pembahasan/<?=$banksoal['gambar_pembahasan'];?>" alt="" />
 
        </div>
-
-
-
        <div class="col-sm-12">
-
         <div class="col-md-5 left"> 
-
           <h6>Name: <span id="filenamePembahasan"></span></h6> 
-
         </div> 
-
         <div class="col-md-4 left"> 
-
           <h6>Size: <span id="filesizePembahasan"></span>Kb</h6> 
-
         </div> 
-
         <div class="col-md-3 bottom"> 
-
           <h6>Type: <span id="filetypePembahasan"></span></h6> 
-
         </div>
-
       </div>
-
-
       <div class="col-sm-12">
-
         <label for="filePembahasan" class="btn btn-sm btn-default">
-
           Pilih Gambar
-
         </label>
-
         <input style="display:none;" type="file" id="filePembahasan" name="gambarPembahasan" onchange="ValidateSingleInput(this);"/>
-        <label class="btn btn-sm btn-danger"  onclick="restImgPembahasan()">Reset</label>
+        <label class="btn btn-sm btn-danger"  onclick='restImgPembahasan("<?=$UUID?>")'>Reset</label>
       </div>
-
     </div>
-
   </div>
   <!-- End Upload Gambar Pembahsan -->
 
@@ -985,38 +968,21 @@ true">
 </div>
 <!-- End Editor Pembahasan -->
 
-
 <!-- Start Upload Video Pembahasan -->
 <!-- pilih option upload video -->
-
            <!--  <div class="form-group vido" hidden="true">
-
                 <label class="control-label col-sm-2">Pilihan Upload Video</label>
-
                 <div class="col-sm-8">
-
                     <div class="btn-group" data-toggle="buttons" >
-
                         <label class="btn btn-teal btn-outline active" id="up_server">
-
                             <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
-
                         </label>
-
                         <label class="btn btn-teal btn-outline " id="up_link">
-
                             <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
-
                         </label>
-
                     </div>
-
                 </div>
-
               </div> -->
-
-
-
               <!-- untuk preview video -->
 
               <div  class="form-group prv_video " hidden="true">
@@ -1796,22 +1762,163 @@ function ValidateInputVideo(oInput) {
         });
       });
     }
-    function restImgPembahasan() {
-      $("input[name=gambarPembahasan]").val("");
-      $('#previewPembahasan').attr('src', "");
-      $('#filenamePembahasan').text("");
-      $('#filetypePembahasan').text("");
-      $('#filesizePembahasan').text("");
+    function restImgPembahasan(UUID) {
+       url = base_url+"index.php/banksoal/delImgPembahasan/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar pembahasan ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "Audio soal berhasil dihapus.", "success");
+            $("input[name=gambarPembahasan]").val("");
+            $('#previewPembahasan').attr('src', "");
+            $('#filenamePembahasan').text("");
+            $('#filetypePembahasan').text("");
+            $('#filesizePembahasan').text("");
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+
+
     }
 
      //reset form input audio soal
-     function restAudioSoal(){
-      $("input[name=listening]").val("");
-      $('#previewAudio').attr('src', "");
-      $('#filenameAudio').text("");
-      $('#filetypeAudio').text("");
-      $('#filesizeAudio').text("");
-      $('.hidden-audio').hide();
+     function restAudioSoal(UUID){
+       url = base_url+"index.php/banksoal/delAudioSoal/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus audio soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "Audio soal berhasil dihapus.", "success");
+            $("input[name=listening]").val("");
+            $('#previewAudio').attr('src', "");
+            $('#filenameAudio').text("");
+            $('#filetypeAudio').text("");
+            $('#filesizeAudio').text("");
+            $('.hidden-audio').hide();
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+
+      
+    }
+
+    //reser/hapus gambar pilihan jawaban A
+    function restImgPilihan(UUID,pilihan) {
+      //hapus img
+        url = base_url+"index.php/banksoal/delImgpilihan/"+UUID+"/"+pilihan,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "ambar soal berhasil dihapus.", "success");
+            if (pilihan=="A") {
+              resetImgA();
+            }else if(pilihan=="B"){
+              resetImgB();
+            }else if(pilihan=="C"){
+              resetImgC();
+            }else if(pilihan=="D"){
+              resetImgD();
+            }else if(pilihan=="E"){
+               resetImgE();
+            }
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+    }
+
+    //reset priview image pilihan jawaban A
+    function resetImgA() {
+       $("input[name=gambar1]").val("");
+            $("#previewA").attr('src', "");
+            $("#filenameA").text("");
+            $('#filetypeA').text("");
+            $('#filesizeA').text("");
+    }
+    //reset priview image pilihan jawaban B
+    function resetImgB() {
+       $("input[name=gambar2]").val("");
+            $("#previewB").attr('src', "");
+            $("#filenameB").text("");
+            $('#filetypeB').text("");
+            $('#filesizeB').text("");
+    }
+
+    //reset priview image pilihan jawaban C
+        function resetImgC() {
+       $("input[name=gambar3]").val("");
+            $("#previewC").attr('src', "");
+            $("#filenameC").text("");
+            $('#filetypeC').text("");
+            $('#filesizeC').text("");
+    }
+ //reset priview image pilihan jawaban D
+        function resetImgD() {
+       $("input[name=gambar4]").val("");
+            $("#previewD").attr('src', "");
+            $("#filenameD").text("");
+            $('#filetypeD').text("");
+            $('#filesizeD').text("");
+    }
+     //reset priview image pilihan jawaban E
+        function resetImgE() {
+       $("input[name=gambar5]").val("");
+            $("#previewE").attr('src', "");
+            $("#filenameE").text("");
+            $('#filetypeE').text("");
+            $('#filesizeE').text("");
     }
 
     //validasi upload audio
