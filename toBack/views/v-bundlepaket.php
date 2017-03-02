@@ -105,6 +105,7 @@
      <th>ID</th>
      <th>Nama Lengkap</th>
      <th>Cabang</th>
+     <th>Kelas</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
@@ -115,6 +116,7 @@
    <th><input class="form-control" type="text" placeholder="ID" /></th>
    <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
    <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+    <th><input class="form-control" type="text" placeholder="Kelas" /></th>
  </tfoot>
 </table>
 <!-- END TABEL SISWA -->
