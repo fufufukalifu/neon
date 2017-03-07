@@ -10,7 +10,7 @@
         <table class="table table-bordered listsoal" style="font-size: 13px">
          <thead>
           <tr>
-           <th >ID Soal</th>
+           <th >NO Soal</th>
            <th >Nama Soal</th>
            <th>Isi Soal</th>
          </tr>
@@ -31,19 +31,19 @@
 </div><!-- /.modal-content -->
 </div>
 
-<div>
+
  <!-- Strt ROW -->
  <div class="row">
   <div class="container">
    <!--START LIST PAKET dan SISWA -->
-   <div class="panel panel-inverse">
+   <div class="panel panel-inverse mr10 ml10 ">
     <div class="panel-heading">
      <h3 class="panel-title text-center">Nama Tryout : <?=$nm_to ?></h3>
    </div>
    <!-- Start Panel Body ALL -->
    <div class="panel-body">
      <!-- END LIST paket n siswa yang sudah dia ADD -->
-     <div class="col-md-6">
+     <div class="col-md-12">
       <div class="panel panel-teal">
        <div class="panel-heading">
         <h3 class="panel-title">Daftar Yang Akan DI Tambahkan Ke Try</h3>
@@ -67,7 +67,7 @@
          <thead>
           <tr>
            <th> <input type="checkbox" name="checkall"></th>
-           <th >ID</th>
+           <th >No</th>
            <th>Nama paket</th>
            <th>Deskripsi</th>
            <th>Lihat</th>
@@ -102,9 +102,10 @@
    <thead>
     <tr>
      <th width="10%"><input type="checkbox" name="checkall_siswa"></th>
-     <th>ID</th>
+     <th>No</th>
      <th>Nama Lengkap</th>
      <th>Cabang</th>
+     <th>Tingkat</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
@@ -115,6 +116,7 @@
    <th><input class="form-control" type="text" placeholder="ID" /></th>
    <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
    <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+    <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
  </tfoot>
 </table>
 <!-- END TABEL SISWA -->
@@ -140,8 +142,9 @@
    <thead>
     <tr>
      <th> <input type="checkbox" name="checkall"></th>
-     <th >ID</th>
+     <th >No</th>
      <th>Nama Pengwas</th>
+     <th>Alamat</th>
    </tr>
  </thead>
  <form>
@@ -181,7 +184,7 @@
 <!--END LIST PAKET dan SISWA -->
 <!-- ########################################### -->
 <!-- START LIST paket n siswa yang sudah dia ADD -->
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="panel panel-teal">
    <div class="panel-heading">
     <h3 class="panel-title">Daftar Soal</h3>
@@ -208,7 +211,7 @@
        <table class="table table-striped" id="listaddpaket" style="font-size: 13px" width="100%">
         <thead>
          <tr>
-          <th>ID</th>
+          <th>No</th>
           <th>Nama Paket</th>
           <th>Deskripsi</th>
           <th>Aksi</th>
@@ -309,7 +312,7 @@
 <!-- END CONTAINER -->
 </div>
 <!-- END ROW -->
-</div>
+
 
 
 <script type="text/javascript">

@@ -1815,7 +1815,8 @@ function ValidateAudioInput(oInput){
  <!--END Script drop down depeden  -->
  <script src="http://malsup.github.com/jquery.form.js"></script>
  <!-- SCRIPT UNTUK PROGRESS BAR -->
- <script>
+ <!-- Untuk sementara di komen karena menyebabkan error ckeditor value always null-->
+ <!-- <script>
  (function() {
   var bar = $('#ProgressSOal');
   var status = $('#status');
@@ -1859,7 +1860,7 @@ function ValidateAudioInput(oInput){
   }); 
 
 })();       
-</script>
+</script> -->
 <!-- ## PROGRES BAR -->
 
 </section>

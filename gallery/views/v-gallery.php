@@ -9,12 +9,12 @@
 			<div class="panel-heading">
 				<h3 class="panel-title"><?=$judul_panel;?></h3>
 				<div class="panel-toolbar text-right">
-					<form class="form-group">
-						<p class="input-icon">
+					<!-- <form class="form-group">
+						<p class="input-icon"> -->
 							<!-- <i class="fa fa-search"></i> -->
-							<input class="form-control" type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
+							<!-- <input class="form-control" type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
 						</p>
-					</form>
+					</form> -->
 				</div>
 			</div>
 			<!-- End Panel Heading -->
@@ -81,25 +81,56 @@
 	});
 	function hapusImg(UUID) {
 		var name = $('#name_img').val();
-		if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
-               // ajax delete data to database
+		// if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
+  //              // ajax delete data to database
                
-               $.ajax({
-               	url : base_url+"index.php/gallery/remove_img/",
-               	type: "POST",
-               	data: { file: name,
-               		UUID : UUID},
-               		dataType: "TEXT",
-               		success: function(data,respone)
-               		{  
+  //              $.ajax({
+  //              	url : base_url+"index.php/gallery/remove_img/",
+  //              	type: "POST",
+  //              	data: { file: name,
+  //              		UUID : UUID},
+  //              		dataType: "TEXT",
+  //              		success: function(data,respone)
+  //              		{  
                			
-               			Swal('Berhasil Dihapus');
-               		},
-               		error: function (jqXHR, textStatus, errorThrown)
-               		{
-               			swal("Gagal!", "Menghapus gambar gagal", "warning");
-               		}
-               	});
-           }
+  //              			Swal('Berhasil Dihapus');
+  //              		},
+  //              		error: function (jqXHR, textStatus, errorThrown)
+  //              		{
+  //              			swal("Gagal!", "Menghapus gambar gagal", "warning");
+  //              		}
+  //              	});
+  //          }
+
+           //
+		url = base_url+"index.php/gallery/remove_img/",
+       swal({
+        title: "Apakah Anda yakin akan menghapus Gambar ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        $.ajax({
+          dataType:"text",
+          data:{file:name,UUID:UUID},
+          type:"POST",
+          url:url,
+          success:function(data,respone){
+          	swal("Terhapus!", "ambar soal berhasil dihapus.", "success");
+          	window.location = base_url();
+           
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+
+           //
        }
    </script>

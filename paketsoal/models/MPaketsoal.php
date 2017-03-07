@@ -77,33 +77,18 @@ class MPaketsoal extends CI_Model {
 	#ambil paket soal yang belum terdaftar di to tertentu 
 
 	public function get_paket_unregistered($id_to) {
-
 		$query = "SELECT p.deskripsi,p.id_paket, p.nm_paket FROM tb_paket p 
-
-		WHERE p.id_paket NOT IN
-
+		 WHERE p.status = 1 AND p.id_paket NOT IN
 		(
-
 		SELECT paket.id_paket FROM tb_paket paket
-
 		JOIN `tb_mm-tryoutpaket` mm ON mm.`id_paket` = paket.`id_paket`
-
 		WHERE id_tryout = $id_to AND paket.id_paket 
-
 		)";
-
 		$result = $this->db->query($query);
-
 		return $result->result_array();
-
 	}
 
 	##
-
-
-
-
-
 	public function getpaket_by_id($idpaket) {
 
 		$this->db->select( '*' )->from( 'tb_paket' );

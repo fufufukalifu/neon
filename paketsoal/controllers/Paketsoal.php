@@ -60,13 +60,14 @@ class paketsoal extends MX_Controller
 		foreach ( $list as $paket_soal ) {
 			$no++;
 			$penggunaID = $paket_soal['penggunaID'];
+			 $hakAkses=$this->session->userdata['HAKAKSES'];
 			$sesId = $this->session->userdata['id'];
 			$row = array();
 			$row[] = $no;
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
-			if ($penggunaID == $sesId) {
+			if ($penggunaID == $sesId || $hakAkses == "admin") {
 				$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
 			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-remove"></i></a>';
@@ -200,7 +201,8 @@ class paketsoal extends MX_Controller
 	}
 	##
 
-	function droppaketsoal( $id ) {
+	function droppaketsoal(  ) {
+		$id=$this->input->post('id');
 		$this->mpaketsoal->droppaket( $id );
 	}
 

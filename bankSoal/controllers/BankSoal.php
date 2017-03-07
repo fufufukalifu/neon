@@ -127,7 +127,6 @@ class Banksoal extends MX_Controller {
             }
 
 
-
             // pengecekan gambar pembahasan
             if ($tampimgbahas!= '' && $tampimgbahas != ' ' ) {
                 $imgBahas = base_url().'/assets/image/pembahasan/'.$tampimgbahas;
@@ -925,11 +924,11 @@ class Banksoal extends MX_Controller {
            $random = htmlspecialchars($this->input->post('random'));
            $pembahasan = $this->input->post('editor2');
            $opmedia=$this->input->post('opmedia');
-           $a = $this->input->post('a');
-           $b = $this->input->post('b');
-           $c = $this->input->post('c');
-           $d = $this->input->post('d');
-           $e = $this->input->post('e');
+           $a = htmlspecialchars($this->input->post('a'));
+           $b = htmlspecialchars($this->input->post('b'));
+           $c = htmlspecialchars($this->input->post('c'));
+           $d = htmlspecialchars($this->input->post('d'));
+           $e = htmlspecialchars($this->input->post('e'));
            $create_by = $this->session->userdata['id'];
            //kesulitan indks 1-3
            $dataSoal = array(
@@ -1336,11 +1335,11 @@ class Banksoal extends MX_Controller {
         $idC = htmlspecialchars($this->input->post('idpilC'));
         $idD = htmlspecialchars($this->input->post('idpilD'));
         $idE = htmlspecialchars($this->input->post('idpilE'));
-        $data['a'] = $this->input->post('a');
-        $data['b'] = $this->input->post('b');
-        $data['c']= $this->input->post('c');
-        $data['d'] = $this->input->post('d');
-        $data['e'] = $this->input->post('e');
+        $data['a'] = htmlspecialchars($this->input->post('a'));
+        $data['b'] = htmlspecialchars($this->input->post('b'));
+        $data['c']= htmlspecialchars($this->input->post('c'));
+        $data['d'] = htmlspecialchars($this->input->post('d'));
+        $data['e'] = htmlspecialchars($this->input->post('e'));
         #END post data pilihan jawaban#
         //keterangan *kesulitan index 1-3
 
@@ -2196,8 +2195,8 @@ class Banksoal extends MX_Controller {
         $oldImg=$this->Mbanksoal->get_oldgambar_soal($UUID);
         if ($oldImg) 
         {
-            $namaImg=$oldImg[0]['gambar_soal'];
-             unlink(FCPATH . "./assets/image/soal/" . $namaImg);
+            $namaImg=$oldImg[0]['gambar_pembahasan'];
+             unlink(FCPATH . "./assets/image/pembahasan/" . $namaImg);
              $data['UUID']=$UUID;
             $data['dataSoal']=  array(
                 'gambar_pembahasan' => ' ',

@@ -7,9 +7,10 @@
  	private $upload_path = "./assets/image/gallery";
  	function __construct()
  	{
- 		 parent::__construct();
+ 		parent::__construct();
         $this->load->model('Mgallery');
         $this->load->model('banksoal/Mbanksoal');
+        $this->load->model('templating/Mtemplating');
         $this->load->library('parser');
  	}
 
@@ -33,7 +34,7 @@
 
         } elseif($hakAkses=='guru'){
                     // jika guru
-              redirect(site_url('guru/dashboard/'));   
+        $this->parser->parse('templating/index-b-guru', $data);
             
             
         }else{
@@ -63,7 +64,7 @@
 
         } elseif($hakAkses=='guru'){
                     // jika guru
-              redirect(site_url('guru/dashboard/'));   
+           $this->parser->parse('templating/index-b-guru', $data);
             
             
         }else{
@@ -112,7 +113,7 @@
                 $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
              // jika guru
-                 redirect(site_url('guru/dashboard/'));
+                $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -140,7 +141,7 @@
                 $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
              // jika guru
-                 redirect(site_url('guru/dashboard/'));
+                $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -169,7 +170,7 @@
                 $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
              // jika guru
-                 redirect(site_url('guru/dashboard/'));
+               $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));

@@ -1980,7 +1980,7 @@ function ValidateInputVideo(oInput) {
     <!-- PROGRES BAR -->
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <!-- SCRIPT UNTUK PROGRESS BAR -->
-    <script>
+   <!--  <script>
       (function() {
         var bar = $('#ProgressSOal');
         var status = $('#status');
@@ -2024,7 +2024,7 @@ function ValidateInputVideo(oInput) {
         }); 
 
       })();       
-    </script>
+    </script> -->
     <!-- ## PROGRES BAR -->
   </section>
         <!--/ END Template Main
