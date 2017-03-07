@@ -1,5 +1,5 @@
 <?php
-    defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 class Tryout extends MX_Controller {
 
     public function __construct() {
@@ -221,58 +221,53 @@ class Tryout extends MX_Controller {
     }
 
     public function cekJawaban() {
-        $data = $this->input->post('pil');
+        if ($this->input->post()) {
+            $data = $this->input->post('pil');
 
-       // var_dump($data);
-       // echo $data[27][0];
-        $id = $this->session->userdata['id_mm-tryoutpaket'];
-        $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
-////   
-        $result = $this->Mtryout->jawabansoal($id_paket);
-//        var_dump($result);
-        $benar = 0;
-        $salah = 0;
-        $kosong = 0;
-        $koreksi = array();
-        $idSalah = array();
-        for ($i = 0; $i < sizeOf($result); $i++) {
-            $id = $result[$i]['soalid'];
-            // $data[$id];
-            // echo $data[$id][0];
-            // echo "<br>";
-            // echo $result[$i]['jawaban'];
-            if (!isset($data[$id])) {
-                $kosong++;
-                $koreksi[] = $result[$i]['soalid'];
-                $idSalah[] = $i;
-            } else if ($data[$id][0] == $result[$i]['jawaban']) {
-                $benar++;
-            } else {
-                $salah++;
-                $koreksi[] = $result[$i]['soalid'];
-                $idSalah[] = $i;
+            $id = $this->session->userdata['id_mm-tryoutpaket'];
+            $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
+
+            $result = $this->Mtryout->jawabansoal($id_paket);
+
+            $benar = 0;
+            $salah = 0;
+            $kosong = 0;
+            $koreksi = array();
+            $idSalah = array();
+            for ($i = 0; $i < sizeOf($result); $i++) {
+                $id = $result[$i]['soalid'];
+
+                if (!isset($data[$id])) {
+                    $kosong++;
+                    $koreksi[] = $result[$i]['soalid'];
+                    $idSalah[] = $i;
+                } else if ($data[$id][0] == $result[$i]['jawaban']) {
+                    $benar++;
+                } else {
+                    $salah++;
+                    $koreksi[] = $result[$i]['soalid'];
+                    $idSalah[] = $i;
+                }
             }
+
+            $hasil['id_pengguna'] = $this->session->userdata['id'];
+            $hasil['siswaID'] = $this->msiswa->get_siswaid();
+            $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
+            ;
+            $hasil['jmlh_kosong'] = $kosong;
+            $hasil['jmlh_benar'] = $benar;
+            $hasil['jmlh_salah'] = $salah;
+            $hasil['total_nilai'] = $benar;
+            $hasil['poin'] = $benar;
+            $hasil['status_pengerjaan'] = 1;
+
+            $result = $this->load->Mtryout->inputreport($hasil);
+            $this->session->unset_userdata('id_mm-tryoutpaket');
+            redirect(base_url('index.php/tryout/daftarpaket'));
+        }else{
+            redirect(base_url('index.php/tryout/daftarpaket'));
         }
-//////
-           // echo 'kosong = ' . $kosong;
-           // echo 'Salah = ' . $salah;
-           // echo 'benar = ' . $benar;
-        //
 
-        $hasil['id_pengguna'] = $this->session->userdata['id'];
-        $hasil['siswaID'] = $this->msiswa->get_siswaid();
-        $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
-        ;
-        $hasil['jmlh_kosong'] = $kosong;
-        $hasil['jmlh_benar'] = $benar;
-        $hasil['jmlh_salah'] = $salah;
-        $hasil['total_nilai'] = $benar;
-        $hasil['poin'] = $benar;
-        $hasil['status_pengerjaan'] = 1;
-
-        $result = $this->load->Mtryout->inputreport($hasil);
-        $this->session->unset_userdata('id_mm-tryoutpaket');
-        redirect(base_url('index.php/tryout'));
     }
 
     //end fungsi ilham
@@ -291,6 +286,36 @@ class Tryout extends MX_Controller {
         } else {
             $this->errorTest();
         }
+    }
+
+    public function backup_jawaban(){
+        $backup_jawaban = $this->input->post();
+
+        $id = $this->session->userdata['id_mm-tryoutpaket'];
+        $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
+
+        $result = $this->Mtryout->get_soal_by_paket($id_paket);
+
+        print_r($backup_jawaban);
+        //  var_dump($backup_jawaban);
+        // foreach ($backup_jawaban['pil'] as $backup => $key) {
+        //     print_r($key);
+        // }
+
+        // var_dump($result);
+
+        // foreach ($result as $key) {
+        //     foreach ($backup_jawaban as $backup) {
+        //         if ($key['soalid']==) {
+        //             # code...
+        //         }
+        //     }
+        // }
+
+
+        // $pilihan = $backup_jawaban['pil'];
+        // $soal = $backup_jawaban['']
+
     }
 }
 ?>

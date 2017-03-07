@@ -150,8 +150,14 @@ $this->sessionchecker->cek_token();
                 $link = "assets/video/".$onevideo[0]->namaFile;
                 $judul = base_url($link);
             }
-            $guruID = $onevideo[0]->guruID;
-            $penulis = $this->load->mguru->get_penulis($guruID)[0];
+            if ($onevideo[0]->guruID!="") {
+                $guruID = $onevideo[0]->guruID;
+                $penulis = $this->load->mguru->get_penulis($guruID)[0];
+            }else{
+                $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya','photo'=>'default.png'];
+            }
+
+        
             $data = array(
                 'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
                 'judul_header' => $judul_header,
@@ -165,12 +171,13 @@ $this->sessionchecker->cek_token();
                 'sub_id' => base_url()."video/timeline/".$onevideo[0]->subBabID,
             );
             $subid = $onevideo[0]->subBabID;
+
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub($subid);
             $data['video_by_bab'] = $this->Mvideos->get_all_video_by_bab($idbab);
-
+            
+            //ambil komen
             $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
-
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header-login.php',
                 APPPATH.'modules/templating/views/t-f-pagetitle.php',

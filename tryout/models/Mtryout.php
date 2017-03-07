@@ -148,7 +148,7 @@ public function dataPaket($id) {
 
 public function get_soal($id_paket) {
     $this->db->order_by('rand()');
-    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar,soal.audio');
+    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, audio, soal.judul_soal as judul, soal.gambar_soal as gambar');
     $this->db->from('tb_mm-paketbank as paban');
     $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
     $this->db->where('paban.id_paket', $id_paket);
@@ -224,8 +224,6 @@ public function inputreport($data) {
     $this->db->insert('tb_report-paket', $data);
 }
 
-
-
 public function datatopaket($id) {
     $this->db->select('try.nm_tryout as namato, p.nm_paket as namapa');
     $this->db->from('tb_mm-tryoutpaket as tp');
@@ -237,10 +235,15 @@ public function datatopaket($id) {
 }
 
 
-
-
-
-
+function get_soal_by_paket($id_paket){
+    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, audio, soal.judul_soal as judul, soal.gambar_soal as gambar');
+    $this->db->from('tb_mm-paketbank as paban');
+    $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
+    $this->db->where('paban.id_paket', $id_paket);
+    $query = $this->db->get();
+    $soal = $query->result_array();
+    return $soal;
+}
 }
 
 ?>
