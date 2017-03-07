@@ -187,16 +187,21 @@ class Toback extends MX_Controller{
 	function ajax_listpaket_by_To($idTO) {
 		$list = $this->load->Mtoback->paket_by_toID($idTO);
 		$data = array();
-
+		$no=0;
 		$baseurl = base_url();
 		foreach ( $list as $list_paket ) {
-			// $no++;
+			$no++;
 			$row = array();
-			$row[] = $list_paket['paketID'];
+			$row[] = $no;
 			$row[] = $list_paket['nm_paket'];
 			$row[] = $list_paket['deskripsi'];
 			$row[] = '
-			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>';
+			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropPaket('."'".$list_paket['idKey']."'".')"><i class="ico-remove"></i></a>
+
+
+
+			';
+			// <a onclick="lihatsoal('."'".$list_paket['idKey']."'".')" class="btn btn-primary" >Lihat</a>
 
 			$data[] = $row;
 		}
@@ -206,9 +211,7 @@ class Toback extends MX_Controller{
 		echo json_encode( $output );
 	}
 
-
-
-
+	//list siswa yg mengikuti to
 	function ajax_listsiswa_by_To($idTO) {
 				$list = $this->load->Mtoback->siswa_by_totID($idTO);
 		$data = array();
@@ -219,7 +222,7 @@ class Toback extends MX_Controller{
 			// $no++;
 			$row = array();
 			$row[] = $no;
-			$row[] = $list_siswa ['namaDepan'];
+			$row[] = $list_siswa ['namaDepan'].' '.$list_siswa ['namaBelakang'];
 			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';
@@ -302,8 +305,9 @@ class Toback extends MX_Controller{
 		$baseurl = base_url();
 		$hakAkses=$this->session->userdata['HAKAKSES'];
 		$sesPenggunaID = $this->session->userdata['id'];
+		$no=0;
 		foreach ( $list as $list_to ) {
-			// $no++;
+			$no++;
 			if ($list_to['publish']=='1') {
 				$publish='Publish';
 			} else {
@@ -313,7 +317,7 @@ class Toback extends MX_Controller{
 			
 
 			$row = array();
-			$row[] = $list_to ['id_tryout'];
+			$row[] = $no;
 			$row[] = $list_to ['nm_tryout'];
 			$row[] = $list_to['tgl_mulai'];
 			$row[] = $list_to['wkt_mulai'];
@@ -447,7 +451,7 @@ class Toback extends MX_Controller{
 		foreach ( $list as $list_paket ) {
 			$row = array();
 			$row[] = "<input type='checkbox' value=".$list_paket['id_paket']." id=".$list_paket['nm_paket'].$list_paket['id_paket']." name=".$list_paket['nm_paket'].$n.">";
-			$row[] = $list_paket['id_paket'];
+			$row[] = $n;
 			$row[] = $list_paket['nm_paket'];
 			$row[] = $list_paket['deskripsi'];
 			$row[] = "<a onclick="."lihatsoal(".$list_paket['id_paket'].")"." class='btn btn-primary'>Lihat</a>";
@@ -467,14 +471,15 @@ class Toback extends MX_Controller{
 		$list = $this->Mtoback->get_pengawas_blm_to($id_to);
 		$data = array();
 		$baseurl = base_url();
-		$n = 1;
+		$no = 1;
 		foreach ( $list as $list_pengawas ) {
 			$row = array();
 			$row[] = "<input type='checkbox' value=".$list_pengawas['id']." >";
+			$row[] =$no;
 			$row[] = $list_pengawas['nama'];
 			$row[] = $list_pengawas['alamat'];
 			$data[] = $row;
-			$n++;
+			$no++;
 		}
 		$output = array(
 				"data"=>$data,
@@ -488,17 +493,20 @@ class Toback extends MX_Controller{
 	function ajax_list_siswa_belum_to($id){
 		$list = $this->msiswa->get_siswa_blm_ikutan_to($id);
 		$data = array();
+		$no=0;
 		$baseurl = base_url();
 		foreach ( $list as $list_siswa ) {
+			$no++;
 			$row = array();
 			$row[] = "<input type='checkbox' value=".$list_siswa['id']." >";
-			$row[] = $list_siswa ['id'];
+			$row[] = $no;
 			$row[] = $list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'];
 			if($list_siswa['namaCabang']!=null){
 				$row[] = $list_siswa['namaCabang'];
 			}else{
 				$row[] = "Non-neutron";
 			}
+			$row[] = $list_siswa['aliasTingkat'];
 			// $row[] = '
 			// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['id']."'".')"><i class="ico-remove"></i></a>';
 				$data[] = $row;

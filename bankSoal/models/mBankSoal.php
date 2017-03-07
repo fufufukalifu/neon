@@ -178,9 +178,30 @@ class Mbanksoal extends CI_Model {
     public function get_oldgambar_soal($UUID)
     {
         $this->db->where('UUID', $UUID);
-        $this->db->select('id_soal,gambar_soal')->from('tb_banksoal');
+        $this->db->select('id_soal,gambar_soal,gambar_pembahasan')->from('tb_banksoal');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    //get old gambar pilihan jawaban
+    public function get_oldgambar_pilihan($UUID,$pilihan)
+    {
+        $this->db->where('UUID',$UUID);
+        $this->db->select('id_soal')->from('tb_banksoal');
+        $query = $this->db->get();
+        $tamData =$query->result_array();
+        if ( $tamData) {
+             $id_soal = $tamData[0]['id_soal'];
+            $this->db->where('id_soal',  $id_soal );
+            $this->db->where('pilihan', $pilihan);
+            $this->db->select('id_pilihan,gambar')->from('tb_piljawaban');
+            $query2 = $this->db->get();
+            return $query2->result_array();
+        }else{
+            return null;
+        }
+
+       
     }
 
     //get old gambar pembahasn
@@ -215,9 +236,16 @@ class Mbanksoal extends CI_Model {
         $this->db->update_batch('tb_piljawaban', $data['dataJawaban'], 'pilihan');
     }
 
+    //update batch gambar pilihan jawaban
     public function ch_gambar($datagambar) {
         $this->db->update_batch('tb_piljawaban', $datagambar, 'id_pilihan');
         // var_dump($datagambar);
+    }
+    //updtae single gambar jawaban 
+    public function ch_single_img($data) {
+        $this->db->where('id_pilihan',$data['id_pilihan']);
+        $this->db->set($data['dataJawaban']);
+        $this->db->update('tb_piljawaban');
     }
 
     # END Function untuk form update soal#

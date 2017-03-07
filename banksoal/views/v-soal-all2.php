@@ -192,7 +192,7 @@
       type:"POST",
       url:url,
       success:function(){
-        swal("Terhapus!", "Token berhasil dihapus.", "success");
+        swal("Terhapus!", "Soal berhasil dihapus.", "success");
        window.location.href =base_url+"banksoal/listsoal";
       },
       error:function(){

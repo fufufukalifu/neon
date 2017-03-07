@@ -125,6 +125,95 @@ Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
 </script>
+<script>
+var Preview2 = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+  buffer: null,      // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  //
+  //  Get the preview and buffer DIV's
+  //
+  Init: function () {
+    this.preview = document.getElementById("MathPreview2");
+    this.buffer = document.getElementById("MathBuffer2");
+  },
+
+  //
+  //  Switch the buffer and preview, and display the right one.
+  //  (We use visibility:hidden rather than display:none since
+  //  the results of running MathJax are more accurate that way.)
+  //
+  SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+    preview.style.position = ""; preview.style.visibility = "";
+  },
+
+  //
+  //  This gets called when a key is pressed in the textarea.
+  //  We check if there is already a pending update and clear it if so.
+  //  Then set up an update to occur after a small delay (so if more keys
+  //    are pressed, the update won't occur until after there has been 
+  //    a pause in the typing).
+  //  The callback function is set up below, after the Preview object is set up.
+  //
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //
+  //  Creates the preview and runs MathJax on it.
+  //  If MathJax is already trying to render the code, return
+  //  If the text hasn't changed, return
+  //  Otherwise, indicate that MathJax is running, and start the
+  //    typesetting.  After it is done, call PreviewDone.
+  //  
+  CreatePreview: function () {
+    Preview2.timeout = null;
+    if (this.mjPending) return;
+        var text = CKEDITOR.instances.editor1.getData();
+    // console.log(text);
+    if (text === this.oldtext) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+  ["Typeset",MathJax.Hub,this.buffer],
+  ["PreviewDone",this]
+      );
+    }
+  },
+
+  //
+  //  Indicate that MathJax is no longer running,
+  //  and swap the buffers to show the results.
+  //
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//
+//  Cache a callback to the CreatePreview action
+//
+Preview2.callback = MathJax.Callback(["CreatePreview",Preview2]);
+Preview2.callback.autoReset = true;  // make sure it can run more than once
+
+</script>
 <!-- END Script Matjax -->
 <!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
 <!-- START Template Main -->
@@ -136,7 +225,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
   <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 
   <div class="container-fluid">
-
+     <?php $UUID=$banksoal['UUID']?>
     <!-- Start Modal salah upload gambar -->
     <div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -273,7 +362,10 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
         </div>
         <!-- img -->
         <div class="prevSoal col-sm-12">
-
+                
+  <div class="a" id="MathPreview2" ></div>
+            <div class="a" id="MathBuffer2" style=" 
+            visibility:hidden; position:absolute; top:0; left: 0"></div>
         </div>
         <!-- pilihan jawaban -->
         <div class="col-sm-12">
@@ -397,7 +489,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             <h6>Type: <span id="filetypeAudio"></span></h6> 
           </div>
         </div>
-        <div class="col-sm-12 hidden-audio" hidden="true">
+        <div class="col-sm-12 hidden-audio" >
           <audio class="col-sm-12" id="previewAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
           </audio>
         </div>
@@ -406,9 +498,8 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
             Pilih Audio
           </label>
           <input  id="fileAudio" style="display:none;" type="file" name="listening" onchange="ValidateAudioInput(this);">
-          <label class="btn btn-sm btn-danger"  onclick="restAudioSoal()">Reset</label>
+          <label class="btn btn-sm btn-danger"  onclick='restAudioSoal("<?=$UUID?>")'>Reset</label>
         </div>
-
       </div>
     </div>
     <div class="form-group">
@@ -435,7 +526,8 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
           Pilih Gambar
         </label>
         <input style="display:none;" type="file" id="fileSoal" name="gambarSoal" onchange="ValidateSingleInput(this);"/>
-        <label class="btn btn-sm btn-danger"  onclick="restImgSoal()">Reset</label>
+        
+                                       <label class="btn btn-sm btn-danger"  onclick='restImgSoal("<?=$UUID?>")'>Reset</label>
       </div>
     </div>
   </div>
@@ -507,6 +599,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 <script>
   Preview.Init();
 </script>
+<script>
+  Preview2.Init();
+</script>
 <!-- End MathJax -->
 </div>
 <div class="form-group">
@@ -567,6 +662,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileA" value="<?=$piljawaban['0']['gambar'];?>" name="gambar1" onchange="ValidateSingleInput(this);"/>
+     <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","A")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar A -->
@@ -604,6 +700,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileB" value="<?=$piljawaban['1']['gambar'];?>" name="gambar2" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","B")'>Reset</label>
   </div>
 </div>
 </div>
@@ -641,6 +738,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileC" value="<?=$piljawaban['2']['gambar'];?>" name="gambar3" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","C")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar C -->                       
@@ -679,6 +777,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileD" value="<?=$piljawaban['3']['gambar'];?>" name="gambar4" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","D")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar D -->                       
@@ -718,6 +817,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       Pilih Gambar
     </label>
     <input style="display:none;" type="file" id="fileE"  value="<?=$piljawaban['4']['gambar'];?>" name="gambar5" onchange="ValidateSingleInput(this);"/>
+    <label class="btn btn-sm btn-danger"  onclick='restImgPilihan("<?=$UUID?>","E")'>Reset</label>
   </div>
 </div>
 <!-- END input Gambar C -->                       
@@ -832,46 +932,25 @@ true">
          <img id="previewPembahasan" style="max-width: 497px; max-height: 381px;  " class="img" src="<?=base_url();?>assets/image/pembahasan/<?=$banksoal['gambar_pembahasan'];?>" alt="" />
 
        </div>
-
-
-
        <div class="col-sm-12">
-
         <div class="col-md-5 left"> 
-
           <h6>Name: <span id="filenamePembahasan"></span></h6> 
-
         </div> 
-
         <div class="col-md-4 left"> 
-
           <h6>Size: <span id="filesizePembahasan"></span>Kb</h6> 
-
         </div> 
-
         <div class="col-md-3 bottom"> 
-
           <h6>Type: <span id="filetypePembahasan"></span></h6> 
-
         </div>
-
       </div>
-
-
       <div class="col-sm-12">
-
         <label for="filePembahasan" class="btn btn-sm btn-default">
-
           Pilih Gambar
-
         </label>
-
         <input style="display:none;" type="file" id="filePembahasan" name="gambarPembahasan" onchange="ValidateSingleInput(this);"/>
-        <label class="btn btn-sm btn-danger"  onclick="restImgPembahasan()">Reset</label>
+        <label class="btn btn-sm btn-danger"  onclick='restImgPembahasan("<?=$UUID?>")'>Reset</label>
       </div>
-
     </div>
-
   </div>
   <!-- End Upload Gambar Pembahsan -->
 
@@ -889,38 +968,21 @@ true">
 </div>
 <!-- End Editor Pembahasan -->
 
-
 <!-- Start Upload Video Pembahasan -->
 <!-- pilih option upload video -->
-
            <!--  <div class="form-group vido" hidden="true">
-
                 <label class="control-label col-sm-2">Pilihan Upload Video</label>
-
                 <div class="col-sm-8">
-
                     <div class="btn-group" data-toggle="buttons" >
-
                         <label class="btn btn-teal btn-outline active" id="up_server">
-
                             <input type="radio" name="option_up" value="server" autocomplete="off" > Upload Video Ke server
-
                         </label>
-
                         <label class="btn btn-teal btn-outline " id="up_link">
-
                             <input type="radio" name="option_up"  value="link" autocomplete="off" checked="true"> Link
-
                         </label>
-
                     </div>
-
                 </div>
-
               </div> -->
-
-
-
               <!-- untuk preview video -->
 
               <div  class="form-group prv_video " hidden="true">
@@ -1667,29 +1729,196 @@ function ValidateInputVideo(oInput) {
 
     loadTingkat();
 
-    function restImgSoal() {
-      $("input[name=gambarSoal]").val("");
-      $('#previewSoal').attr('src', "");
-      $('#filenameSoal').text("");
-      $('#filetypeSoal').text("");
-      $('#filesizeSoal').text("");
+    function restImgSoal(UUID) {
+        url = base_url+"index.php/banksoal/delImgSoal/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "ambar soal berhasil dihapus.", "success");
+            $("input[name=gambarSoal]").val("");
+            $('#previewSoal').attr('src', "");
+            $('#filenameSoal').text("");
+            $('#filetypeSoal').text("");
+            $('#filesizeSoal').text("");
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
     }
-    function restImgPembahasan() {
-      $("input[name=gambarPembahasan]").val("");
-      $('#previewPembahasan').attr('src', "");
-      $('#filenamePembahasan').text("");
-      $('#filetypePembahasan').text("");
-      $('#filesizePembahasan').text("");
+    function restImgPembahasan(UUID) {
+       url = base_url+"index.php/banksoal/delImgPembahasan/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar pembahasan ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "Audio soal berhasil dihapus.", "success");
+            $("input[name=gambarPembahasan]").val("");
+            $('#previewPembahasan').attr('src', "");
+            $('#filenamePembahasan').text("");
+            $('#filetypePembahasan').text("");
+            $('#filesizePembahasan').text("");
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+
+
     }
 
      //reset form input audio soal
-     function restAudioSoal(){
-      $("input[name=listening]").val("");
-      $('#previewAudio').attr('src', "");
-      $('#filenameAudio').text("");
-      $('#filetypeAudio').text("");
-      $('#filesizeAudio').text("");
-      $('.hidden-audio').hide();
+     function restAudioSoal(UUID){
+       url = base_url+"index.php/banksoal/delAudioSoal/"+UUID,
+       swal({
+        title: "Apakah Anda yakin akan menghapus audio soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "Audio soal berhasil dihapus.", "success");
+            $("input[name=listening]").val("");
+            $('#previewAudio').attr('src', "");
+            $('#filenameAudio').text("");
+            $('#filetypeAudio').text("");
+            $('#filesizeAudio').text("");
+            $('.hidden-audio').hide();
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+
+      
+    }
+
+    //reser/hapus gambar pilihan jawaban A
+    function restImgPilihan(UUID,pilihan) {
+      //hapus img
+        url = base_url+"index.php/banksoal/delImgpilihan/"+UUID+"/"+pilihan,
+       swal({
+        title: "Apakah Anda yakin akan menghapus gambar soal ini?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap hapus!",
+        closeOnConfirm: false
+      },
+      function(){
+
+        var datas = {UUID:UUID};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(){
+            swal("Terhapus!", "ambar soal berhasil dihapus.", "success");
+            if (pilihan=="A") {
+              resetImgA();
+            }else if(pilihan=="B"){
+              resetImgB();
+            }else if(pilihan=="C"){
+              resetImgC();
+            }else if(pilihan=="D"){
+              resetImgD();
+            }else if(pilihan=="E"){
+               resetImgE();
+            }
+          },
+          error:function(){
+            sweetAlert("Oops...", "Data gagal terhapus!", "error");
+          }
+
+        });
+      });
+    }
+
+    //reset priview image pilihan jawaban A
+    function resetImgA() {
+       $("input[name=gambar1]").val("");
+            $("#previewA").attr('src', "");
+            $("#filenameA").text("");
+            $('#filetypeA').text("");
+            $('#filesizeA').text("");
+    }
+    //reset priview image pilihan jawaban B
+    function resetImgB() {
+       $("input[name=gambar2]").val("");
+            $("#previewB").attr('src', "");
+            $("#filenameB").text("");
+            $('#filetypeB').text("");
+            $('#filesizeB').text("");
+    }
+
+    //reset priview image pilihan jawaban C
+        function resetImgC() {
+       $("input[name=gambar3]").val("");
+            $("#previewC").attr('src', "");
+            $("#filenameC").text("");
+            $('#filetypeC').text("");
+            $('#filesizeC').text("");
+    }
+ //reset priview image pilihan jawaban D
+        function resetImgD() {
+       $("input[name=gambar4]").val("");
+            $("#previewD").attr('src', "");
+            $("#filenameD").text("");
+            $('#filetypeD').text("");
+            $('#filesizeD').text("");
+    }
+     //reset priview image pilihan jawaban E
+        function resetImgE() {
+       $("input[name=gambar5]").val("");
+            $("#previewE").attr('src', "");
+            $("#filenameE").text("");
+            $('#filetypeE').text("");
+            $('#filesizeE').text("");
     }
 
     //validasi upload audio
@@ -1724,10 +1953,10 @@ function ValidateInputVideo(oInput) {
 
     // priview soal sebelum di upload
     function priview() {
+          Preview2.Update();
       var tingkat = $('select#tingkat').text();
       var judul = $("input[name=judul]").val();
       var sumber  = $("input[name=sumber]").val();
-      var soal  = CKEDITOR.instances.editor1.getData();
       var jawaban = $('select[name=jawaban]').val();
       var a  =$("textarea[name=a]").val();
       var b  =$("textarea[name=b]").val();
@@ -1741,7 +1970,6 @@ function ValidateInputVideo(oInput) {
       $('li#c').text(c);
       $('li#d').text(d);
       $('li#e').text(e);
-      $('div.prevSoal').html(soal);
       $('a#prevJawaban').text(jawaban);
         $('#modalpriview').modal('show'); // show bootstrap modal
 
@@ -1752,7 +1980,7 @@ function ValidateInputVideo(oInput) {
     <!-- PROGRES BAR -->
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <!-- SCRIPT UNTUK PROGRESS BAR -->
-    <script>
+   <!--  <script>
       (function() {
         var bar = $('#ProgressSOal');
         var status = $('#status');
@@ -1796,7 +2024,7 @@ function ValidateInputVideo(oInput) {
         }); 
 
       })();       
-    </script>
+    </script> -->
     <!-- ## PROGRES BAR -->
   </section>
         <!--/ END Template Main

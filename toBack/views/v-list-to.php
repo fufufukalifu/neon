@@ -1,7 +1,87 @@
 </style>
 <section id="main" role="main">
     <!-- START MODAL EDIT TRYOUT -->
-    <script type="text/javascript">halaman = true;</script>
+    <!-- START Modal ADD TO -->
+<div class="modal fade" id="modalto" tabindex="-1" role="dialog">
+  <!--START modal dialog  -->
+  <div class="modal-dialog" role="document">
+   <!-- STRAT MOdal Content -->
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title">Buat TO</h4>
+   </div>
+
+   <!-- START Modal Body -->
+   <div class="modal-body">
+
+     <!-- START PESAN ERROR EMPTY INPUT -->
+     <div class="alert alert-dismissable alert-danger" id="e_crtTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_crtTo()" >×</button>
+      <strong>O.M.G.!</strong> Tolong di ISI semua.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <!-- START PESAN ERROR EMPTY INPUT -->
+     <div class="alert alert-dismissable alert-danger" id="e_wktTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_wktTo()" >×</button>
+      <strong>ilahkan cek kembali!</strong> Waktu mulai dan tanggal waktu tidak sesuai.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <!-- START PESAN ERROR EMPTY INPUT -->
+    <div class="alert alert-dismissable alert-danger" id="e_tglTo" hidden="true" >
+      <button type="button" class="close" onclick="hide_e_tglTo()" >×</button>
+      <strong>Silahkan cek kembali!</strong> Tanggal mulai dan tanggal akhir tidak sesuai.
+    </div>
+    <!-- END PESAN ERROR EMPTY INPUT -->
+    <form class="panel panel-default form-horizontal form-bordered" action="javascript:void(0);" method="post" id="form_to">
+      <div  class="form-group">
+       <label class="col-sm-3 control-label">Nama Tryout</label>
+       <div class="col-sm-8">
+        <input type="text" class="form-control" name="nmpaket" id="to_nm">
+      </div>
+    </div>
+    <div  class="form-group">
+     <label class="col-sm-3 control-label">Tanggal Mulai</label>
+     <div class="col-sm-4">
+      <input type="date" class="form-control" name="tglmulai" id="to_tglmulai">
+    </div >
+    <div class="col-sm-4">
+      <input type="time" class="form-control" name="wktmulai" id="to_wktmulai" >
+    </div>
+  </div>
+  <div  class="form-group">
+   <label class="col-sm-3 control-label">Tanggal Berakhir</label>
+   <div class="col-sm-4">
+    <input type="date" class="form-control" name="tglakhir" id="to_tglakhir">
+  </div>
+  <div class="col-sm-4">
+    <input type="time" class="form-control" name="wktakhir" id="to_wktakhir" >
+  </div>
+</div>
+
+<div class="form-group">
+ <label class="col-sm-3 control-label">Publish</label>
+ <div class="col-sm-8">
+  <div class="checkbox custom-checkbox">  
+   <input type="checkbox" name="publish" id="to_publish" value="1">  
+   <label for="to_publish" >&nbsp;&nbsp;</label>   
+ </div>
+</div>
+</div> 
+</div>
+<!-- END Modal Body -->
+<!-- START Modal Footer -->
+<div class="modal-footer">
+  <button type="submit" id="myFormSubmit" class="btn btn-primary" onclick="crtTo()"  >Proses</button>
+</div>
+</form>
+<!-- START Modal Footer -->
+</div>
+<!-- END MOdal Content -->
+</div>
+<!--END modal dialog  -->
+</div>
+<!-- END Modal ADD TO -->
     <div class="modal fade" id="modal_editTO" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -47,8 +127,8 @@
                                   <input type="date" class="form-control" name="tgl_mulai">
                                 </div>
                                  <div class="col-sm-4">
-      <input type="time" class="form-control" name="wkt_mulai"  >
-    </div>
+                                   <input type="time" class="form-control" name="wkt_mulai"  >
+                                  </div>
                             </div>
                             <div  class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal Berakhir</label>
@@ -56,8 +136,8 @@
                                   <input type="date" class="form-control" name="tgl_berhenti">
                               </div>
                                 <div class="col-sm-4">
-    <input type="time" class="form-control" name="wkt_akhir"  >
-  </div>
+                                  <input type="time" class="form-control" name="wkt_akhir"  >
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -91,13 +171,16 @@
     			<div class="panel panel-teal">
                     <!--Start untuk menampilkan nama tabel -->
                     <div class="panel-heading">
-                    	<h3>List Try Out</h3>
+                    	<h3 class="panel-title">List Try Out</h3>
+                       <div class="panel-toolbar text-right">
+                            <a class="btn btn-inverse btn-outline" href="javascript:void(0);" onclick="add_to()"><i class="ico-plus"></i></a>
+                        </div>
                     </div>
                     <div class="panel-body">
                     	<table class="table table-striped" id="tblistTO" style="font-size: 13px">
                     		<thead>
                     			<tr>
-                    				<th>ID</th>
+                    				<th>NO</th>
                     				<th>Nama TO</th>
                     				<th>Tanggal Mulai</th>
                                     <th>Waktu Mulai</th>
@@ -109,13 +192,11 @@
                     		</thead>
                     		<tbody>
                     			
-
                     		</tbody>
                     	</table>
                     </div>
                 </div>
                 </div>
-    			
     		</div>
     	</div>
     </div>
@@ -283,4 +364,122 @@
     }
     // 
     </script>
+    <!-- Script utuk add TO -->
+<script type="text/javascript">
+ function add_to() {
+  $('#modalto').modal('show'); // show bootstrap modal
+  // if (halaman) {
+  //   $('#modalto').modal('show'); // show bootstrap modal
+  // }else{
+  //   var konfirm = window.confirm("Anda akan dialihkan pada halaman tryout?");
+  //   if (konfirm) {
+  //   document.location.href = base_url+"index.php/toback/listTo";
+  //   }
+  // }
+
+}
+ function hide_e_crtTo() {
+    $("#e_crtTo").hide();
+  }
+  function hide_e_tglTo() {
+    $("#e_tglTo").hide();
+  }
+  function hide_e_wktTo() {
+    $("#e_wktTo").hide();
+  }
+  function crtTo() {
+    var nm_paket   =   $('#to_nm').val();
+    var tgl_mulai  =   $('#to_tglmulai').val();
+    var tgl_akhir  =   $('#to_tglakhir').val();
+    var wkt_mulai  =   $('#to_wktmulai').val();
+    var wkt_akhir  =   $('#to_wktakhir').val();
+    var publish;
+    if ($('#to_publish:checked')==true) {
+     publish = 1;
+   } else{
+     publish = 0;
+   }
+// pengecekan inputan pembuatan to
+// cek inputan kosong
+if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
+    // validasi tanggal mulai dan tanggal akhir
+    if (tgl_mulai<tgl_akhir) {
+
+      
+     var url = base_url+"index.php/toback/buatTo";
+     $.ajax({
+      url : url,
+      type: "POST",
+      data: { nmpaket : nm_paket,
+       tglmulai:tgl_mulai,
+       tglakhir:tgl_akhir,
+       wktmulai:wkt_mulai,
+       wktakhir:wkt_akhir,
+       publish :publish 
+
+     },
+       // cache: false,
+       // dataType: "JSON",
+       success: function(data,respone)
+      {   
+        reload_tblist();  
+        $("#e_crtTo").hide(); 
+        $('#modalto').modal('hide'); 
+        $('#form_to')[0].reset(); // reset form on modals
+        $('#modalto').removeClass('has-error'); // clear error class  
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+                            // $("#e_crtTo").show();
+        lert('Error adding / update data');
+        }
+        });
+   }else if(tgl_mulai==tgl_akhir) {
+    if (wkt_mulai>=wkt_akhir) {
+      $("#e_wktTo").show();
+    }else{
+          var url = base_url+"index.php/toback/buatTo";
+     $.ajax({
+      url : url,
+      type: "POST",
+      data: { nmpaket : nm_paket,
+       tglmulai:tgl_mulai,
+       tglakhir:tgl_akhir,
+       wktmulai:wkt_mulai,
+       wktakhir:wkt_akhir,
+       publish :publish 
+
+     },
+       // cache: false,
+       // dataType: "JSON",
+       success: function(data,respone)
+      {   
+        reload_tblist();  
+        $("#e_crtTo").hide(); 
+        $('#modalto').modal('hide'); 
+        $('#form_to')[0].reset(); // reset form on modals
+        $('#modalto').removeClass('has-error'); // clear error class  
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+                            // $("#e_crtTo").show();
+        lert('Error adding / update data');
+        }
+        });
+    }
+    
+   }else {
+     $("#e_tglTo").show();
+   }
+   
+ }else{
+
+   $("#e_crtTo").show();
+ }
+}
+</script>
 </section>

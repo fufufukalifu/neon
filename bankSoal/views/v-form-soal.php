@@ -545,10 +545,10 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
        <label class="control-label col-sm-2"></label>
        <div class="col-sm-10">
-        <label class="control-label" >Preview is shown here:</label>
-        <div class="form-control" id="MathPreview" ></div>
-        <div class="form-control" id="MathBuffer" style=" 
-        visibility:hidden; position:absolute; top:0; left: 0"></div>
+        <label class="control-label" >Preview :</label>
+        <textarea class="form-control" id="MathPreview" ></textarea>
+        <textarea class="form-control" id="MathBuffer" style=" 
+        visibility:hidden; position:absolute; top:0; left: 0" cols="60" rows="10"></textarea>
       </div>
     </div>
     <script>
@@ -1815,7 +1815,8 @@ function ValidateAudioInput(oInput){
  <!--END Script drop down depeden  -->
  <script src="http://malsup.github.com/jquery.form.js"></script>
  <!-- SCRIPT UNTUK PROGRESS BAR -->
- <script>
+ <!-- Untuk sementara di komen karena menyebabkan error ckeditor value always null-->
+ <!-- <script>
  (function() {
   var bar = $('#ProgressSOal');
   var status = $('#status');
@@ -1859,7 +1860,7 @@ function ValidateAudioInput(oInput){
   }); 
 
 })();       
-</script>
+</script> -->
 <!-- ## PROGRES BAR -->
 
 </section>

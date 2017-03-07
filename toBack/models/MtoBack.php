@@ -17,8 +17,8 @@ class Mtoback extends CI_Model {
 	public function get_To()
 	{
 		$this->db->select('*');
-		$this->db->from('tb_tryout');
-		        $query = $this->db->get();
+		$this->db->from('tb_tryout')->order_by('id_tryout','DESC');
+		$query = $this->db->get();
         return $query->result_array();
 	}
 	//add paket Ke TO
@@ -226,7 +226,3 @@ class Mtoback extends CI_Model {
 	}
 }
 ?>
-
-
-
-

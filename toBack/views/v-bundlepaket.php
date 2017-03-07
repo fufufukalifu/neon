@@ -105,6 +105,7 @@
      <th>ID</th>
      <th>Nama Lengkap</th>
      <th>Cabang</th>
+     <th>Tingkat</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
@@ -115,6 +116,7 @@
    <th><input class="form-control" type="text" placeholder="ID" /></th>
    <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
    <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+    <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
  </tfoot>
 </table>
 <!-- END TABEL SISWA -->
@@ -142,8 +144,6 @@
 <!-- END FOOTER -->
 </div>
 <!-- END Panel Body -->
-
-
 </div>
 </div>
 <!--END LIST PAKET dan SISWA -->
@@ -162,7 +162,6 @@
       <li><a href="#siswaadd" data-toggle="tab">Siswa</a></li>
     </ul>
   </div>
-
   <div class="tab-content">
    <!-- START LIST Paket yang sudah di ADD -->
    <div class="tab-pane active" id="paketadd">
@@ -181,12 +180,9 @@
           <th>Aksi</th>
         </tr>
       </thead>
-
       <tbody>
-
       </tbody>
     </table>
-
   </form>
 </div>
 </div>
@@ -212,23 +208,17 @@
         <th>Aksi</th>
       </tr>
     </thead>
-
     <tbody>
-
     </tbody>
-
   </table>
-
 </form>
 <!-- END TABEL SISWA YG SUDAH DI ADD  -->
-
 </div>
 </div>
 <!-- END tabel siswa add to -->
 </div>
 <!-- LIST Siswa yang sudah di ADD -->
 </div>
-
 </div>
 <!-- END Panel Body -->
 </div>         
@@ -243,7 +233,6 @@
 <!-- END ROW -->
 </div>
 
-
 <script type="text/javascript">
  var tblist_paket;
  var tblist_siswa;
@@ -253,7 +242,6 @@
  var listsoal;
 
     // Script for getting the dynamic values from database using jQuery and AJAX
-
 
     $(document).ready(function() {
       //check all paket
@@ -275,11 +263,7 @@
         }
       });
       //####---
-
-
-
       $('#siswaBlmTo tfoot th').first().append("");
-
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
        "ajax": {
         "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
@@ -288,7 +272,6 @@
       "processing": true,
       "bDestroy": true,
     });
-
       tblist_paket = $('#paket table').DataTable({ 
        "ajax": {
         "url": base_url+"index.php/toback/ajax_list_all_paket/"+idTo,
@@ -297,7 +280,6 @@
       "processing": true,
       "bDestroy": true,
     });
-
         // tabel paket yang sudah di add ke to
         tblist_paketAdd = $('#listaddpaket').DataTable({ 
          "ajax": {
@@ -307,8 +289,6 @@
         "processing": true,
         "bDestroy": true,
       });
-
-
         // tabel siswa yang akan mengokuti ujian
         tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
          "ajax": {
@@ -318,84 +298,66 @@
         "processing": true,
         "bDestroy": true,
       });
+        tblist_siswa.columns().every( function () {
+          var that = this;
+          $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+              that
+              .search( this.value )
+              .draw();
+            }
+          } );
+        } );
+      });
 
-    // Setup - add a text input to each footer cell
-    // $('#siswaBlmTo tfoot th').each( function () {
-    //     var title = $(this).text();
-    //     $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
-    // } );
-
-tblist_siswa.columns().every( function () {
-  var that = this;
-  $( 'input', this.footer() ).on( 'keyup change', function () {
-    if ( that.search() !== this.value ) {
-      that
-      .search( this.value )
-      .draw();
-    }
-  } );
-} );
-
-
-
-
-});
-
-function reload_tblist(){
- tblist_siswaAdd.ajax.reload(null,false);
- tblist_paketAdd.ajax.reload(null,false); 
- tblist_paket.ajax.reload();
- tblist_siswa.ajax.reload();
-
+    function reload_tblist(){
+     tblist_siswaAdd.ajax.reload(null,false);
+     tblist_paketAdd.ajax.reload(null,false); 
+     tblist_paket.ajax.reload();
+     tblist_siswa.ajax.reload();
         //reload datatable ajax 
        // 
      }
+     function adda() {
+       $('.add').click(function(){ 
+        addPaket();
+        addSiswa();
+      });
+     }
+     function hide_msg_e_siswa() 
+     {
+       $("#msg_e_siswa").hide();
+     }
+     function hide_msg_e_paket() 
+     {
+       $("#msg_e_paket").hide();
+     }
+     function hide_msg_s_paket()
+     {
+       $("#msg_s_paket").hide();
+     }
+     function hide_msg_s_siswa()
+     {
+       $("#msg_s_siswa").hide();
+     }
+     function addPaket(){
+       var idpaket = [];
+       var id_to =$('#id_to').val();
+       var test ='test';
+       $('#tbpaket input:checked').each(function(i){
+        idpaket[i] = $(this).val();
+      });
+       $('#tbpaket input').attr('checked',false);
 
-    // function reload_listsiswa(){
-    //     tblist_siswa.reload(null,false);
-    // }
-    function adda() {
+       if (idpaket.length > 0) {
+        var url = base_url+"index.php/toback/addPaketToTO";
 
-     $('.add').click(function(){ 
-      addPaket();
-      addSiswa();
-    });
-
-   }
-   function hide_msg_e_siswa() 
-   {
-     $("#msg_e_siswa").hide();
-   }
-   function hide_msg_e_paket() 
-   {
-     $("#msg_e_paket").hide();
-   }
-   function hide_msg_s_paket()
-   {
-     $("#msg_s_paket").hide();
-   }
-   function hide_msg_s_siswa()
-   {
-     $("#msg_s_siswa").hide();
-   }
-   function addPaket(){
-     var idpaket = [];
-     var id_to =$('#id_to').val();
-     var test ='test';
-     $('#tbpaket input:checked').each(function(i){
-      idpaket[i] = $(this).val();
-    });
-     $('#tbpaket input').attr('checked',false);
-
-     if (idpaket.length > 0) {
-      var url = base_url+"index.php/toback/addPaketToTO";
-
-      $.ajax({
-       url : url,
-       type: "POST",
-       data: {idpaket:idpaket,
-        id_to:id_to 
-      },
+        $.ajax({
+         url : url,
+         type: "POST",
+         data: {idpaket:idpaket,
+          id_to:id_to 
+        },
                 // cache: false,
               // dataType: "JSON",
               success: function(data,respone)
@@ -414,10 +376,10 @@ function reload_tblist(){
                alert('Error adding / update data');
              }
            });
-    }else{
-      $("#msg_s_paket").hide();
-      $("#msg_e_paket").show();
-    }
+      }else{
+        $("#msg_s_paket").hide();
+        $("#msg_e_paket").show();
+      }
 
 
 
@@ -527,31 +489,28 @@ function reload_tblist(){
            }
 
 
-           function dropSiswa(idKey) {
-            var id_to =$('#id_to').val();
-            if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+function dropSiswa(idKey) {
+  var id_to =$('#id_to').val();
+  if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
                // ajax delete data to database
-               $.ajax({
-                url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
-                type: "POST",
-                dataType: "TEXT",
-                success: function(data,respone)
-                {  
-                  reload_tblist();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                  swal('Error deleting data');
-                        // console.log(jqXHR);
-                        // console.log(textStatus);
-                        console.log(errorThrown);
-                      }
-                    });
-             }
-           }
+    $.ajax({
+      url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
+      type: "POST",
+      dataType: "TEXT",
+      success: function(data,respone)
+      {  
+        reload_tblist();
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+        swal('Error deleting data');
+      }
+    });
+  }
+}
 
 
-           adda();
+adda();
 
 
-         </script>
+</script>

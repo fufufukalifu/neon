@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
   <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
   <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
-  <script>var base_url = '<?php echo base_url() ?>';</script>
+ <script>var base_url = '<?php echo base_url() ?>'</script>
   <!--/ END META SECTION -->
 
   <!-- START STYLESHEETS -->
@@ -27,7 +27,10 @@
 
 
   <!--/ Plugins stylesheet -->
-
+<!-- css aoutocomplate -->
+<link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
+<!-- JS aoutocomplate -->
+<script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script>
   <!-- Application stylesheet : mandatory -->
   <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/stylesheet/layout.min.css') ?>">
@@ -57,7 +60,7 @@
             <label class="col-sm-3 control-label">Tingkat</label>
             <div class="col-sm-8">
               <!-- vtkt = video tingkat -->
-              <select class="form-control gettkt" name="tingkat" id="galtkt">
+              <select class="form-control gettkt" name="tingkat" id="galtkt" required="true">
                 <option>-Pilih Tingkat-</option>
               </select>
             </div>
@@ -66,7 +69,7 @@
           <div  class="form-group">
             <label class="col-sm-3 control-label">Mata Pelajaran</label>
             <div class="col-sm-8">
-              <select class="form-control getpel" name="mataPelajaran" id="galpel">
+              <select class="form-control getpel" name="mataPelajaran" id="galpel" required="true">
 
               </select>
             </div>
@@ -75,7 +78,7 @@
           <div  class="form-group">
             <label class="col-sm-3 control-label">Bab</label>
             <div class="col-sm-8">
-              <select class="form-control getbb" name="bab" id="galbab">
+              <select class="form-control getbb" name="bab" id="galbab" required="true">
 
               </select>
             </div>
@@ -170,7 +173,7 @@
 
    <!-- Start Body modal -->
    <div class="modal-body">
-     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" >
+     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal2" method="get" >
       <div  class="form-group">
        <label class="col-sm-3 control-label">Tingkat</label>
        <div class="col-sm-8">
@@ -219,6 +222,56 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- END  Modal ADD BANK SOAL-->
+<!-- Start Modal Filter Gallery  -->
+<div class="modal fade" id="modalfilter-gallery" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Filter Gallery</h4>
+      </div>
+
+
+      <!-- Start Body modal -->
+      <div class="modal-body">
+        <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/gallery/filtergallery" method="post" >
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Tingkat</label>
+            <div class="col-sm-8">
+              <!-- vtkt = video tingkat -->
+              <select class="form-control gettkt" name="tingkat" id="fgaltkt">
+                <option>-Pilih Tingkat-</option>
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Mata Pelajaran</label>
+            <div class="col-sm-8">
+              <select class="form-control getpel" name="mataPelajaran" id="fgalpel">
+
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Bab</label>
+            <div class="col-sm-8">
+              <select class="form-control getbb" name="bab" id="fgalbab">
+
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
+          </div>
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal-content -->
 
 <!-- START Template Header -->
 <header id="header" class="navbar navbar-fixed-top">
@@ -509,7 +562,7 @@
     <li class="submenu-header ellipsis">Materi</li>
 
     <li >
-      <a href="<?=base_url('index.php/materi/form_materi')?>" onclick="add_soal()">
+      <a href="<?=base_url('index.php/materi/form_materi')?>" >
         <span class="text">Form Materi</span> 
       </a>
     </li>
@@ -581,11 +634,6 @@
   </a>
 </li>
 
-<li >
- <a href="javascript:void(0);" onclick="add_to()">
-  <span class="text">Tambahkan Try Out</span>
-</a>
-</li>
 <li >
  <a href="<?= base_url('index.php/toback/listTo');?>">
   <span class="text">Daftar Try Out</span>
@@ -800,7 +848,7 @@
 <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/custom.js') ?>"></script>
+
 <script type="text/javascript">
 //panggil modal
 function add_soal() {
@@ -811,84 +859,12 @@ function filter_video() {
 $('#modalvideo').modal('show'); // show bootstrap modal
 }
 
-function add_to() {
- if (halaman) {
- $('#modalto').modal('show'); // show bootstrap modal
-}else{
- var konfirm = window.confirm("Anda akan dialihkan pada halaman tryout?");
- if (konfirm) {
-  document.location.href = base_url+"index.php/toback/listTo";
-}
-}
 
-}
 
 </script>
 <!-- drop down dependend for get subbab -->
 <script type="text/javascript">
 
-
- function hide_e_crtTo() {
-  $("#e_crtTo").hide();
-}
-function hide_e_tglTo() {
-  $("#e_tglTo").hide();
-}
-function crtTo() {
-  var nm_paket   =   $('#to_nm').val();
-  var tgl_mulai  =   $('#to_tglmulai').val();
-  var tgl_akhir  =   $('#to_tglakhir').val();
-  var wkt_mulai  =   $('#to_wktakhir').val();
-  var wkt_akhir  =   $('#to_wktmulai').val();
-  var publish;
-  if ($('#to_publish:checked')==true) {
-   publish = 1;
- } else{
-   publish = 0;
- }
-// pengecekan inputan pembuatan to
-// cek inputan kosong
-if (nm_paket != "" && tgl_mulai != "" && tgl_akhir!= "" && wkt_mulai != "" && wkt_akhir != "" ) {
-    // validasi tanggal mulai dan tanggal akhir
-    if (tgl_mulai<tgl_akhir) {
-     var url = base_url+"index.php/toback/buatTo";
-     $.ajax({
-      url : url,
-      type: "POST",
-      data: { nmpaket : nm_paket,
-       tglmulai:tgl_mulai,
-       tglakhir:tgl_akhir,
-       wktmulai:wkt_mulai,
-       wktakhir:wkt_akhir,
-       publish :publish 
-
-     },
-     success: function(data,respone)
-     {   
-       reload_tblist();  
-       $("#e_crtTo").hide(); 
-       $('#modalto').modal('hide'); 
-       $('#form_to')[0].reset(); // reset form on modals
-       $('#modalto').removeClass('has-error'); // clear error class  
-
-     },
-     error: function (jqXHR, textStatus, errorThrown)
-     {
-      alert('Error adding / update data');
-    }
-  });
-   } else {
-     $("#e_tglTo").show();
-   }
-   
- }else{
-
-   $("#e_crtTo").show();
- }
-
-
-
-}
 // ####################################################
             //buat load tingkat untuk modal buat soal
             // load tingkat untuk modal bank soal
@@ -1063,7 +1039,7 @@ function filter_gallery() {
                loadBbgal($('#galpel').val());
              });
                // ##############################
-                // event untuk modal tambah Gallery
+                // event untuk modal filter Gallery
               // ##############################
               $('#fgaltkt').change(function () {
                tingkat_id = {"tingkat_id": $('#fgaltkt').val()};
