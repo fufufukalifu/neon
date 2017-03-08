@@ -177,7 +177,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                    	<table class="table table-striped" id="tblistTO" style="font-size: 13px">
+                    	<table class="table table-striped" id="tblistTO" style="font-size: 13px" width="100%">
                     		<thead>
                     			<tr>
                     				<th>NO</th>

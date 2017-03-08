@@ -5,6 +5,7 @@ class Admincabang_model extends CI_model {
 
 	//get report all
 	function get_report_paket($data){
+		$this->db->order_by('s.namaDepan','asc');
 		$this->db->select('id_report,p.namaPengguna,
 			c.namaCabang,
 			s.namaBelakang,
