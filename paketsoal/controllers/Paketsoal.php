@@ -62,11 +62,18 @@ class paketsoal extends MX_Controller
 			$penggunaID = $paket_soal['penggunaID'];
 			 $hakAkses=$this->session->userdata['HAKAKSES'];
 			$sesId = $this->session->userdata['id'];
+			$statusRandom =  $paket_soal['random'];
 			$row = array();
 			$row[] = $no;
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
+			if ($statusRandom=='1') {
+				$row[] ='YA';
+			}else{
+				$row[] ='TIDAK';
+			}
+			
 			if ($penggunaID == $sesId || $hakAkses == "admin") {
 				$row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_paket('."'".$paket_soal['id_paket']."'".')"><i class="ico-edit"></i></a>
 			<a class="btn btn-sm btn-success"  title="Add Soal" href="addbanksoal/'."".$paket_soal['id_paket']."".'"><i class="ico-file-plus2"></i></a>
