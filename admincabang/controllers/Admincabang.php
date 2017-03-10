@@ -102,7 +102,14 @@ class Admincabang extends MX_Controller {
 			$row[] = $item ['jmlh_salah'];
 			$row[] = $item ['jmlh_kosong'];
 			$row[] = number_format($nilai,2);			
-			$row[] = $item['tgl_pengerjaan'];	
+			$row[] = $item['tgl_pengerjaan'];
+
+			if ($item['jmlh_benar']==0 && $item['jmlh_salah']==0) {
+				$row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a>';
+			}else{
+				$row[] = "-";	
+
+			}	
 			
 			$data[] = $row;
 		}
@@ -128,6 +135,11 @@ class Admincabang extends MX_Controller {
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
 			$this->parser->parse('v-index-admincabang', $data);
+		} elseif ($hakAkses == 'admin') {
+					$data['files'] = array(
+			APPPATH . 'modules/admincabang/views/v-daftar-paket-admin.php',
+			);
+			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif ($hakAkses == 'guru') {
 			redirect(site_url('guru/dashboard/'));
 		} elseif ($hakAkses == 'siswa') {
@@ -161,8 +173,12 @@ class Admincabang extends MX_Controller {
 			$sumKosong=$item ['jmlh_kosong'];
 			//hitung jumlah soal
 			$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
-			//hitung nilai
-			$nilai=$sumBenar/$jumlahSoal*100;
+						// cek jika pembagi 0
+			if ($jumlahSoal != 0) {
+				//hitung nilai
+				$nilai=$sumBenar/$jumlahSoal*100;
+			}
+			
 			$paket=$item ['nm_paket'];
 			$cabang=$item ['namaCabang'];
 			$data['all_report'][]=array(
@@ -229,6 +245,13 @@ class Admincabang extends MX_Controller {
 		$data['all_report']=$datArr;
 		$this->parser->parse('v-laporanPDF-to.php',$data);
 	}
+
+function drop_report(){
+	if ($this->input->post()) {
+		$data = $this->input->post();
+		$this->admincabang_model->delete_report($data);
+	}
+}
 
 }
 ?>

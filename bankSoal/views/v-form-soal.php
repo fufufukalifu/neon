@@ -1285,9 +1285,11 @@ true">
                var reader = new FileReader();
                var size=Math.round(file.size/1024);
                if (size>=50000) {
+                console.log("gak-gak");
                 $('#e_size_audio').modal('show');
                 $('.hidden-audio').hide();
               }else{
+                console.log("masuk");
                 reader.onload = viewerAudio.load;
                 reader.readAsDataURL(file);
                 viewerAudio.setProperties(file);

@@ -68,6 +68,7 @@ class paketsoal extends MX_Controller
 			$row[] = $paket_soal['nm_paket'];
 			$row[] = $paket_soal['jumlah_soal'];
 			$row[] = $paket_soal['durasi'];
+			//pengecekan status random
 			if ($statusRandom=='1') {
 				$row[] ='YA';
 			}else{

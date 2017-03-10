@@ -12,13 +12,13 @@ class Siswa extends MX_Controller {
          $this->load->model('cabang/mcabang');
         $this->load->helper('session');
         $this->load->library('parser');
+         $this->load->library('pagination');
 
         // sessionkonfirm();
         // get_session_siswa();
     }
 
     //
-
     public function profilesetting() {
          $data = array(
 
@@ -27,9 +27,6 @@ class Siswa extends MX_Controller {
             'judul_header' =>'Pengaturan Akun',
 
             'judul_header2' =>'Pengaturan Akun'
-
-
-
         );
 
         $data['files'] = array( 
@@ -330,6 +327,8 @@ class Siswa extends MX_Controller {
             $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
             $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
             $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
+            $cabangID = htmlspecialchars($this->input->post('cabang'));
+            $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
 
 //data akun
             $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
@@ -366,6 +365,8 @@ class Siswa extends MX_Controller {
                 'alamatSekolah' => $alamatSekolah,
                 'penggunaID' => $penggunaID,
                 'tingkatID' => $tingkatID,
+                'cabangID' => $cabangID,
+                'noIndukNeutron' => $noIndukNeutron
             );
 //data unutk session siswa
 //            $sess_array = array(
@@ -511,6 +512,118 @@ class Siswa extends MX_Controller {
         $this->parser->parse( 'templating/index', $data );
     }
 
+    // create pagination siswa /*by MrBebek
+    public function paginationSiswa()
+    {
+       // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->msiswa->jumlah_siswa();
+       
+        $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 10;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->msiswa->data_siswa($config['per_page'],$from);
+
+        $this->tampSiswa($list);
+        
+    }
+    //untuk emanmpilkan  list siswa /*by MrBebek
+    public function tampSiswa($list)
+    {
+        // $data['siswa'] = array();
+        // $no = 0;
+        // //mengambil nilai list
+        // $baseurl = base_url();
+        // foreach ($list as $list_siswa) {
+        //     $no++;
+        //     $data['siswa'][] = array(
+        //   'no'=> $no,
+        //   'idsiswa'=> $list_siswa['idsiswa'],
+        //   'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
+        //    'namaPengguna'=> $list_siswa['namaPengguna'],
+
+        //   'namaSekolah'=> $list_siswa['namaSekolah'],
+        //   'eMail'=>  $list_siswa['eMail'] ,
+        //   'penggunaID'=> $list_siswa['penggunaID']
+
+        //    );
+        // }
+        // var_dump($data['siswa']);
+       $data = array();
+        $no = 0;
+        //mengambil nilai list
+        $baseurl = base_url();
+        foreach ($list as $list_siswa) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $list_siswa['idsiswa'];
+            $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
+            $row[] = $list_siswa['namaPengguna'];
+
+            $row[] = $list_siswa['namaSekolah'];
+            $row[] = '<a href=""  title="Mail To">' . $list_siswa['eMail'] . '</a> <i class="ico-mail-send"></i>';
+            $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>';
+
+            $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
+
+        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "data" => $data,
+        );
+        echo json_encode($output);
+    }
+
+    public function listSiswa()
+    {
+         $data['judul_halaman'] = "Pengelolaan Data Siswa";
+        $data['files'] = array(
+            APPPATH . 'modules/siswa/views/v-list-siswa.php',
+        );
+        // jika admin
+        $this->parser->parse('admin/v-index-admin', $data);
+    }
 
 }
 
