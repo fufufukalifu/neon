@@ -57,7 +57,7 @@ class Siswa extends MX_Controller {
     $data['files'] = array( 
         APPPATH.'modules/homepage/views/v-header-login.php',
         APPPATH.'modules/siswa/views/headersiswa.php',
-        APPPATH.'modules/siswa/views/v-container-dashboard-siswa.php',
+        APPPATH.'modules/siswa/views/t-profile-siswa.php',
         APPPATH.'modules/testimoni/views/v-footer.php',
         );
 
