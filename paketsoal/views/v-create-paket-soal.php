@@ -145,6 +145,7 @@
                                                 <th>Nama Paket Soal</th>
                                                 <th>Jumlah soal</th>
                                                 <th class="text-center">Durasi</th>
+                                                <th>Random</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -156,6 +157,7 @@
                                                 <th>Nama Paket Soal</th>
                                                 <th>Jumlah soal</th>
                                                 <th class="text-center">Durasi</th>
+                                                <th>Random</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </tfoot>
@@ -209,11 +211,13 @@ function add_paket(){
 //fungsi simpan
 // dari sini 
 function save(){
+    var id_paket =$('[name="id_paket"]').val();
     var nama_paket= $('[name="nama_paket"]').val();
     var jumlah_soal  = $('[name="jumlah_soal"]').val();
     var durasi = $('[name="durasi"]').val();
-var deskripsi= $('[name="deskripsi"]').val();
+    var deskripsi= $('[name="deskripsi"]').val();
     var random = $('input[name=random]:checked').val();
+
     if (!random) {
         random = 0;
     };
@@ -225,7 +229,7 @@ var deskripsi= $('[name="deskripsi"]').val();
         url = base_url+"index.php/paketsoal/addpaketsoal";
 
     } else {
-
+        console.log("ini budi");
         url = base_url+"index.php/paketsoal/updatepaketsoal";
 
     }
@@ -237,12 +241,13 @@ var deskripsi= $('[name="deskripsi"]').val();
          $('#btnSave').attr('disabled',true); //set button disable 
 
              // ajax adding data to database
-             var datas = {nama_paket:nama_paket,
+             var datas = {id_paket:id_paket,
+                            nama_paket:nama_paket,
                           jumlah_soal:jumlah_soal,
                           deskripsi:deskripsi,
                           durasi:durasi,
                           random:random};
-             console.log(datas);
+
              $.ajax({
                 url : url,
                 type: "POST",
@@ -311,6 +316,7 @@ url = base_url+"index.php/paketsoal/droppaketsoal/"+id;
 
 function edit_paket(id)
 {
+
     save_method = 'update';
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class

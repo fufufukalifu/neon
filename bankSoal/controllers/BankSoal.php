@@ -1,7 +1,24 @@
 <?php
 
+//============================================================+
+// File name   : Banksoal.php
+// Begin       : -
+// Last Update : -2017-03-02
+//
+// Description : List pagination siswa
+//               
+//
+// Author: MrBebek
+//
+// (c) Copyright:
+//               MrBebek
+//               neonjogja.com
+
+//============================================================+
+
 /**
- * 
+ * @author MrBebek
+ * @since  2016-08-xx
  */
 class Banksoal extends MX_Controller {
 

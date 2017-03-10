@@ -211,6 +211,22 @@ class Msiswa extends CI_Model {
         }
     }
 
+    // get jumlah siswa untuk footer pagination
+    function jumlah_siswa(){
+        $this->db->where('status','1');
+        return $this->db->get('tb_siswa')->num_rows();
+    }
+
+    // get data siswa per segment
+    function data_siswa($number,$offset){
+        $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail');
+        $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+        $this->db->where('s.status','1');
+        $this->db->where('p.status','1');
+         $this->db->order_by('s.namaDepan', 'desc');
+        return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
+    }
+
     ##
 }
 

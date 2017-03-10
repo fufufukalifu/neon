@@ -5,6 +5,7 @@ class Admincabang_model extends CI_model {
 
 	//get report all
 	function get_report_paket($data){
+		$this->db->order_by('s.namaDepan','asc');
 		$this->db->select('id_report,p.namaPengguna,
 			c.namaCabang,
 			s.namaBelakang,
@@ -81,6 +82,14 @@ function get_paket_by_id_to($id_to){
 
 	return $result->result_array();
 }
+
+
+	// hapus report laporan //
+	public function delete_report($data){
+		$this->db->where('id_report',$data['id_report']);
+		$this->db->delete('tb_report-paket');
+	}
+	// hapus report laporan //
 
 
 
