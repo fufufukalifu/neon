@@ -226,6 +226,21 @@ class Msiswa extends CI_Model {
          $this->db->order_by('s.namaDepan', 'desc');
         return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
     }
+    //cari Siswa
+    public function get_cari_siswa($data)
+    {   
+        $this->db->select('s.namaDepan,s.namaBelakang,p.namaPengguna,s.penggunaID');
+        $this->db->from('tb_siswa s');
+        $this->db->join('tb_pengguna p','p.id=s.penggunaID');
+
+         $this->db->like('namaDepan',$data);
+        $this->db->or_like('namaBelakang',$data);
+         $this->db->or_like('p.namaPengguna',$data);
+       
+        $this->db->where('s.status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
     ##
 }

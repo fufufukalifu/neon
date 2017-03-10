@@ -28,9 +28,9 @@
 
   <!--/ Plugins stylesheet -->
 <!-- css aoutocomplate -->
-<link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
-<!-- JS aoutocomplate -->
-<script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script>
+<!-- <link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
+JS aoutocomplate
+<script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script> -->
   <!-- Application stylesheet : mandatory -->
   <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/stylesheet/layout.min.css') ?>">
@@ -449,7 +449,7 @@
             </a>
           </li>
           <li>
-            <a href="<?=base_url('siswa/daftar') ?>">
+            <a href="<?=base_url('siswa/listSiswa') ?>">
               <span class="text">Daftar Siswa</span>
             </a>
           </li>

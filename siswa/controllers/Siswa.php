@@ -642,6 +642,7 @@ $output = array(
 echo json_encode($output);
 }
 
+
 public function listSiswa()
 {
  $data['judul_halaman'] = "Pengelolaan Data Siswa";
