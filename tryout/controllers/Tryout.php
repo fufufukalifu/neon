@@ -164,12 +164,6 @@ class Tryout extends MX_Controller {
     //# fungsi indeks
 
     function test2() {
-        var_dump($this->session->userdata());
-    }
-
-//# fungsi indeks
-//fungsi ilham
-    public function mulaitest() {
         if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
             $id = $this->session->userdata['id_mm-tryoutpaket'];
             $data['topaket'] = $this->Mtryout->datatopaket($id);
@@ -185,13 +179,65 @@ class Tryout extends MX_Controller {
             $data['soal'] = $query['soal'];
             $data['pil'] = $query['pil'];
 ////        var_dump($data);
-            $this->load->view('vHalamanTo.php', $data);
-            $this->load->view('templating/t-footerto', $data);
+            $this->load->view('v-test-mathjax.php', $data);
+            // $this->load->view('templating/t-footerto', $data);
         } else {
             $this->errorTest();
         }
     }
 
+// ================ mulai test lama ======================
+//# fungsi indeks
+//fungsi ilham
+    /*public function mulaitest() {
+//agar pesanya hilang dulu
+        if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
+            $id = $this->session->userdata['id_mm-tryoutpaket'];
+            $data['topaket'] = $this->Mtryout->datatopaket($id);
+//        echo $id;
+            $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
+
+//        echo $id_paket; 
+            $data['paket'] = $this->Mtryout->durasipaket($id_paket);
+//        var_dump($data);
+
+            $this->load->view('templating/t-headerto');
+            $query = $this->load->Mtryout->get_soal($id_paket);
+            $data['soal'] = $query['soal'];
+            $data['pil'] = $query['pil'];
+////        var_dump($data);
+            $this->load->view('vHalamanTo-bu.php', $data);
+            $this->load->view('templating/t-footerto', $data);
+        } else {
+            $this->errorTest();
+        }
+    }*/
+// ================ mulai test lama ======================
+public function mulaitest() { 
+        if (!empty($this->session->userdata['id_mm-tryoutpaket'])) { 
+            $id = $this->session->userdata['id_mm-tryoutpaket']; 
+            $data['topaket'] = $this->Mtryout->datatopaket($id); 
+//        echo $id; 
+            $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket; 
+        $random = $this->Mtryout->dataPaketRandom($id_paket)[0]->random; 
+//        echo $id_paket;  
+            $data['paket'] = $this->Mtryout->durasipaket($id_paket); 
+//        var_dump($data); 
+            $this->load->view('templating/t-headerto'); 
+            if ($random == 0) { 
+                $query = $this->load->Mtryout->get_soalnorandom($id_paket); 
+            }else{ 
+                $query = $this->load->Mtryout->get_soal($id_paket); 
+            } 
+            $data['soal'] = $query['soal']; 
+            $data['pil'] = $query['pil']; 
+////        var_dump($data); 
+            $this->load->view('vHalamanTo-bu.php', $data); 
+            $this->load->view('templating/t-footerto', $data); 
+        } else { 
+            $this->errorTest(); 
+        } 
+    }
     public function mulaipembahasan() {
         if (!empty($this->session->userdata['id_mm-tryoutpaketpembahasan'])) {
             $id = $this->session->userdata['id_mm-tryoutpaketpembahasan'];

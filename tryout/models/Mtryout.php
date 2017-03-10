@@ -244,6 +244,35 @@ function get_soal_by_paket($id_paket){
     $soal = $query->result_array();
     return $soal;
 }
+
+public function get_soalnorandom($id_paket) { 
+    $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.audio as audio'); 
+    $this->db->from('tb_mm-paketbank as paban'); 
+    $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal'); 
+    $this->db->where('paban.id_paket', $id_paket); 
+    $query = $this->db->get(); 
+    $soal = $query->result_array(); 
+
+    $this->db->select('*,id_paket as idpak, soal as soal, pil.id_soal as pilid,soal.id_soal as soalid, pil.pilihan as pilpil, pil.jawaban as piljaw, pil.gambar as pilgam'); 
+    $this->db->from('tb_mm-paketbank as paban'); 
+    $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal'); 
+    $this->db->join('tb_piljawaban as pil', 'soal.id_soal = pil.id_soal'); 
+    $this->db->where('paban.id_paket', $id_paket); 
+    $query = $this->db->get(); 
+    $pil = $query->result_array(); 
+    return array( 
+        'soal' => $soal, 
+        'pil' => $pil, 
+        ); 
+} 
+public function dataPaketRandom($id) { 
+    $this->db->select('random'); 
+    $this->db->from('tb_paket'); 
+    $this->db->where('id_paket', $id); 
+    $query = $this->db->get(); 
+    return $query->result(); 
+}
+
 }
 
 ?>
