@@ -28,6 +28,9 @@
 
   <!--/ Plugins stylesheet -->
 <!-- css aoutocomplate -->
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
 <!-- <link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
 JS aoutocomplate
 <script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script> -->

@@ -216,7 +216,10 @@ function hidePesan() {
 var site = "<?php echo site_url();?>";
   $(function() {
     $( "#carisoal" ).autocomplete({
-        serviceUrl: site+'/banksoal/autocomplete',
+        source: site+'/banksoal/autocomplete',
+               select: function (event, ui) {
+                window.location = ui.item.url;
+                }
     });
 });
 </script>

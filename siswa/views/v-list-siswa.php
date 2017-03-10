@@ -21,8 +21,7 @@
  */
 
  ?>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
-<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
 
  <!-- <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>"> -->
 <section id="main" role="main">
@@ -32,22 +31,16 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">Daftar Siswa</h4>
                   <!--    Trigger the modal with a button -->
-                  <div>
-                      
-                  </div>
-                    
+                 
+                         <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right " style="margin-top:-30px;" ><i class="ico-plus"></i></a>
+              
                    <!--  <a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a> -->
                 </div>
                 <!-- Funsi cari  -->
-                <div class="col-md-4">
-
-                    <form class="input-group ">
+                <div class=" pull-right">
                     <input id="carisoal" type="text" name="keyword" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit"><i class="ico-search"></i></button>
-                    </span>
-                </form>
                 </div>
+
          <!-- Funsi cari -->
                 <input type="text" name="page" value="<?=$this->uri->segment('3')?>" hidden="true">
                 <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
@@ -108,7 +101,7 @@
     $( "#carisoal" ).autocomplete({
         source:  site+"/siswa/autocompleteSiswa",
         select: function (event, ui) {
-                        source:  base_url +"siswa/autocompleteSiswa",
+            source:  site+"/siswa/autocompleteSiswa",
                 window.location = ui.item.url;
                 }
     });

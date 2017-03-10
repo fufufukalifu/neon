@@ -536,9 +536,10 @@ class Mbanksoal extends CI_Model {
 
     public function get_cari($data)
     {   
-        $this->db->select('judul_soal');
+        $this->db->select('judul_soal,sumber');
         $this->db->from('tb_banksoal');
         $this->db->like('judul_soal',$data);
+         // $this->db->or_like('sumber',$data);
         $this->db->where('status',1);
         $query = $this->db->get();
         return $query->result_array();

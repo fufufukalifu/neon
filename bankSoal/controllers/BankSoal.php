@@ -2024,16 +2024,17 @@ class Banksoal extends MX_Controller {
     //search autocomplete soal berdasarkan judul soal
     public function autocomplete()
     {
-     $keyword = $this->uri->segment(3);
+     $keyword = $_GET['term'];
         // cari di database
      $data = $this->Mbanksoal->get_cari($keyword);  
 
         // format keluaran di dalam array
+     $arr = array();
      foreach($data as $row)
      {
-        $arr['query'] = $keyword;
-        $arr['suggestions'][] = array(
-            'value' =>$row['judul_soal'],
+        $arr[] = array(
+            'value' =>"Judul: ".$row['judul_soal'].", Sumber: ".$row['sumber'],
+            'url'=>base_url('banksoal/cari')."/".$row['judul_soal'],
             );
     }
         // minimal PHP 5.2
@@ -2041,11 +2042,14 @@ class Banksoal extends MX_Controller {
   }
 
   // cari soal berdasarkan nama
-  public function cari()
+  public function cari($keyget='')
   {
       // code u/pagination
        $this->load->database();
            $keyword = $this->input->post('keyword');
+           if ($keyget!='') {
+               $keyword=$keyget;
+           }
       $datCari = $this->Mbanksoal->get_cari2($keyword);
         $jumlah_data = $this->Mbanksoal->jumlah_soalCari($keyword);
        

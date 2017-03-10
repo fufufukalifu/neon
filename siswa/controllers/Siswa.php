@@ -10,6 +10,8 @@ class Siswa extends MX_Controller {
         $this->load->model('msiswa');
         $this->load->model('register/mregister');
         $this->load->model('cabang/mcabang');
+        $this->load->model('tryout/mtryout');
+
         $this->load->helper('session');
         $this->load->library('parser');
         $this->load->library('pagination');
@@ -20,7 +22,7 @@ class Siswa extends MX_Controller {
 
     //
     public function profilesetting() {
-       $data = array(
+     $data = array(
 
         'judul_halaman' => 'Neon - Pengaturan Akun',
 
@@ -29,7 +31,7 @@ class Siswa extends MX_Controller {
         'judul_header2' =>'Pengaturan Akun'
         );
 
-       $data['files'] = array( 
+     $data['files'] = array( 
 
         APPPATH.'modules/homepage/views/v-header-login.php',
 
@@ -42,27 +44,41 @@ class Siswa extends MX_Controller {
 
         );
 
-       $data['siswa'] = $this->msiswa->get_datsiswa();
-       $this->parser->parse( 'templating/index', $data );
-   }
+     $data['siswa'] = $this->msiswa->get_datsiswa();
+     $this->parser->parse( 'templating/index', $data );
+ }
 
-   public function index() {
-    $data['siswa'] = $this->msiswa->get_datsiswa();
+ public function index() {
+
+    $data['siswa'] = $this->msiswa->get_datsiswa()[0];
+    if ($data['siswa']['biografi']=="") {
+        $bio = "ini masih malu-malu nyeritain tentang dirinya";
+    }
     $data = array(
         'judul_halaman' => 'Neon - Dashboard Siswa',
         'judul_header' =>'Dashboard Siswa',
-        'judul_header2' =>'Dashboard Siswa'
+        'judul_header2' =>'Dashboard Siswa',
+        'namaDepan' => $data['siswa']['namaDepan'],
+        'namaBelakang' => $data['siswa']['namaBelakang'],
+        'alamat' => $data['siswa']['alamat'],
+        'noKontak' => $data['siswa']['noKontak'],
+        'biografi' => $bio,
+        'namaSekolah' => $data['siswa']['namaSekolah'],
+        'alamatSekolah'  =>$data['siswa']['alamatSekolah'],
+        'photo'=>base_url().'assets/image/photo/siswa/'.$data['siswa']['photo'],
+        'sisa'=>$this->session->userdata('sisa'),
+        'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
+        'jumlah_latihan' =>$this->mtryout->get_jumlah_report_latihan(),
         );
 
     $data['files'] = array( 
-        APPPATH.'modules/homepage/views/v-header-login.php',
-        APPPATH.'modules/siswa/views/headersiswa.php',
-        APPPATH.'modules/siswa/views/v-container-dashboard-siswa.php',
-        APPPATH.'modules/testimoni/views/v-footer.php',
+        // APPPATH.'modules/homepage/views/v-header-login.php',
+        // APPPATH.'modules/siswa/views/headersiswa.php',
+        APPPATH.'modules/siswa/views/t-profile-siswa.php',
+        // APPPATH.'modules/testimoni/views/v-footer.php',
         );
 
-    $data['siswa'] = $this->msiswa->get_datsiswa();
-    $this->parser->parse( 'templating/index', $data );
+    $this->parser->parse( 'templating/index-d-siswa', $data );
 }
 
     //menampilkan halaman pengaturan profile
@@ -146,12 +162,12 @@ public function ubahemailsiswa() {
 
 
     if ($this->form_validation->run() == FALSE) {
-       $this->profilesetting();
+     $this->profilesetting();
         // sessionkonfirm();
         // sessionsiswa();
 
-       
-   } else {
+
+ } else {
     $email = htmlspecialchars($this->input->post('email'));
 
     $data_post = array(
@@ -406,22 +422,22 @@ function updateSiswa($idsiswa, $idpengguna) {
     if ($idsiswa == null || $idpengguna == 0) {
         echo 'kosong';
     } else {
-       $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-       $data['cabang'] = $this->mcabang->get_all_cabang();
-       $idsiswa = $idsiswa;
-       $idpengguna = $idpengguna;
+     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+     $data['cabang'] = $this->mcabang->get_all_cabang();
+     $idsiswa = $idsiswa;
+     $idpengguna = $idpengguna;
 
-       $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+     $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
 
 //            var_dump($data);
 
-       $data['judul_halaman'] = "Rubah Data Siswa";
-       $data['files'] = array(
+     $data['judul_halaman'] = "Rubah Data Siswa";
+     $data['files'] = array(
         APPPATH . 'modules/siswa/views/v-update-siswa.php',
         );
             // jika admin
-       $this->parser->parse('admin/v-index-admin', $data);
-   }
+     $this->parser->parse('admin/v-index-admin', $data);
+ }
 }
 
     //tgl 30 Oktober
@@ -503,24 +519,24 @@ public function ajax_daftar_latihan() {
 
 
 public function test() {
-   $data = array(
+ $data = array(
 
     'judul_halaman' => 'Neon - Welcome',
     'judul_header' =>'Welcome',
     'judul_header2' =>'Welcome'
     );
 
-   $data['files'] = array( 
+ $data['files'] = array( 
     APPPATH.'modules/homepage/views/v-header-login.php',
     APPPATH.'modules/siswa/views/headersiswa.php',
     APPPATH.'modules/siswa/views/v-dashboard.php',
     APPPATH.'modules/testimoni/views/v-footer.php',
     );
 
-   $data['siswa'] = $this->msiswa->get_datsiswa()[0];
-   $data['token'] = $this->session->userdata('token');
-   var_dump($data['token']);
-   $this->parser->parse( 'templating/index', $data );
+ $data['siswa'] = $this->msiswa->get_datsiswa()[0];
+ $data['token'] = $this->session->userdata('token');
+ var_dump($data['token']);
+ $this->parser->parse( 'templating/index', $data );
 }
 
     // create pagination siswa /*by MrBebek
@@ -578,7 +594,7 @@ public function listSiswa()
     //untuk emanmpilkan  list siswa /*by MrBebek
 public function tampSiswa($list)
 {
-        $data['judul_halaman'] = "Pengelolaan Data Siswa";
+      $data['judul_halaman'] = "Pengelolaan Data Siswa";
    $data['files'] = array(
     APPPATH . 'modules/siswa/views/v-list-siswa.php',
     );
@@ -616,13 +632,13 @@ public function tampSiswa($list)
             redirect(site_url('welcome'));
         }
         #END Cek USer#
-       
 }
 
-  //search autocomplete soal berdasarkan judul soal
+
+//search autocomplete soal berdasarkan judul soal
     public function autocompleteSiswa()
     {
-     $keyword = $this->uri->segment(3);
+     $keyword = $_GET['term'];
 
      // cari di database
      $data = $this->msiswa->get_cari_siswa($keyword); 
