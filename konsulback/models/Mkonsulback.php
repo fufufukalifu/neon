@@ -88,7 +88,7 @@
 
     	//ambil pertanyaan yang dimiliki oleh id tertentu.
 	function get_my_questions($mataPelajaranID){
-		$this->db->limit(3);
+		$this->db->limit(10);
 		// $this->db->offset($this->uri->segment(3));
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
@@ -99,8 +99,7 @@
 		$this->db->join('`tb_bab` `bab`','`subbab`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
-		$this->db->where('`tp`.`mataPelajaranID`',$mataPelajaranID);
-		$this->db->order_by('`pertanyaan`.`id`','desc');
+		$this->db->where('`tp`.`mataPelajaranID`',$mataPelajaranID)->order_by('`pertanyaan`.`id`','desc');
 		 $query = $this->db->get();
 		 		if ($query->result_array()==array()) {
 			return false;
@@ -198,13 +197,10 @@
 		$this->db->where('id <',$last_askID);
 		$query = $this->db->get();
 		return $query->num_rows();
-
 	}
 
-
-	public function count_konsulMapel($last_askIDMp,$mataPelajaranID)
+		public function count_konsulMapel($last_askIDMp,$mataPelajaranID)
 	{
-
 		$this->db->select('pertanyaan.id');
 		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
 		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');

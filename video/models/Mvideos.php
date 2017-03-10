@@ -445,6 +445,23 @@ function get_meta_mapel($subBabID){
     return $result->result_array()[0];
   }
 }
+
+// ambil semua video
+function get_video_by_admin() {
+  $this->db->select( '*, video.id as videoID,judulSubBab,judulBab, tp.keterangan as matapelajaran' );
+  $this->db->from( 'tb_video video' );
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->join('tb_bab bab','subbab.babID=bab.id');
+  $this->db->join('tb_tingkat-pelajaran tp','bab.tingkatPelajaranID=tp.id');
+  $this->db->where('video.status', '1');
+  $this->db->where('video.guruID IS NULL');
+
+  $query = $this->db->get();
+  return $query->result_array();
 }
+
+}
+
+
 
 ?>

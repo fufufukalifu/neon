@@ -24,98 +24,102 @@
         <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
           <thead>
             <tr>
-              <th> </th>
-              <th>No</th>
-              <th>Nama Mahasiswa</th>
-              <th>Nama Pengguna</th>
-              <th>Cabang</th>
+              <th>
+                <span class="checkbox custom-checkbox check-all">
+                  <input type="checkbox" name="checkall" id="check-all">
+                  <label for="check-all">&nbsp;&nbsp;</label></span> 
+                </th>
+                <th>No</th>
+                <th>Nama Mahasiswa</th>
+                <th>Nama Pengguna</th>
+                <th>Cabang</th>
 
-            </tr>
-          </thead>
+              </tr>
+            </thead>
 
-          <tbody>
+            <tbody>
 
-          </tbody>
-        </table>
-        <hr>
-        <a class="btn btn-primary set_token">Kirim Token</a>
+            </tbody>
+          </table>
+          <hr>
+          <a class="btn btn-primary set_token">Kirim Token</a>
 
-      </div>
-      <div class="panel-footer">
-        <ul class="nav nav-section nav-justified">
-          <li>
-            <div class="section">
-              <input type="hidden" name="jumlah_semua_stok">
-              <input type="hidden" name="jumlah_30_stok">
-              <input type="hidden" name="jumlah_100_stok">
-              <input type="hidden" name="jumlah_365_stok">  
-              <h5 class="nm jumlah_semua_stok"></h5>
-              <span>Semua</span>
-            </div>
-          </li>
+        </div>
+        <div class="panel-footer">
+          <ul class="nav nav-section nav-justified">
+            <li>
+              <div class="section">
+                <input type="hidden" name="jumlah_semua_stok">
+                <input type="hidden" name="jumlah_30_stok">
+                <input type="hidden" name="jumlah_100_stok">
+                <input type="hidden" name="jumlah_365_stok">  
+                <h5 class="nm jumlah_semua_stok"></h5>
+                <span>Semua</span>
+              </div>
+            </li>
 
-          <li>
-            <div class="section">
-              <h5 class="nm jumlah_30_stok"></h5>
-              <span>30 Hari</span>
-            </div>
-          </li>
+            <li>
+              <div class="section">
+                <h5 class="nm jumlah_30_stok"></h5>
+                <span>30 Hari</span>
+              </div>
+            </li>
 
-          <li>
-            <div class="section">
-              <h5 class="nm jumlah_100_stok"></h5>
-              <span>100 Hari</span>
-            </div>
-          </li>
+            <li>
+              <div class="section">
+                <h5 class="nm jumlah_100_stok"></h5>
+                <span>100 Hari</span>
+              </div>
+            </li>
 
-          <li>
-            <div class="section">
-              <h5 class="nm jumlah_365_stok"></h5>
-              <span>365 Hari</span>
-            </div>
-          </li>
-        </ul>
+            <li>
+              <div class="section">
+                <h5 class="nm jumlah_365_stok"></h5>
+                <span>365 Hari</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<div class="col-md-12 form-token" style="display: none">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Tambah Token</h3> 
-    </div>
-    <div class="panel-body">
-      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-       <div  class="form-group">
-         <label class="col-sm-2 control-label">Jumlah Token</label>
-         <div class="col-sm-3">
-           <!-- stkt = soal tingkat -->
-           <input type="text" class="form-control" name="jumlah_token">
-         </div>
-
-         <label class="col-sm-2 control-label">Masa aktif</label>
-         <div class="col-sm-3">
-           <!-- stkt = soal tingkat -->
-           <select class="form-control" name="masa_aktif">
-            <option value="0">-- Pilih Masa Aktif --</option>
-            <option value="30">30 Hari</option>
-            <option value="100">100 Hari</option>
-            <option value="365">365 Hari</option>
-          </select>
-        </div>
+  <div class="col-md-12 form-token" style="display: none">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Tambah Token</h3> 
       </div>
+      <div class="panel-body">
+        <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
+         <div  class="form-group">
+           <label class="col-sm-2 control-label">Jumlah Token</label>
+           <div class="col-sm-3">
+             <!-- stkt = soal tingkat -->
+             <input type="text" class="form-control" name="jumlah_token">
+           </div>
 
-      <div class="form-group no-border">
-        <div class="col-sm-6 ml10">
-         <a class="btn btn-primary simpan_token">Generate Token</a>
+           <label class="col-sm-2 control-label">Masa aktif</label>
+           <div class="col-sm-3">
+             <!-- stkt = soal tingkat -->
+             <select class="form-control" name="masa_aktif">
+              <option value="0">-- Pilih Masa Aktif --</option>
+              <option value="30">30 Hari</option>
+              <option value="100">100 Hari</option>
+              <option value="365">365 Hari</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group no-border">
+          <div class="col-sm-6 ml10">
+           <a class="btn btn-primary simpan_token">Generate Token</a>
+         </div>
        </div>
-     </div>
 
-   </form>
+     </form>
+   </div>
  </div>
-</div>
 </div>
 <div class="col-md-12">
   <div class="panel panel-default">
@@ -221,7 +225,6 @@ var dataRekapToken
 
 
 $(document).ready(function(){
-
   // TABLE TOKEN
   dataTableToken = $('.daftartoken').DataTable({
     "ajax": {
@@ -261,11 +264,6 @@ $(document).ready(function(){
 // onclick action
 $('.add-token').click(function(){
   $('.form-token').toggle('show');
-  // console.log($('.form-token').toggle('show'));
-  /*
-  var container = $("html,body");
-  var scrollTo = $('.kirim_token');
-  container.animate({scrollTop: scrollTo.offset().top - container.offset().top, scrollLeft: 0},300);*/
 });
 
 $('.simpan_token').click(function(){
@@ -339,9 +337,11 @@ function set_token_to_mahasiswa(){
     swal('silahkan tentukan masa aktif terlebih dahulu');
     $('select[name=masa_aktif_set]').focus();
   }else{
-   $(':checkbox:checked').each(function(i){
+   $('.daftarsiswa tbody td :checkbox:checked').each(function(i){
      id_siswa[i] = $(this).val();
    }); 
+  console.log(id_siswa);
+   
    jumlah_mahasiswa = id_siswa.length;
    jumlah_stok = $('input[name=jumlah_'+masa_aktif+'_stok]').val();
 
@@ -425,7 +425,7 @@ function get_stok(){
 
 function reload(){
   get_stok();
-    dataTableToken.ajax.reload(null,false); 
+  dataTableToken.ajax.reload(null,false); 
   dataTableSiswa.ajax.reload(null,false); 
   dataRekapToken.ajax.reload(null,false); 
 }
@@ -492,5 +492,16 @@ function update_token(data){
     });
   });
 }
+
+
+
+$('[name="checkall"]:checkbox').click(function () {
+ if($(this).attr("checked")){
+  $('table.daftarsiswa tbody input:checkbox').prop( "checked", true );
+} else{ 
+  $('table.daftarsiswa tbody input:checkbox').prop( "checked", false );
+}
+});
+
 get_stok();
 </script>
