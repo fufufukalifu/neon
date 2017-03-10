@@ -49,13 +49,27 @@
                     </thead>
 
                     <tbody>
+                    <?php foreach ($siswa as $key): ?>
+                    <tr>
+                        <td><?=$no;?></td>
+                        <td>Id siswa</td>
+                        <td>Nama Lengkap</td>
+                        <td>Nama Pengguna</td>
+                        <td>Sekolah</td>
+                        <td>Email</td>
+                        <td>Report Siswa</td>
+                        <td>Aksi</td>
+                        </tr>
+                    <?php endforeach ?>
 
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation mt10 pt10"><center>
         <ul class="pagination ">
         <?php 
+       
         echo $this->pagination->create_links();
+       
         ?>
         </ul>
         </center>
@@ -67,14 +81,16 @@
 <script type="text/javascript">
     var tb_siswa;
     $(document).ready(function () {
-        tb_siswa = $('.daftarsiswa').DataTable({
-            "ajax": {
-                "url": base_url + "siswa/paginationSiswa",
-                "type": "POST"
-            },
-            "emptyTable": "Tidak Ada Data Siswa",
-            "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-        });
+        // tb_siswa = $('.daftarsiswa').DataTable({
+        //     "ajax": {
+        //         "url": base_url + "siswa/paginationSiswa",
+        //         "type": "POST"
+        //     },
+        //     "emptyTable": "Tidak Ada Data Siswa",
+        //     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+        //     "paging":   false,
+        //      "searching": false
+        // });
     });
 
     function dropSiswa(idsiswa, idpengguna) {

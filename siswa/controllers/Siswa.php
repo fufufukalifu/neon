@@ -567,57 +567,79 @@ class Siswa extends MX_Controller {
     //untuk emanmpilkan  list siswa /*by MrBebek
     public function tampSiswa($list)
     {
-        // $data['siswa'] = array();
-        // $no = 0;
-        // //mengambil nilai list
-        // $baseurl = base_url();
-        // foreach ($list as $list_siswa) {
-        //     $no++;
-        //     $data['siswa'][] = array(
-        //   'no'=> $no,
-        //   'idsiswa'=> $list_siswa['idsiswa'],
-        //   'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
-        //    'namaPengguna'=> $list_siswa['namaPengguna'],
-
-        //   'namaSekolah'=> $list_siswa['namaSekolah'],
-        //   'eMail'=>  $list_siswa['eMail'] ,
-        //   'penggunaID'=> $list_siswa['penggunaID']
-
-        //    );
-        // }
-        // var_dump($data['siswa']);
-       $data = array();
+        $data['judul_halaman'] = "Siswa list";
+        $data['files'] = array(
+            APPPATH . 'modules/siswa/views/v-list-siswa.php',
+            );
+        $data['siswa'] = array();
         $no = 0;
-        //mengambil nilai list
+        // //mengambil nilai list
         $baseurl = base_url();
         foreach ($list as $list_siswa) {
             $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $list_siswa['idsiswa'];
-            $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
-            $row[] = $list_siswa['namaPengguna'];
+            $data['siswa'][] = array(
+          'no'=> $no,
+          'idsiswa'=> $list_siswa['idsiswa'],
+          'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
+           'namaPengguna'=> $list_siswa['namaPengguna'],
 
-            $row[] = $list_siswa['namaSekolah'];
-            $row[] = '<a href=""  title="Mail To">' . $list_siswa['eMail'] . '</a> <i class="ico-mail-send"></i>';
-            $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>';
+          'namaSekolah'=> $list_siswa['namaSekolah'],
+          'eMail'=>  $list_siswa['eMail'] ,
+          'penggunaID'=> $list_siswa['penggunaID']
 
-            $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
-
-        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
-
-            $data[] = $row;
+           );
         }
 
-        $output = array(
-            "data" => $data,
-        );
-        echo json_encode($output);
+
+
+        // var_dump($data['siswa']);
+      // ///jason
+      //  $datArr = array();
+      //   $no = 0;
+      //   //mengambil nilai list
+      //   $baseurl = base_url();
+      //   foreach ($list as $list_siswa) {
+      //       $no++;
+      //       $row = array();
+      //       $row[] = $no;
+      //       $row[] = $list_siswa['idsiswa'];
+      //       $row[] = $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'];
+      //       $row[] = $list_siswa['namaPengguna'];
+
+      //       $row[] = $list_siswa['namaSekolah'];
+      //       $row[] = '<a href=""  title="Mail To">' . $list_siswa['eMail'] . '</a> <i class="ico-mail-send"></i>';
+      //       $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>';
+
+      //       $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
+
+      //   <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>';
+
+      //       $datArr[] = $row;
+      //   }
+
+      //   $output = array(
+      //       "data" => $data,
+      //   );
+      //   $data['output']= json_encode($output);
+
+                  #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+                $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+             // jika guru
+               $this->parser->parse('templating/index-b-guru', $data);
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
     }
 
-    public function listSiswa()
+    public function listSiswa($indexPage="")
     {
-         $data['judul_halaman'] = "Pengelolaan Data Siswa";
+        $data["indexPage"]=$indexPage;
+        $data['judul_halaman'] = "Pengelolaan Data Siswa";
         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-list-siswa.php',
         );
