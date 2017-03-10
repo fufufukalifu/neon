@@ -21,19 +21,35 @@
  */
 
  ?>
- <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
+ <!-- <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>"> -->
 <section id="main" role="main">
     <div class="col-md-12">
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">Daftar Siswa</h4>
-                    <!-- Trigger the modal with a button -->
-                    <a href="<?= base_url('index.php/siswa/daftarsiswa') ?>" title="Tambah Data" type="button" class="btn btn-default pull-right" style="margin-top:-30px;" ><i class="ico-plus"></i></a>
-                    <br>
-                    <!--<a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a>-->
+                  <!--    Trigger the modal with a button -->
+                  <div>
+                      
+                  </div>
+                    
+                   <!--  <a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a> -->
                 </div>
+                <!-- Funsi cari  -->
+                <div class="col-md-4">
 
+                    <form class="input-group ">
+                    <input id="carisoal" type="text" name="keyword" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit"><i class="ico-search"></i></button>
+                    </span>
+                </form>
+                </div>
+         <!-- Funsi cari -->
+                <input type="text" name="page" value="<?=$this->uri->segment('3')?>" hidden="true">
                 <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                         <tr>
@@ -49,18 +65,22 @@
                     </thead>
 
                     <tbody>
-                    <?php foreach ($siswa as $key): ?>
+                    <?php 
+                     $no = $this->uri->segment('3') + 1;
+                    foreach ($siswa as $key): ?>
                     <tr>
                         <td><?=$no;?></td>
-                        <td>Id siswa</td>
-                        <td>Nama Lengkap</td>
-                        <td>Nama Pengguna</td>
-                        <td>Sekolah</td>
-                        <td>Email</td>
-                        <td>Report Siswa</td>
-                        <td>Aksi</td>
+                        <td><?=$key["idsiswa"];?></td>
+                        <td><?=$key["nama"];?></td>
+                        <td><?=$key["namaPengguna"];?></td>
+                        <td><?=$key["namaSekolah"];?></td>
+                        <td><?=$key["eMail"];?></td>
+                        <td><?=$key["report"];?></td>
+                        <td><?=$key["aksi"];?></td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php 
+                    $no++;
+                    endforeach ?>
 
                     </tbody>
                 </table>
@@ -78,25 +98,29 @@
         </div>
     </div>
 </section>
+<!-- on keypres cari soal -->
+
+
 <script type="text/javascript">
-    var tb_siswa;
-    $(document).ready(function () {
-        // tb_siswa = $('.daftarsiswa').DataTable({
-        //     "ajax": {
-        //         "url": base_url + "siswa/paginationSiswa",
-        //         "type": "POST"
-        //     },
-        //     "emptyTable": "Tidak Ada Data Siswa",
-        //     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-        //     "paging":   false,
-        //      "searching": false
-        // });
+
+  $(document).ready(function() { 
+    var site = "<?php echo site_url();?>";
+    $( "#carisoal" ).autocomplete({
+        source:  site+"/siswa/autocompleteSiswa",
+        select: function (event, ui) {
+                        source:  base_url +"siswa/autocompleteSiswa",
+                window.location = ui.item.url;
+                }
     });
+
+});
+</script>
+<script type="text/javascript">
+    var page=base_url+"siswa/listSiswa/"+$("input[name=page]").val();
 
     function dropSiswa(idsiswa, idpengguna) {
         if (confirm('Apakah Anda yakin akan menghapus data ini? ')) {
             // ajax delete data to database
-
             $.ajax({
                 url: base_url + "index.php/siswa/deleteSiswa/" + idsiswa + "/" + idpengguna,
                 data: "idsiswa=" + idsiswa + "&idpengguna=" + idpengguna,
@@ -104,7 +128,7 @@
                 dataType: "TEXT",
                 success: function (data, respone)
                 {
-                    reload_tblist();
+                     window.location.href =page;
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
