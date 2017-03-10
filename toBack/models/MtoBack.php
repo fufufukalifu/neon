@@ -222,7 +222,17 @@ class Mtoback extends CI_Model {
 		$this->db->where('p.status',1);
 		$query = $this->db->get();
         return $query->result_array();
+	}
+
+	# function get report paket soal to berdasarkan 
+	public function get_report_paket_by_pengguna(){
 
 	}
+	# function get report paket soal to berdasarkan 
+
+	public function get_report_latihan_by_pengguna(){
+		
+	}
+
 }
 ?>
