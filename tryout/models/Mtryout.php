@@ -298,7 +298,8 @@ class Mtryout extends MX_Controller {
         $id = $this->session->userdata('id');
 
         $query = "
-        SELECT p.id_paket,p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
+        SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+        p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
         hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
         (SELECT * FROM `tb_report-paket` rp
         WHERE `id_pengguna` = $id) hasil
