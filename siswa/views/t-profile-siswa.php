@@ -138,7 +138,35 @@
   </div>
 
 
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Laporan Semua Latihan</h3> 
+      </div>
+      <div class="panel-body">
+        <table class="rline_log table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+          <thead>
+            <tr>
 
+              <th>no</th>
+              <th>Nama Step</th>
+              <th>Jenis Step</th>
+              <th>Status</th>
+              <th>Jumlah Soal</th>
+              <th>Topik</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+  </div>
 
   <!-- get data siswa unutk di tampilkan di form -->          
   <div class="container-fluid">
@@ -207,8 +235,23 @@ dataTableReportPaket = $('.rlatihan').DataTable({
   "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
   "bDestroy": true,
 });
-})
 // ## datatable report latihan
+
+// ## datatable line log
+url3 = base_url+"learningline/get_line_log";
+
+dataTableReportPaket = $('.rline_log').DataTable({
+  "ajax": {
+    "url": url3,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+
+})
+// ## datatable line log
 
 
 function lihat_laporan_latihan(data){

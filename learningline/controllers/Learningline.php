@@ -672,33 +672,46 @@ function ajax_detail_video($id_video){
 # get line log berdasrkan pengguna.
 function get_line_log(){
 	$list = $this->learning_model->get_line_log_step_line_by_user();
-	var_dump($list);
 
 	$data = array();
-    $no = 0;
+	$no = 0;
         //mengambil nilai list
-    $baseurl = base_url();
-    foreach ($list as $list_log) {
-        $no++;
-        $row = array();
-        $row[] = $no;
-        $row[] = $list_log['namaStep'];
-        if ($list['videoID']!="") {
-        	
-        }
+	$baseurl = base_url();
+	foreach ($list as $list_log) {
+		$no++;
+		$row = array();
+		$row[] = $no;
+		$row[] = $list_log['namaStep'];
+		if ($list_log['jenisStep']==1) {
+			$row[] = "Video";
+			$row[] = "Sudah Di tonton";
+			$row[] = "-";
 
-       
-        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_log['id'] . '/' . $list_log['id']) . '" "><i class="ico-edit"></i></a> 
+		}elseif ($list_log['jenisStep']==2) {
+			$row[] = "Materi";
+			$row[] = "Sudah Dibaca";
+			$row[] = "-";
 
-        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_log['id'] . "," . $list_log['id'] . ')"><i class="ico-remove"></i></a>';
+		}else{
+			$row[] = "Latihan";
+			$row[] = "Lulus";
+			$row[] = $list_log['jumlah_soal'];
+		}
+		$row[] = $list_log['namaTopik'];
 
-        $data[] = $row;
-    }
+	
 
-    $output = array(
-        "data" => $data,
-        );
-    echo json_encode($output);
+		// $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_log['id'] . '/' . $list_log['id']) . '" "><i class="ico-edit"></i></a> 
+
+		// <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_log['id'] . "," . $list_log['id'] . ')"><i class="ico-remove"></i></a>';
+
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+		);
+	echo json_encode($output);
 }
 # get line log berdasrkan pengguna.
 

@@ -53,6 +53,9 @@ class Siswa extends MX_Controller {
     $data['siswa'] = $this->msiswa->get_datsiswa()[0];
     if ($data['siswa']['biografi']=="") {
         $bio = "ini masih malu-malu nyeritain tentang dirinya";
+    }else{
+        $bio = $data['siswa']['biografi'];
+
     }
     $data = array(
         'judul_halaman' => 'Neon - Dashboard Siswa',

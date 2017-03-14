@@ -277,7 +277,10 @@ class Learning_model extends CI_Model{
 	public function get_line_log_step_line_by_user(){
 		$query = "SELECT * FROM (
 		SELECT * FROM tb_line_log l WHERE l.`penggunaID` = 74 ) hasil
-		JOIN `tb_line_step` s ON s.`id` = hasil.stepID";
+		JOIN `tb_line_step` s ON s.`id` = hasil.stepID
+		JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
+		ORDER BY s.`topikID` 
+		";
 		$result = $this->db->query($query);
 		if ($result->result_array()==array()) {
 			return false;
