@@ -539,9 +539,10 @@ class Mbanksoal extends CI_Model {
         $this->db->select('judul_soal,sumber');
         $this->db->from('tb_banksoal');
         $this->db->like('judul_soal',$data);
-         // $this->db->or_like('sumber',$data);
+         $this->db->or_like('sumber',$data);
         $this->db->where('status',1);
         $query = $this->db->get();
+        // var_dump($query->result_array());
         return $query->result_array();
     }
 
@@ -550,6 +551,7 @@ class Mbanksoal extends CI_Model {
         $this->db->select('judul_soal');
         $this->db->from('tb_banksoal');
         $this->db->like('judul_soal',$data);
+         $this->db->or_like('sumber',$data);
         $this->db->where('status',1);
         $query = $this->db->get();
         return $query->result_array();
