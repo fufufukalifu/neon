@@ -19,7 +19,7 @@
                     </div>
                 <?php }; ?>
                 <!-- Form horizontal layout bordered -->
-                <form class="form-horizontal panel panel-default login-form " name="form-register" action="<?= base_url() ?>index.php/siswa/savesiswa" method="post">
+                <form class="form-horizontal panel panel-default login-form " name="form-register" action="<?= base_url() ?>index.php/siswa/editSiswa" method="post">
                     <div class="panel-heading">
                         <h3 class="panel-title">Rubah Data Siswa</h3>
                         <!-- untuk menampung bab id -->
@@ -161,27 +161,7 @@
 <?php
                                         }
                         ?>
-                        <hr>
-                        <div class="">
-                            <br>
-                            <p class="text-center">IDENTITAS AKUN</p>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-10 col-md-offset-1">
-                                <input placeholder="Username" type="text" class="form-control" name="namapengguna" value="<?= $key['namaPengguna']?>"  data-parsley-required required>
-                                <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-md-offset-1">
-                                <!-- Star form konfirmasi akun by email -->
-                                <input type="email" class="form-control" name="email" value="<?= $key['eMail']?>" placeholder="xxx@mail.com" required>
-                                <!-- untuk menampilkan pesan kesalahan penginputan email -->
-                                <span class="text-danger"><?php echo form_error('email'); ?></span> 
-                            </div>
-                        </div>
-                    </div>
                      <hr>
                      <!-- Start form data bimbel -->
                         <div  class="form-group">

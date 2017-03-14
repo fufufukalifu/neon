@@ -138,6 +138,7 @@ public function ubahprofilesiswa() {
 
         $this->session->set_flashdata('updsiswa', 'Data profilmu telah berubah');
         $this->msiswa->update_siswa($data_post);
+        redirect(site_url('siswa/profilesetting'));
     }
 }
 
@@ -517,28 +518,6 @@ public function ajax_daftar_latihan() {
     echo json_encode($output);
 }
 
-
-public function test() {
- $data = array(
-
-    'judul_halaman' => 'Neon - Welcome',
-    'judul_header' =>'Welcome',
-    'judul_header2' =>'Welcome'
-    );
-
- $data['files'] = array( 
-    APPPATH.'modules/homepage/views/v-header-login.php',
-    APPPATH.'modules/siswa/views/headersiswa.php',
-    APPPATH.'modules/siswa/views/v-dashboard.php',
-    APPPATH.'modules/testimoni/views/v-footer.php',
-    );
-
- $data['siswa'] = $this->msiswa->get_datsiswa()[0];
- $data['token'] = $this->session->userdata('token');
- var_dump($data['token']);
- $this->parser->parse( 'templating/index', $data );
-}
-
     // create pagination siswa /*by MrBebek
 public function listSiswa()
 {
@@ -723,6 +702,38 @@ function ajax_get_report_latihan(){
         );
     echo json_encode($output);
 
+}
+
+// edit data siswa by admin
+public function editSiswa()
+{
+    //data siswa
+        $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+        $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+        $alamat = htmlspecialchars($this->input->post('alamat'));
+        $noKontak = htmlspecialchars($this->input->post('nokontak'));
+
+
+        $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+        $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
+        $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
+        $cabangID = htmlspecialchars($this->input->post('cabang'));
+        $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+
+    //data array siswa
+        $data_post = array(
+            'namaDepan' => $namaDepan,
+            'namaBelakang' => $namaBelakang,
+            'alamat' => $alamat,
+            'noKontak' => $noKontak,
+            'namaSekolah' => $namaSekolah,
+            'alamatSekolah' => $alamatSekolah,
+            'tingkatID' => $tingkatID,
+            'cabangID' => $cabangID,
+            'noIndukNeutron' => $noIndukNeutron
+            );
+         $this->msiswa->update_siswa($data_post);
+         
 }
 
 }
