@@ -542,7 +542,6 @@ class Mbanksoal extends CI_Model {
          $this->db->or_like('sumber',$data);
         $this->db->where('status',1);
         $query = $this->db->get();
-        // var_dump($query->result_array());
         return $query->result_array();
     }
 

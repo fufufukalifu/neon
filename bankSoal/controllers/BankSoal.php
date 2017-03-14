@@ -1292,7 +1292,7 @@ class Banksoal extends MX_Controller {
         $data['subBabID'] = $subBabID;
         $data['infosoal']=$this->Mbanksoal->get_info_soal($subBabID);
         $UUID = htmlspecialchars($this->input->get('UUID'));
-
+        $data['page'] = htmlspecialchars($this->input->get('page'));
         //get data soan where==UUID
         $data['banksoal'] = $this->Mbanksoal->get_onesoal($UUID)[0];
         $id_soal = $data['banksoal']['id_soal'];
@@ -1343,8 +1343,11 @@ class Banksoal extends MX_Controller {
          $pembahasan = $this->input->post('editor2');
           $opmedia=$this->input->post('opmedia');
         $create_by = $this->session->userdata['id'];
-
         #END post data soal#
+
+        //pege redirect
+        $page = htmlspecialchars($this->input->post('page')); 
+
 
         #Start post data pilihan jawaban#
         $idA = htmlspecialchars($this->input->post('idpilA'));
@@ -1478,7 +1481,7 @@ class Banksoal extends MX_Controller {
 
 
            #END pengecekan media pembahasan
-        redirect(site_url('banksoal/listsoal'));
+        redirect(site_url('banksoal/listsoal/'. $page));
     }
 
 

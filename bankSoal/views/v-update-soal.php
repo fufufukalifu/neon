@@ -403,7 +403,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
     <!-- Form horizontal layout bordered -->
     <form class="form-horizontal form-bordered panel panel-teal edit-form" action="<?=base_url()?>index.php/banksoal/updatebanksoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
       <div class="panel-heading">
-        <h3 class="panel-title">Form Update Soal</h3>
+        <h3 class="panel-title">Form Update Soal </h3>
         <!-- untuk menampung bab id -->
         <input type="text" name="subBabID" value="<?=$subBabID;?>"  hidden="true">
         <input type="text" name="soalID" value="<?=$banksoal['id_soal'];?>" hidden="true">
@@ -414,6 +414,9 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
         <input type="text" id="oldbab"  value="<?=$infosoal['id_bab'];?>" hidden="true">
         <input type="text" id="oldsub"  value="<?=$infosoal['id_subbab'];?>" hidden="true">
         <!-- END old info data soal -->
+        <!-- Untuk menampung page -->
+        <input type="text" name="page" value="<?=$page?>" hidden="true">
+        <!--  -->
       </div>               
       <div class="panel-body">
        <!-- Start Dropd Down depeden -->
@@ -570,7 +573,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
  <!-- End Editor Soal -->
  <!-- Start Math jax -->
  <div id="editor-rumus" hidden="true">
-  <label class="control-label col-sm-2">Buat rumus</label>
+  <label class="control-label col-sm-2">Buat rumus </label>
   <div class="col-sm-10">
 
    <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
