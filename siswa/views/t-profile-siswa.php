@@ -77,94 +77,143 @@
         <h3 class="panel-title">Laporan Semua Paket Tryout</h3> 
       </div>
       <div class="panel-body">
-        <table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+        <table class="rpaket table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
           <thead>
             <tr>
-            
-                <th>no</th>
-                <th>Nama Paket</th>
-                <th>Jumlah Soal</th>
-                <th>Benar</th>
-                <th>Salah</th>
-                <th>Kosong</th>
-                <th>Nilai</th>
-                <th>Waktu Mengerjakan</th>
-                <th>Aksi</th>
 
-              </tr>
-            </thead>
+              <th>no</th>
+              <th>Nama Paket</th>
+              <th>Jumlah Soal</th>
+              <th>Benar</th>
+              <th>Salah</th>
+              <th>Kosong</th>
+              <th>Nilai</th>
+              <th>Waktu Mengerjakan</th>
+              <th>Aksi</th>
 
-            <tbody>
+            </tr>
+          </thead>
 
-            </tbody>
-          </table>
+          <tbody>
+
+          </tbody>
+        </table>
 
 
-        </div>
       </div>
     </div>
+  </div>
 
-      <div class="col-md-12">
+  <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Laporan Semua Latihan</h3> 
       </div>
       <div class="panel-body">
-        <table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+        <table class="rlatihan table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
           <thead>
             <tr>
-            
-                <th>no</th>
-                <th>Nama Latihan</th>
-                <th>Jumlah Soal</th>
-                <th>Benar</th>
-                <th>Salah</th>
-                <th>Kosong</th>
-                <th>Nilai</th>
-                <th>Waktu Mengerjakan</th>
-                <th>Aksi</th>
-
-              </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-          </table>
 
 
-        </div>
+              <th>no</th>
+              <th>Nama Latihan</th>
+              <th>Jumlah Soal</th>
+              <th>Benar</th>
+              <th>Salah</th>
+              <th>Kosong</th>
+              <th>Nilai</th>
+              <th>Waktu Mengerjakan</th>
+              <th>Aksi</th> 
+            </tr>
+          </thead>
+
+          <tbody>
+
+          </tbody>
+        </table>
+
+
       </div>
     </div>
+  </div>
 
 
 
 
-    <!-- get data siswa unutk di tampilkan di form -->          
-    <div class="container-fluid">
-     <div class="col-xs-3">
+  <!-- get data siswa unutk di tampilkan di form -->          
+  <div class="container-fluid">
+   <div class="col-xs-3">
 
-      <div class="widget panel">
-        <div class="thumbnail">
-          <div class="media">
-            <div class="indicator"><span class="spinner"></span></div>
-            <div class="meta bottom text-center">
-              <center>
-               <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
-             </center>
-             <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
-             <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
-               <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
-             </i></h6>
-           </div>
+    <div class="widget panel">
+      <div class="thumbnail">
+        <div class="media">
+          <div class="indicator"><span class="spinner"></span></div>
+          <div class="meta bottom text-center">
+            <center>
+             <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
+           </center>
+           <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
+           <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
+             <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
+           </i></h6>
          </div>
        </div>
-
-
-
-
      </div>
+
+
+
+
    </div>
  </div>
 </div>
+</div>
 
+<!--datatable-->
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+<!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+
+<script type="text/javascript">
+  var dataTableReportPaket,dataTableReportLatihan;
+
+  $(document).ready(function(){
+// ## datatable report tryout
+url = base_url+"siswa/ajax_report_tryout";
+
+dataTableReportPaket = $('.rpaket').DataTable({
+  "ajax": {
+    "url": url,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+// ## datatable report tryout
+
+
+
+// ## datatable report latihan
+url2 = base_url+"siswa/ajax_get_report_latihan";
+
+dataTableReportPaket = $('.rlatihan').DataTable({
+  "ajax": {
+    "url": url2,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+})
+// ## datatable report latihan
+
+
+function lihat_laporan_latihan(data){
+ var kelas ='.latihan-'+data;
+ var data = $(kelas).data('todo');
+ console.log(data);
+}
+</script>

@@ -594,66 +594,136 @@ public function listSiswa()
     //untuk emanmpilkan  list siswa /*by MrBebek
 public function tampSiswa($list)
 {
-        $data['judul_halaman'] = "Pengelolaan Data Siswa";
-   $data['files'] = array(
-    APPPATH . 'modules/siswa/views/v-list-siswa.php',
-    );
-        $data['siswa'] = array();
-        $no = 0;
+    $data['judul_halaman'] = "Pengelolaan Data Siswa";
+    $data['files'] = array(
+        APPPATH . 'modules/siswa/views/v-list-siswa.php',
+        );
+    $data['siswa'] = array();
+    $no = 0;
         //mengambil nilai list
-        $baseurl = base_url();
-        foreach ($list as $list_siswa) {
-            $no++;
-            $data['siswa'][] = array(
+    $baseurl = base_url();
+    foreach ($list as $list_siswa) {
+        $no++;
+        $data['siswa'][] = array(
           'no'=> $no,
           'idsiswa'=> $list_siswa['idsiswa'],
           'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
-           'namaPengguna'=> $list_siswa['namaPengguna'],
+          'namaPengguna'=> $list_siswa['namaPengguna'],
 
           'namaSekolah'=> $list_siswa['namaSekolah'],
           'eMail'=>  $list_siswa['eMail'] ,
           'report'=>'<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>',
           'aksi'=>'<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
 
-    <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>',
+          <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>',
           // 'penggunaID'=> $list_siswa['penggunaID']
 
-           );
-        }
+          );
+    }
           #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-                $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
+    $hakAkses=$this->session->userdata['HAKAKSES'];
+    if ($hakAkses=='admin') {
+        $this->parser->parse('admin/v-index-admin', $data);
+    } elseif($hakAkses=='guru'){
              // jika guru
-               $this->parser->parse('templating/index-b-guru', $data);
-        }else{
+       $this->parser->parse('templating/index-b-guru', $data);
+   }else{
             // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
-        }
+    redirect(site_url('welcome'));
+}
         #END Cek USer#
-       
+
 }
 
   //search autocomplete soal berdasarkan judul soal
-    public function autocompleteSiswa()
-    {
-     $keyword = $_GET['term'];
+public function autocompleteSiswa()
+{
+ $keyword = $_GET['term'];
 
      // cari di database
-     $data = $this->msiswa->get_cari_siswa($keyword); 
+ $data = $this->msiswa->get_cari_siswa($keyword); 
     // format keluaran di dalam array
-     $arr = array();
-     foreach($data as $row)
-     {
+ $arr = array();
+ foreach($data as $row)
+ {
      $arr[] = array(
-            'value' =>$row['namaDepan'].$row['namaBelakang']." (".$row['namaPengguna']." )",
-            'url'=>base_url('siswa/reportSiswa')."/".$row['penggunaID'],
-            );
-    }
+        'value' =>$row['namaDepan'].$row['namaBelakang']." (".$row['namaPengguna']." )",
+        'url'=>base_url('siswa/reportSiswa')."/".$row['penggunaID'],
+        );
+ }
         // minimal PHP 5.2
-    echo json_encode($arr);
-  }
+ echo json_encode($arr);
+}
+
+function ajax_report_tryout(){
+    $datas = $this->mtryout->get_report_paket();
+    // var_dump($datas);
+    $list = array();
+    $no = 0;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
+        
+        $row[] = $no;
+        $row[] = $list_item['nm_paket'];
+        $row[] = $list_item['jumlah_soal'];
+        $row[] = $list_item['jmlh_benar'];
+        $row[] = $list_item['jmlh_salah'];
+        $row[] = $list_item['jmlh_kosong'];
+        $row[] = "belum dihitung";
+        $row[] = $list_item['tgl_pengerjaan'];
+        $row[] ='<a class="btn btn-sm btn-success"  title="Lihat Report" onclick="dropSoal('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+
+        $list[] = $row;   
+
+    }
+
+    $output = array(
+        "data" => $list,
+        );
+    echo json_encode($output);
+
+}
+
+function ajax_get_report_latihan(){
+    $datas = $this->mtryout->get_report_latihan();
+    // print_r($datas);
+
+    $list = array();
+    $no = 0;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
+        
+        $row[] = $no;
+        $row[] = $list_item['nm_latihan'];
+        $row[] = $list_item['jumlahSoal'];
+        $row[] = $list_item['jmlh_benar'];
+        $row[] = $list_item['jmlh_salah'];
+        $row[] = $list_item['jmlh_kosong'];
+        $row[] = $list_item['skore'];
+        $row[] = $list_item['tgl_pengerjaan'];
+        $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
+        title="Lihat Score" 
+        onclick="lihat_laporan_latihan('.$list_item['id_latihan'].')"
+        data-todo='."'".json_encode($list_item)."'".'
+        "><i class="ico-book"></i></a>';
+
+
+        $list[] = $row;   
+
+    }
+
+    $output = array(
+        "data" => $list,
+        );
+    echo json_encode($output);
+
+}
 
 }
 

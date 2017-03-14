@@ -293,6 +293,34 @@ class Mtryout extends MX_Controller {
         return $query->num_rows(); 
     }
 
+    // ambil jumlah paket yang sudah di kerjakan oleh siswa tertentu.
+    public function get_report_paket(){
+        $id = $this->session->userdata('id');
+
+        $query = "
+        SELECT p.id_paket,p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
+        hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
+        (SELECT * FROM `tb_report-paket` rp
+        WHERE `id_pengguna` = $id) hasil
+        JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+        JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket` 
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();     
+    }
+
+        // ambil report latihan yang sudah di kerjakan oleh siswa tertentu.
+    public function get_report_latihan(){
+        $username = $this->session->userdata('USERNAME');
+        $query = "SELECT * FROM 
+        (SELECT * FROM `tb_latihan` l
+        WHERE l.`create_by`= '".$username."') hasil
+        JOIN `tb_report-latihan` rp ON rp.`id_latihan` = hasil.id_latihan
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();     
+    }
+
 }
 
 ?>

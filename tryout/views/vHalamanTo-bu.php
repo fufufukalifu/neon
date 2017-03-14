@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> 
+
 <style>
  #jwb_sisJ {
   border-radius: 12px;
@@ -63,6 +63,20 @@ label:hover{ /* HIDE RADIO */
   background-color: #63d3e9;
 }
 
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  height: 100%;
+  min-height: 100%;
+  border-radius: 0;
+}
+
 </style>
 <!-- START Body -->
 
@@ -80,7 +94,11 @@ label:hover{ /* HIDE RADIO */
  });
 </script>
 
+
+
+<!-- SCRIPT RENDER MATHJAX KETIKA DI KLIK -->
 <script>
+  /*
   //
   //  Use a closure to hide the local variables from the
   //  global namespace
@@ -119,34 +137,62 @@ label:hover{ /* HIDE RADIO */
         );
     }
   })();
+  */
 </script>
+<!-- SCRIPT RENDER MATHJAX KETIKA DI KLIK -->
 
 
 <section id="main" role="main">
-  <!-- START page header -->
-  <section class="page-header page-header-block nm" style="">
-   <!-- pattern -->
-   <!--/ pattern -->
-   <div class="container pt15 pb15">
-    <div class="">
-     <div class="page-header-section text-center">
-      <img src="<?= base_url('assets/back/img/logo.png') ?>" width="70px"  alt>
-      <p class="title font-alt">Tryout Online 
-      </p>
-      <?php foreach ($topaket as $key): ?>
-       <div class="text-center"><div style="font-size:20px;"><?= $key['namato'] ?>/<?= $key['namapa'] ?></div></div>
-     <?php endforeach ?>
-     
-     <!-- info untuk soal -->
-     <div class="col-md-12 animation animating pulse pesan-jawaban">
+  <!-- Trigger the modal with a button -->
+  <!-- START modal-lg -->
+  <div class="modal fade" id="pesan_habis">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <div class="ico-clock mb15 mt15" style="font-size:36px;"></div>
+          <h3 class="semibold modal-title text-primary">Waktu Habis</h3>
+          <p class="text-danger">
+            Waktu Habis, silahkan kumpulkan jawaban.
+          </p>
+        </div>
+        <div class="modal-body">
+           <center><a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a></center>
+        </div>
+        <div class="modal-footer">
+           <!-- <a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a> -->
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+  <!--/ END modal-lg -->
+</div>
+
+
+
+<!-- START page header -->
+<section class="page-header page-header-block nm" style="">
+ <!-- pattern -->
+ <!--/ pattern -->
+ <div class="container pt15 pb15">
+  <div class="">
+   <div class="page-header-section text-center">
+    <img src="<?= base_url('assets/back/img/logo.png') ?>" width="70px"  alt>
+    <p class="title font-alt">Tryout Online 
+    </p>
+    <?php foreach ($topaket as $key): ?>
+     <div class="text-center"><div style="font-size:20px;"><?= $key['namato'] ?>/<?= $key['namapa'] ?></div></div>
+   <?php endforeach ?>
+
+   <!-- info untuk soal -->
+     <!-- <div class="col-md-12 animation animating pulse pesan-jawaban">
       <div class="alert alert-success fade in">
-       <!-- <a type="button" class="close" onclick="close_info_jawaban()" aria-hidden="true">×</a> -->
+       <a type="button" class="close" onclick="close_info_jawaban()" aria-hidden="true">×</a>
        <center>
         <h4 class="semibold">Jawaban Anda</h4>
         <h4 class="mb10 notif-jawaban" id="MathOutput">$${}$$</h4>
         <h4 class="mb10 notif-jawaban" id="box" style="visibility:hidden"></h4>
       </div>
-    </div>
+    </div> -->
     <!-- info untuk soal -->
 
   </div>
@@ -178,8 +224,9 @@ label:hover{ /* HIDE RADIO */
               <div class="col-md-6 text-right" style="margin-top:5">
                <a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp
                <a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a>&nbsp&nbsp&nbsp
-               <a class="btn btn-sm btn-success" onclick="lihatJawaban('<?= $key['soalid']?>')">Lihat jawaban</a>
-
+               <!-- JANGAN DIHAPUS, TOMBOL LIHAT JAWABAN -->
+               <!-- <a class="btn btn-sm btn-success" onclick="lihatJawaban('<?= $key['soalid']?>')">Lihat jawaban</a> -->
+               <!-- JANGAN DIHAPUS, TOMBOL LIHAT JAWABAN -->
              </div>
            </div>
          </div>
@@ -264,7 +311,6 @@ label:hover{ /* HIDE RADIO */
                  <?= $row['piljaw'] ?>
                  <?php $indexpil++;?>
                </label> 
-
              </div>
              <?php
            } else {
@@ -272,7 +318,7 @@ label:hover{ /* HIDE RADIO */
            }
            ?>
          <?php endforeach ?>
-
+         <span class="soal-<?=$key['soalid']?>"></span>
        </div>
      </div>
    </div>
@@ -401,7 +447,7 @@ function changeColor(data){
   $('label[alt="' + data.soalid + '"]').removeClass( "terpilih" );
   var d = document.getElementById(data.value);
   d.className = "terpilih";
-    pilihan_jawaban = $('input[name=pilsoal-'+data.value+']').val();
+  pilihan_jawaban = $('input[name=pilsoal-'+data.value+']').val();
    // simpan di local storage
    backup_jawaban = {id:data.soalid,pilihan:pilihan_jawaban};
    localStorage.setItem('soal-'+data.soalid, JSON.stringify(backup_jawaban));
@@ -435,9 +481,31 @@ function changeColor(data){
   }
 }
 
- function close_info_jawaban(){
-      $('.pesan-jawaban').toggle();
- }
+function close_info_jawaban(){
+  $('.pesan-jawaban').toggle();
+}
+
+function allStorage() {
+
+  var values = [],
+  keys = Object.keys(localStorage),
+  i = keys.length;
+
+  while ( i-- ) {
+    values.push( localStorage.getItem(keys[i]) ); 
+  }
+
+  return values;
+}
 
   // lihat jawaban yang sudah di jawab Sebelumnya
+  function show_storage(data){
+    console.log(data);
+    $.each( data, function( key, value ) {
+     backup = JSON.parse(value);
+     $('span.soal-'+backup.id).html("Jawaban Sebelumnya : "+backup.pilihan);
+   });
+  }
+
+  show_storage(allStorage());
 </script>
