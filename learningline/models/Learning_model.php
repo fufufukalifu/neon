@@ -250,7 +250,7 @@ class Learning_model extends CI_Model{
 
 	}
 
-		function get_step_sama_urutan($idtopik, $urutan){
+	function get_step_sama_urutan($idtopik, $urutan){
 		$this->db->where('topikID', $idtopik);
 		$this->db->where('urutan =', $urutan);
 		$this->db->select('*');
@@ -266,11 +266,24 @@ class Learning_model extends CI_Model{
 	}
 
 	//========== update batch  ==================
-	    //function untuk update pilihan jawaban text
-    public function update_step_urutan($data) {
-        $this->db->where('id',$data['id']);
-        $this->db->set($data);
+	//function untuk update pilihan jawaban text.
+	public function update_step_urutan($data) {
+		$this->db->where('id',$data['id']);
+		$this->db->set($data);
 		$this->db->update('tb_line_step');
-    }
+	}
+
+	# fungsi mengambil line log berdasarkan pengguna id.
+	public function get_line_log_step_line_by_user(){
+		$query = "SELECT * FROM (
+		SELECT * FROM tb_line_log l WHERE l.`penggunaID` = 74 ) hasil
+		JOIN `tb_line_step` s ON s.`id` = hasil.stepID";
+		$result = $this->db->query($query);
+		if ($result->result_array()==array()) {
+			return false;
+		} else {
+			return $result->result_array();
+		}
+	}
 }
 ?>
