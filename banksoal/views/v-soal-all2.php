@@ -17,7 +17,8 @@
             </div>
         </div>
     <div class="col-sm-12">
-        
+        <!-- get page pagination -->
+        <?php $page=$this->uri->segment('3');  ?>
         <!--Pengulangan list soal  -->
         <?php 
         $no = $this->uri->segment('3') + 1;
@@ -43,7 +44,7 @@
                             $create_by = $key['create_by'];
                              ?>
                             <?php if ($idPengguna == $create_by || $hakakses == 'admin' ): ?>
-                                <li><a href="<?=base_url()?>banksoal/formUpdate?UUID=<?=$key['UUID']?>&subBab=<?=$key['id_subbab']?>">Edit</a></li>
+                                <li><a href="<?=base_url()?>banksoal/formUpdate?UUID=<?=$key['UUID']?>&subBab=<?=$key['id_subbab']?>&page=<?=$page?>">Edit</a></li>
                             <li><a href="javascript:void(0)" onclick="drop_soal(<?=$key['id_soal'];?>)">Hapus</a></li>
                             <?php endif ?>  
                         </ul>
