@@ -22,35 +22,34 @@
                                 </form>
                             </aside>
                        <!-- /Pencarian -->
+
                           <h2><a href="<?=base_url('index.php/linetopik/timeLine/').$topikUUID?>"><?= $datMateri['namaTopik']; ?></a></h2>
                           <hr class="divider-big">
-                                                   <!-- Start Time Line -->
-                            <ul class="media-list media-list-feed grid-col grid-col-3" >
+                            <!-- Start Time Line -->
+                            <ul class="media-list media-list-feed  grid-col-3" >
                             <?php 
                             $i=0;
                             foreach ($datline as $key ):           
                             ?>
-                                <li  class="media">
+                                <li  class="media" id="bg-<?=$i;?>">
                                      <div class="media-object pull-left ">
                                         <i href="<?=$key['link'];?>"  class="<?=$key['icon']?> " id="ico-<?=$i;?>"></i>
                                     </div>
-                                    <div class="media-body">
+                                    <div class="media-body" >
                                         <!-- Untuk menampung staus step disable or enable -->
                                         <input type="text" id="status-<?=$i;?>" value="<?=$key["status"];?>" hidden="true">
                                         <!-- // Untuk menampung staus step disable or enable  -->
-                                        <a href="<?=$key['link'];?>" class="media-heading"  id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
-                                      <!--   <p class="media-text"><span class="text-primary semibold">Service Page</span> has been edited by Tamara Moon.</p>
-                                        <p class="media-meta">Just Now</p> -->
+                                        <a href="<?=$key['link'];?>" class="media-heading headline"  id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
                                     </div>
-                                </li>       
+                                 <!-- <hr> -->
+                                </li>
                             <?php 
                             $i ++;
                             endforeach ?>
                             </ul>
                             <!-- menampung nilai panjang array -->
                             <input id="n" type="text"  value="<?=$i;?>" hidden="true">
-                            <!-- END Tieme line -->
-                
+                            <!-- END Tieme line -->  
             </div>
             <div class="grid-col grid-col-9">
                 <main>
@@ -60,7 +59,7 @@
                         <div class="post-info">
                             <div class="date-post"><div class="day"><?=$tgl?></div><div class="month"><?=$bulan?></div></div>
                             <div class="post-info-main">
-                                <div class="author-post">nama Materi:' <?= $datMateri['judulMateri']; ?> '</div>
+                                <div class="-post">nama Materi:' <?= $datMateri['judulMateri']; ?> '</div>
                             </div>
                             <div class="comments-post">Materi</div>
                         </div>
@@ -86,19 +85,25 @@
     <!-- / content -->
 
 	<!-- END Page Content -->
+
+<!-- JQ UNTUK RUBAH STYLE CSS STEPLINE BY MrBebek-->
 <script type="text/javascript">
-    $(document).ready(function() { 
-        var n = $("#n").val();
-        // console.log(n);
-        // $("#ico-0").css("background","black");
-        for (i = 0; i < n; i++) {
-        var status = $("#status-"+i).val();
-        
-            if (status=="disable") {
-                 $("#ico-"+i).css("background","#b0b0b0");
-                 $("#font-"+i).css("color","#b0b0b0");
-            } 
-           
-        }
-    });
+  $(document).ready(function() { 
+      var n = $("#n").val();
+      for (i = 0; i < n; i++) {
+      var status = $("#status-"+i).val();
+          // cek status disable
+      if (status=="disable") {
+        // jika status disable
+        $("#ico-"+i).css("background","#b0b0b0");
+        $("#font-"+i).css("color","#b0b0b0");
+      }else if(status =="current"){
+        // jika step line yg sedang di buka
+        $("#ico-"+i).css("background","#D26161");
+        $("#font-"+i).css("color","#D26161");
+        $("#bg-"+i).css({ "background-color":"","box-shadow": "inset 0 0 0 1px #E4E4E4,inset 0 1px 6px #E6E6E6"});
+      }
+         
+      }
+  });
 </script>

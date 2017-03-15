@@ -83,8 +83,6 @@
                                         <a  href="<?=$key['link'];?>" class="media-heading" id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
                                 
                                     </div>
-                             
-                                    <hr>
                                 </li> 
                                 <!-- </a>       -->
                                  <?php $i++;  ?>

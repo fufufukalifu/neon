@@ -220,6 +220,11 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
      <!-- End heading -->
      <!-- Start body priview -->
      <div class="panel-body ">
+      <!-- prev audio di modal -->
+      <div class="hidden-audio" hidden="true">
+         <audio class="col-sm-12 " id="prevAudio" src="" type="audio/mpeg" controls>voiv</audio>
+      </div>
+     <hr>
       <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
       <label> judul  :</label> <a id="prevJudul" ></a> <br>
       <label>Soal   : </label>
@@ -447,7 +452,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-2">Voice</label>
+          <label class="control-label col-sm-2">Audio</label>
           <div class="col-sm-8">
             <div class="col-sm-12 hidden-audio " hidden="true"> 
               <div class="col-md-5 left"> 
@@ -1285,11 +1290,9 @@ true">
                var reader = new FileReader();
                var size=Math.round(file.size/1024);
                if (size>=50000) {
-                console.log("gak-gak");
                 $('#e_size_audio').modal('show');
                 $('.hidden-audio').hide();
               }else{
-                console.log("masuk");
                 reader.onload = viewerAudio.load;
                 reader.readAsDataURL(file);
                 viewerAudio.setProperties(file);
@@ -1300,6 +1303,7 @@ true">
              var viewerAudio = {
               load : function(e){
                 $('#previewAudio').attr('src', e.target.result);
+                  $('#prevAudio').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameAudio').text(file.name);

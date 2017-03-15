@@ -35,15 +35,12 @@
                     <h2>Topik</h2>
                     <hr class="divider-big" />
                     <ul>
-                   
                       <?php   $x=0; ?>
                     <?php foreach ($topik as $rows): ?>
                         <li class="cat-item cat-item-1 current-cat"><a href="#topik<?=$x?>"><?=$rows['namaTopik']?><span></span></a>
                         <?php $x++; ?>
                     <?php endforeach ?>
                     </ul>
-                  
-              
                 <!--/ widget Topik -->
                 <?php endif ?>
                   </aside>
@@ -113,10 +110,7 @@
                                      <input type="text" id="status-<?=$i;?>" value="<?=$key["status"];?>" hidden="true">
                                      <!-- // Untuk menampung staus step disable or enable  -->
                                         <a  href="<?=$key['link'];?>" class="media-heading" id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
-                                
                                     </div>
-                             
-                                    <hr>
                                 </li> 
                                 <!-- </a>       -->
                                  <?php $i++;  ?>
