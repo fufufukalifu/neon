@@ -312,7 +312,7 @@ class Mtryout extends MX_Controller {
 
         // ambil report latihan yang sudah di kerjakan oleh siswa tertentu.
     public function get_report_latihan(){
-        $username = $this->session->userdata('USERNAME');
+        $username = $this->db->escape_str($this->session->userdata('USERNAME'));
         $query = "SELECT * FROM 
         (SELECT * FROM `tb_latihan` l
         WHERE l.`create_by`= '".$username."') hasil

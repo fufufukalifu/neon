@@ -12,6 +12,7 @@ class Siswa extends MX_Controller {
         $this->load->model('cabang/mcabang');
         $this->load->model('tryout/mtryout');
         $this->load->model('learningline/learning_model');
+        $this->load->model('konsultasi/mkonsultasi');
         
         $this->load->helper('session');
         $this->load->library('parser');
@@ -71,9 +72,10 @@ class Siswa extends MX_Controller {
         'photo'=>base_url().'assets/image/photo/siswa/'.$data['siswa']['photo'],
         'sisa'=>$this->session->userdata('sisa'),
         'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
-        'jumlah_latihan' =>$this->mtryout->get_jumlah_report_latihan(),
+        'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
         'jumlah_line'=>count($this->learning_model->get_line_log_step_line_by_user())
         );
+
 
     $data['files'] = array( 
         // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -760,8 +762,39 @@ public function editSiswa()
          $this->msiswa->update_siswa($data_post);
          
 }
+    
+    function ajax_daftar_konsultasi(){
+    $datas = $this->mkonsultasi->get_konsultasi_by_siswa();
 
+    $list = array();
+    $no = 0;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
+
+        $row[] = $no;
+        $row[] = $list_item['judulPertanyaan'];
+        $row[] = $list_item['isiPertanyaan'];
+        $row[] = $list_item['date_created'];
+        
+        $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id'].'"  
+        title="Lihat Konsultasi" 
+        href='.base_url()."konsultasi/singlekonsultasi/".$list_item['id'].'
+        "><i class="ico-search"></i></a>';
+
+
+        $list[] = $row;   
+
+    }
+
+      $output = array(
+        "data" => $list,
+        );
+    echo json_encode($output);
 
 }
 
+}
 ?>

@@ -167,14 +167,12 @@
         <table class="rline_log table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
           <thead>
             <tr>
-
               <th>no</th>
               <th>Nama Step</th>
               <th>Jenis Step</th>
               <th>Status</th>
               <th>Jumlah Soal</th>
               <th>Topik</th>
-
             </tr>
           </thead>
 
@@ -188,45 +186,72 @@
     </div>
   </div>
 
-  <!-- get data siswa unutk di tampilkan di form -->          
-  <div class="container-fluid">
-   <div class="col-xs-3">
 
-    <div class="widget panel">
-      <div class="thumbnail">
-        <div class="media">
-          <div class="indicator"><span class="spinner"></span></div>
-          <div class="meta bottom text-center">
-            <center>
-             <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
-           </center>
-           <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
-           <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
-             <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
-           </i></h6>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Daftar Konsultasi</h3> 
+      </div>
+      <div class="panel-body">
+        <table class="rkonstultasi table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+          <thead>
+            <tr>
+              <th>no</th>
+              <th>Judul</th>
+              <th>Isi Pertanyaan</th>
+              <th>Tanggal Dibuat</th>
+              <th>Aksi</th>
+              </tr>
+              </thead>
+
+              <tbody>
+
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+        </div
+
+        <div class="container-fluid">
+         <div class="col-xs-3">
+
+          <div class="widget panel">
+            <div class="thumbnail">
+              <div class="media">
+                <div class="indicator"><span class="spinner"></span></div>
+                <div class="meta bottom text-center">
+                  <center>
+                   <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
+                 </center>
+                 <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
+                 <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
+                   <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
+                 </i></h6>
+               </div>
+             </div>
+           </div>
+
+
+
+
          </div>
        </div>
      </div>
-
-
-
-
    </div>
- </div>
-</div>
-</div>
 
-<!--datatable-->
-<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
-<!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
-<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+   <!--datatable-->
+   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+   <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
+   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+   <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
-<script type="text/javascript">
-  var dataTableReportPaket,dataTableReportLatihan;
+   <script type="text/javascript">
+    var dataTableReportPaket,dataTableReportLatihan;
 
-  $(document).ready(function(){
+    $(document).ready(function(){
 // ## datatable report tryout
 url = base_url+"siswa/ajax_report_tryout";
 
@@ -270,8 +295,23 @@ dataTableReportPaket = $('.rline_log').DataTable({
   "bDestroy": true,
 });
 
-})
 // ## datatable line log
+
+// ## datatable konsultasi
+url4 = base_url+"siswa/ajax_daftar_konsultasi";
+
+dataTableReportPaket = $('.rkonstultasi').DataTable({
+  "ajax": {
+    "url": url4,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+
+})
+// ## datatable konsultasi
 
 //  lihat laporan to
 function lihat_laporan_latihan(data){
@@ -308,6 +348,10 @@ function pembahasanto(id_to){
     swal("gagal");
   }
 });
+}
+
+function lihat_konsultasi(id){
+  
 }
 
 </script>

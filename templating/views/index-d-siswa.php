@@ -46,40 +46,40 @@
 
 <!-- START Body -->
 <body>
-<!-- START Template Header -->
-<header id="header" class="navbar navbar-fixed-top">
-  <!-- START navbar header -->
-  <div class="navbar-header">
-   <!-- Brand -->
-   <a class="navbar-brand" href="javascript:void(0);">
-    <span class="logo-figure"></span>
-    <span class="logo-text"></span>
-  </a>
-  <!--/ Brand -->
-</div>
-<!--/ END navbar header -->
+  <!-- START Template Header -->
+  <header id="header" class="navbar navbar-fixed-top">
+    <!-- START navbar header -->
+    <div class="navbar-header">
+     <!-- Brand -->
+     <a class="navbar-brand" href="javascript:void(0);">
+      <span class="logo-figure"></span>
+      <span class="logo-text"></span>
+    </a>
+    <!--/ Brand -->
+  </div>
+  <!--/ END navbar header -->
 
-<!-- START Toolbar -->
-<div class="navbar-toolbar clearfix">
- <!-- START Left nav -->
- <ul class="nav navbar-nav navbar-left">
-  <!-- Sidebar shrink -->
-  <li class="hidden-xs hidden-sm">
-   <a href="javascript:void(0);" class="sidebar-minimize" data-toggle="minimize" title="Minimize sidebar">
+  <!-- START Toolbar -->
+  <div class="navbar-toolbar clearfix">
+   <!-- START Left nav -->
+   <ul class="nav navbar-nav navbar-left">
+    <!-- Sidebar shrink -->
+    <li class="hidden-xs hidden-sm">
+     <a href="javascript:void(0);" class="sidebar-minimize" data-toggle="minimize" title="Minimize sidebar">
+      <span class="meta">
+       <span class="icon"></span>
+     </span>
+   </a>
+ </li>
+ <!--/ Sidebar shrink -->
+
+ <!-- Offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
+ <li class="navbar-main hidden-lg hidden-md hidden-sm">
+   <a href="javascript:void(0);" data-toggle="sidebar" data-direction="ltr" rel="tooltip" title="Menu sidebar">
     <span class="meta">
-     <span class="icon"></span>
+     <span class="icon"><i class="ico-paragraph-justify3"></i></span>
    </span>
  </a>
-</li>
-<!--/ Sidebar shrink -->
-
-<!-- Offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
-<li class="navbar-main hidden-lg hidden-md hidden-sm">
- <a href="javascript:void(0);" data-toggle="sidebar" data-direction="ltr" rel="tooltip" title="Menu sidebar">
-  <span class="meta">
-   <span class="icon"><i class="ico-paragraph-justify3"></i></span>
- </span>
-</a>
 </li>
 <!--/ Offcanvas left -->
 
@@ -213,19 +213,88 @@
    <!-- START MENU -->
    <ul class="topmenu topmenu-responsive" data-toggle="menu">
     <li >
-     <a href="<?= base_url('index.php/guru/dashboard/') ?>">
+     <a href="<?= base_url('index.php/siswa') ?>">
       <span class="figure"><i class="ico-trophy"></i></span>
       <span class="text">Dashboard</span>
     </a>
   </li>
 
   <li>
-   <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-money"></i></span>
-    <span class="text">Keuangan</span>
-    <span class="arrow"></span>
-  </a>
+    <a href="<?= base_url('index.php/welcome') ?>">
+      <span class="figure"><i class="ico-home7"></i></span>
+      <span class="text">Home</span>
+    </a>
   </li>
+
+  <li>
+   <a href="">
+    <span class="figure"><i class="ico-bubble-video-chat"></i></span>
+    <span class="text">Video</span>
+  </a>
+</li>
+
+<li>
+ <a href="<?= base_url('index.php/Konsultasi') ?>">
+  <span class="figure"><i class="ico-bubbles8"></i></span>
+  <span class="text">Konsultasi</span>
+</a>
+</li>
+
+<li>
+ <a href="<?= base_url('index.php/tryout') ?>">
+  <span class="figure"><i class="ico-pencil5"></i></span>
+  <span class="text">Tryout</span>
+</a>
+</li>
+<li>
+ <a href="<?= base_url('index.php/tesonline/daftarlatihan') ?>">
+  <span class="figure"><i class="ico-notebook"></i></span>
+  <span class="text">Latihan</span>
+</a>
+</li>
+
+<li>
+ <a data-target="#components" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-stack"></i></span>
+  <span class="text">Learning Line</span>
+  <span class="arrow"></span>
+
+  <ul id="components" class="submenu collapse in" style="height: auto;">
+    <li>
+      <a href="component-animation.html">
+      <span class="text"><a href="<?=base_url("linetopik/lineMapel/1") ?>">SD</a></span>
+      </a>
+    </li>
+
+        <li>
+      <a href="component-animation.html">
+      <span class="text"><a href="<?=base_url("linetopik/lineMapel/2") ?>">SMP</a></span>
+      </a>
+    </li>
+
+        <li>
+      <a href="component-animation.html">
+      <span class="text"><a href="<?=base_url("linetopik/lineMapel/3") ?>">SMA IPS</a></span>
+      </a>
+    </li>
+
+        <li>
+      <a href="component-animation.html">
+      <span class="text"><a href="<?=base_url("linetopik/lineMapel/4") ?>">SMA IPA</a></span>
+      </a>
+    </li>
+
+  </ul>
+</a>
+</li>
+
+
+<li>
+ <a href="<?= base_url('index.php/modulonline/allmodul') ?>">
+  <span class="figure"><i class="ico-download-alt"></i></span>
+  <span class="text">Edu Drive</span>
+</a>
+</li>
 
 </ul>
 <!--/ END Template Navigation/Menu -->

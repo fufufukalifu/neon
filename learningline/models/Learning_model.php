@@ -275,15 +275,16 @@ class Learning_model extends CI_Model{
 
 	# fungsi mengambil line log berdasarkan pengguna id.
 	public function get_line_log_step_line_by_user(){
+		$id = $this->session->userdata('id');
 		$query = "SELECT * FROM (
-		SELECT * FROM tb_line_log l WHERE l.`penggunaID` = 74 ) hasil
+		SELECT * FROM tb_line_log l WHERE l.`penggunaID` = $id ) hasil
 		JOIN `tb_line_step` s ON s.`id` = hasil.stepID
 		JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
 		ORDER BY s.`topikID` 
 		";
 		$result = $this->db->query($query);
 		if ($result->result_array()==array()) {
-			return false;
+			return $result->result_array();
 		} else {
 			return $result->result_array();
 		}
