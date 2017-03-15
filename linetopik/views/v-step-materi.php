@@ -1,3 +1,30 @@
+<?php 
+//============================================================+
+// File name   : v-step-materi.php
+// Begin       : 2017-
+// Last Update : 2017-03-15
+//
+// Description : List pagination siswa
+//               Untuk menggantikan v-daftar-siswa yg berupa datatable
+//
+// Author: MrBebek
+//
+// (c) Copyright:
+//               MrBebek
+//               neonjogja.com
+
+//============================================================+
+
+/**
+ * @author MrBebek
+ * @since  2017-
+ */
+?>
+<!-- Automplate -->
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<!-- /Automplate -->
+
 <div class="page-title" style="background:#2b3036">
 
     <div class="grid-row">
@@ -16,7 +43,7 @@
                                 <form method="get" class="search-form" action="<?=base_url()?>index.php/linetopik/cariTopik"  accept-charset="utf-8" enctype="multipart/form-data">
                                     <label>
                                         <span class="screen-reader-text">Search for:</span>
-                                        <input type="search" class="search-field" placeholder="Search"  name="keycari" title="Search for:">
+                                        <input type="search" class="ui-autocomplete-input" placeholder="Search"  name="keycari" title="Search for:" id="caritopik">
                                     </label>
                                     <input type="submit" class="search-submit" value="GO">
                                 </form>
@@ -106,4 +133,19 @@
          
       }
   });
+</script>
+
+<!-- JQ untuk autocomplate search topik -->
+<script type="text/javascript">
+
+  $(document).ready(function() { 
+    var site = "<?php echo site_url();?>";
+    $( "#caritopik" ).autocomplete({
+        source:  site+"/linetopik/autocompleteTopik",
+        select: function (event, ui) {
+                window.location = ui.item.url;
+                }
+    });
+
+});
 </script>

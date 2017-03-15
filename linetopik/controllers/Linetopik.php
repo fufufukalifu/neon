@@ -720,6 +720,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->parser->parse('templating/index', $data);
         // END step line
     }
+
+
+//search autocomplete soal berdasarkan judul soal
+public function autocompleteTopik()
+{
+ $keyword = $_GET['term'];
+  // cari di database
+ $data = $this->Mlinetopik->get_cari_topik($keyword); 
+ // format keluaran di dalam array
+ $arr = array();
+ foreach($data as $row)
+ {
+     $arr[] = array(
+        'value' =>$row['namaTopik'],
+        'url'=>base_url('linetopik/timeLine')."/".$row['UUID'],
+        );
+ }
+        // minimal PHP 5.2
+ echo json_encode($arr);
+}
  
 
  } ?>

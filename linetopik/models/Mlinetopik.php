@@ -317,6 +317,20 @@
         return $query->result_array()[0]['jumlah_soal'];
     }
 
+    //mencari topik line untuk autocomplate serach timeline
+    public function get_cari_topik($keyword='')
+    {
+      $this->db->distinct('topik.namaTopik');
+       $this->db->select('topik.namaTopik,topik.UUID');
+       $this->db->from('tb_line_topik topik');
+      $this->db->join('tb_bab bab','bab.id=topik.babID');
+      $this->db->join('tb_line_step step','step.topikID=topik.id');
+       $this->db->like('topik.namaTopik',$keyword);
+       $this->db->where('topik.status',1);
+       $query = $this->db->get();
+       return $query->result_array();
+    }
+
 
 
 
