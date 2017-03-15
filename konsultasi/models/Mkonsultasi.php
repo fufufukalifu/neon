@@ -211,5 +211,15 @@ class Mkonsultasi extends CI_Model
 			public function insert_point($data){
 				$this->db->insert( 'tb_k_love', $data );
 			}
+
+			public function get_konsultasi_by_siswa(){
+				$sub = "SELECT * FROM 
+				(SELECT id FROM tb_siswa s WHERE s.penggunaID = '1589' ) 
+				siswa JOIN `tb_k_pertanyaan` p ON siswa.id = p.siswaID";
+
+				$result = $this->db->query($sub);
+				return $result->result_array();
+
+			}
 		}
 		?>

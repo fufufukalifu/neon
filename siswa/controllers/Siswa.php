@@ -11,7 +11,9 @@ class Siswa extends MX_Controller {
         $this->load->model('register/mregister');
         $this->load->model('cabang/mcabang');
         $this->load->model('tryout/mtryout');
-
+        $this->load->model('learningline/learning_model');
+        $this->load->model('konsultasi/mkonsultasi');
+        
         $this->load->helper('session');
         $this->load->library('parser');
         $this->load->library('pagination');
@@ -55,7 +57,6 @@ class Siswa extends MX_Controller {
         $bio = "ini masih malu-malu nyeritain tentang dirinya";
     }else{
         $bio = $data['siswa']['biografi'];
-
     }
     $data = array(
         'judul_halaman' => 'Neon - Dashboard Siswa',
@@ -71,8 +72,10 @@ class Siswa extends MX_Controller {
         'photo'=>base_url().'assets/image/photo/siswa/'.$data['siswa']['photo'],
         'sisa'=>$this->session->userdata('sisa'),
         'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
-        'jumlah_latihan' =>$this->mtryout->get_jumlah_report_latihan(),
+        'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
+        'jumlah_line'=>count($this->learning_model->get_line_log_step_line_by_user())
         );
+
 
     $data['files'] = array( 
         // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -640,6 +643,7 @@ public function autocompleteSiswa()
 function ajax_report_tryout(){
     $datas = $this->mtryout->get_report_paket();
     // var_dump($datas);
+
     $list = array();
     $no = 0;
         //mengambil nilai list
@@ -647,16 +651,35 @@ function ajax_report_tryout(){
     foreach ($datas as $list_item) {
         $no++;
         $row = array();
-        
+                $sumBenar=$list_item ['jmlh_benar'];
+            $sumSalah=$list_item ['jmlh_salah'];
+            $sumKosong=$list_item ['jmlh_kosong'];
+            //hitung jumlah soal
+            $jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+            
+            $nilai=0;
+            // cek jika pembagi 0
+            if ($jumlahSoal != 0) {
+                //hitung nilai
+                $nilai=$sumBenar/$jumlahSoal*100;
+            }
         $row[] = $no;
         $row[] = $list_item['nm_paket'];
         $row[] = $list_item['jumlah_soal'];
         $row[] = $list_item['jmlh_benar'];
         $row[] = $list_item['jmlh_salah'];
         $row[] = $list_item['jmlh_kosong'];
-        $row[] = "belum dihitung";
+        $row[] = $jumlahSoal;
         $row[] = $list_item['tgl_pengerjaan'];
-        $row[] ='<a class="btn btn-sm btn-success"  title="Lihat Report" onclick="dropSoal('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+
+        $array = array("id_tryout"=>$list_item['id_tryout'],
+            "id_mm_tryout_paket"=>$list_item['id_mm-tryout-paket'],
+            "id_paket"=>$list_item['id_mm-tryout-paket']);
+
+        $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
+        data-todo='.htmlspecialchars(json_encode($array)).' 
+       
+         title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
 
         $list[] = $row;   
 
@@ -680,7 +703,7 @@ function ajax_get_report_latihan(){
     foreach ($datas as $list_item) {
         $no++;
         $row = array();
-        
+
         $row[] = $no;
         $row[] = $list_item['nm_latihan'];
         $row[] = $list_item['jumlahSoal'];
@@ -689,11 +712,12 @@ function ajax_get_report_latihan(){
         $row[] = $list_item['jmlh_kosong'];
         $row[] = $list_item['skore'];
         $row[] = $list_item['tgl_pengerjaan'];
-        $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
-        title="Lihat Score" 
-        onclick="lihat_laporan_latihan('.$list_item['id_latihan'].')"
-        data-todo='."'".json_encode($list_item)."'".'
-        "><i class="ico-book"></i></a>';
+        
+        // $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
+        // title="Lihat Score" 
+        // onclick="lihat_laporan_latihan('.$list_item['id_latihan'].')"
+        // data-todo='."'".json_encode($list_item)."'".'
+        // "><i class="ico-book"></i></a>';
 
 
         $list[] = $row;   
@@ -738,7 +762,39 @@ public function editSiswa()
          $this->msiswa->update_siswa($data_post);
          
 }
+    
+    function ajax_daftar_konsultasi(){
+    $datas = $this->mkonsultasi->get_konsultasi_by_siswa();
+
+    $list = array();
+    $no = 0;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
+
+        $row[] = $no;
+        $row[] = $list_item['judulPertanyaan'];
+        $row[] = $list_item['isiPertanyaan'];
+        $row[] = $list_item['date_created'];
+        
+        $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id'].'"  
+        title="Lihat Konsultasi" 
+        href='.base_url()."konsultasi/singlekonsultasi/".$list_item['id'].'
+        "><i class="ico-search"></i></a>';
+
+
+        $list[] = $row;   
+
+    }
+
+      $output = array(
+        "data" => $list,
+        );
+    echo json_encode($output);
 
 }
 
+}
 ?>

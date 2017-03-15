@@ -1,33 +1,24 @@
 <?php
-
-
-
 class Mlogin extends CI_Model {
-
-
-
     //put your code here
-
     public $id_akun;
 
 
 
     public function __construct() {
-
         parent::__construct();
-
     }
 
 
 
     public function cekUser($username, $password) {
-
+        $user = $this->db->escape_str($username);
         $this->db->select('*');
 
         $this->db->from('tb_pengguna pengguna');
         $this->db->where('kataSandi', $password);
         $this->db->where('pengguna.status','1');
-        $this->db->where("(namaPengguna='$username' OR eMail='$username')", NULL, FALSE);
+        $this->db->where("(namaPengguna='$user' OR eMail='$user')", NULL, FALSE);
         
         $this->db->limit(1);
 
