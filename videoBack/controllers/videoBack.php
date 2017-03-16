@@ -1,7 +1,24 @@
 <?php
 
+//============================================================+
+// File name   : videoBack.php
+// Begin       : -
+// Last Update : 2017-03-15
+//
+// Description : controller model video back
+//               
+//
+// Author: MrBebek
+//
+// (c) Copyright:
+//               MrBebek
+//               neonjogja.com
+
+//============================================================+
+
 /**
- *
+ * @author MrBebek
+ * @since  2016-08-xx
  */
 class Videoback extends MX_Controller {
 
@@ -14,6 +31,7 @@ class Videoback extends MX_Controller {
     $this->load->model('guru/mguru');
     $this->load->model('templating/mtemplating');
     $this->load->library('parser');
+    $this->load->library('pagination');
   }
 
     # Mengambil video berdasarkan id guru
@@ -400,15 +418,19 @@ public function dropVideo($videoID)
   $this->Mvideoback->del_video($videoID);
 }
     //hapus file video
-public function del_file_video($videoID)
+public function del_file_video()
 {
-  $oldVideo=$this->mvideos->get_nameFile($videoID)[0];
-  $nameVideo=$oldVideo->namaFile;
+  if ($this->input->post()) {
+    $videoID=$this->input->post('videoID');
+    $oldVideo=$this->mvideos->get_nameFile($videoID)[0];
+      $nameVideo=$oldVideo->namaFile;
 
-  if ($nameVideo!=null) {
-   unlink(FCPATH . "./assets/video/" . $nameVideo);
- }
- $this->dropVideo($videoID);
+      if ($nameVideo!=null) {
+       unlink(FCPATH . "./assets/video/" . $nameVideo);
+     }
+     $this->dropVideo($videoID);
+  }
+  
 
 
 }
@@ -1061,20 +1083,111 @@ $output = array(
 echo json_encode( $output );
 }
 
+//list daftar video tidak menggunkan datatable
+public function daftarvideo()
+{
+// code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_video();
+       
+        $config['base_url'] = base_url().'index.php/videoback/daftarvideo/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 12;
 
-function test(){
-  $data['videos_uploaded'] = $this->load->mvideos->get_all_video();
-  $data['videos_uploaded_by_admin'] = $this->load->mvideos->get_video_by_admin();
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
 
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
 
-  // var_dump($data['videos_uploaded_by_admin'][0]);
-  // echo "<br><br><br>";
-  // var_dump($data['videos_uploaded'][0]);
-  // echo "<br><br><br>";
-  $datas = array_merge($data['videos_uploaded'],$data['videos_uploaded_by_admin']);
-  // echo "<br><br><br>";
-// var_dump($data);
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video($config['per_page'],$from);
+
+        // var_dump($list);
+        $this->tampVideo($list);
 }
+
+public function tampVideo($list='')
+{
+    $data['judul_halaman'] = "List Video";
+    $data['files'] = array(
+            APPPATH . 'modules/Videoback/views/v-tamp-video.php',
+            );
+    $data['list']=array();
+    foreach ($list as $key ) {
+      $namaFile=$key['namaFile'];
+      $link=$key['link'];
+      $publish=$key['published'];
+      $video="<h3>Tidak ada File video</h3>";
+      $hapus='<a href="javascript:void(0);" class="btn btn-danger" title="Hapus" onclick="drop_video('.$key["id"].')"><i class="ico-remove"></i></a>';
+      $ubah=' <a href="'.base_url().'videoback/formUpdateVideo/'.$key["UUID"].'" class="btn btn-warning" title="Ubah"><i class="ico-file5"></i></a>';
+      $lihat='<a href="javascript:void(0);" class="btn btn-success detail-'.$key['id'].'" title="Lihat" data-id='."'".json_encode($key)."'".' onclick="detail('."'".$key['id']."'".')"><i class="ico-facetime-video" ></i></a>';
+      // pengecekan file video atau link video
+      if ($namaFile != '' && $namaFile != ' ') {
+        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style="max-width:400px; max-height:250px;" controls></video>';
+      }elseif($link != '' && $link != ' '){
+        $video = '<iframe  src="'.$link.'"  controls id="video-ply-link" width="100%"  style="max-width:400px; max-height:250px;">
+        </iframe>';
+      }
+        $timestamp = strtotime($key['date_created']);
+         $tgl=date("M-Y", $timestamp);
+      $data['list'][]=array(
+                'judulVideo'=>$key['judulVideo'],
+                'video'=>$video,
+                'deskripsi'=>$key['deskripsi'],
+                'date_created'=>$tgl,
+                'mapel'=>$key['mapel'],
+                'bab'=>$key['judulBab'],
+                'subbab'=>$key['judulSubBab'],
+                'hapus'=>$hapus,
+                'ubah'=>$ubah,
+                'lihat'=>$lihat
+                );
+    }
+
+    #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+                $this->parser->parse('admin/v-index-admin', $data);
+        } elseif($hakAkses=='guru'){
+             // jika guru
+               $this->parser->parse('templating/index-b-guru', $data);
+        }else{
+            // jika siswa redirect ke welcome
+            redirect(site_url('welcome'));
+        }
+        #END Cek USer#
+}
+
 }
 
 ?>
