@@ -47,11 +47,11 @@
                     <thead>
                         <tr>
                             <th>no</th>
-                            <th>Id siswa</th>
                             <th>Nama Lengkap</th>
                             <th>Nama Pengguna</th>
                             <th>Sekolah</th>
                             <th>Email</th>
+                            <th>Cabang Neutron</th>
                             <th>Report Siswa</th>
                             <th>Aksi</th>
                         </tr>
@@ -63,11 +63,11 @@
                     foreach ($siswa as $key): ?>
                     <tr>
                         <td><?=$no;?></td>
-                        <td><?=$key["idsiswa"];?></td>
                         <td><?=$key["nama"];?></td>
                         <td><?=$key["namaPengguna"];?></td>
                         <td><?=$key["namaSekolah"];?></td>
                         <td><?=$key["eMail"];?></td>
+                        <td><?=$key["cabang"];?></td>
                         <td><?=$key["report"];?></td>
                         <td><?=$key["aksi"];?></td>
                         </tr>
@@ -137,5 +137,56 @@
     function reload_tblist() {
         tb_siswa.ajax.reload(null, false);
     }
+
+    // function resetPassword11(idsiswa, idpengguna) {
+    //     if (confirm('Apakah Anda yakin akan me-reset katasandi ini? ')) {
+    //         // ajax delete data to database
+    //         $.ajax({
+    //             url: base_url + "index.php/siswa/resetPassword/",
+    //             data: "idsiswa=" + idsiswa + "&idpengguna=" + idpengguna,
+    //             type: "POST",
+    //             dataType: "TEXT",
+    //             success: function (data, respone)
+    //             {
+    //                  window.location.href =page;
+    //             },
+    //             error: function (jqXHR, textStatus, errorThrown)
+    //             {
+    //                 alert('Error deleting data');
+    //                 console.log(errorThrown);
+    //             }
+    //         });
+    //     }
+    // }
+
+function resetPassword(idpengguna){
+  url = base_url + "index.php/siswa/resetPassword/";
+  swal({
+    title: "Yakin akan me-reset katasandi ini?",
+    text: "Anda tidak dapat membatalkan ini.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Ya,Tetap me-reset katasandi!",
+    closeOnConfirm: false
+  },
+  function(){
+    var datas = {idpengguna:idpengguna};
+    $.ajax({
+      dataType:"text",
+      data:datas,
+      type:"POST",
+      url:url,
+      success:function(){
+        swal("kata sandi baru : [namaPengguna]+[tgl sekarang] !", "katasandi lama: aa , tgl: 29 => katasandi: aa29 ", "success");
+       // window.location.href =base_url+"videoback/daftarvideo";
+      },
+      error:function(){
+        sweetAlert("Oops...", "Ktasandi gagal di reset!", "error");
+      }
+
+    });
+  });
+}
 
 </script>

@@ -2,12 +2,18 @@
 
 class Msiswa extends CI_Model {
     #Start function pengaturan profile siswa#
-
+    //front
     public function update_siswa($data) {
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
-        redirect(site_url('siswa/profilesetting'));
+        
+    }
+    //back
+    public function update_siswa1($data,$idsiswa) {
+        $this->db->where('id', $idsiswa);
+        $this->db->update('tb_siswa', $data);
+        
     }
 
     public function update_email($data) {
@@ -18,16 +24,20 @@ class Msiswa extends CI_Model {
             'eMail' => $data['eMail'],
             );
         $this->session->set_userdata($sess_array);
-        redirect(site_url('siswa/profilesetting'));
+       
     }
 
+    // front
     public function update_katasandi($data) {
         $id = $this->session->userdata['id'];
         $this->db->where('id', $id);
         $this->db->update('tb_pengguna', $data);
-        redirect(site_url('siswa/profilesetting'));
     }
-
+    // back
+    public function update_katasandi2($data,$idpengguna) {
+        $this->db->where('id', $idpengguna);
+        $this->db->update('tb_pengguna', $data);
+    }
     public function update_photo($photo) {
         $data = array(
             'photo' => $photo
@@ -35,7 +45,7 @@ class Msiswa extends CI_Model {
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
-        redirect(site_url('siswa/profilesetting'));
+       
     }
 
     public function get_siswa() {
@@ -219,11 +229,12 @@ class Msiswa extends CI_Model {
 
     // get data siswa per segment
     function data_siswa($number,$offset){
-        $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail');
+        $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail,cabang.namaCabang');
         $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+        $this->db->join('tb_cabang cabang','cabang.id = s.cabangID');
         $this->db->where('s.status','1');
         $this->db->where('p.status','1');
-         $this->db->order_by('s.namaDepan', 'desc');
+         $this->db->order_by('s.namaDepan', 'asc');
         return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
     }
     //cari Siswa
@@ -241,8 +252,16 @@ class Msiswa extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
-
     ##
+    //get nama pengguna untuk reset katasandi
+    public function get_namaPengguna($id)
+    {
+        $this->db->select('namaPengguna');
+        $this->db->from('tb_pengguna');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
 
 ?>

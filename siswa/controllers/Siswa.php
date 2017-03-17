@@ -78,10 +78,7 @@ class Siswa extends MX_Controller {
 
 
     $data['files'] = array( 
-        // APPPATH.'modules/homepage/views/v-header-login.php',
-        // APPPATH.'modules/siswa/views/headersiswa.php',
         APPPATH.'modules/siswa/views/t-profile-siswa.php',
-        // APPPATH.'modules/testimoni/views/v-footer.php',
         );
 
     $this->parser->parse( 'templating/index-d-siswa', $data );
@@ -182,7 +179,7 @@ public function ubahemailsiswa() {
         );
     $this->session->set_flashdata('updsiswa', 'Emailmu telah berhasil dirubah');
     $this->msiswa->update_email($data_post);
-
+ redirect(site_url('siswa/profilesetting'));
 
 }
 }
@@ -221,12 +218,12 @@ public function ubahkatasandi() {
         if ($kataSandi == $inputSandi) {
             $this->session->set_flashdata('updsiswa', 'Passwordmu telah berubah');
             $this->msiswa->update_katasandi($data_post);
+
         } else {
-                // code...
-                // echo "salah"; //for testing
             $this->session->set_flashdata('updsiswa', 'Password gagal  dirubah, password lama salah');
-            redirect(site_url('siswa/profilesetting'));
+            
         }
+        redirect(site_url('siswa/profilesetting'));
     }
 }
 
@@ -258,9 +255,7 @@ public function upload($oldphoto) {
         $photo = $file_data['file_name'];
         $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
         $this->msiswa->update_photo($photo);
-            // echo "berhasil upload"; //for testing
-            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
-            // $this->load->view('beranda/success_msg',$data);
+         redirect(site_url('siswa/profilesetting'));
     }
 }
 
@@ -433,11 +428,7 @@ function updateSiswa($idsiswa, $idpengguna) {
      $data['cabang'] = $this->mcabang->get_all_cabang();
      $idsiswa = $idsiswa;
      $idpengguna = $idpengguna;
-
      $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
-
-//            var_dump($data);
-
      $data['judul_halaman'] = "Rubah Data Siswa";
      $data['files'] = array(
         APPPATH . 'modules/siswa/views/v-update-siswa.php',
@@ -591,16 +582,18 @@ public function tampSiswa($list)
         $no++;
         $data['siswa'][] = array(
           'no'=> $no,
-          'idsiswa'=> $list_siswa['idsiswa'],
           'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
           'namaPengguna'=> $list_siswa['namaPengguna'],
 
           'namaSekolah'=> $list_siswa['namaSekolah'],
           'eMail'=>  $list_siswa['eMail'] ,
+          'cabang'=> $list_siswa['namaCabang'],
           'report'=>'<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>',
           'aksi'=>'<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
 
-          <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>',
+          <a class="btn btn-sm btn-danger"  title="Reset Pasword" title="Hapus" onclick="resetPassword(' . "" . $list_siswa['penggunaID'] . ')"><i class="ico-key"></i></a>
+          <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>'
+          ,
           // 'penggunaID'=> $list_siswa['penggunaID']
 
           );
@@ -712,12 +705,6 @@ function ajax_get_report_latihan(){
         $row[] = $list_item['jmlh_kosong'];
         $row[] = $list_item['skore'];
         $row[] = $list_item['tgl_pengerjaan'];
-        
-        // $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
-        // title="Lihat Score" 
-        // onclick="lihat_laporan_latihan('.$list_item['id_latihan'].')"
-        // data-todo='."'".json_encode($list_item)."'".'
-        // "><i class="ico-book"></i></a>';
 
 
         $list[] = $row;   
@@ -739,7 +726,7 @@ public function editSiswa()
         $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
         $alamat = htmlspecialchars($this->input->post('alamat'));
         $noKontak = htmlspecialchars($this->input->post('nokontak'));
-
+        $idsiswa=htmlspecialchars($this->input->post('idsiswa'));
 
         $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
         $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
@@ -748,7 +735,7 @@ public function editSiswa()
         $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
 
     //data array siswa
-        $data_post = array(
+        $data = array(
             'namaDepan' => $namaDepan,
             'namaBelakang' => $namaBelakang,
             'alamat' => $alamat,
@@ -759,7 +746,9 @@ public function editSiswa()
             'cabangID' => $cabangID,
             'noIndukNeutron' => $noIndukNeutron
             );
-         $this->msiswa->update_siswa($data_post);
+         $this->msiswa->update_siswa1($data,$idsiswa);
+
+         redirect(site_url('siswa/listSiswa'));
          
 }
     
@@ -794,6 +783,18 @@ public function editSiswa()
         );
     echo json_encode($output);
 
+}
+
+//reset pasword
+public function resetPassword()
+{
+    $mydate=getdate(date("U"));
+// echo "$mydate[weekday], $mydate[month] $mydate[mday], $mydate[year]";
+    $idpengguna = $this->input->post('idpengguna');
+    $namaPengguna = $this->msiswa->get_namaPengguna($idpengguna)[0]['namaPengguna'];
+    $katasandi =md5($namaPengguna.$mydate["mday"]);
+    $data = array('kataSandi' => $katasandi);
+    $this->msiswa->update_katasandi2($data,$idpengguna);
 }
 
 }

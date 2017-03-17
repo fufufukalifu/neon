@@ -82,7 +82,7 @@ class Mvideoback extends CI_Model
 		$this->db->set($data['video']);
 		$this->db->where('UUID',$data['UUID']);
 		$this->db->update('tb_video');
-		redirect(site_url('videoback/managervideo'));
+		
 	}
 
         public function scTingkatvideo()
