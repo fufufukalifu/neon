@@ -14,7 +14,7 @@
  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?= base_url('assets/image/touch/apple-touch-icon-114x114-precomposed.png') ?>">
  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url('assets/image/touch/apple-touch-icon-72x72-precomposed.png') ?>">
  <link rel="apple-touch-icon-precomposed" href="<?= base_url('assets/image/touch/apple-touch-icon-57x57-precomposed.png') ?>">
- <link rel="shortcut icon" href="<?= base_url('assets/image/favicon.ico') ?>">
+ <link rel="shortcut icon" href="<?= base_url('assets/image/logo/favicon.png') ?>">
  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/css/jquery.datatables.min.css'); ?>">
  <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
  <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
@@ -46,12 +46,13 @@
 
 <!-- START Body -->
 <body>
+
   <!-- START Template Header -->
-  <header id="header" class="navbar navbar-fixed-top">
+  <header id="header" class="navbar navbar-fixed-top text-white">
     <!-- START navbar header -->
     <div class="navbar-header">
      <!-- Brand -->
-     <a class="navbar-brand" href="javascript:void(0);">
+     <a class="navbar-brand" href="<?=base_url('welcome') ?>">
       <span class="logo-figure"></span>
       <span class="logo-text"></span>
     </a>
@@ -84,13 +85,13 @@
 <!--/ Offcanvas left -->
 
 <!-- Notification dropdown -->
-<li class="dropdown custom" id="header-dd-notification">
+<!-- <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
    <span class="icon"><i class="ico-bell"></i></span>
    <span class="hasnotification hasnotification-danger"></span>
  </span>
-</a>
+</a> -->
 
 
 <!-- Dropdown menu -->
@@ -206,9 +207,9 @@
 <!--/ END Template Header -->
 
 <!-- START Template Sidebar (Left) -->
-<aside class="sidebar sidebar-left sidebar-menu">
+<aside class="sidebar sidebar-left sidebar-menu"">
   <!-- START Sidebar Content -->
-  <section class="content slimscroll">
+  <section class="content slimscroll" >
    <h5 class="heading">Main Menu</h5>
    <!-- START MENU -->
    <ul class="topmenu topmenu-responsive" data-toggle="menu">
@@ -253,41 +254,34 @@
 </a>
 </li>
 
+
+
 <li>
- <a data-target="#components" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-stack"></i></span>
-  <span class="text">Learning Line</span>
-  <span class="arrow"></span>
+  <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
+    <span class="figure"><i class="ico-stack"></i></span>
+    <span class="text">Learning Line</span>
+    <span class="arrow"></span>
+  </a>
 
-  <ul id="components" class="submenu collapse in" style="height: auto;">
+  <ul id="filtervideo" class="submenu collapse">
     <li>
-      <a href="component-animation.html">
       <span class="text"><a href="<?=base_url("linetopik/lineMapel/1") ?>">SD</a></span>
-      </a>
     </li>
 
-        <li>
-      <a href="component-animation.html">
+    <li>
       <span class="text"><a href="<?=base_url("linetopik/lineMapel/2") ?>">SMP</a></span>
-      </a>
     </li>
 
-        <li>
-      <a href="component-animation.html">
+    <li>
       <span class="text"><a href="<?=base_url("linetopik/lineMapel/3") ?>">SMA IPS</a></span>
-      </a>
     </li>
 
-        <li>
-      <a href="component-animation.html">
+    <li>
       <span class="text"><a href="<?=base_url("linetopik/lineMapel/4") ?>">SMA IPA</a></span>
-      </a>
     </li>
 
   </ul>
-</a>
 </li>
-
 
 <li>
  <a href="<?= base_url('index.php/modulonline/allmodul') ?>">
