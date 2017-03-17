@@ -1,3 +1,18 @@
+<!-- LOADING -->
+<style>
+  .no-js #loader { display: none;  }
+  .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+  .se-pre-con {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_8.gif) center no-repeat #fff;
+  }
+</style>
+<!-- LOADING -->
 
 <style>
  #jwb_sisJ {
@@ -81,65 +96,27 @@ label:hover{ /* HIDE RADIO */
 <!-- START Body -->
 
 <body class="bgcolor-white">
-
- <!-- START Template Main -->
- <script src="<?= base_url('assets/js/bjqs-1.10.js') ?>"></script>
- <script type="text/javascript">
-  jQuery(document).ready(function ($) {
-   $('#my-slideshow').bjqs({
+  <div class="se-pre-con">
+  </div>
+  <!-- START Template Main -->
+  <script src="<?= base_url('assets/js/bjqs-1.10.js') ?>"></script>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+     $('#my-slideshow').bjqs({
 //                'height': 400,
                 // 'width': 600,
                 // 'responsive': false
               });
- });
+   });
+
+
+    $(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");;
+  });
 </script>
 
 
-
-<!-- SCRIPT RENDER MATHJAX KETIKA DI KLIK -->
-<script>
-  /*
-  //
-  //  Use a closure to hide the local variables from the
-  //  global namespace
-  //
-  (function () {
-    var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
-    var math = null, box = null;    // the element jax for the math output, and the box it's in
-
-    //
-    //  Hide and show the box (so it doesn't flicker as much)
-    //
-    var HIDEBOX = function () {box.style.visibility = "hidden"}
-    var SHOWBOX = function () {box.style.visibility = "visible"}
-
-    //
-    //  Get the element jax when MathJax has produced it.
-    //
-    QUEUE.Push(function () {
-      math = MathJax.Hub.getAllJax("MathOutput")[0];
-      box = document.getElementById("box");
-      SHOWBOX(); // box is initially hidden so the braces don't show
-    });
-
-    //
-    //  The onchange event handler that typesets the math entered
-    //  by the user.  Hide the box, then typeset, then show it again
-    //  so we don't see a flash as the math is cleared and replaced.
-    //
-    window.UpdateMath = function (TeX) {
-      console.log(TeX);
-      QUEUE.Push(
-        HIDEBOX,
-        ["resetEquationNumbers",MathJax.InputJax.TeX],
-        ["Text",math,"\\displaystyle{"+TeX+"}"],
-        SHOWBOX
-        );
-    }
-  })();
-  */
-</script>
-<!-- SCRIPT RENDER MATHJAX KETIKA DI KLIK -->
 
 
 <section id="main" role="main">
@@ -156,15 +133,15 @@ label:hover{ /* HIDE RADIO */
           </p>
         </div>
         <div class="modal-body">
-           <center><a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a></center>
-        </div>
-        <div class="modal-footer">
-           <!-- <a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a> -->
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
-  <!--/ END modal-lg -->
+         <center><a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a></center>
+       </div>
+       <div class="modal-footer">
+         <!-- <a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a> -->
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div>
+ <!--/ END modal-lg -->
 </div>
 
 

@@ -313,33 +313,12 @@ class Tryout extends MX_Controller {
         }
     }
 
-    public function backup_jawaban(){
-        $backup_jawaban = $this->input->post();
-
-        $id = $this->session->userdata['id_mm-tryoutpaket'];
-        $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
-
-        $result = $this->Mtryout->get_soal_by_paket($id_paket);
-
-        print_r($backup_jawaban);
-        //  var_dump($backup_jawaban);
-        // foreach ($backup_jawaban['pil'] as $backup => $key) {
-        //     print_r($key);
-        // }
-
-        // var_dump($result);
-
-        // foreach ($result as $key) {
-        //     foreach ($backup_jawaban as $backup) {
-        //         if ($key['soalid']==) {
-        //             # code...
-        //         }
-        //     }
-        // }
-
-
-        // $pilihan = $backup_jawaban['pil'];
-        // $soal = $backup_jawaban['']
+    public function test(){
+       try {
+           echo "strin";
+       } catch (Exception $e) {
+           echo "error";
+       }
 
     }
 }
