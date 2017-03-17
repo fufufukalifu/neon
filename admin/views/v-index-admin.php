@@ -279,7 +279,7 @@ JS aoutocomplate
 <!-- START Template Header -->
 <header id="header" class="navbar navbar-fixed-top">
   <!-- START navbar header -->
-  <div class="navbar-header">
+  <div class="navbar-header" style="background:#f27c66;"">
     <!-- Brand -->
     <a class="navbar-brand" href="javascript:void(0);">
       <span class="logo-figure"></span>

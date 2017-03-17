@@ -125,7 +125,7 @@
 								</li>
 
 								<li>
-									<a href="">Learning Line</a>
+									<a >Learning Line</a>
 									<ul>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/1/">SD</a></li>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/2/">SMP</a></li>

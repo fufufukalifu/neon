@@ -353,6 +353,11 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
        <!-- End heading -->
        <!-- Start body priview -->
        <div class="panel-body ">
+       <div  class="hidden-audio" >
+          <audio class="col-sm-12" id="prevAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
+          </audio>
+       </div>
+       <hr>
         <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
         <label> judul  :</label> <a id="prevJudul" ></a> <br>
         <label>Soal   : </label>
@@ -363,7 +368,7 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
         <!-- img -->
         <div class="prevSoal col-sm-12">
                 
-  <div class="a" id="MathPreview2" ></div>
+            <p class="a" id="MathPreview2" ></p>
             <div class="a" id="MathBuffer2" style=" 
             visibility:hidden; position:absolute; top:0; left: 0"></div>
         </div>
@@ -1256,6 +1261,7 @@ true">
              var viewerAudio = {
               load : function(e){
                 $('#previewAudio').attr('src', e.target.result);
+                  $('#prevAudio').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameAudio').text(file.name);

@@ -5,14 +5,18 @@
  class Mlinetopik extends CI_Model
  {
 
+    //get maple line topik
  	public function get_mapel($tingkatID)
  	{
+        $this->db->distinct('tp.keterangan');
  		$this->db->select('tp.keterangan as mapel, bab.judulBab, bab.id as babID');
  		$this->db->from('tb_tingkat-pelajaran tp');
  		$this->db->join('tb_bab bab','bab.tingkatPelajaranID = tp.id');
         $this->db->join('tb_line_topik topik','topik.babID=bab.id');
+        $this->db->join('.tb_line_step step','step.topikId=topik.id');
  		$this->db->order_by('tp.keterangan');
  		$this->db->order_by('bab.judulBab');
+        $this->db->where('topik.status',1);
  		$this->db->where('tingkatID',$tingkatID);
  		$query=$this->db->get();
  		return $query->result_array();
@@ -121,12 +125,14 @@
 	// get topik untuk side bar by babiD
  	public function get_topik($babID)
  	{
- 		$this->db->select('id,UUID,namaTopik');
- 		$this->db->from('tb_line_topik');
- 		$this->db->where('babID',$babID);
- 		$this->db->where('status',1);
- 		$this->db->where('statusLearning',1);
- 		$this->db->order_by('namaTopik');
+        $this->db->distinct('topik.namaTopik');
+ 		$this->db->select('topik.id,topik.UUID,topik.namaTopik');
+ 		$this->db->from('tb_line_topik topik');
+        $this->db->join('tb_line_step step','step.topikID=topik.id');
+ 		$this->db->where('topik.babID',$babID);
+ 		$this->db->where('topik.status',1);
+ 		$this->db->where('topik.statusLearning',1);
+ 		$this->db->order_by('topik.namaTopik');
  		$query=$this->db->get();
  		return $query->result_array();
  	}
@@ -309,6 +315,20 @@
         $this->db->where('UUID',$UUID);
         $query = $this->db->get();
         return $query->result_array()[0]['jumlah_soal'];
+    }
+
+    //mencari topik line untuk autocomplate serach timeline
+    public function get_cari_topik($keyword='')
+    {
+      $this->db->distinct('topik.namaTopik');
+       $this->db->select('topik.namaTopik,topik.UUID');
+       $this->db->from('tb_line_topik topik');
+      $this->db->join('tb_bab bab','bab.id=topik.babID');
+      $this->db->join('tb_line_step step','step.topikID=topik.id');
+       $this->db->like('topik.namaTopik',$keyword);
+       $this->db->where('topik.status',1);
+       $query = $this->db->get();
+       return $query->result_array();
     }
 
 

@@ -187,5 +187,23 @@ class Mvideoback extends CI_Model
         $query = $this->db->get();
         return $query->result_array()[0];
     }
+
+    //jumlah semua video dengan status 1
+    public function jumlah_video(){
+        $this->db->where('status','1');
+        return $this->db->get('tb_video')->num_rows();
+    }
+
+        // data paginataion all video
+    function data_video($number,$offset){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
 }
 ?>

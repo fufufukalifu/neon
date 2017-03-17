@@ -1,3 +1,30 @@
+<?php 
+//============================================================+
+// File name   : v-step-materi.php
+// Begin       : 2017-
+// Last Update : 2017-03-15
+//
+// Description : List pagination siswa
+//               Untuk menggantikan v-daftar-siswa yg berupa datatable
+//
+// Author: MrBebek
+//
+// (c) Copyright:
+//               MrBebek
+//               neonjogja.com
+
+//============================================================+
+
+/**
+ * @author MrBebek
+ * @since  2017-
+ */
+?>
+
+<!-- Autocomplate -->
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<!-- /Autocomplate -->
 <div class="page-title" style="background:#2b3036">
 
     <div class="grid-row">
@@ -9,7 +36,6 @@
 </div>
 <!-- CSS TIME LINE -->
  <link rel="stylesheet" href="<?= base_url('assets/css/custom-time-line.css') ?>">
-
 <!--  -->
 
 	   <!-- content -->
@@ -21,7 +47,7 @@
                 <form method="get" class="search-form" action="<?=base_url()?>index.php/linetopik/cariTopik"  accept-charset="utf-8" enctype="multipart/form-data">
                     <label>
                         <span class="screen-reader-text">Search for:</span>
-                        <input type="search" class="search-field" placeholder="Search"  name="keycari" title="Search for:">
+                        <input type="search" class="ui-autocomplete-input" placeholder="Search"  name="keycari" title="Search for:" id="caritopik">
                     </label>
                     <input type="submit" class="search-submit" value="GO">
                 </form>
@@ -35,29 +61,28 @@
                     <h2>Topik</h2>
                     <hr class="divider-big" />
                     <ul>
-                   
                       <?php   $x=0; ?>
                     <?php foreach ($topik as $rows): ?>
                         <li class="cat-item cat-item-1 current-cat"><a href="#topik<?=$x?>"><?=$rows['namaTopik']?><span></span></a>
                         <?php $x++; ?>
                     <?php endforeach ?>
                     </ul>
-                  
-              
                 <!--/ widget Topik -->
                 <?php endif ?>
                   </aside>
                
       </div>
             <div class="grid-col grid-col-9">
-                <main> <?php   $i=0; 
+                <main> <?php   $i=0;
+                                $noTopik=0; 
                                     $namaTopik=''; ?>
                             <?php foreach ($datline as $key ): ?>
                                 
                                 <?php if ($namaTopik != $key['namaTopik'] && $i==0): ?>
                 <!-- start header line-->
                     <!-- post item -->
-                    <div class="blog-post">
+                    <div class="blog-post" id="topik<?=$noTopik;?>">
+                    <?php $noTopik++; ?>
                         <article>
                         <div class="post-info">
                             
@@ -88,7 +113,8 @@
                 <!-- END body line -->
                 <!-- start header line-->
                     <!-- post item -->
-                    <div class="blog-post" id="topik1">
+                    <div class="blog-post" id="topik<?=$noTopik;?>">
+                    <?php $noTopik++; ?>
                         <article>
                         <div class="post-info">
                             
@@ -113,10 +139,7 @@
                                      <input type="text" id="status-<?=$i;?>" value="<?=$key["status"];?>" hidden="true">
                                      <!-- // Untuk menampung staus step disable or enable  -->
                                         <a  href="<?=$key['link'];?>" class="media-heading" id="font-<?=$i;?>" ><?=$key['namaStep']?></a>
-                                
                                     </div>
-                             
-                                    <hr>
                                 </li> 
                                 <!-- </a>       -->
                                  <?php $i++;  ?>
@@ -156,11 +179,10 @@
         </div>
     </div>
     <!-- / content -->
+<!-- JQ utuk add css step line -->
 <script type="text/javascript">
     $(document).ready(function() { 
         var n = $("#n").val();
-        // console.log(n);
-        // $("#ico-0").css("background","black");
         for (i = 0; i < n; i++) {
         var status = $("#status-"+i).val();
         
@@ -171,6 +193,21 @@
            
         }
     });
+</script>
+
+<!-- JQ untuk autocomplate search topik -->
+<script type="text/javascript">
+
+  $(document).ready(function() { 
+    var site = "<?php echo site_url();?>";
+    $( "#caritopik" ).autocomplete({
+        source:  site+"/linetopik/autocompleteTopik",
+        select: function (event, ui) {
+                window.location = ui.item.url;
+                }
+    });
+
+});
 </script>
 
 
