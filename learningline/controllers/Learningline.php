@@ -681,7 +681,8 @@ function get_line_log(){
 		$no++;
 		$row = array();
 		$row[] = $no;
-		$row[] = $list_log['namaStep'];
+		$row[] = $list_log['namaTopik'];
+		
 		if ($list_log['jenisStep']==1) {
 			$row[] = "Video";
 			$row[] = "Sudah Di tonton";
@@ -697,7 +698,7 @@ function get_line_log(){
 			$row[] = "Lulus";
 			$row[] = $list_log['jumlah_soal'];
 		}
-		$row[] = $list_log['namaTopik'];
+		$row[] = $list_log['namaStep'];
 
 	
 

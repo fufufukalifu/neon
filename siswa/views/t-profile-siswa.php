@@ -168,11 +168,11 @@
           <thead>
             <tr>
               <th>no</th>
-              <th>Nama Step</th>
+              <th>Topik</th>
               <th>Jenis Step</th>
               <th>Status</th>
               <th>Jumlah Soal</th>
-              <th>Topik</th>
+              <th>Nama Step</th>
             </tr>
           </thead>
 
@@ -201,57 +201,100 @@
               <th>Isi Pertanyaan</th>
               <th>Tanggal Dibuat</th>
               <th>Aksi</th>
-              </tr>
-              </thead>
+            </tr>
+          </thead>
 
-              <tbody>
+          <tbody>
 
-              </tbody>
-            </table>
+          </tbody>
+        </table>
 
 
+      </div>
+    </div>
+    </div
+
+
+
+    <!-- Browser Breakpoint -->
+    <div class="col-lg-12">
+      <!-- START panel -->
+      <div class="panel panel-default">
+        <!-- panel heading/header -->
+        <div class="panel-heading">
+          <h3 class="panel-title ellipsis"><i class="ico-files mr5"></i>Progress learning Line</h3>
+          <!-- panel toolbar -->
+          <div class="panel-toolbar text-right">
+            <!-- option -->
+            <div class="option">
+              <button class="btn up" data-toggle="panelcollapse"><i class="arrow"></i></button>
+              <button class="btn" data-toggle="panelremove" data-parent=".col-md-12"><i class="remove"></i></button>
+            </div>
+            <!--/ option -->
           </div>
+          <!--/ panel toolbar -->
         </div>
-        </div
+        <!--/ panel heading/header -->
+        <!-- panel body with collapse capabale -->
+        <div class="table-responsive panel-collapse pull out">
+          <table class="table rpersentase" style="font-size: 13px" width=100%>
+            <thead>
+              <tr>
+              <th>no</th>
+                <th>nama topik</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+      <!--/ panel body with collapse capabale -->
+    </div>
+    <!--/ END panel -->
+  </div>
+  <!-- Browser Breakpoint -->
 
-        <div class="container-fluid">
-         <div class="col-xs-3">
 
-          <div class="widget panel">
-            <div class="thumbnail">
-              <div class="media">
-                <div class="indicator"><span class="spinner"></span></div>
-                <div class="meta bottom text-center">
-                  <center>
-                   <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
-                 </center>
-                 <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
-                 <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
-                   <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
-                 </i></h6>
-               </div>
-             </div>
-           </div>
+  <div class="container-fluid">
+   <div class="col-xs-3">
 
-
-
-
+    <div class="widget panel">
+      <div class="thumbnail">
+        <div class="media">
+          <div class="indicator"><span class="spinner"></span></div>
+          <div class="meta bottom text-center">
+            <center>
+             <img class="img-circle img-bordered-teal mb10 text-center" src="<?=$photo ?>" alt="" width="120px" height="120px">
+           </center>
+           <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6">{namaDepan} {namaBelakang}</span></h4>
+           <h6 class="nm" style="color:black"><i><span class="iconmoon-location-6">
+             <b>About me :</b><br>{namaDepan} {namaBelakang} {biografi}</span>
+           </i></h6>
          </div>
        </div>
      </div>
+
+
+
+
    </div>
+ </div>
+</div>
+</div>
 
-   <!--datatable-->
-   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
-   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
-   <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
-   <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
-   <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+<!--datatable-->
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
+<!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
+<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
-   <script type="text/javascript">
-    var dataTableReportPaket,dataTableReportLatihan;
+<script type="text/javascript">
+  var dataTableReportPaket,dataTableReportLatihan;
 
-    $(document).ready(function(){
+  $(document).ready(function(){
 // ## datatable report tryout
 url = base_url+"siswa/ajax_report_tryout";
 
@@ -310,6 +353,21 @@ dataTableReportPaket = $('.rkonstultasi').DataTable({
   "bDestroy": true,
 });
 
+// ## datatable konsultasi
+
+// ## datatable konsultasi
+url4 = base_url+"siswa/async_persentase_learning";
+
+dataTableReportPaket = $('.rpersentase').DataTable({
+  "ajax": {
+    "url": url4,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+
 })
 // ## datatable konsultasi
 
@@ -351,7 +409,7 @@ function pembahasanto(id_to){
 }
 
 function lihat_konsultasi(id){
-  
+
 }
 
 </script>

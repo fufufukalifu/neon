@@ -651,18 +651,18 @@ function ajax_report_tryout(){
     foreach ($datas as $list_item) {
         $no++;
         $row = array();
-                $sumBenar=$list_item ['jmlh_benar'];
-            $sumSalah=$list_item ['jmlh_salah'];
-            $sumKosong=$list_item ['jmlh_kosong'];
+        $sumBenar=$list_item ['jmlh_benar'];
+        $sumSalah=$list_item ['jmlh_salah'];
+        $sumKosong=$list_item ['jmlh_kosong'];
             //hitung jumlah soal
-            $jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
-            
-            $nilai=0;
+        $jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+
+        $nilai=0;
             // cek jika pembagi 0
-            if ($jumlahSoal != 0) {
+        if ($jumlahSoal != 0) {
                 //hitung nilai
-                $nilai=$sumBenar/$jumlahSoal*100;
-            }
+            $nilai=$sumBenar/$jumlahSoal*100;
+        }
         $row[] = $no;
         $row[] = $list_item['nm_paket'];
         $row[] = $list_item['jumlah_soal'];
@@ -678,8 +678,8 @@ function ajax_report_tryout(){
 
         $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
         data-todo='.htmlspecialchars(json_encode($array)).' 
-       
-         title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+
+        title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
 
         $list[] = $row;   
 
@@ -735,35 +735,35 @@ function ajax_get_report_latihan(){
 public function editSiswa()
 {
     //data siswa
-        $namaDepan = htmlspecialchars($this->input->post('namadepan'));
-        $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-        $alamat = htmlspecialchars($this->input->post('alamat'));
-        $noKontak = htmlspecialchars($this->input->post('nokontak'));
+    $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+    $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+    $alamat = htmlspecialchars($this->input->post('alamat'));
+    $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
 
-        $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
-        $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
-        $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
-        $cabangID = htmlspecialchars($this->input->post('cabang'));
-        $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+    $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+    $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
+    $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
+    $cabangID = htmlspecialchars($this->input->post('cabang'));
+    $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
 
     //data array siswa
-        $data_post = array(
-            'namaDepan' => $namaDepan,
-            'namaBelakang' => $namaBelakang,
-            'alamat' => $alamat,
-            'noKontak' => $noKontak,
-            'namaSekolah' => $namaSekolah,
-            'alamatSekolah' => $alamatSekolah,
-            'tingkatID' => $tingkatID,
-            'cabangID' => $cabangID,
-            'noIndukNeutron' => $noIndukNeutron
-            );
-         $this->msiswa->update_siswa($data_post);
-         
+    $data_post = array(
+        'namaDepan' => $namaDepan,
+        'namaBelakang' => $namaBelakang,
+        'alamat' => $alamat,
+        'noKontak' => $noKontak,
+        'namaSekolah' => $namaSekolah,
+        'alamatSekolah' => $alamatSekolah,
+        'tingkatID' => $tingkatID,
+        'cabangID' => $cabangID,
+        'noIndukNeutron' => $noIndukNeutron
+        );
+    $this->msiswa->update_siswa($data_post);
+
 }
-    
-    function ajax_daftar_konsultasi(){
+
+function ajax_daftar_konsultasi(){
     $datas = $this->mkonsultasi->get_konsultasi_by_siswa();
 
     $list = array();
@@ -789,12 +789,41 @@ public function editSiswa()
 
     }
 
-      $output = array(
+    $output = array(
         "data" => $list,
         );
     echo json_encode($output);
 
 }
 
+function async_persentase_learning(){
+    $datas = $this->msiswa->persentasi();
+
+    $list = array();
+    $no = 0;
+
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
+
+        $row[] = $no;
+        $row[] = $list_item['namaTopik'];
+        $step = $list_item['stepDone']*10;
+        $row[] = "<div class='progress' title='Progress :". $step. "%'>
+        <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
+            <span class='sr-only'>10% Complete (success)</span>
+        </div>
+        </div>";
+
+    $list[] = $row;   
+
+}
+
+$output = array(
+    "data" => $list,
+    );
+echo json_encode($output);
+}
 }
 ?>

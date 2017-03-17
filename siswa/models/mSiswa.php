@@ -242,6 +242,17 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
+    public function persentasi(){
+        $query = "SELECT topikID,`namaTopik` , COUNT(`stepID`) AS stepDone  FROM(
+        SELECT * FROM tb_line_log l WHERE l.`penggunaID` = 1589 ) hasil
+        JOIN `tb_line_step` s ON s.`id` = hasil.stepID
+        JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
+        GROUP BY topikID
+        ORDER BY topikID
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
     ##
 }
 
