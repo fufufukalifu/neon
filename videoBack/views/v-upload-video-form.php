@@ -404,7 +404,7 @@
                   if (isConfirm) {
                    location.reload();
                } else {
-                window.location = base_url+"videoback/managervideo"
+                window.location = base_url+"videoback/daftarvideo"
             }
         });
             },

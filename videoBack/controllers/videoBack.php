@@ -233,6 +233,7 @@ public function upvideo($data) {
       );
 
     $this->Mvideoback->insertVideo($data_video);
+    redirect(site_url('videoback/daftarvideo'));
   }
 }
 
@@ -478,15 +479,19 @@ public function filter_video()
   $subbab=$this->input->post('subbab');
 
   if ($subbab != null) {
-    $this->video_by_subbab($subbab);
+    // $this->video_by_subbab($subbab);
+     $this->listvideoSubBab($subbab);
   } else if ($bab != null) {
-    $this->video_by_bab($bab);
+    // $this->video_by_bab($bab);  (datatable)
+     $this->listvideoBab($bab); 
   } else if ($pelajaran != null) {
-    $this->video_by_mapel($pelajaran);
+    // $this->video_by_mapel($pelajaran); (datatable)
+    $this->listvideoMp($pelajaran);
   } else if ($tingkat != null) {
-    $this->video_by_tingkat($tingkat);
+    // $this->video_by_tingkat($tingkat); (datatable)
+    $this->listvideoTingkat($tingkat);
   } else {
-   $this->listvideo();
+   $this->daftarvideo();
  }    
 }
     //menampilkan video by subbab
@@ -1087,7 +1092,6 @@ echo json_encode( $output );
 //list daftar video tidak menggunkan datatable
 public function daftarvideo()
 {
-// code u/pagination
        $this->load->database();
         $jumlah_data = $this->Mvideoback->jumlah_video();
        
@@ -1154,7 +1158,7 @@ public function tampVideo($list='')
       $lihat='<a href="javascript:void(0);" class="btn btn-success detail-'.$key['id'].'" title="Lihat" data-id='."'".json_encode($key)."'".' onclick="detail('."'".$key['id']."'".')"><i class="ico-facetime-video" ></i></a>';
       // pengecekan file video atau link video
       if ($namaFile != '' && $namaFile != ' ') {
-        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style=" min-width:100%;max-height:150px;" style="background:grey;"></video>';
+        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style="max-width:400px; max-height:250px;"></video>';
       }elseif($link != '' && $link != ' '){
         $video = '<iframe  src="'.$link.'"  controls id="video-ply-link" width="100%"  style="max-width:400px; max-height:250px;">
         </iframe>';
@@ -1162,7 +1166,7 @@ public function tampVideo($list='')
         $timestamp = strtotime($key['date_created']);
          $tgl=date("M-Y", $timestamp);
       $data['list'][]=array(
-                'judulVideo'=>$key['judulVideo'],
+                'judulVideo'=>substr($key['judulVideo'],  0, 30),
                 'video'=>$video,
                 'deskripsi'=>$key['deskripsi'],
                 'date_created'=>$tgl,
@@ -1188,6 +1192,286 @@ public function tampVideo($list='')
         }
         #END Cek USer#
 }
+// pencarian autocomplate
+public function autocompletevideo()
+{
+  $keyword = $_GET['term'];
+        // cari di database
+     $data = $this->Mvideoback->get_carivideo($keyword);  
+        // format keluaran di dalam array
+     $arr = array();
+     foreach($data as $row)
+     {
+      $arr[] = array(
+          'value' =>$row['judulVideo'],
+          // 'url'=>base_url('videoback/carivideo')."/".$row['judulVideo'],
+      );
+    }
+    echo json_encode($arr);
+}
+
+public function carivideo()
+{
+  $keyword = $this->input->post('keyword');
+  $data = $this->Mvideoback->get_carivideo($keyword); 
+
+    $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_carivideo($keyword);
+       
+        $config['base_url'] = base_url().'index.php/videoback/daftarvideo/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 20;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video_cari($config['per_page'],$from,$keyword);
+
+        $this->tampVideo($list);
+}
+// create pagination list video by tingkat
+ public function listvideoTingkat($tingkatID="")
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_video_tingkat($tingkatID);
+        
+        $config['base_url'] = base_url().'index.php/videoback/listvideoTingkat/'.$tingkatID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 12;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video_tingkat($config['per_page'],$from,$tingkatID);
+        $this->tampVideo($list);
+    }
+
+    // create pagination list video by mapel
+     public function listvideoMp($mpID='')
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_video_mp($mpID);
+        
+        $config['base_url'] = base_url().'index.php/videoback/listvideoMp/'.$mpID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 12;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video_mp($config['per_page'],$from,$mpID);
+
+
+        $this->tampVideo($list);
+    }
+
+     // create pagination list video by bab
+     public function listvideoBab($babID='')
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_video_bab($babID);
+        
+        $config['base_url'] = base_url().'index.php/videoback/listvideoBab/'.$babID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 12;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video_bab($config['per_page'],$from,$babID);
+
+
+        $this->tampVideo($list);
+    }
+
+     // create pagination list video by bab
+     public function listvideoSubBab($subBabID='')
+    {
+        // code u/pagination
+       $this->load->database();
+        $jumlah_data = $this->Mvideoback->jumlah_video_subbab($subBabID);
+        
+        $config['base_url'] = base_url().'index.php/videoback/listvideoBab/'.$subBabID.'/';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 12;
+
+        // Start Customizing the “Digit” Link
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+        
+        // Start Customizing the “Current Page” Link
+        $config['cur_tag_open'] = '<li><a><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+        $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+        $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+        $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+        $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config);     
+        $list = $this->Mvideoback->data_video_subbab($config['per_page'],$from,$subBabID);
+
+
+        $this->tampVideo($list);
+    }
+
 
 }
 
