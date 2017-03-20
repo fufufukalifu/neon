@@ -9,7 +9,7 @@ class Mvideoback extends CI_Model
 	public function insertVideo($data_video)
 	{		
 		$this->db->insert('tb_video', $data_video);
-		redirect(site_url('videoback/managervideo'));
+		
 	}
 
 	// untuk mengambil get value tingkatan seperti sd, smo dll u/
@@ -204,6 +204,133 @@ class Mvideoback extends CI_Model
         $this->db->where('video.status','1');
          $this->db->order_by('video.date_created', 'desc');
         return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    public function get_carivideo($data)
+    {
+        $this->db->select('id,judulVideo,UUID');
+        $this->db->from('tb_video');
+        $this->db->like('judulVideo',$data);
+        $this->db->where('status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function jumlah_carivideo($data)
+    {
+    	$this->db->where('status','1');
+    	$this->db->like('judulVideo',$data);
+        return $this->db->get('tb_video')->num_rows();
+    }
+    //get data hasil pencarian by nama
+     function data_video_cari($number,$offset,$keyword){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->like('video.judulVideo',$keyword);
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+    // get data video by tingkat
+    function data_video_tingkat($number,$offset,$tingkatID){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->where('tp.tingkatID',$tingkatID);
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    // count video by tingkat
+    public function jumlah_video_tingkat($tingkatID)
+    {
+    	$this->db->where('video.status','1');
+    	$this->db->where('tp.tingkatID',$tingkatID);
+    	$this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        return $this->db->get('tb_tingkat tkt')->num_rows();
+    }
+
+    // get data video by mapel
+    function data_video_mp($number,$offset,$mpID){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->where('tp.id',$mpID);
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    // count video by mapel
+    public function jumlah_video_mp($mpID)
+    {
+    	$this->db->where('video.status','1');
+    	$this->db->where('tp.id',$mpID);
+    	$this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        return $this->db->get('tb_tingkat tkt')->num_rows();
+    }
+
+     // get data video by bab
+    function data_video_bab($number,$offset,$babID){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->where('bab.id',$babID);
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    // count video by bab
+    public function jumlah_video_bab($babID)
+    {
+    	$this->db->where('video.status','1');
+    	$this->db->where('bab.id',$babID);
+    	$this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        return $this->db->get('tb_tingkat tkt')->num_rows();
+    }
+         // get data video by subbab
+    function data_video_subbab($number,$offset,$subBabID){
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        $this->db->where('subbab.id',$subBabID);
+        $this->db->where('video.status','1');
+         $this->db->order_by('video.date_created', 'desc');
+        return $query = $this->db->get('tb_tingkat tkt',$number,$offset)->result_array();       
+    }
+
+    // count video by subbab
+    public function jumlah_video_subbab($subBabID)
+    {
+    	$this->db->where('video.status','1');
+    	$this->db->where('subbab.id',$subBabID);
+    	$this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
+        $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
+        $this->db->join('tb_video video', 'subbab.id = video.subBabID');
+        return $this->db->get('tb_tingkat tkt')->num_rows();
     }
 }
 ?>

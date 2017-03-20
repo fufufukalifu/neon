@@ -44,6 +44,7 @@ JS aoutocomplate
   <!-- START JAVASCRIPT SECTION - Load only modernizr script here -->
   <script src="<?= base_url('assets//library/modernizr/js/modernizr.min.js') ?>"></script>
   <!--/ END JAVASCRIPT SECTION -->
+
 </head>
 <!--/ END Head -->
 <!-- Start Modal Tambah Gallery -->
@@ -279,7 +280,7 @@ JS aoutocomplate
 <!-- START Template Header -->
 <header id="header" class="navbar navbar-fixed-top">
   <!-- START navbar header -->
-  <div class="navbar-header" style="background:#f27c66;"">
+  <div class="navbar-header" style="background:#f27c66;">
     <!-- Brand -->
     <a class="navbar-brand" href="javascript:void(0);">
       <span class="logo-figure"></span>
@@ -512,7 +513,7 @@ JS aoutocomplate
 
         <li class="submenu-header ellipsis">Daftar video</li>
 
-        <li><a href="<?=base_url('/index.php/videoback/listvideo')?>"><span class="text">Daftar Semua video</span>
+        <li><a href="<?=base_url('/index.php/videoback/daftarvideo')?>"><span class="text">Daftar Semua video</span>
 
         </a></li>
 

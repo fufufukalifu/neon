@@ -26,39 +26,28 @@
     <div class="modal fade" id="mdetailvideo">
 
         <div class="modal-dialog" role="document">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
                         <span aria-hidden="true">&times;</span>
-
                     </button>
-
                     <h3 class="modal-title text-center"></h3>
-
                 </div>
-
                 <video class=" modal-body img-tumbnail image" src="" width="100%" height="50%" controls id="video-ply" style="background:grey;">
                 </video>
-
                 <div class="modal-body ">
                     <p class="semibold text-justify mt0 mb5 mr10 ml10">Deskripsi</p>
                     <p class="text-justify deskripsi mt0 mb5 mr10 ml10 "></p>
+                    <p class="tag ellipsis">
+                                    <a href="javascript:void(0);">#a</a>&nbsp;
+                                    <a href="javascript:void(0);">#ss</a>
+                                </p>
                 </div>
-
                 <div class="modal-footer">
-
                     <button type="button" class="btn btn-danger" data-dismiss="modal" id="closePlayer" >Close</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
     <!-- End Modal Detail Video -->
     <!-- Start Modal Detail Video dari link -->
@@ -89,9 +78,7 @@
                 </div>
 
                 <div class="modal-footer">
-
                     <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeYoutube">Close</button>
-
                 </div>
 
             </div>
@@ -105,15 +92,24 @@
             <!-- START Template Container -->
             <div class="container-fluid">
                 <!-- Page Header -->
-                <div class="page-header page-header-block" style="background:#f27c66;">
+                <div class="page-header page-header-block" style="background:#6D6A6A;">
                     <div class="page-header-section">
-                        <!-- <h4 class="title semibold">Media album</h4> -->
-                        <input class="form-group" type="text" name="keyword" placeholder="Cari video">
+                        <!--  -->
+                           <form class="mb0" action="<?=base_url()?>index.php/videoback/carivideo" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+
+                            <div class="input-group">
+                                <input id="carivideo" type="text" name="keyword" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit"><i class="ico-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
+                        <!--  -->
                     </div>
                     <div class="page-header-section">
                         <!-- Toolbar -->
                         <div class="toolbar">
-                            <a href="<?=base_url()?>/videoback/formupvideo" type="button" class="btn btn-primary"><i class="ico-upload22"></i> Upload Video</a>
+                            <a href="<?=base_url()?>videoback/formupvideo" type="button" class="btn btn-primary"><i class="ico-upload22"></i> Upload Video</a>
                            
                             </div>
                         </div>
@@ -126,7 +122,7 @@
                 <div class="row">
                 <!-- STRAT PENGULANGAN LIST VIDEO -->
                 <?php foreach ($list as $key): ?>
-                    <div class="col-md-3">
+                    <div class="col-md-3 ml0">
                         <!-- thumbnail -->
                         <div class="thumbnail thumbnail-album animation animating delay fadeInLeft">
                             <!-- media -->
@@ -162,9 +158,6 @@
                                 <li>
                                     <div class="img-group img-group-stack">
                                     <p class="nm">sub:<?=$key['subbab']?></p>
-                                        <!-- <img src="../image/avatar/avatar1.jpg" class="img-circle" alt="" /> -->
-                                      <!--   <img src="../image/avatar/avatar2.jpg" class="img-circle" alt="" />
-                                        <img src="../image/avatar/avatar3.jpg" class="img-circle" alt="" /> -->
                                     </div>
                                 </li>
                                 <li>
@@ -254,14 +247,26 @@ function detail(id){
 }
    $(document).ready(function() {
 $('#closeYoutube').on('click', function() {
-      var vidf = document.getElementById("video-ply-link"); 
-    vidf.stopVideo();
-    // // closeYoutube video-ply-link
-    // $('iframe').get(0).stopVideo();
+      var url = $('#video-ply-link').attr('src');
+                $('#video-ply-link').attr('src', '');
+                $('#video-ply-link').attr('src', url);
  });
 $('#closePlayer').on('click', function() {
     var vid = document.getElementById("video-ply"); 
     vid.pause();
  });
  });
+</script>
+
+<!-- on keypres cari soal -->
+<script type="text/javascript">
+var site = "<?php echo site_url();?>";
+  $(function() {
+    $( "#carivideo" ).autocomplete({
+        source: site+'/videoback/autocompletevideo',
+               select: function (event, ui) {
+                // window.location = ui.item.url;
+                }
+    });
+});
 </script>
