@@ -304,7 +304,7 @@ class Mtryout extends MX_Controller {
         (SELECT * FROM `tb_report-paket` rp
         WHERE `id_pengguna` = $id) hasil
         JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
-        JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket` 
+        JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  order by mmto.id_tryout
         ";
         $result = $this->db->query($query);
         return $result->result_array();     

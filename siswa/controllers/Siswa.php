@@ -855,23 +855,40 @@ function async_persentase_learning(){
             $step = $list_item['stepDone']*10;
             $row[] = "<div class='progress' title='Progress :". $step. "%'>
             <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
-                <span class='sr-only'>10% Complete (success)</span>
+            <span class='sr-only'>10% Complete (success)</span>
             </div>
-        </div>";
+            </div>";
 
-        $list[] = $row;   
+            $list[] = $row;   
 
+        }
+
+        $output = array(
+            "data" => $list,
+            );
+        echo json_encode($output);
+
+    }else{
+        redirect('login');
     }
-
-    $output = array(
-        "data" => $list,
-        );
-    echo json_encode($output);
-
-}else{
-    redirect('login');
 }
 
+function persentase_json(){
+    if ($this->get_status_login()){
+        $datas = $this->mtryout->get_report_paket();
+        $array = [];
+
+        foreach ($datas as $key) {
+            $point = $key['jmlh_benar'] + $key['jmlh_salah'] + $key['jmlh_kosong'] / $key['jumlah_soal']*100;
+            $array[] = ['y'=>$point,'indexLabel'=>$key['nm_paket'],'label'=>'Point'];
+        }
+        echo json_encode($array);
+
+    }else{
+        redirect('login');
+    }
 }
+
+
 }
 ?>

@@ -22,7 +22,7 @@
   width: 20px;
   height: 20px;
   color : #06C;
-  font-size: 12px;
+    font-size: 12px;
   text-align: center;
   text-decoration: none;
   border: 1px solid #63d3e9; 

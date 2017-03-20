@@ -41,6 +41,7 @@
  <!-- START JAVASCRIPT SECTION - Load only modernizr script here -->
  <script src="<?= base_url('assets//library/modernizr/js/modernizr.min.js') ?>"></script>
  <!--/ END JAVASCRIPT SECTION -->
+
 </head>
 <!--/ END Head -->
 
