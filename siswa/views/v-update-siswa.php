@@ -37,15 +37,16 @@
                         ?>       
                         
 
-                        
+                           
                         <div class="form-group">
                             <!--<label class="control-label col-sm-2">Judul Soal</label>-->
                             <div class="col-sm-5 col-md-offset-1">
+                                <input type="text" name="idsiswa" hidden="true" value="<?=$key['idsiswa'];?>" >
                                 <input type="text" name="namadepan" class="form-control" placeholder="Nama Depan" required="true" value="<?= $key['namaDepan'] ?>">
                                 <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" name="namabelakang" class="form-control" placeholder="Nama Belakang" required="true" value="<?= $key['namaBelakang'] ?>">
+                                <input type="text" name="namabelakang" class="form-control" placeholder="Nama Belakang"  value="<?= $key['namaBelakang'] ?>">
                                 <span class="text-danger"> <?php echo form_error('namabelakang'); ?></span>
                             </div>
 

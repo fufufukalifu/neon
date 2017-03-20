@@ -10,13 +10,6 @@ class Siswa extends MX_Controller {
         return $log_in;        
     }
 
-    function get_hak_akses(){
-        $hak_akses = $this->session->userdata('HAKAKSES');        
-        return $hak_akses;        
-    }
-
-
-
     public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
@@ -55,6 +48,7 @@ class Siswa extends MX_Controller {
         }
     }
 
+<<<<<<< HEAD
     public function index() {        
         if ($this->get_status_login()) {
             $data['siswa'] = $this->msiswa->get_datsiswa()[0];
@@ -90,16 +84,24 @@ class Siswa extends MX_Controller {
             redirect('login');
         }        
     }
+=======
+    $data['files'] = array( 
+        APPPATH.'modules/siswa/views/t-profile-siswa.php',
+        );
+
+    $this->parser->parse( 'templating/index-d-siswa', $data );
+}
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 
     //menampilkan halaman pengaturan profile
     public function PengaturanProfile() {
         if ($this->get_status_login()) {
-           $data['tb_siswa'] = $this->msiswa->get_datsiswa();
-           $this->load->view('templating/t-header');
-           $this->load->view('templating/t-navbarUser');
-           $this->load->view('vPengaturanProfile', $data);
-           $this->load->view('templating/t-footer');
-       }else{
+         $data['tb_siswa'] = $this->msiswa->get_datsiswa();
+         $this->load->view('templating/t-header');
+         $this->load->view('templating/t-navbarUser');
+         $this->load->view('vPengaturanProfile', $data);
+         $this->load->view('templating/t-footer');
+     }else{
         redirect('login');
     }   
 
@@ -173,17 +175,28 @@ public function ubahemailsiswa() {
 
 
         if ($this->form_validation->run() == FALSE) {
-           $this->profilesetting();
-       } else {
+         $this->profilesetting();
+     } else {
         $email = htmlspecialchars($this->input->post('email'));
 
+<<<<<<< HEAD
         $data_post = array(
             'eMail' => $email,
             );
         $this->session->set_flashdata('updsiswa', 'Emailmu telah berhasil dirubah');
         $this->msiswa->update_email($data_post);
-        redirect(site_url('siswa/profilesetting'));
     }
+=======
+ } else {
+    $email = htmlspecialchars($this->input->post('email'));
+
+    $data_post = array(
+        'eMail' => $email,
+        );
+    $this->session->set_flashdata('updsiswa', 'Emailmu telah berhasil dirubah');
+    $this->msiswa->update_email($data_post);
+ redirect(site_url('siswa/profilesetting'));
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 
 }else{
     redirect('login');
@@ -207,6 +220,7 @@ public function ubahkatasandi() {
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
 
 
+<<<<<<< HEAD
         if ($this->form_validation->run() == FALSE) {
             $this->profilesetting();
         } else {
@@ -228,10 +242,37 @@ public function ubahkatasandi() {
         redirect('login');
     } 
 
+=======
+    if ($this->form_validation->run() == FALSE) {
+            // $data['siswa'] = $this->msiswa->get_datsiswa();
+            // $this->load->view('templating/t-header');
+            // $this->load->view('templating/t-navbarUser');
+            // $this->load->view('vPengaturanProfile', $data);
+            // $this->load->view('templating/t-footer');
+        $this->profilesetting();
+    } else {
+        $kataSandi = htmlspecialchars(md5($this->input->post('newpass')));
+        $inputSandi = htmlspecialchars(md5($this->input->post('sandilama')));
+        $data_post = array('kataSandi' => $kataSandi,);
+        $data['pengguna'] = $this->msiswa->get_password()[0];
+        $kataSandi = $data['pengguna']['kataSandi'];
+            // var_dump($kataSandi);
+        if ($kataSandi == $inputSandi) {
+            $this->session->set_flashdata('updsiswa', 'Passwordmu telah berubah');
+            $this->msiswa->update_katasandi($data_post);
+
+        } else {
+            $this->session->set_flashdata('updsiswa', 'Password gagal  dirubah, password lama salah');
+            
+        }
+        redirect(site_url('siswa/profilesetting'));
+    }
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 }
 
 public function upload($oldphoto) {
     if ($this->get_status_login()) {
+
         unlink(FCPATH . "./assets/image/photo/siswa/" . $oldphoto);
         $config['upload_path'] = './assets/image/photo/siswa';
         $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
@@ -248,12 +289,20 @@ public function upload($oldphoto) {
             $photo = $file_data['file_name'];
             $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
             $this->msiswa->update_photo($photo);
-            redirect(site_url('siswa/profilesetting'));
-
         }
 
+<<<<<<< HEAD
     }else{
         redirect('login');
+=======
+            // $this->load->view('beranda/main_view',$error);,
+    } else {
+        $file_data = $this->upload->data();
+        $photo = $file_data['file_name'];
+        $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
+        $this->msiswa->update_photo($photo);
+         redirect(site_url('siswa/profilesetting'));
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
     }
 
 }
@@ -295,9 +344,7 @@ public function ajax_daftar_siswa() {
     ##menampilkan siswa
 
 public function daftar() {
-    $hak_akses = $this->get_hak_akses();
-
-    if ($this->get_status_login() && $hak_akses=="admin") {
+    if ($this->get_status_login()) {
         $data['judul_halaman'] = "Pengelolaan Data Siswa";
         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-daftar-siswa.php',
@@ -310,9 +357,7 @@ public function daftar() {
 }
 
 public function daftarsiswa() {
-    $hak_akses = $this->get_hak_akses();
-
-    if ($this->get_status_login()&& $hak_akses=="admin") {
+    if ($this->get_status_login()) {
         $data['judul_halaman'] = "Pengelolaan Data Siswa";
         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-form-siswa.php',
@@ -329,101 +374,98 @@ public function daftarsiswa() {
 
 //function untuk menyimpan data pendaftaran user siswa ke database
 public function savesiswa(){
- $hak_akses = $this->get_hak_akses();
-
- if ($this->get_status_login()&& $hak_akses=="admin") {   
+    if ($this->get_status_login()){     
     //load library n helper
-    $this->load->helper(array('form', 'url'));
-    $this->load->library('form_validation');
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
 
     //syarat pengisian form regitrasi siswa
-    $this->form_validation->set_rules('namapengguna', 'Nama Pengguna', 'trim|required|min_length[5]|max_length[12]|is_unique[tb_pengguna.namaPengguna]');
-    $this->form_validation->set_rules('namadepan', 'Nama Depan', 'required');
-    $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-    $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
-    $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]|min_length[5]');
-    $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-    $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
+        $this->form_validation->set_rules('namapengguna', 'Nama Pengguna', 'trim|required|min_length[5]|max_length[12]|is_unique[tb_pengguna.namaPengguna]');
+        $this->form_validation->set_rules('namadepan', 'Nama Depan', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('nokontak', 'No Kontak', 'required');
+        $this->form_validation->set_rules('katasandi', 'Kata Sandi', 'required|matches[passconf]|min_length[5]');
+        $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[tb_pengguna.email]');
 
     //pesan error atau pesan kesalahan pengisian form registrasi siswa
-    $this->form_validation->set_message('is_unique', '*Nama Pengguna atau email sudah terpakai');
-    $this->form_validation->set_message('max_length', '*Nama Pengguna maksimal 12 karakter!');
-    $this->form_validation->set_message('min_length', '*Inputan minimal 6 karakter!');
-    $this->form_validation->set_message('required', '*tidak boleh kosong!');
-    $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
-    $this->form_validation->set_message('valid_email', '*silahkan masukan alamat email anda dengan benar');
+        $this->form_validation->set_message('is_unique', '*Nama Pengguna atau email sudah terpakai');
+        $this->form_validation->set_message('max_length', '*Nama Pengguna maksimal 12 karakter!');
+        $this->form_validation->set_message('min_length', '*Inputan minimal 6 karakter!');
+        $this->form_validation->set_message('required', '*tidak boleh kosong!');
+        $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
+        $this->form_validation->set_message('valid_email', '*silahkan masukan alamat email anda dengan benar');
 
     //pengecekan pengisian form regitrasi siswa
-    if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE) {
         //jika tidak memenuhi syarat akan menampilkan pesan error/kesalahan di halaman regitrasi siswa
-        $this->daftarsiswa();
-    } else {
+            $this->daftarsiswa();
+        } else {
         //data siswa
-        $namaDepan = htmlspecialchars($this->input->post('namadepan'));
-        $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-        $alamat = htmlspecialchars($this->input->post('alamat'));
-        $noKontak = htmlspecialchars($this->input->post('nokontak'));
+            $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+            $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+            $alamat = htmlspecialchars($this->input->post('alamat'));
+            $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
 
-        $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
-        $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
-        $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
-        $cabangID = htmlspecialchars($this->input->post('cabang'));
-        $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+            $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+            $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
+            $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
+            $cabangID = htmlspecialchars($this->input->post('cabang'));
+            $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
 
         //data akun
-        $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
-        $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
-        $email = htmlspecialchars($this->input->post('email'));
-        $hakAkses = 'siswa';
+            $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
+            $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
+            $email = htmlspecialchars($this->input->post('email'));
+            $hakAkses = 'siswa';
 
         //data array akun
-        $data_akun = array(
-            'namaPengguna' => $namaPengguna,
-            'kataSandi' => $kataSandi,
-            'eMail' => $email,
-            'hakAkses' => $hakAkses,
-            );
+            $data_akun = array(
+                'namaPengguna' => $namaPengguna,
+                'kataSandi' => $kataSandi,
+                'eMail' => $email,
+                'hakAkses' => $hakAkses,
+                );
 
 
         //melempar data guru ke function insert_pengguna di kelas model
-        $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
+            $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
         //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
-        $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
+            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
 
-        $penggunaID = $data['tb_pengguna']['id'];
+            $penggunaID = $data['tb_pengguna']['id'];
 
         //session buat id
-        $id_arr = array('id' => $penggunaID);
+            $id_arr = array('id' => $penggunaID);
 
         //data array siswa
-        $data_siswa = array(
-            'namaDepan' => $namaDepan,
-            'namaBelakang' => $namaBelakang,
-            'alamat' => $alamat,
-            'noKontak' => $noKontak,
-            'namaSekolah' => $namaSekolah,
-            'alamatSekolah' => $alamatSekolah,
-            'penggunaID' => $penggunaID,
-            'tingkatID' => $tingkatID,
-            'cabangID' => $cabangID,
-            'noIndukNeutron' => $noIndukNeutron
-            );
+            $data_siswa = array(
+                'namaDepan' => $namaDepan,
+                'namaBelakang' => $namaBelakang,
+                'alamat' => $alamat,
+                'noKontak' => $noKontak,
+                'namaSekolah' => $namaSekolah,
+                'alamatSekolah' => $alamatSekolah,
+                'penggunaID' => $penggunaID,
+                'tingkatID' => $tingkatID,
+                'cabangID' => $cabangID,
+                'noIndukNeutron' => $noIndukNeutron
+                );
 
-            //melempar data guru ke function insert_guru di kelas model
-        $data['mregister'] = $this->mregister->insert_siswabyadmin($data_siswa, $email, $namaPengguna);
-        redirect(base_url('index.php/siswa/daftarsiswa'));
+        //melempar data guru ke function insert_guru di kelas model
+            $data['mregister'] = $this->mregister->insert_siswabyadmin($data_siswa, $email, $namaPengguna);
+            redirect(base_url('index.php/siswa/daftarsiswa'));
+        }
+
+    }else{
+        redirect('login');
     }
+}
 
-}else{
-    redirect('login');
-}
-}
-# -------------------------- #
 public function deleteSiswa() {
-    $hak_akses = $this->get_hak_akses();
+    if ($this->get_status_login()){     
 
-    if ($this->get_status_login()&& $hak_akses=="admin") {    
         $idsiswa = $this->input->post('idsiswa');
         $idpengguna = $this->input->post('idpengguna');
         $this->msiswa->hapus_siswa($idsiswa, $idpengguna);
@@ -435,36 +477,50 @@ public function deleteSiswa() {
 
     //tgl 30 Oktober
 function updateSiswa($idsiswa, $idpengguna) {
-    $hak_akses = $this->get_hak_akses();
-
-    if ($this->get_status_login()&& $hak_akses=="admin") {  
+<<<<<<< HEAD
+    if ($this->get_status_login()){     
         if ($idsiswa == null || $idpengguna == 0) {
             echo 'kosong';
         } else {
-           $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-           $data['cabang'] = $this->mcabang->get_all_cabang();
-           $idsiswa = $idsiswa;
-           $idpengguna = $idpengguna;
+         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+         $data['cabang'] = $this->mcabang->get_all_cabang();
+         $idsiswa = $idsiswa;
+         $idpengguna = $idpengguna;
 
-           $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+         $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
 
-           $data['judul_halaman'] = "Rubah Data Siswa";
-           $data['files'] = array(
+         $data['judul_halaman'] = "Rubah Data Siswa";
+         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-update-siswa.php',
             );
 
-           $this->parser->parse('admin/v-index-admin', $data);
-       }
-   }else{
+         $this->parser->parse('admin/v-index-admin', $data);
+     }
+ }else{
     redirect('login');
 }
+=======
+    if ($idsiswa == null || $idpengguna == 0) {
+        echo 'kosong';
+    } else {
+     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+     $data['cabang'] = $this->mcabang->get_all_cabang();
+     $idsiswa = $idsiswa;
+     $idpengguna = $idpengguna;
+     $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+     $data['judul_halaman'] = "Rubah Data Siswa";
+     $data['files'] = array(
+        APPPATH . 'modules/siswa/views/v-update-siswa.php',
+        );
+            // jika admin
+     $this->parser->parse('admin/v-index-admin', $data);
+ }
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 }
 
 //tgl 30 Oktober
 function reportSiswa($idpengguna) {
-    $hak_akses = $this->get_hak_akses();
-
-    if ($this->get_status_login()&& $hak_akses=="admin") {   
+    if ($this->get_status_login()){     
         if ($idpengguna == 0) {
         } else {
             $idpengguna = $idpengguna;
@@ -485,9 +541,7 @@ function reportSiswa($idpengguna) {
 
     //tgl 30 Oktober
 function reportto() {
-    $hak_akses = $this->get_hak_akses();
-
-    if ($this->get_status_login()&& $hak_akses=="admin") {    
+    if ($this->get_status_login()){     
       $idto = $this->uri->segment(3);
       if (empty($idto)) {
         redirect('admin');
@@ -554,119 +608,121 @@ public function listSiswa()
 {
     if ($this->get_status_login()){     
        // code u/ pagination
-       $this->load->database();
-       $jumlah_data = $this->msiswa->jumlah_siswa();
+     $this->load->database();
+     $jumlah_data = $this->msiswa->jumlah_siswa();
 
-       $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
-       $config['total_rows'] = $jumlah_data;
-       $config['per_page'] = 10;
+     $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
+     $config['total_rows'] = $jumlah_data;
+     $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
-       $config['num_tag_open'] = '<li>';
-       $config['num_tag_close'] = '</li>';
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
         // end  Customizing the “Digit” Link
 
         // Start Customizing the “Current Page” Link
-       $config['cur_tag_open'] = '<li><a><b>';
-       $config['cur_tag_close'] = '</b></a></li>';
+     $config['cur_tag_open'] = '<li><a><b>';
+     $config['cur_tag_close'] = '</b></a></li>';
         // END Customizing the “Current Page” Link
 
         // Start Customizing the “Previous” Link
-       $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
-       $config['prev_tag_open'] = '<li>';
-       $config['prev_tag_close'] = '</li>';
+     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+     $config['prev_tag_open'] = '<li>';
+     $config['prev_tag_close'] = '</li>';
          // END Customizing the “Previous” Link
 
         // Start Customizing the “Next” Link
-       $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
-       $config['next_tag_open'] = '<li>';
-       $config['next_tag_close'] = '</li>';
+     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
          // END Customizing the “Next” Link
 
         // Start Customizing the first_link Link
-       $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
-       $config['first_tag_open'] = '<li>';
-       $config['first_tag_close'] = '</li>';
+     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
          // END Customizing the first_link Link
 
         // Start Customizing the last_link Link
-       $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
-       $config['last_tag_open'] = '<li>';
-       $config['last_tag_close'] = '</li>';
+     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
          // END Customizing the last_link Link
 
-       $from = $this->uri->segment(3);
-       $this->pagination->initialize($config);     
-       $list = $this->msiswa->data_siswa($config['per_page'],$from);
+     $from = $this->uri->segment(3);
+     $this->pagination->initialize($config);     
+     $list = $this->msiswa->data_siswa($config['per_page'],$from);
 
-       $this->tampSiswa($list);
-   }else{
+     $this->tampSiswa($list);
+ }else{
     redirect('login');
 }
 
 }
     //untuk emanmpilkan  list siswa /*by MrBebek
-public function tampSiswa($list){
-    if ($this->get_status_login()){     
-        $data['judul_halaman'] = "Pengelolaan Data Siswa";
-        $data['files'] = array(
-            APPPATH . 'modules/siswa/views/v-list-siswa.php',
-            );
-        $data['siswa'] = array();
-        $no = 0;
+public function tampSiswa($list)
+{
+    $data['judul_halaman'] = "Pengelolaan Data Siswa";
+    $data['files'] = array(
+        APPPATH . 'modules/siswa/views/v-list-siswa.php',
+        );
+    $data['siswa'] = array();
+    $no = 0;
         //mengambil nilai list
-        $baseurl = base_url();
-        foreach ($list as $list_siswa) {
-            $no++;
-            $data['siswa'][] = array(
-              'no'=> $no,
-              'idsiswa'=> $list_siswa['idsiswa'],
-              'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
-              'namaPengguna'=> $list_siswa['namaPengguna'],
+    $baseurl = base_url();
+    foreach ($list as $list_siswa) {
+        $no++;
+        $data['siswa'][] = array(
+          'no'=> $no,
+          'nama'=> $list_siswa['namaDepan'] . " " . $list_siswa['namaBelakang'],
+          'namaPengguna'=> $list_siswa['namaPengguna'],
 
-              'namaSekolah'=> $list_siswa['namaSekolah'],
-              'eMail'=>  $list_siswa['eMail'] ,
-              'cabang'=> $list_siswa['namaCabang'],
+          'namaSekolah'=> $list_siswa['namaSekolah'],
+          'eMail'=>  $list_siswa['eMail'] ,
+          'cabang'=> $list_siswa['namaCabang'],
+          'report'=>'<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>',
+          'aksi'=>'<a class="btn btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
 
-              'report'=>'<a href="' . base_url('index.php/siswa/reportSiswa/' . $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>',
-              'aksi'=>'<a class="btn        btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
+          <a class="btn btn-sm btn-danger"  title="Reset Pasword" title="Hapus" onclick="resetPassword(' . "" . $list_siswa['penggunaID'] . ')"><i class="ico-key"></i></a>
+          <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>'
+          ,
+          // 'penggunaID'=> $list_siswa['penggunaID']
 
-              <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>'
-              );
-        }
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-            $this->parser->parse('admin/v-index-admin', $data);
-        } elseif($hakAkses=='guru'){
-             // jika guru
-           $this->parser->parse('templating/index-b-guru', $data);
-       }else{
-            // jika siswa redirect ke welcome
-        redirect(site_url('welcome'));
+          );
     }
-}else{
-    redirect('login');
+          #START cek hakakses#
+    $hakAkses=$this->session->userdata['HAKAKSES'];
+    if ($hakAkses=='admin') {
+        $this->parser->parse('admin/v-index-admin', $data);
+    } elseif($hakAkses=='guru'){
+             // jika guru
+       $this->parser->parse('templating/index-b-guru', $data);
+   }else{
+            // jika siswa redirect ke welcome
+    redirect(site_url('welcome'));
 }
-}
+        #END Cek USer#
 
+}
 
   //search autocomplete soal berdasarkan judul soal
 public function autocompleteSiswa()
 {
-   $keyword = $_GET['term'];
+ $keyword = $_GET['term'];
+
      // cari di database
-   $data = $this->msiswa->get_cari_siswa($keyword); 
+ $data = $this->msiswa->get_cari_siswa($keyword); 
     // format keluaran di dalam array
-   $arr = array();
-   foreach($data as $row)
-   {
-       $arr[] = array(
+ $arr = array();
+ foreach($data as $row)
+ {
+     $arr[] = array(
         'value' =>$row['namaDepan'].$row['namaBelakang']." (".$row['namaPengguna']." )",
         'url'=>base_url('siswa/reportSiswa')."/".$row['penggunaID'],
         );
-   }
+ }
         // minimal PHP 5.2
-   echo json_encode($arr);
+ echo json_encode($arr);
 }
 
 function ajax_report_tryout(){
@@ -741,12 +797,6 @@ function ajax_get_report_latihan(){
         $row[] = $list_item['jmlh_kosong'];
         $row[] = $list_item['skore'];
         $row[] = $list_item['tgl_pengerjaan'];
-        
-        // $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
-        // title="Lihat Score" 
-        // onclick="lihat_laporan_latihan('.$list_item['id_latihan'].')"
-        // data-todo='."'".json_encode($list_item)."'".'
-        // "><i class="ico-book"></i></a>';
 
 
         $list[] = $row;   
@@ -761,48 +811,61 @@ function ajax_get_report_latihan(){
 }
 
 // edit data siswa by admin
-public function editSiswa(){
+public function editSiswa()
+{
     //data siswa
-    if ($this->get_status_login()){     
-        if ($this->input->post()){     
+<<<<<<< HEAD
+    $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+    $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+    $alamat = htmlspecialchars($this->input->post('alamat'));
+    $noKontak = htmlspecialchars($this->input->post('nokontak'));
 
-            $namaDepan = htmlspecialchars($this->input->post('namadepan'));
-            $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
-            $alamat = htmlspecialchars($this->input->post('alamat'));
-            $noKontak = htmlspecialchars($this->input->post('nokontak'));
-            $idsiswa=htmlspecialchars($this->input->post('idsiswa'));
+=======
+        $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+        $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+        $alamat = htmlspecialchars($this->input->post('alamat'));
+        $noKontak = htmlspecialchars($this->input->post('nokontak'));
+        $idsiswa=htmlspecialchars($this->input->post('idsiswa'));
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 
-
-            $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
-            $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
-            $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
-            $cabangID = htmlspecialchars($this->input->post('cabang'));
-            $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+    $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
+    $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
+    $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
+    $cabangID = htmlspecialchars($this->input->post('cabang'));
+    $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
 
     //data array siswa
-            $data_post = array(
-                'namaDepan' => $namaDepan,
-                'namaBelakang' => $namaBelakang,
-                'alamat' => $alamat,
-                'noKontak' => $noKontak,
-                'namaSekolah' => $namaSekolah,
-                'alamatSekolah' => $alamatSekolah,
-                'tingkatID' => $tingkatID,
-                'cabangID' => $cabangID,
-                'noIndukNeutron' => $noIndukNeutron
-                );
-            $this->msiswa->update_siswa1($data_post,$idsiswa);
+<<<<<<< HEAD
+    $data_post = array(
+        'namaDepan' => $namaDepan,
+        'namaBelakang' => $namaBelakang,
+        'alamat' => $alamat,
+        'noKontak' => $noKontak,
+        'namaSekolah' => $namaSekolah,
+        'alamatSekolah' => $alamatSekolah,
+        'tingkatID' => $tingkatID,
+        'cabangID' => $cabangID,
+        'noIndukNeutron' => $noIndukNeutron
+        );
+    $this->msiswa->update_siswa($data_post);
 
-            redirect('siswa/listsiswa');
+=======
+        $data = array(
+            'namaDepan' => $namaDepan,
+            'namaBelakang' => $namaBelakang,
+            'alamat' => $alamat,
+            'noKontak' => $noKontak,
+            'namaSekolah' => $namaSekolah,
+            'alamatSekolah' => $alamatSekolah,
+            'tingkatID' => $tingkatID,
+            'cabangID' => $cabangID,
+            'noIndukNeutron' => $noIndukNeutron
+            );
+         $this->msiswa->update_siswa1($data,$idsiswa);
 
-        }else{
-            redirect('siswa/listsiswa');
-        }
-
-    }else{
-        redirect('login');
-    }
-
+         redirect(site_url('siswa/listSiswa'));
+         
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 }
 
 function ajax_daftar_konsultasi(){
@@ -838,40 +901,53 @@ function ajax_daftar_konsultasi(){
 
 }
 
+<<<<<<< HEAD
 function async_persentase_learning(){
-    if ($this->get_status_login()){     
-        $datas = $this->msiswa->persentasi();
+    $datas = $this->msiswa->persentasi();
 
-        $list = array();
-        $no = 0;
+    $list = array();
+    $no = 0;
 
-        $baseurl = base_url();
-        foreach ($datas as $list_item) {
-            $no++;
-            $row = array();
+    $baseurl = base_url();
+    foreach ($datas as $list_item) {
+        $no++;
+        $row = array();
 
-            $row[] = $no;
-            $row[] = $list_item['namaTopik'];
-            $step = $list_item['stepDone']*10;
-            $row[] = "<div class='progress' title='Progress :". $step. "%'>
-            <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
-                <span class='sr-only'>10% Complete (success)</span>
-            </div>
-        </div>";
+        $row[] = $no;
+        $row[] = $list_item['namaTopik'];
+        $step = $list_item['stepDone']*10;
+        $row[] = "<div class='progress' title='Progress :". $step. "%'>
+        <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
+            <span class='sr-only'>10% Complete (success)</span>
+        </div>
+    </div>";
 
-        $list[] = $row;   
-
-    }
-
-    $output = array(
-        "data" => $list,
-        );
-    echo json_encode($output);
-
-}else{
-    redirect('login');
-}
+    $list[] = $row;   
 
 }
+
+$output = array(
+    "data" => $list,
+    );
+echo json_encode($output);
+}
+
+function test(){
+    var_dump($this->session->userdata());
+}
+=======
+//reset pasword
+public function resetPassword()
+{
+    $mydate=getdate(date("U"));
+// echo "$mydate[weekday], $mydate[month] $mydate[mday], $mydate[year]";
+    $idpengguna = $this->input->post('idpengguna');
+    $namaPengguna = $this->msiswa->get_namaPengguna($idpengguna)[0]['namaPengguna'];
+    $katasandi =md5($namaPengguna.$mydate["mday"]);
+    $data = array('kataSandi' => $katasandi);
+    $this->msiswa->update_katasandi2($data,$idpengguna);
+}
+
+>>>>>>> 4e7c433a4c4d680d84ea7d5aba555cdeb1687e8e
 }
 ?>

@@ -3,7 +3,7 @@
 //============================================================+
 // File name   : videoBack.php
 // Begin       : -
-// Last Update : 2017-03-15
+// Last Update : 2017-03-16
 //
 // Description : controller model video back
 //               
@@ -336,9 +336,9 @@ public function cek_option_update()
   }else{
    if ($option_up =='link') {
     $this->dropVideoServer($UUID);
-    $penggunaID = $this->session->userdata['id'];
-    $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
-    $guruID = $data['tb_guru']['id'];
+    // $penggunaID = $this->session->userdata['id'];
+    // $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
+    // $guruID = $data['tb_guru']['id'];
     $linkembed=$this->get_linkembed($link);
     $data['video'] = array(
       'judulVideo' => $data['judulVideo'] ,
@@ -346,12 +346,12 @@ public function cek_option_update()
       'link' => $linkembed,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
-      'guruID' => $guruID,
+      // 'guruID' => $guruID,
       'subBabID' => $data['subBabID'],
       );
 
     $this->Mvideoback->ch_video($data);
-
+    redirect(site_url('videoback/daftarvideo'));
   }else{
 
 
@@ -368,9 +368,9 @@ public function updateVideo($data) {
   $config['max_size'] = 90000;
   $this->load->library('upload', $config);
 
-  $penggunaID = $this->session->userdata['id'];
-  $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
-  $guruID = $data['tb_guru']['id'];
+  // $penggunaID = $this->session->userdata['id'];
+  // $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
+  // $guruID = $data['tb_guru']['id'];
   $UUID=$data['UUID'];
 
              // pengecekan upload
@@ -386,7 +386,7 @@ public function updateVideo($data) {
       'link' => null,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
-      'guruID' => $guruID,
+      // 'guruID' => $guruID,
       'subBabID' => $data['subBabID'],
       );
   } else {
@@ -395,11 +395,12 @@ public function updateVideo($data) {
       'link' => null,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
-      'guruID' => $guruID,
+      // 'guruID' => $guruID,
       'subBabID' => $data['subBabID'],
       );
   }
   $this->Mvideoback->ch_video($data);
+  redirect(site_url('videoback/daftarvideo'));
 }
     //hapus video di server
 public function dropVideoServer($UUID)
@@ -1153,7 +1154,7 @@ public function tampVideo($list='')
       $lihat='<a href="javascript:void(0);" class="btn btn-success detail-'.$key['id'].'" title="Lihat" data-id='."'".json_encode($key)."'".' onclick="detail('."'".$key['id']."'".')"><i class="ico-facetime-video" ></i></a>';
       // pengecekan file video atau link video
       if ($namaFile != '' && $namaFile != ' ') {
-        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style="max-width:400px; max-height:250px;" controls></video>';
+        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style=" min-width:100%;max-height:150px;" style="background:grey;"></video>';
       }elseif($link != '' && $link != ' '){
         $video = '<iframe  src="'.$link.'"  controls id="video-ply-link" width="100%"  style="max-width:400px; max-height:250px;">
         </iframe>';

@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_8.gif) center no-repeat #fff;
+    background: url(https://neonjogja.com:2083/cpsess0442349035/viewer/home%2fneonjogja%2fpublic_html%2fassets%2fimage%2floading/spinner.gif) center no-repeat #fff;
   }
 </style>
 <!-- LOADING -->

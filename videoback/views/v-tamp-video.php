@@ -51,7 +51,7 @@
 
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closePlayer" >Close</button>
 
                 </div>
 
@@ -80,7 +80,7 @@
 
                 </div>
 
-                <iframe class=" modal-body img-tumbnail image" src=""  controls id="video-ply-link" width="100%" height="315" style="background:grey;">
+                <iframe class=" modal-body img-tumbnail image" src=""  controls id="video-ply-link" width="100%" height="315" style="background:grey;" >
                 </iframe>
 
                 <div class="modal-body ">
@@ -90,7 +90,7 @@
 
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeYoutube">Close</button>
 
                 </div>
 
@@ -198,7 +198,8 @@
         </ul>
         </center>
     </nav>
-
+<script type="text/javascript" src="http://www.youtube.com/player_api">
+</script>
 <script type="text/javascript">
 	//# fungsi menghapus video
 function drop_video(videoID){
@@ -251,4 +252,16 @@ function detail(id){
     }
     
 }
+   $(document).ready(function() {
+$('#closeYoutube').on('click', function() {
+      var vidf = document.getElementById("video-ply-link"); 
+    vidf.stopVideo();
+    // // closeYoutube video-ply-link
+    // $('iframe').get(0).stopVideo();
+ });
+$('#closePlayer').on('click', function() {
+    var vid = document.getElementById("video-ply"); 
+    vid.pause();
+ });
+ });
 </script>
