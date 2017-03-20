@@ -852,8 +852,12 @@ function async_persentase_learning(){
 
             $row[] = $no;
             $row[] = $list_item['namaTopik'];
-            $step = $list_item['stepDone']*10;
-            $row[] = "<div class='progress' title='Progress :". $step. "%'>
+            $row[] = $list_item['stepDone'];
+            $row[] = $list_item['jumlah_step'];
+            $test = $list_item['jumlah_step'] - $list_item['stepDone'];
+            $row[] = $test;
+            $step =  $list_item['stepDone'] / $list_item['jumlah_step']  * 100;
+            $row[] = "<div class='progress' title='Progress :". (int)$step. "%'>
             <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
             <span class='sr-only'>10% Complete (success)</span>
             </div>
@@ -890,5 +894,8 @@ function persentase_json(){
 }
 
 
+function a(){
+    print_r($this->session->userdata());
+}
 }
 ?>
