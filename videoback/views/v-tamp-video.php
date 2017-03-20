@@ -28,12 +28,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" id="closePlayer2" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h3 class="modal-title text-center"></h3>
                 </div>
-                <video class=" modal-body img-tumbnail image" src="" width="100%" height="50%" controls id="video-ply" style="background:grey;">
+                <video class=" modal-body img-tumbnail image" src="" width="100%" height="50%" poster="" controls id="video-ply" style="background:grey;">
                 </video>
                 <div class="modal-body ">
                     <p class="semibold text-justify mt0 mb5 mr10 ml10">Deskripsi</p>
@@ -59,7 +59,7 @@
 
                 <div class="modal-header">
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" id="closeYoutube2" aria-label="Close">
 
                         <span aria-hidden="true">&times;</span>
 
@@ -160,9 +160,9 @@
                                     <p class="nm">sub:<?=$key['subbab']?></p>
                                     </div>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <p class="nm"><a href="javascript:void(0);" class="semibold">,</a><?=$key['date_created']?></p>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <!--/ thumbnail -->
@@ -234,7 +234,8 @@ function detail(id){
     $('.deskripsi').html(data.deskripsi);
     if (data.namaFile != null) {
         links = '<?=base_url();?>assets/video/' + data.namaFile;
-        $('#video-ply').attr('src',links); 
+        $('#video-ply').attr('src',links);
+         $('#video-ply').attr('poster','<?=base_url();?>assets/image/thumbnail/' +data.thumbnail);
         $('#mdetailvideo').modal('show');
     }else if(data.link != null){
         links = data.link;
@@ -251,11 +252,21 @@ $('#closeYoutube').on('click', function() {
                 $('#video-ply-link').attr('src', '');
                 $('#video-ply-link').attr('src', url);
  });
+$('#closeYoutube2').on('click', function() {
+      var url = $('#video-ply-link').attr('src');
+                $('#video-ply-link').attr('src', '');
+                $('#video-ply-link').attr('src', url);
+ });
 $('#closePlayer').on('click', function() {
     var vid = document.getElementById("video-ply"); 
     vid.pause();
  });
+$('#closePlayer2').on('click', function() {
+    var vid = document.getElementById("video-ply"); 
+    vid.pause();
  });
+ });
+
 </script>
 
 <!-- on keypres cari soal -->

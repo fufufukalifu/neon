@@ -115,14 +115,32 @@ public function index() {
 
     //menampilkan view form upload
 public function formupvideo() {
-
-
   $data['judul_halaman'] = "upload Video";
   $data['files'] = array(
     APPPATH . 'modules/videoback/views/v-upload-video-form.php',
     );
+  $hakAkses=$this->session->userdata['HAKAKSES'];
+        // cek hakakses 
+  if ($hakAkses=='admin') {
+            // jika admin
+    $this->parser->parse('admin/v-index-admin', $data);
+  } elseif($hakAkses=='guru'){
+            // jika guru
+    $this->parser->parse('templating/index-b-guru', $data);
+  }elseif($hakAkses=='siswa'){
+            // jika siswa redirect ke welcome
+    redirect(site_url('welcome'));
+  }else{
 
+    redirect(site_url('login'));
+  }
+}
 
+public function formupvideo2() {
+  $data['judul_halaman'] = "upload Video";
+  $data['files'] = array(
+    APPPATH . 'modules/videoback/views/v-upload-video-form2.php',
+    );
   $hakAkses=$this->session->userdata['HAKAKSES'];
         // cek hakakses 
   if ($hakAkses=='admin') {
@@ -204,29 +222,34 @@ public function upvideo($data) {
   $config['upload_path'] = './assets/video';
   $config['allowed_types'] = 'mp4';
   $config['max_size'] = 90000;
+
+          $config['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["video"]['name'];
+        $config['file_name'] = $new_name;
+
   $this->load->library('upload', $config);
+  $this->upload->initialize($config);
              // pengecekan upload
   if (!$this->upload->do_upload('video')) {
                 // jika upload video gagal
     $error = array('error' => $this->upload->display_errors());
 
   } else {
-                // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
+    // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
     $file_data = $this->upload->data();
     $video = $file_data['file_name'];
-
-
+    $thumbnail = $this->upThumbnail();
     $penggunaID = $this->session->userdata['id'];
-    $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
-    $guruID = $data['tb_guru']['id'];
+    // $guruID = $data['tb_guru']['id'];
     $UUID=uniqid();
                 //data yg akan di masukan ke tabel video
     $data_video = array(
       'judulVideo' => $data['judulVideo'] ,
       'namaFile' => $video,
+      'thumbnail' => $thumbnail,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
-      'guruID' => $guruID,
+      'penggunaID' => $penggunaID,
       'subBabID' => $data['subBabID'],
       'UUID' => $UUID,
       'jenis_video' => $data['jenis_video']
@@ -237,14 +260,37 @@ public function upvideo($data) {
   }
 }
 
+public function upThumbnail()
+{
+    $configTmbl['upload_path'] = './assets/image/thumbnail/';
+        $configTmbl['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
+        $configTmbl['max_size'] = 100;
+        $configTmbl['max_width'] = 1024;
+        $configTmbl['max_height'] = 768;
+        //random name
+        $configTmbl['encrypt_name'] = TRUE;
+        $new_name = time().$_FILES["thumbnail"]['name'];
+        $configTmbl['file_name'] = $new_name;
+        $this->load->library('upload', $configTmbl);
+        $gambar = "thumbnail";
+        $this->upload->initialize($configTmbl);
+        if ($this->upload->do_upload($gambar)) {
+           $file_data = $this->upload->data();
+           $file_name = $file_data['file_name'];
+           return $file_name;
+        }else{
+          return null;
+        }
+
+
+}
+
 
 public function cek_option_upload()
 {
           //load library n helper
   $this->load->helper(array('form', 'url'));
   $this->load->library('form_validation');
-
-
 
         //set role
   $this->form_validation->set_rules('judulvideo', 'Judul Video', 'required');
@@ -266,8 +312,8 @@ public function cek_option_upload()
   }else{
    if ($option_up =='link') {
     $penggunaID = $this->session->userdata['id'];
-    $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
-    $guruID = $data['tb_guru']['id'];
+    // $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
+    // $guruID = $data['tb_guru']['id'];
     $UUID = uniqid();
     $linkembed=$this->get_linkembed($link);
     $data_video = array(
@@ -275,7 +321,7 @@ public function cek_option_upload()
       'link' => $linkembed,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
-      'guruID' => $guruID,
+      'penggunaID' => $penggunaID,
       'subBabID' => $data['subBabID'],
       'UUID' => $UUID,
       'jenis_video' => $data['jenis_video']
@@ -368,10 +414,6 @@ public function updateVideo($data) {
   $config['allowed_types'] = 'mp4';
   $config['max_size'] = 90000;
   $this->load->library('upload', $config);
-
-  // $penggunaID = $this->session->userdata['id'];
-  // $data['tb_guru'] = $this->Mvideoback->getIDguru($penggunaID)[0];
-  // $guruID = $data['tb_guru']['id'];
   $UUID=$data['UUID'];
 
              // pengecekan upload
@@ -380,10 +422,13 @@ public function updateVideo($data) {
                 // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
     $file_data = $this->upload->data();
     $video = $file_data['file_name'];
+    $UUID=$data['UUID'];
+    $thumbnail = $this->chThumbnail($UUID);
                 //data yg akan di masukan ke tabel video
     $data['video'] = array(
       'judulVideo' => $data['judulVideo'] ,
       'namaFile' => $video,
+      'thumbnail' => $thumbnail,
       'link' => null,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
@@ -391,8 +436,11 @@ public function updateVideo($data) {
       'subBabID' => $data['subBabID'],
       );
   } else {
+    $UUID=$data['UUID'];
+     $thumbnail = $this->chThumbnail($UUID);
     $data['video'] = array(
       'judulVideo' => $data['judulVideo'] ,
+      'thumbnail' => $thumbnail,
       'link' => null,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
@@ -402,6 +450,35 @@ public function updateVideo($data) {
   }
   $this->Mvideoback->ch_video($data);
   redirect(site_url('videoback/daftarvideo'));
+}
+//  Thumbnail
+public function chThumbnail($UUID)
+{
+    $oldthumbnail = $this->Mvideoback->get_onethumbnail($UUID)[0]['thumbnail'];
+    $configChTmbl['upload_path'] = './assets/image/thumbnail/';
+      $configChTmbl['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
+      $configChTmbl['max_size'] = 100;
+      $configChTmbl['max_width'] = 1024;
+      $configChTmbl['max_height'] = 768;
+      //random name
+      $configChTmbl['encrypt_name'] = TRUE;
+      $new_name = time().$_FILES["thumbnail"]['name'];
+      $configChTmbl['file_name'] = $new_name;
+      $this->load->library('upload', $configChTmbl);
+      $gambar = "thumbnail";
+      $this->upload->initialize($configChTmbl);
+      if ($this->upload->do_upload($gambar)) {
+         if ($oldthumbnail!='' && $oldthumbnail!=' ') {
+                   unlink(FCPATH . "./assets/image/thumbnail/" . $oldthumbnail);
+          }
+         $file_data = $this->upload->data();
+         $file_name = $file_data['file_name'];
+         return $file_name;
+      }else{
+        return $oldthumbnail;
+      }
+
+
 }
     //hapus video di server
 public function dropVideoServer($UUID)
@@ -1150,15 +1227,16 @@ public function tampVideo($list='')
     $data['list']=array();
     foreach ($list as $key ) {
       $namaFile=$key['namaFile'];
+      $thumbnail=$key['thumbnail'];
       $link=$key['link'];
       $publish=$key['published'];
-      $video="<h3>Tidak ada File video</h3>";
+      $video='<div style="width:250px ;height:110px; "><div class="ml10 mr10 "><h3>Tidak ada File video</div></h3></div>';
       $hapus='<a href="javascript:void(0);" class="btn btn-danger" title="Hapus" onclick="drop_video('.$key["id"].')"><i class="ico-remove"></i></a>';
       $ubah=' <a href="'.base_url().'videoback/formUpdateVideo/'.$key["UUID"].'" class="btn btn-warning" title="Ubah"><i class="ico-file5"></i></a>';
       $lihat='<a href="javascript:void(0);" class="btn btn-success detail-'.$key['id'].'" title="Lihat" data-id='."'".json_encode($key)."'".' onclick="detail('."'".$key['id']."'".')"><i class="ico-facetime-video" ></i></a>';
       // pengecekan file video atau link video
       if ($namaFile != '' && $namaFile != ' ') {
-        $video = '<video data-toggle="unveil" src="'.base_url().'assets/video/'.$namaFile.'" data-src="'.base_url().'assets/video/'.$namaFile.'" alt="Cover" width="100%" style="max-width:400px; max-height:250px;"></video>';
+        $video = '<img data-toggle="unveil" src="'.base_url().'assets/image/thumbnail/'.$thumbnail.'" data-src="'.base_url().'assets/image/thumbnail/'.$thumbnail.'" alt="Cover" width="250px" height="150px" style="background:#E6E2E2;"></img>';
       }elseif($link != '' && $link != ' '){
         $video = '<iframe  src="'.$link.'"  controls id="video-ply-link" width="100%"  style="max-width:400px; max-height:250px;">
         </iframe>';
@@ -1172,7 +1250,7 @@ public function tampVideo($list='')
                 'date_created'=>$tgl,
                 'mapel'=>$key['mapel'],
                 'bab'=>$key['judulBab'],
-                'subbab'=>$key['judulSubBab'],
+                'subbab'=>substr($key['judulSubBab'],  0, 30),
                 'hapus'=>$hapus,
                 'ubah'=>$ubah,
                 'lihat'=>$lihat

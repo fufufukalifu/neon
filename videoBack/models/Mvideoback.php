@@ -52,13 +52,13 @@ class Mvideoback extends CI_Model
 	}
 
 	//get ID Guru
-	public function getIDguru($penggunaID)
-	{
-		$this->db->where('penggunaID',$penggunaID);
-		$this->db->select('id')->from('tb_guru');
-		$query = $this->db->get();
-		return $query->result_array();
-	}
+	// public function getIDguru($penggunaID)
+	// {
+	// 	$this->db->where('penggunaID',$penggunaID);
+	// 	$this->db->select('id')->from('tb_guru');
+	// 	$query = $this->db->get();
+	// 	return $query->result_array();
+	// }
 
 	//query haspus video
 	public function del_video($videoID)
@@ -196,7 +196,7 @@ class Mvideoback extends CI_Model
 
         // data paginataion all video
     function data_video($number,$offset){
-        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.thumbnail,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -331,6 +331,16 @@ class Mvideoback extends CI_Model
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
         $this->db->join('tb_video video', 'subbab.id = video.subBabID');
         return $this->db->get('tb_tingkat tkt')->num_rows();
+    }
+
+    // get thumbnail
+    public function get_onethumbnail($UUID)
+    {
+    	$this->db->select('thumbnail');
+    	$this->db->from('tb_video');
+    	$this->db->where('UUID',$UUID);
+    	$query = $this->db->get();
+    	return $query->result_array();
     }
 }
 ?>

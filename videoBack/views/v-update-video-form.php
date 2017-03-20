@@ -233,7 +233,35 @@
                 </div>
 
             </div>
-
+        <!-- prev thumbnail -->
+        <div  class="form-group prv_thumbnail" >
+            <div class="row" style="margin:1%;"> 
+                <div class="col-md-12">
+                    <img id="prevthumbnail" class="img-tumbnail image" src="<?=base_url();?>assets/image/thumbnail/<?=$video['thumbnail'];?>" width="25%"  >
+                </div>
+                <div class="col-md-5 left"> 
+                    <h6>Name: <span id="namethumbnail"></span></h6> 
+                </div> 
+                <div class="col-md-4 left"> 
+                    <h6>Size: <span id="sizethumbnail"></span>Kb</h6> 
+                </div> 
+                <div class="col-md-3 bottom"> 
+                    <h6>Type: <span id="typethumbnail"></span></h6> 
+                </div>
+            </div>
+        </div>
+        <!--/ prev thumbnail -->
+        <!-- Upload thumbnail -->
+        <div class="form-group server">
+           <label class="col-sm-2 control-label">Thumbnail</label>
+            <div class="col-sm-4">
+                <label for="thumbnail" class="btn btn-sm btn-default">
+                    Pilih gambar
+                </label>
+                <input style="display:none;" type="file" id="thumbnail" name="thumbnail" onchange="Validatethumbnail(this);"/>
+            </div>
+        </div>
+         <!-- /Upload thumbnail -->
 
 
             <!-- upload video by link -->
@@ -419,13 +447,15 @@
                        $(".prv_video").show();
 
                     });
+                    $("#thumbnail").click(function () {
+
+                        $(".prv_thumbnail").show();
+
+                    });
 
 
 
                 });
-
-
-
 
 
                 //buat load tingkat
@@ -621,6 +651,35 @@
 
 <!-- start script js validation extension -->
 <script type="text/javascript">
+// prev Thumbnail 
+        $(function () {
+        $('#thumbnail').on('change',function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            var size=Math.round(file.size/1024);
+        // start pengecekan ukuran file
+        if (size>=90000) {
+            // $('#e_size_video').modal('show');
+            $('.prv_thumbnail').hide();
+        }else{
+            reader.onload = viewer.load;
+            reader.readAsDataURL(file);
+            viewer.setProperties(file);
+        }
+        
+    });
+        var viewer = {
+            load : function(e){
+                $('#prevthumbnail').attr('src', e.target.result);
+            },
+            setProperties : function(file){
+                $('#namethumbnail').text(file.name);
+                $('#typethumbnail').text(file.type);
+                $('#sizethumbnail').text(Math.round(file.size/1024));
+            },
+        }
+    });
+
  var _validFileExtensions = [".mp4"];    
 function ValidateSingleInput(oInput) {
     if (oInput.type == "file") {
