@@ -83,10 +83,10 @@
                     <div id="upload" class="form-group server">
                         <label class="col-sm-2 control-label">File Video</label>
                         <div class="col-sm-4">
-                            <label for="file" class="btn btn-sm btn-default">
+                            <label for="filevideo" class="btn btn-sm btn-default filevideo">
                                 Pilih Video
                             </label>
-                            <input style="display:none;" type="file" id="file" name="video" onchange="ValidateSingleInput(this);"/>
+                            <input style="display:none;" type="file" id="filevideo" name="video" onchange="fileVideo(this,z='');"/>
                         </div>
                     </div>
                     <!-- /upload ke server -->
@@ -112,10 +112,10 @@
                     <div class="form-group server">
                        <label class="col-sm-2 control-label">Thumbnail</label>
                         <div class="col-sm-4">
-                            <label for="thumbnail" class="btn btn-sm btn-default">
+                            <label for="filethumbnail" class="btn btn-sm btn-default filethumbnail">
                                 Pilih gambar
                             </label>
-                            <input style="display:none;" type="file" id="thumbnail" name="thumbnail" onchange="Validatethumbnail(this);"/>
+                            <input style="display:none;" type="file" id="filethumbnail" name="thumbnail" onchange="fileThumbnail(this,z='');"/>
                         </div>
                     </div>
                     <!-- /Upload thumbnail -->
@@ -245,14 +245,37 @@
           controlForm.find('.entry:not(:last) .server')
           .removeClass('server')
           .addClass('server'+x);
-          //link
+          //ubah kelas link u/ form baru
           controlForm.find('.entry:not(:last) .link')
           .removeClass('link')
           .addClass('link'+x);
-          // prv_video
+          // #VIDEO
+          // ubah kelas prv_video u/ form baru
           controlForm.find('.entry:not(:last) .prv_video')
           .removeClass('prv_video')
           .addClass('prv_video'+x);
+          //ubah evebt onchange="fileVideo(this,z='')
+          controlForm.find('.entry:not(:last) #filevideo')
+          .attr('id','filevideo'+x)
+          .attr('onchange','fileVideo(this,'+x+')');
+          //ubah attr for 
+          controlForm.find('.entry:not(:last) .filevideo')
+          .removeClass('filevideo')
+          .addClass('filevideo'+x)
+          .attr('for','filevideo'+x);
+          // ubah id preview u/ form baru
+          controlForm.find('.entry:not(:last) #preview')
+          .attr('id','preview'+x);
+          // ubah id filename u/ form baru
+          controlForm.find('.entry:not(:last) #filename')
+          .attr('id','filename'+x);
+          // ubah id filesize u/ form baru
+          controlForm.find('.entry:not(:last) #filesize')
+          .attr('id','filesize'+x);
+          // ubah id filename u/ form baru
+          controlForm.find('.entry:not(:last) #filetype')
+          .attr('id','filetype'+x);
+          // #VIDEO
           // op_server
           controlForm.find('.entry:not(:last) .op_server')
           .removeClass('op_server')
@@ -261,16 +284,46 @@
           controlForm.find('.entry:not(:last) .op_link')
           .removeClass('op_link')
           .attr('onclick','up_link('+x+')');
-          // ganti name input jenis_video => jenis_video+x
+          // ubah name input link_video => link_video+x
+          controlForm.find('.entry:not(:last) [name=link_video]')
+          .attr('name','link_video'+x);                    
+          // thumbnail
+          // ubah class prv_thumbnail
+          controlForm.find('.entry:not(:last) .prv_thumbnail')
+          .removeClass('prv_thumbnail')
+          .addClass('prv_thumbnail'+x);
+          // ubah id prevthumbnail
+          controlForm.find('.entry:not(:last) #prevthumbnail')
+          .attr('id','prevthumbnail'+x);
+          // ubah id namethumbnail
+          controlForm.find('.entry:not(:last) #namethumbnail')
+          .attr('id','namethumbnail'+x);
+          // ubah id sizethumbnail
+          controlForm.find('.entry:not(:last) #sizethumbnail')
+          .attr('id','sizethumbnail'+x);
+          // ubah id typethumbnail
+          controlForm.find('.entry:not(:last) #typethumbnail')
+          .attr('id','namethumbnail'+x);
+          // ubah for filethumbnail
+          controlForm.find('.entry:not(:last) .filethumbnail')
+          .removeClass('filethumbnail')
+          .attr('for','filethumbnail'+x);
+          // ubah id filethumbnail
+          controlForm.find('.entry:not(:last) #filethumbnail')
+          .attr('id','filethumbnail'+x)
+          .attr('onchange','fileThumbnail(this,'+x+')')
+          ;
+          // /thumbnail
+          // ubah name input jenis_video => jenis_video+x
           controlForm.find('.entry:not(:last) [name=jenis_video]')
           .attr('name','jenis_video'+x);
-          // ganti name input judulvideo => judulvideo+x
+          // ubah name input judulvideo => judulvideo+x
           controlForm.find('.entry:not(:last) [name=judulvideo]')
           .attr('name','judulvideo'+x);
-          // ganti name input deskripsi => deskripsi+x
+          // ubah name input deskripsi => deskripsi+x
           controlForm.find('.entry:not(:last) [name=deskripsi]')
           .attr('name','deskripsi'+x);
-          // ganti name input publish => publish+x
+          // ubah name input publish => publish+x
           controlForm.find('.entry:not(:last) [name=publish]')
           .attr('name','publish'+x);
           // btnf
@@ -422,31 +475,84 @@
     $(".server"+z).hide();
     $(".prv_video"+z).hide();
   }
-       $(document).ready(function () {
 
-      $("#file").click(function () {
-          $(".prv_video").show();
-      });
-      $("#thumbnail").click(function () {
-          $(".prv_thumbnail").show();
-      });
-    });
+     
+  // show preview video
+  function fileVideo(oInput,z='') {
+    var viewer = {
+        load : function(e){
+          $('#preview'+z).attr('src', e.target.result);
+        },
+        setProperties : function(file){
+          $('#filename'+z).text(file.name);
+          $('#filetype'+z).text(file.type);
+          $('#filesize'+z).text(Math.round(file.size/1024));
+        },
+      }
+
+    var file = oInput.files[0];
+    var reader = new FileReader();
+    var size=Math.round(file.size/1024);
+     if (size>=90000) {
+        $('#e_size_video').modal('show');
+      }else{
+        $(".prv_video"+z).show();
+        reader.onload = viewer.load;
+        reader.readAsDataURL(file);
+        viewer.setProperties(file);
+      }
+  }
+  // show preview Thumbnail
+  function fileThumbnail(oInput,z='') {
+    var viewer = {
+          load : function(e){
+              $('#prevthumbnail'+z).attr('src', e.target.result);
+          },
+          setProperties : function(file){
+              $('#namethumbnail'+z).text(file.name);
+              $('#typethumbnail'+z).text(file.type);
+              $('#sizethumbnail'+z).text(Math.round(file.size/1024));
+          },
+        }
+
+      var file = oInput.files[0];
+      var reader = new FileReader();
+      var size=Math.round(file.size/1024);
+      // start pengecekan ukuran file
+      if (size>=90000) {
+        // $('#e_size_video').modal('show');
+      }else{
+        $(".prv_thumbnail"+z).show();
+        reader.onload = viewer.load;
+        reader.readAsDataURL(file);
+        viewer.setProperties(file);
+      }
+  }
 </script>
 
 <script type="text/javascript">
     function upvideo(y='') {
-     var jenis_video =$('[name=jenis_video'+y+']').val();
-     var judulvideo =$('[name=judulvideo'+y+']').val();
-     var deskripsi =$('[name=deskripsi'+y+']').val();
-     var publish =$('[name=publish'+y+']').val();
-     console.log(jenis_video);
-     console.log(judulvideo);
-     console.log(deskripsi);
-     console.log(publish);
+      var subBab =$('[name=subBab'+y+']').val();
+      var video ='video'+y;
+      var link_video =$('[name=link_video'+y+']').val();
+      var tumbnail = 'tumbnail'+y;
+      var jenis_video =$('[name=jenis_video'+y+']').val();
+      var judulvideo =$('[name=judulvideo'+y+']').val();
+      var deskripsi =$('[name=deskripsi'+y+']').val();
+      var publish =$('[name=publish'+y+']').val();
+      // testing data
+      console.log('FORM ke-'+y)
+      console.log('Subab: '+subBab);
+      console.log(video);
+      console.log('link: '+link_video);
+      console.log(tumbnail);
+      console.log('jenis video: '+jenis_video);
+      console.log('judul video: '+judulvideo);
+      console.log('deskripsi: '+deskripsi);
+      console.log('publish: '+publish);
+      console.log('=======================');
 
     }
 
 
 </script>
-
-
