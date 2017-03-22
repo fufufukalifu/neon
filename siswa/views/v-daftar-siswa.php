@@ -38,6 +38,8 @@
     $(document).ready(function () {
         tb_siswa = $('.daftarsiswa').DataTable({
             "ajax": {
+        //           "processing": true,
+        // "serverSide": true,
                 "url": base_url + "siswa/ajax_daftar_siswa",
                 "type": "POST"
             },
