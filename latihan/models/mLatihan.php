@@ -1,16 +1,6 @@
 <?php
-
-/**
-
- *
-
- */
-
 class Mlatihan extends CI_Model
-
 {
-
-
 	//random buat subbab
 	public function get_random_for_latihan( $param ) {
 		$this->db->where( 'id_subbab', $param['id_subab'] );
@@ -73,55 +63,32 @@ class Mlatihan extends CI_Model
 
 
 	public function ajax_add_paket_soal() {
-
-
-
 		$data = array(
-
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
-
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
-
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
-
 			'durasi' =>$this->input->post( 'durasi' )
-
 			);
-
-
-
 		$this->MPaketsoal->insertpaketsoal( $data );
-
 	}
 
 
 
 	public function insert( $data ) {
-
 		$this->db->insert( 'tb_latihan', $data );
-
 	}
 
-
-
 	public function get_latihan_by_uuid($uuid){
-
 		$this->db->where( 'uuid_latihan', $uuid );		
-
 		$this->db->select('id_latihan');
-
 		$this->db->from( 'tb_latihan' );
-
 		$query = $this->db->get();
-
 		return $query->result_array();
-
 	}
 
 
 
 	public function insert_tb_mm_sol_lat( $data ) {
-
 		$this->db->insert( 'tb_mm_sol_lat', $data );
 
 	}
@@ -175,7 +142,7 @@ class Mlatihan extends CI_Model
 	//random buat bab
 	public function get_soal_bybab( $param ) {
 		$this->db->where( 'bab.id', $param );
-		// $this->db->where( 'kesulitan', $param['kesulitan'] );
+
 		$this->db->from( 'tb_banksoal b' );
 		$this->db->join('tb_subbab sub',
 			'b.id_subbab = sub.id');
@@ -197,7 +164,61 @@ class Mlatihan extends CI_Model
 		return $query->result_array();
 	}
 
+	function repot_latihan_filter($id){
+		$username = $this->db->escape_str($this->session->userdata('USERNAME'));
+		if($id==""){
+		## TANPA FILTER BAB, TAMPILIN SEMUA ##
+			$query = "SELECT hasil.id_latihan,hasil.nm_latihan,skore FROM 
+			(SELECT * FROM `tb_latihan` l
+			WHERE l.`create_by` = '".$username."') hasil
+			JOIN `tb_report-latihan` rp ON rp.`id_latihan` = hasil.id_latihan
+			JOIN `tb_mm_sol_lat` mm ON mm.`id_latihan` = hasil.id_latihan
+			JOIN `tb_banksoal` b ON b.`id_soal` = mm.`id_soal`
+			JOIN `tb_subbab` s ON s.`id` = b.`id_subbab`
+			JOIN `tb_bab` bab ON bab.`id` = s.`babID`
+			GROUP BY hasil.`id_latihan`
+			";
+		## TANPA FILTER BAB, TAMPILIN SEMUA ##
+		}else{
+		## TANPA FILTER BAB, TAMPILIN SEMUA ##
+			$query = "SELECT hasil.id_latihan,hasil.nm_latihan,skore FROM 
+			(SELECT * FROM `tb_latihan` l
+			WHERE l.`create_by` = '".$username."') hasil
+			JOIN `tb_report-latihan` rp ON rp.`id_latihan` = hasil.id_latihan
+			JOIN `tb_mm_sol_lat` mm ON mm.`id_latihan` = hasil.id_latihan
+			JOIN `tb_banksoal` b ON b.`id_soal` = mm.`id_soal`
+			JOIN `tb_subbab` s ON s.`id` = b.`id_subbab`
+			JOIN `tb_bab` bab ON bab.`id` = s.`babID`
+			WHERE bab.`id` = '".$id."'
+			GROUP BY hasil.`id_latihan`
+			";
+		## TANPA FILTER BAB, TAMPILIN SEMUA ##
+		}
 
+		$result = $this->db->query($query);
+		return $result->result_array();   
+	}
+
+	// get bab yang pernah dia latihan.
+	function get_bab_latihan(){
+		$username = $this->db->escape_str($this->session->userdata('USERNAME'));
+		## TANPA ORDER ##
+		$query = "SELECT bab.`id`,bab.`judulBab` FROM 
+		(SELECT * FROM `tb_latihan` l
+		WHERE l.`create_by`= '".$username."') hasil
+		JOIN `tb_report-latihan` rp ON rp.`id_latihan` = hasil.id_latihan
+		JOIN `tb_mm_sol_lat` mm ON mm.`id_latihan` = hasil.id_latihan
+		JOIN `tb_banksoal` b ON b.`id_soal` = mm.`id_soal`
+		JOIN `tb_subbab` s ON s.`id` = b.`id_subbab`
+		JOIN `tb_bab` bab ON bab.`id` = s.`babID`
+		GROUP BY bab.id";
+		## ORDER BAB ##	
+
+
+		$result = $this->db->query($query);
+		return $result->result_array();   
+
+	}
 
 
 }

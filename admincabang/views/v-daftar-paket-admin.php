@@ -86,7 +86,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
   var mySelect = $('select[name=cabang]').val();
-  dataTablePaket = $('.daftarpaket').DataTable({
+ 
+ /* dataTablePaket = $('.daftarpaket').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": base_url+"admincabang/admincabang/laporanto"
     "ajax": {
       "url": base_url+"admincabang/admincabang/laporanto",
       "type": "POST"
@@ -94,8 +98,17 @@ $(document).ready(function(){
     "emptyTable": "Tidak Ada Data Pesan",
     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
     "bDestroy": true,
-  });
+  });*/
 
+dataTablePaket = $(".daftarpaket").DataTable({
+  ordering: false,
+  processing: true,
+  serverSide: true,
+  ajax: {
+    url: base_url+"admincabang/admincabang/laporanto_ss",
+    type:'POST',
+  }
+});
 
 });
 
@@ -130,13 +143,18 @@ $('select[name=to]').change(function(){
   url = base_url+"admincabang/admincabang/laporanto/"+cabang+"/"+tryout+"/"+paket;
 
   dataTablePaket = $('.daftarpaket').DataTable({
-    "ajax": {
+    "processing": true,
+        "serverSide": true,
+        "ajax": url
+    /*"ajax": {
       "url": url,
-      "type": "POST"
+      "type": "POST",
+      "serverSide": true,
+      "processing": true,
     },
     "emptyTable": "Tidak Ada Data Pesan",
     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
+    "bDestroy": true,*/
   });
 
 load_paket(tryout);
