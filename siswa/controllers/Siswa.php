@@ -94,12 +94,12 @@ class Siswa extends MX_Controller {
     //menampilkan halaman pengaturan profile
     public function PengaturanProfile() {
         if ($this->get_status_login()) {
-           $data['tb_siswa'] = $this->msiswa->get_datsiswa();
-           $this->load->view('templating/t-header');
-           $this->load->view('templating/t-navbarUser');
-           $this->load->view('vPengaturanProfile', $data);
-           $this->load->view('templating/t-footer');
-       }else{
+         $data['tb_siswa'] = $this->msiswa->get_datsiswa();
+         $this->load->view('templating/t-header');
+         $this->load->view('templating/t-navbarUser');
+         $this->load->view('vPengaturanProfile', $data);
+         $this->load->view('templating/t-footer');
+     }else{
         redirect('login');
     }   
 
@@ -173,8 +173,8 @@ public function ubahemailsiswa() {
 
 
         if ($this->form_validation->run() == FALSE) {
-           $this->profilesetting();
-       } else {
+         $this->profilesetting();
+     } else {
         $email = htmlspecialchars($this->input->post('email'));
 
         $data_post = array(
@@ -329,9 +329,9 @@ public function daftarsiswa() {
 
 //function untuk menyimpan data pendaftaran user siswa ke database
 public function savesiswa(){
- $hak_akses = $this->get_hak_akses();
+   $hak_akses = $this->get_hak_akses();
 
- if ($this->get_status_login()&& $hak_akses=="admin") {   
+   if ($this->get_status_login()&& $hak_akses=="admin") {   
     //load library n helper
     $this->load->helper(array('form', 'url'));
     $this->load->library('form_validation');
@@ -441,21 +441,21 @@ function updateSiswa($idsiswa, $idpengguna) {
         if ($idsiswa == null || $idpengguna == 0) {
             echo 'kosong';
         } else {
-           $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-           $data['cabang'] = $this->mcabang->get_all_cabang();
-           $idsiswa = $idsiswa;
-           $idpengguna = $idpengguna;
+         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+         $data['cabang'] = $this->mcabang->get_all_cabang();
+         $idsiswa = $idsiswa;
+         $idpengguna = $idpengguna;
 
-           $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+         $data['siswa'] = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
 
-           $data['judul_halaman'] = "Rubah Data Siswa";
-           $data['files'] = array(
+         $data['judul_halaman'] = "Rubah Data Siswa";
+         $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-update-siswa.php',
             );
 
-           $this->parser->parse('admin/v-index-admin', $data);
-       }
-   }else{
+         $this->parser->parse('admin/v-index-admin', $data);
+     }
+ }else{
     redirect('login');
 }
 }
@@ -554,53 +554,53 @@ public function listSiswa()
 {
     if ($this->get_status_login()){     
        // code u/ pagination
-       $this->load->database();
-       $jumlah_data = $this->msiswa->jumlah_siswa();
+     $this->load->database();
+     $jumlah_data = $this->msiswa->jumlah_siswa();
 
-       $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
-       $config['total_rows'] = $jumlah_data;
-       $config['per_page'] = 10;
+     $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
+     $config['total_rows'] = $jumlah_data;
+     $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
-       $config['num_tag_open'] = '<li>';
-       $config['num_tag_close'] = '</li>';
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
         // end  Customizing the “Digit” Link
 
         // Start Customizing the “Current Page” Link
-       $config['cur_tag_open'] = '<li><a><b>';
-       $config['cur_tag_close'] = '</b></a></li>';
+     $config['cur_tag_open'] = '<li><a><b>';
+     $config['cur_tag_close'] = '</b></a></li>';
         // END Customizing the “Current Page” Link
 
         // Start Customizing the “Previous” Link
-       $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
-       $config['prev_tag_open'] = '<li>';
-       $config['prev_tag_close'] = '</li>';
+     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+     $config['prev_tag_open'] = '<li>';
+     $config['prev_tag_close'] = '</li>';
          // END Customizing the “Previous” Link
 
         // Start Customizing the “Next” Link
-       $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
-       $config['next_tag_open'] = '<li>';
-       $config['next_tag_close'] = '</li>';
+     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
          // END Customizing the “Next” Link
 
         // Start Customizing the first_link Link
-       $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
-       $config['first_tag_open'] = '<li>';
-       $config['first_tag_close'] = '</li>';
+     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
          // END Customizing the first_link Link
 
         // Start Customizing the last_link Link
-       $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
-       $config['last_tag_open'] = '<li>';
-       $config['last_tag_close'] = '</li>';
+     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
          // END Customizing the last_link Link
 
-       $from = $this->uri->segment(3);
-       $this->pagination->initialize($config);     
-       $list = $this->msiswa->data_siswa($config['per_page'],$from);
+     $from = $this->uri->segment(3);
+     $this->pagination->initialize($config);     
+     $list = $this->msiswa->data_siswa($config['per_page'],$from);
 
-       $this->tampSiswa($list);
-   }else{
+     $this->tampSiswa($list);
+ }else{
     redirect('login');
 }
 
@@ -639,8 +639,8 @@ public function tampSiswa($list){
             $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
              // jika guru
-           $this->parser->parse('templating/index-b-guru', $data);
-       }else{
+         $this->parser->parse('templating/index-b-guru', $data);
+     }else{
             // jika siswa redirect ke welcome
         redirect(site_url('welcome'));
     }
@@ -653,24 +653,24 @@ public function tampSiswa($list){
   //search autocomplete soal berdasarkan judul soal
 public function autocompleteSiswa()
 {
-   $keyword = $_GET['term'];
+ $keyword = $_GET['term'];
      // cari di database
-   $data = $this->msiswa->get_cari_siswa($keyword); 
+ $data = $this->msiswa->get_cari_siswa($keyword); 
     // format keluaran di dalam array
-   $arr = array();
-   foreach($data as $row)
-   {
-       $arr[] = array(
+ $arr = array();
+ foreach($data as $row)
+ {
+     $arr[] = array(
         'value' =>$row['namaDepan'].$row['namaBelakang']." (".$row['namaPengguna']." )",
         'url'=>base_url('siswa/reportSiswa')."/".$row['penggunaID'],
         );
-   }
+ }
         // minimal PHP 5.2
-   echo json_encode($arr);
+ echo json_encode($arr);
 }
 
-function ajax_report_tryout(){
-    $datas = $this->mtryout->get_report_paket();
+function ajax_report_tryout($id=""){
+    $datas = $this->mtryout->get_report_paket($id);
     // var_dump($datas);
 
     $list = array();
@@ -859,27 +859,27 @@ function async_persentase_learning(){
             $step =  $list_item['stepDone'] / $list_item['jumlah_step']  * 100;
             $row[] = "<div class='progress' title='Progress :". (int)$step. "%'>
             <div class='progress-bar progress-bar-success' style='width: ". $step."%'>
-            <span class='sr-only'>10% Complete (success)</span>
+                <span class='sr-only'>10% Complete (success)</span>
             </div>
-            </div>";
+        </div>";
 
-            $list[] = $row;   
+        $list[] = $row;   
 
-        }
-
-        $output = array(
-            "data" => $list,
-            );
-        echo json_encode($output);
-
-    }else{
-        redirect('login');
     }
+
+    $output = array(
+        "data" => $list,
+        );
+    echo json_encode($output);
+
+}else{
+    redirect('login');
+}
 }
 
-function persentase_json(){
+function persentase_json($id=""){
     if ($this->get_status_login()){
-        $datas = $this->mtryout->get_report_paket();
+        $datas = $this->mtryout->get_report_paket($id);
         $array = [];
 
         foreach ($datas as $key) {
@@ -894,8 +894,17 @@ function persentase_json(){
 }
 
 
-function a(){
-    print_r($this->session->userdata());
+function get_tryout_for_select(){
+   if ($this->get_status_login()){
+
+    $datas = $this->mtryout->get_tryout_by_pengguna();
+
+    echo json_encode($datas);
+
+}else{
+    redirect('login');
+}
+
 }
 }
 ?>

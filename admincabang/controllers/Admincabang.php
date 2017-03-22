@@ -115,7 +115,6 @@ class Admincabang extends MX_Controller {
 		}
 
 		$output = array(
-
 			"data"=>$data,
 			);
 
@@ -136,9 +135,9 @@ class Admincabang extends MX_Controller {
 		if ($hakAkses == 'admin_cabang') {
 			$this->parser->parse('v-index-admincabang', $data);
 		} elseif ($hakAkses == 'admin') {
-					$data['files'] = array(
-			APPPATH . 'modules/admincabang/views/v-daftar-paket-admin.php',
-			);
+			$data['files'] = array(
+				APPPATH . 'modules/admincabang/views/v-daftar-paket-admin.php',
+				);
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif ($hakAkses == 'guru') {
 			redirect(site_url('guru/dashboard/'));
@@ -182,16 +181,16 @@ class Admincabang extends MX_Controller {
 			$paket=$item ['nm_paket'];
 			$cabang=$item ['namaCabang'];
 			$data['all_report'][]=array(
-                'no'=>$no,
-                'jumlah_soal'=>$jumlahSoal,
-                'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
-                'jmlh_benar'=>$item ['jmlh_benar'],
-                'jmlh_salah'=>$item ['jmlh_salah'],
-                'jmlh_kosong'=>$item ['jmlh_kosong'],
-                'jumlah_soal'=>$jumlahSoal,
-                'nilai'=>number_format($nilai,2),
-                'tgl_pengerjaan'=>$item ['tgl_pengerjaan']
-                );
+				'no'=>$no,
+				'jumlah_soal'=>$jumlahSoal,
+				'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
+				'jmlh_benar'=>$item ['jmlh_benar'],
+				'jmlh_salah'=>$item ['jmlh_salah'],
+				'jmlh_kosong'=>$item ['jmlh_kosong'],
+				'jumlah_soal'=>$jumlahSoal,
+				'nilai'=>number_format($nilai,2),
+				'tgl_pengerjaan'=>$item ['tgl_pengerjaan']
+				);
 			//sum Nilai
 			$sumNilai += $nilai;
 
@@ -216,7 +215,7 @@ class Admincabang extends MX_Controller {
 		if ($cabang !="all" && $tryout !="all" && $paket !="all") {
 			$this->parser->parse('v-laporanPDF-to.php',$data);
 		}else{
-			 redirect(site_url('admincabang/laporanpaket'));
+			redirect(site_url('admincabang/laporanpaket'));
 		}
 		
 	}
@@ -246,12 +245,85 @@ class Admincabang extends MX_Controller {
 		$this->parser->parse('v-laporanPDF-to.php',$data);
 	}
 
-function drop_report(){
-	if ($this->input->post()) {
-		$data = $this->input->post();
-		$this->admincabang_model->delete_report($data);
+	function drop_report(){
+		if ($this->input->post()) {
+			$data = $this->input->post();
+			$this->admincabang_model->delete_report($data);
+		}
 	}
-}
+
+
+
+
+
+## SERVER SIDE ##
+//laporan to ajax
+	public function laporanto_ss($cabang="all",$tryout="all",$paket="all"){
+		// parameter dari datable
+		$draw=$_REQUEST['draw'];
+		$length=$_REQUEST['length'];
+		$start=$_REQUEST['start'];
+		$search=$_REQUEST['search']["value"];
+		// parameter dari datable
+
+		// data untuk filterasasi.
+		$datas = ['draw'=>$draw,
+		'length'=>$length,
+		'start'=>$start,
+		'search'=>$search,
+		'cabang'=>$cabang,
+		'tryout'=>$tryout,
+		'paket'=>$paket];
+
+		// parameter
+		$all_report = $this->admincabang_model->get_report_paket_ss($datas);
+
+		$data = array();
+		foreach ( $all_report as $item ) {
+			$sumBenar=$item ['jmlh_benar'];
+			$sumSalah=$item ['jmlh_salah'];
+			$sumKosong=$item ['jmlh_kosong'];
+			//hitung jumlah soal
+			$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+			
+			$nilai=0;
+			// cek jika pembagi 0
+			if ($jumlahSoal != 0) {
+				//hitung nilai
+				$nilai=$sumBenar/$jumlahSoal*100;
+			}
+			$row = array();
+			$row[] = $item ['id_report'];
+			$row[] = $item ['namaPengguna'];
+			$row[] = $item ['nm_paket'];
+			$row[] = $item ['namaCabang'];
+			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
+			$row[] = $jumlahSoal;
+			$row[] = $item ['jmlh_benar'];
+			$row[] = $item ['jmlh_salah'];
+			$row[] = $item ['jmlh_kosong'];
+			$row[] = number_format($nilai,2);			
+			$row[] = $item['tgl_pengerjaan'];
+
+			if ($item['jmlh_benar']==0 && $item['jmlh_salah']==0) {
+				$row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a>';
+			}else{
+				$row[] = "-";	
+
+			}	
+			
+			$data[] = $row;
+		}
+
+		$output = array(
+			"data"=>$data,
+			
+			);
+
+		echo json_encode( $output );
+	}
+
+
 
 }
 ?>
