@@ -74,9 +74,9 @@
 
 
 
-<section id="main" role="main">
+<section class="row">
 
-	<section class="container">
+	<section class="col-md-12">
 
 		<div class="panel panel-default">
 

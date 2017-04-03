@@ -371,7 +371,6 @@ dataTableReportPaket = $('.rlatihan').DataTable({
 
 // ## datatable line log
 url3 = base_url+"learningline/get_line_log";
-
 dataTableReportPaket = $('.rline_log').DataTable({
   "ajax": {
     "url": url3,
@@ -399,7 +398,7 @@ dataTableReportPaket = $('.rkonstultasi').DataTable({
 
 // ## datatable konsultasi
 
-// ## datatable konsultasi
+// ## datatable persentasi learning line
 url4 = base_url+"siswa/async_persentase_learning";
 
 dataTableReportPaket = $('.rpersentase').DataTable({
@@ -413,7 +412,7 @@ dataTableReportPaket = $('.rpersentase').DataTable({
 });
 
 })
-// ## datatable konsultasi
+// ## datatable persentasi learning line
 
 //  lihat laporan to
 function lihat_laporan_latihan(data){
@@ -464,7 +463,6 @@ function lihat_konsultasi(id){
 <script type="text/javascript">
 
   $.getJSON(base_url+"siswa/persentase_json", function(data) {
-
     load_grafik(data);
   });
 

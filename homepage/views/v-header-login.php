@@ -96,7 +96,7 @@
 								</li>
 
 								<li>
-									<a href="<?=base_url('welcome') ?>">Video</a>
+									<a href="<?=base_url('video') ?>">Video</a>
 								</li>
 
 								<li>
@@ -138,7 +138,7 @@
 									<a href="#">Hallo <?= $this->session->userdata['NAMASISWA']?> </a>
 									<ul>
 										<li><a href="<?=base_url('siswa') ?>">Dashboard</a></li>
-										<li><a href="<?=base_url('siswa/profilesetting') ?>" class="active">Pengaturan Profil</a></li>
+										<li><a href="<?=base_url('siswa/profilesetting') ?>">Pengaturan Profil</a></li>
 										<li><a href="<?=base_url('logout') ?>">Logout</a></li>
 
 									</ul>

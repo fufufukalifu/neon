@@ -281,8 +281,6 @@ class Toback extends MX_Controller{
 		if ($hakAkses=='admin') {
         // jika admin
 			$this->parser->parse('admin/v-index-admin', $data);
-
-
 		} elseif($hakAkses=='guru'){
                     // jika guru
 			$this->load->view('templating/index-b-guru', $data);  

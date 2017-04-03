@@ -164,10 +164,8 @@
     <!-- END MODAL EDIT TRYOUT -->
 
     <!-- START Template Container -->
-    <div class="container-fluid">
     	<div class="row">
-    		<div class="container">
-            <div class="col-md-11">
+            <div class="col-md-12">
     			<div class="panel panel-teal">
                     <!--Start untuk menampilkan nama tabel -->
                     <div class="panel-heading">
@@ -197,9 +195,7 @@
                     </div>
                 </div>
                 </div>
-    		</div>
     	</div>
-    </div>
     <script type="text/javascript">
          var tblist_TO;
         $(document).ready(function() {

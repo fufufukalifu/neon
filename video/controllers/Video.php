@@ -4,6 +4,31 @@ class Video extends MX_Controller {
 
     private $pesan_error = "Oops..maaf sepertinya halaman masih kosong<br><br><br><br>";
 
+
+    public function index(){
+        $data = array(
+            'judul_halaman' => 'Neon - Video',
+            'judul_header' =>'Video',
+            'judul_header2' =>'Video Belajar'
+        );
+        
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header-login.php',
+            APPPATH.'modules/welcome/views/v-welcome.php',
+            APPPATH.'modules/welcome/views/v-tampil-tes.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
+        );
+
+        $data['tingkat'] = $this->load->MTingkat->gettingkat();
+
+        $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
+        $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
+        $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
+        $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
+        $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
+
+        $this->parser->parse( 'templating/index', $data );
+    }
     //put your code here
     public function __construct() {
         parent::__construct();
@@ -12,6 +37,8 @@ class Video extends MX_Controller {
         $this->load->model('komen/mkomen');
         $this->load->library('parser');
         $this->load->library('sessionchecker');
+                $this->load->model( 'matapelajaran/mmatapelajaran' );
+        $this->load->model( 'tingkat/MTingkat' );
 
     // 
     }

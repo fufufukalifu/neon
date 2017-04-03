@@ -49,274 +49,73 @@
 <!-- START Body -->
 <body>
 
- <!-- START Modal ADD BANK SOAL -->
- <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Form Modul</h4>
-   </div>
+
+  <!-- PERMODALAN -->
+  <!-- Start Modal salah upload gambar -->
+  <div class="modal fade" id="filter_tryout_pencarian_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h2 class="modal-title text-center text-info">Silahkan PIlih Cabang, tryout dan paket</h2>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center">Filter</h3>
+
+          <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/admincabang/laporanpaket" method="post" >
+
+            <div  class="form-group">
+              <label class="col-sm-3 control-label">Cabang</label>
+              <div class="col-sm-8">
+
+               <select class="form-control" name="select_cabang">
+                <option value="all">Semua Cabang</option>
+                <?php foreach ($cabang as $item): ?>
+                  <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
+                <?php endforeach ?>
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Tryout</label>
+            <div class="col-sm-8">
+
+              <select class="form-control" name="to">
+                <option value="all">Semua Tryout</option>
+                <?php foreach ($to as $item): ?>
+                  <option value="<?=$item['id_tryout']?>"><?=$item['nm_tryout'] ?></option>
+                <?php endforeach ?>
+              </select>
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label class="col-sm-3 control-label">Paket</label>
+            <div class="col-sm-8">
+
+             <select class="form-control col-sm-6" name="paket">
+              <option value="all">Semua paket</option>
+
+            </select>
+          </div>
+        </div>
 
 
-   <!-- Start Body modal -->
-   <div class="modal-body">
-    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
-    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/modulonline/filtermodul" method="post" >
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Tingkat</label>
-       <div class="col-sm-8">
-         <!-- stkt = soal tingkat -->
-         <select class="form-control gettkt" name="tingkat" id="stkt">
-           <option>-Pilih Tingkat-</option>
-         </select>
-       </div>
-     </div>
 
-     <div  class="form-group">
-       <label class="col-sm-3 control-label">Mata Pelajaran</label>
-       <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="spel">
-
-        </select>
       </div>
-    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-default">cari</button>
+      </div>
+    </form>
 
-    <!-- <div  class="form-group">
-     <label class="col-sm-3 control-label">Bab</label>
-     <div class="col-sm-8">
-      <select class="form-control getbb" name="bab" id="sbab">
-
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-   <label class="col-sm-3 control-label">Subab</label>
-   <div class="col-sm-8">
-    <select class="form-control subb" name="subbab" id="ssub">
-
-    </select>
-  </div>
-</div> -->
-
-</div>
-<!-- END BODY modla-->
-<div class="modal-footer">
-  <button type="submit" id="myFormSubmit" class="btn btn-primary">Proses</button>                
-</div>
-</form> 
-</div><!-- /.modal-content -->
-
+  </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- END  Modal ADD BANK SOAL-->
-
-<!-- START Modal ADD BANK SOAL -->
-<div class="modal fade" id="modalsoal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Form Soal</h4>
-   </div>
+<!-- PERMODALAN -->
 
 
-   <!-- Start Body modal -->
-   <div class="modal-body">
-    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
-    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/filtersoal" method="post" >
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Tingkat</label>
-       <div class="col-sm-8">
-         <!-- stkt = soal tingkat -->
-         <select class="form-control gettkt" name="tingkat" id="stkt">
-           <option>-Pilih Tingkat-</option>
-         </select>
-       </div>
-     </div>
-
-     <div  class="form-group">
-       <label class="col-sm-3 control-label">Mata Pelajaran</label>
-       <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="spel">
-
-        </select>
-      </div>
-    </div>
-
-    <div  class="form-group">
-     <label class="col-sm-3 control-label">Bab</label>
-     <div class="col-sm-8">
-      <select class="form-control getbb" name="bab" id="sbab">
-
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-   <label class="col-sm-3 control-label">Subab</label>
-   <div class="col-sm-8">
-    <select class="form-control subb" name="subbab" id="ssub">
-
-    </select>
-  </div>
-</div>
-
-</div>
-<!-- END BODY modla-->
-<div class="modal-footer">
-  <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
-</div>
-</form> 
-</div><!-- /.modal-content -->
-
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- END  Modal ADD BANK SOAL-->
-
-<!-- START Modal Filter Video -->
-<div class="modal fade" id="modalvideo" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Filter Video</h4>
-   </div>
-
-
-   <!-- Start Body modal -->
-   <div class="modal-body">
-     <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/videoback/filter_video" method="post" >
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Tingkat</label>
-       <div class="col-sm-8">
-         <!-- vtkt = video tingkat -->
-         <select class="form-control gettkt" name="tingkat" id="vtkt">
-           <option>-Pilih Tingkat-</option>
-         </select>
-       </div>
-     </div>
-
-     <div  class="form-group">
-       <label class="col-sm-3 control-label">Mata Pelajaran</label>
-       <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="vpel">
-
-        </select>
-      </div>
-    </div>
-
-    <div  class="form-group">
-     <label class="col-sm-3 control-label">Bab</label>
-     <div class="col-sm-8">
-      <select class="form-control getbb" name="bab" id="vbab">
-
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-   <label class="col-sm-3 control-label">Subab</label>
-   <div class="col-sm-8">
-    <select class="form-control subb" name="subbab" id="vsub">
-
-    </select>
-  </div>
-</div>
-
-</div>
-<!-- END BODY modla-->
-<div class="modal-footer">
-  <button type="submit" id="myFormSubmit" class="btn btn-primary"  >Proses</button>                
-</div>
-</form> 
-</div><!-- /.modal-content -->
-
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- END  Modal Filter Video -->
-
-
-
-<!-- START Modal ADD TO -->
-<div class="modal fade" id="modalto" tabindex="-1" role="dialog">
-  <!--START modal dialog  -->
-  <div class="modal-dialog" role="document">
-   <!-- STRAT MOdal Content -->
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Buat TO</h4>
-   </div>
-
-   <!-- START Modal Body -->
-   <div class="modal-body">
-
-     <!-- START PESAN ERROR EMPTY INPUT -->
-     <div class="alert alert-dismissable alert-danger" id="e_crtTo" hidden="true" >
-      <button type="button" class="close" onclick="hide_e_crtTo()" >×</button>
-      <strong>O.M.G.!</strong> Tolong di ISI semua.
-    </div>
-    <!-- END PESAN ERROR EMPTY INPUT -->
-    <!-- START PESAN ERROR EMPTY INPUT -->
-    <div class="alert alert-dismissable alert-danger" id="e_tglTo" hidden="true" >
-      <button type="button" class="close" onclick="hide_e_tglTo()" >×</button>
-      <strong>Silahkan cek kembali!</strong> Tanggal mulai dan tanggal akhir tidak sesuai.
-    </div>
-    <!-- END PESAN ERROR EMPTY INPUT -->
-    <form class="panel panel-default form-horizontal form-bordered" action="javascript:void(0);" method="post" id="form_to">
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Nama Tryout</label>
-       <div class="col-sm-8">
-        <input type="text" class="form-control" name="nmpaket" id="to_nm">
-      </div>
-    </div>
-    <div  class="form-group">
-     <label class="col-sm-3 control-label">Tanggal Mulai</label>
-     <div class="col-sm-4">
-      <input type="date" class="form-control" name="tglmulai" id="to_tglmulai">
-    </div >
-    <div class="col-sm-4">
-      <input type="time" class="form-control" name="wktmulai" id="to_wktmulai" >
-    </div>
-  </div>
-  <div  class="form-group">
-   <label class="col-sm-3 control-label">Tanggal Berakhir</label>
-   <div class="col-sm-4">
-    <input type="date" class="form-control" name="tglakhir" id="to_tglakhir">
-  </div>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" name="wktakhir" id="to_wktakhir" >
-  </div>
-</div>
-
-<div class="form-group">
- <label class="col-sm-3 control-label">Publish</label>
- <div class="col-sm-8">
-  <div class="checkbox custom-checkbox">  
-   <input type="checkbox" name="publish" id="to_publish" value="1">  
-   <label for="to_publish" >&nbsp;&nbsp;</label>   
- </div>
-</div>
-</div> 
-
-</div>
-<!-- END Modal Body -->
-<!-- START Modal Footer -->
-<div class="modal-footer">
-  <button type="submit" id="myFormSubmit" class="btn btn-primary" onclick="crtTo()"  >Proses</button>
-</div>
-</form>
-<!-- START Modal Footer -->
-
-</div>
-<!-- END MOdal Content -->
-
-</div>
-<!--END modal dialog  -->
-</div>
-<!-- END Modal ADD TO -->
 
 <!-- START Template Header -->
 <header id="header" class="navbar navbar-fixed-top">
@@ -354,85 +153,6 @@
 </a>
 </li>
 <!--/ Offcanvas left -->
-
-<!-- Notification dropdown -->
-<li class="dropdown custom" id="header-dd-notification">
- <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-  <span class="meta">
-   <span class="icon"><i class="ico-bell"></i></span>
-   <span class="hasnotification hasnotification-danger"></span>
- </span>
-</a>
-
-
-<!-- Dropdown menu -->
-<div class="dropdown-menu" role="menu">
-  <div class="dropdown-header">
-   <span class="title">Notification <span class="count"></span></span>
-   <span class="option text-right"><a href="javascript:void(0);">Clear all</a></span>
- </div>
- <div class="dropdown-body slimscroll">
-   <!-- indicator -->
-   <div class="indicator inline"><span class="spinner"></span></div>
-   <!--/ indicator -->
-
-   <!-- Message list -->
-   <div class="media-list">
-    <a href="javascript:void(0);" class="media read border-dotted">
-     <span class="media-object pull-left">
-      <i class="ico-basket2 bgcolor-info"></i>
-    </span>
-    <span class="media-body">
-      <span class="media-text">Duis aute irure dolor in <span class="text-primary semibold">reprehenderit</span> in voluptate.</span>
-      <!-- meta icon -->
-      <span class="media-meta pull-right">2d</span>
-      <!--/ meta icon -->
-    </span>
-  </a>
-
-  <a href="javascript:void(0);" class="media read border-dotted">
-   <span class="media-object pull-left">
-    <i class="ico-call-incoming"></i>
-  </span>
-  <span class="media-body">
-    <span class="media-text">Aliquip ex ea commodo consequat.</span>
-    <!-- meta icon -->
-    <span class="media-meta pull-right">1w</span>
-    <!--/ meta icon -->
-  </span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-alarm2"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Excepteur sint <span class="text-primary semibold">occaecat</span> cupidatat non.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">12w</span>
-  <!--/ meta icon -->
-</span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-checkmark3 bgcolor-success"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">14w</span>
-  <!--/ meta icon -->
-</span>
-</a>
-</div>
-<!--/ Message list -->
-</div>
-</div>
-<!--/ Dropdown menu -->
-</li>
-<!--/ Notification dropdown -->
-
 
 </ul>
 <!--/ END Left nav -->
@@ -503,19 +223,31 @@
 <ul id="tryout" class="submenu collapse ">
   <li class="submenu-header ellipsis">Try Out</li>
 
-  <li >
+  <li>
    <a href="<?= base_url('index.php/admincabang/laporanpaket');?>">
-    <span class="text">Laporan Paket</span>
+    <span class="text">Laporan Paket (Semua)</span>
   </a>
 </li>
 
-  <li >
-   <a href="<?= base_url('index.php/admincabang/infograph');?>">
-    <span class="text">Infografics Tryout</span>
-  </a>
+<li >
+ <a onclick="show_filter_tryout()" style="cursor: hand">
+  <span class="text">Laporan Paket (Filter)</span>
+</a>
 </li>
 
- 
+<li >
+ <a href="<?= base_url('index.php/admincabang/infograph');?>">
+  <span class="text">Infografics Tryout</span>
+</a>
+</li>
+
+<li >
+ <a href="<?= base_url('index.php/admincabang/pengerjaan');?>">
+  <span class="text">Status Pengerjaan</span>
+</a>
+</li>
+
+
 
 
 </ul>
@@ -557,7 +289,35 @@
 </section>
 <!--/ END Template Main -->
 
+<script>
+  function show_filter_tryout(){
+    $('#filter_tryout_pencarian_modal').modal('show');
+  }
 
+  $('select[name=select_cabang]').change(function(){
+    // console.log(this.val);
+  });
+
+  // TO KETIKA DI CHANGE
+  $('select[name=to]').change(function(){
+    load_paket_modal($(this).val())
+  });
+//ketika paket di change
+
+function load_paket_modal(id_to){
+ $.ajax({
+  type: "POST",
+  url: "<?php echo base_url() ?>admincabang/get_paket/"+id_to,
+  success: function(data){
+   $('select[name=paket]').html('<option value="all">-- Pilih Paket  --</option>');
+   $.each(data, function(i, data){
+    $('select[name=paket]').append("<option value="+data.id_paket+">"+data.nm_paket+"</option>");
+  });
+ }
+});
+}
+
+</script>
 
 <!-- START JAVASCRIPT SECTION (Load javascripts at bottom to reduce load time) -->
 <!-- Library script : mandatory -->

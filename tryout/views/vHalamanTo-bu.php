@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(https://neonjogja.com:2083/cpsess0442349035/viewer/home%2fneonjogja%2fpublic_html%2fassets%2fimage%2floading/spinner.gif) center no-repeat #fff;
+    background: url(http://www.thebuddhistchef.com/wp-content/themes/culinier-theme/images/loader.gif) center no-repeat #fff;
   }
 </style>
 <!-- LOADING -->

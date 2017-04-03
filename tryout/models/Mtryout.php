@@ -298,36 +298,36 @@ class Mtryout extends MX_Controller {
 
         $id = $this->session->userdata('id');
         if ($id_tryout=="") {
-           $query = "
-           SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
-           p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
-           hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
-           (SELECT * FROM `tb_report-paket` rp
-           WHERE `id_pengguna` = $id) hasil
-           JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
-           JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  order by mmto.id_tryout
-           ";
-       } else {
-           $query = "
-           SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
-           p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
-           hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
-           (SELECT * FROM `tb_report-paket` rp
-           WHERE `id_pengguna` = $id) hasil
-           JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
-           JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
-           WHERE mmto.`id_tryout` = $id_tryout
-           ORDER BY mmto.id_tryout
-           ";
-       }
+         $query = "
+         SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+         p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
+         hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
+         (SELECT * FROM `tb_report-paket` rp
+         WHERE `id_pengguna` = $id) hasil
+         JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+         JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  order by mmto.id_tryout
+         ";
+     } else {
+         $query = "
+         SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+         p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
+         hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
+         (SELECT * FROM `tb_report-paket` rp
+         WHERE `id_pengguna` = $id) hasil
+         JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+         JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
+         WHERE mmto.`id_tryout` = $id_tryout
+         ORDER BY mmto.id_tryout
+         ";
+     }
 
-       
-       $result = $this->db->query($query);
-       return $result->result_array();     
-   }
+
+     $result = $this->db->query($query);
+     return $result->result_array();     
+ }
 
         // ambil report latihan yang sudah di kerjakan oleh siswa tertentu.
-   public function get_report_latihan(){
+ public function get_report_latihan(){
     $username = $this->db->escape_str($this->session->userdata('USERNAME'));
     $query = "SELECT * FROM 
     (SELECT * FROM `tb_latihan` l
@@ -353,6 +353,18 @@ public function get_tryout_by_pengguna(){
     ";
     $result = $this->db->query($query);
     return $result->result_array(); 
+}
+
+// insert ke log tryout
+public function insert_log_tryout($data){
+    $this->db->insert('tb_log_pengerjaan_to', $data);
+}
+
+// update log trytout
+public function update_log_tryout($data){
+   $this->db->set($data['update']);
+   $this->db->where($data['where']);
+   $this->db->update('tb_log_pengerjaan_to');
 }
 
 }

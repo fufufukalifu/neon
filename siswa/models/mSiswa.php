@@ -70,7 +70,6 @@ class Msiswa extends CI_Model {
     }
 
     public function get_datsiswa() {
-
         $penggunaID = $this->session->userdata['id'];
         $this->db->select('namaDepan,namaBelakang,alamat,noKontak,namaSekolah,alamatSekolah,biografi,photo');
         $this->db->from('tb_siswa');

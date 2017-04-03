@@ -140,13 +140,17 @@ class Tryout extends MX_Controller {
             "id_tryout" => $this->input->post('id_tryout'),
             "id_mm-tryoutpaket" => $this->input->post('id_mm_tryoutpaket'),
             );
+        // set user data
         $this->session->set_userdata('id_paket', $data['id_paket']);
         $this->session->set_userdata('id_tryout', $data['id_tryout']);
         $this->session->set_userdata('id_mm-tryoutpaket', $data['id_mm-tryoutpaket']);
-        $insert = array("siswaID" => $this->msiswa->get_siswaid(),
-            "id_mm-tryout-paket" => $this->session->userdata('id_mm-tryoutpaket'),
-            "status_pengerjaan" => '2'
+
+        // insert ke log tryout
+        $insert = array("siswa_id" => $this->msiswa->get_siswaid(),
+            "mm_tryout_paket_id" => $this->session->userdata('id_mm-tryoutpaket'),
             );
+
+        $this->Mtryout->insert_log_tryout($insert);
     }
 
     function buatpembahasan() {
@@ -159,7 +163,6 @@ class Tryout extends MX_Controller {
         $this->session->set_userdata('id_mm-tryoutpaketpembahasan', $data['id_mm-tryoutpaket']);
     }
 
-    //# fungsi indeks
 
     function test2() {
         if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
@@ -248,7 +251,7 @@ class Tryout extends MX_Controller {
     public function cekJawaban() {
         if ($this->input->post()) {
             $data = $this->input->post('pil');
-
+            
             $id = $this->session->userdata['id_mm-tryoutpaket'];
             $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
 
@@ -275,10 +278,11 @@ class Tryout extends MX_Controller {
                 }
             }
 
+            // data buat di insert ke laporan tryout paket
             $hasil['id_pengguna'] = $this->session->userdata['id'];
             $hasil['siswaID'] = $this->msiswa->get_siswaid();
             $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
-            ;
+            
             $hasil['jmlh_kosong'] = $kosong;
             $hasil['jmlh_benar'] = $benar;
             $hasil['jmlh_salah'] = $salah;
@@ -286,8 +290,21 @@ class Tryout extends MX_Controller {
             $hasil['poin'] = $benar;
             $hasil['status_pengerjaan'] = 1;
 
+            // insert ke repory paket
             $result = $this->load->Mtryout->inputreport($hasil);
+            
+            // update tb log tryout
+            $waktu = new DateTime("now");
+            $data['update'] = ['waktu_selesai'=>date($waktu->format("Y-m-d H:i:s")),
+            'status_pengerjaan'=>1];
+            $data['where'] = ['siswa_id'=>$hasil['siswaID'],
+            'mm_tryout_paket_id'=>$hasil['id_mm-tryout-paket']];
+            $this->Mtryout->update_log_tryout($data);
+            // update tb log tryout
+
+            // unset session userdata
             $this->session->unset_userdata('id_mm-tryoutpaket');
+            // direct ke daftar
             redirect(base_url('index.php/tryout/daftarpaket'));
         }else{
             redirect(base_url('index.php/tryout/daftarpaket'));
@@ -314,11 +331,7 @@ class Tryout extends MX_Controller {
     }
 
     public function test(){
-       try {
-           echo "strin";
-       } catch (Exception $e) {
-           echo "error";
-       }
+
 
     }
 }
