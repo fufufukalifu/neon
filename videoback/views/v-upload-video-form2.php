@@ -3,7 +3,7 @@
 	<div class="row">
     <div class="control-group" id="fields">
         <div class="controls"> 
-          <form class=" form-horizontal form-bordered upload-video" role="form" action="" autocomplete="off">
+          <form class=" form-horizontal form-bordered upload-video" role="form" action="" autocomplete="off" >
             <!-- entry-->
               <div class="entry input-group col-xs-3">
                 <!-- Start panel  -->
@@ -79,6 +79,11 @@
                         </div>
                     </div>
                     <!-- /untuk preview video -->
+                            <div class="form-group ">
+            <div class="col-md-11 bottom">    
+                <progress id="prog" max="100" value="0" style="display:none;"></progress>
+            </div>
+        </div> 
                     <!-- upload ke server -->
                     <div id="upload" class="form-group server">
                         <label class="col-sm-2 control-label">File Video</label>
@@ -200,9 +205,14 @@
 	</div>
 </section>
 <!-- /konten -->
+<!-- Script ajax upload -->
+ <script type="text/javascript" src="<?= base_url('assets/js/ajaxfileupload.js') ?>"></script>
+<!-- /Script ajax upload -->
 <!-- script clone form -->
 <script type="text/javascript">
   var x = 1;
+  // set value radio option jenis video
+
       $(function()
   {
       $(document).on('click', '.btn-add', function(e)
@@ -276,6 +286,13 @@
           controlForm.find('.entry:not(:last) #filetype')
           .attr('id','filetype'+x);
           // #VIDEO
+          // ubah name input option_up => option_up+x
+          controlForm.find('.entry:not(:last) .op_server [name=option_up]')
+          .attr('name','option_up'+x)
+          .val('server');
+          controlForm.find('.entry:not(:last) .op_link [name=option_up]')
+          .attr('name','option_up'+x)
+          .val('link');
           // op_server
           controlForm.find('.entry:not(:last) .op_server')
           .removeClass('op_server')
@@ -314,6 +331,11 @@
           .attr('onchange','fileThumbnail(this,'+x+')')
           ;
           // /thumbnail
+
+          // ubah name input video => video+x
+          controlForm.find('.entry:not(:last) [name=video]')
+          .attr('name','video'+x);
+
           // ubah name input jenis_video => jenis_video+x
           controlForm.find('.entry:not(:last) [name=jenis_video]')
           .attr('name','jenis_video'+x);
@@ -326,6 +348,8 @@
           // ubah name input publish => publish+x
           controlForm.find('.entry:not(:last) [name=publish]')
           .attr('name','publish'+x);
+          controlForm.find('#ProgressBarDownload')
+          .attr('id','ProgressBarDownload'+x);
           // btnf
            controlForm.find('.entry:not(:last) .btnf')
            .removeClass('btnf')
@@ -348,6 +372,7 @@
 <!-- script event dropdown dp -->
 <script type="text/javascript">
    $(document).ready(function () {
+
     function loadTingkat(z='') {
       var tingkat_id = {"tingkat_id": $('#tingkat').val()};
       var idTingkat;
@@ -532,7 +557,9 @@
 
 <script type="text/javascript">
     function upvideo(y='') {
+      var url = base_url+"index.php/videoback/cek_option_upload";
       var subBab =$('[name=subBab'+y+']').val();
+      var option_up = $('[name=option_up'+y+']:checked').val();
       var video ='video'+y;
       var link_video =$('[name=link_video'+y+']').val();
       var tumbnail = 'tumbnail'+y;
@@ -540,19 +567,79 @@
       var judulvideo =$('[name=judulvideo'+y+']').val();
       var deskripsi =$('[name=deskripsi'+y+']').val();
       var publish =$('[name=publish'+y+']').val();
+      var filevideo = "filevideo"+y;
+      var filethumbnail = "filethumbnail"+y;
       // testing data
-      console.log('FORM ke-'+y)
-      console.log('Subab: '+subBab);
-      console.log(video);
-      console.log('link: '+link_video);
-      console.log(tumbnail);
-      console.log('jenis video: '+jenis_video);
-      console.log('judul video: '+judulvideo);
-      console.log('deskripsi: '+deskripsi);
-      console.log('publish: '+publish);
+
+      console.log('FORM ke-'+y);
+            console.log(option_up);
+      // console.log('Subab: '+subBab);
+      // console.log(video);
+      // console.log('link: '+link_video);
+      // console.log(tumbnail);
+      // console.log('jenis video: '+jenis_video);
+      // console.log('judul video: '+judulvideo);
+      // console.log('deskripsi: '+deskripsi);
+      // console.log('publish: '+publish);
       console.log('=======================');
+                   // ajax adding data to database
+      var datas = {
+            subBab:subBab,
+            option_up:option_up,
+            video:video,
+            link_video:link_video,
+            tumbnail:tumbnail,
+            jenis_video:jenis_video,
+            judulvideo:judulvideo,
+            deskripsi:deskripsi,
+            publish:publish
+          };
+
+    // $.ajax({
+      $.ajaxFileUpload({
+        url : url,
+        type: "POST",
+        data: datas,
+        fileElementId :filevideo,
+        dataType: "TEXT",
+        success: function(data)
+        {
+           swal("success!", "Data Form ke-"+y+" Berhasil Terupload", "success");
+         },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          sweetAlert("Oops...", "Data gagal tersimpan!", "error");
+        }
+      });
 
     }
 
-
+</script>
+<script type="text/javascript">
+  var main = function () 
+  { 
+    $(".ladda-button").on('clik',function(e)
+    {
+      console.log('fr');
+      e.preventDefault();
+      $(this).ajaxSubmit(
+      {
+        beforeSend:function()
+        {
+          $("#prog").show();
+          $("#prog").attr('value','0');
+        },
+        uploadProgress:function(even,position,total,percentComplate)
+        {
+          $("#prog").attr('value',percentComplate);
+          $("percent").html(percentComplate+'%');
+        },
+        success:function(data)
+        {
+          // $("#here").html(data);
+        }
+      });
+    });
+  };
+  $(document).ready(main);
 </script>

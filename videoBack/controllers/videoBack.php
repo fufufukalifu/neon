@@ -3,7 +3,7 @@
 //============================================================+
 // File name   : videoBack.php
 // Begin       : -
-// Last Update : 2017-03-16
+// Last Update : 2017-04-03
 //
 // Description : controller model video back
 //               
@@ -168,26 +168,21 @@ public function formUpdateVideo($UUID) {
   APPPATH . 'modules/videoback/views/v-update-video-form.php',
   );
 
-
  $hakAkses=$this->session->userdata['HAKAKSES'];
-        // cek hakakses 
+  // cek hakakses 
  if ($hakAkses=='admin') {
-            // jika admin
+  // jika admin
   $this->parser->parse('admin/v-index-admin', $data);
 } elseif($hakAkses=='guru'){
-            // jika guru
+  // jika guru
   $this->parser->parse('templating/index-b-guru', $data);
 }elseif($hakAkses=='siswa'){
-            // jika siswa redirect ke welcome
+  // jika siswa redirect ke welcome
   redirect(site_url('welcome'));
 }else{
-
   redirect(site_url('login'));
 }
-
-            // jika guru untul sentara yg guru bisa di tembak URL untuk testing
-
-
+// jika guru untul sentara yg guru bisa di tembak URL untuk testing
 }
 
 public function managervideo() {
@@ -196,8 +191,6 @@ public function managervideo() {
   $data['files'] = array(
     APPPATH.'modules/videoback/views/v-container-video.php',
     );
-
-
   $hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
   if ($hakAkses=='admin') {
@@ -216,29 +209,37 @@ public function managervideo() {
 
 }
 
+public function upvideos($data) {
+$video=$data['video'];
+
+}
+
     // fungsi untuk upload video
 public function upvideo($data) {
 
   $config['upload_path'] = './assets/video';
   $config['allowed_types'] = 'mp4';
   $config['max_size'] = 90000;
-
-          $config['encrypt_name'] = TRUE;
-        $new_name = time().$_FILES["video"]['name'];
-        $config['file_name'] = $new_name;
+$video=$data['video'];
+  $config['encrypt_name'] = TRUE;
+  $new_name = time().$_FILES[$video]['name'];
+  $config['file_name'] = $new_name;
 
   $this->load->library('upload', $config);
   $this->upload->initialize($config);
-             // pengecekan upload
-  if (!$this->upload->do_upload('video')) {
-                // jika upload video gagal
+  
+  // pengecekan upload
+  if (!$this->upload->do_upload($video)) {
+    // jika upload video gagal
     $error = array('error' => $this->upload->display_errors());
 
   } else {
     // jika uplod video berhasil jalankan fungsi penyimpanan data video ke db
     $file_data = $this->upload->data();
     $video = $file_data['file_name'];
-    $thumbnail = $this->upThumbnail();
+    // $thumbnail=$data['thumbnail'];
+    // $filethumbnail = $this->upThumbnail($thumbnail);
+     $filethumbnail = "bc975b02f820d402d0a30de1eb0e8c75.jpg";
     $penggunaID = $this->session->userdata['id'];
     // $guruID = $data['tb_guru']['id'];
     $UUID=uniqid();
@@ -246,7 +247,7 @@ public function upvideo($data) {
     $data_video = array(
       'judulVideo' => $data['judulVideo'] ,
       'namaFile' => $video,
-      'thumbnail' => $thumbnail,
+      'thumbnail' => $filethumbnail,
       'deskripsi' => $data['deskripsi'],
       'published' => $data['published'],
       'penggunaID' => $penggunaID,
@@ -256,11 +257,11 @@ public function upvideo($data) {
       );
 
     $this->Mvideoback->insertVideo($data_video);
-    redirect(site_url('videoback/daftarvideo'));
+    // redirect(site_url('videoback/daftarvideo'));
   }
 }
 
-public function upThumbnail()
+public function upThumbnail($thumbnail)
 {
     $configTmbl['upload_path'] = './assets/image/thumbnail/';
         $configTmbl['allowed_types'] = 'jpeg|gif|jpg|png|bmp';
@@ -272,7 +273,7 @@ public function upThumbnail()
         $new_name = time().$_FILES["thumbnail"]['name'];
         $configTmbl['file_name'] = $new_name;
         $this->load->library('upload', $configTmbl);
-        $gambar = "thumbnail";
+        $gambar = $thumbnail;
         $this->upload->initialize($configTmbl);
         if ($this->upload->do_upload($gambar)) {
            $file_data = $this->upload->data();
@@ -299,10 +300,16 @@ public function cek_option_upload()
 
         //pesan error atau pesan kesalahan pengisian form upload video
   $this->form_validation->set_message('required', '*Data tidak boleh kosong!');
-        //value post
+
+  //val file 
+  $data['video'] = htmlspecialchars($this->input->post('video'));
+
+   $data['tumbnail'] = htmlspecialchars($this->input->post('tumbnail'));
+  //
+  //value post
+  $data['subBabID'] = htmlspecialchars($this->input->post('subBab'));
   $data['judulVideo'] = htmlspecialchars($this->input->post('judulvideo'));
   $data['deskripsi'] = htmlspecialchars($this->input->post('deskripsi'));
-  $data['subBabID'] = htmlspecialchars($this->input->post('subBab'));
   $data['published'] = htmlspecialchars($this->input->post('publish'));
   $data['jenis_video'] = htmlspecialchars($this->input->post('jenis_video'));
   $link=$this->input->post('link_video');
@@ -326,7 +333,7 @@ public function cek_option_upload()
       'UUID' => $UUID,
       'jenis_video' => $data['jenis_video']
       );
-
+    var_dump($data_video);
     $this->Mvideoback->insertVideo($data_video);
   }else{
     $this->upvideo($data);
