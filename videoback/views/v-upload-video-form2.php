@@ -1,9 +1,9 @@
-<!-- konten  -->
+<!-- konten  --> 
 <section id="main" role="main" class="mt10 ml10 mr10">
 	<div class="row">
     <div class="control-group" id="fields">
         <div class="controls"> 
-          <form class=" form-horizontal form-bordered upload-video" role="form" action="" autocomplete="off" >
+          <form class=" form-horizontal form-bordered upload-video" role="form" action="" autocomplete="off" enctype="multipart/form-data">
             <!-- entry-->
               <div class="entry input-group col-xs-3">
                 <!-- Start panel  -->
@@ -14,7 +14,19 @@
                   </div>
                   <!-- Start heading panel -->
                   <!-- Start panel-body  -->
-                  <div class="panel-body">
+                  <!-- Indicator -->
+                  <div class="panel-body indicator indiF">
+                  <div class="progress progress-striped active mt10">
+                      <div class="progress-bar progress-bar-success prog" style="width: 20%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                  </div>
+                  <!-- progresbar -->
+                  <!--  -->
+                  </div>
+                  <!-- /Indicator -->
+                  <div class="panel-body F">
+
                     <!-- pilih option tingkatan video -->
                       <div  class="form-group">
                         <label class="col-sm-1 control-label">Tingkat</label>
@@ -38,7 +50,7 @@
                         </div>
                         <label class="col-sm-2 control-label">Subab</label>
                         <div class="col-sm-4">
-                          <select class="form-control" name="subBab" id="subbab">
+                          <select class="form-control" name="subBab" id="subbab" >
 
                           </select>
                           <span class="text-danger"><?php echo form_error('subBab'); ?></span>
@@ -79,11 +91,7 @@
                         </div>
                     </div>
                     <!-- /untuk preview video -->
-                            <div class="form-group ">
-            <div class="col-md-11 bottom">    
-                <progress id="prog" max="100" value="0" style="display:none;"></progress>
-            </div>
-        </div> 
+                  
                     <!-- upload ke server -->
                     <div id="upload" class="form-group server">
                         <label class="col-sm-2 control-label">File Video</label>
@@ -174,7 +182,7 @@
                   </div>
                   <!-- END panel-body --> 
                   <!-- Start panel footer -->
-                  <div class="panel-footer">
+                  <div class="panel-footer F">
                     <div class="col-md-4 ">
                         <button type="reset" class="btn btn-danger">Reset</button>
                         <a class="btn btn-primary ladda-button btnf" data-style="zoom-in" onclick="upvideo()">Submit</a>
@@ -183,7 +191,7 @@
                                   Add Form
                               </button>
                     </div>
-                    <div class="col-md-4"><br><br>
+<!--                     <div class="col-md-4"><br><br>
                       <div class="indicator show">
                         <div class="progress progress-striped active">
                             <div class="progress-bar progress-bar-success" style="width: 0%" id="ProgressBarDownload">
@@ -191,7 +199,7 @@
                             </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <!-- /END Panel footer -->
                 </div>
@@ -354,15 +362,23 @@
            controlForm.find('.entry:not(:last) .btnf')
            .removeClass('btnf')
           .attr('onclick','upvideo('+x+')');
-
-
-              x++;
+          //ubah class untuk progresbar
+          controlForm.find('.entry:not(:last) .F')
+          .removeClass('F')
+          .addClass('F'+x);
+          controlForm.find('.entry:not(:last) .indiF')
+          .removeClass('indiF')
+          .addClass('indiF'+x);
+          controlForm.find('.entry:not(:last) .prog')
+          .removeClass('prog')
+          .addClass('prog'+x);
+          // 
+          x++;
       }).on('click', '.btn-remove', function(e)
       {
-          $(this).parents('.entry:first').remove();
-
-          e.preventDefault();
-          return false;
+        $(this).parents('.entry:first').remove();
+        e.preventDefault();
+        return false;
       });
   });
 
@@ -500,8 +516,6 @@
     $(".server"+z).hide();
     $(".prv_video"+z).hide();
   }
-
-     
   // show preview video
   function fileVideo(oInput,z='') {
     var viewer = {
@@ -556,8 +570,8 @@
 </script>
 
 <script type="text/javascript">
+    //get data vidio dan cek data video
     function upvideo(y='') {
-      var url = base_url+"index.php/videoback/cek_option_upload";
       var subBab =$('[name=subBab'+y+']').val();
       var option_up = $('[name=option_up'+y+']:checked').val();
       var video ='video'+y;
@@ -567,22 +581,10 @@
       var judulvideo =$('[name=judulvideo'+y+']').val();
       var deskripsi =$('[name=deskripsi'+y+']').val();
       var publish =$('[name=publish'+y+']').val();
-      var filevideo = "filevideo"+y;
-      var filethumbnail = "filethumbnail"+y;
-      // testing data
 
-      console.log('FORM ke-'+y);
-            console.log(option_up);
-      // console.log('Subab: '+subBab);
-      // console.log(video);
-      // console.log('link: '+link_video);
-      // console.log(tumbnail);
-      // console.log('jenis video: '+jenis_video);
-      // console.log('judul video: '+judulvideo);
-      // console.log('deskripsi: '+deskripsi);
-      // console.log('publish: '+publish);
-      console.log('=======================');
-                   // ajax adding data to database
+      // testing data
+      // ajax adding data to database
+      if (subBab && judulvideo) {
       var datas = {
             subBab:subBab,
             option_up:option_up,
@@ -593,53 +595,52 @@
             judulvideo:judulvideo,
             deskripsi:deskripsi,
             publish:publish
-          };
+      };
+       postData(datas,y);
+      } else {
+        sweetAlert("Oops...", "Harap data subbab dan judul Video diisi !", "warning");
+      }
+    }
 
-    // $.ajax({
+    //post data form
+    function postData(datas,y) {
+      var url = base_url+"index.php/videoback/cek_option_upload";
+        var filevideo = "filevideo"+y;
+      var filethumbnail = "filethumbnail"+y;
+        var bar = $('.prog'+y);
+        $('.F'+y).attr("hidden","true");
+        $('.indiF'+y).addClass('show');
       $.ajaxFileUpload({
         url : url,
         type: "POST",
         data: datas,
         fileElementId :filevideo,
         dataType: "TEXT",
+        onChange: function()
+        {
+         console.log('testing ini budiss'); 
+        },
+        uploadProgress: function ( event, position, total,percentComplete)         {
+         console.log('testing ini budi');
+         var percentVal = percentComplete + '%';
+         bar.width(percentVal);
+          console.log(percentComplete);
+        },
+    // 
         success: function(data)
         {
-           swal("success!", "Data Form ke-"+y+" Berhasil Terupload", "success");
-         },
+          var percentVal = '100%';
+          bar.width(percentVal);
+          swal("success!", "Data Form ke-"+y+" Berhasil Terupload", "success");
+        },
         error: function (jqXHR, textStatus, errorThrown)
         {
           sweetAlert("Oops...", "Data gagal tersimpan!", "error");
         }
       });
-
     }
 
 </script>
 <script type="text/javascript">
-  var main = function () 
-  { 
-    $(".ladda-button").on('clik',function(e)
-    {
-      console.log('fr');
-      e.preventDefault();
-      $(this).ajaxSubmit(
-      {
-        beforeSend:function()
-        {
-          $("#prog").show();
-          $("#prog").attr('value','0');
-        },
-        uploadProgress:function(even,position,total,percentComplate)
-        {
-          $("#prog").attr('value',percentComplate);
-          $("percent").html(percentComplate+'%');
-        },
-        success:function(data)
-        {
-          // $("#here").html(data);
-        }
-      });
-    });
-  };
-  $(document).ready(main);
+
 </script>
