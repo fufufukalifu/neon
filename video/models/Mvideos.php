@@ -460,6 +460,19 @@ function get_video_by_admin() {
   return $query->result_array();
 }
 
+function get_video_limit(){
+  $this->db->select( '*, video.id as videoid' );
+  $this->db->from( 'tb_video video' );
+  $this->db->join('tb_subbab subbab','video.subBabID=subbab.id');
+  $this->db->order_by('video.id desc');
+  $this->db->limit(4);
+
+  $this->db->where('video.status', '1');
+  $query = $this->db->get();
+  return $query->result_array();
+}
+
+
 }
 
 

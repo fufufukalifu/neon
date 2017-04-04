@@ -108,11 +108,11 @@ class Admincabang_model extends CI_model {
 	// jumlah paket yang ada di to tertentu
 	function get_paket_by_id_to($data){
 		if ($data['cabang']==='all') {
-			$query = "SELECT COUNT(p.id_paket) as jumlah_paket FROM `tb_paket` p
+			$query = "SELECT COUNT(DISTINCT(p.id_paket)) as jumlah_paket FROM `tb_paket` p
 			JOIN `tb_mm-tryoutpaket` tp ON p.id_paket = tp.id_paket
 			WHERE tp.id_tryout = ".$data['id_tryout'];
 		} else {
-			$query = "SELECT COUNT(p.id_paket) AS jumlah_paket FROM `tb_paket` p
+			$query = "SELECT COUNT(DISTINCT(p.id_paket)) AS jumlah_paket FROM `tb_paket` p
 			JOIN `tb_mm-tryoutpaket` tp ON p.id_paket = tp.id_paket
 			JOIN `tb_hakakses-to` t ON t.`id_tryout` = tp.`id_tryout`
 			JOIN `tb_siswa` s ON s.`id` = t.`id_siswa`

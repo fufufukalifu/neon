@@ -110,7 +110,6 @@
 <!-- LOAD GRAFIK PERSENTASE TO -->
 <script type="text/javascript">
   function load_grafik_siswa_daftar(data){
-    console.log(data[2].y);
 
     partisipan = data[2].y
 
@@ -137,7 +136,6 @@
 <!-- LOAD GRAFIK PERSENTASE TO -->
 <script type="text/javascript">
   function load_grafik_paket(data){
-    console.log(data[0].y);
     paket = data[0].y;
     if (paket!=0) {
       var chart = new CanvasJS.Chart("paket_terdaftar", {
@@ -196,6 +194,7 @@
 
     $.getJSON(base_url+"admincabang/get_paket_registrasi/"+param.id+"/"+param.id_cabang, function(data) {
       datas = JSON.stringify(data);
+      console.log(base_url+"admincabang/get_paket_registrasi/"+param.id+"/"+param.id_cabang);
       load_grafik_paket(data);
     });
   }

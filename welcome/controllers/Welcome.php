@@ -5,31 +5,34 @@
 defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 
 
-
 class Welcome extends MX_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
+        $this->load->model( 'video/mvideos' );
+        $this->load->model( 'siswa/msiswa' );
+
 
         $this->load->library( 'parser' );
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
                // redirect('welcome');
             }else if($this->session->userdata('HAKAKSES')=='guru'){
-             redirect('guru/dashboard');
-         }else{
-         }
+               redirect('guru/dashboard');
+           }else{
+           }
 
-     }
-
-
-
- }
+       }
 
 
 
- public function index() {
+   }
+
+
+
+   public function index() {
+
     $data = array(
         'judul_halaman' => 'Neon - Welcome',
         'judul_header' =>'Video',
@@ -41,8 +44,9 @@ class Welcome extends MX_Controller {
         APPPATH.'modules/welcome/views/v-container-graph.php',
         APPPATH.'modules/testimoni/views/v-footer.php',
         );
-
-        $this->parser->parse( 'templating/index', $data );
+    $data['video'] = $this->mvideos->get_video_limit();
+    $data['topik'] = $this->msiswa->persentasi_limit();
+    $this->parser->parse( 'templating/index', $data );
 
 
 }
@@ -51,7 +55,7 @@ class Welcome extends MX_Controller {
 public function faq()
 {
 
-   $data = array(
+ $data = array(
 
     'judul_halaman' => 'Neon - FAQ',
 
@@ -63,7 +67,7 @@ public function faq()
 
     );
 
-   $data['files'] = array( 
+ $data['files'] = array( 
 
     APPPATH.'modules/homepage/views/v-header-login.php',
 
@@ -74,7 +78,7 @@ public function faq()
     APPPATH.'modules/testimoni/views/v-footer.php',
 
     );
-   $this->parser->parse( 'templating/index', $data );
+ $this->parser->parse( 'templating/index', $data );
 }
 
 
