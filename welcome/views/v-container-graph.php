@@ -10,17 +10,57 @@
   color:white;
 }
 </style>
+<!-- MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" id="latihan_persentase">
+  <div class="modal-dialog" role="document" style="width: 80%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Progress Learning Line</h3>
+
+      </div>
+      <div class="modal-body">
+
+        <table class="table rpersentase" width=100% style="font-size: 13px">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Bab</th>
+              <th>Jumlah Soal</th>
+              <th>Jumlah Salah</th>
+              <th>Jumlah Kosong</th>
+              <th>Jumlah Benar</th>
+              <th>Score</th>
+              <th>Persentase</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer bg-color-3">
+        <button type="button" class="cws-button bt-color-1 alt small selesai" data-dismiss="modal">Batal</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- MODAL -->
 <div class="page-title" style="background:#2b3036">
   <div class="grid-row">
     <h1>Halo, <?=$this->session->userdata['USERNAME']?> !  </h1>
+
+
   </div>
 </div>
 
 <!-- PERKEMBANGAN learning Line -->
-<section class="padding-section" style="padding: : 0;">
-  <div class="grid-row clear-fix" style="padding-bottom: 0">
-    <h3>Topik yang baru saja dipelajari..</h3>
-    Hi, patub ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
+<section class="padding-section" style="padding:0;">
+  <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
+    <h3>Topik yang baru saja dipelajari..</h3> 
+    Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
+    <a href="" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
       <?php foreach ($topik  as $item): ?>
         <?php $persentasi = (int)$item['stepDone'] / (int)$item['jumlah_step'] * 100; ?>
@@ -49,44 +89,42 @@
 
 
 <!-- PERKEMBANGAN learning Line -->
-<!--<section class="padding-section" style="padding-bottom: : 0">
-  <div class="grid-row clear-fix">
-    <h3>Progress Learning Line</h3>
-    Hi, patub ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
+<section class="padding-section" style="padding:0;">
+  <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
+    <h3>Latihan</h3> 
+    Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan anda<br><br>
+    <a onclick="show_modal_learning()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
+      <?php foreach ($latihan  as $item): ?>
+        <?php $persentasi = (int)$item['total_benar'] / (int)$item['total_soal'] * 100; ?>
+        <div class="grid-col grid-col-4" title="<?=$item['judulBab'] ?>">
+          <div class="portfolio-item">
+            <div class="picture">
+              <div class="course-item">
+                <div class="course-date bg-color-3 clear-fix skill-bar">
+                  <h3 style="margin:0;"><a href="<?=base_url("linetopik/learningline/".$item['judulBab']) ?>"><?=$item['judulBab'] ?></a></h3>
+                  <hr style="margin-bottom: 5px">
+                  <div class="day"><?=$item['total_benar'] ?> Benar dari <?=$item['total_soal'] ?> soal</div> <br> 
+                  <div class="day"><?=(int)$persentasi ?>% Benar</div> <br>
+                  <div class="day">Nilai : <bold><i><?=(int)$item['total_benar'] / (int)$item['total_soal'] * 100 ?></i></bold> </div>
 
-      <div class="grid-col grid-col-4">
-        <div class="portfolio-item" style="height: 400px" id="graph_learning_line_0">
-          <div class="picture">
-
+                  <div class="bar">
+                    <span class="bg-color-4 skill-bar-progress" processed="true" style="width: <?=$persentasi ?>%;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="grid-col grid-col-4">
-        <div class="portfolio-item" style="height: 400px" id="graph_learning_line_1">
-          <div class="picture">
-
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-col grid-col-4">
-        <div class="portfolio-item" style="height: 400px" id="graph_learning_line_2">
-          <div class="picture">
-
-          </div>
-        </div>
-      </div>
-
-
+      <?php endforeach ?>
     </div>
+    <hr class="divider-color">
   </div>
-</section> -->
+</section>
 <!-- PERKEMBANGAN learning Line -->
 
 <!-- video random -->
-<section class="padding-section" style="padding-bottom: : 0;padding-top: 0">
+<section class="padding-section" style="padding-bottom: : 0;">
   <div class="grid-row clear-fix">
     <h3 style="margin:0">Recent Video</h3>
     Nah, dibawah ini terdapat video terbaru loh, yuk coba tonton..
@@ -105,9 +143,7 @@
               <center>
                 <?php if (!empty($item['link'])): ?>
                   <iframe  width="250" src="<?=$item['link'] ?>"></iframe>
-                  
                 <?php endif ?>
-
               </center>
 
             </div>
@@ -125,31 +161,6 @@
 </section>
 <!-- video random -->
 
-
-<!-- PERKEMBANGAN learning Line -->
-<!-- <section class="padding-section" style="padding-bottom: : 0">
-  <div class="grid-row clear-fix">
-    <h3>Progress Learning Line</h3>
-    <p>Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat! </p>
-    <table class="table rpersentase" style="font-size: 13px" width=100%>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama topik</th>
-          <th>Dikerjakan</th>
-          <th>Jumlah Step</th>
-          <th>Belum Dikerjakan</th>
-          <th>Progress</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-  </div>  
-</section>
-<hr class="divider-color">   -->
-<!-- PERKEMBANGAN learning Line -->
 
 <!-- PERKEMBANGAN TO -->
 <section class="padding-section" style="padding-top: 0;margin-top: 0">
@@ -180,7 +191,7 @@
 <script>
   $(document).ready(function(){
         // ## datatable line log
-        url4 = base_url+"siswa/async_persentase_learning";
+        url4 = base_url+"welcome/get_data_latihan";
 
         dataTableReportPaket = $('.rpersentase').DataTable({
           "ajax": {
@@ -259,82 +270,9 @@ $('.tryout_select').change(function () {
     });
   }
 });
-// KETIKA BAB CHANGE, LOOAD GRAFIK
 </script>
 <script type="text/javascript">
-
-  $.getJSON(base_url+"siswa/get_high_three_learning", function(data) {
-    console.log(data);
-    load_grafik_progress_line(data);
-  });
-
-  function load_grafik_progress_line(data){
-    var chart1 = new CanvasJS.Chart("graph_learning_line_0", {
-      title:{
-        text: data[0].namaTopik           
-      },
-      animationEnabled: true,
-      
-      data: [              
-      {
-      // Change type to "doughnut", "line", "splineArea", etc.
-      type: "doughnut",
-      dataPoints: [
-      { label: "Dikerjakan "+parseInt(data[0].stepDone/data[0].jumlah_step * 100)+"%",  
-      y: data[0].stepDone  },
-
-      { label: "Belum Dikerjakan "+parseInt(((data[0].jumlah_step-data[0].stepDone)/data[0].jumlah_step)*100)+"%", 
-      y: data[0].jumlah_step-data[0].stepDone }
-      ]
-    }
-    ]
-  });
-    chart1.render();
-
-    jumlah = data[1].jumlah_step-data[1].stepDone;
-    var chart2 = new CanvasJS.Chart("graph_learning_line_1", {
-      title:{
-        text: data[1].namaTopik            
-      },
-      animationEnabled: true,
-
-      data: [              
-      {
-      // Change type to "doughnut", "line", "splineArea", etc.
-      type: "doughnut",
-      dataPoints: [
-      { label: "Dikerjakan "+parseInt(data[1].stepDone/data[1].jumlah_step * 100)+"%",  
-      y: data[1].stepDone  },
-
-      { label: "Belum Dikerjakan "+parseInt(((data[1].jumlah_step-data[1].stepDone)/data[1].jumlah_step)*100)+"%", 
-      y: data[1].jumlah_step-data[1].stepDone }
-      ]
-    }
-    ]
-  });
-    chart2.render();
-
-    var chart3 = new CanvasJS.Chart("graph_learning_line_2", {
-      title:{
-        text: data[2].namaTopik        
-      },
-      animationEnabled: true,
-      data: [              
-      {
-      // Change type to "doughnut", "line", "splineArea", etc.
-      type: "doughnut",
-      dataPoints: [
-      { label: "Dikerjakan "+parseInt(data[2].stepDone/data[2].jumlah_step * 100)+"%",  
-      y: data[2].stepDone  },
-
-      { label: "Belum Dikerjakan "+parseInt(((data[2].jumlah_step-data[2].stepDone)/data[2].jumlah_step)*100)+"%", 
-      y: data[2].jumlah_step-data[2].stepDone }
-      ]
-    }
-    ]
-  });
-    chart3.render();
+  function show_modal_learning() {
+    $('#latihan_persentase').modal('show');
   }
 </script>
-<!-- FILTER PENCARIAN TO -->
-<!-- LOAD GRAFIK PERSENTASE TO -->

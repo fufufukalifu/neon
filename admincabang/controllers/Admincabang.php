@@ -9,8 +9,6 @@ class Admincabang extends MX_Controller {
 		$this->load->model('cabang/mcabang');
 		$this->load->model('toback/mtoback');
 		$this->load->model('logtryout/logtryout_model');
-
-
 	}
 
 
