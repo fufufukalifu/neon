@@ -534,7 +534,7 @@
 
       <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span></a></li>
       <li >
-       <a href="<?=base_url('/index.php/videoback/listvideo')?>">
+       <a href="<?=base_url('/index.php/videoback/daftarvideo')?>">
         <span class="text">Daftar Semua video</span>
       </a>
     </li>

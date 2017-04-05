@@ -90,7 +90,7 @@ class Mguru extends CI_Model
 
 		$this->db->join( 'tb_mata-pelajaran pelajaran', 'guru.mataPelajaranID=pelajaran.id' );
 
-		$this->db->where( 'guru.id', $data );
+		$this->db->where( 'guru.penggunaID', $data );
 
 		$query = $this->db->get();
 

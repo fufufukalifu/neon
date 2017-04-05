@@ -236,7 +236,7 @@ class Mvideoback extends CI_Model
     }
     // get data video by tingkat
     function data_video_tingkat($number,$offset,$tingkatID){
-        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.thumbnail,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -261,7 +261,7 @@ class Mvideoback extends CI_Model
 
     // get data video by mapel
     function data_video_mp($number,$offset,$mpID){
-        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.thumbnail,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -286,7 +286,7 @@ class Mvideoback extends CI_Model
 
      // get data video by bab
     function data_video_bab($number,$offset,$babID){
-        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.thumbnail,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');
@@ -310,7 +310,7 @@ class Mvideoback extends CI_Model
     }
          // get data video by subbab
     function data_video_subbab($number,$offset,$subBabID){
-        $this->db->select('video.id,video.judulVideo,video.namaFile,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
+        $this->db->select('video.id,video.judulVideo,video.namaFile,video.thumbnail,video.deskripsi,video.link,video.published,video.date_created,video.UUID,tp.keterangan as mapel, bab.judulBab, subbab.judulSubBab');
         $this->db->join('tb_tingkat-pelajaran tp','tp.tingkatID=tkt.id');
         $this->db->join('tb_bab bab','bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab subbab','subbab.babID = bab.id');

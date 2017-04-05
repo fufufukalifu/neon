@@ -88,7 +88,7 @@
     </div>
     <!-- End Modal Detail Video -->
         <!-- START Template Main -->
-        <section id="main" role="main">
+        <section class="" id="main" role="main">
             <!-- START Template Container -->
             <div class="container-fluid">
                 <!-- Page Header -->
@@ -139,8 +139,10 @@
                                     </div>
                                 </div>
                                 <!--/ toolbar overlay -->
-                               
-                                <?=$key['video'];?>
+                               <div>
+                                   <?=$key['video'];?>
+                               </div>
+                                
                             </div>
                             <!--/ media -->
                             <!-- caption -->
@@ -232,12 +234,18 @@ function detail(id){
 
     $('h3.modal-title').html(data.judulVideo);
     $('.deskripsi').html(data.deskripsi);
-    if (data.namaFile != null) {
+    if (data.namaFile != null && data.thumbnail !=null && data.thumbnail !='' && data.thumbnail !='default') {
+
         links = '<?=base_url();?>assets/video/' + data.namaFile;
         $('#video-ply').attr('src',links);
          $('#video-ply').attr('poster','<?=base_url();?>assets/image/thumbnail/' +data.thumbnail);
         $('#mdetailvideo').modal('show');
-    }else if(data.link != null){
+    }else if(data.namaFile != null  ){
+            links = '<?=base_url();?>assets/video/' + data.namaFile;
+        $('#video-ply').attr('src',links);
+        $('#mdetailvideo').modal('show');
+    }
+    else if(data.link != null){
         links = data.link;
         $('#video-ply-link').attr('src',links); 
         $('#mvideolink').modal('show');
