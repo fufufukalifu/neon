@@ -30,9 +30,9 @@ class Guru extends MX_Controller {
     }
 
     //set get untuk session
-    public function setGuruId() {
-        $this->idGuru = $this->session->userdata['id_guru'];
-    }
+    // public function setGuruId() {
+    //     $this->idGuru = $this->session->userdata['id_guru'];
+    // }
 
     public function getGuruId() {
         return $this->idGuru;
@@ -47,12 +47,13 @@ class Guru extends MX_Controller {
     }
 
     public function videobyteacher() {
-        $this->setGuruId();
+        // $this->setGuruId();
+        $penggunaID=$this->session->userdata['id'];
         $guru_id = $this->getGuruId();
         $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher( $guru_id );
         //var_dump($data);
         //untuk mengambil data guru
-        $data['data_guru'] = $this->load->mguru->get_single_guru( $guru_id )[0];
+        $data['data_guru'] = $this->load->mguru->get_single_guru( $penggunaID )[0];
         //untuk menghitung berapa banyak video yang sudah diupload
         $data['jumlah_video'] = count( $this->load->mvideos->get_video_by_teacher( $guru_id ) );
        // var_dump($data);

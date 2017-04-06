@@ -39,6 +39,7 @@ class Video extends MX_Controller {
         $this->load->library('sessionchecker');
                 $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
+         $this->load->library('generateavatar');
 
     // 
     }
@@ -171,18 +172,30 @@ $this->sessionchecker->cek_token();
             $namasub = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
             $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
             $onevideo = $data['videosingle'];
+            $penggunaID = $onevideo[0]->penggunaID;
+            $penulis = $this->load->mguru->get_penulis($penggunaID);
+            
+            if ($penulis != array()) {
+                $photo=base_url().'assets/image/photo/guru/'.$penulis[0]['photo'];
+
+            }else{
+                
+                $photo= $this->generateavatar->generate_first_letter_avtar_url("Admin");
+                $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya'];
+            }
+            
             if($onevideo[0]->namaFile==NULL){
                 $judul = $onevideo[0]->link;
             }else{
                 $link = "assets/video/".$onevideo[0]->namaFile;
                 $judul = base_url($link);
             }
-            if ($onevideo[0]->guruID!="") {
-                $guruID = $onevideo[0]->guruID;
-                $penulis = $this->load->mguru->get_penulis($guruID)[0];
-            }else{
-                $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya','photo'=>'default.png'];
-            }
+            // if ($onevideo[0]->guruID!="") {
+            //     $guruID = $onevideo[0]->guruID;
+            //     $penulis = $this->load->mguru->get_penulis($guruID)[0];
+            // }else{
+            //     $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya','photo'=>'default.png'];
+            // }
 
         
             $data = array(
@@ -193,7 +206,7 @@ $this->sessionchecker->cek_token();
                 'file' => $judul,
                 'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
                 'biografi' => $penulis['biografi'],
-                'photo' => $penulis['photo'],
+                'photo' => $photo,
                 'nama_sub' => $namasub,
                 'sub_id' => base_url()."video/timeline/".$onevideo[0]->subBabID,
             );

@@ -22,6 +22,7 @@
  */
 class Videoback extends MX_Controller {
 
+
   function __construct() {
     parent::__construct();
     $this->load->helper('session');
@@ -32,6 +33,8 @@ class Videoback extends MX_Controller {
     $this->load->model('templating/mtemplating');
     $this->load->library('parser');
     $this->load->library('pagination');
+    $this->load->library('generateavatar');
+
   }
 
     # Mengambil video berdasarkan id guru
@@ -239,7 +242,7 @@ $video=$data['video'];
     $video = $file_data['file_name'];
     // $thumbnail=$data['thumbnail'];
     // $filethumbnail = $this->upThumbnail($thumbnail);
-     $filethumbnail = "bc975b02f820d402d0a30de1eb0e8c75.jpg";
+     $filethumbnail = "";
     $penggunaID = $this->session->userdata['id'];
     // $guruID = $data['tb_guru']['id'];
     $UUID=uniqid();
@@ -1242,22 +1245,37 @@ public function tampVideo($list='')
       $ubah=' <a href="'.base_url().'videoback/formUpdateVideo/'.$key["UUID"].'" class="btn btn-warning" title="Ubah"><i class="ico-file5"></i></a>';
       $lihat='<a href="javascript:void(0);" class="btn btn-success detail-'.$key['id'].'" title="Lihat" data-id='."'".json_encode($key)."'".' onclick="detail('."'".$key['id']."'".')"><i class="ico-facetime-video" ></i></a>';
       // pengecekan file video atau link video
-      if ($namaFile != '' && $namaFile != ' ') {
+      if ($namaFile != '' && $namaFile != ' ' && $thumbnail !=' ' && $thumbnail !='' && $thumbnail !='default' ) {
+        
         $video = '<img data-toggle="unveil" src="'.base_url().'assets/image/thumbnail/'.$thumbnail.'" data-src="'.base_url().'assets/image/thumbnail/'.$thumbnail.'" alt="Cover" width="250px" height="150px" style="background:#E6E2E2;"></img>';
-      }elseif($link != '' && $link != ' '){
+      }elseif($namaFile != '' && $namaFile != ' '){
+        
+        $mapel=$key['mapel'];
+        //generate avatar
+        $thumbnail=$this->generateavatar->generate_first_letter_avtar_url($mapel);
+        $video = '
+        <div class="jumbotron jumbotron-bg7 nm"  data-stellar-background-ratio="0.4" style="width:100%; height:150px;">
+        <div class="pattern pattern2 overlay overlay-primary"></div>
+          <div class="container text-center" style="padding-top:8%;">
+              <img class=" img-circle img-bordered" data-toggle="unveil" src="'. $thumbnail.'" data-src="" alt="Cover" style=" margin: 0 auto;" ></img>
+            <p class=" semibold mb0 mt15">'.$mapel.'</p>
+          </div>
+        </div>';
+      }
+      elseif($link != '' && $link != ' '){
         $video = '<iframe  src="'.$link.'"  controls id="video-ply-link" width="100%"  style="max-width:400px; max-height:250px;">
         </iframe>';
       }
         $timestamp = strtotime($key['date_created']);
          $tgl=date("M-Y", $timestamp);
       $data['list'][]=array(
-                'judulVideo'=>substr($key['judulVideo'],  0, 30),
+                'judulVideo'=>substr($key['judulVideo'],  0, 25),
                 'video'=>$video,
                 'deskripsi'=>$key['deskripsi'],
                 'date_created'=>$tgl,
                 'mapel'=>$key['mapel'],
                 'bab'=>$key['judulBab'],
-                'subbab'=>substr($key['judulSubBab'],  0, 30),
+                'subbab'=>substr($key['judulSubBab'],  0, 25),
                 'hapus'=>$hapus,
                 'ubah'=>$ubah,
                 'lihat'=>$lihat
@@ -1557,7 +1575,7 @@ public function carivideo()
         $this->tampVideo($list);
     }
 
-
+   
 }
 
 ?>
