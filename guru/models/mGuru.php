@@ -100,17 +100,19 @@ class Mguru extends CI_Model
 
 
 
-	public function get_penulis( $guruID ) {
+	public function get_penulis( $penggunaID ) {
 
-		$this->db->select( '*' );
+		$this->db->select( 'guru.namaDepan,guru.namaBelakang,guru.biografi,guru.photo' );
 
 		$this->db->from( 'tb_guru guru' );
 
-		$this->db->where( 'guru.id', $guruID );
+		$this->db->where( 'guru.penggunaID', $penggunaID );
 
 		$query = $this->db->get();
+return $query->result_array();
+		
 
-		return $query->result_array();
+		
 
 	}
 

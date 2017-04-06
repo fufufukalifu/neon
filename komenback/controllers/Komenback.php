@@ -10,7 +10,7 @@ class Komenback extends MX_Controller
    $this->load->model('mkomen');
    $this->load->model('video/mvideos');
    $this->load->model('guru/mguru');
-
+   $this->load->library('generateavatar');
 
  }
 
@@ -41,10 +41,15 @@ class Komenback extends MX_Controller
  }
 }
 
-function ajax_data_komen(){
-  $list = $this->mkomen->get_all_komen();
-            // var_dump($list);
 
+function ajax_data_komen(){
+  $hakAkses = $this->session->userdata['HAKAKSES'];
+  if ($hakAkses == 'admin') {
+      $list = $this->mkomen->get_all_komen();
+  }else{
+    $id_guru = $this->session->userdata['id_guru'];
+     $list = $this->mkomen->get_komen_by_profesi($id_guru);
+  }
 
   $data = array();
 
@@ -146,8 +151,21 @@ function seevideo($idvideo){
 
     // echo $judulxz;
 
-      $guruID = $onevideo[0]->guruID;
-      $penulis = $this->load->mguru->get_penulis($guruID)[0];
+      $penggunaID = $onevideo[0]->penggunaID;
+      $penulis = $this->load->mguru->get_penulis($penggunaID);
+
+      if ($penulis) {
+       $namaDepan=$penulis[0]['namaDepan']; 
+       $biografi=$penulis[0]['biografi'] ;
+       $photo=base_url('assets/image/photo/guru/').$penulis[0]['photo'] ;
+       $namaBelakang=$penulis[0]['namaBelakang'];
+      } else{
+        $nama="Admin"; 
+       $biografi= "-";
+       $photo= $this->generateavatar->generate_first_letter_avtar_url($nama);
+      }
+      
+      
       $date = strtotime($onevideo[0]->date_created);
       $data = array(
         'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
@@ -155,21 +173,42 @@ function seevideo($idvideo){
         'judul_video' => $onevideo[0]->judulVideo,
         'deskripsi' => $onevideo[0]->deskripsi,
         'file' => $judul,
-        'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
-        'biografi' => $penulis['biografi'],
-        'photo' => $penulis['photo'],
+        'nama_penulis' =>$nama ,
+        'biografi' => $biografi,
+        'photo' => $photo,
         'nama_sub' => $namasub,
         'jumlah_comment'=>count($this->mkomen->get_komen_byvideo($idvideo)),
         'tanggal'=>date("d", $date),
         'bulan'=>date("M", $date),
-        'avatar'=>base_url('assets/image/photo/guru/').$penulis['photo'],
+        'avatar'=>$photo,
         );
       $subid = $onevideo[0]->subBabID;
             //ambil list semua video yang memiliki sub id yang sama
       $data['videobysub'] = $this->load->mvideos->get_video_by_sub($subid);
       $data['video_by_bab'] = $this->mvideos->get_all_video_by_bab($idbab);
 
-      $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
+     $comments = $this->mkomen->get_komen_byvideo($idvideo);
+       $data['comments']=array();
+      foreach ( $comments as $key ) {
+        // generateavatar
+        $avatar=$key->avatar;
+        $namaPengguna=$key->namaPengguna;
+        // if ($avatar !='' && $avatar !=' ') {
+          // $img=base_url('assets/image/photo/'.$key->hakAkses.'/'.$key->avatar);
+        // } else {
+         $img=$this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
+        // }
+        
+         $data['comments'][]=array(
+          'avatar'=> $img,
+          'namaPengguna'=>$namaPengguna,
+          'isiKomen'=>$key->isiKomen ,
+          'date_created'=>$key->date_created,
+          'komenID'=>$key->komenID,
+
+
+          );
+      }
 
       $data['files'] = array(
         APPPATH . 'modules/komenback/views/v-single-video-komen.php',

@@ -159,7 +159,7 @@
                     <!-- <video preload controls src="{file}" width="750px" ></video> -->
                     <p>{deskripsi}</p>
                     <hr class="divider-color" />
-                    <div class="quote-avatar-author clear-fix"><img src="<?= base_url('assets/image/photo/guru/{photo}'); ?>" data-at2x="<?= base_url('assets/image/photo/guru/{photo}'); ?>" alt width="100px"><div class="author-info">{nama_penulis}<br/><span>Pembuat Video</span></div></div>
+                    <div class="quote-avatar-author clear-fix"><img src=" {photo}" data-at2x="{photo}" alt width="100px"><div class="author-info">{nama_penulis}<br/><span>Pembuat Video</span></div></div>
                     <p>{biografi}</p>
                 </section>
                 <hr class="divider-color" />

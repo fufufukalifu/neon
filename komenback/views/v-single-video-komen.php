@@ -150,21 +150,21 @@
 
                             <div class="media" >
                                 <a href="javascript:void(0);" class="media-object pull-left">
-                                    <?php $img = base_url('assets/image/photo/'.$comment->hakAkses.'/'.$comment->avatar) ?>
-                                    <img src="<?=$img ?>" class="img-circle" alt="">
+
+                                    <img src="<?=$comment['avatar'] ?>" class="img-circle" alt="">
                                 </a>
 
                                 <div class="media-body">
 
                                     <div class="media-text" style="width: 100%">
-                                        <h5 class="semibold mt0 mb5 text-default"><?=$comment->namaPengguna ?></h5>
-                                        <p class="<?=$comment->komenID ?> mb15"><?=$comment->isiKomen ?></p>
-                                        <input type="hidden" name="<?=$comment->komenID ?>" value="<?=$comment->isiKomen ?>">
+                                        <h5 class="semibold mt0 mb5 text-default"><?=$comment['namaPengguna'] ?></h5>
+                                        <p class="<?=$comment['komenID'] ?> mb15"><?=$comment['isiKomen']?></p>
+                                        <input type="hidden" name="<?=$comment['komenID'] ?>" value="<?=$comment['isiKomen'] ?>">
                                         <!-- meta icon -->
                                         <p class="mb0">
-                                            <span class="media-meta"><?=$comment->date_created ?></span>
+                                            <span class="media-meta"><?=$comment['date_created'] ?></span>
                                             <span class="mr5 ml5 text-muted">&#8226;</span>
-                                            <a onclick="reply(<?=$comment->komenID ?>)" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
+                                            <a onclick="reply(<?=$comment['komenID'] ?>)" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a>
                                         </p>
                                         <!--/ meta icon -->
                                     </div>

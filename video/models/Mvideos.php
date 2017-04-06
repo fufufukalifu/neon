@@ -185,9 +185,10 @@ class Mvideos extends CI_Model
 
   //ambil 1 video bedasarkan id videonya
   function get_single_video( $id_video ) {
-    $this->db->select( '*' );
+    $this->db->select( 'video.id,video.judulVideo,video.thumbnail,video.deskripsi,video.link,video.date_created,video.namaFile,video.penggunaID,video.subBabID' );
     $this->db->from( 'tb_video video' );
-    $this->db->where( 'id', $id_video );
+    $this->db->where( 'video.id', $id_video );
+
     $query = $this->db->get();
     return $query->result();
   }
