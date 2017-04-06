@@ -10,12 +10,12 @@
   color:white;
 }
 </style>
-<!-- MODAL -->
+<!-- MODAL LATIHAN PERSENTASE-->
 <div class="modal fade" tabindex="-1" role="dialog" id="latihan_persentase">
   <div class="modal-dialog" role="document" style="width: 80%">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Progress Learning Line</h3>
+        <h3>Perkembangan Latihan</h3>
 
       </div>
       <div class="modal-body">
@@ -46,7 +46,45 @@
     </div>
   </div>
 </div>
-<!-- MODAL -->
+<!-- MODAL LATIHAN PERSENTASE-->
+
+<!-- MODAL LATIHAN PERSENTASE-->
+<div class="modal fade" tabindex="-1" role="dialog" id="learning_persentase">
+  <div class="modal-dialog" role="document" style="width: 80%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Progress Learning Line</h3>
+
+      </div>
+      <div class="modal-body">
+
+        <table class="table lpersentase" width=100% style="font-size: 13px">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Topik</th>
+              <th>Step Dikerjakan</th>
+              <th>Jumlah Step</th>
+              <th>Persentase</th>
+              <th>Bar</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer bg-color-3">
+        <button type="button" class="cws-button bt-color-1 alt small selesai" data-dismiss="modal">Batal</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- MODAL LATIHAN PERSENTASE-->
+
+
 <div class="page-title" style="background:#2b3036">
   <div class="grid-row">
     <h1>Halo, <?=$this->session->userdata['USERNAME']?> !  </h1>
@@ -60,7 +98,7 @@
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
     <h3>Topik yang baru saja dipelajari..</h3> 
     Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
-    <a href="" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
+    <a onclick="show_modal_learning()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
       <?php foreach ($topik  as $item): ?>
         <?php $persentasi = (int)$item['stepDone'] / (int)$item['jumlah_step'] * 100; ?>
@@ -93,7 +131,7 @@
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
     <h3>Latihan</h3> 
     Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan anda<br><br>
-    <a onclick="show_modal_learning()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
+    <a onclick="show_modal_latihan()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
       <?php foreach ($latihan  as $item): ?>
         <?php $persentasi = (int)$item['total_benar'] / (int)$item['total_soal'] * 100; ?>
@@ -122,6 +160,28 @@
   </div>
 </section>
 <!-- PERKEMBANGAN learning Line -->
+
+<!-- PERKEMBANGAN TO -->
+<section class="padding-section" style="padding-top: 0;margin-top: 0">
+  <div class="grid-row clear-fix">
+    <h3>Grafik Tryout</h3>
+    <p>Dibawah ini adalah grafik perkembangan TO kamu, jika nilaninya masih tidak memuaskan jangan khawatir pasti kamu bisa memperbaikinya dengan cara banyak mengikuti latihan. Tetap semangat! </p>
+<!--     <label for="" class="">
+      Filter Tryout : <select class="form-control tryout_select" name="tryout_select">
+      <option value="">-- Cari Berdasarkan Tryout --</option>
+    </select>
+  </label> -->
+  <div class="panel-body" >
+    <div class="panel-body pt0" id="resizeble" style="height:430px">
+      <div class="container" id="chartContainer" style="width:100%">
+
+      </div>
+    </div>      
+  </div>
+</div>  
+</section>
+<hr class="divider-big">
+<!-- PERKEMBANGAN TO -->
 
 <!-- video random -->
 <section class="padding-section" style="padding-bottom: : 0;">
@@ -152,7 +212,7 @@
           </div>
         </div>
       <?php endforeach ?>
-      
+
 
     </div>
     <hr class="divider-color">  
@@ -162,27 +222,7 @@
 <!-- video random -->
 
 
-<!-- PERKEMBANGAN TO -->
-<section class="padding-section" style="padding-top: 0;margin-top: 0">
-  <div class="grid-row clear-fix">
-    <h3>Grafik Tryout</h3>
-    <p>Dibawah ini adalah grafik perkembangan TO kamu, jika nilaninya masih tidak memuaskan jangan khawatir pasti kamu bisa memperbaikinya dengan cara banyak mengikuti latihan. Tetap semangat! </p>
-    <label for="" class="">
-      Filter Tryout : <select class="form-control tryout_select" name="tryout_select">
-      <option value="">-- Cari Berdasarkan Tryout --</option>
-    </select>
-  </label>
-  <div class="panel-body" >
-    <div class="panel-body pt0" id="resizeble" style="height:430px">
-      <div class="container" id="chartContainer" style="width:100%">
 
-      </div>
-    </div>      
-  </div>
-</div>  
-</section>
-<hr class="divider-big">
-<!-- PERKEMBANGAN TO -->
 
 
 
@@ -190,26 +230,40 @@
 <script src="<?= base_url('assets/back/plugins/canvasjs.min.js') ?>"></script>
 <script>
   $(document).ready(function(){
-        // ## datatable line log
-        url4 = base_url+"welcome/get_data_latihan";
+// ## datatable latihan
+url4 = base_url+"welcome/get_data_latihan";
 
-        dataTableReportPaket = $('.rpersentase').DataTable({
-          "ajax": {
-            "url": url4,
-            "type": "POST",
-          },
-          "emptyTable": "Tidak Ada Data Pesan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-          "bDestroy": true,
-        });
+dataTableLatihan = $('.rpersentase').DataTable({
+  "ajax": {
+    "url": url4,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+// ## datatable latihan
 
 // ## datatable line log
+url5 = base_url+"welcome/get_data_learning_line";
+
+dataTableLearningLine = $('.lpersentase').DataTable({
+  "ajax": {
+    "url": url5,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+// ## datatable line log
+
 })
 </script>
 <!-- LOAD GRAFIK PERSENTASE TO -->
 <script type="text/javascript">
 
-  $.getJSON(base_url+"siswa/persentase_json", function(data) {
+  $.getJSON(base_url+"tryout/report_to", function(data) {
     load_grafik(data);
   });
 
@@ -218,6 +272,7 @@
     //   title:{
     //     text:"Grafik Perkembangan Paket Tryout"        
     // },
+    theme: "theme1",
     animationEnabled: true,
     axisX:{
       interval: 1,
@@ -226,20 +281,12 @@
       labelFontStyle: "normal",
       labelFontWeight: "normal",
       labelFontFamily: "Lucida Sans Unicode"
-
     },
-    axisY2:{
-      interlacedColor: "rgba(1,77,101,.2)",
-      gridColor: "rgba(1,77,101,.1)"
-
-    },
-
     data: [
     {     
-      type: "bar",
+      type: "column",
       name: "companies",
-      axisYType: "secondary",
-      color: "#4bbcd7",       
+      axisYType: "secondary",   
       dataPoints: data
     }
 
@@ -250,12 +297,12 @@
 </script>
 <!-- FILTER PENCARIAN TO -->
 <script type="text/javascript">
- $.getJSON(base_url+"siswa/get_tryout_for_select", function(data) {
-  $('.tryout_select').html('<option value="">-- Cari Berdasarkan Tryout --</option>');
-  $.each(data, function (i, data) {
-    $('.tryout_select').append("<option value='" + data.id_tryout + "'>" + data.nm_tryout + "</option>");
+  $.getJSON(base_url+"siswa/get_tryout_for_select", function(data) {
+    $('.tryout_select').html('<option value="">-- Cari Berdasarkan Tryout --</option>');
+    $.each(data, function (i, data) {
+      $('.tryout_select').append("<option value='" + data.id_tryout + "'>" + data.nm_tryout + "</option>");
+    });
   });
-});
 
 // KETIKA BAB CHANGE, LOOAD GRAFIK
 $('.tryout_select').change(function () {
@@ -272,7 +319,11 @@ $('.tryout_select').change(function () {
 });
 </script>
 <script type="text/javascript">
-  function show_modal_learning() {
+  function show_modal_latihan() {
     $('#latihan_persentase').modal('show');
+  }
+
+  function show_modal_learning() {
+    $('#learning_persentase').modal('show');
   }
 </script>

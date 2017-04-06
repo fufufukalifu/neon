@@ -100,7 +100,7 @@
             <th><?=$no;?></th>
             <th><?=$value['judulPertanyaan']?></th>
             <th><?=$value['isiPertanyaan']?></th>
-            <th><?=substr($value['isiJawaban'], 0, 100)?>...</th>
+            <th><?=htmlspecialchars(substr($value['isiJawaban'], 0, 100))?>...</th>
             <th><?=$value['tgl']?></th>
             <th><a class="btn btn-sm bgcolor-success text-center"  title="Detail" href=""><i class="ico-bubble11 fsize23"></i></a></th>
          </tr>

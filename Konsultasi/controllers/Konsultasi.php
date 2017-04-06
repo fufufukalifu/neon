@@ -21,8 +21,6 @@ class Konsultasi extends MX_Controller{
  }
 
  public function index() {
-
-
   $data = array(
     'judul_halaman' => 'Neon - Konsultasi',
     'judul_header'=> 'Daftar Pertanyaan'
@@ -35,6 +33,7 @@ class Konsultasi extends MX_Controller{
     APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
     APPPATH.'modules/homepage/views/v-footer.php'
     );
+  
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
   $data['questions']=$this->mkonsultasi->get_all_questions();
   $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa());

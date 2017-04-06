@@ -147,7 +147,7 @@ blockquote em{
 										<!-- Stat Media wall -->
 										<div class="media well mb0">
 											<span class="pull-left">
-												<img src="http://placehold.it/60x60" class="img-circle" width="65px" height="65px" alt="">
+												<img src="{photo}" class="img-circle" width="65px" height="65px" alt="">
 											</span>
 											<span class="media-body">
 												<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
@@ -176,7 +176,13 @@ blockquote em{
 										<!-- <hr class="divider-big"><?php echo "hakakses ".$this->session->userdata('HAKAKSES')?> -->
 										<?php if ($data_postingan!=array()): ?>
 										<?php foreach ($data_postingan as $item_postingan): ?>
-										<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
+										<?php 
+										if ($item_postingan['hakAkses']=="siswa") {
+										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['siswa_photo'];
+										}else{
+										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['guru_photo'];
+										}
+									?>
 										<div class="blog-post">
 											<article>
 												<!-- Start Respon Guru -->
@@ -247,45 +253,15 @@ blockquote em{
 
 
 <script type="text/javascript">
-	// 	var ckeditor;
-	// 	var string;
-	// 	$("blockquote").attr('class', 'media well mb0');
-	// 	function quote(data=""){
-	// 		elemen = "<div class='quotes kuote'><p><i></p><i></div><textarea  name='editor1' class='form-control' id='isi'></textarea>";
-	// 		button = "<button type='button' class='btn btn-sm btn-danger' data-dismiss='modal'>Batal</button><button type='button' class='btn btn-sm btn-success' onclick='save()'>Post</button>";
-
-	// 		$('.modal-body').html(elemen);
-	// 		$('.modal-footer').html(button);
-
-
-	// 		ckeditor = CKEDITOR.replace( 'editor1' );
-
-
-	// 		if (data=="") {
-	// 			$('.modal-header .modal-title').html("<h4>Balas Pertanyaan</h4>");
-	// 			string = 0;
-	// 			$('#myModal').modal('show');
-	// 		// ckeditor.setData(data);
-	// 	}else{
-	// 		$('.modal-header .modal-title').html("Quote Jawaban");
-
-	// 		string = $('input[name='+data+']').val();
-	// 		$('.modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
-	// 		console.log(string);
-	// 		// ckeditor.setData(string);
-	// 		$('#myModal').modal('show');
-	// 	}
-	// }
 
 	var ckeditor;
 	var string;
 	var txt = 1;
 
 
-	function quote(data){
+	function quote(data=0){
 		if (data==0) { 	
 			$('#modalJawab .modal-body .quotes p i').html("");
-
 			$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
 			string = 0;
 			$('#modalJawab').modal('show');

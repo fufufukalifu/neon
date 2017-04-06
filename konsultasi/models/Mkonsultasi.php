@@ -107,10 +107,13 @@ class Mkonsultasi extends CI_Model
 
 	//ambil postingan dalam pertanyaan tertentu.
 	function get_postingan($pertanyaanID){
-		$this->db->select('*,jawab.id as jawabID');
+		$this->db->select('*,jawab.id as jawabID,siswa.photo siswa_photo,guru.photo guru_photo');
 		$this->db->from('tb_k_jawab jawab');
 		$this->db->where('jawab.pertanyaanID',$pertanyaanID);
 		$this->db->join('tb_pengguna pengguna','pengguna.id = jawab.penggunaID');
+		$this->db->join('tb_siswa siswa','pengguna.id = siswa.penggunaID','left');
+		$this->db->join('tb_guru guru','pengguna.id = guru.penggunaID','left');
+
 		$this->db->order_by('jawab.date_created','asc');
 
 		$query = $this->db->get();   

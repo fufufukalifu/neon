@@ -270,7 +270,7 @@ $result = $this->db->query($query);
 return $result->result_array();
 }
 
-public function persentasi_limit(){
+public function persentasi_limit($data){
     $id = $this->session->userdata('id');
     $query = "SELECT topikID AS top,babID,`namaTopik` , 
     COUNT(`stepID`) AS stepDone, 
@@ -281,7 +281,7 @@ JOIN `tb_line_step` s ON s.`id` = hasil.stepID
 JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
 GROUP BY topikID
 ORDER BY topikID
-limit 3
+limit $data
 ";
 $result = $this->db->query($query);
 return $result->result_array();

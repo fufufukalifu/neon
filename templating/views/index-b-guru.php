@@ -466,7 +466,9 @@
   <li class="dropdown profile">
    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
     <span class="meta">
-     <span class="avatar"></span>
+     <span class="avatar">
+       
+     </span>
      <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['NAMAGURU'];?></span>
      <span class="caret"></span>
    </span>

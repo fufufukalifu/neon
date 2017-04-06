@@ -330,8 +330,15 @@ class Tryout extends MX_Controller {
         }
     }
 
-    public function test(){
+    public function report_to(){
+        $list = $this->Mtryout->get_laporan_to();
+        $array = [];
+        foreach ($list as $item ) {
 
+            $tempt = ['label'=>$item['nm_tryout'],'y'=> (int)number_format($item['nilai'],1)];
+            $array[] = $tempt;
+        }
+      echo json_encode($array);
 
     }
 }

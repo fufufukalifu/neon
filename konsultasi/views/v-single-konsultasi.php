@@ -139,7 +139,14 @@
 
 							<div class="quotes clear-fix" >
 								<div class="quote-avatar-author clear-fix">
-									<?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
+
+									<?php 
+										if ($item_postingan['hakAkses']=="siswa") {
+										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['siswa_photo'];
+										}else{
+										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['guru_photo'];
+										}
+									?>
 									<img 
 									src="<?=$gbr ?>" width="60px">
 									<div class="author-info"><?=$item_postingan['namaPengguna'] ?><br><span><?=$item_postingan['hakAkses'] ?></span></div>

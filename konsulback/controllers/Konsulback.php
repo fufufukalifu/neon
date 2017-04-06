@@ -376,6 +376,7 @@
     public function konsultasi($id_pertanyaan)
     {
        $single_pertanyaan = $this->mkonsultasi->get_pertanyaan($id_pertanyaan)[0];
+
         $jumlah = $this->mkonsultasi->get_jumlah_postingan($id_pertanyaan);
         $date = $single_pertanyaan['date_created'];
 
@@ -393,6 +394,7 @@
           'id_pengguna'=>$this->session->userdata('id'),
           'tanggal'=>date("d", $timestamp),
           'bulan'=>date("M", $timestamp),
+          'photo'=>base_url("assets/image/photo/siswa/".$single_pertanyaan['photo'])
           );
             // print_r($data);
         $data['isi'] = $single_pertanyaan['isiPertanyaan'];
