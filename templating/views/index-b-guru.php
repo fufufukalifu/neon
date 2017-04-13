@@ -21,6 +21,9 @@
 
  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
  <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
+ <!-- socket.io -->
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+<!-- /socket.io -->
  
  <script>var base_url = '<?php echo base_url() ?>'</script>
  <!--/ END META SECTION -->
@@ -55,6 +58,10 @@
 
 <!-- START Body -->
 <body>
+
+<!-- sound notification -->
+<audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+<!-- /sound notification -->
 
  <!-- START Modal ADD BANK SOAL -->
  <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
@@ -371,7 +378,11 @@
 <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <span class="icon"><i class="ico-bell"></i></span>
+   <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true">
+   <span class="icon" id="new_count_komen">
+   <?=$count_komen; ?>
+  
+   <i class="ico-bell"></i></span>
    <span class="hasnotification hasnotification-danger"></span>
  </span>
 </a>
@@ -389,54 +400,22 @@
    <!--/ indicator -->
 
    <!-- Message list -->
-   <div class="media-list">
-    <a href="javascript:void(0);" class="media read border-dotted">
-     <span class="media-object pull-left">
-      <i class="ico-basket2 bgcolor-info"></i>
-    </span>
-    <span class="media-body">
-      <span class="media-text">Duis aute irure dolor in <span class="text-primary semibold">reprehenderit</span> in voluptate.</span>
-      <!-- meta icon -->
-      <span class="media-meta pull-right">2d</span>
-      <!--/ meta icon -->
-    </span>
-  </a>
-
-  <a href="javascript:void(0);" class="media read border-dotted">
-   <span class="media-object pull-left">
-    <i class="ico-call-incoming"></i>
-  </span>
-  <span class="media-body">
-    <span class="media-text">Aliquip ex ea commodo consequat.</span>
-    <!-- meta icon -->
-    <span class="media-meta pull-right">1w</span>
-    <!--/ meta icon -->
-  </span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-alarm2"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Excepteur sint <span class="text-primary semibold">occaecat</span> cupidatat non.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">12w</span>
-  <!--/ meta icon -->
-</span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-checkmark3 bgcolor-success"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">14w</span>
-  <!--/ meta icon -->
-</span>
-</a>
+   <div class="media-list" id="message-tbody">
+  <?php foreach ($datKomen as $key ): ?>
+    <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
+      <span class="pull-left">
+        <img src="../image/avatar/avatar1.jpg" class="media-object img-circle" alt="">
+      </span>
+      <span class="media-body">
+        <span class="media-heading"><?=$key['namaPengguna']?></span>
+        <span class="media-text ellipsis nm"><?=$key['isiKomen']?></span>
+        <!-- meta icon -->
+        <span class="media-meta pull-right"><?=$key['date_created']?></span>
+        <!--/ meta icon -->
+      </span>
+    </a>
+  <?php endforeach ?>
+    
 </div>
 <!--/ Message list -->
 </div>
@@ -764,7 +743,29 @@
         <script type="text/javascript" src="<?=base_url('assets/plugins/steps/js/jquery.steps.min.js')?>"></script>
         
         <script type="text/javascript" src="<?=base_url('assets/plugins/inputmask/js/inputmask.min.js')?>"></script>
+
 <script type="text/javascript">
+  jQuery(document).ready(function () {
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    var idPengguna=('<?=$this->session->userdata['id'];?>');
+    var new_count_komen = 0;
+    var mapelID=('<?=$this->session->userdata['mapelID'];?>');
+           socket.on( 'new_komen', function( data ) {
+             if (idPengguna!=data.userID &&data.mapelID==mapelID) {
+              var old_count_komen = parseInt($('[name=count_komen]').val());
+                new_count_komen = old_count_komen + 1;
+                $('[name=count_komen]').val(new_count_komen);
+               $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+               $('#notif_audio')[0].play();
+            $( "#message-tbody" ).prepend(' <a href="'+base_url+'komenback/seevideo/'+data.videoID+'/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="../image/avatar/avatar1.jpg" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+data.namaPengguna+'</span><span class="media-text ellipsis nm">'+data.isiKomen+'</span><!-- meta icon --><span class="media-meta pull-right">'+data.date_created+'</span><!--/ meta icon --></span></a>');
+          }
+          });
+  });
+</script>
+
+<script type="text/javascript">
+
+
 
   function add_modul() {
 $('#modalmodul').modal('show'); // show bootstrap modal
@@ -792,8 +793,6 @@ $('#modalvideo').modal('show'); // show bootstrap modal
     $('span.avatar').html(data);
   }
 });
-
- 
 // ####################################################
             //buat load tingkat untuk modal buat soal
             // load tingkat untuk modal bank soal
@@ -1053,6 +1052,7 @@ function filter_gallery() {
 <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
 <!--/ App and page level script -->
 <!--/ END JAVASCRIPT SECTION -->
+
 </body>
 <!--/ END Body -->
 </html>

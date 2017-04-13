@@ -34,13 +34,12 @@ class Video extends MX_Controller {
         parent::__construct();
         $this->load->model('Mvideos');
         $this->load->model('guru/mguru');
-        $this->load->model('komen/mkomen');
+        $this->load->model('komenback/mkomen');
         $this->load->library('parser');
         $this->load->library('sessionchecker');
                 $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
          $this->load->library('generateavatar');
-
     // 
     }
 
@@ -209,6 +208,7 @@ $this->sessionchecker->cek_token();
                 'photo' => $photo,
                 'nama_sub' => $namasub,
                 'sub_id' => base_url()."video/timeline/".$onevideo[0]->subBabID,
+                'videoID'=>$onevideo[0]->id
             );
             $subid = $onevideo[0]->subBabID;
 
@@ -333,16 +333,50 @@ $this->sessionchecker->cek_token();
     //----------# BACK END  #----------#
 
     public function addkomen() {
-        $isiKomen = $this->input->post('isiKomen');
-        $idvideo = $this->input->post('videoID');
-        $userID = $this->session->userdata['id'];
 
-        $dataKomen = array(
-            'isiKomen' => $isiKomen,
-            'videoID' => $idvideo,
-            'userID' => $userID,
-        );
+
+
+        $dataKomen['isiKomen'] = $this->input->post('isiKomen');
+        $dataKomen['videoID'] = $this->input->post('videoID');
+        $dataKomen['userID'] = $this->session->userdata['id'];
+        $UUID=uniqid();
+        $dataKomen['UUID']=$UUID;
         $this->Mvideos->insertComment($dataKomen);
+
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+           // jika admin
+          //get data komen by UUID
+          $datArr=$this->mkomen->get_komen_by_UUID($UUID);
+        } elseif($hakAkses=='guru'){
+         // jika guru
+         //get data komen by UUID
+          $datArr=$this->mkomen->get_komenGuru_by_UUID($UUID);
+         }else{
+            // jika siswa redirect ke welcome
+          //get data komen by UUID
+          $datArr=$this->mkomen->get_komenSiswa_by_UUID($UUID);
+        }
+
+        #cek Photo
+        $photo=$datArr[0]['photo'];
+        $namaPengguna = $datArr[0]['namaPengguna'];
+        if ($photo!='' && $photo!=' ' && $photo!='default') {
+          $dataKomen['photo']=base_url().'assets/image/photo/'.$hakAkses.'/'.$photo;
+        } else {
+           $photo= $this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
+           $dataKomen['photo']=$photo;
+        }
+        
+        $dataKomen['namaPengguna']=$namaPengguna;
+        $dataKomen['date_created']=$datArr[0]['date_created'];
+        $dataKomen['videoID']=$datArr[0]['videoID'];
+        $dataKomen['mapelID']=$datArr[0]['mataPelajaranID'];
+        $dataKomen['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
+          $dataKomen['success']=true;
+
+        echo json_encode($dataKomen);
     }
 
 }

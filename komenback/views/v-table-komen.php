@@ -42,6 +42,7 @@
         <!-- page header -->
 
         <section id="main" role="main">
+
             <!-- START Template Container -->
             <div class="container-fluid">
                 <div class="row">
@@ -76,8 +77,12 @@
         <!--/ END row -->
 
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#ajax-source-komen").DataTable({
+          var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+         var tb_komen;
+            $(document).ready(function(){  
+                
+
+                tb_komen= $("#ajax-source-komen").DataTable({
                     "bProcessing": true,
                     "sAjaxSource": base_url+"komenback/ajax_data_komen",
                     "sServerMethod": "POST",
@@ -85,7 +90,13 @@
                     "responsive": true,
                 });
 
+
+
             });
+                        socket.on( 'new_komen', function( data ) {
+                            console.log('ininininni');
+                tb_komen.ajax.reload(null,false); 
+                  });
 
             function respon(komenID){
                 button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Respon</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Batal</button>";
@@ -119,5 +130,6 @@
             function check(videoID){
                 window.location=base_url+"komenback/seevideo/"+videoID;
             }
+
 
         </script>

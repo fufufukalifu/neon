@@ -68,6 +68,7 @@
                 <!-- Content -->
                 <section class="panel-body pl0 pr0">
                     <div class="row">
+                    <input type="text" name="videoID" hidden="true" value="{videoID}">
                         <!-- post date -->
                         <div class="col-xs-3 col-sm-1 col-md-1 pr0">
                             <div class="panel widget">
@@ -145,6 +146,7 @@
                         </h4>
                     </div>
                     <!--/ Header -->
+                    <div class="media" id="media-comment">
                     <?php foreach ($comments as $comment): ?>
                         <div class="media-list media-list-bubble" >
 
@@ -154,7 +156,7 @@
                                     <img src="<?=$comment['avatar'] ?>" class="img-circle" alt="">
                                 </a>
 
-                                <div class="media-body">
+                                <div class="media-body" >
 
                                     <div class="media-text" style="width: 100%">
                                         <h5 class="semibold mt0 mb5 text-default"><?=$comment['namaPengguna'] ?></h5>
@@ -173,7 +175,7 @@
                             </div>
                         </div>
                     <?php endforeach ?>
-
+                    </div>
                 </section>
                 <!-- Comments -->
 
@@ -247,14 +249,41 @@
             type: "POST",
             url: base_url+"/video/addkomen",
             data: {isiKomen: isiKomen, videoID: videoID},
+            dataType: "json",
+                cache : false,
             success: function (data)
             {
-             // alert('SUCCESS!!');
              $('#info .lengkapi').addClass('hide');
              $('#info .sukses').removeClass('hide');
              $('#info .gagal').addClass('hide');
-             // $('textarea[name=comment]').val();
-                                // window.location = base_url+"/video/seevideo/"+videoID;
+             // set data ke server.js
+             if(data.success == true){
+
+                var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
+                socket.emit('new_count_komen', { 
+                  new_count_komen: data.new_count_komen
+                });
+                console.log(data);
+                socket.emit('new_komen', { 
+                   isiKomen: data.isiKomen,
+                  videoID: data.videoID,
+                  userID: data.userID,
+                  UUID: data.UUID,
+                  namaPengguna:data.namaPengguna,
+                  date_created:data.date_created,
+                  videoID:data.videoID,
+                  photo:data.photo,
+                  mapelID:data.mapelID
+
+                });
+
+              } else if(data.success == false){
+                console.log("gagal");
+
+              }
+
+             // 
                             },
                             error: function ()
                             {
@@ -265,4 +294,21 @@
                         }); 
        }
    }
+</script>
+
+<script type="text/javascript">
+ var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
+    socket.on( 'new_komen', function( data ) {
+      var videoID = $("[name=videoID]").val();
+      console.log(videoID);
+     if (data.videoID==videoID) {
+            $("#media-comment").append('<div class="media-list media-list-bubble" ><div class="media" ><a href="javascript:void(0);" class="media-object pull-left"><img src="'+data.photo+'" class="img-circle" alt=""></a><div class="media-body" ><div class="media-text" style="width: 100%"><h5 class="semibold mt0 mb5 text-default">'+data.namaPengguna+'</h5><p class="<?=$comment['komenID'] ?> mb15">'+data.isiKomen+'</p><input type="hidden" name="<?=$comment['komenID'] ?>" value="'+data.isiKomen+'"><p class="mb0"><span class="media-meta">'+data.date_created+'</span><span class="mr5 ml5 text-muted">&#8226;</span><a onclick="reply('+data.komenID+')" class="media-meta text-default" data-toggle="tooltip" title="Reply"><i class="ico-reply"></i></a></p></div></div></div></div>');
+     }
+      // media-bodey-comment
+
+      // if (true) {
+
+      // }
+    });
 </script>

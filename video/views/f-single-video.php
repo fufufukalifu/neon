@@ -154,6 +154,7 @@
             <main>
                 <section class="clear-fix">
                     <h5 class="center" >{judul_video}</h5>
+                    <input type="text" name="videoID" value="{videoID}" hidden="true">
                     <hr class="divide-color">
                     <iframe width="760" height="430" src="{file}"></iframe>
                     <!-- <video preload controls src="{file}" width="750px" ></video> -->
@@ -190,10 +191,11 @@
                     <div class="comments">
                         <div id="comments">
 
-                            <div class="comment-title">Komentar <span>(<?=count($comments) ?>)</span></div>
-                            <ol class="commentlist">
+                            <div class="comment-title" id="new_count_komen">Komentar <span>(<?=count($comments) ?>)</span></div>
+                            <input type="text" name="count_komen" value="<?=count($comments) ?>" hidden="true">
+                            <ol class="commentlist" id="comment-tbody">
                                 <?php foreach ($comments as $comment): ?>   
-                                    <li class="comment">
+                                    <li class="comment" >
                                         <div class="comment_container clear" style="margin-right: 100px">
                                             <img src="http://placehold.it/70x70" data-at2x="http://placehold.it/70x70" alt="" class="avatar">
                                             <div class="comment-text">
@@ -219,8 +221,11 @@
         </div>
     </div>
 </div>
+<!-- sound notification -->
+<audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+<!-- /sound notification -->
 <script src="http://macyjs.com/assets/js/macy.min.js"></script>
-
+  <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 <script>
     $(document).ready(function () {
         Macy.init({
@@ -250,17 +255,41 @@
                 type: "POST",
                 url: '<?php echo base_url() ?>index.php/video/addkomen',
                 data: {isiKomen: isiKomen, videoID: videoID},
+                dataType: "json",
+                cache : false,
                 success: function (data)
                 {
-                    swal({   title: "Komen Berhasil ditambahkan",   
-                     type: "info",   
-                     showCancelButton: false,   
-                     confirmButtonColor: "#8BDCF7",   
-                     confirmButtonText: "Ok!",   
-                     closeOnConfirm: false }, 
-                     function(){   
-                        window.location = base_url+"video/seevideo/"+videoID;
-                        ; });
+                if(data.success == true){
+
+                var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
+                socket.emit('new_count_komen', { 
+                  new_count_komen: data.new_count_komen
+                });
+                console.log(data);
+                socket.emit('new_komen', { 
+                   isiKomen: data.isiKomen,
+                  videoID: data.videoID,
+                  userID: data.userID,
+                  UUID: data.UUID,
+                  namaPengguna:data.namaPengguna,
+                  date_created:data.date_created,
+                  videoID:data.videoID,
+                  photo:data.photo,
+                  mapelID:data.mapelID
+
+                });
+
+              } else if(data.success == false){
+                console.log("gagal");
+                // $("#name").val(data.name);
+                // $("#email").val(data.email);
+                // $("#subject").val(data.subject);
+                // $("#message").val(data.message);
+                // $("#notif").html(data.notif);
+
+              }
+                    // IO
                 },
                 error: function ()
                 {
@@ -273,4 +302,42 @@
 
      });
     });
+
+</script>
+<script type="text/javascript">
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
+          // socket.on( 'new_count_komen', function( data ) {
+          //   console.log(data);
+          //     $( "#new_count_komen" ).html( data.new_count_komen+'<i class="ico-bell"></i>');
+          //     $('#notif_audio')[0].play();
+
+          // });
+
+          // socket.on( 'update_count_komen', function( data ) {
+
+          //     $( "#new_count_komen" ).html( data.update_count_komen );
+            
+          // });
+           socket.on( 'new_komen', function( data ) {
+              var videoID=$("[name=videoID]").val();
+              var penggunaID = '<?=$this->session->userdata['id'];?>';
+               var old_count_komen = parseInt($('[name=count_komen]').val());
+                new_count_komen = old_count_komen + 1;
+                if (penggunaID!=data.userID && videoID==data.videoID) {
+
+                 $( "#new_count_komen" ).html('Komenta <span>'+new_count_komen+'<span>');  
+                 $('#notif_audio')[0].play();
+                 $('[name=count_komen]').val(new_count_komen);
+                 $( "#comment-tbody" ).append('<li class="comment"><div class="comment_container clear" style="margin-right: 100px"><img src="http://placehold.it/70x70" data-at2x="http://placehold.it/70x70" alt="" class="avatar"><div class="comment-text"><p class="meta"><strong>'+data.namaPengguna+'</strong><time datetime="<?=$comment->date_created ?>"> : '+data.date_created+'</time></p><div class="description"><p>'+data.isiKomen+'</p></div></div></div></li>');
+               }else if(videoID==data.videoID){
+                $( "#new_count_komen" ).html('Komenta <span>'+new_count_komen+'<span>'); 
+                $('[name=count_komen]').val(new_count_komen);
+                $( "#comment-tbody" ).append('<li class="comment"><div class="comment_container clear" style="margin-right: 100px"><img src="http://placehold.it/70x70" data-at2x="http://placehold.it/70x70" alt="" class="avatar"><div class="comment-text"><p class="meta"><strong>'+data.namaPengguna+'</strong><time datetime="<?=$comment->date_created ?>"> : '+data.date_created+'</time></p><div class="description"><p>'+data.isiKomen+'</p></div></div></div></li>');
+              }
+
+           
+          });
+
+
 </script>

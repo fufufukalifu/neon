@@ -1,3 +1,6 @@
+<!-- sound notification -->
+<audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+<!-- /sound notification -->
 		<div class="modal fade" tabindex="-1" role="dialog" id="laporkanbug">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">

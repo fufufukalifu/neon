@@ -15,6 +15,8 @@ class Komenback extends MX_Controller
  }
 
  public function index() {
+  
+  $data['datKomen']=$this->datKomen();
   $data['judul_halaman'] = "Dashboard Admin";
   $data['files'] = array(
    APPPATH . 'modules/komenback/views/v-table-komen.php',
@@ -27,6 +29,9 @@ class Komenback extends MX_Controller
  } elseif ($hakAkses == 'guru') {
             // jika guru
    // redirect(site_url('guru/dashboard/'));
+  $id_guru = $this->session->userdata['id_guru'];
+  // get jumlah komen yg belum di baca
+  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
     $data['judul_halaman'] = "Dashboard Guru : Komen";
   $data['files'] = array(
    APPPATH . 'modules/komenback/views/v-table-komen.php',
@@ -105,10 +110,14 @@ public function addkomen() {
 
   // LOAD PARSER SESUAI HAK AKSES
   public function loadparser($data){
+     $data['datKomen']=$this->datKomen();
     $this->hakakses = $this->gethakakses();
     if ($this->hakakses=='admin') {
       $this->parser->parse('admin/v-index-admin', $data);
     } else if($this->hakakses=='guru'){
+        $id_guru = $this->session->userdata['id_guru'];
+  // get jumlah komen yg belum di baca
+  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
       $this->parser->parse('templating/index-b-guru', $data);
     }else{
       echo "forbidden access";        
@@ -118,8 +127,11 @@ public function addkomen() {
 
 
 function seevideo($idvideo){
+
         //data untuk templating
+  $this->mkomen->ch_stat_read($idvideo);
   $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
+
   if ($data['videosingle'] == array()) {
     $data['title'] = "Video yang anda pilih tidak ada, mohon kirimi kami laporan";
 
@@ -148,9 +160,6 @@ function seevideo($idvideo){
           </p>
         </video>";
       }
-
-    // echo $judulxz;
-
       $penggunaID = $onevideo[0]->penggunaID;
       $penulis = $this->load->mguru->get_penulis($penggunaID);
 
@@ -168,6 +177,7 @@ function seevideo($idvideo){
       
       $date = strtotime($onevideo[0]->date_created);
       $data = array(
+        'videoID' =>$onevideo[0]->id,
         'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
         'judul_header' =>  $onevideo[0]->judulVideo,
         'judul_video' => $onevideo[0]->judulVideo,
@@ -187,14 +197,25 @@ function seevideo($idvideo){
       $data['videobysub'] = $this->load->mvideos->get_video_by_sub($subid);
       $data['video_by_bab'] = $this->mvideos->get_all_video_by_bab($idbab);
 
-     $comments = $this->mkomen->get_komen_byvideo($idvideo);
+     
+       // $hakakses=$this->session->userdata['HAKAKSES'];
+      // cek hakakases
+      // if ($hakakses=='admin') {
+         $comments = $this->mkomen->get_komen_byvideo($idvideo);
+      // } else if($hakakses=='guru'){
+      //    $comments = $this->mkomen->get_komenGuru_byvideo($idvideo);
+      // }else{
+      //    $comments = $this->mkomen->get_komenSiswa_byvideo($idvideo);
+      // }
+    // 
+
        $data['comments']=array();
       foreach ( $comments as $key ) {
         // generateavatar
-        $avatar=$key->avatar;
+        // $avatar=$key->photo;
         $namaPengguna=$key->namaPengguna;
-        // if ($avatar !='' && $avatar !=' ') {
-          // $img=base_url('assets/image/photo/'.$key->hakAkses.'/'.$key->avatar);
+        // if ($avatar !='' && $avatar !=' ' && $avatar !='default') {
+        //   $img=base_url('assets/image/photo/'.$hakakses.'/'.$key->photo);
         // } else {
          $img=$this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
         // }
@@ -224,5 +245,18 @@ function seevideo($idvideo){
     return $this->session->userdata('HAKAKSES');
   }
   //GET HAK AKSES
+  // get data komen not read
+  public function datKomen()
+  {
+      $hakAkses = $this->session->userdata['HAKAKSES'];
+      if ($hakAkses == 'admin') {
+          $listKomen = $this->mkomen->get_all_komen();
+      }else{
+        $id_guru = $this->session->userdata['id_guru'];
+         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+      }
+
+      return $listKomen;
+  }
 }
 ?>

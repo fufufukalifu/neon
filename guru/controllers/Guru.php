@@ -11,7 +11,8 @@ class Guru extends MX_Controller {
         parent::__construct();
         $this->load->model( 'mguru' );
         $this->load->model( 'video/mvideos' );
-        $this->load->model( 'komen/mkomen' );
+        // $this->load->model( 'komen/mkomen' );
+        $this->load->model( 'komenback/mkomen' );
         $this->load->model( 'register/mregister' );
         $this->load->model('templating/mtemplating');
         $this->load->model('siswa/msiswa');
@@ -64,7 +65,8 @@ class Guru extends MX_Controller {
 
         $data = $this->videobyteacher();
         #Sesudah Tempalting#
-
+        //get data komen yg belum di baca
+         $data['datKomen']=$this->datKomen();
         $data['judul_halaman'] = "Dashboard";
         $data['files'] = array(
             APPPATH . 'modules/guru/views/v-container-video.php',
@@ -75,6 +77,12 @@ class Guru extends MX_Controller {
          // jika admin
            $this->parser->parse('admin/v-index-admin', $data);
        } elseif($hakAkses=='guru'){
+        ##count komen
+        //get id guru
+         $id_guru = $this->session->userdata['id_guru'];
+        // get jumlah komen yg belum di baca
+        $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+        ## count komen
          // jika guru
          $this->parser->parse('templating/index-b-guru', $data);
      }else{
@@ -344,6 +352,20 @@ function get_avatar_guru(){
     $photo =  base_url()."assets/image/photo/guru/".$avatar;
     echo "<img src=".$photo." class='img-circle' alt='' />";
 }
+
+// get data komen not read
+  public function datKomen()
+  {
+      $hakAkses = $this->session->userdata['HAKAKSES'];
+      if ($hakAkses == 'admin') {
+          $listKomen = $this->mkomen->get_all_komen();
+      }else{
+        $id_guru = $this->session->userdata['id_guru'];
+         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+      }
+
+      return $listKomen;
+  }
 
 }
 ?>
