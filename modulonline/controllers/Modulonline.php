@@ -10,7 +10,7 @@ class Modulonline extends MX_Controller {
         $this->load->model('Mmodulonline');
         $this->load->library('Ajax_pagination');
         $this->perPage = 6;
-
+        $this->load->model('komenback/mkomen');
         $this->load->model('templating/Mtemplating');
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
@@ -489,11 +489,14 @@ class Modulonline extends MX_Controller {
            
             
         } elseif($hakAkses=='guru'){
-             // jika guru
-
-               $this->parser->parse('templating/index-b-guru', $data);
-
-            
+          // jika guru
+          // notification
+          $data['datKomen']=$this->datKomen();
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          //
+          $this->parser->parse('templating/index-b-guru', $data);            
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -714,7 +717,13 @@ class Modulonline extends MX_Controller {
             if ($data['id_tingkatpelajaran'] == null || $uuid == null) {
                 redirect(site_url('guru/dashboard/'));
             } else {
-                $this->parser->parse('templating/index-b-guru', $data);
+              // notification
+              $data['datKomen']=$this->datKomen();
+              $id_guru = $this->session->userdata['id_guru'];
+              // get jumlah komen yg belum di baca
+              $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+              //
+              $this->parser->parse('templating/index-b-guru', $data);
             }
             
         }else{
@@ -1156,6 +1165,20 @@ class Modulonline extends MX_Controller {
         $download = $this->Mmodulonline->ambilnilai($idmodul);
         $temp= $download['download']+1;       
         $this->Mmodulonline->tambahdownload($idmodul,$temp);
+    }
+
+    // get data komen not read
+    public function datKomen()
+    {
+        $hakAkses = $this->session->userdata['HAKAKSES'];
+        if ($hakAkses == 'admin') {
+            $listKomen = $this->mkomen->get_all_komen();
+        }else{
+          $id_guru = $this->session->userdata['id_guru'];
+           $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+        }
+
+        return $listKomen;
     }
 
 }

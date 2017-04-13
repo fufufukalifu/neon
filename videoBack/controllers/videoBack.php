@@ -3,7 +3,7 @@
 //============================================================+
 // File name   : videoBack.php
 // Begin       : -
-// Last Update : 2017-04-03
+// Last Update : 2017-04-13
 //
 // Description : controller model video back
 //               
@@ -34,6 +34,7 @@ class Videoback extends MX_Controller {
     $this->load->library('parser');
     $this->load->library('pagination');
     $this->load->library('generateavatar');
+    $this->load->model('komenback/mkomen');
 
   }
 
@@ -116,30 +117,38 @@ public function index() {
   $this->load->view('v-upload-video-form');
 }
 
-    //menampilkan view form upload
+#######menampilkan view form upload OLD FORM############################
+// public function formupvideo() {
+//     // notification
+//   $data['datKomen']=$this->datKomen();
+//   $id_guru = $this->session->userdata['id_guru'];
+//   // get jumlah komen yg belum di baca
+//   $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+//   //
+//   $data['judul_halaman'] = "upload Video";
+//   $data['files'] = array(
+//     APPPATH . 'modules/videoback/views/v-upload-video-form.php',
+//     );
+//   $hakAkses=$this->session->userdata['HAKAKSES'];
+//         // cek hakakses 
+//   if ($hakAkses=='admin') {
+//             // jika admin
+//     $this->parser->parse('admin/v-index-admin', $data);
+//   } elseif($hakAkses=='guru'){
+//             // jika guru
+//     $this->parser->parse('templating/index-b-guru', $data);
+//   }elseif($hakAkses=='siswa'){
+//             // jika siswa redirect ke welcome
+//     redirect(site_url('welcome'));
+//   }else{
+
+//     redirect(site_url('login'));
+//   }
+// }
+####################################################################################
+
 public function formupvideo() {
-  $data['judul_halaman'] = "upload Video";
-  $data['files'] = array(
-    APPPATH . 'modules/videoback/views/v-upload-video-form.php',
-    );
-  $hakAkses=$this->session->userdata['HAKAKSES'];
-        // cek hakakses 
-  if ($hakAkses=='admin') {
-            // jika admin
-    $this->parser->parse('admin/v-index-admin', $data);
-  } elseif($hakAkses=='guru'){
-            // jika guru
-    $this->parser->parse('templating/index-b-guru', $data);
-  }elseif($hakAkses=='siswa'){
-            // jika siswa redirect ke welcome
-    redirect(site_url('welcome'));
-  }else{
 
-    redirect(site_url('login'));
-  }
-}
-
-public function formupvideo2() {
   $data['judul_halaman'] = "upload Video";
   $data['files'] = array(
     APPPATH . 'modules/videoback/views/v-upload-video-form2.php',
@@ -150,7 +159,13 @@ public function formupvideo2() {
             // jika admin
     $this->parser->parse('admin/v-index-admin', $data);
   } elseif($hakAkses=='guru'){
-            // jika guru
+    // jika guru
+    // notification
+    $data['datKomen']=$this->datKomen();
+    $id_guru = $this->session->userdata['id_guru'];
+    // get jumlah komen yg belum di baca
+    $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+   //
     $this->parser->parse('templating/index-b-guru', $data);
   }elseif($hakAkses=='siswa'){
             // jika siswa redirect ke welcome
@@ -178,6 +193,12 @@ public function formUpdateVideo($UUID) {
   $this->parser->parse('admin/v-index-admin', $data);
 } elseif($hakAkses=='guru'){
   // jika guru
+  // notification
+  $data['datKomen']=$this->datKomen();
+  $id_guru = $this->session->userdata['id_guru'];
+  // get jumlah komen yg belum di baca
+  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+ //
   $this->parser->parse('templating/index-b-guru', $data);
 }elseif($hakAkses=='siswa'){
   // jika siswa redirect ke welcome
@@ -189,7 +210,13 @@ public function formUpdateVideo($UUID) {
 }
 
 public function managervideo() {
-        // $data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
+  // notification
+  $data['datKomen']=$this->datKomen();
+  $id_guru = $this->session->userdata['id_guru'];
+  // get jumlah komen yg belum di baca
+  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+  //
+  // $data['paket_soal'] = $this->load->MPaketsoal->getpaketsoal();
   $data['judul_halaman'] = "My Video";
   $data['files'] = array(
     APPPATH.'modules/videoback/views/v-container-video.php',
@@ -1179,6 +1206,7 @@ echo json_encode( $output );
 //list daftar video tidak menggunkan datatable
 public function daftarvideo()
 {
+
        $this->load->database();
         $jumlah_data = $this->Mvideoback->jumlah_video();
        
@@ -1230,6 +1258,7 @@ public function daftarvideo()
 
 public function tampVideo($list='')
 {
+
     $data['judul_halaman'] = "List Video";
     $data['files'] = array(
             APPPATH . 'modules/Videoback/views/v-tamp-video.php',
@@ -1287,8 +1316,14 @@ public function tampVideo($list='')
         if ($hakAkses=='admin') {
                 $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
-             // jika guru
-               $this->parser->parse('templating/index-b-guru', $data);
+          // jika guru
+          // notification
+          $data['datKomen']=$this->datKomen();
+          $id_guru = $this->session->userdata['id_guru'];
+           // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          //
+          $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -1575,7 +1610,19 @@ public function carivideo()
         $this->tampVideo($list);
     }
 
-   
+   // get data komen not read
+    public function datKomen()
+    {
+        $hakAkses = $this->session->userdata['HAKAKSES'];
+        if ($hakAkses == 'admin') {
+            $listKomen = $this->mkomen->get_all_komen();
+        }else{
+          $id_guru = $this->session->userdata['id_guru'];
+           $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+        }
+
+        return $listKomen;
+    }
 }
 
 ?>

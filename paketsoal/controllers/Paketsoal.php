@@ -10,7 +10,7 @@ class paketsoal extends MX_Controller
 		$this->load->model( 'mpaketsoal' );
 		$this->load->model( 'banksoal/mbanksoal' );
 		$this->load->model( 'latihan/mlatihan' );
-
+		 $this->load->model('komenback/mkomen');
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
 		$this->load->model('templating/mtemplating');
@@ -154,7 +154,13 @@ class paketsoal extends MX_Controller
 
 
 		} elseif($hakAkses=='guru'){
-                    // jika guru
+      // jika guru
+      // notification
+      $data['datKomen']=$this->datKomen();
+      $id_guru = $this->session->userdata['id_guru'];
+      // get jumlah komen yg belum di baca
+      $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+      //
 			$this->load->view('templating/index-b-guru', $data);  
 
 
@@ -281,10 +287,14 @@ class paketsoal extends MX_Controller
 
 
 		} elseif($hakAkses=='guru'){
-                    // jika guru
-			$this->load->view('templating/index-b-guru', $data);  
-
-
+      // jika guru
+      // notification
+      $data['datKomen']=$this->datKomen();
+      $id_guru = $this->session->userdata['id_guru'];
+      // get jumlah komen yg belum di baca
+      $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+      //
+			$this->load->view('templating/index-b-guru', $data);
 		}else{
             // jika siswa redirect ke welcome
 			redirect(site_url('welcome'));
@@ -501,6 +511,19 @@ $output = array(
 echo json_encode( $output );
 
 }
+  // get data komen not read
+  public function datKomen()
+  {
+      $hakAkses = $this->session->userdata['HAKAKSES'];
+      if ($hakAkses == 'admin') {
+          $listKomen = $this->mkomen->get_all_komen();
+      }else{
+        $id_guru = $this->session->userdata['id_guru'];
+         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+      }
+
+      return $listKomen;
+  }
 
 }
 ?>

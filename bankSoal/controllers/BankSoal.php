@@ -3,7 +3,7 @@
 //============================================================+
 // File name   : Banksoal.php
 // Begin       : -
-// Last Update : -2017-03-02
+// Last Update : -2017-04-13
 //
 // Description : List pagination siswa
 //               
@@ -29,6 +29,7 @@ class Banksoal extends MX_Controller {
         $this->load->helper(array('url'));
         $this->load->model('Mbanksoal');
         $this->load->model('templating/Mtemplating');
+        $this->load->model('komenback/mkomen');
         $this->load->library('parser');
          $this->load->library('pagination');
     }
@@ -205,8 +206,14 @@ class Banksoal extends MX_Controller {
         if ($hakAkses=='admin') {
                 $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
-             // jika guru
-               $this->parser->parse('templating/index-b-guru', $data);
+          // jika guru
+          // notification
+          $data['datKomen']=$this->datKomen();
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          //
+          $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -768,9 +775,14 @@ class Banksoal extends MX_Controller {
                 $this->parser->parse('admin/v-index-admin', $data);  
             
         } elseif($hakAkses=='guru'){
-             // jika guru
-            $this->parser->parse('templating/index-b-guru', $data);
-
+          // jika guru
+          // notification
+          $data['datKomen']=$this->datKomen();
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          //
+          $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
             redirect(site_url('welcome'));
@@ -910,14 +922,19 @@ class Banksoal extends MX_Controller {
            
             
         } elseif($hakAkses=='guru'){
-            // jika guru
-            $this->parser->parse('templating/index-b-guru', $data);
-            
+          // jika guru
+          // notification
+          $data['datKomen']=$this->datKomen();
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          //
+          $this->parser->parse('templating/index-b-guru', $data);   
         }else{
-                        // jika siswa redirect ke welcome
-            redirect(site_url('welcome'));
+          // jika siswa redirect ke welcome
+          redirect(site_url('welcome'));
         }
-                #END Cek USer#
+        #END Cek USer#
     }
 
     public function uploadsoal() {
@@ -2228,6 +2245,19 @@ class Banksoal extends MX_Controller {
                $this->Mbanksoal->ch_soal($data);
         }
     }
+  // get data komen not read
+  public function datKomen()
+  {
+      $hakAkses = $this->session->userdata['HAKAKSES'];
+      if ($hakAkses == 'admin') {
+          $listKomen = $this->mkomen->get_all_komen();
+      }else{
+        $id_guru = $this->session->userdata['id_guru'];
+         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+      }
+
+      return $listKomen;
+  }
 
 
 }

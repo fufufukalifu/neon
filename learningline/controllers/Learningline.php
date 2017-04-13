@@ -14,6 +14,7 @@ class Learningline extends MX_Controller {
 		$this->load->model('materi/mmateri');
 		$this->load->model('latihan/mlatihan');
 		$this->load->model('video/mvideos');
+		$this->load->model('komenback/mkomen');
 
 		$this->hakakses = $this->gethakakses();
 	}
@@ -30,6 +31,12 @@ class Learningline extends MX_Controller {
 		if ($this->hakakses=='admin') {
 			$this->parser->parse('admin/v-index-admin', $data);
 		} else if($this->hakakses=='guru'){
+			// notification
+	        $data['datKomen']=$this->datKomen();
+	        $id_guru = $this->session->userdata['id_guru'];
+	        // get jumlah komen yg belum di baca
+	        $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+	        //
 			$this->parser->parse('templating/index-b-guru', $data);
 		}else{
 			echo "forbidden access";    		
@@ -715,5 +722,18 @@ function get_line_log(){
 	echo json_encode($output);
 }
 # get line log berdasrkan pengguna.
+// get data komen not read
+  public function datKomen()
+  {
+      $hakAkses = $this->session->userdata['HAKAKSES'];
+      if ($hakAkses == 'admin') {
+          $listKomen = $this->mkomen->get_all_komen();
+      }else{
+        $id_guru = $this->session->userdata['id_guru'];
+         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+      }
+
+      return $listKomen;
+  }
 
 }
