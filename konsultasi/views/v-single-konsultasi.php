@@ -37,10 +37,14 @@
 	}
 </style>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/config.js') ?>"></script>
+
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
 
 
+
 <main>	
+	<br>
 	<div class="modal fade " tabindex="-1" role="dialog" id="myModal">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -104,23 +108,24 @@
 
 					<div class="quotes clear-fix" >
 						<div class="quote-avatar-author clear-fix">
-							<img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt="">
+							<img src="{photo}" data-at2x="{photo}" alt="{namaPengguna}" width="60px">
 							<div class="author-info">{author}<br><span>{akses}</span></div>
 						</div>
 
 						<div>
-							<p><q><b>{judul_header}</b></q></p>
+							<h4 style="display:inline">{judul_header}</h4>
 							<div class="komen"><?=$isi ?>
-								<input type="hidden" name="single" value="<?=$isi ?>">
 							</div>
-							<input type="hidden" name="" value="{isi}">
+							<!-- <input type="hidden" name="" value="{isi}"> -->
+							<input type="hidden" name="single" value="<?=htmlspecialchars($isi) ?>">
+
 
 						</div>
 
 					</div><br>
 
 					<div class="tags-post">
-						<a href="#" rel="tag">{sub}</a>
+						<a href="#" rel="tag">{bab}</a>
 						<a onclick="quote('single')" rel="tag">quote</a>
 						<a onclick="quote(0)" rel="tag">Balas</a>
 
@@ -128,7 +133,6 @@
 				</article>
 			</div>
 
-			<hr class="divider-big">
 			<?php if ($data_postingan!=array()): ?>
 				<?php foreach ($data_postingan as $item_postingan): ?>
 					<div class="blog-post">
@@ -141,11 +145,11 @@
 								<div class="quote-avatar-author clear-fix">
 
 									<?php 
-										if ($item_postingan['hakAkses']=="siswa") {
+									if ($item_postingan['hakAkses']=="siswa") {
 										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['siswa_photo'];
-										}else{
+									}else{
 										$gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['guru_photo'];
-										}
+									}
 									?>
 									<img 
 									src="<?=$gbr ?>" width="60px">
@@ -155,7 +159,7 @@
 								<div>
 									<div class="komen"><?=$item_postingan['isiJawaban'] ?>
 
-										<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=$item_postingan['isiJawaban']."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
+										<input type="hidden" name="<?=$item_postingan['jawabID'] ?>" value="<?=htmlspecialchars($item_postingan['isiJawaban'])."<span style='font-style:italic'><br>Post By:".$item_postingan['namaPengguna']?>">
 
 									</div>
 
@@ -203,93 +207,112 @@
 				<?php endforeach ?>
 			<?php endif ?>
 
+			<!-- editor reply -->
+			<div class="container">	
+				<hr>	
+				<div class="col-sm-12" id="jawaban">
+					<br>
+					<span>Isi Jawaban :</span>
+					<textarea  name="respon" class="form-control" id="isi" row=10 cols=80></textarea>
+					<br>
+					<form action="<?=base_url('konsultasi/do_upload') ?>" method="post" enctype="multipart/form-data" id="form-gambar">
+						<span>Upload gambar :</span> 
+						<input type="file" class="cws-button bt-color-3 alt smaller post" name="file" style="display: inline">
+
+						<a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
+						<div id="output" style="display: inline">
+							<a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+						</div>
+
+
+						<input type="submit" class="fa fa-cloud-upload submit-upload" style="margin-top: 3px;display: none" value="Upload">							
+					</a>
+				</form>
+				<!-- <br> -->
+				<!-- <a class="cws-button bt-color-3 alt smalls" onclick="preview()">Preview</a>  -->
+				<a onclick="simpan_jawaban()" class="cws-button bt-color-3 alt smaller post">Post</a>
+				<br>
+				<br>
+				<hr>
+			</div>
 		</div>
+	</div>
+	<script type="text/javascript">
+		var ckeditor;
 
-		<script type="text/javascript">
-			var ckeditor;
-			var string;
-			var txt = 1;
-			function quote(data){
-				if (data==0) { 	
-					$('#modalJawab .modal-body .quotes p i').html("");
-
-					$('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
-					string = 0;
-					$('#modalJawab').modal('show');
-			// ckeditor.setData(data);
-		}else{
-			$('#modalJawab .modal-header .modal-title').html("Quote Jawaban");
-			string = $('input[name='+data+']').val();
-			$('#modalJawab .modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
-			// ckeditor.setData(string);
-			$('#modalJawab').modal('show');
-		}
-			// ckeditor = CKEDITOR.replace( 'editor1' );
-
-		}
-		function simpan_jawaban(){
-			txt = $('#komenText').val();
-			console.log(txt);
-			console.log(string);
-		//kalo kosong
-		if (string==0) {
-			var desc = txt;/*ckeditor.getData();*/
-			var data = {
-				isiJawaban : desc,
-				penggunaID : $('input[name=idpengguna]').val(),
-				pertanyaanID : $('input[name=idpertanyaan]').val(),
-			}
-			idpertanyaan= data.pertanyaanID;
-		}else{
-			quote = "<blockquote>"+string+"</blockquote>"+txt;
-
-
-			var data = {
-				isiJawaban : quote,
-				penggunaID : $('input[name=idpengguna]').val(),
-				pertanyaanID : $('input[name=idpertanyaan]').val(),
-			}
-			idpertanyaan= data.pertanyaanID;
-		}
-		if (data.isiJawaban == "") {
-			$('#info').show();
-		}else{
-			url = base_url+"konsultasi/ajax_add_jawaban/";
-			$.ajax({
-				url : url,
-				type: "POST",
-				data: data,
-				dataType: "TEXT",
-				success: function(data)
-				{
-				// alert('masd');
-                $('.post').text('Posting..'); //change button text
-                $('.post').attr('disabled',false); //set button enable
-                // alert('berhasil');
-                window.location = base_url+"konsultasi/singlekonsultasi/"+idpertanyaan;
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-            	alert('Error adding / update data');
-            }
-        });
-		}
-	}
-
-	function point(data){
-		elemen = "<textarea class='form-control' name='komentar'></textarea>";
-		$('.modal-body').html(elemen);
-		$('.modal-header .modal-title').html("Berikan Komentar");
-		$('#myModal').modal('show');
-		button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
-
-		$('.modal-footer').html(button);
 		
 
-	}
+		$(document).ready(function(){
+			CKEDITOR.replace( 'respon', {
+				height: 260,
+				/* Default CKEditor styles are included as well to avoid copying default styles. */
+			} );
 
-	function komen(data){
-		var isikomentar = $('textarea[name=komentar]').val();
+			/*ckeditor = CKEDITOR.replace('respon');	*/
+		});
+
+		var ckeditor;
+		var string;
+		var txt = 1;
+		function quote(data){
+			if (data==0) {						
+					// balas
+					$('html, body').animate({
+						scrollTop: $("#jawaban").offset().top
+					}, 2000);
+				}else{
+					//quote
+					$('html, body').animate({
+						scrollTop: $("#jawaban").offset().top
+					}, 2000);
+
+					string = $('input[name='+data+']').val();
+
+					CKEDITOR.instances.isi.setData("<blockquote>"+string+"</blockquote><br>");
+				}
+
+			}
+			function simpan_jawaban(){
+				// get text from ck editor
+				txt = CKEDITOR.instances.isi.getData();
+				
+				var datas = {
+					isiJawaban : txt,
+					penggunaID : $('input[name=idpengguna]').val(),
+					pertanyaanID : $('input[name=idpertanyaan]').val(),
+				};
+
+				url = base_url+"konsultasi/ajax_add_jawaban/";
+				$.ajax({
+					url : url,
+					type: "POST",
+					data: datas,
+					dataType: "TEXT",
+					success: function(data){
+						window.location = base_url+"konsultasi/singlekonsultasi/"+datas.pertanyaanID;
+					},
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						alert('Error adding / update data');
+					}
+				});
+
+			}
+
+			function point(data){
+				elemen = "<textarea class='form-control' name='komentar'></textarea>";
+				$('.modal-body').html(elemen);
+				$('.modal-header .modal-title').html("Berikan Komentar");
+				$('#myModal').modal('show');
+				button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+
+				$('.modal-footer').html(button);
+
+
+			}
+
+			function komen(data){
+				var isikomentar = $('textarea[name=komentar]').val();
 
 	// url = base_url+"konsultasi/ajax_add_point/"+data;
 	url = base_url+"konsultasi/check_point/"+data;

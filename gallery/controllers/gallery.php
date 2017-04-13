@@ -7,6 +7,8 @@
  	private $upload_path = "./assets/image/gallery";
  	function __construct()
  	{
+        date_default_timezone_set('Asia/Jakarta');
+        
  		parent::__construct();
         $this->load->model('Mgallery');
         $this->load->model('banksoal/Mbanksoal');

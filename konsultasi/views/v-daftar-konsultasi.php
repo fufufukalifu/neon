@@ -3,6 +3,9 @@
 		width:80%;
 		margin-left: 120px;
 	}
+	.komen img{
+		width: 10%;
+	}
 	.komen li{
 		margin: 0;
 		padding: 0;
@@ -15,8 +18,7 @@
 
 <main class="container">
 	<div class="page-content">
-				<h2><a onclick="showmodal()" class="cws-button bt-color-3 border-radius icon-left"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2>
-
+		<h2><a onclick="showmodal()" class="cws-button bt-color-3 icon-left small"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2>
 		<!-- tabs -->
 		<div class="tabs">
 			<div class="block-tabs-btn clear-fix">
@@ -35,142 +37,152 @@
 						</p>
 					</form>
 					<!-- semua -->
-					<?php foreach ($questions as $question): ?>
-						<div class="blog-post">
-							<article>
-								<hr class="divider-color">
-								<br><br>
-								<div class="quotes clear-fix">
-									<div class="quote-avatar-author clear-fix" style="border-radius: 0">
-										<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
-										data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
-										width=60
-										alt="">
-										<div class="author-info">
-											<center><?=$question['namaDepan']." ".$question['namaBelakang'] ?></center>
-										</div>
-									</div>
-
-									<q>
-										<b><?=$question['judulPertanyaan'] ?></b>
-										<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
-									</q>	
-									<div class="komen">
-										<?=$question['isiPertanyaan'] ?><br>
-									</div>
-
-								</div>
-
-								<div class="tags-post">
-									<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
-								</div>
-								<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button alt small" style="margin-top: 15px">
-									Read More 
-								</a>
-							</article>
-						</div>
-
-						<!-- / blog item -->
-					<?php endforeach ?>
-					<!-- pagination -->
-					<div class="page-pagination clear-fix">
-					<a href="#"><i class="fa fa-angle-double-left"></i></a>
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<a href="#" class="active">3</a>
-				<a href="#"><i class="fa fa-angle-double-right"></i></a>
-			</div>
-			<!-- / pagination -->
-		</div>
-
-
-		<!--/tabs container -->
-		<div class="container-tabs" data-tabs-id="cont-tabs2" style="display: none;">
-			<form class="form-group">
-				<p class="input-icon">
-					<i class="fa fa-search"></i>
-					<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search2">
-				</p>
-			</form>
-			<!-- PERTANYAAN LEVEL -->
-			<?php foreach ($questions_bylevel as $question): ?>
-				<div class="blog-post">
-					<article>
-						<hr class="divider-color">
-						<br><br>
-						<div class="quotes clear-fix">
-							<div class="quote-avatar-author clear-fix">
-								<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
-								data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
-								width=60
-								alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
-
-								<q>
-									<b><?=$question['judulPertanyaan'] ?></b>
-									<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
-								</q>	
-								<div class="komen">
-									<?=$question['isiPertanyaan'] ?><br>
-								</div>
-								
-							</div>
-							<br>
-							<div class="tags-post">
-								<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
-							</div>
-							<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
-								Read More 
-								<i class="fa fa-angle-right"></i></a>
-							</article>
-						</div>
-
-						<!-- / blog item -->
-					<?php endforeach ?></div>
-					<!-- tabs container -->
-					<div class="container-tabs" data-tabs-id="cont-tabs3" style="display: none;">
-						<form class="form-group">
-							<p class="input-icon">
-								<i class="fa fa-search"></i>
-								<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search3">
-							</p>
-						</form>
-						<!-- PERTANYAANKU -->
-						<?php foreach ($my_questions as $question): ?>
-
+					<?php if ($questions): ?>
+						<?php foreach ($questions as $question): ?>
 							<div class="blog-post">
 								<article>
 									<hr class="divider-color">
 									<br><br>
 									<div class="quotes clear-fix">
-										<div class="quote-avatar-author clear-fix">
+										<div class="quote-avatar-author clear-fix" style="border-radius: 0">
 											<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
 											width=60
-											alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
-
-											<q>
-												<b><?=$question['judulPertanyaan'] ?></b>
-												<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
-											</q>	
-											<div class="komen">
-												<?=$question['isiPertanyaan'] ?><br>
+											alt="">
+											<div class="author-info">
+												<center><?=$question['namaDepan']." ".$question['namaBelakang'] ?></center>
 											</div>
-											
 										</div>
-										<br>
-										<div class="tags-post">
-											<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
+										<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>">
+											<q>
+												<h3><?=$question['judulPertanyaan'] ?></h3>
+												<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+											</q>
+										</a>
+
+										<div class="komen">
+											<?=$question['isiPertanyaan'] ?><br>
 										</div>
-										<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
-											Read More 
-											<i class="fa fa-angle-right"></i></a>
-										</article>
+
 									</div>
 
-									<!-- / blog item -->
-								<?php endforeach ?>
-								<!-- pagination -->
-								<div class="page-pagination clear-fix">
+									<div class="tags-post" style="text-align: right">
+										<a href="#" rel="tag"><?=$question['judulBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
+									</div>
+									<!-- <a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" 
+									   class="cws-button alt small" style="margin-top: 15px" style="opacity: 0">
+										Read More 
+									</a> -->
+								</article>
+							</div>
+
+							<!-- / blog item -->
+						<?php endforeach ?>
+					<?php else: ?>
+						<h3>Tidak Ada Pertanyaan</h3>
+
+					<?php endif ?>
+					
+				</div>
+				<!-- pagination -->
+				<hr>
+				<br>
+<!-- 				<div class="page-pagination clear-fix">
+					<a href="#"><i class="fa fa-angle-double-left"></i></a>
+					<a href="#">1</a>
+					<a href="#">2</a>
+					<a href="#" class="active">3</a>
+					<a href="#"><i class="fa fa-angle-double-right"></i></a>
+				</div> -->
+				<!-- / pagination -->
+
+				<!--/tabs container -->
+				<div class="container-tabs" data-tabs-id="cont-tabs2" style="display: none;">
+					<form class="form-group">
+						<p class="input-icon">
+							<i class="fa fa-search"></i>
+							<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search2">
+						</p>
+					</form>
+					<!-- PERTANYAAN LEVEL -->
+					<?php foreach ($questions_bylevel as $question): ?>
+						<div class="blog-post">
+							<article>
+								<hr class="divider-color">
+								<br><br>
+								<div class="quotes clear-fix">
+									<div class="quote-avatar-author clear-fix">
+										<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+										data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+										width=60
+										alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
+
+										<q>
+											<b><?=$question['judulPertanyaan'] ?></b>
+											<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+										</q>	
+										<div class="komen">
+											<?=$question['isiPertanyaan'] ?><br>
+										</div>
+
+									</div>
+									<br>
+									<div class="tags-post">
+										<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
+									</div>
+									<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
+										Read More 
+										<i class="fa fa-angle-right"></i></a>
+									</article>
+								</div>
+
+								<!-- / blog item -->
+							<?php endforeach ?></div>
+							<!-- tabs container -->
+							<div class="container-tabs" data-tabs-id="cont-tabs3" style="display: none;">
+								<form class="form-group">
+									<p class="input-icon">
+										<i class="fa fa-search"></i>
+										<input type="text" placeholder="Cari Pertanyaan" name="search_data" id="search3">
+									</p>
+								</form>
+								<!-- PERTANYAANKU -->
+								<?php foreach ($my_questions as $question): ?>
+
+									<div class="blog-post">
+										<article>
+											<hr class="divider-color">
+											<br><br>
+											<div class="quotes clear-fix">
+												<div class="quote-avatar-author clear-fix">
+													<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+													data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+													width=60
+													alt=""><div class="author-info"><?=$question['namaDepan']." ".$question['namaBelakang'] ?><br></div></div>
+
+													<q>
+														<b><?=$question['judulPertanyaan'] ?></b>
+														<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+													</q>	
+													<div class="komen">
+														<?=$question['isiPertanyaan'] ?><br>
+													</div>
+
+												</div>
+												<br>
+												<div class="tags-post">
+													<a href="#" rel="tag"><?=$question['judulSubBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
+												</div>
+												<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>" class="cws-button border-radius alt icon-right">
+													Read More 
+													<i class="fa fa-angle-right"></i></a>
+												</article>
+											</div>
+
+											<!-- / blog item -->
+										<?php endforeach ?>
+										<!-- pagination -->
+										<div class="page-pagination clear-fix">
 					<a href="#"><i class="fa fa-angle-double-left"></i></a><!--
 					--><a href="#">1</a><!-- 
 					--><a href="#">2</a><!-- 
@@ -216,7 +228,9 @@
 			}
 		});
 	});
+	
 	function showmodal(){
 		$('#myModal').modal('show');
 	}
+
 </script>

@@ -13,9 +13,9 @@ class Mkonsultasi extends CI_Model
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 		`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 		`isiPertanyaan`, `pertanyaan`.`date_created`, 
-		`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
 		FROM `tb_k_pertanyaan` `pertanyaan` 
-		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_bab` `bab` ON `pertanyaan`.`babID` = `bab`.`id` 
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id`
 		WHERE `judulPertanyaan` LIKE '%$key%' 
 		ORDER BY `pertanyaan`.`date_created` desc ";
@@ -34,9 +34,9 @@ class Mkonsultasi extends CI_Model
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 		`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 		`isiPertanyaan`, `pertanyaan`.`date_created`, 
-		`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
 		FROM `tb_k_pertanyaan` `pertanyaan` 
-		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_bab` `bab` ON `pertanyaan`.`babID` = `bab`.`id` 
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
 		WHERE `siswa`.`id` = $id_siswa 
 		AND `judulPertanyaan` LIKE '%$key%' 
@@ -56,10 +56,11 @@ class Mkonsultasi extends CI_Model
 	function get_my_question_level($id_tingkat,$key=""){
 
 		$sub = "SELECT `pertanyaan`.`id` AS `pertanyaanID`, `photo`, `namaDepan`, 
-		`namaBelakang`, `judulPertanyaan`, `isiPertanyaan`, `pertanyaan`.`date_created`, `subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
+		`namaBelakang`, `judulPertanyaan`, `isiPertanyaan`, `pertanyaan`.`date_created`, 
+		`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah
 		FROM `tb_k_pertanyaan` `pertanyaan` 
 		JOIN `tb_siswa` `siswa` ON `pertanyaan`.`siswaID` = `siswa`.`id` 
-		JOIN `tb_subbab` `subbab` ON `pertanyaan`.`subBabID` = `subbab`.`id` 
+		JOIN `tb_bab` `bab` ON `pertanyaan`.`babID` = `bab`.`id` 
 		JOIN `tb_tingkat` `tingkat` ON `siswa`.`tingkatID` = `tingkat`.`id` 
 		WHERE `tingkat`.`id` = 1
 		AND `judulPertanyaan` LIKE '%$key%' 
@@ -79,10 +80,10 @@ class Mkonsultasi extends CI_Model
 
 	// ambil meta data from konsultasi
 	function get_pertanyaan($id_pertanyaan){
-		$this->db->select('*');
+		$this->db->select('*, pertanyaan.date_created as tgl_dibuat');
 		$this->db->from('tb_k_pertanyaan pertanyaan');
 		$this->db->join('tb_siswa siswa','pertanyaan.siswaID = siswa.id');
-		$this->db->join('tb_subbab subbab','pertanyaan.subBabID = subbab.id');
+		$this->db->join('tb_bab bab','pertanyaan.babID = bab.id');
 		
 		$this->db->join('tb_tingkat tingkat','siswa.tingkatID = tingkat.id');
 		$this->db->join('tb_pengguna pengguna','pengguna.id = siswa.penggunaID');
@@ -198,19 +199,19 @@ class Mkonsultasi extends CI_Model
 				$this->db->like('judulPertanyaan', $name, 'both');
 				return $this->db->get('tb_k_pertanyaan')->result();
 			}
-	// =========## cruud ##==============
+// =========## cruud ##==============
 			public function insert_konstulasi( $data ) {
 				$this->db->insert( 'tb_k_pertanyaan', $data );
 
 			}
 
-	// insert jawaban
+// insert jawaban
 			public function insert_jawaban($data){
 				$this->db->insert( 'tb_k_jawab', $data );
 
 			}
 
-	//insert point
+//insert point
 			public function insert_point($data){
 				$this->db->insert( 'tb_k_love', $data );
 			}
@@ -223,6 +224,20 @@ class Mkonsultasi extends CI_Model
 				$result = $this->db->query($sub);
 				return $result->result_array();
 
+			}
+
+			public function in_upload_konsultasi($data){
+				$this->db->insert('tb_upload_konsultasi', $data['data_upload_konsultasi']);
+			}
+
+			public function show_image(){
+				$id = $this->session->userdata('id');
+
+				$this->db->select('*');
+				$this->db->from('tb_upload_konsultasi');
+				$this->db->where('penggunaID',$id);
+				$query = $this->db->get();   
+				return $query->result_array();
 			}
 		}
 		?>
