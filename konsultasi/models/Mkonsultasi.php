@@ -125,6 +125,36 @@ class Mkonsultasi extends CI_Model
 		}
 	}
 
+	//ambil postingan dalam pertanyaan tertentu pagination
+	function get_postingan_pagination($pertanyaanID,$number,$offset){
+		$this->db->select('*,jawab.id as jawabID,siswa.photo siswa_photo,guru.photo guru_photo');
+		// $this->db->from('tb_k_jawab jawab');
+		$this->db->where('jawab.pertanyaanID',$pertanyaanID);
+		$this->db->join('tb_pengguna pengguna','pengguna.id = jawab.penggunaID');
+		$this->db->join('tb_siswa siswa','pengguna.id = siswa.penggunaID','left');
+		$this->db->join('tb_guru guru','pengguna.id = guru.penggunaID','left');
+
+		$this->db->order_by('jawab.date_created','asc');
+
+
+			return $query = $this->db->get('tb_k_jawab jawab',$number,$offset)->result_array();   
+		}
+			
+	//ambil postingan dalam pertanyaan tertentu pagination
+
+		//ambil jumlah postingan dalam pertanyaan tertentu pagination
+	function get_postingan_pagination_number($pertanyaanID){
+		$this->db->select('id');
+		$this->db->from('tb_k_jawab jawab');
+		$this->db->where('jawab.pertanyaanID',$pertanyaanID);
+
+		$this->db->order_by('jawab.date_created','asc');
+
+		$query = $this->db->get();   
+		return  $query->num_rows();
+	}
+	//ambil jumlah postingan dalam pertanyaan tertentu pagination
+
 	//ambil penggunaID by id_jawab
 	function get_penggunaID($id_jawab){
 		$this->db->select('penggunaID');
@@ -239,5 +269,51 @@ class Mkonsultasi extends CI_Model
 				$query = $this->db->get();   
 				return $query->result_array();
 			}
+
+			#get edit jawaban#
+			function get_edit_jawaban($data){
+				$this->db->select('*');
+				$this->db->from('tb_k_jawab');
+				$this->db->where('penggunaID',$data['id_pengguna']);
+				$this->db->where('id',$data['id_jawaban']);
+				$query = $this->db->get();
+
+				if ($query->result_array()) {
+					return $query->result_array();
+				}else{
+					return false;
+				}
+			}
+			#get edit jawaban#
+
+			function edit_jawaban($data){
+				$this->db->set('isiJawaban',htmlspecialchars_decode($data['isiJawaban']));
+				$this->db->where('id', $data['id']);
+				$this->db->update('tb_k_jawab');
+			}
+
+
+			// get single jawaban
+			function show_post($id_jawaban){
+				$this->db->select('*,jawab.id as jawabID,siswa.photo siswa_photo,guru.photo guru_photo');
+				$this->db->from('tb_k_jawab jawab');
+				$this->db->join('tb_k_pertanyaan pertanyaan','jawab.pertanyaanID = pertanyaan.id');
+				$this->db->join('tb_pengguna pengguna','pengguna.id = jawab.penggunaID');
+				$this->db->join('tb_siswa siswa','pengguna.id = siswa.penggunaID','left');
+				$this->db->join('tb_guru guru','pengguna.id = guru.penggunaID','left');
+
+				$this->db->order_by('jawab.date_created','asc');
+
+				$this->db->where('jawab.id',$id_jawaban);
+				$query = $this->db->get();
+
+				if ($query->result_array()) {
+					return $query->result_array();
+				}else{
+					return false;
+				}
+			}
+			// get single jawaban
+
 		}
 		?>
