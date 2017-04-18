@@ -253,12 +253,34 @@ return $query->result_array();
 
     // get data siswa per segment
 	function data_guru($number,$offset){
-	    $this->db->select('guru.namaDepan,guru.namaBelakang,guru.id as guruID,pengguna.id as penggunaID,pengguna.namaPengguna,pengguna.regTime');
+	    $this->db->select('guru.namaDepan,guru.namaBelakang,guru.id as guruID,guru.alamat,guru.noKontak,guru.biografi,pengguna.id as penggunaID,pengguna.namaPengguna,pengguna.regTime,pengguna.eMail');
 		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
 		$this->db->order_by('regTime','desc');
 		$this->db->where('pengguna.status', 1);
 		$this->db->where('guru.status', 1);
 	    return $query = $this->db->get('tb_guru guru',$number,$offset)->result_array();       
+	}
+
+	// ubah katasandi pengguna
+	function ch_password($md5Sandi,$penggunaID)
+	{
+    $this->db->set('kataSandi', $md5Sandi);
+    $this->db->where('id', $penggunaID);
+    $this->db->update('tb_pengguna');
+	}
+
+		// ubah katasandi pengguna
+	function ch_email($newEmail,$penggunaID)
+	{
+    $this->db->set('email', $newEmail);
+    $this->db->where('id', $penggunaID);
+    $this->db->update('tb_pengguna');
+	}
+	public function ch_guru($data='')
+	{
+		$guruID=$data['id'];
+    $this->db->where('id',$guruID );
+    $this->db->update('tb_guru',$data);
 	}
 }
 

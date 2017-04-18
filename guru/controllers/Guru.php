@@ -448,19 +448,22 @@ function get_avatar_guru(){
     $no=1;
     foreach ($list as $key ) {
       $datReset=$key["penggunaID"].",'".$key["namaPengguna"]."'";
+      $datChEmail=$key["penggunaID"].",'".$key["eMail"]."'";
       $guruID=$key['guruID'];
       $mengajar=$this->get_keahlianGuru($guruID);
+      $datas="'".json_encode($key)."'";
       $tb_guru.='
         <tr>
           <td>'.$no.'</td>
           <td>'.$key["namaPengguna"].'</td>
           <td>'.$key["namaDepan"].' '.$key["namaBelakang"].'</td>
           <td>'.$mengajar.'</td>
+          <td>'.$key["eMail"].'</td>
           <td>'.$key["regTime"].'</td>
           <td>
-            <button class="btn btn-sm btn-info"  title="Lihat Detail Data Guru" ><i class="ico-folder-open-alt"></i></button>
+            <button class="btn btn-sm btn-info"  title="Lihat Detail Data Guru" data-todo='. $datas.' onclick="detail('.$no.')" id="data-'.$no.'"><i class="ico-folder-open-alt"></i></button>
             <button class="btn btn-sm btn-warning"title="Ubah Data Guru"><i class=" ico-file-text"></i></button>
-            <button class="btn btn-sm btn-warning" title="Ubah Email" ><i class=" ico-envelop2"></i></button>
+            <button class="btn btn-sm btn-warning" title="Ubah Email" onclick="modalChEmail('.$datChEmail.')"><i class=" ico-envelop2"></i></button>
             <button class="btn btn-sm btn-danger" title="Reset Katasandi" onclick="resetSandi('.$datReset.')"><i class=" ico-key"></i></button>
             <button class="btn btn-sm btn-danger" title="Hapus Data guru"><i class="ico-remove2"></i></button>
           </td>
@@ -492,10 +495,34 @@ function get_avatar_guru(){
     $namaPengguna=$this->input->post('namaPengguna');
     $date=date("d");
     $newPassword=$namaPengguna.$date;
-
-    $this->mguru->ch_password();
-
+    //m5 katasandi
+    $md5Sandi=md5($newPassword);
+    $this->mguru->ch_password($md5Sandi,$penggunaID);
+    // return kata sandi baru
     echo json_encode($newPassword);
+  }
+
+  //update email
+  public function updateEmail()
+  {
+    $penggunaID=$this->input->post('penggunaID');
+    $newEmail=$this->input->post('email');
+
+    $this->mguru->ch_email($newEmail,$penggunaID);
+
+    echo json_encode($newEmail);
+  }
+
+  public function updateDatGuru()
+  {
+    $data['id']=$this->input->post('guruID');
+    $data['namaDepan']=$this->input->post('namaDepan');
+    $data['namaBelakang']=$this->input->post('namaBelakang');
+    $data['alamat']=$this->input->post('alamat');
+    $data['nokontak']=$this->input->post('nokontak');
+    $data['biografi']=$this->input->post('biografi');
+
+    $this->mguru->ch_guru($data);
   }
 
 }
