@@ -107,19 +107,13 @@
 								<thead>
 
 									<tr>
-
 										<th>no</th>
-
 										<th>Nama Lengkap</th>
-
 										<th>Nama Pengguna</th>
-
+										<th>Kelompok Keahlian</th>
 										<th>Tanggal Daftar</th>
-
 										<th>Email</th>
-
 										<th>Aksi</th>
-
 									</tr>
 
 								</thead>
@@ -240,8 +234,6 @@
 			var kelas = ".detail-"+data;
 
 			var datas = $(kelas).data('todo');
-
-			console.log(datas);
 
 			$('[name=namaDepan]').val(datas.namaDepan);
 

@@ -215,10 +215,18 @@ function seevideo($idvideo){
         // $avatar=$key->photo;
         $namaPengguna=$key->namaPengguna;
         // if ($avatar !='' && $avatar !=' ' && $avatar !='default') {
-        //   $img=base_url('assets/image/photo/'.$hakakses.'/'.$key->photo);
+            // cek hakakses
+             $hakakses=$key->hakAkses;
+             if ($hakakses=="guru") {
+              $img=base_url('assets/image/photo/guru/'.$key->guru_photo);
+             } else {
+              $img=base_url('assets/image/photo/siswa/'.$key->siswa_photo);
+             }
         // } else {
-         $img=$this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
+        //     $img=$this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
         // }
+
+         
         
          $data['comments'][]=array(
           'avatar'=> $img,

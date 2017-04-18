@@ -237,6 +237,29 @@ return $query->result_array();
 		return $query->result_array()[0]['photo'];
 	}
 
+	public function get_m_keahlianGuru($guruID='')
+	{
+		$this->db->select('mp.aliasMataPelajaran');
+		$this->db->from('tb_mm-gurumapel gm');
+		$this->db->join('tb_mata-pelajaran mp','mp.id=gm.mapelID');
+		$this->db->where('gm.guruID',$guruID);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+		function jumlah_guru(){
+		    $this->db->where('status','1');
+		    return $this->db->get('tb_guru')->num_rows();
+		}
+
+    // get data siswa per segment
+	function data_guru($number,$offset){
+	    $this->db->select('guru.namaDepan,guru.namaBelakang,guru.id as guruID,pengguna.id as penggunaID,pengguna.namaPengguna,pengguna.regTime');
+		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
+		$this->db->order_by('regTime','desc');
+		$this->db->where('pengguna.status', 1);
+		$this->db->where('guru.status', 1);
+	    return $query = $this->db->get('tb_guru guru',$number,$offset)->result_array();       
+	}
 }
 
 

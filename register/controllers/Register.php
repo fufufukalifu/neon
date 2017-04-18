@@ -547,15 +547,14 @@ class Register extends MX_Controller {
 
     public function saveguru() {
 
-// load library n helper
+    // load library n helper
 
         $this->load->helper(array('form', 'url'));
 
         $this->load->library('form_validation');
 
 
-
-//syarat pengisian form regitrasi guru
+        //syarat pengisian form regitrasi guru
 
         $this->form_validation->set_rules('namapengguna', 'Nama Pengguna', 'trim|required|min_length[6]|max_length[12]|is_unique[tb_pengguna.namaPengguna]');
 
@@ -574,10 +573,7 @@ class Register extends MX_Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|is_unique[tb_pengguna.email]');
 
 
-
-
-
-// //pesan error atau pesan kesalahan pengisian form registrasi guru
+    // //pesan error atau pesan kesalahan pengisian form registrasi guru
 
         $this->form_validation->set_message('namapengguna', 'is_unique', '*Nama Pengguna sudah terpakai');
 
@@ -592,13 +588,6 @@ class Register extends MX_Controller {
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
 
         $this->form_validation->set_message('matches', '*Kata Sandi tidak sama!');
-
-
-
-
-
-
-
 
 
         if ($this->form_validation->run() == FALSE) {
@@ -1019,7 +1008,57 @@ class Register extends MX_Controller {
 
     }
 
+    public function test()
+    {
 
+            //data guru
+            $namaDepan = htmlspecialchars($this->input->post('namadepan'));
+            $namaBelakang = htmlspecialchars($this->input->post('namabelakang'));
+            $alamat = htmlspecialchars($this->input->post('alamat'));
+            $noKontak = htmlspecialchars($this->input->post('nokontak'));
+
+            //data untuk akun
+            $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
+            $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
+            $email = htmlspecialchars($this->input->post('email'));
+            $hakAkses = 'guru';
+
+            //data array akun
+            $data_akun = array(
+                'namaPengguna' => $namaPengguna,
+                'kataSandi' => $kataSandi,
+                'eMail' => $email,
+                'hakAkses' => $hakAkses,
+            );
+
+            //melempar data guru ke function insert_pengguna di kelas model
+            $data['mregister'] = $this->mregister->insert_pengguna($data_akun);
+            //untuk mengambil nilai id pengguna untuk di jadikan FK pada tabel siswa
+            $data['tb_pengguna'] = $this->mregister->get_idPengguna($namaPengguna)[0];
+            $penggunaID = $data['tb_pengguna']['id'];
+            //data array guru
+            $data_guru = array(
+                'namaDepan' => $namaDepan,
+                'namaBelakang' => $namaBelakang,
+                'alamat' => $alamat,
+                'noKontak' => $noKontak,
+                'penggunaID' => $penggunaID,
+            );
+            //melempar data guru ke function insert_guru di kelas model
+            $data['mregister'] = $this->mregister->insert_guru($data_guru);
+
+
+            $guruID=$this->mregister->get_guruID_by_penggunaID($penggunaID);
+            $sumMapel=htmlspecialchars($this->input->post('sumMapel'));
+
+               for ($i=1; $i <= $sumMapel ; $i++) { 
+                $datArr['mapelID']=$this->input->post('mapelIDke-'.$i);
+                $datArr['guruID']=$guruID[0]['id'];
+                $this->mregister->in_guruMapel($datArr);
+            }
+
+            redirect(base_url('guru/daftar'));
+    }
 
 }
 
