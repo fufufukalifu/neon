@@ -29,10 +29,9 @@
  					<form class="form-group">
  						<select name="" id="" onchange="location = this.value";>
  							<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>" class="center-text">Pertanyaan Saya</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 							<option value="<?=base_url('konsultasi/pertanyaan_all')?>" selected>Semua Pertanyaan</option>
  							<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
  							<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
-
  						</select><br>
  						<p class="input-icon">
  							<i class="fa fa-search"></i>
