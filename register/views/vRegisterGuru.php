@@ -1,11 +1,7 @@
   <!-- START Template Main -->
-
   <section id="main" role="main">
-
     <!-- START Register Content -->
-
     <section class="container">
-
         <div class="row">
 
             <div class="col-md-10">
@@ -19,8 +15,7 @@
                 </div>
 
                 <!-- Register form -->
-
-                <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/saveguru" method="post">
+                <form class="panel nm" name="form-register" action="<?=base_url()?>index.php/register/test" method="post">
 
                     <ul class="list-table pa15">
 
@@ -41,11 +36,6 @@
                         <li class="text-right" style="width:20px;"><a href="javascript:void(0);"><i class="ico-question-sign fsize16"></i></a></li>
 
                     </ul>
-
-
-
-
-
                     <hr class="nm">
 
                     <div class="panel-body">
@@ -65,62 +55,36 @@
                                     <!-- untuk menampilkan pesan kesalahan penginputan alamat -->
 
                                     <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
-
                                 </div>
-
                             </div>
-
                             <div class="col-md-6">
-
                              <input type="text" class="form-control" name="namabelakang" value="<?php echo set_value('namabelakang'); ?>" placeholder="Nama Belakang" data-parsley-required>
-
                          </div>
-
-
-
                      </div>
-
-
-
                      <div class="col-md-12 form-group">
-
                          <label class="control-label">Mata Pelajaran</label>
-
                          <div class="has-icon pull-left">
-
-                            <select class="form-control"  name="mataPelajaran">
-
-                                <option value>-Pilih Matapelajaran-</option>
-
+                            <select class="form-control"  name="mataPelajaran" id="mataPelajaran">
+                                <option value >-Pilih Matapelajaran-</option>
                                 <?php 
-
                                 foreach ($mataPelajaran as $row) {
-
                                     $id = $row['id'];
-
                                     $aliasMataPelajaran = $row['aliasMataPelajaran'];
-
                                     echo "<option value='".$id."''>".$aliasMataPelajaran." </option>";
-
-
 
                                 } ;
 
                                 ?> 
-
-
-
                             </select>
-
+                            <input type="text" name="sumMapel" value="" hidden="true">
                             <span class="text-danger"> <?php echo form_error('mataPelajaran'); ?></span>
 
                         </div>
-
-
-
                     </div>
 
+                    <div class="col-md-12 form-group" id="keahlian-guru">
 
+                    </div>
 
                     <div class="col-md-12 form-group">
 
@@ -270,9 +234,7 @@
 
                 <div class="panel-footer">
 
-
-
-                    <button type="submit" class="btn btn-block btn-success" id="kirimdata" disabled><span class="semibold">Sign up</span></button>
+                    <button class="btn btn-block btn-success" id="kirimdata"  disabled ><span class="semibold" >Sign up</span></button>
 
                 </div>
 
@@ -321,7 +283,50 @@
  }
 
  document.getElementById("agree").addEventListener("change", enable);
+</script>
 
+<!--  -->
+<script type="text/javascript">
+  $(document).ready(function(){ 
+    var i =0;
+
+    $('#mataPelajaran').change(function () {
+      i ++;
+      var idMapel =$('#mataPelajaran').val();
+      var mapel =$('#mataPelajaran option:selected').text();
+      $("#keahlian-guru").append('<span class="note note-success mb15 mr15 mt15" id="mapelke-'+i+'"> <i class="ico-remove" onClick="test('+i+')"></i> '+mapel+' </span> <input type="text" name="mapelIDke-'+i+'" value="'+idMapel+'" hidden="true" id="mapelIDke-'+i+'">');
+        // var ini = $("mapelke-"+i).text();
+        // console.log(ini);
+      $('[name=sumMapel]').val(i);
+    }); 
+      // var datas = {
+      //       subBab:subBab,
+      //       option_up:option_up,
+      //       video:video,
+      //       link_video:link_video,
+      //       tumbnail:tumbnail,
+      //       jenis_video:jenis_video,
+      //       judulvideo:judulvideo,
+      //       deskripsi:deskripsi,
+      //       publish:publish
+      // };
+      
+      // $('#kirimdata').click(function () {
+      //   for (x = 1; x < i+1; x++) {
+      //     var mapelID = $('#mapelIDke-'+x).val();
+      //     console.log(mapelID);
+      //   }
+     
+      // });
+
+
+  });
+
+function test(i) {
+  $("#mapelke-"+i).remove();
+}
 
 
 </script>
+
+<!--         -->

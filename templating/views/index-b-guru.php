@@ -404,7 +404,7 @@
   <?php foreach ($datKomen as $key ): ?>
     <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
       <span class="pull-left">
-        <img src="../image/avatar/avatar1.jpg" class="media-object img-circle" alt="">
+        <img src="<?=base_url()?>assets\image\photo\siswa\<?=$key['siswa_photo']?>" class="media-object img-circle" alt="">
       </span>
       <span class="media-body">
         <span class="media-heading"><?=$key['namaPengguna']?></span>

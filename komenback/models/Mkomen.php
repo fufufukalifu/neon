@@ -14,10 +14,12 @@ class Mkomen extends CI_Model
 
 	//fungsi untuk menampilkan komen yang ada di halaman seevideo
 	public function get_komen_byvideo( $idvideo ) {
-		$this->db->select( 'namaPengguna`,komen.date_created,`isiKomen`,avatar, komen.id as komenID, avatar, hakAkses' );
+		$this->db->select( 'namaPengguna`,komen.date_created,`isiKomen`,avatar, komen.id as komenID, avatar, hakAkses,siswa.photo as siswa_photo, guru.photo as guru_photo' );
 		$this->db->from( 'tb_komen komen' );
 		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
 		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');
+		$this->db->join('tb_guru guru','guru.penggunaID=pengguna.id','left');
+		$this->db->join('tb_siswa siswa','siswa.penggunaID=pengguna.id','left');
 		$this->db->where( 'video.id', $idvideo );
 		$this->db->where( 'komen.status', 1 );
 
@@ -89,10 +91,11 @@ class Mkomen extends CI_Model
 		$mataPelajaranID=$this->mataPelajaranID_by_idguru($id_guru);
 		$this->db->order_by('komen.id','desc');
 		$this->db->select( 'komen.id as komenID, isiKomen, komen.date_created, video.id as videoID,
-							video.judulVideo, video.id as videoID, pengguna.id as penggunaID,pengguna.namaPengguna,komen.UUID');
+							video.judulVideo, video.id as videoID, pengguna.id as penggunaID,pengguna.namaPengguna,komen.UUID,siswa.photo as siswa_photo');
 		$this->db->from( 'tb_komen komen');
 		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
 		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');
+		$this->db->join('tb_siswa siswa','siswa.penggunaID=pengguna.id');
 		$this->db->join('tb_subbab sub','sub.id=video.subBabID');
 		$this->db->join('tb_bab bab','bab.id=sub.babID');
 		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');

@@ -17,6 +17,7 @@ class Guru extends MX_Controller {
         $this->load->model('templating/mtemplating');
         $this->load->model('siswa/msiswa');
         $this->load->library('parser');
+         $this->load->library('pagination');
         //cek kalo bukan guru lemparin.
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -324,10 +325,12 @@ function ajax_list_guru(){
     foreach ($list as $teacheritem) {
         $row = array();
         $no++;
+        $guruID=$teacheritem['guruID'];
         $kelas = "btn btn-sm btn-primary detail-".$teacheritem['guruID'];
         $row[] = $no;
         $row[] = $teacheritem['namaDepan']." ".$teacheritem['namaBelakang'];
         $row[] = $teacheritem['namaPengguna'];
+         $row[] = $this->get_keahlianGuru($guruID);
         $row[] = $teacheritem['regTime'];
         $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
 
@@ -342,6 +345,23 @@ function ajax_list_guru(){
     echo json_encode($output);
 }
 
+public function get_keahlianGuru($guruID='')
+{
+    $datkeahlianGuru=$this->mguru->get_m_keahlianGuru($guruID);
+    // var_dump($datkeahlianGuru);
+    $keahlianGuru='';
+    foreach ($datkeahlianGuru as $key ) {
+          $keahlianGuru .=$key['aliasMataPelajaran'].', ';
+        
+    }
+    if ($datkeahlianGuru) {
+        return $keahlianGuru;
+    } else {
+        return '<p style="color:red;">Belum Memilih keahlian mengajar</p>';
+    }
+    
+   
+}
 
 function drop_teacher($id_guru,$id_pengguna){
     $this->mguru->drop_guru( $id_guru,$id_pengguna );
@@ -365,6 +385,117 @@ function get_avatar_guru(){
       }
 
       return $listKomen;
+  }
+
+  public function daftar2()
+  {
+     $this->load->database();
+     $jumlah_data = $this->mguru->jumlah_guru();
+
+     $config['base_url'] = base_url().'guru/daftar2/';
+     $config['total_rows'] = $jumlah_data;
+     $config['per_page'] = 2;
+
+        // Start Customizing the “Digit” Link
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+
+        // Start Customizing the “Current Page” Link
+     $config['cur_tag_open'] = '<li><a><b>';
+     $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+     $config['prev_tag_open'] = '<li>';
+     $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+
+     $from = $this->uri->segment(3);
+     $this->pagination->initialize($config);     
+     $list = $this->mguru->data_guru($config['per_page'],$from);
+     $this->tampGuru($list,$jumlah_data);
+  }
+
+  public function tampGuru($list='',$jumlah_data='')
+  {
+    $data['judul_halaman'] = "Pengelolaan Data Siswa";
+    $data['files'] = array(
+            APPPATH . 'modules/guru/views/v-daftar-guru.php',
+            );
+    $data['datGuru']=$list;
+
+    $tb_guru=null;
+    $no=1;
+    foreach ($list as $key ) {
+      $datReset=$key["penggunaID"].",'".$key["namaPengguna"]."'";
+      $guruID=$key['guruID'];
+      $mengajar=$this->get_keahlianGuru($guruID);
+      $tb_guru.='
+        <tr>
+          <td>'.$no.'</td>
+          <td>'.$key["namaPengguna"].'</td>
+          <td>'.$key["namaDepan"].' '.$key["namaBelakang"].'</td>
+          <td>'.$mengajar.'</td>
+          <td>'.$key["regTime"].'</td>
+          <td>
+            <button class="btn btn-sm btn-info"  title="Lihat Detail Data Guru" ><i class="ico-folder-open-alt"></i></button>
+            <button class="btn btn-sm btn-warning"title="Ubah Data Guru"><i class=" ico-file-text"></i></button>
+            <button class="btn btn-sm btn-warning" title="Ubah Email" ><i class=" ico-envelop2"></i></button>
+            <button class="btn btn-sm btn-danger" title="Reset Katasandi" onclick="resetSandi('.$datReset.')"><i class=" ico-key"></i></button>
+            <button class="btn btn-sm btn-danger" title="Hapus Data guru"><i class="ico-remove2"></i></button>
+          </td>
+      </tr>
+    ';
+    $no++;
+    }
+    $data['tb_guru']=$tb_guru;
+    $data['jumlahGuru']=$jumlah_data;
+
+
+
+    $hakAkses=$this->session->userdata['HAKAKSES'];
+    if ($hakAkses=='admin') {
+        $this->parser->parse('admin/v-index-admin', $data);
+    } elseif($hakAkses=='guru'){
+      // jika guru
+      // $this->parser->parse('templating/index-b-guru', $data);
+    }else{
+      // jika siswa redirect ke welcome
+      redirect(site_url('welcome'));
+    }
+  }
+
+  // reset sandi penggunaID 
+  public function resetPassword()
+  {
+    $penggunaID=$this->input->post('penggunaID');
+    $namaPengguna=$this->input->post('namaPengguna');
+    $date=date("d");
+    $newPassword=$namaPengguna.$date;
+
+    $this->mguru->ch_password();
+
+    echo json_encode($newPassword);
   }
 
 }
