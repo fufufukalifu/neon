@@ -37,7 +37,7 @@
  								</select>
  							</div>
  							<div class="grid-col grid-col-4">
- 									<form method="POST">
+ 									<form method="get	">
  										<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
  								</div>
 

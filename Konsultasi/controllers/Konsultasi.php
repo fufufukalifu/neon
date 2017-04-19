@@ -46,9 +46,9 @@ class Konsultasi extends MX_Controller{
   $config = array();
 
   // kalo ada yang di cari
-  if (!empty($_POST)) {
+  if (!empty($_GET)) {
     //keywordnya dapet dari get.
-    $keyword = $_POST['cari'];
+    $keyword = $_GET['cari'];
   }else{
     $keyword='';
   }
@@ -154,8 +154,9 @@ public function pertanyaan_grade() {
   ##KONFIGURASI UNTUUK PAGINATION
   $config = array();
   $config["base_url"] = base_url() . "konsultasi/pertanyaan_grade/";
-  $config["total_rows"] = $this->mkonsultasi->get_all_questions_number($this->get_id_siswa());
-  $config["per_page"] = 10;
+  $config["total_rows"] = $this->mkonsultasi->get_my_question_level_number($this->get_tingkat_siswa(),$key);
+
+  $config["per_page"] = 5;
   $config["uri_segment"] = 3;
 
   $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
@@ -190,28 +191,27 @@ function ajax_add_konsultasi(){
   $isi = $this->input->post( 'isi' ) ;
   $judul = $this->input->post( 'namapertanyaan' );
   $bab = $this->input->post( 'bab' );
-
   $mentor = $this->input->post( 'mentorID' );
-  // $mentor = 1;
 
-  if ($mentor == 1) {
-    // kalo ada mentornya
-    $data = array(
-      'isiPertanyaan' => $isi,
-      'judulPertanyaan' => $judul,
-      'babID' =>$bab,
-      'siswaID' =>$this->get_id_siswa(),
-      'mentorID'=>$this->get_id_mentor()
-      );
-  }else{
-    // kalo gak ada
-    $data = array(
+  if($mentor=="NULL"){
+ $data = array(
       'isiPertanyaan' => $isi,
       'judulPertanyaan' => $judul,
       'babID' =>$bab,
       'siswaID' =>$this->get_id_siswa()
       );
+  }else{
+     $data = array(
+      'isiPertanyaan' => $isi,
+      'judulPertanyaan' => $judul,
+      'babID' =>$bab,
+      'siswaID' =>$this->get_id_siswa(),
+      'mentorID'=>$mentor
+      );
   }
+    // kalo ada mentornya
+   
+
   $this->mkonsultasi->insert_konstulasi( $data );
 }
 
@@ -257,6 +257,9 @@ public function bertanya($bab){
     'bab' => $bab
     );
 
+  $param = ['bab'=>$bab,'id_siswa'=>$this->get_id_siswa()];
+  $data['mentornya'] = $this->mkonsultasi->get_mentor($param);
+  
   $data['files'] = array(
     APPPATH.'modules/homepage/views/v-header-login.php',
     APPPATH.'modules/templating/views/t-f-pagetitle.php',

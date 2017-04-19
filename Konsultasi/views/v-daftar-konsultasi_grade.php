@@ -46,7 +46,7 @@
  							</div>
 
  							<div class="grid-col grid-col-1">
- 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_all') ?>"><i class="fa fa-times"></i> Reset</a>
+ 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_grade') ?>"><i class="fa fa-times"></i> Reset</a>
  							</div>
  						</div>
  					</form>
@@ -81,12 +81,12 @@
  									</div>
 
  									<div style="text-align: right">
- 										<a><i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
+ 										<a href="<?=base_url()."konsultasi/pertanyaan_grade?cari=".$question['judulBab'] ?>"><i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
  										<a><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></a> |
  										<?php if (!empty($question['namaGuru'])): ?>
- 										<a><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
+ 										<span><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></span>
 										<?php else: ?>
-										<a>Tanpa Mentor</a>
+										<span>Tanpa Mentor</span>
  										<?php endif ?>
  									</div>
 								</article>

@@ -1,3 +1,4 @@
+
 <main class="container">
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
@@ -82,10 +83,12 @@
 						<div class="col-sm-12" style="padding:0">
 
 							<div class="col-sm-8">
-							<label >Kepada Mentor</label>
-								<select class="form-control" name="mentor" id="babSelect"  >
-									<option value=0>- Tidak -</option>
-									<option value=1>- Ya -</option>
+								<label >Kepada Mentor</label>
+								<select class="form-control" name="mentor">
+									<option value="NULL">- Tidak -</option>
+									<?php if (!empty($mentornya)): ?>
+										<option value="<?=$mentornya['guruID'] ?>"><?=$mentornya['namaDepan']." ".$mentornya['namaBelakang'] ?></option>
+									<?php endif ?>
 								</select>
 								<br>
 								Judul Pertanyaan
@@ -97,7 +100,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12">
-								
+
 
 
 							<br>
@@ -244,7 +247,6 @@
 				{
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
-                // alert('berhasil');
                 window.location = base_url+"konsultasi/pertanyaan_all";
             },
             error: function (jqXHR, textStatus, errorThrown)
