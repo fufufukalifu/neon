@@ -234,7 +234,7 @@
 			var kelas = ".detail-"+data;
 
 			var datas = $(kelas).data('todo');
-
+			console.log(datas);
 			$('[name=namaDepan]').val(datas.namaDepan);
 
 			$('[name=namaBelakang]').val(datas.namaBelakang);
