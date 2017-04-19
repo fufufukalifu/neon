@@ -32,11 +32,6 @@
       <select class="form-control" name="tingkat" id="babSelect"  ><option value=0>-Pilih Bab-</option></select>
     </p>
 
-    <p class="has-success">
-      <!-- <label >Sub Bab</label> -->
-      <!-- <select class="form-control" name="subab" id="subSelect"  ><option value=0>-Pilih Sub-</option></select>                       -->
-    </p>
-
 
     <div class="modal-footer bg-color-3">
       <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
@@ -59,17 +54,17 @@
 </div>
 
 <script type="text/javascript">
-load_matapelajaran(4);
+  load_matapelajaran(4);
 
- $('#mapelSelect').change(function () {
-  var idMapel = $(this).val();
-  load_bab(idMapel);
-});
+  $('#mapelSelect').change(function () {
+    var idMapel = $(this).val();
+    load_bab(idMapel);
+  });
 
- $('#babSelect').change(function () {
-  var idbab = $(this).val();
-  load_sub(idbab);
-});
+  $('#babSelect').change(function () {
+    var idbab = $(this).val();
+    load_sub(idbab);
+  });
 
 
 // fungsi untuk ngeload matapelajaran

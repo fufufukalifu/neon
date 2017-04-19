@@ -27,16 +27,28 @@
  				<!-- tabs container -->
  				<div class="container-tabs active" data-tabs-id="cont-tabs1" style="display: block;">
  					<form class="form-group">
- 						<select name="" id="" onchange="location = this.value";>
- 							<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>" class="center-text">Pertanyaan Saya</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_grade')?>" selected>Pertanyaan Setingkat</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
- 						</select><br>
- 						<p class="input-icon">
- 							<i class="fa fa-search"></i>
- 							<input type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
- 						</p>
+ 						<div class="grid-col-row clear-fix">
+ 							<div class="grid-col grid-col-4">
+ 								<select name="" id="" onchange="location = this.value";>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+ 								</select>
+ 							</div>
+ 							<div class="grid-col grid-col-4">
+ 								<p class="input-icon">
+ 									<i class="fa fa-search"></i>
+ 									<form method ="get">
+ 										<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
+ 									</form>
+ 								</p>
+ 							</div>
+
+ 							<div class="grid-col grid-col-1">
+ 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_all') ?>"><i class="fa fa-times"></i> Reset</a>
+ 							</div>
+ 						</div>
  					</form>
  					<!-- semua -->
  					<?php if ($my_questions): ?>
@@ -68,8 +80,14 @@
 
  									</div>
 
- 									<div class="tags-post" style="text-align: right">
- 										<a href="#" rel="tag"><?=$question['judulBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
+ 									<div style="text-align: right">
+ 										<a><i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
+ 										<a><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></a> |
+ 										<?php if (!empty($question['namaGuru'])): ?>
+ 										<a><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
+										<?php else: ?>
+										<a>Tanpa Mentor</a>
+ 										<?php endif ?>
  									</div>
 								</article>
 							</div>

@@ -26,19 +26,29 @@
  			<div class="tabs-keeper">
  				<!-- tabs container -->
  				<div class="container-tabs active" data-tabs-id="cont-tabs1" style="display: block;">
- 					<form class="form-group">
- 						<select name="" id="" onchange="location = this.value";>
- 							<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>" class="center-text">Pertanyaan Saya</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
- 							<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+ 					<div class="form-group">
+ 						<div class="grid-col-row clear-fix">
+ 							<div class="grid-col grid-col-4">
+ 								<select name="" id="" onchange="location = this.value";>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+ 								</select>
+ 							</div>
+ 							<div class="grid-col grid-col-4">
+ 									<form method="POST">
+ 										<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
+ 								</div>
 
- 						</select><br>
- 						<p class="input-icon">
- 							<i class="fa fa-search"></i>
- 							<input type="text" placeholder="Cari Pertanyaan..." name="search_data_1" id="search1">
- 						</p>
- 					</form>
+ 								<div class="grid-col grid-col-1">
+ 									<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_ku') ?>"><i class="fa fa-times"></i> Reset</a>
+ 								</div>
+
+ 							</form>
+
+ 						</div>
+ 					</div>
  					<!-- semua -->
  					<?php if ($my_questions): ?>
  						<?php foreach ($my_questions as $question): ?>
@@ -69,76 +79,58 @@
 
  									</div>
 
- 									<div class="tags-post" style="text-align: right">
- 										<a href="#" rel="tag"><?=$question['judulBab'] ?></a><a href="#" rel="tag"><?=$question['jumlah'] ?></a>
- 									</div>
-								</article>
-							</div>
+ 									<div style="text-align: right">
+ 										<a href="<?=base_url('konsultasi/pertanyaan_ku?cari='.$question['judulBab']) ?>">
+ 											<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
+ 											<a><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></a> |
+ 											<?php if (!empty($question['namaGuru'])): ?>
+ 												<a><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
+ 											<?php else: ?>
+ 												<a>Tanpa Mentor</a>
+ 											<?php endif ?>
+ 										</div>
+ 									</article>
+ 								</div>
 
-							<!-- / blog item -->
-						<?php endforeach ?>
-					<?php else: ?>
-						<h3>Tidak Ada Pertanyaan</h3>
+ 								<!-- / blog item -->
+ 							<?php endforeach ?>
+ 						<?php else: ?>
+ 							<h3>Tidak Ada Pertanyaan</h3>
 
-					<?php endif ?>
-					
-				</div>
-				<!-- pagination -->
-				<hr>
-				<br>
-				<div>
+ 						<?php endif ?>
 
-					<div class="page-pagination clear-fix" style="width:100%;">
-						<center><?php echo $links; ?></center>	
-					</div>
+ 					</div>
+ 					<!-- pagination -->
+ 					<hr>
+ 					<br>
+ 					<div>
 
-				</div>
-				
-				<!-- / pagination -->
+ 						<div class="page-pagination clear-fix" style="width:100%;">
+ 							<center><?php echo $links; ?></center>	
+ 						</div>
 
-				<!--/tabs container -->
-				<!-- / pagination -->
-			</div>
+ 					</div>
 
-			<!--/tabs container -->
-			<!-- tabs container -->
+ 					<!-- / pagination -->
 
-			<!--/tabs container -->
-		</div>
-		<!--/tabs keeper -->
-	</div>
-	<!-- /tabs -->
-</section>
-</div>
+ 					<!--/tabs container -->
+ 					<!-- / pagination -->
+ 				</div>
+
+ 				<!--/tabs container -->
+ 				<!-- tabs container -->
+
+ 				<!--/tabs container -->
+ 			</div>
+ 			<!--/tabs keeper -->
+ 		</div>
+ 		<!-- /tabs -->
+ 	</section>
+ </div>
 </div>
 </main>
 <script type="text/javascript">
-	$(document).ready(function() {  
-
-		$('#search1').autocomplete({
-			source:  base_url +"konsultasi/search_all",
-			select: function (event, ui) {
-				window.location = ui.item.url;
-			}
-		});
-
-		$('#search2').autocomplete({
-			source: base_url +"konsultasi/search_tingkat",
-			select: function (event, ui) {
-				window.location = ui.item.url;
-			}
-		});
-
-		$('#search3').autocomplete({
-			source: base_url +"konsultasi/search_mine",
-			select: function (event, ui) {
-				window.location = ui.item.url;
-			}
-		});
-	});
-	
 	function showmodal(){
 		$('#myModal').modal('show');
 	}
-
 </script>

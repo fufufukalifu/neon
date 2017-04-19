@@ -104,7 +104,7 @@
 
 								<li>
 
-									<a href="<?=base_url('konsultasi') ?>">Konsultasi</a>
+									<a href="<?=base_url('konsultasi/pertanyaan_all') ?>">Konsultasi</a>
 
 								</li>
 								<li>

@@ -21,10 +21,13 @@ class Konsultasi extends MX_Controller{
 
   function get_id_siswa(){
    return $this->mtryout->get_id_siswa();
-
  }
 
- public function pertanyaan_ku() {
+ function get_id_mentor(){
+   return $this->mkonsultasi->get_id_mentor();
+ }
+
+ public function pertanyaan_ku($key='') {
   $data = array(
     'judul_halaman' => 'Neon - Konsultasi',
     'judul_header'=> 'Daftar Pertanyaan Saya'
@@ -38,10 +41,71 @@ class Konsultasi extends MX_Controller{
     APPPATH.'modules/homepage/views/v-footer.php'
     );
   
+  // jika gada yang di search, key di set kosong
   ##KONFIGURASI UNTUUK PAGINATION
   $config = array();
-  $config["base_url"] = base_url() . "konsultasi/pertanyaan_ku/";
-  $config["total_rows"] = $this->mkonsultasi->get_my_questions_number($this->get_id_siswa());
+
+  // kalo ada yang di cari
+  if (!empty($_POST)) {
+    //keywordnya dapet dari get.
+    $keyword = $_POST['cari'];
+  }else{
+    $keyword='';
+  }
+
+    $config["base_url"] = base_url() . "konsultasi/pertanyaan_ku/";
+    $config["uri_segment"] = 3;
+    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+  
+
+  $config["total_rows"] = $this->mkonsultasi->get_my_questions_number($this->get_id_siswa(),$keyword);
+  $config["per_page"] = 10;
+
+  # konfig link
+  $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+  $config['cur_tag_close'] = '</a>';
+  $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+  $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+  $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+  
+  $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+  $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa(),$config["per_page"], $page, $keyword);
+  $data["links"] = $this->pagination->create_links();
+
+  $this->parser->parse( 'templating/index', $data );
+}
+
+public function pertanyaan_all() {
+  ## kalo gak ada yang di cari
+  if (!empty($_GET)) {
+    $key = $_GET['cari'];
+  }else{
+    $key="";
+  }
+  ## kalo gak ada yang di cari
+
+  $data = array(
+    'judul_halaman' => 'Neon - Konsultasi',
+    'judul_header'=> 'Daftar Semua Pertanyaan'
+    );
+
+  $data['files'] = array(
+    APPPATH.'modules/homepage/views/v-header-login.php',
+    APPPATH.'modules/templating/views/t-f-pagetitle.php',
+    APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_all.php',
+    APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+    APPPATH.'modules/homepage/views/v-footer.php'
+    );
+  
+  ##KONFIGURASI UNTUUK PAGINATION
+  $config = array();
+  $config["base_url"] = base_url() . "konsultasi/pertanyaan_all/";
+  $config["total_rows"] = $this->mkonsultasi->get_all_questions_number($key);
   $config["per_page"] = 1;
   $config["uri_segment"] = 3;
 
@@ -59,54 +123,21 @@ class Konsultasi extends MX_Controller{
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
 
   // pertanyaan saya.
-  $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa(),$config["per_page"], $page);
+  $data['my_questions']=$this->mkonsultasi->get_all_questions($this->get_id_siswa(),$config["per_page"], $page,$key);
   $data["links"] = $this->pagination->create_links();
 
   $this->parser->parse( 'templating/index', $data );
 }
 
- public function pertanyaan_all() {
-  $data = array(
-    'judul_halaman' => 'Neon - Konsultasi',
-    'judul_header'=> 'Daftar Semua Pertanyaan'
-    );
+public function pertanyaan_grade() {
+  ## kalo gak ada yang di cari
+  if (!empty($_GET)) {
+    $key = $_GET['cari'];
+  }else{
+    $key="";
+  }
+  ## kalo gak ada yang di cari
 
-  $data['files'] = array(
-    APPPATH.'modules/homepage/views/v-header-login.php',
-    APPPATH.'modules/templating/views/t-f-pagetitle.php',
-    APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_all.php',
-    APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
-    APPPATH.'modules/homepage/views/v-footer.php'
-    );
-  
-  ##KONFIGURASI UNTUUK PAGINATION
-  $config = array();
-  $config["base_url"] = base_url() . "konsultasi/pertanyaan_all/";
-  $config["total_rows"] = $this->mkonsultasi->get_all_questions_number($this->get_id_siswa());
-  $config["per_page"] = 10;
-  $config["uri_segment"] = 3;
-
-  $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
-  $config['cur_tag_close'] = '</a>';
-
-
-
-  $config['first_link'] = "<span title='Page Awal'> << </span>"; 
-  $config['last_link'] = "<span title='Page Akhir'> >> </span>";
-  $this->pagination->initialize($config);
-  $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-  ##KONFIGURASI UNTUUK PAGINATION
-  
-  $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
-
-  // pertanyaan saya.
-  $data['my_questions']=$this->mkonsultasi->get_all_questions($this->get_id_siswa(),$config["per_page"], $page);
-  $data["links"] = $this->pagination->create_links();
-
-  $this->parser->parse( 'templating/index', $data );
-}
-
- public function pertanyaan_grade() {
   $data = array(
     'judul_halaman' => 'Neon - Konsultasi',
     'judul_header'=> 'Daftar Pertanyaan Setingkat'
@@ -141,7 +172,7 @@ class Konsultasi extends MX_Controller{
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
 
   // pertanyaan saya.
-  $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$config["per_page"], $page);
+  $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$config["per_page"], $page,$key);
   $data["links"] = $this->pagination->create_links();
 
   $this->parser->parse( 'templating/index', $data );
@@ -159,12 +190,28 @@ function ajax_add_konsultasi(){
   $isi = $this->input->post( 'isi' ) ;
   $judul = $this->input->post( 'namapertanyaan' );
   $bab = $this->input->post( 'bab' );
-  $data = array(
-    'isiPertanyaan' => $isi,
-    'judulPertanyaan' => $judul,
-    'babID' =>$bab,
-    'siswaID' =>$this->get_id_siswa()
-    );
+
+  $mentor = $this->input->post( 'mentorID' );
+  // $mentor = 1;
+
+  if ($mentor == 1) {
+    // kalo ada mentornya
+    $data = array(
+      'isiPertanyaan' => $isi,
+      'judulPertanyaan' => $judul,
+      'babID' =>$bab,
+      'siswaID' =>$this->get_id_siswa(),
+      'mentorID'=>$this->get_id_mentor()
+      );
+  }else{
+    // kalo gak ada
+    $data = array(
+      'isiPertanyaan' => $isi,
+      'judulPertanyaan' => $judul,
+      'babID' =>$bab,
+      'siswaID' =>$this->get_id_siswa()
+      );
+  }
   $this->mkonsultasi->insert_konstulasi( $data );
 }
 
@@ -572,5 +619,13 @@ function singlekonsultasi($id_pertanyaan){
     );
   $this->parser->parse( 'templating/index', $data );
 }
+
+
+
+#pencarian
+function cari_semua(){
+  var_dump($_GET);
+}
+#pencarian
 
 }
