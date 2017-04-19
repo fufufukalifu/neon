@@ -547,5 +547,15 @@ function get_avatar_guru(){
 
   }
 
+  public function cekEmail()
+  {
+    $this->form_validation->set_rules( 'email', 'email', 'required|is_unique[tb_pengguna.eMail]' );
+      if ( $this->form_validation->run() == FALSE ) {
+        echo json_encode("FALSE");
+      }else{
+        echo json_encode("TRUE");
+      }
+  }
+
 }
 ?>

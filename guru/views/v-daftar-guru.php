@@ -264,6 +264,7 @@
 	      success:function(data){
 
 	        swal("Data Guru berhasil diperbaharui!","--","success");
+	        window.location.href =base_url+"guru/daftar/";
 	      },
 	      error:function(){
 	        sweetAlert("Oops...", "Data Guru gagal diperbaharui!", "error");
@@ -310,10 +311,4 @@
 	  });
 
 	}
-</script>
-<!-- event -->
-<script type="text/javascript">
-	$(document).ready(function(){ 
-		$()
-	 }); 
 </script>

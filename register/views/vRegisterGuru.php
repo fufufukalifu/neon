@@ -48,7 +48,7 @@
 
                                 <div class="has-icon pull-left">
 
-                                    <input type="text" class="form-control" name="namadepan" value="<?php echo set_value('namadepan'); ?>" placeholder="Nama Depan" data-parsley-required>
+                                    <input type="text" class="form-control" name="namadepan" value="<?php echo set_value('namadepan'); ?>" placeholder="Nama Depan" required>
 
                                     <i class="ico-user2 form-control-icon"></i>
 
@@ -64,13 +64,13 @@
                      <div class="col-md-12 form-group">
                          <label class="control-label">Mata Pelajaran</label>
                          <div class="has-icon pull-left">
-                            <select class="form-control"  name="mataPelajaran" id="mataPelajaran">
+                            <select class="form-control"  name="mataPelajaran" id="mataPelajaran" required>
                                 <option value >-Pilih Matapelajaran-</option>
                                 <?php 
                                 foreach ($mataPelajaran as $row) {
                                     $id = $row['id'];
                                     $aliasMataPelajaran = $row['aliasMataPelajaran'];
-                                    echo "<option value='".$id."''>".$aliasMataPelajaran." </option>";
+                                    echo "<option class='op' value='".$id."'' id='id-".$id."'>".$aliasMataPelajaran." </option>";
 
                                 } ;
 
@@ -82,9 +82,10 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 form-group" id="keahlian-guru">
-
+                    <div class="col-md-6 form-group" id="keahlian-guru">
+                    <a class="btn btn-sm btn-danger" id="resetMapel">Reset</a>
                     </div>
+
 
                     <div class="col-md-12 form-group">
 
@@ -134,13 +135,13 @@
 
                 <div class="panel-body">
 
-                    <div class="col-md-12 form-group ">
+                    <div class="col-md-12 form-group fg-nmPengguna">
 
                         <label class="control-label">Nama Pengguna</label>
 
                         <div class="has-icon pull-left">
 
-                            <input type="text" class="form-control " name="namapengguna" value="<?php echo set_value('namapengguna'); ?>" onblur="cekNamaPengguna()" data-parsley-required  >
+                            <input type="text" class="form-control " name="namapengguna" value="<?php echo set_value('namapengguna'); ?>" onblur="cekNamaPengguna()" required  >
                             
 
                             <i class="ico-tag9 form-control-icon"></i>
@@ -159,7 +160,7 @@
 
                         <div class="has-icon pull-left">
 
-                            <input type="password" class="form-control" name="katasandi" data-parsley-required>
+                            <input type="password" class="form-control" name="katasandi" required>
 
                             <i class="ico-key2 form-control-icon"></i>
 
@@ -197,19 +198,19 @@
 
                     <p class="semibold text-muted">Untuk konfirmasi dan pengaktifan akun baru anda, kita akan mengirim aktivasi code ke email anda.</p>
 
-                    <div class="form-group">
+                    <div class="form-group fg-email">
 
                         <label class="control-label">Email</label>
 
                         <div class="has-icon pull-left">
 
-                            <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="you@mail.com">
+                            <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" onblur="cekEmail()" placeholder="you@mail.com">
 
                             <i class="ico-envelop form-control-icon"></i>
 
                             <!-- untuk menampilkan pesan kesalahan penginputan email -->
 
-                            <span class="text-danger"><?php echo form_error('email'); ?></span>
+                             <span class="text-danger msg-email hidden ">*Email sudah terpakai</span>
 
                         </div>
 
@@ -235,7 +236,7 @@
 
                 <div class="panel-footer">
 
-                    <button class="btn btn-block btn-success" id="kirimdata"  disabled ><span class="semibold" >Sign up</span></button>
+                    <button type="submit" class="btn btn-block btn-success" id="kirimdata"  disabled ><span class="semibold" >Sign up</span></button>
 
                 </div>
 
@@ -295,11 +296,25 @@
       i ++;
       var idMapel =$('#mataPelajaran').val();
       var mapel =$('#mataPelajaran option:selected').text();
-      $("#keahlian-guru").append('<span class="note note-success mb15 mr15 mt15" id="mapelke-'+i+'"> <i class="ico-remove" onClick="test('+i+')"></i> '+mapel+' </span> <input type="text" name="mapelIDke-'+i+'" value="'+idMapel+'" hidden="true" id="mapelIDke-'+i+'">');
+      $("#keahlian-guru").append('<span class="note note-success mb15 mr15 mt15 pickMapel" id="mapelke-'+i+'"> <i class="ico-remove" onClick="removeMapel('+i+','+idMapel+')"></i> '+mapel+' </span> <input type="text" name="mapelIDke-'+i+'" value="'+idMapel+'" hidden="true" id="mapelIDke-'+i+'">');
         // var ini = $("mapelke-"+i).text();
         // console.log(ini);
       $('[name=sumMapel]').val(i);
+      //remove mapel dari dropdown
+      $("#id-"+idMapel).addClass("hidden");
     }); 
+
+   
+      $( "#resetMapel" ).click(function() {
+         i=0;
+        $('.op').removeClass("hidden"); 
+       
+         $('[name=sumMapel]').val(i);
+      $('.pickMapel').remove();
+
+    }); 
+
+
       // var datas = {
       //       subBab:subBab,
       //       option_up:option_up,
@@ -323,9 +338,12 @@
 
   });
 
-function test(i) {
-  $("#mapelke-"+i).remove();
-}
+// function removeMapel(i,idMapel) {
+//   // $("#mapelke-"+i).remove();
+//   $("#id-"+idMapel).removeClass("hidden");  
+//       i=0;
+//       $('.pickMapel').remove();
+// }
 
 
 </script>
@@ -334,24 +352,64 @@ function test(i) {
 <script type="text/javascript">
   function cekNamaPengguna() {
     var namaPengguna=$('[name=namapengguna]').val();
-    var url =base_url + "index.php/guru/cekNamaPengguna/";
-    $.ajax({
-      dataType:"text",
-      data:{namapengguna:namaPengguna},
-      type:"POST",
-      url:url,
-      success:function(data){
-        var parData=JSON.parse(data);
-        if (parData=="FALSE") {
-          console.log("das");
-          $("span .msg-namaPengguna").removeClass('.hidden');
-        } else {
-          console.log("Bisa di pakai");
+    if (namaPengguna) {
+      var url =base_url + "index.php/guru/cekNamaPengguna/";
+      $.ajax({
+        dataType:"text",
+        data:{namapengguna:namaPengguna},
+        type:"POST",
+        url:url,
+        success:function(data){
+          var parData=JSON.parse(data);
+          if (parData=="FALSE") {
+            console.log("das");
+            $(".msg-namaPengguna").removeClass('hidden');
+            $(".fg-nmPengguna").addClass('has-error');
+            $(".fg-nmPengguna").removeClass('has-success');
+          } else {
+             $(".fg-nmPengguna").addClass('has-success');
+             $(".fg-nmPengguna").removeClass('has-error');
+             $(".msg-namaPengguna").addClass('hidden');
+          }
+          
         }
-        
-      }
 
 
-    });
+      });
+    }else{
+       $(".fg-nmPengguna").addClass('has-error');
+    }
+  }
+
+
+  function cekEmail() {
+    var email=$('[name=email]').val();
+    if (email) {
+      var url =base_url + "index.php/guru/cekEmail/";
+      $.ajax({
+        dataType:"text",
+        data:{email:email},
+        type:"POST",
+        url:url,
+        success:function(data){
+          var parData=JSON.parse(data);
+          if (parData=="FALSE") {
+            console.log("das");
+            $(".msg-email").removeClass('hidden');
+            $(".fg-email").addClass('has-error');
+            $(".fg-email").removeClass('has-success');
+          } else {
+             $(".fg-email").addClass('has-success');
+             $(".fg-email").removeClass('has-error');
+             $(".msg-email").addClass('hidden');
+          }
+          
+        }
+
+
+      });
+    }else{
+       $(".fg-email").addClass('has-error');
+    }
   }
 </script>
