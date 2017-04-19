@@ -134,19 +134,20 @@
 
                 <div class="panel-body">
 
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-12 form-group ">
 
                         <label class="control-label">Nama Pengguna</label>
 
                         <div class="has-icon pull-left">
 
-                            <input type="text" class="form-control" name="namapengguna" value="<?php echo set_value('namapengguna'); ?>" data-parsley-required>
+                            <input type="text" class="form-control " name="namapengguna" value="<?php echo set_value('namapengguna'); ?>" onblur="cekNamaPengguna()" data-parsley-required  >
+                            
 
                             <i class="ico-tag9 form-control-icon"></i>
 
                             <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
 
-                            <span class="text-danger"><?php echo form_error('namapengguna'); ?></span>
+                            <span class="text-danger msg-namaPengguna hidden ">*Nama pengguna sudah terpakai</span>
 
                         </div>
 
@@ -329,4 +330,28 @@ function test(i) {
 
 </script>
 
-<!--         -->
+<!--   Event      -->
+<script type="text/javascript">
+  function cekNamaPengguna() {
+    var namaPengguna=$('[name=namapengguna]').val();
+    var url =base_url + "index.php/guru/cekNamaPengguna/";
+    $.ajax({
+      dataType:"text",
+      data:{namapengguna:namaPengguna},
+      type:"POST",
+      url:url,
+      success:function(data){
+        var parData=JSON.parse(data);
+        if (parData=="FALSE") {
+          console.log("das");
+          $("span .msg-namaPengguna").removeClass('.hidden');
+        } else {
+          console.log("Bisa di pakai");
+        }
+        
+      }
+
+
+    });
+  }
+</script>

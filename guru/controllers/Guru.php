@@ -18,6 +18,8 @@ class Guru extends MX_Controller {
         $this->load->model('siswa/msiswa');
         $this->load->library('parser');
          $this->load->library('pagination');
+           $this->load->helper( array( 'form', 'url' ) );
+      $this->load->library( 'form_validation' );
         //cek kalo bukan guru lemparin.
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -305,45 +307,45 @@ public function ubahemailGuru() {
 
 
 ## Menampilkan daftar guru
-public function daftar(){
-    $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-    $data['judul_halaman'] = "Daftar Guru";
-    $data['files'] = array(
-        APPPATH . 'modules/register/views/v-daftar-guru.php',
-        );
-            // jika admin
-    $this->parser->parse('admin/v-index-admin', $data);
-}
+// public function daftar(){
+//     $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+//     $data['judul_halaman'] = "Daftar Guru";
+//     $data['files'] = array(
+//         APPPATH . 'modules/register/views/v-daftar-guru.php',
+//         );
+//             // jika admin
+//     $this->parser->parse('admin/v-index-admin', $data);
+// }
 
 ## ajax menampilkan data guru
-function ajax_list_guru(){
-    $list  = $this->mguru->get_teacher_user();
+// function ajax_list_guru(){
+//     $list  = $this->mguru->get_teacher_user();
 
 
-    $data = array();
-    $no = 0;
-    foreach ($list as $teacheritem) {
-        $row = array();
-        $no++;
-        $guruID=$teacheritem['guruID'];
-        $kelas = "btn btn-sm btn-primary detail-".$teacheritem['guruID'];
-        $row[] = $no;
-        $row[] = $teacheritem['namaDepan']." ".$teacheritem['namaBelakang'];
-        $row[] = $teacheritem['namaPengguna'];
-         $row[] = $this->get_keahlianGuru($guruID);
-        $row[] = $teacheritem['regTime'];
-        $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
+//     $data = array();
+//     $no = 0;
+//     foreach ($list as $teacheritem) {
+//         $row = array();
+//         $no++;
+//         $guruID=$teacheritem['guruID'];
+//         $kelas = "btn btn-sm btn-primary detail-".$teacheritem['guruID'];
+//         $row[] = $no;
+//         $row[] = $teacheritem['namaDepan']." ".$teacheritem['namaBelakang'];
+//         $row[] = $teacheritem['namaPengguna'];
+//          $row[] = $this->get_keahlianGuru($guruID);
+//         $row[] = $teacheritem['regTime'];
+//         $row[] = '<a href=""  title="Mail To" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')">'.$teacheritem['eMail'].'<i class="ico-mail-send"></i></a>';
 
-        $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-edit"></i></a>
+//         $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" onclick="edit_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-edit"></i></a>
 
-        <a class='."'".$kelas."'".' data-todo='."'".json_encode($teacheritem)."'".' title="Detail" onclick="detail_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-file5"></i></a>
+//         <a class='."'".$kelas."'".' data-todo='."'".json_encode($teacheritem)."'".' title="Detail" onclick="detail_teacher('."'".$teacheritem['guruID']."'".')"><i class="ico-file5"></i></a>
 
-        <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_teacher('."'".$teacheritem['guruID']."'".','."'".$teacheritem['penggunaID']."'".')"><i class="ico-remove"></i></a>';
-        $data[] = $row;
-    }
-    $output = array("data"=>$data);
-    echo json_encode($output);
-}
+//         <a class="btn btn-sm btn-danger"  title="Hapus" onclick="delete_teacher('."'".$teacheritem['guruID']."'".','."'".$teacheritem['penggunaID']."'".')"><i class="ico-remove"></i></a>';
+//         $data[] = $row;
+//     }
+//     $output = array("data"=>$data);
+//     echo json_encode($output);
+// }
 
 public function get_keahlianGuru($guruID='')
 {
@@ -362,9 +364,11 @@ public function get_keahlianGuru($guruID='')
     
    
 }
-
-function drop_teacher($id_guru,$id_pengguna){
-    $this->mguru->drop_guru( $id_guru,$id_pengguna );
+// hapus data guru
+function drop_teacher(){
+    $guruID=$this->input->post("guruID");
+    $penggunaID=$this->input->post("penggunaID");
+    $this->mguru->drop_guru( $guruID,$penggunaID );
 }
 
 function get_avatar_guru(){
@@ -387,12 +391,12 @@ function get_avatar_guru(){
       return $listKomen;
   }
 
-  public function daftar2()
+  public function daftar()
   {
      $this->load->database();
      $jumlah_data = $this->mguru->jumlah_guru();
 
-     $config['base_url'] = base_url().'guru/daftar2/';
+     $config['base_url'] = base_url().'guru/daftar/';
      $config['total_rows'] = $jumlah_data;
      $config['per_page'] = 2;
 
@@ -453,7 +457,7 @@ function get_avatar_guru(){
       $mengajar=$this->get_keahlianGuru($guruID);
       $datas="'".json_encode($key)."'";
       $tb_guru.='
-        <tr>
+        <tr class="tr-'.$no.'" >
           <td>'.$no.'</td>
           <td>'.$key["namaPengguna"].'</td>
           <td>'.$key["namaDepan"].' '.$key["namaBelakang"].'</td>
@@ -462,10 +466,9 @@ function get_avatar_guru(){
           <td>'.$key["regTime"].'</td>
           <td>
             <button class="btn btn-sm btn-info"  title="Lihat Detail Data Guru" data-todo='. $datas.' onclick="detail('.$no.')" id="data-'.$no.'"><i class="ico-folder-open-alt"></i></button>
-            <button class="btn btn-sm btn-warning"title="Ubah Data Guru"><i class=" ico-file-text"></i></button>
             <button class="btn btn-sm btn-warning" title="Ubah Email" onclick="modalChEmail('.$datChEmail.')"><i class=" ico-envelop2"></i></button>
             <button class="btn btn-sm btn-danger" title="Reset Katasandi" onclick="resetSandi('.$datReset.')"><i class=" ico-key"></i></button>
-            <button class="btn btn-sm btn-danger" title="Hapus Data guru"><i class="ico-remove2"></i></button>
+            <button class="btn btn-sm btn-danger" title="Hapus Data guru" onclick="del_guru('.$no.')"><i class="ico-remove2"></i></button>
           </td>
       </tr>
     ';
@@ -505,12 +508,20 @@ function get_avatar_guru(){
   //update email
   public function updateEmail()
   {
-    $penggunaID=$this->input->post('penggunaID');
+        $penggunaID=$this->input->post('penggunaID');
     $newEmail=$this->input->post('email');
 
-    $this->mguru->ch_email($newEmail,$penggunaID);
+     $this->form_validation->set_rules( 'email', 'email', 'required|is_unique[tb_pengguna.eMail]' );
+       if ( $this->form_validation->run() == FALSE ) {
+          $msg="FALSE";
+          echo json_encode($msg);
+       }else{
+          $this->mguru->ch_email($newEmail,$penggunaID);
+          echo json_encode($newEmail);
+       }
+  
 
-    echo json_encode($newEmail);
+    
   }
 
   public function updateDatGuru()
@@ -523,6 +534,17 @@ function get_avatar_guru(){
     $data['biografi']=$this->input->post('biografi');
 
     $this->mguru->ch_guru($data);
+  }
+
+  public function cekNamaPengguna()
+  {
+     $this->form_validation->set_rules( 'namapengguna', 'namapengguna', 'required|is_unique[tb_pengguna.namaPengguna]' );
+      if ( $this->form_validation->run() == FALSE ) {
+        echo json_encode("FALSE");
+      }else{
+        echo json_encode("TRUE");
+      }
+
   }
 
 }

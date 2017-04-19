@@ -17,7 +17,7 @@
             	<!-- Tabel Guru -->
             	<table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
 	            	<thead>
-	            	<input class="form-control mb10 " type="text" name="cari" placeholder="Cari Guru">
+	            	<input class="form-control mb10 " type="text" name="cari" placeholder="Cari Guru" hidden>
 	            		<tr>
 	            			<th>No</th>
 	            			<th>Nama Pengguna</th>
@@ -69,8 +69,8 @@
 			</div>
 			<!-- /Modal Header -->
 			<div class="modal-body">
+				<input class="form-control" type="text" name="penggunaID" value="" hidden="true">
 				<input class="form-control" type="email" name="email" value="">
-				<input class="form-control" type="penggunaID" name="penggunaID" value="" hidden="true">
 			</div>
 			<!-- Modal Body -->
 
@@ -105,7 +105,7 @@
 			<div class="modal-body">
 				<form class="form-bordered">
 				 <div class="form-group">
-				 	<input type="text" name="guruID" value="" class="form-control col-md-6"/>
+				 	<input type="text" name="guruID" value="" class="form-control col-md-6" hidden="true" />
 					<label>Nama Depan</label>
 					<input type="text" name="namaDepan" value="" class="form-control col-md-6"/> 
 				</div>
@@ -190,7 +190,6 @@
 	function updateEmail() {
 		var newEmail=$('[name=email]').val();
 		var penggunaID=$('[name=penggunaID]').val();
-		console.log(newEmail);
 
 		url = base_url + "index.php/guru/updateEmail/";
 		 var data;
@@ -212,8 +211,13 @@
 	      type:"POST",
 	      url:url,
 	      success:function(data){
-
-	        swal("Email berhasil diperbaharui !", "Email Baru = "+data, "success");
+	      	var ret= JSON.parse(data);
+	      	if (ret=="FALSE") {
+	      		sweetAlert("Oops...", "Email anda sudah terpakai!", "error");
+	      	} else {
+	      		swal("Email berhasil diperbaharui !", "Email Baru = "+data, "success");
+	      	}
+	        
 	       // window.location.href =base_url+"videoback/daftarvideo";
 	      },
 	      error:function(){
@@ -269,5 +273,47 @@
 
 	}
 
+	function del_guru(n) {
+		var id = "#data-"+n;
+		var datGuru = $(id).data('todo');
+		var penggunaID = datGuru.penggunaID;
+		var namaPengguna = datGuru.namaPengguna;
+		var guruID	=	datGuru.guruID;
+		url = base_url + "index.php/guru/drop_teacher/";
 
+		 swal({
+	    title: "Yakin akan menghapus data "+namaPengguna+"?",
+	    text: "Anda tidak dapat membatalkan ini.",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonColor: "#DD6B55",
+	    confirmButtonText: "Ya,Tetap Hapus!",
+	    closeOnConfirm: false
+	  },
+	  function(){
+	    var datas = {penggunaID:penggunaID,
+	    							guruID:guruID};
+	    $.ajax({
+	      dataType:"text",
+	      data:datas,
+	      type:"POST",
+	      url:url,
+	      success:function(data){
+	      	swal("Data Guru "+namaPengguna+" Behasil Dihapus !", "", "success");
+	      	window.location.href =base_url+"guru/daftar/";
+	      },
+	      error:function(){
+	        sweetAlert("Oops...", "Data Guru "+namaPengguna+" Gagal Dihapus!", "error");
+	      }
+
+	    });
+	  });
+
+	}
+</script>
+<!-- event -->
+<script type="text/javascript">
+	$(document).ready(function(){ 
+		$()
+	 }); 
 </script>
