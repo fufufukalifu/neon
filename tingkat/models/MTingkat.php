@@ -95,6 +95,19 @@ class MTingkat extends CI_Model {
 
 	}
 
+		function get_level_by_siswaID_all($id_siswa){
+		$this->db->select( 'tingkatID' )->from( 'tb_siswa' );
+		$this->db->where( 'id', $id_siswa );
+
+		$query = $this->db->get();
+		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->result_array();
+		}
+
+	}
+
 
 
 

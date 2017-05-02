@@ -35,7 +35,7 @@
 
     <div class="modal-footer bg-color-3">
       <button type="button" class="cws-button bt-color-1 border-radius alt small" data-dismiss="modal">Batal</button>
-      <button type="button" class="cws-button bt-color-2 border-radius alt small buat-btn">Buat Pertanyaan</button>
+      <!-- <button type="button" class="cws-button bt-color-2 border-radius alt small buat-btn">Buat Pertanyaan</button> -->
     </div>
 
   </form>     
@@ -54,17 +54,22 @@
 </div>
 
 <script type="text/javascript">
-  load_matapelajaran(4);
+  $.ajax({
+    type: "POST",
+    url: base_url+"konsultasi/get_tingkat_for_konsultasi",
+    dataType: 'JSON',
+    success: function(data){
+      load_matapelajaran(data.tingkatID);
+    }
+
+  });
+
 
   $('#mapelSelect').change(function () {
     var idMapel = $(this).val();
     load_bab(idMapel);
   });
 
-  $('#babSelect').change(function () {
-    var idbab = $(this).val();
-    load_sub(idbab);
-  });
 
 
 // fungsi untuk ngeload matapelajaran
@@ -75,7 +80,7 @@ function load_matapelajaran(tingkatID){
     data: tingkatID.tingkat_id,
     url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/" + tingkatID,
     success: function (data) {
-      $('#mapelSelect').html('<option value="">-- Pilih Mata Pelajaran  --</option>');
+      $('#mapelSelect').html('<option value="">Pilih Mata Pelajaran</option>');
       $.each(data, function (i, data) {
         $('#mapelSelect').append("<option value='" + data.id + "'>" + data.keterangan + "</option>");
       });
@@ -98,32 +103,18 @@ function load_matapelajaran(tingkatID){
       success: function (data) {
        $.each(data, function (i, data) {
         $('#babSelect').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
-        load_sub(data.id);  
       });
      }
    });
    }
 
-   //  // //fungsi untuk ngeload bab berdasarkan tingkat-pelajaran id
-   //  function load_sub(babID) {
-   //   var babID;
-   //   $.ajax({
-   //    type: "POST",
-   //    url: "<?php echo base_url() ?>videoback/getSubbab/" + babID,
-   //    success: function (data) {
-   //     $('#subSelect').html('<option value=0>-- Pilih Sub Bab Pelajaran  --</option>');
-   //     $.each(data, function (i, data) {
-   //       $('#subSelect').append("<option value='" + data.id + "'>" + data.judulSubBab + "</option>");
-   //     });
-   //   }
-   // });
-   // }
+
 
    function mulai() {
     var mapel= $('#mapelSelect').val();
     var bab= $('#babSelect').val();
     if (mapel == 0 || bab == 0) {
-      $('#info').show();
+      sweetAlert("Oops...", "Silahkan Pilih Pelajaran Dan Bab Terlebih Dahulu", "error");
     }else{
      $('.buat-btn').text('proses...');
      window.location = "<?php echo base_url() ?>konsultasi/bertanya/" + bab;

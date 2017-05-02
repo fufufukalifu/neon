@@ -53,9 +53,9 @@ class Konsultasi extends MX_Controller{
     $keyword='';
   }
 
-    $config["base_url"] = base_url() . "konsultasi/pertanyaan_ku/";
-    $config["uri_segment"] = 3;
-    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+  $config["base_url"] = base_url() . "konsultasi/pertanyaan_ku/";
+  $config["uri_segment"] = 3;
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
   
 
   $config["total_rows"] = $this->mkonsultasi->get_my_questions_number($this->get_id_siswa(),$keyword);
@@ -76,6 +76,56 @@ class Konsultasi extends MX_Controller{
   // pertanyaan saya.
   $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa(),$config["per_page"], $page, $keyword);
   $data["links"] = $this->pagination->create_links();
+  $data['jumlah_postingan'] = $config['total_rows'];
+  $this->parser->parse( 'templating/index', $data );
+}
+
+public function pertanyaan_mentor(){
+  $data = array(
+    'judul_halaman' => 'Neon - Konsultasi',
+    'judul_header'=> 'Daftar Pertanyaan Mentor Saya'
+    );
+
+  $data['files'] = array(
+    APPPATH.'modules/homepage/views/v-header-login.php',
+    APPPATH.'modules/templating/views/t-f-pagetitle.php',
+    APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_mentor.php',
+    APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+    APPPATH.'modules/homepage/views/v-footer.php'
+    );
+  
+    // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+  $config = array();
+
+  // kalo ada yang di cari
+  if (!empty($_GET)) {
+    //keywordnya dapet dari get.
+    $keyword = $_GET['cari'];
+  }else{
+    $keyword='';
+  }
+
+  $config["base_url"] = base_url() . "konsultasi/pertanyaan_mentor/";
+  $config["uri_segment"] = 3;
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+  
+
+  $config["total_rows"] = $this->mkonsultasi->get_question_mentor_number($this->get_id_siswa(),$keyword);
+  $config["per_page"] = 10;
+
+  # konfig link
+  $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+  $config['cur_tag_close'] = '</a>';
+  $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+  $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+  $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+  $data['my_questions']=$this->mkonsultasi->get_question_m($this->get_id_siswa(),$config["per_page"], $page, $keyword);
+  $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config["total_rows"];
 
   $this->parser->parse( 'templating/index', $data );
 }
@@ -106,7 +156,7 @@ public function pertanyaan_all() {
   $config = array();
   $config["base_url"] = base_url() . "konsultasi/pertanyaan_all/";
   $config["total_rows"] = $this->mkonsultasi->get_all_questions_number($key);
-  $config["per_page"] = 1;
+  $config["per_page"] = 10;
   $config["uri_segment"] = 3;
 
   $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
@@ -125,6 +175,7 @@ public function pertanyaan_all() {
   // pertanyaan saya.
   $data['my_questions']=$this->mkonsultasi->get_all_questions($this->get_id_siswa(),$config["per_page"], $page,$key);
   $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config["total_rows"];
 
   $this->parser->parse( 'templating/index', $data );
 }
@@ -156,7 +207,7 @@ public function pertanyaan_grade() {
   $config["base_url"] = base_url() . "konsultasi/pertanyaan_grade/";
   $config["total_rows"] = $this->mkonsultasi->get_my_question_level_number($this->get_tingkat_siswa(),$key);
 
-  $config["per_page"] = 5;
+  $config["per_page"] = 10;
   $config["uri_segment"] = 3;
 
   $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
@@ -180,7 +231,7 @@ public function pertanyaan_grade() {
 }
 
 function get_tingkat_siswa(){
-  $id_tingkat = $this->mtingkat->get_level_by_siswaID($this->get_id_siswa());
+  $id_tingkat = $this->mtingkat->get_level_by_siswaID_all($this->get_id_siswa());
   if ($id_tingkat) {
     return $id_tingkat[0]['tingkatID'];
   } 
@@ -194,25 +245,25 @@ function ajax_add_konsultasi(){
   $mentor = $this->input->post( 'mentorID' );
 
   if($mentor=="NULL"){
- $data = array(
-      'isiPertanyaan' => $isi,
-      'judulPertanyaan' => $judul,
-      'babID' =>$bab,
-      'siswaID' =>$this->get_id_siswa()
-      );
-  }else{
-     $data = array(
-      'isiPertanyaan' => $isi,
-      'judulPertanyaan' => $judul,
-      'babID' =>$bab,
-      'siswaID' =>$this->get_id_siswa(),
-      'mentorID'=>$mentor
-      );
-  }
+   $data = array(
+    'isiPertanyaan' => $isi,
+    'judulPertanyaan' => $judul,
+    'babID' =>$bab,
+    'siswaID' =>$this->get_id_siswa()
+    );
+ }else{
+   $data = array(
+    'isiPertanyaan' => $isi,
+    'judulPertanyaan' => $judul,
+    'babID' =>$bab,
+    'siswaID' =>$this->get_id_siswa(),
+    'mentorID'=>$mentor
+    );
+ }
     // kalo ada mentornya
-   
+ 
 
-  $this->mkonsultasi->insert_konstulasi( $data );
+ $this->mkonsultasi->insert_konstulasi( $data );
 }
 
 function list_image_uploaded(){
@@ -623,6 +674,11 @@ function singlekonsultasi($id_pertanyaan){
   $this->parser->parse( 'templating/index', $data );
 }
 
+function index(){
+  $data = $this->mkonsultasi->get_question_m();
+  print_r($data);
+}
+
 
 
 #pencarian
@@ -631,4 +687,341 @@ function cari_semua(){
 }
 #pencarian
 
+public function pertanyaan_ku_search($kunci=''){
+  if (!empty($kunci)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Daftar Pertanyaan Saya'
+      );
+    $kunci = str_replace(' ', '_', $kunci);
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+
+    $config["base_url"] = base_url() . "konsultasi/pertanyaan_ku_search/".$kunci;
+    $config["uri_segment"] = 4;
+    $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+
+    $config["total_rows"] = $this->mkonsultasi->get_my_questions_number($this->get_id_siswa(),$kunci);
+    $config["per_page"] = 1;
+
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa(),$config["per_page"], $page, $kunci);
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config['total_rows'];
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_ku'));
+  }
+}
+
+public function filter($matapelajaran='',$bab=''){
+if (!empty($matapelajaran)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Hasil Pencarian : '.$matapelajaran."-".$bab
+      );
+    $matapelajaran = str_replace(' ', '_', $matapelajaran);
+    $bab = str_replace(' ', '_', $bab);
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_all.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+
+    $config["base_url"] = base_url() . "konsultasi/filter/".$matapelajaran."/".$bab;
+    $config["uri_segment"] = 5;
+    $page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+
+
+    $config["total_rows"] = $this->mkonsultasi->get_all_questions_number_filter($bab, $matapelajaran);
+    $config["per_page"] = 10;
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_all_questions_filter($bab, $matapelajaran,$config["per_page"],$page);
+
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config['total_rows'];
+
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_all'));
+  }
+}
+
+public function filter_mentor($matapelajaran='',$bab=''){
+  $matapelajaran = str_replace('_', ' ', $matapelajaran);
+    $bab = str_replace('_', ' ', $bab);
+
+if (!empty($matapelajaran)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Hasil Pencarian : '.$matapelajaran."-".$bab
+      );
+    
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_mentor.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+ $matapelajaran = str_replace(' ', '_', $matapelajaran);
+    $bab = str_replace(' ', '_', $bab);
+    $config["base_url"] = base_url() . "konsultasi/filter_mentor/".$matapelajaran."/".$bab;
+    $config["uri_segment"] = 5;
+    $page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+
+ $matapelajaran = str_replace('_', ' ', $matapelajaran);
+    $bab = str_replace('_', ' ', $bab);
+    $config["total_rows"] = $this->mkonsultasi->get_question_mentor_number_filter($this->get_id_siswa(),$bab, $matapelajaran);
+    $config["per_page"] = 10;
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_question_m_filter($bab, $matapelajaran,$this->get_id_siswa(),$config["per_page"],$page);
+
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config["total_rows"];
+
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_mentor'));
+  }
+}
+
+public function pertanyaan_all_search($kunci=''){
+  if (!empty($kunci)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Hasil Pencarian Semua Daftar Pertanyaan'
+      );
+    $kunci = str_replace(' ', '_', $kunci);
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_all.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+
+    $config["base_url"] = base_url() . "konsultasi/pertanyaan_all_search/".$kunci;
+    $config["uri_segment"] = 4;
+    $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+
+    $config["total_rows"] = $this->mkonsultasi->get_all_questions_number($kunci);
+    $config["per_page"] = 2;
+
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_all_questions_search($config["per_page"], $page, $kunci);
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config['total_rows'];
+
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_ku'));
+  }
+}
+
+public function pertanyaan_grade_search($kunci=''){
+  if (!empty($kunci)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Hasil Pencarian Daftar Pertanyaan Tingkat'
+      );
+    $kunci = str_replace(' ', '_', $kunci);
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_grade.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+
+    $config["base_url"] = base_url() . "konsultasi/pertanyaan_grade_search/".$kunci;
+    $config["uri_segment"] = 4;
+    $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+
+    $config["total_rows"] = $this->mkonsultasi->get_my_question_level_number($kunci);
+    $config["per_page"] = 1;
+
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_id_siswa(),$config["per_page"], $page, $kunci);
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config['total_rows'];
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_grade'));
+  }
+}
+
+public function pertanyaan_mentor_search($kunci=''){
+  if (!empty($kunci)) {
+    $data = array(
+      'judul_halaman' => 'Neon - Konsultasi',
+      'judul_header'=> 'Hasil Pencarian Daftar Pertanyaan Mentor'
+      );
+    $kunci = str_replace(' ', '_', $kunci);
+    $data['files'] = array(
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/templating/views/t-f-pagetitle.php',
+      APPPATH.'modules/konsultasi/views/v-daftar-konsultasi_mentor.php',
+      APPPATH.'modules/konsultasi/views/v-show-tingkat.php',
+      APPPATH.'modules/homepage/views/v-footer.php'
+      );
+
+  // jika gada yang di search, key di set kosong
+  ##KONFIGURASI UNTUUK PAGINATION
+    $config = array();
+
+
+
+    $config["base_url"] = base_url() . "konsultasi/pertanyaan_mentor_search/".$kunci;
+    $config["uri_segment"] = 4;
+    $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+
+    $config["total_rows"] = $this->mkonsultasi->get_question_mentor_number($this->get_id_siswa(),$kunci);
+    $config["per_page"] = 10;
+
+  # konfig link
+    $config['cur_tag_open'] = "<a style='background:#f27c66;color:white'>";
+    $config['cur_tag_close'] = '</a>';
+    $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+    $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+  # konfig link
+
+    $this->pagination->initialize($config);
+  ##KONFIGURASI UNTUUK PAGINATION
+
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+
+  // pertanyaan saya.
+    $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$config["per_page"], $page, $kunci);
+    $data["links"] = $this->pagination->create_links();
+    $data['jumlah_postingan'] = $config["total_rows"];
+
+    $this->parser->parse( 'templating/index', $data );
+ # code...
+  }else{
+    redirect(base_url('konsultasi/pertanyaan_grade'));
+  }
+}
+
+
+function get_tingkat_for_konsultasi(){
+  $tingkat=$this->get_tingkat_siswa();
+  $data['meta'] = $this->mkonsultasi->get_meta_data_tingkat($tingkat);
+
+  $tingkatID = null;
+
+  if (strpos($data['meta']['aliasTingkat'], 'SMA-IPA') !== false) {
+    $tingkatID = '4';
+  }else if (strpos($data['meta']['aliasTingkat'], 'SMA-IPS') !== false) {
+    $tingkatID = '5';
+  }else if (strpos($data['meta']['aliasTingkat'], 'SMP') !== false) {
+    $tingkatID = '2';
+  }else{
+    $tingkatID = '1';
+  }
+
+  echo json_encode($arrayName = array('tingkatID' => $tingkatID ));
+}
 }

@@ -1,3 +1,6 @@
+ <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
+
  <style type="text/css">
  	.komen {
  		width:80%;
@@ -18,7 +21,6 @@
 
  <main class="container">
  	<div class="page-content">
- 		<h2><a onclick="showmodal()" class="cws-button bt-color-3 icon-left small"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2>
  		<!-- tabs -->
  		<div class="tabs">
 
@@ -26,7 +28,35 @@
  			<div class="tabs-keeper">
  				<!-- tabs container -->
  				<div class="container-tabs active" data-tabs-id="cont-tabs1" style="display: block;">
- 					<div class="form-group">
+ 					<form class="form-group">
+ 						<b>Filter Pertanyaan</b>
+ 						<div class="grid-col-row clear-fix">
+ 							<div class="grid-col grid-col-4">
+ 								<select class="form-control" name="mapel" id="mapelSelect">
+ 									<option value=0>-Pilih Matapelajaran-</option>
+ 									<?php foreach ($mapel as $mapel_item): ?>
+ 										<option value=<?=$mapel_item['tingpelID'] ?>><?=$mapel_item['napel'] ?></option>  
+ 									<?php endforeach ?>
+ 								</select>
+ 							</div>
+
+ 							<div class="grid-col grid-col-4">
+ 								<select class="form-control" name="tingkat" id="babSelect"  ><option value=0>-Pilih Bab-</option></select>
+ 								
+ 							</div>
+
+
+ 							<div class="grid-col grid-col-1">
+ 								<a class="cws-button bt-color-3 icon-left smaller buat-btn"><i class="fa fa-plus"></i>Buat</a>
+
+ 								<a class="cws-button bt-color-3 icon-left smaller cari-btn"><i class="fa fa-search"></i>Cari</a>
+ 							</div>
+ 						</div>
+ 						
+ 					</form>
+
+ 					<form class="form-group">
+ 						<b>Pencarian Pertanyaan</b>
  						<div class="grid-col-row clear-fix">
  							<div class="grid-col grid-col-4">
  								<select name="" id="" onchange="location = this.value";>
@@ -37,19 +67,18 @@
  								</select>
  							</div>
  							<div class="grid-col grid-col-4">
- 									<form method="get	">
- 										<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
- 								</div>
+ 								<p class="input-icon">
+ 									<i class="fa fa-search"></i>
+ 									<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
+ 								</p>
+ 							</div>
 
- 								<div class="grid-col grid-col-1">
- 									<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_ku') ?>"><i class="fa fa-times"></i> Reset</a>
- 								</div>
-
- 							</form>
-
+ 							<div class="grid-col grid-col-1">
+ 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_mentor') ?>"><i class="fa fa-times"></i> Reset</a>
+ 							</div>
  						</div>
- 					</div>
- 					<!-- semua -->
+ 						
+ 					</form>
  					<?php if ($my_questions): ?>
  						<?php foreach ($my_questions as $question): ?>
  							<div class="blog-post">
@@ -79,16 +108,19 @@
 
  									</div>
 
- 									<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/pertanyaan_ku?cari='.$question['judulBab']) ?>">
- 											<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
- 											<a><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></a> |
- 											<?php if (!empty($question['namaGuru'])): ?>
- 												<a><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
- 											<?php else: ?>
- 												<a>Tanpa Mentor</a>
- 											<?php endif ?>
- 										</div>
+ 									
+ 										<div style="text-align: right">
+ 										<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
+ 											<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
+ 												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
+ 												<?php if (!empty($question['namaGuru'])): ?>
+ 													<span><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
+ 													<?php else: ?>
+ 														<span>Tanpa Mentor</span>
+ 													<?php endif ?>
+ 												</div>
  									</article>
  								</div>
 
@@ -110,6 +142,8 @@
  						</div>
 
  					</div>
+						<b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
+
 
  					<!-- / pagination -->
 
@@ -133,4 +167,14 @@
 	function showmodal(){
 		$('#myModal').modal('show');
 	}
+</script>
+
+<!-- on keypres cari soal -->
+<script type="text/javascript">
+$("#search1").on('keyup', function (e) {
+    if (e.keyCode == 13) {
+       keyword = $('#search1').val().replace(/ /g,"-");		;
+       document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
+    }
+});
 </script>

@@ -85,6 +85,7 @@ class Admincabang extends MX_Controller {
 
 	//laporan to ajax
 	public function laporanto($cabang="all",$tryout="all",$paket="all"){
+		echo "";
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to

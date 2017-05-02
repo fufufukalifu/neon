@@ -18,7 +18,7 @@
 
  <main class="container">
  	<div class="page-content">
- 		<h2><a onclick="showmodal()" class="cws-button bt-color-3 icon-left small"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2>
+ 		<!-- <h2><a onclick="showmodal()" cl	ass="cws-button bt-color-3 icon-left small"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2> -->
  		<!-- tabs -->
  		<div class="tabs">
 
@@ -27,6 +27,34 @@
  				<!-- tabs container -->
  				<div class="container-tabs active" data-tabs-id="cont-tabs1" style="display: block;">
  					<form class="form-group">
+ 						<b>Filter Pertanyaan</b>
+ 						<div class="grid-col-row clear-fix">
+ 							<div class="grid-col grid-col-4">
+ 								<select class="form-control" name="mapel" id="mapelSelect">
+ 									<option value=0>-Pilih Matapelajaran-</option>
+ 									<?php foreach ($mapel as $mapel_item): ?>
+ 										<option value=<?=$mapel_item['tingpelID'] ?>><?=$mapel_item['napel'] ?></option>  
+ 									<?php endforeach ?>
+ 								</select>
+ 							</div>
+
+ 							<div class="grid-col grid-col-4">
+ 								<select class="form-control" name="tingkat" id="babSelect"  ><option value=0>-Pilih Bab-</option></select>
+ 								
+ 							</div>
+
+
+ 							<div class="grid-col grid-col-1">
+ 								<a class="cws-button bt-color-3 icon-left smaller buat-btn"><i class="fa fa-plus"></i>Buat</a>
+
+ 								<a class="cws-button bt-color-3 icon-left smaller cari-btn"><i class="fa fa-search"></i>Cari</a>
+ 							</div>
+ 						</div>
+ 						
+ 					</form>
+
+ 					<form class="form-group">
+ 						<b>Pencarian Pertanyaan</b>
  						<div class="grid-col-row clear-fix">
  							<div class="grid-col grid-col-4">
  								<select name="" id="" onchange="location = this.value";>
@@ -39,9 +67,7 @@
  							<div class="grid-col grid-col-4">
  								<p class="input-icon">
  									<i class="fa fa-search"></i>
- 									<form method ="POST">
- 										<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
- 									</form>
+ 									<input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
  								</p>
  							</div>
 
@@ -82,58 +108,87 @@
  									</div>
 
  									<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/pertanyaan_all?cari='.$question['judulBab']) ?>">
- 											<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
- 											<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
- 											<?php if (!empty($question['namaGuru'])): ?>
- 												<span><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
- 												<?php else: ?>
- 													<span>Tanpa Mentor</span>
- 												<?php endif ?>
- 											</div>
- 										</article>
- 									</div>
+ 										<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
+ 											<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
+ 												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
+ 												<?php if (!empty($question['namaGuru'])): ?>
+ 													<span><i class="fa fa-search"></i> <?=$question['namaGuru'] ?></a>
+ 													<?php else: ?>
+ 														<span>Tanpa Mentor</span>
+ 													<?php endif ?>
+ 												</div>
+ 											</article>
+ 										</div>
 
- 									<!-- / blog item -->
- 								<?php endforeach ?>
- 							<?php else: ?>
- 								<h3>Tidak Ada Pertanyaan</h3>
+ 										<!-- / blog item -->
+ 									<?php endforeach ?>
+ 								<?php else: ?>
+ 									<h3>Tidak Ada Pertanyaan</h3>
 
- 							<?php endif ?>
+ 								<?php endif ?>
 
- 						</div>
- 						<!-- pagination -->
- 						<hr>
- 						<br>
- 						<div>
+ 							</div>
+ 							<!-- pagination -->
+ 							<hr>
+ 							<br>
+ 							<div>
 
- 							<div class="page-pagination clear-fix" style="width:100%;">
- 								<center><?php echo $links; ?></center>	
+ 								<div class="page-pagination clear-fix" style="width:100%;">
+ 									<center><?php echo $links; ?></center>	
+ 								</div>
+						<b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
+
+
  							</div>
 
+ 							<!-- / pagination -->
+
+ 							<!--/tabs container -->
+ 							<!-- / pagination -->
  						</div>
 
- 						<!-- / pagination -->
+ 						<!--/tabs container -->
+ 						<!-- tabs container -->
 
  						<!--/tabs container -->
- 						<!-- / pagination -->
  					</div>
-
- 					<!--/tabs container -->
- 					<!-- tabs container -->
-
- 					<!--/tabs container -->
+ 					<!--/tabs keeper -->
  				</div>
- 				<!--/tabs keeper -->
- 			</div>
- 			<!-- /tabs -->
- 		</section>
+ 				<!-- /tabs -->
+ 			</section>
+ 		</div>
  	</div>
- </div>
-</main>
-<script type="text/javascript">
-	function showmodal(){
-		$('#myModal').modal('show');
-	}
+ </main>
+ <script type="text/javascript">
+ 	function showmodal(){
+ 		$('#myModal').modal('show');
+ 	}
 
-</script>
+ </script>
+ <!-- on keypres cari soal -->
+ <script type="text/javascript">
+ 	$("#search1").on('keyup', function (e) {
+ 		if (e.keyCode == 13) {
+ 			keyword = $('#search1').val().replace(/ /g,"-");		;
+ 			document.location = base_url+"konsultasi/pertanyaan_all_search/"+keyword;
+ 		}
+ 	});
+
+ 	$('.cari-btn').click(function(){
+ 		var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
+ 		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
+
+ 		console.log(mapel);
+ 		if (mapel == 'Pilih Mata Pelajaran') {
+ 			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
+ 		}else{
+ 			if (bab=='Bab_Pelajaran') {
+ 				document.location = base_url+"konsultasi/filter/"+mapel+"/all";
+ 			}else if(bab!='Bab_Pelajaran'){
+ 				document.location = base_url+"konsultasi/filter/"+mapel+"/"+bab;
+ 			}
+ 		}
+ 	});
+ </script>

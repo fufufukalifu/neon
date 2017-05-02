@@ -1,10 +1,6 @@
-
 <main class="container">
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
-
-
-
 	<!-- modal preview -->
 	<div class="modal fade" id="preview" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -83,7 +79,9 @@
 						<div class="col-sm-12" style="padding:0">
 
 							<div class="col-sm-8">
-								<label >Kepada Mentor</label>
+
+								<label >Kepada Mentor ? :
+								<?php if (empty($mentornya)): ?> <span class="text-danger">Anda belum memiliki mentor</small><?php endif ?></label>
 								<select class="form-control" name="mentor">
 									<option value="NULL">- Tidak -</option>
 									<?php if (!empty($mentornya)): ?>

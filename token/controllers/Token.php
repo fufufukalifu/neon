@@ -118,7 +118,7 @@ class Token extends MX_Controller {
 			$sisa_aktif = $date2->diff($date1);
 			
 			$row = array();
-			$row[] = $no;
+			$row[] = $list->tokenid;
 			$row[] = $list->namaDepan." ".$list->namaBelakang;
 			$row[] = $list->namaPengguna;
 

@@ -105,6 +105,7 @@
 
                 <td>
 
+
                   <?php if ($status_to=='doing'): ?>
                    <a onclick="kerjakan(<?=$paketitem['id_paket']?>)" 
                      class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
@@ -118,8 +119,6 @@
                     class="btn btn-danger border-radius modal-on<?=$paketitem['id_paket']?>"
                     data-todo='<?=json_encode($paketitem)?>'><i class="fa fa-times"></i></a>
                   <?php endif ?>
-
-
 
                 </td>
 
@@ -237,7 +236,6 @@
     var kelas = ".modal-on"+id_to;
     var data_to = $(kelas).data('todo');
     url = base_url+"index.php/tryout/buatto";
-    console.log(data_to);
 
     var datas = {
       id_paket:data_to.id_paket,
@@ -334,17 +332,24 @@
   }
 
   function load_grafik(data) {
-
-
+  nilai =data.jmlh_benar/ data.jumlah_soal * 100;
 
    var chart = new CanvasJS.Chart("chartContainer", {
 
      title: {
-
-      text: "Nama Paket : "+data.nm_paket
-
+      text: data.nm_paket,
+      fontSize: 30
+      
     },
-
+    subtitles:[
+    {
+      text: "Nilai : "+nilai.toFixed(2),
+      //Uncomment properties below to see how they behave
+      //fontColor: "red",
+      fontSize: 30
+    }
+    ]
+,
     animationEnabled: true,
 
     theme: "theme1",
@@ -354,33 +359,19 @@
     {
 
       type: "doughnut",
-
       indexLabelFontFamily: "Garamond",
-
       indexLabelFontSize: 20,
-
       startAngle: 0,
-
       indexLabelFontColor: "dimgrey",
-
       indexLabelLineColor: "darkgrey",
-
       toolTipContent: "Jumlah : {y} ",
 
 
 
       dataPoints: [
-
-      { y : data.total_nilai, indexLabel:"Poin {y}"},
-
       { y: data.jmlh_salah, indexLabel: "Salah {y}" },
-
       { y: data.jmlh_kosong, indexLabel: "Kosong {y}" },
-
       { y: data.jmlh_benar, indexLabel: "Benar {y}" },
-
-
-
       ]
 
     }
