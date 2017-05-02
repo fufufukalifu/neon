@@ -822,7 +822,7 @@ function ajax_daftar_konsultasi(){
 
         $row[] = $no;
         $row[] = $list_item['judulPertanyaan'];
-        $row[] = $list_item['isiPertanyaan'];
+        $row[] = htmlspecialchars($list_item['isiPertanyaan']);
         $row[] = $list_item['date_created'];
         
         $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id'].'"  

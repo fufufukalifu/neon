@@ -1,6 +1,3 @@
- <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
-
-
  <style type="text/css">
  	.komen {
  		width:80%;
@@ -21,6 +18,7 @@
 
  <main class="container">
  	<div class="page-content">
+ 		<!-- <h2><a onclick="showmodal()" cl	ass="cws-button bt-color-3 icon-left small"><i class="fa fa-plus"></i>Buat Pertanyaan</a></h2> -->
  		<!-- tabs -->
  		<div class="tabs">
 
@@ -60,8 +58,8 @@
  						<div class="grid-col-row clear-fix">
  							<div class="grid-col grid-col-4">
  								<select name="" id="" onchange="location = this.value";>
- 									<option selected value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
- 									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
  								</select>
@@ -74,11 +72,12 @@
  							</div>
 
  							<div class="grid-col grid-col-1">
- 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_mentor') ?>"><i class="fa fa-times"></i> Reset</a>
+ 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_all') ?>"><i class="fa fa-times"></i> Reset</a>
  							</div>
  						</div>
  						
  					</form>
+ 					<!-- semua -->
  					<?php if ($my_questions): ?>
  						<?php foreach ($my_questions as $question): ?>
  							<div class="blog-post">
@@ -108,11 +107,10 @@
 
  									</div>
 
- 									
- 										<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 									<div style="text-align: right">
+ 										<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
  											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
- 											<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 											<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
  												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
  												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
  												<?php if (!empty($question['namaGuru'])): ?>
@@ -121,60 +119,74 @@
  														<span>Tanpa Mentor</span>
  													<?php endif ?>
  												</div>
- 									</article>
+ 											</article>
+ 										</div>
+
+ 										<!-- / blog item -->
+ 									<?php endforeach ?>
+ 								<?php else: ?>
+ 									<h3>Tidak Ada Pertanyaan</h3>
+
+ 								<?php endif ?>
+
+ 							</div>
+ 							<!-- pagination -->
+ 							<hr>
+ 							<br>
+ 							<div>
+
+ 								<div class="page-pagination clear-fix" style="width:100%;">
+ 									<center><?php echo $links; ?></center>	
  								</div>
 
- 								<!-- / blog item -->
- 							<?php endforeach ?>
- 						<?php else: ?>
- 							<h3>Tidak Ada Pertanyaan</h3>
+ 							</div>
 
- 						<?php endif ?>
+ 							<!-- / pagination -->
 
- 					</div>
- 					<!-- pagination -->
- 					<hr>
- 					<br>
- 					<div>
-
- 						<div class="page-pagination clear-fix" style="width:100%;">
- 							<center><?php echo $links; ?></center>	
+ 							<!--/tabs container -->
+ 							<!-- / pagination -->
  						</div>
 
+ 						<!--/tabs container -->
+ 						<!-- tabs container -->
+
+ 						<!--/tabs container -->
  					</div>
-						<b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
-
-
- 					<!-- / pagination -->
-
- 					<!--/tabs container -->
- 					<!-- / pagination -->
+ 					<!--/tabs keeper -->
  				</div>
-
- 				<!--/tabs container -->
- 				<!-- tabs container -->
-
- 				<!--/tabs container -->
- 			</div>
- 			<!--/tabs keeper -->
+ 				<!-- /tabs -->
+ 			</section>
  		</div>
- 		<!-- /tabs -->
- 	</section>
- </div>
-</div>
-</main>
-<script type="text/javascript">
-	function showmodal(){
-		$('#myModal').modal('show');
-	}
-</script>
+ 	</div>
+ </main>
+ <script type="text/javascript">
+ 	function showmodal(){
+ 		$('#myModal').modal('show');
+ 	}
 
-<!-- on keypres cari soal -->
-<script type="text/javascript">
-$("#search1").on('keyup', function (e) {
-    if (e.keyCode == 13) {
-       keyword = $('#search1').val().replace(/ /g,"-");		;
-       document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
-    }
-});
-</script>
+ </script>
+ <!-- on keypres cari soal -->
+ <script type="text/javascript">
+ 	$("#search1").on('keyup', function (e) {
+ 		if (e.keyCode == 13) {
+ 			keyword = $('#search1').val().replace(/ /g,"-");		;
+ 			document.location = base_url+"konsultasi/pertanyaan_grade_search/"+keyword;
+ 		}
+ 	});
+
+ 	$('.cari-btn').click(function(){
+ 		var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
+ 		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
+
+ 		console.log(mapel);
+ 		if (mapel == 'Pilih Mata Pelajaran') {
+ 			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
+ 		}else{
+ 			if (mapel!='Pilih Mata Pelajaran' && bab=='Bab Pelajaran') {
+ 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"all";
+ 			}else if(bab!='Bab Pelajaran'){
+ 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/"+bab;
+ 			}
+ 		}
+ 	});
+ </script>

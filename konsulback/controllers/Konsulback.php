@@ -299,7 +299,7 @@
 
   }
     function get_tingkat_siswa(){
-    $id_tingkat = $this->mtingkat->get_level_by_siswaID($this->get_id_siswa());
+    $id_tingkat = $this->mtingkat->get_level_by_siswaID_all($this->get_id_siswa());
     if ($id_tingkat) {
     return $id_tingkat[0]['tingkatID'];
     } 

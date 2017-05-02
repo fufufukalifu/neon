@@ -1,6 +1,3 @@
- <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
-
-
  <style type="text/css">
  	.komen {
  		width:80%;
@@ -60,10 +57,10 @@
  						<div class="grid-col-row clear-fix">
  							<div class="grid-col grid-col-4">
  								<select name="" id="" onchange="location = this.value";>
- 									<option selected value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
- 									<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
  								</select>
  							</div>
  							<div class="grid-col grid-col-4">
@@ -79,40 +76,41 @@
  						</div>
  						
  					</form>
- 					<?php if ($my_questions): ?>
- 						<?php foreach ($my_questions as $question): ?>
- 							<div class="blog-post">
- 								<article>
- 									<hr class="divider-color">
- 									<br><br>
- 									<div class="quotes clear-fix">
- 										<div class="quote-avatar-author clear-fix" style="border-radius: 0">
- 											<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
- 											data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
- 											width=60
- 											alt="">
- 											<div class="author-info">
- 												<center><?=$question['namaDepan']." ".$question['namaBelakang'] ?></center>
+ 					<!-- semua -->
+ 						<!-- semua -->
+ 						<?php if ($my_questions): ?>
+ 							<?php foreach ($my_questions as $question): ?>
+ 								<div class="blog-post">
+ 									<article>
+ 										<hr class="divider-color">
+ 										<br><br>
+ 										<div class="quotes clear-fix">
+ 											<div class="quote-avatar-author clear-fix" style="border-radius: 0">
+ 												<img src="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+ 												data-at2x="<?=base_url("assets/image/photo/siswa/".$question['photo'])?>" 
+ 												width=60
+ 												alt="">
+ 												<div class="author-info">
+ 													<center><?=$question['namaDepan']." ".$question['namaBelakang'] ?></center>
+ 												</div>
  											</div>
+ 											<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>">
+ 												<q>
+ 													<h3><?=$question['judulPertanyaan'] ?></h3>
+ 													<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
+ 												</q>
+ 											</a>
+
+ 											<div class="komen">
+ 												<?=$question['isiPertanyaan'] ?><br>
+ 											</div>
+
  										</div>
- 										<a href="<?=base_url('konsultasi/singlekonsultasi/') ?><?=$question['pertanyaanID'] ?>">
- 											<q>
- 												<h3><?=$question['judulPertanyaan'] ?></h3>
- 												<span title="waktu dibuat"> (<?=$question['date_created'] ?>)</span>
- 											</q>
- 										</a>
 
- 										<div class="komen">
- 											<?=$question['isiPertanyaan'] ?><br>
- 										</div>
-
- 									</div>
-
- 									
  										<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 										<a href="<?=base_url('konsultasi/filter_mentor/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
  											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
- 											<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 											<a href="<?=base_url('konsultasi/filter_mentor/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
  												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
  												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
  												<?php if (!empty($question['namaGuru'])): ?>
@@ -121,60 +119,74 @@
  														<span>Tanpa Mentor</span>
  													<?php endif ?>
  												</div>
- 									</article>
- 								</div>
+ 											</article>
+ 										</div>
+ 										</article>
+ 									</div>
 
- 								<!-- / blog item -->
- 							<?php endforeach ?>
- 						<?php else: ?>
- 							<h3>Tidak Ada Pertanyaan</h3>
+ 									<!-- / blog item -->
+ 								<?php endforeach ?>
+ 							<?php else: ?>
+ 								<h3>Tidak Ada Pertanyaan</h3>
 
- 						<?php endif ?>
+ 							<?php endif ?>
 
- 					</div>
- 					<!-- pagination -->
- 					<hr>
- 					<br>
- 					<div>
+ 						</div>
+ 						<!-- pagination -->
+ 						<hr>
+ 						<br>
+ 						<div>
 
- 						<div class="page-pagination clear-fix" style="width:100%;">
- 							<center><?php echo $links; ?></center>	
+ 							<div class="page-pagination clear-fix" style="width:100%;">
+ 								<center><?php echo $links; ?></center>	
+ 							</div>
+						<b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
  						</div>
 
+ 						<!-- / pagination -->
+
+ 						<!--/tabs container -->
+ 						<!-- / pagination -->
  					</div>
-						<b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
-
-
- 					<!-- / pagination -->
 
  					<!--/tabs container -->
- 					<!-- / pagination -->
+ 					<!-- tabs container -->
+
+ 					<!--/tabs container -->
  				</div>
-
- 				<!--/tabs container -->
- 				<!-- tabs container -->
-
- 				<!--/tabs container -->
+ 				<!--/tabs keeper -->
  			</div>
- 			<!--/tabs keeper -->
- 		</div>
- 		<!-- /tabs -->
- 	</section>
+ 			<!-- /tabs -->
+ 		</section>
+ 	</div>
  </div>
-</div>
 </main>
 <script type="text/javascript">
 	function showmodal(){
 		$('#myModal').modal('show');
 	}
 </script>
-
-<!-- on keypres cari soal -->
 <script type="text/javascript">
-$("#search1").on('keyup', function (e) {
-    if (e.keyCode == 13) {
-       keyword = $('#search1').val().replace(/ /g,"-");		;
-       document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
-    }
-});
+	$("#search1").on('keyup', function (e) {
+		if (e.keyCode == 13) {
+			keyword = $('#search1').val().replace(/ /g,"-");		;
+			document.location = base_url+"konsultasi/pertanyaan_mentor_search/"+keyword;
+		}
+	});
+
+	 	$('.cari-btn').click(function(){
+ 		var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
+ 		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
+
+ 		console.log(bab);
+ 		if (mapel == 'Pilih Mata Pelajaran') {
+ 			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
+ 		}else{
+ 			if (bab=='Bab_Pelajaran') {
+ 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/all";
+ 			}else if(bab!='Bab_Pelajaran'){
+ 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/"+bab;
+ 			}
+ 		}
+ 	});
 </script>

@@ -1,9 +1,6 @@
 <main class="container">
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
-
-
-
 	<!-- modal preview -->
 	<div class="modal fade" id="preview" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -82,15 +79,28 @@
 						<div class="col-sm-12" style="padding:0">
 
 							<div class="col-sm-8">
-								<input name="namaPertanyaan" type="text" value="" size="30" aria-required="true" placeholder="Nama Pertanyaan" class="col-sm-10"> 
+
+								<label >Kepada Mentor ? :
+								<?php if (empty($mentornya)): ?> <span class="text-danger">Anda belum memiliki mentor</small><?php endif ?></label>
+								<select class="form-control" name="mentor">
+									<option value="NULL">- Tidak -</option>
+									<?php if (!empty($mentornya)): ?>
+										<option value="<?=$mentornya['guruID'] ?>"><?=$mentornya['namaDepan']." ".$mentornya['namaBelakang'] ?></option>
+									<?php endif ?>
+								</select>
+								<br>
+								Judul Pertanyaan
+								<input name="namaPertanyaan" type="text" value="" size="30" aria-required="true" class="col-sm-10"> 
 								<input type="hidden" name="idsub" value="{idsub}">
 							</div>
-							<div class="col-sm-4">
-								<a onclick="show_image()" class="cws-button bt-color-3 alt smalls">Lihat Gambar</a>
-
+							<div class="col-sm-4"><br><br><br><br>
+								<a onclick="show_image()" class="cws-button bt-color-3 alt smalls" style="margin-top: 10px">Lihat Gambar</a>
 							</div>
 						</div>
 						<div class="col-sm-12">
+
+
+
 							<br>
 							Isi Pertanyaan :
 							<textarea  name="editor1" class="form-control" id="isi"></textarea>
@@ -101,7 +111,7 @@
 
 								<a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
 								<div id="output" style="display: inline">
-								<a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+									<a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
 								</div>
 
 								
@@ -216,10 +226,11 @@
 		var data = {
 			namapertanyaan : $('input[name=namaPertanyaan]').val(),
 			isi : desc+"<br>",
-			bab : $('input[name=babid]').val()
+			bab : $('input[name=babid]').val(),
+			mentorID:$('select[name=mentor]').val()
 		}
 
-		// console.log(data);
+		console.log(data);
 
 		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
 			$('#info').show();
@@ -234,8 +245,7 @@
 				{
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
-                // alert('berhasil');
-                window.location = base_url+"konsultasi";
+                window.location = base_url+"konsultasi/pertanyaan_all";
             },
             error: function (jqXHR, textStatus, errorThrown)
             {

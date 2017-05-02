@@ -2,7 +2,7 @@
 class Logtryout_model extends CI_Model {
 
 	public function get_log_tryout($data){
-		$this->db->select('l.id, siswa_id ,s.`namaDepan`, s.`namaBelakang`, waktu_mulai, waktu_selesai, status_pengerjaan, p.`nm_paket`, t.`nm_tryout`');
+		$this->db->select('l.id, siswa_id ,s.`namaDepan`, s.`namaBelakang`, waktu_mulai, waktu_selesai, status_pengerjaan, p.`nm_paket`, t.`nm_tryout`,p.`durasi`');
 		$this->db->from('tb_log_pengerjaan_to l');
 
 		$this->db->join('tb_mm-tryoutpaket mt','mt.id = l.mm_tryout_paket_id');

@@ -9,17 +9,17 @@
 
 
   <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
   </script>
   <script type="text/javascript" async
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
-  </script>
-  <!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
-  <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
+</script>
+<!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
 
-  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
-  <!-- Script priview mathjax form input buat rumus-->
-  <script>
+<script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
+<!-- Script priview mathjax form input buat rumus-->
+<script>
   var Preview = {
   delay: 150,        // delay after keystroke before updating
 
@@ -110,7 +110,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
 <!--END Script priview mathjax form input buat rumus-->
 <!-- Script priview mathjax untuk priview soal-->
 <script>
-var Preview2 = {
+  var Preview2 = {
   delay: 150,        // delay after keystroke before updating
 
   preview: null,     // filled in by Init below
@@ -222,23 +222,23 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
      <div class="panel-body ">
       <!-- prev audio di modal -->
       <div class="hidden-audio" hidden="true">
-         <audio class="col-sm-12 " id="prevAudio" src="" type="audio/mpeg" controls>voiv</audio>
-      </div>
+       <audio class="col-sm-12 " id="prevAudio" src="" type="audio/mpeg" controls>voiv</audio>
+     </div>
      <hr>
-      <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
-      <label> judul  :</label> <a id="prevJudul" ></a> <br>
-      <label>Soal   : </label>
+     <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
+     <label> judul  :</label> <a id="prevJudul" ></a> <br>
+     <label>Soal   : </label>
 
-      <!-- img -->
-      <div class="col-sm-12">
-        <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
-      </div>
-      <!-- img -->
-      <div class="prevSoal col-sm-12">
-        <div class="a" id="MathPreview2" ></div>
-        <div class="a" id="MathBuffer2" style=" 
-        visibility:hidden; position:absolute; top:0; left: 0"></div>
-      </div>
+     <!-- img -->
+     <div class="col-sm-12">
+      <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
+    </div>
+    <!-- img -->
+    <div class="prevSoal col-sm-12">
+      <div class="a" id="MathPreview2" ></div>
+      <div class="a" id="MathBuffer2" style=" 
+      visibility:hidden; position:absolute; top:0; left: 0"></div>
+    </div>
           <!-- <script>
       Preview2.Init();
     </script> -->
@@ -389,6 +389,8 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
   <div class="col-md-12">
     <!-- Form horizontal layout bordered -->
     <form class="form-horizontal form-bordered panel panel-teal form-tambahsoal" action="<?=base_url()?>index.php/banksoal/uploadsoal" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
+      <!-- <form class="form-horizontal form-bordered panel panel-teal form-tambahsoal" id="form_soal" action="" method="post" accept-charset="utf-8" enctype="multipart/form-data" > -->
+
       <div class="panel-heading">
         <h3 class="panel-title">Form Soal</h3>
         <!-- untuk menampung bab id -->
@@ -557,10 +559,10 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       </div>
     </div>
     <script>
-    Preview.Init();
+      Preview.Init();
     </script>
     <script>
-    Preview2.Init();
+      Preview2.Init();
     </script>
     <!-- End MathJax -->
   </div>
@@ -1156,7 +1158,7 @@ true">
 
                   <div class="panel-footer">
                     <div class="col-md-2">
-                      <button type="submit" class="btn btn-primary">Simpan</button>
+                      <button type="submit" class="btn btn-primary simpan">Simpan</button>
                       <a class="btn btn-info" onclick="priview()">Preview</a>
                     </div>
                     <div class="col-md-5"><br><br>
@@ -1199,13 +1201,13 @@ true">
         CKEDITOR.replace( 'editor1' );
         CKEDITOR.replace( 'editor2' );
 
-        </script>
+      </script>
 
 
 
-        <!-- script untuk option hide and show -->
+      <!-- script untuk option hide and show -->
 
-        <script type="text/javascript">
+      <script type="text/javascript">
 
         $(document).ready(function(){
           CKEDITOR.instances.editor1.on( 'keyup', function( event ) {
@@ -1248,12 +1250,12 @@ true">
             // END  event untuk jumlah pilihan
           });
 
- </script>
+        </script>
 
 
- <!-- Start script untuk priview gambar soal -->
- <script type="text/javascript">
- $(function () {
+        <!-- Start script untuk priview gambar soal -->
+        <script type="text/javascript">
+         $(function () {
             // Start event priview gambar Soal
             $('#fileSoal').on('change',function () {
               var file = this.files[0];
@@ -1303,7 +1305,7 @@ true">
              var viewerAudio = {
               load : function(e){
                 $('#previewAudio').attr('src', e.target.result);
-                  $('#prevAudio').attr('src', e.target.result);
+                $('#prevAudio').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameAudio').text(file.name);
@@ -1510,10 +1512,10 @@ true">
         },
       }
 
-      </script>
-      <!-- End script untuk priview gambar soal -->
-      <!-- start script js validation extension -->
-      <script type="text/javascript">
+    </script>
+    <!-- End script untuk priview gambar soal -->
+    <!-- start script js validation extension -->
+    <script type="text/javascript">
 // validasi upload gambar 
 function ValidateSingleInput(oInput) {
   var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]; 
@@ -1594,12 +1596,12 @@ function ValidateAudioInput(oInput){
           }
           return true;
         }
-        </script>
-        <!-- END -->
+      </script>
+      <!-- END -->
 
-        <!--Start  Script drop down depeden -->
+      <!--Start  Script drop down depeden -->
 
-        <script>
+      <script>
 
     // Script for getting the dynamic values from database using jQuery and AJAX
 
@@ -1706,8 +1708,8 @@ function ValidateAudioInput(oInput){
           load_sub_bab($('#bab').val());
         })
       })
-}
-;
+    }
+    ;
 
     //buat load pelajaran
     function loadPelajaran(tingkatID) {
@@ -1783,9 +1785,9 @@ function ValidateAudioInput(oInput){
       $('#filesizeAudio').text("");
       $('.hidden-audio').hide();
     }
-    </script>
+  </script>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
     // priview soal sebelum di upload
     function priview() {
       Preview2.Update();
@@ -1817,56 +1819,124 @@ function ValidateAudioInput(oInput){
       //     console.log('key up')
       // });
 
- </script>
- <!--END Script drop down depeden  -->
- <script src="http://malsup.github.com/jquery.form.js"></script>
- <!-- SCRIPT UNTUK PROGRESS BAR -->
- <!-- Untuk sementara di komen karena menyebabkan error ckeditor value always null-->
- <!-- <script>
- (function() {
-  var bar = $('#ProgressSOal');
-  var status = $('#status');
-  $('.form-tambahsoal').ajaxForm({
-    beforeSend: function() {
-      status.empty();
-      var percentVal = '0%';
-      bar.width(percentVal)
-    },
-    uploadProgress: function(event, position, total, percentComplete) {
-      var percentVal = percentComplete + '%';
-      bar.width(percentVal)
-    },
-    success: function() {
-      var percentVal = '100%';
-      bar.width(percentVal);
-      swal({
-        title: "Selesai membuat soal",
-        text: "tambah lagi atau selesai?",
-        type: "success",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Buat Lagi",
-        cancelButtonText: "Selesai Buat Soal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm) {
-         location.reload();
-       } else {
-        uuid = $('input[name=UUID]').val();
-        sub = $('input[name=subBabID]').val();
-        window.location = base_url+"banksoal/banksoal/mysoal";
-      }
-    });
-    },
-    complete: function(xhr) {
-      status.html(xhr.responseText);
-    }
-  }); 
+    </script>
+    <!--END Script drop down depeden  -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+<!--     <script>
+     $('.simpan').click(function(){
+      // data = $('#form_soal').serialize();
 
-})();       
-</script> -->
+
+      data_post = {
+        'subBabID':$('select[name=subBabID]').val(),
+        'op-jawaban':$('input[name=op-jawaban]').val(),
+        'opjumlah':$('input[name=opjumlah]').val(),
+        'editor1':CKEDITOR.instances.editor1.getData(),
+        'gambarSoal':$('input[name=]').val(),
+        'judul':$('input[name=judul]').val(),
+        'jawaban':$('select[name=jawaban]').val(),
+        'kesulitan':$('select[name=kesulitan]').val(),
+        'sumber':$('input[name=sumber]').val(),
+        'publish':$('input[name=random]').val(),
+        'random':$('input[name=random]').val(),
+        'editor2':$('textarea[name=editor2]').val(),
+        'opmedia':$('input[name=opmedia]').val(),
+        'a':$("textarea[name=a]").val(),
+        'b':$("textarea[name=b]").val(),
+        'c':$("textarea[name=c]").val(),
+        'd':$("textarea[name=d]").val(),
+        'e':$("textarea[name=e]").val(),
+      }
+
+      $.ajax({
+        type: "POST",
+        url: base_url+"banksoal/uploadsoal",
+        data: data_post,
+        dataType: "text",
+        success:function(){
+          console.log('masuk');
+        },error: function(XMLHttpRequest, textStatus, errorThrown) {
+     console.log(XMLHttpRequest);
+     console.log(textStatus);
+     console.log(errorThrown);
+
+  }
+      });
+    });
+  </script> -->
+  <!-- SCRIPT UNTUK PROGRESS BAR -->
+  <!-- Untuk sementara di komen karena menyebabkan error ckeditor value always null-->
+  <script>
+   (function() {
+    var bar = $('#ProgressSOal');
+    var status = $('#status');
+    $('.form-tambahsoal').ajaxForm({
+      beforeSerialize:function($Form, options){
+        /* Before serialize */
+        for ( instance in CKEDITOR.instances ) {
+          CKEDITOR.instances[instance].updateElement();
+        }
+        return true; 
+      },
+      beforeSend: function() {
+        status.empty();
+        var percentVal = '0%';
+        bar.width(percentVal)
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+        var percentVal = percentComplete + '%';
+        bar.width(percentVal)
+      },
+      success: function() {
+        var percentVal = '100%';
+        bar.width(percentVal);
+        swal({
+          title: "Selesai membuat soal",
+          text: "tambah lagi atau selesai?",
+          type: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Buat Lagi",
+          cancelButtonText: "Selesai Buat Soal",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+           swal("Tambah Kembali", "Silahkan tambahkan soal lagi.", "success");
+           $('#ProgressSOal').width(0);
+           CKEDITOR.instances['editor1'].setData('');
+           $('input[name=judul]').val('');
+           $('input[name=listening]').val('');
+           $('input[name=gambarSoal]').val('');
+           $('input[name=gambarSoal]').val('');
+           $('input[name=gambar1]').val('');
+           $('input[name=gambar2]').val('');
+           $('input[name=gambar3]').val('');
+           $('input[name=gambar4]').val('');
+           $('input[name=gambar5]').val('');
+           $("select[name=jawaban]").val($("select[name=jawaban] option:first").val());
+           $('input[name=publish]').prop('checked', false);
+           $('input[name=random]').prop('checked', false);
+           $('textarea[name=a]').val('');
+           $('textarea[name=b]').val('');
+           $('textarea[name=c]').val('');
+           $('textarea[name=d]').val('');
+           $('textarea[name=e]').val('');
+         } else {
+          uuid = $('input[name=UUID]').val();
+          sub = $('input[name=subBabID]').val();
+          window.location = base_url+"banksoal/banksoal/mysoal";
+        }
+      });
+      },
+      complete: function(xhr) {
+        status.html(xhr.responseText);
+      }
+    }); 
+
+  })();       
+</script>
 <!-- ## PROGRES BAR -->
 
 </section>
