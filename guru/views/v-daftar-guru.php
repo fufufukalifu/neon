@@ -6,7 +6,7 @@
 				<div class="panel panel-default">
 						<!-- Panel Heading -->
 					  <div class="panel-heading">
-              <h4 class="panel-title">Daftar Siswa</h4>
+              <h4 class="panel-title">Daftar Guru</h4>
               <div class="panel-toolbar text-right">
               	<a href="http://localhost/netjoo-2/register/registerGuru" class="btn btn-success"><i class="ico-user-plus"></i></a>
               </div>
@@ -17,7 +17,14 @@
             	<!-- Tabel Guru -->
             	<table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
 	            	<thead>
-	            	<input class="form-control mb10 " type="text" name="cari" placeholder="Cari Guru" hidden>
+	            	<form action="<?=base_url()?>index.php/guru/cariGuru" method="get">
+	            			<div class="input-group mb10">
+	            				<input id="carisoal" type="text" name="keyword" class="form-control " placeholder="Search...">
+	            				<span class="input-group-btn">
+	            					<button class="btn  btn-success" type="submit" >Cari</button>
+	            				</span>
+	            			</div>
+	            		</form>
 	            		<tr>
 	            			<th>No</th>
 	            			<th>Nama Pengguna</th>
@@ -69,7 +76,7 @@
 			</div>
 			<!-- /Modal Header -->
 			<div class="modal-body">
-				<input class="form-control" type="text" name="penggunaID" value="" hidden="true">
+				<input class="form-control hidden" type="text" name="penggunaID" value="" >
 				<input class="form-control" type="email" name="email" value="">
 			</div>
 			<!-- Modal Body -->
@@ -92,7 +99,7 @@
 			<!-- Modal header -->
 			<div class="modal-header">
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetUlangMapel()">
 
 					<span aria-hidden="true">&times;</span>
 
@@ -103,9 +110,9 @@
 			</div>
 			<!-- /Modal Header -->
 			<div class="modal-body">
-				<form class="form-bordered">
+				<form class="form-bordered" id="formUpdateGuru" action="javascript:void(0)">
 				 <div class="form-group">
-				 	<input type="text" name="guruID" value="" class="form-control col-md-6" hidden="true" />
+				 	<input type="text" name="guruID" value="" class="form-control col-md-6 hidden"  >
 					<label>Nama Depan</label>
 					<input type="text" name="namaDepan" value="" class="form-control col-md-6"/> 
 				</div>
@@ -113,7 +120,15 @@
 					<label>Nama Belakang</label>
 					<input type="text" name="namaBelakang" value="" class="form-control col-md-6" />
 				</div>
-				
+				<div class="form-group">
+					<label>Mengajar</label>
+					<input class="hidden" type="text" name="sumMapel" value="0" >
+					<select class="form-control selectMapel"  name="mataPelajaran" id="mataPelajaran" required>
+					</select>
+				</div>
+				<div class="form-group" id="listGuruMapel">
+					<a class="btn btn-sm btn-danger" id="resetMapel">Reset</a>
+				</div>
 				 <div class="form-group">
 					<label>Alamat</label>
 					<input type="text" name="alamat" value="" class="form-control col-md-6" />
@@ -129,6 +144,8 @@
 
 					<textarea type="text" name="biografi" value="" class="form-control col-md-6" ></textarea>
 				</div>
+				<hr>
+				<button type="submit" class="btn btn-success" >Simpan Perubahan</button>
 				</form>
 			
 			</div>
@@ -136,10 +153,8 @@
 
 			<!-- /Modal Body -->
 
-			<!-- Modal Footer -->
-			<div class="modal-footer">
-				<button class="btn btn-success" onclick="updateDatGuru()">Simpan Perubahan</button>
-			</div>
+			<!-- Modal Footer onclick="updateDatGuru()" -->
+			
 			<!-- /Modal Footer -->
 		</div>
 	</div>
@@ -232,13 +247,61 @@
 		$("#modal-chguru").modal('show');
 		var id = "#data-"+n;
 		var datas = $(id).data('todo');
-		$('[name=guruID]').val(datas.guruID);
+		var guruID = datas.guruID;
+		$('[name=guruID]').val(guruID);
 		$('[name=namaDepan]').val(datas.namaDepan);
 		$('[name=namaBelakang]').val(datas.namaBelakang);
 		$('[name=alamat]').val(datas.alamat);
 		$('[name=nokontak]').val(datas.noKontak);
 		$('[name=biografi]').val(datas.biografi);
+
+		// get all mapel
+		var url1=base_url+"index.php/guru/get_allMapel/";
+		// 
+		$.ajax({
+			dataType:'text',
+			data:{guruID:guruID},
+			type:"POST",
+			url:url1,
+			success:function (data) {
+				var obData =JSON.parse(data);
 		
+				if (obData!="FALSE") {
+					$(".selectMapel").append(obData);
+				} else {
+					console.log(obData);
+				}
+			},
+			error:function(){
+				swal("Oops..","ada Kesalahan uu!","error");
+			}
+		});
+		// get mapel guru
+		var url2 = base_url+"index.php/guru/get_mapelGuru/";
+		$.ajax({
+			dataType:'text',
+			data:{guruID:guruID},
+			type:"POST",
+			url:url2,
+			success:function(data){
+				var ob2Data=JSON.parse(data);
+				
+				// listGuruMapel
+				if (ob2Data !="FALSE") {
+					$("#listGuruMapel").append(ob2Data);
+					$('#resetMapel').removeClass('hidden');
+					$("#mataPelajaran").addClass("hidden");
+				}else{
+					$("#listGuruMapel").append("<h4 class='pickMapel' style='color:red;'>Belum Memilih Mapel</h4>");
+					$('#resetMapel').addClass('hidden');
+					$("#mataPelajaran").removeClass("hidden");
+
+				}
+			},
+			error:function(){
+				swal("Oops..","ada Kesalahan!","error");
+			}
+		});
 	}
 
 	function updateDatGuru() {
@@ -262,16 +325,14 @@
 	      type:"POST",
 	      url:url,
 	      success:function(data){
-
+	      	console.log(datas);
 	        swal("Data Guru berhasil diperbaharui!","--","success");
 	        window.location.href =base_url+"guru/daftar/";
 	      },
 	      error:function(){
 	        sweetAlert("Oops...", "Data Guru gagal diperbaharui!", "error");
 	      }
-
 	    });
-
 	}
 
 	function del_guru(n) {
@@ -311,4 +372,56 @@
 	  });
 
 	}
+
+	function resetUlangMapel() {
+		$('.pickMapel').remove();
+		$('.op').remove();
+	}
+</script>
+<script type="text/javascript">
+	 $(document).ready(function(){ 
+    var i =0;
+
+    $('#mataPelajaran').change(function () {
+      i ++;
+      var idMapel =$('#mataPelajaran').val();
+      var mapel =$('#mataPelajaran option:selected').text();
+      $("#listGuruMapel").append('<span class="note note-success mb15 mr15 mt15 pickMapel" id="mapelke-'+i+'"> <i class="ico-remove" onClick="removeMapel('+i+','+idMapel+')"></i> '+mapel+' </span> <input type="text" name="mapelIDke-'+i+'" value="'+idMapel+'" hidden="true" id="mapelIDke-'+i+'">');
+      // var ini = $("mapelke-"+i).text();
+      // console.log(ini);
+      $('[name=sumMapel]').val(i);
+      //remove mapel dari dropdown
+      $("#id-"+idMapel).addClass("hidden");
+      $('#resetMapel').removeClass('hidden');
+    }); 
+    $( "#resetMapel" ).click(function() {
+      i=0;
+      $('.op').removeClass("hidden");  
+      $('[name=sumMapel]').val(i);
+      $('.pickMapel').remove();
+      $('#resetMapel').addClass('hidden');
+      $("#mataPelajaran").removeClass("hidden");
+    }); 
+
+    $("#formUpdateGuru").submit(function(e) { 
+    		var url = base_url+"index.php/guru/update_guru_jsonDat/";
+    		var formUp=$("#formUpdateGuru");
+    		 $.ajax({
+	      dataType:"text",
+	      data:formUp.serialize(),
+	      type:"POST",
+	      url:url,
+	      success:function(data){
+	      	swal("Data Guru berhasil diperbaharui!","--","success");
+	        window.location.href =base_url+"guru/daftar/";
+	      },
+	      error:function(){
+	        sweetAlert("Oops...", "Email gagal diperbaharui!", "error");
+	      }
+
+	    });
+    }); 
+
+  }); 
+	 
 </script>

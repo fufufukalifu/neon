@@ -36,11 +36,12 @@
 
         <div class="meta bottom text-center">
 
-         <img class="img-circle img-bordered-teal mb10" src="<?php echo base_url( 'assets/image/photo/guru/' )?><?=$data_guru['photo'] ?>" alt="" width="120px" height="120px">
+         <img class="img-circle img-bordered-teal mb10" src="<?=$photo;?>" alt="" width="120px" height="120px">
 
          <h4 class="semibold nm" style="color:black"><span class="iconmoon-location-6"><?php echo $data_guru['namaDepan']." ".$data_guru['namaBelakang'] ?></span></h4>
 
-         <h6 class="nm" style="color:black"><span class="iconmoon-location-6"><?php echo $data_guru['namaMataPelajaran'] ?></span></h6>
+         <!-- <h6 class="nm" style="color:black"><span class="iconmoon-location-6"><?php echo $data_guru['namaMataPelajaran'] ?></span></h6> -->
+         <h6 class="nm" style="color:black"><span class="iconmoon-location-6"><?=$keahlian?></span></h6>
 
          <a href="<?=base_url('index.php/logout') ?>" class="btn btn-primary mt5" >Logout</a>
 

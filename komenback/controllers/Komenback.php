@@ -57,14 +57,12 @@ function ajax_data_komen(){
   }
 
   $data = array();
-
+  $no=1;
   foreach ( $list as $komen_item ) {
-
     $row = array();
-    $row[] = $komen_item->komenID;
+    $row[] = $no;
       // $row[] = htmlspecialchars(substr($komen_item->isiKomen, 0, 100));
     $row[] = htmlspecialchars($komen_item->isiKomen);
-
     $row[] = $komen_item->date_created;
     $row[] = $komen_item->judulVideo;
     $row[] = "
@@ -72,10 +70,8 @@ function ajax_data_komen(){
     <a class='btn btn-danger' onclick='spam(".$komen_item->komenID.")'><i class='icon ico-remove3' title='Hapus'></i></a>
     <a class='btn btn-success' onclick='check(".$komen_item->videoID.")'><i class='ico-bubble-video-chat' title='Check Video'></i></a>
     ";
-
-
-
     $data[] = $row;
+    $no++;
   }
 
   $output = array(

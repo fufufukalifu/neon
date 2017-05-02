@@ -32,21 +32,19 @@
                         </div>
                         <div class="clear-both"></div>
 
-                        <?php
-                            foreach ($siswa as $key) {
-                        ?>       
+
                         
 
                            
                         <div class="form-group">
                             <!--<label class="control-label col-sm-2">Judul Soal</label>-->
                             <div class="col-sm-5 col-md-offset-1">
-                                <input type="text" name="idsiswa" hidden="true" value="<?=$key['idsiswa'];?>" >
-                                <input type="text" name="namadepan" class="form-control" placeholder="Nama Depan" required="true" value="<?= $key['namaDepan'] ?>">
+                                <input type="text" name="idsiswa" hidden="true" value="<?=$siswa['idsiswa'];?>" >
+                                <input type="text" name="namadepan" class="form-control" placeholder="Nama Depan" required="true" value="<?= $siswa['namaDepan'] ?>">
                                 <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" name="namabelakang" class="form-control" placeholder="Nama Belakang"  value="<?= $key['namaBelakang'] ?>">
+                                <input type="text" name="namabelakang" class="form-control" placeholder="Nama Belakang"  value="<?= $siswa['namaBelakang'] ?>">
                                 <span class="text-danger"> <?php echo form_error('namabelakang'); ?></span>
                             </div>
 
@@ -55,13 +53,13 @@
                          
                         <div class="form-group">
                             <div class="col-sm-10 col-md-offset-1">
-                                <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="<?= $key['alamat'] ?>" data-parsley-required required>
+                                <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="<?= $siswa['alamat'] ?>" data-parsley-required required>
                                 <span class="text-danger"> <?php echo form_error('alamat'); ?></span> 
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10 col-md-offset-1">
-                                <input type="text" class="form-control" placeholder="No Kontak" name="nokontak" value="<?= $key['noKontak'] ?>" data-parsley-required required>
+                                <input type="text" class="form-control" placeholder="No Kontak" name="nokontak" value="<?= $siswa['noKontak'] ?>" data-parsley-required required>
                                 <span class="text-danger"> <?php echo form_error('nokontak'); ?></span> 
                             </div>
                         </div>
@@ -71,97 +69,38 @@
                         <div class="">
                             <br>
                             <p class="text-center">IDENTITAS SEKOLAH</p>
+                            <input type="text" id="oldtkt" value="<?=$siswa['tingkatID'];?>" hidden >
+                            <input type="text" id="oldkelas" value="<?=$siswa['kelasID'];?>" hidden>
                         </div>
                         <div class="clear-both"></div>
                         <div class="form-group">
-                            <div class="col-sm-10 col-md-offset-1">
-                                <select class="form-control" name="tingkatID" id="tingkatID" required>
-                                    <?php
-                                    $tingkat = $key['tingkatID'];
-                                        switch ($tingkat) {
-                                            case 6:
-                                                echo "<option value=6 selected>Kelas 1 - SD</option>";
-                                                break;
-                                            case 7:
-                                                echo "<option value=7 selected>Kelas 2 - SD</option>";
-                                                break;
-                                            case 8:
-                                                echo "<option value=8 selected>Kelas 3 - SD</option>";
-                                                break;
-                                            case 9:
-                                                echo "<option value=9 selected>Kelas 4 - SD</option>";
-                                                break;
-                                            case 10:
-                                                echo "<option value=10 selected>Kelas 5 - SD</option>";
-                                                break;
-                                            case 11:
-                                                echo "<option value=11 selected>Kelas 6 - SD</option>";
-                                                break;
-                                            case 12:
-                                                echo "<option value=12 selected>Kelas 7 - SMP</option>";
-                                                break;
-                                            case 13:
-                                                echo "<option value=13 selected>Kelas 8 - SMP</option>";
-                                                break;
-                                            case 14:
-                                                echo "<option value=14 selected>Kelas 9 - SMP</option>";
-                                                break;
-                                            case 15:
-                                                echo "<option value=15 selected>Kelas 10 - SMA IPA</option>";
-                                                break;
-                                            case 16:
-                                                echo "<option value=16 selected>Kelas 11 - SMA IPA</option>";
-                                                break;
-                                            case 17:
-                                                echo "<option value=16 selected>Kelas 12 - SMA IPA</option>";
-                                                break;
-                                            case 18:
-                                                echo "<option value=16 selected>Kelas 10 - SMA IPS</option>";
-                                                break;
-                                            case 19:
-                                                echo "<option value=16 selected>Kelas 11 - SMA IPS</option>";
-                                                break;
-                                            case 20:
-                                                echo "<option value=16 selected>Kelas 12 - SMA IPS</option>";
-                                                break;
-                                            default:
-                                                echo  "<option value=''>Tingkat sekolah tidak ada</option>";
-}
-                                    ?>
-                                    <option value="">-Pilih Tingkat Sekolah-</option>
-                                    <option value="6">Kelas 1 - SD</option>
-                                    <option value="7">Kelas 2 - SD</option>
-                                    <option value="8">Kelas 3 - SD</option>
-                                    <option value="9">Kelas 4 - SD</option>
-                                    <option value="10">Kelas 5 - SD</option>
-                                    <option value="11">Kelas 6 - SD</option>
-                                    <option value="12">Kelas 7 - SMP</option>
-                                    <option value="13">Kelas 8 - SMP</option>
-                                    <option value="14">Kelas 9 - SMP</option>
-                                    <option value="15">Kelas 10 - SMA IPA</option>
-                                    <option value="16">Kelas 11 - SMA IPA</option>
-                                    <option value="17">Kelas 12 - SMA IPA</option>
-                                    <option value="18">Kelas 10 - SMA IPS</option>
-                                    <option value="19">Kelas 11 - SMA IPS</option>
-                                    <option value="20">Kelas 12 - SMA IPS</option>  
+                            <div class="col-sm-5 col-md-offset-1">
+                                <!-- menampilkan tingkat sekolah untuk memfilter kelas siswa-->
+                                <select class="form-control" name="tingkatSiswaID" id="tingkatSekolah"  required>
+                                
+                                 
+                                </select>
+                            </div>
+                            <!-- menampilkan kelas siswa yg telah di filer berdasarkan tingkat sekolah -->
+                             <div class="col-sm-5 ">
+                                <select class="form-control" name="tingkatID" id="kelasSiswa"  required>
+                                
+                                  
                                 </select>
                             </div>
                         </div>
                           
                         <div class="form-group">
                             <div class="col-sm-10 col-md-offset-1">
-                                <input type="text" placeholder="Nama Sekolah" class="form-control" name="namasekolah" value="<?= $key['namaSekolah']?>" data-parsley-required required>
+                                <input type="text" placeholder="Nama Sekolah" class="form-control" name="namasekolah" value="<?= $siswa['namaSekolah']?>" data-parsley-required required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-10 col-md-offset-1">
-                                <input placeholder="Alamat Sekolah" type="text" class="form-control" name="alamatsekolah" value="<?= $key['alamatSekolah']?>" data-parsley-required required>
+                                <input placeholder="Alamat Sekolah" type="text" class="form-control" name="alamatsekolah" value="<?= $siswa['alamatSekolah']?>" data-parsley-required required>
                             </div>
                         </div>
-<?php
-                                        }
-                        ?>
 
                      <hr>
                      <!-- Start form data bimbel -->
@@ -174,7 +113,7 @@
                                 <!-- list Bimbel -->
                                 <select class="form-control" name="bimbel">
                                     <option value="">- Pilih Bimbel Kalian -</option>
-                                    <option value="Neutron">Neutron</option>
+                                    <option value="Neutron" id="opNeutron">Neutron</option>
                                     <option value="GO">GO</option>
                                     <option value="1bimbel lainya">Bimbel lainya</option>
                                 </select>
@@ -197,8 +136,13 @@
                                 <div class="col-sm-10 col-md-offset-1">
                                     <select class="form-control" name="cabang">
                                         <option value="">- Pilih Cabang -</option>
-                                        <?php foreach ($cabang as $cabang_item): ?>
-                                            <option value="<?=$cabang_item->id ?>"><?=$cabang_item->namaCabang ?></option>
+                                        <?php foreach ($cabang as $cabang_item): ?> 
+
+                                        <?php if ($cabang_item->id==$siswa['cabangID']): ?>
+                                            <option value="<?=$cabang_item->id ?>" selected><?=$cabang_item->namaCabang ?></option>
+                                        <?php endif ?>
+                                            <option value="<?=$cabang_item->id ?>" ><?=$cabang_item->namaCabang ?></option>
+                                            
                                         <?php endforeach ?>
                                     </select>
                                     <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
@@ -250,4 +194,77 @@ $('select[name=bimbel]').change(function(){
 
     }
 });
+</script>
+<!-- ajax dropdown depedensi -->
+<script type="text/javascript">
+  function loadTingkat() {
+  $(document).ready(function () {
+    var oldtkt = $('#oldtkt').val();
+    var tingkat_id = {"tingkat_id": $('#tingkatSekolah').val()};
+        var idTingkat;
+    $.ajax({
+    type: "POST",
+    dataType: "json",
+    data: tingkat_id,
+    url: "<?= base_url() ?>index.php/siswa/getTingkatSiswa",
+
+    success: function (data) {
+
+      $('#tingkatSekolah').html('<option value="">-- Pilih Tingkat  --</option>');
+
+      $.each(data, function (i, data) {
+        if (data.id==oldtkt) {
+             $('#tingkatSekolah').append("<option value='" + data.id + "' selected>" + data.aliasTingkat + "</option>"); 
+             $('.Keaktivan').removeClass('hide');
+             $("#opNeutron").prop("selected",true);
+        }else{
+            $('#tingkatSekolah').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+        }
+        
+
+        return idTingkat = data.id;
+
+            });
+
+          }
+
+        });
+    });
+}
+  loadTingkat();
+  // event
+  $(document).ready(function () {
+
+    if (true) {} else {}
+
+    $('#tingkatSekolah').change(function () {
+      tingkat_id = {"tingkat_id": $('#tingkatSekolah').val()};
+      loadKelas($('#tingkatSekolah').val());
+ 
+    });
+    // set option dropdown bab
+    loadKelas($('#oldtkt').val());
+  });
+
+  function loadKelas(tingkatID) {
+   
+    var kelasID = $('#oldkelas').val();
+     $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: tingkatID.tingkat_id,
+        url: "<?php echo base_url() ?>index.php/siswa/getKelasSiswa/" + tingkatID,
+        success: function (data) {
+          $('#kelasSiswa').html('<option value="">-- Pilih Kelas  --</option>');
+          $.each(data, function (i, data) {
+            if (data.id==kelasID) {
+                 $('#kelasSiswa').append("<option value='" + data.id + "' selected>" + data.aliasTingkat + "</option>");
+            } else {
+                 $('#kelasSiswa').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+            }
+           
+          });
+        }
+      });
+  }
 </script>

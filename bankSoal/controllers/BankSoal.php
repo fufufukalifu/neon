@@ -98,7 +98,7 @@ class Banksoal extends MX_Controller {
     //tampung list semua soal u/ ke view
     public function tampSoal($list)
     {
-         $data['judul_halaman'] = "Bank Soal";
+         $data['judul_halaman'] = 'Bank Soal <a class="btn btn-sm  btn-inverse btn-outline" href="formsoal" title="Tambah Data Soal" ><i class="ico-plus"></i></a>' ;
         $data['files'] = array(
             APPPATH . 'modules/banksoal/views/v-soal-all2.php',
             );

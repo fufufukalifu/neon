@@ -70,7 +70,7 @@ class Mlogin extends CI_Model {
 
     public function cekGuru($id) {
 
-        $this->db->select('tb_guru.id,namaDepan,namaBelakang,mataPelajaranID');
+        $this->db->select('tb_guru.id,namaDepan,namaBelakang');
 
         $this->db->from('tb_guru');
 

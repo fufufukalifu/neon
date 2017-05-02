@@ -70,8 +70,16 @@
 
 
         } elseif($hakAkses=='guru'){
-                    // jika guru
-           $this->parser->parse('templating/index-b-guru', $data);
+          // jika guru
+          //get data komen yg belum di baca
+          $data['datKomen']=$this->datKomen();
+          ##count komen
+          //get id guru
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          ## count komen
+          $this->parser->parse('templating/index-b-guru', $data);
             
             
         }else{
@@ -273,5 +281,6 @@
 
       return $listKomen;
   }
+
 
  } ?>

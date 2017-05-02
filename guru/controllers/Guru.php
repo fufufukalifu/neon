@@ -7,19 +7,19 @@ class Guru extends MX_Controller {
     private $idGuru;
 
     public function __construct() {
-        $this->load->helper( 'session' );
-        parent::__construct();
-        $this->load->model( 'mguru' );
-        $this->load->model( 'video/mvideos' );
-        // $this->load->model( 'komen/mkomen' );
-        $this->load->model( 'komenback/mkomen' );
-        $this->load->model( 'register/mregister' );
-        $this->load->model('templating/mtemplating');
-        $this->load->model('siswa/msiswa');
-        $this->load->library('parser');
-         $this->load->library('pagination');
-           $this->load->helper( array( 'form', 'url' ) );
+      $this->load->helper( 'session' );
+      parent::__construct();
+      $this->load->model( 'mguru' );
+      $this->load->model( 'video/mvideos' );
+      $this->load->model( 'komenback/mkomen' );
+      $this->load->model( 'register/mregister' );
+      $this->load->model('templating/mtemplating');
+      $this->load->model('siswa/msiswa');
+      $this->load->library('parser');
+      $this->load->library('pagination');
+      $this->load->helper( array( 'form', 'url' ) );
       $this->load->library( 'form_validation' );
+      $this->load->library('generateavatar');
         //cek kalo bukan guru lemparin.
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -58,6 +58,14 @@ class Guru extends MX_Controller {
         //var_dump($data);
         //untuk mengambil data guru
         $data['data_guru'] = $this->load->mguru->get_single_guru( $penggunaID )[0];
+        $namaDepan=$data['data_guru']['namaDepan'];
+        $photo = $data['data_guru']['photo'];
+        if ($photo=='' || $photo==' ' || $photo=='default.jpg') {
+          $data['photo']= $this->generateavatar->generate_first_letter_avtar_url($namaDepan);
+        } else {
+          $data['photo']=base_url()."assets/image/photo/guru/".$photo;
+        }
+        
         //untuk menghitung berapa banyak video yang sudah diupload
         $data['jumlah_video'] = count( $this->load->mvideos->get_video_by_teacher( $guru_id ) );
        // var_dump($data);
@@ -65,34 +73,34 @@ class Guru extends MX_Controller {
     }
 
     public function dashboard() {
-
         $data = $this->videobyteacher();
         #Sesudah Tempalting#
         //get data komen yg belum di baca
-         $data['datKomen']=$this->datKomen();
+        $data['datKomen']=$this->datKomen();
         $data['judul_halaman'] = "Dashboard";
         $data['files'] = array(
             APPPATH . 'modules/guru/views/v-container-video.php',
-            );
+        );
          #START cek hakakses#
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
-         // jika admin
-           $this->parser->parse('admin/v-index-admin', $data);
+          // jika admin
+          $this->parser->parse('admin/v-index-admin', $data);
        } elseif($hakAkses=='guru'){
-        ##count komen
-        //get id guru
-         $id_guru = $this->session->userdata['id_guru'];
-        // get jumlah komen yg belum di baca
-        $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-        ## count komen
-         // jika guru
-         $this->parser->parse('templating/index-b-guru', $data);
+          ##count komen
+          //get id guru
+          $id_guru = $this->session->userdata['id_guru'];
+          // get jumlah komen yg belum di baca
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          ## count komen
+          $data["keahlian"]=$this->get_keahlianGuru($id_guru,0);
+          // jika guru
+          $this->parser->parse('templating/index-b-guru', $data);
      }else{
         // jika siswa redirect ke welcome
         redirect(site_url('login'));
     }
-          #END Cek USer#
+    #END Cek USer#
 }
 
     //menampilkan video manager untuk user
@@ -112,16 +120,47 @@ public function setting() {
     $this->load->view( 'vProfileGuru' );
     $this->load->view( 'templating/t-footer' );
 }
-    //untuk menampilkan form updt guru
+  //untuk menampilkan form updt guru
 public function pengaturanProfileguru() {
-    $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-    $data['guru'] = $this->mguru->get_datguru();
-    $data['eMail']=$this->session->userdata['eMail'];
-    $data['files'] = array(
-        APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
-        );
-    $data['judul_halaman'] = "Pengaturan Profile Guru";
-    $this->parser->parse('templating/index-b-guru', $data);
+  //get data komen yg belum di baca
+  $data['datKomen']=$this->datKomen();
+  ##count komen
+  //get id guru
+  $id_guru = $this->session->userdata['id_guru'];
+  // get jumlah komen yg belum di baca
+  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+  ## count komen
+  // get matapelajaran untuk dropdwon
+  $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+  $penggunaID=$this->session->userdata['id'] ;  
+  //get data guru by penggunaID
+  $arrGuru = $this->mguru->get_datguru( $penggunaID);
+   $guruID=$arrGuru[0]['id'];
+  $namaDepan=$arrGuru[0]['namaDepan'];
+  $photo=$arrGuru[0]['photo'];
+  $data['guru']=$arrGuru[0];
+  //#get mapel guru
+  $data['guruMapel']=$this->get_keahlianGuru($guruID,1);
+  //#
+  //
+  //cek jika belum ada foto atau masih default 
+  if ($photo=='' || $photo==' ' || $photo=='default.jpg') {
+    //jika true generate foto default
+    $data['photo']= $this->generateavatar->generate_first_letter_avtar_url($namaDepan);
+    $data['oldphoto']='';
+  } else {
+    //jika false set foto dengan data yg di db
+    $data['photo']=base_url()."assets/image/photo/guru/".$photo;
+    $data['oldphoto']=$photo;
+  }
+  
+  $data['eMail']=$this->session->userdata['eMail'];
+
+  $data['files'] = array(
+      APPPATH . 'modules/guru/views/vPengaturanProfileGuru.php',
+      );
+  $data['judul_halaman'] = "Pengaturan Profile Guru";
+  $this->parser->parse('templating/index-b-guru', $data);
 }
 
 public function ubahprofileguru() {
@@ -144,28 +183,38 @@ public function ubahprofileguru() {
     $this->form_validation->set_message( 'required', '*tidak boleh kosong!' );
 
 
-        //pengecekan inputan / pengisian form
+    //pengecekan inputan / pengisian form
     if ( $this->form_validation->run() == FALSE ) {
         $this->pengaturanProfileguru();
     } else {
         $namaDepan = htmlspecialchars( $this->input->post( 'namadepan' ) );
         $namaBelakang = htmlspecialchars( $this->input->post( 'namabelakang' ) );
-        $mataPelajaranID = htmlspecialchars($this->input->post('mataPelajaran'));
         $alamat = htmlspecialchars( $this->input->post( 'alamat' ) );
         $noKontak = htmlspecialchars( $this->input->post( 'nokontak' ) );
         $biografi = htmlspecialchars( $this->input->post( 'biografi' ) );
-
-
         $data_post = array(
             'namaDepan' => $namaDepan,
             'namaBelakang' => $namaBelakang,
-            'mataPelajaranID' =>$mataPelajaranID,
+            
             'alamat' => $alamat,
             'noKontak' => $noKontak,
             'biografi' => $biografi,
             );
 
         $this->mguru->update_guru( $data_post );
+        //update guru mapel
+        $guruID=$this->session->userdata['id_guru'] ;
+        $sumMapel=htmlspecialchars($this->input->post('sumMapel'));  
+        $reset=htmlspecialchars($this->input->post('reset'));  
+        if ($sumMapel!=0 && $reset==1) {
+          $this->mguru->del_guruMapel($guruID);
+        }
+        for ($i=1; $i <= $sumMapel ; $i++) { 
+            $datArr['mapelID']=$this->input->post('mapelIDke-'.$i);
+            $datArr['guruID']=$guruID;
+            $this->mregister->in_guruMapel($datArr);
+        }
+        redirect(site_url('guru/dashboard'));
     }
 }
 
@@ -194,7 +243,9 @@ public function ubahakunguru() {
 
     if ( $this->form_validation->run() == FALSE ) {
         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-        $data['guru'] = $this->mguru->get_datguru();
+          $penggunaID=$this->session->userdata['id'] ;  
+        //get data guru by penggunaID
+        $data['guru'] = $this->mguru->get_datguru( $penggunaID);
         $this->load->view( 'templating/t-header' );
         $this->load->view( 'vPengaturanProfileGuru',$data );
         $this->load->view( 'templating/t-footer' );
@@ -228,7 +279,9 @@ public function ubahkatasandi() {
 
     if ( $this->form_validation->run() == FALSE ) {
      $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-     $data['guru'] = $this->mguru->get_datguru();
+ $penggunaID=$this->session->userdata['id'] ;  
+        //get data guru by penggunaID
+     $data['guru'] = $this->mguru->get_datguru( $penggunaID);
      $this->load->view( 'templating/t-header' );
      $this->load->view( 'vPengaturanProfileGuru',$data );
      $this->load->view( 'templating/t-footer' );
@@ -347,22 +400,31 @@ public function ubahemailGuru() {
 //     echo json_encode($output);
 // }
 
-public function get_keahlianGuru($guruID='')
+// <span class="note note-success mb15 mr15 mt15 pickMapel" id="mapelke-'+i+'"> <i class="ico-remove" onClick="removeMapel('+i+','+idMapel+')"></i> '+mapel+' </span> <input type="text" name="mapelIDke-'+i+'" value="'+idMapel+'" hidden="true" id="mapelIDke-'+i+'">
+
+public function get_keahlianGuru($guruID='',$form='')
 {
     $datkeahlianGuru=$this->mguru->get_m_keahlianGuru($guruID);
     // var_dump($datkeahlianGuru);
     $keahlianGuru='';
-    foreach ($datkeahlianGuru as $key ) {
-          $keahlianGuru .=$key['aliasMataPelajaran'].', ';
-        
-    }
-    if ($datkeahlianGuru) {
-        return $keahlianGuru;
+    $i=1;
+    if ($form==1) {
+      foreach ($datkeahlianGuru as $key ) {
+        $keahlianGuru .='<span class="note note-success mb15 mr15 mt15 pickMapel" id="mapelke-'.$i.'"> <i class="ico-remove" onClick="removeMapel('.$i.','.$key["mapelID"].')"></i> '.$key["aliasMataPelajaran"].' </span> <input type="text" name="mapelIDke-'.$i.'" value="'.$key["mapelID"].'" hidden="true" id="mapelIDke-'.$i.'">';
+        $i++;
+      }
     } else {
-        return '<p style="color:red;">Belum Memilih keahlian mengajar</p>';
+      foreach ($datkeahlianGuru as $key ) {
+        $keahlianGuru .=$key['aliasMataPelajaran'].', ';
+      }
     }
     
-   
+
+    if ($datkeahlianGuru) {
+          return $keahlianGuru;
+    } else {
+        return '<p style="color:red;">Belum Memilih keahlian mengajar</p>';
+    }  
 }
 // hapus data guru
 function drop_teacher(){
@@ -373,7 +435,13 @@ function drop_teacher(){
 
 function get_avatar_guru(){
     $avatar = $this->mguru->get_avatar();
-    $photo =  base_url()."assets/image/photo/guru/".$avatar;
+    $nama=$this->session->userdata['NAMAGURU'];
+    if ($avatar=='' || $avatar==' ' || $avatar=='default.jpg') {
+      $photo= $this->generateavatar->generate_first_letter_avtar_url($nama);
+    } else {
+       $photo =  base_url()."assets/image/photo/guru/".$avatar;
+    }
+    
     echo "<img src=".$photo." class='img-circle' alt='' />";
 }
 
@@ -386,6 +454,7 @@ function get_avatar_guru(){
       }else{
         $id_guru = $this->session->userdata['id_guru'];
          $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
+        // $listKomen = $this->mkomen->get_all_komen();
       }
 
       return $listKomen;
@@ -442,7 +511,7 @@ function get_avatar_guru(){
 
   public function tampGuru($list='',$jumlah_data='')
   {
-    $data['judul_halaman'] = "Pengelolaan Data Siswa";
+    $data['judul_halaman'] = "Pengelolaan Data Guru";
     $data['files'] = array(
             APPPATH . 'modules/guru/views/v-daftar-guru.php',
             );
@@ -547,6 +616,7 @@ function get_avatar_guru(){
 
   }
 
+  // cek input email
   public function cekEmail()
   {
     $this->form_validation->set_rules( 'email', 'email', 'required|is_unique[tb_pengguna.eMail]' );
@@ -556,6 +626,125 @@ function get_avatar_guru(){
         echo json_encode("TRUE");
       }
   }
+
+  // get mapel guru
+  public function get_mapelGuru()
+  {
+   $mapel='';
+   $no=1;
+   $guruID=$this->input->post('guruID');
+   $arrMapel=$this->mguru->get_mapel_by_guruID($guruID);
+   if ($arrMapel!=array()) {
+      foreach ($arrMapel as $key ) {
+        $mapel.='<span class="note note-success mb15 mr15 mt15 pickMapel" id="mapelke-'.$no.'"> <i class="ico-remove" onClick="removeMapel('.$no.','.$key["mapelID"].')"></i> '.$key["aliasMataPelajaran"].' </span> <input type="text" name="mapelIDke-'.$no.'" value="'.$key["mapelID"].'" hidden="true" id="mapelIDke-'.$no.'">';
+        $no++;
+      }
+      echo json_encode($mapel);
+   } else {
+      echo json_encode("FALSE");
+   }
+  }
+
+  public function get_allMapel()
+  {
+    $allMapel='';
+    $arrMapel=$this->mguru->get_all_mapel();
+    if ($arrMapel!=array()) {
+      foreach ($arrMapel as $key ) {
+        $allMapel.='<option class="op" value="'.$key['id'].'" id="id-'.$key['id'].'">'.$key['aliasMataPelajaran'].'</option>';
+      }
+      echo json_encode($allMapel);
+    } else {
+      echo json_encode("FALSE");
+    }
+    
+  }
+  // update data guru
+  public function update_guru_jsonDat()
+  {
+    $guruID = $this->input->post('guruID');
+       $data['id']=$guruID;
+    $data['namaDepan']=htmlspecialchars($this->input->post('namaDepan'));
+    $data['namaBelakang']=htmlspecialchars($this->input->post('namaBelakang'));
+    $data['alamat']=htmlspecialchars($this->input->post('alamat'));
+    $data['nokontak']=htmlspecialchars($this->input->post('nokontak'));
+    $data['biografi']=htmlspecialchars($this->input->post('biografi'));
+    $this->mguru->ch_guru($data);
+
+    $sumMapel=htmlspecialchars($this->input->post('sumMapel'));
+
+    if ($sumMapel!=0) {
+      $this->mguru->del_guruMapel($guruID);
+    }
+    for ($i=1; $i <= $sumMapel ; $i++) { 
+        $datArr['mapelID']=$this->input->post('mapelIDke-'.$i);
+        $datArr['guruID']=$guruID;
+        $this->mregister->in_guruMapel($datArr);
+    }
+    echo json_encode( "berhasil");
+  }
+
+  public function ajax_mapelID()
+  {
+    $guruID=$this->session->userdata['id_guru'];
+    $arrMapel=$this->mguru->get_m_keahlianGuru($guruID);
+    echo json_encode($arrMapel);
+  }
+
+public function cariGuru($key=''){
+    if ($key=='') {
+        $key=htmlspecialchars($this->input->get('keyword'));
+    } 
+   
+       // code u/ pagination
+     $this->load->database();
+     $jumlah_data = $this->mguru->sum_cari_guru($key);
+
+     $config['base_url'] = base_url().'index.php/guru/cariGuru/'.$key.'/';
+     $config['total_rows'] = $jumlah_data;
+     $config['per_page'] = 10;
+
+        // Start Customizing the “Digit” Link
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
+        // end  Customizing the “Digit” Link
+
+        // Start Customizing the “Current Page” Link
+     $config['cur_tag_open'] = '<li><a><b>';
+     $config['cur_tag_close'] = '</b></a></li>';
+        // END Customizing the “Current Page” Link
+
+        // Start Customizing the “Previous” Link
+     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+     $config['prev_tag_open'] = '<li>';
+     $config['prev_tag_close'] = '</li>';
+         // END Customizing the “Previous” Link
+
+        // Start Customizing the “Next” Link
+     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
+         // END Customizing the “Next” Link
+
+        // Start Customizing the first_link Link
+     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
+         // END Customizing the first_link Link
+
+        // Start Customizing the last_link Link
+     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
+         // END Customizing the last_link Link
+
+     $from = $this->uri->segment(4);
+     $this->pagination->initialize($config);     
+     $list = $this->mguru->data_guru_cari($config['per_page'],$from,$key);
+
+     $this->tampGuru($list,$jumlah_data);
+   
+}
 
 }
 ?>

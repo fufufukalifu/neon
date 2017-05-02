@@ -138,9 +138,10 @@ function hapus_siswa($idsiswa, $idpengguna) {
 }
 
 function get_siswa_byid($idsiswa, $idpengguna) {
-    $this->db->select('*,siswa.id as idsiswa');
+    $this->db->select('siswa.id as idsiswa,siswa.namaDepan,siswa.namaBelakang,siswa.alamat,siswa.noKontak,siswa.tingkatID as kelasID,siswa.namaSekolah,siswa.alamatSekolah,siswa.cabangID,tkt.depedensi as tingkatID');
     $this->db->from('tb_siswa siswa');
     $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
+    $this->db->join('tb_tingkat tkt','tkt.id = siswa.tingkatID');
     $this->db->where('pengguna.id', $idpengguna);
     $query = $this->db->get();
     return $query->result_array();
@@ -239,7 +240,7 @@ function data_siswa($number,$offset){
     //cari Siswa
 public function get_cari_siswa($data)
 {   
-    $this->db->select('s.namaDepan,s.namaBelakang,p.namaPengguna,s.penggunaID');
+    $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,p.namaPengguna,s.penggunaID');
     $this->db->from('tb_siswa s');
     $this->db->join('tb_pengguna p','p.id=s.penggunaID');
 
@@ -320,6 +321,52 @@ public function get_limit_persentase_latihan($data){
     $result = $this->db->query($query);
     return $result->result_array();
 }
+
+public function sum_cari_siswa($key='')
+{
+        $this->db->select('s.id');
+    $this->db->from('tb_siswa s');
+    $this->db->join('tb_pengguna p','p.id=s.penggunaID');
+
+    $this->db->like('s.namaDepan',$key);
+    $this->db->or_like('s.namaBelakang',$key);
+    $this->db->or_like('p.namaPengguna',$key);
+
+    $this->db->where('s.status',1);
+    return $this->db->get()->num_rows();
+}
+
+function data_siswa_cari($number,$offset,$key=''){
+    $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail,cabang.namaCabang');
+    $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+    $this->db->join('tb_cabang cabang','cabang.id = s.cabangID');
+        $this->db->like('s.namaDepan',$key);
+    $this->db->or_like('s.namaBelakang',$key);
+    $this->db->or_like('p.namaPengguna',$key);
+    $this->db->where('s.status','1');
+    $this->db->where('p.status','1');
+    $this->db->order_by('s.namaDepan', 'asc');
+    return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
+}
+public function get_kelas()
+{
+    $this->db->select('id,aliasTingkat as kelas');
+    $this->db->from('tb_tingkat');
+    $this->db->where('status',2);
+    $query=$this->db->get();
+    return $query->result_array();
+
+}
+public function get_tingkat_siswa($status,$tingkatID)
+{
+    $this->db->select('id,aliasTingkat');
+    $this->db->from('tb_tingkat');
+    $this->db->where('status',$status);
+$this->db->where('depedensi',$tingkatID);
+    $query=$this->db->get();
+    return $query->result_array();
+}
+
 }
 
 ?>

@@ -18,7 +18,7 @@ class Mguru extends CI_Model
 
 		$this->db->update( 'tb_guru', $data );
 
-		redirect(site_url('guru/dashboard'));
+		
 
 	}
 
@@ -88,7 +88,7 @@ class Mguru extends CI_Model
 
 		$this->db->from( 'tb_guru guru' );
 
-		$this->db->join( 'tb_mata-pelajaran pelajaran', 'guru.mataPelajaranID=pelajaran.id' );
+		// $this->db->join( 'tb_mata-pelajaran pelajaran', 'guru.mataPelajaranID=pelajaran.id' );
 
 		$this->db->where( 'guru.penggunaID', $data );
 
@@ -122,22 +122,13 @@ return $query->result_array();
 
 	//data guru ke form pengaturan profil/akun guru
 
-	public function get_datguru()
-
+	public function get_datguru( $penggunaID)
 	{
-
-		$penggunaID=$this->session->userdata['id'] ;	
-
-		$this->db->select('namaDepan,namaBelakang,alamat,noKontak,mataPelajaranID,biografi,photo');
-
+		$this->db->select('id,namaDepan,namaBelakang,alamat,noKontak,biografi,photo');
 		$this->db->from('tb_guru');
-
 		$this->db->where('penggunaID',$penggunaID); 
-
 		$query = $this->db->get();
-
 		return $query->result_array();
-
 	}
 
 
@@ -146,7 +137,7 @@ return $query->result_array();
 
 	function get_guru_random(){
 
-		$this->db->select('namaDepan,namaBelakang,alamat,noKontak,mataPelajaranID,biografi,photo');
+		$this->db->select('namaDepan,namaBelakang,alamat,noKontak,biografi,photo');
 
 		$this->db->from('tb_guru');
 
@@ -239,7 +230,7 @@ return $query->result_array();
 
 	public function get_m_keahlianGuru($guruID='')
 	{
-		$this->db->select('mp.aliasMataPelajaran');
+		$this->db->select('mp.aliasMataPelajaran,mp.id as mapelID');
 		$this->db->from('tb_mm-gurumapel gm');
 		$this->db->join('tb_mata-pelajaran mp','mp.id=gm.mapelID');
 		$this->db->where('gm.guruID',$guruID);
@@ -282,9 +273,52 @@ return $query->result_array();
     $this->db->where('id',$guruID );
     $this->db->update('tb_guru',$data);
 	}
+	public function get_mapel_by_guruID($guruID='')
+	{
+		$this->db->select("mapel.aliasMataPelajaran,gm.mapelID");
+		$this->db->from("tb_mata-pelajaran mapel");
+		$this->db->join("tb_mm-gurumapel gm","gm.mapelID=mapel.id");
+		$this->db->where("gm.guruID",$guruID);
+
+		$query=$this->db->get();
+		return $query->result_array();
+	}
+	public function get_all_mapel()
+	{
+		$this->db->select('id,aliasMataPelajaran');
+		$this->db->from('tb_mata-pelajaran');
+		$this->db->where('status',1);
+		$query=$this->db->get();
+		return $query->result_array();
+	}
+	public function del_guruMapel($guruID='')
+	{
+				$this->db->where('guruID',$guruID);
+		$this->db->delete('tb_mm-gurumapel');
+	}
+	public function sum_cari_guru($key='')
+	{
+    $this->db->select('guru.id');
+    $this->db->from('tb_guru guru');
+    $this->db->join('tb_pengguna p','p.id=guru.penggunaID');
+    $this->db->like('guru.namaDepan',$key);
+    $this->db->or_like('guru.namaBelakang',$key);
+    $this->db->or_like('p.namaPengguna',$key);
+    $this->db->where('guru.status',1);
+    return $this->db->get()->num_rows();
+	}
+	    // get data siswa per segment
+	function data_guru_cari($number,$offset,$key=''){
+	    $this->db->select('guru.namaDepan,guru.namaBelakang,guru.id as guruID,guru.alamat,guru.noKontak,guru.biografi,pengguna.id as penggunaID,pengguna.namaPengguna,pengguna.regTime,pengguna.eMail');
+		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
+		$this->db->order_by('regTime','desc');
+		        $this->db->like('guru.namaDepan',$key);
+    $this->db->or_like('guru.namaBelakang',$key);
+    $this->db->or_like('pengguna.namaPengguna',$key);
+		$this->db->where('pengguna.status', 1);
+		$this->db->where('guru.status', 1);
+	    return $query = $this->db->get('tb_guru guru',$number,$offset)->result_array();       
+	}
 }
-
-
-
 ?>
 

@@ -380,7 +380,7 @@
   <span class="meta">
    <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true">
    <span class="icon" id="new_count_komen">
-   <?=$count_komen; ?>
+   <?=$count_komen; ?> 
   
    <i class="ico-bell"></i></span>
    <span class="hasnotification hasnotification-danger"></span>
@@ -392,16 +392,17 @@
 <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
    <span class="title">Notification <span class="count"></span></span>
-   <span class="option text-right"><a href="javascript:void(0);">Clear all</a></span>
+   <span class="option text-right"><a href="javascript:void(0);">X</a></span>
  </div>
  <div class="dropdown-body slimscroll">
    <!-- indicator -->
-   <div class="indicator inline"><span class="spinner"></span></div>
+   <!-- <div class="indicator inline"><span class="spinner"></span></div> -->
    <!--/ indicator -->
 
    <!-- Message list -->
    <div class="media-list" id="message-tbody">
-  <?php foreach ($datKomen as $key ): ?>
+  <?php 
+  foreach ($datKomen as $key ): ?>
     <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
       <span class="pull-left">
         <img src="<?=base_url()?>assets\image\photo\siswa\<?=$key['siswa_photo']?>" class="media-object img-circle" alt="">
@@ -749,17 +750,39 @@
     var socket = io.connect( 'http://'+window.location.hostname+':3000' );
     var idPengguna=('<?=$this->session->userdata['id'];?>');
     var new_count_komen = 0;
-    var mapelID=('<?=$this->session->userdata['mapelID'];?>');
-           socket.on( 'new_komen', function( data ) {
-             if (idPengguna!=data.userID &&data.mapelID==mapelID) {
-              var old_count_komen = parseInt($('[name=count_komen]').val());
-                new_count_komen = old_count_komen + 1;
-                $('[name=count_komen]').val(new_count_komen);
-               $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
-               $('#notif_audio')[0].play();
-            $( "#message-tbody" ).prepend(' <a href="'+base_url+'komenback/seevideo/'+data.videoID+'/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="../image/avatar/avatar1.jpg" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+data.namaPengguna+'</span><span class="media-text ellipsis nm">'+data.isiKomen+'</span><!-- meta icon --><span class="media-meta pull-right">'+data.date_created+'</span><!--/ meta icon --></span></a>');
-          }
+    var mapelID=8;
+    var obMapel ='';
+    var url = "<?= base_url() ?>index.php/guru/ajax_mapelID";
+
+      socket.on( 'new_komen', function( data ) {
+          var userID = data.userID;
+          var mapelID = data.mapelID;
+          var photo = data.photo; 
+          //ajax untuk get data mapelid guru
+          $.ajax({
+            url:url,
+            success:function(mapel){
+              //ubah type data mapel id guru dari jason ke objek
+              obMapel =JSON.parse(mapel);
+              for (i = 0; i < obMapel.length; i++) { 
+                mapelIdGuru=obMapel[i].mapelID;
+                //cek data koemn jika data komen bukan milik dia dan mapel id sesuai dengan mapel id guru 
+                if (idPengguna!=userID && mapelID==mapelIdGuru) {
+                  //jika true 
+                  var old_count_komen = parseInt($('[name=count_komen]').val());
+                  new_count_komen = old_count_komen + 1;
+                  $('[name=count_komen]').val(new_count_komen);
+                  $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+                  // play sound notification
+                  $('#notif_audio')[0].play();
+                  //add komen baru ke data notif id message-tbody
+                  $( "#message-tbody" ).prepend(' <a href="'+base_url+'komenback/seevideo/'+data.videoID+'/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+data.namaPengguna+'</span><span class="media-text ellipsis nm">'+data.isiKomen+'</span><!-- meta icon --><span class="media-meta pull-right">'+data.date_created+'</span><!--/ meta icon --></span></a>');
+                }
+              }
+            },              
           });
+          
+      });
   });
 </script>
 
@@ -789,7 +812,6 @@ $('#modalvideo').modal('show'); // show bootstrap modal
    type: "POST",
    url: "<?= base_url() ?>guru/get_avatar_guru",
    success: function (data) { 
-    console.log(data);
     $('span.avatar').html(data);
   }
 });

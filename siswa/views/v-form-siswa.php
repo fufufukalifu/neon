@@ -64,28 +64,16 @@
 
                         <div class="clear-both"></div>
 
-
-
-
-
                         <div class="form-group">
-
                             <!--<label class="control-label col-sm-2">Judul Soal</label>-->
-
                             <div class="col-sm-5 col-md-offset-1">
-
                                 <input type="text" name="namadepan" class="form-control" placeholder="Nama Depan" required="true" value="<?php echo set_value('namadepan'); ?>">
-
                                 <span class="text-danger"> <?php echo form_error('namadepan'); ?></span>
-
                             </div>
 
                             <div class="col-sm-5">
-
                                 <input type="text" name="namabelakang" class="form-control" placeholder="Nama Belakang" required="true" value="<?php echo set_value('namabelakang'); ?>">
-
                                 <span class="text-danger"> <?php echo form_error('namabelakang'); ?></span>
-
                             </div>
 
 
@@ -131,47 +119,20 @@
                         <div class="clear-both"></div>
 
                         <div class="form-group">
-
-                            <div class="col-sm-10 col-md-offset-1">
-
-                                <select class="form-control" name="tingkatID" id="tingkatID" required>
-
-                                    <option value="">-Pilih Tingkat Sekolah-</option>
-
-                                    <option value="6">Kelas 1 - SD</option>
-
-                                    <option value="7">Kelas 2 - SD</option>
-
-                                    <option value="8">Kelas 3 - SD</option>
-
-                                    <option value="9">Kelas 4 - SD</option>
-
-                                    <option value="10">Kelas 5 - SD</option>
-
-                                    <option value="11">Kelas 6 - SD</option>
-
-                                    <option value="12">Kelas 7 - SMP</option>
-
-                                    <option value="13">Kelas 8 - SMP</option>
-
-                                    <option value="14">Kelas 9 - SMP</option>
-
-                                    <option value="15">Kelas 10 - SMA IPA</option>
-
-                                    <option value="16">Kelas 11 - SMA IPA</option>
-
-                                    <option value="17">Kelas 12 - SMA IPA</option>
-
-                                    <option value="18">Kelas 10 - SMA IPS</option>
-
-                                    <option value="19">Kelas 11 - SMA IPS</option>
-
-                                    <option value="19">Kelas 12 - SMA IPS</option>  
-
+                            <div class="col-sm-5 col-md-offset-1">
+                                <!-- menampilkan tingkat sekolah untuk memfilter kelas siswa-->
+                                <select class="form-control" name="tingkatSiswaID" id="tingkatSekolah"  required>
+                                
+                                 
                                 </select>
-
                             </div>
-
+                            <!-- menampilkan kelas siswa yg telah di filer berdasarkan tingkat sekolah -->
+                             <div class="col-sm-5 ">
+                                <select class="form-control" name="tingkatID" id="kelasSiswa"  required>
+                                
+                                  
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -369,4 +330,59 @@ $('select[name=bimbel]').change(function(){
 
     }
 });
+</script>
+<!-- ajax dropdown depedensi -->
+<script type="text/javascript">
+  function loadTingkat() {
+  $(document).ready(function () {
+    console.log("ss");
+    var tingkat_id = {"tingkat_id": $('#tingkatSekolah').val()};
+        var idTingkat;
+    $.ajax({
+    type: "POST",
+    dataType: "json",
+    data: tingkat_id,
+    url: "<?= base_url() ?>index.php/siswa/getTingkatSiswa",
+
+    success: function (data) {
+
+      $('#tingkatSekolah').html('<option value="">-- Pilih Tingkat  --</option>');
+
+      $.each(data, function (i, data) {
+
+        $('#tingkatSekolah').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+
+        return idTingkat = data.id;
+
+            });
+
+          }
+
+        });
+    });
+}
+  loadTingkat();
+  // event
+  $(document).ready(function () {
+    $('#tingkatSekolah').change(function () {
+      tingkat_id = {"tingkat_id": $('#tingkatSekolah').val()};
+      loadKelas($('#tingkatSekolah').val());
+ 
+    });
+  });
+
+  function loadKelas(tingkatID) {
+     $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: tingkatID.tingkat_id,
+        url: "<?php echo base_url() ?>index.php/siswa/getKelasSiswa/" + tingkatID,
+        success: function (data) {
+          $('#kelasSiswa').html('<option value="">-- Pilih Kelas  --</option>');
+          $.each(data, function (i, data) {
+            $('#kelasSiswa').append("<option value='" + data.id + "'>" + data.aliasTingkat + "</option>");
+          });
+        }
+      });
+  }
 </script>

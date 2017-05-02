@@ -39,6 +39,7 @@ class Homepage extends MX_Controller {
         $data['testimoni'] = $this->Mhomepage->gettestimoni();
 
         $this->parser->parse('v-index-homepage', $data);
+        // echo "string";
     }
     
     function addpesan() {

@@ -88,7 +88,6 @@ public function validasiLogin() {
                     $namaGuru = $value->namaDepan .' '.$value->namaBelakang;
                     $this->session->set_userdata('id_guru', $value->id);
                     $this->session->set_userdata('NAMAGURU', $namaGuru);
-                    $this->session->set_userdata('mapelID', $value->mataPelajaranID);
                 }
                 redirect(site_url('guru/dashboard/'));
             } elseif ($hakAkses == 'siswa') {

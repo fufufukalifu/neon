@@ -55,7 +55,7 @@
                                 <table class="table table-bordered" id="ajax-source-komen" style="padding: 10px;border: 1px solid #cfd9db;width: 100%">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>No</th>
                                             <th width="30%">Isi Komen</th>
                                             <th>Tanggal</th>
                                             <th>Judul video</th>
@@ -93,10 +93,9 @@
 
 
             });
-                        socket.on( 'new_komen', function( data ) {
-                            console.log('ininininni');
-                tb_komen.ajax.reload(null,false); 
-                  });
+            socket.on( 'new_komen', function( data ) {
+              tb_komen.ajax.reload(null,false); 
+            });
 
             function respon(komenID){
                 button = "<button type='button' class='btn btn-success lapor' onclick='post("+komenID+")'>Respon</button><button type='button' class='btn btn-primary selesai' data-dismiss='modal'>Batal</button>";

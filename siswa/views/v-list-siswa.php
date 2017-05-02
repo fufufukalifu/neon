@@ -37,11 +37,18 @@
                    <!--  <a data-toggle="modal" class="btn btn-default pull-right"  "  data-target="#myModal">Tambah</a> -->
                 </div>
                 <!-- Funsi cari  -->
-                <div class=" pull-right">
-                    <input id="carisoal" type="text" name="keyword" class="form-control" placeholder="Search...">
-                </div>
+                
 
          <!-- Funsi cari -->
+            <div class="panel-body">
+                <form action="<?=base_url()?>index.php/siswa/cariSiswa" method="get">
+                <div class="input-group mb10">
+                        <input id="carisoal" type="text" name="keyword" class="form-control " placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn  btn-success" type="submit" >Cari</button>
+                        </span>
+                    </div>
+                </form>
                 <input type="text" name="page" value="<?=$this->uri->segment('3')?>" hidden="true">
                 <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
@@ -77,16 +84,20 @@
 
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation mt10 pt10"><center>
-        <ul class="pagination ">
-        <?php 
+
+        </div>
+        <div class="panel-footer">
        
-        echo $this->pagination->create_links();
-       
-        ?>
-        </ul>
-        </center>
-    </nav>
+           <ul class="pagination mt0 mb0 col-sm-6">
+              <?php 
+
+              echo $this->pagination->create_links();
+
+              ?>
+
+            </ul>
+                        <div class="text-right col-sm-6"><a href="javascript:void(0);"><?=$jumlahSiswa?> terdaftar</a></div>
+      </div>
             </div>
         </div>
     </div>

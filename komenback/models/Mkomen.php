@@ -70,28 +70,13 @@ class Mkomen extends CI_Model
 	}
 	// get data komen by profesi guru
 	public function get_komen_by_profesi($id_guru) {
-		$mataPelajaranID=$this->mataPelajaranID_by_idguru($id_guru);
-		$this->db->order_by('komen.id','desc');
-		$this->db->select( 'komen.id as komenID, isiKomen, komen.date_created, video.id as videoID,
-							video.judulVideo, video.id as videoID, pengguna.id as penggunaID, komen.UUID');
-		$this->db->from( 'tb_komen komen');
-		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
-		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');
-		$this->db->join('tb_subbab sub','sub.id=video.subBabID');
-		$this->db->join('tb_bab bab','bab.id=sub.babID');
-		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
-		// $this->db->where('tp.mataPelajaranID',$this->db->select('guru.mataPelajaranID')->from('tb_gurus guru')->where('guru.id',$id_guru));
-		$this->db->where('tp.mataPelajaranID',$mataPelajaranID);
-		$this->db->where( 'komen.status', 1 );
-		$query = $this->db->get();
-		return $query->result();
-	}
+		$this->db->select('mapelID');
+		$this->db->from('tb_mm-gurumapel')->where('guruID',$id_guru);
+		$where_clause = $this->db->get_compiled_select();
 
-	public function get_komen_by_profesi_notread($id_guru) {
-		$mataPelajaranID=$this->mataPelajaranID_by_idguru($id_guru);
 		$this->db->order_by('komen.id','desc');
 		$this->db->select( 'komen.id as komenID, isiKomen, komen.date_created, video.id as videoID,
-							video.judulVideo, video.id as videoID, pengguna.id as penggunaID,pengguna.namaPengguna,komen.UUID,siswa.photo as siswa_photo');
+							video.judulVideo, video.id as videoID, pengguna.id as penggunaID,pengguna.namaPengguna,komen.UUID,siswa.photo as siswa_photo,tp.mataPelajaranID');
 		$this->db->from( 'tb_komen komen');
 		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
 		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');
@@ -99,21 +84,37 @@ class Mkomen extends CI_Model
 		$this->db->join('tb_subbab sub','sub.id=video.subBabID');
 		$this->db->join('tb_bab bab','bab.id=sub.babID');
 		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
-		// $this->db->where('tp.mataPelajaranID',$this->db->select('guru.mataPelajaranID')->from('tb_gurus guru')->where('guru.id',$id_guru));
-		$this->db->where('tp.mataPelajaranID',$mataPelajaranID);
+		// $this->db->where_in('tp.mataPelajaranID', $subQuery);
+		$this->db->where("`tp`.`mataPelajaranID` IN ($where_clause)", NULL, FALSE);
+		$this->db->where( 'komen.status', 1 );
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_komen_by_profesi_notread($id_guru) {
+		$this->db->select('mapelID');
+		$this->db->from('tb_mm-gurumapel')->where('guruID',$id_guru);
+		$where_clause = $this->db->get_compiled_select();
+
+		$this->db->order_by('komen.id','desc');
+		$this->db->select( 'komen.id as komenID, isiKomen, komen.date_created, video.id as videoID,
+							video.judulVideo, video.id as videoID, pengguna.id as penggunaID,pengguna.namaPengguna,komen.UUID,siswa.photo as siswa_photo,tp.mataPelajaranID');
+		$this->db->from( 'tb_komen komen');
+		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
+		$this->db->join('tb_pengguna pengguna','pengguna.id=komen.userID');
+		$this->db->join('tb_siswa siswa','siswa.penggunaID=pengguna.id');
+		$this->db->join('tb_subbab sub','sub.id=video.subBabID');
+		$this->db->join('tb_bab bab','bab.id=sub.babID');
+		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
+		// $this->db->where_in('tp.mataPelajaranID', $subQuery);
+		$this->db->where("`tp`.`mataPelajaranID` IN ($where_clause)", NULL, FALSE);
 		$this->db->where( 'komen.status', 1 );
 		$this->db->where( 'komen.read_status', 0 );
 		$query = $this->db->get();
 		return $query->result_array();
 	}
 
-	public function mataPelajaranID_by_idguru($id_guru='')
-	{
-		$this->db->select('guru.mataPelajaranID');
-		$this->db->from('tb_guru guru')->where('guru.id',$id_guru);
-		$query = $this->db->get();
-		return $query->result_array()[0]['mataPelajaranID'];
-	}
+
 		//fungsi untuk ambil komen
 	public function get_komen_by_idkomen( $idkomen ) {
 		$this->db->select( 'isiKomen, videoID');
@@ -194,14 +195,18 @@ class Mkomen extends CI_Model
 	// get data  jumlah komen yg belum di baca
     public function get_count_komen_guru($id_guru='')
     {
-    	$mataPelajaranID=$this->mataPelajaranID_by_idguru($id_guru);
+    			$this->db->select('mapelID');
+		$this->db->from('tb_mm-gurumapel')->where('guruID',$id_guru);
+		$where_clause = $this->db->get_compiled_select();
     	$this->db->select('komen.id');
     	$this->db->from( 'tb_komen komen');
 		$this->db->join( 'tb_video video', 'komen.videoID=video.id' );
 		$this->db->join('tb_subbab sub','sub.id=video.subBabID');
 		$this->db->join('tb_bab bab','bab.id=sub.babID');
 		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
-		$this->db->where('tp.mataPelajaranID',$mataPelajaranID);
+		$this->db->where("`tp`.`mataPelajaranID` IN ($where_clause)", NULL, FALSE);
+		
+
 		$this->db->where( 'komen.status', 1 );
 		$this->db->where( 'komen.read_status', 0 );
 		$query = $this->db->get();
