@@ -10,7 +10,8 @@ class Token extends MX_Controller {
 		$this->load->library('parser');
 		$this->load->model('token_model');
 		$this->load->model('siswa/msiswa');
-
+         $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
 		$this->load->helper('string');
 		$this->hakakses = $this->gethakakses();
 	}

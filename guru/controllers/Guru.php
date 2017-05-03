@@ -20,17 +20,7 @@ class Guru extends MX_Controller {
       $this->load->helper( array( 'form', 'url' ) );
       $this->load->library( 'form_validation' );
       $this->load->library('generateavatar');
-        //cek kalo bukan guru lemparin.
-        if ($this->session->userdata('loggedin')==true) {
-            if ($this->session->userdata('HAKAKSES')=='siswa'){
-             // redirect('welcome');
-            }else if($this->session->userdata('HAKAKSES')=='guru'){
-             // redirect('guru/dashboard');
-            }else{
-            // redirect('login');
-            }
-        }
-
+        
     }
 
     //set get untuk session

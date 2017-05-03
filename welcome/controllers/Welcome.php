@@ -12,8 +12,8 @@ class Welcome extends MX_Controller {
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'siswa/msiswa' );
-
-
+        $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
         $this->load->library( 'parser' );
         if ($this->session->userdata('loggedin')==true) {
             if ($this->session->userdata('HAKAKSES')=='siswa'){
@@ -25,14 +25,12 @@ class Welcome extends MX_Controller {
 
        }
 
-
-
    }
 
 
 
    public function index() {
-
+    
     $data = array(
         'judul_halaman' => 'Neon - Welcome',
         'judul_header' =>'Video',

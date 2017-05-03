@@ -15,6 +15,9 @@ class Modulonline extends MX_Controller {
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->library('parser');
+            $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
+     
     }
 
     public function index(){

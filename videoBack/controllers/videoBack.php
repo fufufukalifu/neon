@@ -35,6 +35,8 @@ class Videoback extends MX_Controller {
     $this->load->library('pagination');
     $this->load->library('generateavatar');
     $this->load->model('komenback/mkomen');
+        $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
 
   }
 

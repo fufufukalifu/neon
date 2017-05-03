@@ -9,6 +9,9 @@ class Cabang extends MX_Controller {
 	function __construct(){
 		$this->load->library('parser');
 		$this->load->model('mcabang');
+		$this->load->library('sessionchecker');
+        //cek login
+        $this->sessionchecker->checkloggedin();
 	}
 		//GET HAK AKSES
 	function gethakakses(){

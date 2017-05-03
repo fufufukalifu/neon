@@ -10,6 +10,8 @@ class Admin extends MX_Controller {
         $this->load->model('Templating/mtemplating');
         $this->load->model('madmin');
         $this->load->library('parser');
+            $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
     }
 
     public function get_avatar_ajax(){

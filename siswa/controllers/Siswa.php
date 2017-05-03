@@ -29,6 +29,8 @@ class Siswa extends MX_Controller {
         $this->load->helper('session');
         $this->load->library('parser');
         $this->load->library('pagination');
+                $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
     }
 
     
@@ -622,6 +624,7 @@ public function tampSiswa($list,$jumlah_data=''){
         $baseurl = base_url();
         foreach ($list as $list_siswa) {
             $no++;
+            $namaPengguna="'".$list_siswa['namaPengguna']."'";
             $data['siswa'][] = array(
               'no'=> $no,
               'idsiswa'=> $list_siswa['idsiswa'],
@@ -634,6 +637,8 @@ public function tampSiswa($list,$jumlah_data=''){
 
               'report'=>'<a href="' . base_url('index.php/siswa/reportSiswa/' .$list_siswa['idsiswa'] .'/'. $list_siswa['penggunaID']) . '" "> Lihat detail</a></i>',
               'aksi'=>'<a class="btn        btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $list_siswa['idsiswa'] . '/' . $list_siswa['penggunaID']) . '" "><i class="ico-edit"></i></a> 
+
+              <button class="btn btn-sm btn-danger" title="Reset Katasandi" onclick="resetSandi('.$list_siswa['penggunaID'].','.$namaPengguna.')"><i class=" ico-key"></i></button>
 
               <a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa(' . "" . $list_siswa['idsiswa'] . "," . $list_siswa['penggunaID'] . ')"><i class="ico-remove"></i></a>'
               );

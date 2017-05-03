@@ -15,6 +15,8 @@
         $this->load->model('templating/Mtemplating');
         $this->load->model('komenback/mkomen');
         $this->load->library('parser');
+            $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
  	}
 
 

@@ -11,7 +11,8 @@ class Tesonline extends MX_Controller {
         $this->load->model('latihan/mlatihan');
         $this->load->library('parser');
         parent::__construct();
-    $this->load->library('sessionchecker');
+            $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
     $this->sessionchecker->cek_token();
 
     }

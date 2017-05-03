@@ -11,8 +11,9 @@ class Pesan extends MX_Controller {
         $this->load->helper('session');
         $this->load->library('parser');
 
-        // sessionkonfirm();
-        // get_session_siswa();
+                        $this->load->library('sessionchecker');
+        //cek login
+        $this->sessionchecker->checkloggedin();
     }
 
     public function index() {

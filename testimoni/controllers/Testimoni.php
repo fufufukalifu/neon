@@ -10,7 +10,9 @@ class Testimoni extends MX_Controller {
         $this->load->model('Mtestimoni');
         $this->load->helper('session');
         $this->load->library('parser');
-
+        $this->load->library('sessionchecker');
+        //cek login
+        $this->sessionchecker->checkloggedin();
         // sessionkonfirm();
         // get_session_siswa();
     }

@@ -21,6 +21,8 @@ class Register extends MX_Controller {
         $this->load->model('siswa/msiswa');
 
         $this->load->model('Templating/mtemplating');
+                $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
 
     }
 

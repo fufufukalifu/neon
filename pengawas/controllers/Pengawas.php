@@ -11,6 +11,8 @@ class Pengawas extends MX_Controller
         $this->load->library('parser');
         $this->load->model('register/mregister');
         $this->load->model('Mpengawas');
+                $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
 
 	}
 
