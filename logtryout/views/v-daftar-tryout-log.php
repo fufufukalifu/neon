@@ -39,7 +39,7 @@
         <tr>
 
           <th>ID</th>
-          <th>Siswa ID</th>
+          <th>Nama Pengguna</th>
           <th>Nama Lengkap</th>
           <th>Waktu perngerjaan</th>
 

@@ -59,8 +59,8 @@
  							<div class="grid-col grid-col-4">
  								<select name="" id="" onchange="location = this.value";>
  									<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
- 									<option selected value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
- 									<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
+ 									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
  								</select>
  							</div>
@@ -179,13 +179,13 @@
  		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
 
  		console.log(mapel);
- 		if (mapel == 'Pilih Mata Pelajaran') {
+ 		if (mapel == 'Pilih_Mata_Pelajaran') {
  			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
  		}else{
  			if (mapel!='Pilih Mata Pelajaran' && bab=='Bab Pelajaran') {
- 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"all";
+ 				document.location = base_url+"konsultasi/filter_grade/"+mapel+"all";
  			}else if(bab!='Bab Pelajaran'){
- 				document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/"+bab;
+ 				document.location = base_url+"konsultasi/filter_grade/"+mapel+"/"+bab;
  			}
  		}
  	});

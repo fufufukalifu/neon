@@ -48,7 +48,6 @@
 
  							<div class="grid-col grid-col-1">
  								<a class="cws-button bt-color-3 icon-left smaller buat-btn"><i class="fa fa-plus"></i>Buat</a>
-
  								<a class="cws-button bt-color-3 icon-left smaller cari-btn"><i class="fa fa-search"></i>Cari</a>
  							</div>
  						</div>
@@ -74,7 +73,7 @@
  							</div>
 
  							<div class="grid-col grid-col-1">
- 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_mentor') ?>"><i class="fa fa-times"></i> Reset</a>
+ 								<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_ku') ?>"><i class="fa fa-times"></i> Reset</a>
  							</div>
  						</div>
  						
@@ -110,9 +109,9 @@
 
  									
  										<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 										<a href="<?=base_url('konsultasi/filter_pertanyaanku/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
  											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
- 											<a href="<?=base_url('konsultasi/filter_my/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 											<a href="<?=base_url('konsultasi/filter_pertanyaanku/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
  												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
  												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
  												<?php if (!empty($question['namaGuru'])): ?>
@@ -177,4 +176,21 @@ $("#search1").on('keyup', function (e) {
        document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
     }
 });
+
+$('.cari-btn').click(function(){
+	console.log('masuk');
+ 		var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
+ 		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
+
+ 		if (mapel == 'Pilih_Mata_Pelajaran') {
+ 			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
+ 		}else{
+ 			if (bab=='Bab_Pelajaran') {
+ 				document.location = base_url+"konsultasi/filter_pertanyaanku/"+mapel+"/all";
+ 			}else if(bab!='Bab_Pelajaran'){
+ 				document.location = base_url+"konsultasi/filter_pertanyaanku/"+mapel+"/"+bab;
+ 			}
+ 		}
+
+ 	});
 </script>

@@ -35,7 +35,7 @@ class Mkonsultasi extends CI_Model
 	}
 
 
-	function get_all_questions_search($perpage,$page,$key=""){
+	function get_all_questions_search($perpage,$page,$bab,$matapelajaran){
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 			`isiPertanyaan`, `pertanyaan`.`date_created`, 
@@ -50,15 +50,78 @@ class Mkonsultasi extends CI_Model
 
 		$this->db->order_by('`pertanyaan`.`id`','desc');
 		
-		if ($key==!"") {
-			$this->db->where("judulPertanyaan LIKE '%$key%' OR
-				bab.judulBab LIKE '%$key%'
-				")->order_by('`pertanyaan.date_created`','asc');
+		if ($bab=='all') {
+			$this->db->where("mp.namaMataPelajaran",$mataPelajaran);
+		}else{
+			$this->db->where("mp.namaMataPelajaran",$mataPelajaran);
+			$this->db->where("bab.judulBab",$bab);
 		}
 		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`',$perpage,$page);
 
 		return $query->result_array();
 
+	}
+
+
+
+//ambil pertanyaan yang dimiliki oleh id tertentu.
+	function get_my_questions_filter($id_siswa,$page,$perpage,$bab,$mataPelajaran){
+		$m = str_replace('_', ' ', $mataPelajaran);
+		$b = str_replace('_', ' ', $bab);
+
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+			`isiPertanyaan`, `pertanyaan`.`date_created`, mp.namaMataPelajaran,
+			`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah,
+			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
+
+		$this->db->where('`siswa`.`id`', $id_siswa )->order_by('`pertanyaan`.`id`','desc');
+		
+		if ($bab=='all') {
+			$this->db->where("mp.namaMataPelajaran",$m);
+		}else{
+			$this->db->where("mp.namaMataPelajaran",$m);
+			$this->db->where("bab.judulBab",$b);
+		}
+
+		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`',$perpage,$page);
+		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->result_array();
+		}
+
+	}
+
+	//ambil pertanyaan yang dimiliki oleh id tertentu.
+	function get_my_questions_number_filter($id_siswa,$bab, $mataPelajaran,$perpage,$page){
+		$m = str_replace('_', ' ', $mataPelajaran);
+		$b = str_replace('_', ' ', $bab);
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+			`isiPertanyaan`, `pertanyaan`.`date_created`, mp.namaMataPelajaran,
+			`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah,
+			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
+
+		$this->db->where('`siswa`.`id`', $id_siswa )->order_by('`pertanyaan`.`id`','desc');
+		
+		if ($bab=='all') {
+			$this->db->where("mp.namaMataPelajaran",$m);
+		}else{
+			$this->db->where("mp.namaMataPelajaran",$m);
+			$this->db->where("bab.judulBab",$b);
+		}
+		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`');
+
+		return $query->num_rows();		
 	}
 
 	// ambil jumlah semua pertanyaan
@@ -203,6 +266,8 @@ class Mkonsultasi extends CI_Model
 
 	//ambil pertanyaan yang memiliki level sama
 	function get_my_question_level($id_tingkat,$perpage,$page,$key=""){
+		
+
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 			`isiPertanyaan`, `pertanyaan`.`date_created`, 
@@ -240,12 +305,77 @@ class Mkonsultasi extends CI_Model
 		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
-		$this->db->where('`siswa`.`tingkatID`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
+		$this->db->where('`tp`.`tingkatID`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
 
 		if ($key==!"") {
 			$this->db->where("judulPertanyaan LIKE '%$key%' OR
 				bab.judulBab LIKE '%$key%'
 				")->order_by('`pertanyaan.date_created`','asc');
+		}
+		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`');
+
+		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->num_rows();
+		}
+
+	}
+
+		//ambil pertanyaan yang memiliki level sama
+	function get_my_question_level_filter($id_tingkat,$perpage,$page,$bab,$matapelajaran){
+		$m = str_replace('_', ' ', $matapelajaran);
+		$b = str_replace('_', ' ', $bab);
+
+
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
+			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+			`isiPertanyaan`, `pertanyaan`.`date_created`, mp.namaMataPelajaran,
+			`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah,mp.namaMataPelajaran,
+			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+
+		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->where('`tp`.`tingkatID`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
+
+		if ($bab=='all') {
+			$this->db->where("mp.namaMataPelajaran",$m);
+		}else{
+			$this->db->where("mp.namaMataPelajaran",$m);
+			$this->db->where("bab.judulBab",$b);
+		}
+		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`',$perpage,$page);
+		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
+
+		if ($query->result_array()==array()) {
+			return false;
+		} else {
+			return $query->result_array();
+		}
+
+	}
+
+	function get_my_question_level_number_filter($id_tingkat,$bab,$matapelajaran){
+		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, mp.namaMataPelajaran,
+			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
+			`isiPertanyaan`, `pertanyaan`.`date_created`, 
+			`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah,
+			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
+
+		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
+
+		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
+		$this->db->where('`siswa`.`tingkatID`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
+
+		if ($bab=='all') {
+			$this->db->where("mp.namaMataPelajaran",$matapelajaran);
+		}else{
+			$this->db->where("mp.namaMataPelajaran",$matapelajaran);
+			$this->db->where("bab.judulBab",$bab);
 		}
 		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`');
 
@@ -294,7 +424,7 @@ class Mkonsultasi extends CI_Model
 			bab.judulBab,(SELECT COUNT(id) FROM tb_k_jawab  WHERE pertanyaanID = p.id) AS jumlah,
 			p.mentorID,(SELECT CONCAT(namaDepan,' ',namaBelakang) from tb_guru where id = p.mentorID) as namaGuru
 			");
-if ($key==!"") {
+		if ($key==!"") {
 			$this->db->where("judulPertanyaan LIKE '%$key%' OR
 				bab.judulBab LIKE '%$key%'
 				")->order_by('`p.date_created`','asc');
@@ -321,7 +451,7 @@ if ($key==!"") {
 		$this->db->join('`tb_bab` `bab`','`p`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
 		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
-if ($bab=='all') {
+		if ($bab=='all') {
 			$this->db->where("mp.namaMataPelajaran",$mataPelajaran);
 		}else{
 			$this->db->where("mp.namaMataPelajaran",$mataPelajaran);
@@ -346,7 +476,7 @@ if ($bab=='all') {
 			bab.judulBab,(SELECT COUNT(id) FROM tb_k_jawab  WHERE pertanyaanID = p.id) AS jumlah,
 			p.mentorID,(SELECT CONCAT(namaDepan,' ',namaBelakang) from tb_guru where id = p.mentorID) as namaGuru
 			");
-if ($bab=='all') {
+		if ($bab=='all') {
 			$this->db->where("mp.namaMataPelajaran",$matapelajaran);
 		}else{
 			$this->db->where("mp.namaMataPelajaran",$matapelajaran);

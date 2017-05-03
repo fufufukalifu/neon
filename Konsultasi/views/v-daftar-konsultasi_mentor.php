@@ -179,7 +179,7 @@
  		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
 
  		console.log(bab);
- 		if (mapel == 'Pilih Mata Pelajaran') {
+ 		if (mapel == 'Pilih_Mata_Pelajaran') {
  			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
  		}else{
  			if (bab=='Bab_Pelajaran') {

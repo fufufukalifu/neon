@@ -18,7 +18,7 @@ class Logtryout extends MX_Controller {
 		foreach ( $list as $list_item ) {
 			$row = array();
 			$row[]=$list_item['id'];
-			$row[]=$list_item['siswa_id'];
+			$row[]=$list_item['namaPengguna'];
 
 			$row[]=$list_item['namaDepan'].' '.$list_item['namaBelakang'];
 			$row[]=$list_item['waktu_mulai'];
