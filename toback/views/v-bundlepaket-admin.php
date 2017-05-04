@@ -244,6 +244,7 @@
        <tr>
         <th>No</th>
         <th>Nama</th>
+        <th>Cabang</th>
         <th>Tingkat</th>
         <th>Aksi</th>
       </tr>
@@ -252,7 +253,13 @@
     <tbody>
 
     </tbody>
-
+    <tfoot>
+     <th><input class="form-control" type="text" placeholder="ID" /></th>
+     <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+     <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+     <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
+     <th>Aksi</th>
+   </tfoot>
   </table>
 
 </form>
@@ -349,8 +356,6 @@
       });
       //####---
 
-
-
       $('#siswaBlmTo tfoot th').first().append("");
 
       tblist_siswa = $('#siswaBlmTo').DataTable({ 
@@ -427,7 +432,16 @@ tblist_siswa.columns().every( function () {
     }
   } );
 } );
-
+tblist_siswaAdd.columns().every( function () {
+  var that = this;
+  $( 'input', this.footer() ).on( 'keyup change', function () {
+    if ( that.search() !== this.value ) {
+      that
+      .search( this.value )
+      .draw();
+    }
+  } );
+} );
 });
 
 function reload_tblist(){

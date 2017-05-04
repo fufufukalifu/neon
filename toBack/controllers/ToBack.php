@@ -224,6 +224,7 @@ class Toback extends MX_Controller{
 			$row = array();
 			$row[] = $no;
 			$row[] = $list_siswa ['namaDepan'].' '.$list_siswa ['namaBelakang'];
+			$row[] = $list_siswa ['namaCabang'];
 			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';

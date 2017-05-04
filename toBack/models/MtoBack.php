@@ -43,10 +43,11 @@ class Mtoback extends CI_Model {
 	
 	public function siswa_by_totID ($id_to)
 	{
-		$this->db->select('ht.id as idKey,siswa.id as siswaID,namaDepan,namaBelakang,aliasTingkat');
+		$this->db->select('ht.id as idKey,siswa.id as siswaID,namaDepan,namaBelakang,aliasTingkat,c.namaCabang');
 		$this->db->from('tb_tingkat tkt');
 		$this->db->join('tb_siswa siswa','siswa.tingkatID=tkt.id');
 		$this->db->join('tb_hakakses-to ht','ht.id_siswa=siswa.id');
+		$this->db->join('tb_cabang c','c.id=siswa.cabangID');
 		$this->db->where('ht.id_tryout',$id_to);
 		$query = $this->db->get();
         return $query->result_array();
