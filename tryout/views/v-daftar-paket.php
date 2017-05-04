@@ -78,12 +78,12 @@
              <tr>
 
               <th>ID Paket</th>
+              <th width="10%">Aksi</th>
 
               <th>Nama Paket Soal</th>
 
               <th>Status</th>
 
-              <th width="10%">Aksi</th>
 
             </tr>
 
@@ -98,11 +98,6 @@
               <tr>
 
                 <td><?=$paketitem['id_paket'] ?></td>
-
-                <td><?=$paketitem['nm_paket'] ?></td>
-
-                <td>Belum Dikerjakan</td>
-
                 <td>
 
 
@@ -121,6 +116,12 @@
                   <?php endif ?>
 
                 </td>
+
+                <td><?=$paketitem['nm_paket'] ?></td>
+
+                <td>Belum Dikerjakan</td>
+
+                
 
               </tr>
 
@@ -158,15 +159,15 @@
             <thead>
              <tr>
               <th>ID Paket</th>
-              <th>Nama Paket Soal</th>
               <th width="30%">Aksi</th>
+
+              <th>Nama Paket Soal</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($paket_dikerjakan as $paketitem): ?>
               <tr>
                 <td><?=$paketitem['id'] ?></td>
-                <td><?=$paketitem['nm_paket'] ?></td>
                 <td>
 
                  <a onclick="detail_paket(<?=$paketitem['id_paket']?>)" 
@@ -180,6 +181,8 @@
 
                     <?php endif ?>
                   </td>
+                <td><?=$paketitem['nm_paket'] ?></td>
+                
                 </tr>
               <?php endforeach ?>
             </tbody>

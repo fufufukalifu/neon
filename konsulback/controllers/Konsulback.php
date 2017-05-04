@@ -168,6 +168,8 @@
   ##KONFIGURASI UNTUUK PAGINATION
 
     $this->parser->parse('admin/v-index-admin', $data);
+    $this->parser->parse('templating/index-b-guru', $data);
+
 
 
   }

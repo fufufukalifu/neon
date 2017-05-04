@@ -70,6 +70,12 @@
     load_bab(idMapel);
   });
 
+  $('#mapel_select_guru').change(function () {
+    var mapel_id = $(this).val();
+    console.log('masuk');
+    load_bab_mapelid(mapel_id);
+  });
+
 
 
 // fungsi untuk ngeload matapelajaran
@@ -121,6 +127,19 @@ function load_matapelajaran(tingkatID){
    }
  }
 
+function load_bab_mapelid(mapel_id){
+     $('#bab_select_guru').find('option').remove();
+     $('#bab_select_guru').append('<option value=0>Bab Pelajaran</option>');
+     $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/matapelajaran/get_bab_by_mapel_id/" + mapel_id,
+      success: function (data) {
+       $.each(data, function (i, data) {
+        $('#bab_select_guru').append("<option value='" + data.id + "'>" + data.judulBab + "</option>");
+      });
+     }
+   });
+}
 
 
  function hideme(){

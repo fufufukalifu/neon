@@ -83,7 +83,7 @@
  							<b>Filter Pertanyaan</b>
  							<div class="grid-col-row clear-fix">
  								<div class="grid-col grid-col-4">
- 									<select class="form-control" name="mapel" id="mapelSelect">
+ 									<select class="form-control" name="mapel" id="mapel_select_guru">
  										<option value=0>-Pilih Matapelajaran-</option>
  										<?php foreach ($mapel as $mapel_item): ?>
  											<option value=<?=$mapel_item['mapelID'] ?>><?=$mapel_item['namaMataPelajaran'] ?></option>  
@@ -92,7 +92,7 @@
  								</div>
 
  								<div class="grid-col grid-col-4">
- 									<select class="form-control" name="tingkat" id="babSelect"  ><option value=0>-Pilih Bab-</option></select>
+ 									<select class="form-control" name="tingkat" id="bab_select_guru"  ><option value=0>-Pilih Bab-</option></select>
  								</div>
 
 
@@ -107,9 +107,9 @@
  							<div class="grid-col-row clear-fix">
  								<div class="grid-col grid-col-4">
  									<select name="" id="" onchange="location = this.value";>
- 										<option selected value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Seprofesi</option>
+ 										<option selected value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Matapelajaran Diampu</option>
  										<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
- 										<option value="<?=base_url('konsultasi/pertanyaan_pada_mentor')?>r">Pertanyaan Pada Anda</option>
+ 										<option value="<?=base_url('konsultasi/pertanyaan_pada_mentor')?>">Pertanyaan Pada Anda</option>
  									</select>
  								</div>
  								<div class="grid-col grid-col-4">
@@ -226,22 +226,22 @@
  	$("#search1").on('keyup', function (e) {
  		if (e.keyCode == 13) {
  			keyword = $('#search1').val().replace(/ /g,"-");		;
- 			document.location = base_url+"konsultasi/pertanyaan_all_search/"+keyword;
+ 			document.location = base_url+"konsultasi/pertanyaan_profesi_search/"+keyword;
  		}
  	});
 
  	$('.cari-btn').click(function(){
- 		var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
- 		var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
+ 		var mapel= $('#mapel_select_guru').find(":selected").text().replace(/ /g,"_");
+ 		var bab= $('#bab_select_guru').find(":selected").text().replace(/ /g,"_");
 
  		console.log(mapel);
  		if (mapel == 'Pilih Mata Pelajaran') {
  			sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
  		}else{
  			if (bab=='Bab_Pelajaran') {
- 				document.location = base_url+"konsultasi/filter/"+mapel+"/all";
+ 				document.location = base_url+"konsultasi/pertanyaan_seprofesi/"+mapel+"/all";
  			}else if(bab!='Bab_Pelajaran'){
- 				document.location = base_url+"konsultasi/filter/"+mapel+"/"+bab;
+ 				document.location = base_url+"konsultasi/pertanyaan_seprofesi/"+mapel+"/"+bab;
  			}
  		}
  	});

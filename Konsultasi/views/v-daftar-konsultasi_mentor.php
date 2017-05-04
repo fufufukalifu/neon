@@ -60,7 +60,7 @@
  									<option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
  									<option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
- 									<option selected value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+ 									<option selected value="<?=base_url('konsultasi/pertanyaan_mentor')?>">Pertanyaan Sementor</option>
  								</select>
  							</div>
  							<div class="grid-col grid-col-4">

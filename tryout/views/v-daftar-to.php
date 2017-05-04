@@ -48,24 +48,20 @@
           <thead>
            <tr>
             <th>ID Tryout</th>
+            <th width="10%">Aksi</th>
+
             <th>Nama Tryout</th>
             <th>Tanggal Mulai</th>
             <th>Tanggal Berakhir</th>
 
             <th>Masa berlaku TO</th>
             <th>Keaktivan</th>
-            <th width="10%">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($tryout as $tryout_item): ?>
           <tr>
-            <td><?=$tryout_item['id_tryout'] ?></td>
-            <td><?=$tryout_item['nm_tryout'] ?></td>
-            <td><?=$tryout_item['tgl_mulai']." ".$tryout_item['wkt_mulai'] ?></td>
-            <td><?=$tryout_item['tgl_berhenti']." ".$tryout_item['wkt_berakhir']?></td>
-
-            <?php 
+           <?php 
             $date1 = new DateTime($tryout_item['tgl_mulai']);
             $date2 = new DateTime($tryout_item['tgl_berhenti']);
             $date3 = $date2->diff($date1);
@@ -78,8 +74,7 @@
             }
             ?>
 
-            <td><?=$date3->d." Hari" ?></td>
-            <td><?=$sisa->days ?> Hari</td>
+            <td><?=$tryout_item['id_tryout'] ?></td>
             <td>
               <?php if ($sisa->days == 0): ?>
               <a class="btn btn-primary detail-<?=$tryout_item['id_tryout']?>" 
@@ -97,6 +92,15 @@
                 ><i class="glyphicon glyphicon-list-alt"></i></a>
               <?php endif ?>
             </td>
+            <td><?=$tryout_item['nm_tryout'] ?></td>
+            <td><?=$tryout_item['tgl_mulai']." ".$tryout_item['wkt_mulai'] ?></td>
+            <td><?=$tryout_item['tgl_berhenti']." ".$tryout_item['wkt_berakhir']?></td>
+
+           
+
+            <td><?=$date3->d." Hari" ?></td>
+            <td><?=$sisa->days ?> Hari</td>
+            
           </tr>
         <?php endforeach ?>
       </tbody>

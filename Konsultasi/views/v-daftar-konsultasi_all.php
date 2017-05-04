@@ -108,7 +108,7 @@
  							<div class="grid-col-row clear-fix">
  								<div class="grid-col grid-col-4">
  									<select name="" id="" onchange="location = this.value";>
- 										<option value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Seprofesi</option>
+ 										<option value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Matapelajaran Diampu</option>
  										<option selected value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
  										<option value="<?=base_url('konsultasi/pertanyaan_pada_mentor')?>">Pertanyaan Pada Anda</option>
  									</select>
