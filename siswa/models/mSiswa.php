@@ -99,7 +99,9 @@ class Msiswa extends CI_Model {
     #query get siswa belum to
 
     public function get_siswa_blm_ikutan_to($id) {
-        $query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,tkt.`aliasTingkat` FROM tb_siswa s 
+        $query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,tkt.`aliasTingkat`,pengguna.`namaPengguna` FROM tb_siswa s 
+        Join `tb_pengguna` pengguna
+        ON pengguna.`id` = s.`penggunaID`
         Join `tb_tingkat` tkt
         ON tkt.`id` = s.`tingkatID`
         LEFT JOIN `tb_cabang` c
