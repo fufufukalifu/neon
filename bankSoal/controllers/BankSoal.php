@@ -95,6 +95,8 @@ class Banksoal extends MX_Controller {
         $this->pagination->initialize($config);     
         $list = $this->Mbanksoal->data_soal($config['per_page'],$from);
 
+        // var_dump($config['per_page']);
+        // var_dump($from);
         $this->tampSoal($list);
     }
 

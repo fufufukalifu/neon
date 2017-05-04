@@ -1,90 +1,5 @@
 
 <div class="row">
-  <div class="col-md-12 kirim_token"  style="display: none">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Kirim Token</h3> 
-      </div>
-      <div class="panel-body">
-        <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-         <div  class="form-group">
-           <label class="col-sm-2 control-label">Masa aktif</label>
-           <div class="col-sm-9">
-             <!-- stkt = soal tingkat -->
-             <select class="form-control" name="masa_aktif_set">
-              <option value="0">-- Pilih Masa Aktif --</option>
-              <option value="30">30 Hari</option>
-              <option value="100">100 Hari</option>
-              <option value="365">365 Hari</option>
-            </select>
-          </div>
-        </div>
-      </form>
-      <div  class="form-group">
-        <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-          <thead>
-            <tr>
-              <th>
-                <span class="checkbox custom-checkbox check-all">
-                  <input type="checkbox" name="checkall" id="check-all">
-                  <label for="check-all">&nbsp;&nbsp;</label></span> 
-                </th>
-                <th>No</th>
-                <th>Nama Mahasiswa</th>
-                <th>Nama Pengguna</th>
-                <th>Cabang</th>
-
-              </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-          </table>
-          <hr>
-          <a class="btn btn-primary set_token">Kirim Token</a>
-
-        </div>
-        <div class="panel-footer">
-          <ul class="nav nav-section nav-justified">
-            <li>
-              <div class="section">
-                <input type="hidden" name="jumlah_semua_stok">
-                <input type="hidden" name="jumlah_30_stok">
-                <input type="hidden" name="jumlah_100_stok">
-                <input type="hidden" name="jumlah_365_stok">  
-                <h5 class="nm jumlah_semua_stok"></h5>
-                <span>Semua</span>
-              </div>
-            </li>
-
-            <li>
-              <div class="section">
-                <h5 class="nm jumlah_30_stok"></h5>
-                <span>30 Hari</span>
-              </div>
-            </li>
-
-            <li>
-              <div class="section">
-                <h5 class="nm jumlah_100_stok"></h5>
-                <span>100 Hari</span>
-              </div>
-            </li>
-
-            <li>
-              <div class="section">
-                <h5 class="nm jumlah_365_stok"></h5>
-                <span>365 Hari</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
   <div class="col-md-12 form-token" style="display: none">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -149,8 +64,6 @@
 
       </div>
       <a class="btn btn-inverse btn-outline add-token" title="Tambah Token" ><i class="ico-plus"></i></a>
-      <a class="btn btn-inverse btn-outline send-token" title="Kirim Token" ><i class="ico-user-plus2"></i></a>
-      <a class="btn btn-inverse btn-outline send-token" title="Rekap Token" ><i class="ico-notebook"></i></a>
     </div>
   </div>
   <div class="panel-body">
@@ -169,96 +82,58 @@
 
       </tbody>
     </table>
+     <ul class="pagination pagination-token">
+
+    </ul>
   </div>
 </div>
 </div>
-<div class="col-md-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Penggunaan Token</h3>
-      <!-- panel toolbar -->
-      <div class="panel-toolbar text-right">
-        <!-- option -->
-        <div class="option">
-          <button class="btn up" data-toggle="panelcollapse"><i class="arrow"></i></button>
-          <button class="btn" data-toggle="panelremove"><i class="remove"></i></button>
-        </div>
-        <!--/ option -->
-      </div>
-      <!--/ panel toolbar -->
-    </div>
-    <div class="panel-body">
-      <table class="rekap_token table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Siswa</th>
-            <th>Nama Pengguna</th>
-
-            <th>Nomor Token</th>
-            <th>Masa Aktif</th>
-            <th>Mulai</th>
-            <th>Finish</th>
-            <th>Sisa Aktif</th>
-            <th>Status</th>
-            <th width="15%">Aksi</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
-
 
 </div>
 <!-- TABEL TOKEN -->
 <script type="text/javascript">
 var dataTableToken;
-var dataTableSiswa;
-var dataRekapToken
-
-
+function nextPage(page='') {
+  dataTableToken = $('.daftartoken').DataTable({
+      "ajax": {
+      "url": base_url+"token/ajaxLisToken/all/null/"+page,
+      "type": "POST"
+    },
+      "emptyTable": "Tidak Ada Data Pesan",
+      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+      "bDestroy": true,
+      "bPaginate": false,
+  });
+}
 $(document).ready(function(){
   // TABLE TOKEN
   dataTableToken = $('.daftartoken').DataTable({
     "ajax": {
-      "url": base_url+"token/ajax_data_token",
+      "url": base_url+"token/ajaxLisToken",
       "type": "POST"
     },
     "emptyTable": "Tidak Ada Data Pesan",
     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
     "bDestroy": true,
+    "bPaginate": false,
   });
 
-  // TABLE SISWA
-  dataTableSiswa = $('.daftarsiswa').DataTable({
-    "ajax": {
-      "url": base_url+"token/ajax_data_siswa",
-      "type": "POST"
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
+    //set pagination
+  function paginationToken() {
 
-    // TABLE REKAP
-    dataRekapToken = $('.rekap_token').DataTable({
-      "ajax": {
-        "url": base_url+"token/ajax_rekap_penggunaan_token",
-        "type": "POST"
-      },
-      "emptyTable": "Tidak Ada Data Pesan",
-      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-      "bDestroy": true,
+        $.ajax({
+      url:base_url+"token/paginationToken",
+   
+      type:"POST",
+      dataType:"TEXT",
+      success:function(data){
+        $('.pagination-token').append(JSON.parse(data));
+      },error:function(){
+        swal('Gagal membuat Token');
+      }
     });
-
-
+  }
+  paginationToken();
 
   });
 // onclick action
@@ -269,18 +144,6 @@ $('.add-token').click(function(){
 $('.simpan_token').click(function(){
   addtoken();
   dataTableToken.ajax.reload(null,false); 
-});
-
-$('.send-token').click(function(){
-  $('.kirim_token').toggle('show');
-  dataTableToken.ajax.reload(null,false); 
-  dataTableSiswa.ajax.reload(null,false); 
-  dataRekapToken.ajax.reload(null,false); 
-
-});
-
-$('.set_token').click(function(){
-  set_token_to_mahasiswa();
 });
 
 $('input[name=status_token]').click(function(){
@@ -325,61 +188,6 @@ function addtoken(){
   })
 }
 
-
-//fungsi set token ke mahasiswa
-function set_token_to_mahasiswa(){
-  //tampung id mahasiswa
-  id_siswa = [];
-  //tampung masa aktif
-  masa_aktif = $('select[name=masa_aktif_set]').val();
-  //cek kalo belum set masa aktif
-  if (masa_aktif==0) {
-    swal('silahkan tentukan masa aktif terlebih dahulu');
-    $('select[name=masa_aktif_set]').focus();
-  }else{
-   $('.daftarsiswa tbody td :checkbox:checked').each(function(i){
-     id_siswa[i] = $(this).val();
-   }); 
-  console.log(id_siswa);
-   
-   jumlah_mahasiswa = id_siswa.length;
-   jumlah_stok = $('input[name=jumlah_'+masa_aktif+'_stok]').val();
-
-   // cek jumlah mahasiswa yang dipilih
-   if (jumlah_mahasiswa==0) {
-    swal('Silahkan tentukan mahasiswa terlebih dahulu');
-  }else{
-    if (jumlah_mahasiswa>jumlah_stok) {
-      swal('Jumlah stok kurang');
-    }else{
-      data = {
-        id:id_siswa,
-        jumlah_mahasiswa:jumlah_mahasiswa,
-        masa_aktif:masa_aktif
-      };
-      $.ajax({
-        url:base_url+"token/set_token_to_mahasiswa",
-        data:data,
-        type:"POST",
-        dataType:"TEXT",
-        success:function(){
-          swal('Token Berhasil Di Kirim');
-          reload();
-        },error:function(){
-          swal('Gagal mengirim Token');
-        }
-      });
-    }
-    
-
-    
-
-  }
-}
-
-}
-
-
 //fungsi untuk filter token
 function get_filtered_token(data){
   status_token = $('input[name=status_token]:checked').val();
@@ -406,28 +214,8 @@ function get_filtered_token(data){
 }
 
 
-function get_stok(){
-  $.ajax({
-    url:base_url+"token/ajax_get_stock",
-    type:"POST",
-    dataType:"json",
-    success:function(data, key){
-      $.each(data, function(key, value){
-        $("."+key).html("Stok : "+value);
-        $('input[name='+key+']').val(value);
-      });
-    },error:function(){
-      swal('Gagal mengirim Token');
-    }
-  });
-}
-
-
 function reload(){
-  get_stok();
   dataTableToken.ajax.reload(null,false); 
-  dataTableSiswa.ajax.reload(null,false); 
-  dataRekapToken.ajax.reload(null,false); 
 }
 
 
@@ -450,8 +238,8 @@ function drop_token(data){
       type:"POST",
       url:url,
       success:function(){
-        swal("Terhapus!", "Token berhasil dihapus.", "success");
-        dataRekapToken.ajax.reload(null,false)
+        swal("Terhapus!", "Token berhasil dihapusss.", "success");
+        reload();
       },
       error:function(){
         sweetAlert("Oops...", "Data gagal terhapus!", "error");
@@ -493,15 +281,4 @@ function update_token(data){
   });
 }
 
-
-
-$('[name="checkall"]:checkbox').click(function () {
- if($(this).attr("checked")){
-  $('table.daftarsiswa tbody input:checkbox').prop( "checked", true );
-} else{ 
-  $('table.daftarsiswa tbody input:checkbox').prop( "checked", false );
-}
-});
-
-get_stok();
 </script>

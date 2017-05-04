@@ -10,10 +10,23 @@ class Token extends MX_Controller {
 		$this->load->library('parser');
 		$this->load->model('token_model');
 		$this->load->model('siswa/msiswa');
-         $this->load->library('sessionchecker');
-        $this->sessionchecker->checkloggedin();
+		$this->load->library('sessionchecker');
+		$this->load->library('pagination');
+    $this->sessionchecker->checkloggedin();
 		$this->load->helper('string');
 		$this->hakakses = $this->gethakakses();
+	}
+
+	public function index(){
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Token",
+			);
+
+		$data['files'] = array(
+			APPPATH . 'modules/token/views/v-daftar-token2.php',
+			);
+		// var_dump($data['dataToken']);
+		$this->loadparser($data);
 	}
 
 	//GET HAK AKSES
@@ -32,18 +45,6 @@ class Token extends MX_Controller {
 		}
 	}
 	// LOAD PARSER SESUAI HAK AKSES
-
-	public function index(){
-		$data = array(
-			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Token",
-			);
-
-		$data['files'] = array(
-			APPPATH . 'modules/token/views/v-daftar-token.php',
-			);
-		// var_dump($data['dataToken']);
-		$this->loadparser($data);
-	}
 
 
 	function ajax_data_token($data="all", $status=""){
@@ -276,4 +277,105 @@ class Token extends MX_Controller {
 			$this->token_model->update_token($post);
 		}
 	}
+
+
+	public function daftarToken()
+	{
+		$data = array(
+			'judul_halaman' => 'Dashboard '.$this->hakakses." - Daftar Token",
+			);
+
+		$data['files'] = array(
+			APPPATH . 'modules/token/views/v-daftar-token.php',
+			);
+		// var_dump($data['dataToken']);
+		$this->loadparser($data);
+	}
+
+	public function ajaxLisToken($dataToken="all", $status="",$page="")
+    {
+      // code u/pagination
+     	$this->load->database();
+      $jumlah_data = $this->token_model->jumlah_data_token();
+     
+      $config['base_url'] = base_url().'index.php/token/ajaxLisToken/';
+      $config['total_rows'] = $jumlah_data;
+      $config['per_page'] = 10;
+
+      // Start Customizing the “Digit” Link
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
+      // end  Customizing the “Digit” Link
+      
+      // Start Customizing the “Current Page” Link
+      $config['cur_tag_open'] = '<li><a><b>';
+      $config['cur_tag_close'] = '</b></a></li>';
+      // END Customizing the “Current Page” Link
+
+      // Start Customizing the “Previous” Link
+      $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+      $config['prev_tag_open'] = '<li>';
+      $config['prev_tag_close'] = '</li>';
+       // END Customizing the “Previous” Link
+
+      // Start Customizing the “Next” Link
+      $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+      $config['next_tag_open'] = '<li>';
+      $config['next_tag_close'] = '</li>';
+       // END Customizing the “Next” Link
+
+      // Start Customizing the first_link Link
+      $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+      $config['first_tag_open'] = '<li>';
+      $config['first_tag_close'] = '</li>';
+       // END Customizing the first_link Link
+
+      // Start Customizing the last_link Link
+      $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+      $config['last_tag_open'] = '<li>';
+      $config['last_tag_close'] = '</li>';
+       // END Customizing the last_link Link
+      
+      $this->pagination->initialize($config);     
+      $list = $this->token_model->data_token($config['per_page'],$page);
+      //cacah data 
+      foreach ( $list as $token_item ) {
+      	$row = array();
+      	$row[] = $token_item->tokenid;
+      	$row[] = $token_item->nomorToken;
+
+      	$row[] = $token_item->masaAktif." Hari";
+      	
+      		if ($token_item->siswaID == NULL) {
+				$row[] = "Belum Digunakan";
+			}else{
+				$row[] = $token_item->namaDepan." ".$token_item->namaBelakang;
+			}
+      	
+      	$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->tokenid."'".')"><i class="ico-remove"></i></a>';
+      	$data[] = $row;
+      }
+
+      $output = array(
+      	"data"=>$data,
+      	);
+
+      echo json_encode( $output );
+    }
+    //page adalah variabel untuk menampung jumlah record yg akan di tampilkan pada satu halaman
+    public function paginationToken($dataToken="all",$page=10)
+    {
+    	 $jumlah_data = $this->token_model->jumlah_data_token();
+    	 $pagination='';
+    	 $pagePagination=1;
+
+    	 $sumPagination=($jumlah_data/$page);
+    	
+    	 for ($i=0; $i < $sumPagination; $i++) { 
+    	 	
+    	 	$pagination.='<li><a href="javascript:void(0)" onclick="nextPage('.$i.')">'.$pagePagination.'</a></li>';
+    	 	$pagePagination++;
+    	 }
+    	 echo json_encode ($pagination);
+    }
 }
