@@ -15,7 +15,7 @@
  	// get general data guru by pengguna ID
  	public function get_datguru($penggunaID)
  	{
- 		$this->db->select('namaDepan,namaBelakang,photo,mataPelajaranID');
+ 		$this->db->select('namaDepan,namaBelakang,photo');
  		$this->db->from('tb_pengguna user');
  		$this->db->join('tb_guru guru','user.id=guru.penggunaID');
  		$this->db->where('guru.penggunaID',$penggunaID);
@@ -93,10 +93,9 @@
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 				`isiPertanyaan`, `pertanyaan`.`date_created`, 
-				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+				`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
 		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
-		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
-		$this->db->join('`tb_bab` `bab`','`subbab`.`babID` = `bab`.`id`');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
 		$this->db->where('`tp`.`mataPelajaranID`',$mataPelajaranID)->order_by('`pertanyaan`.`id`','desc');
@@ -118,9 +117,10 @@
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 				`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 				`isiPertanyaan`, `pertanyaan`.`date_created`, 
-				`subbab`.`judulSubBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
+				`bab`.`judulBab`,(SELECT COUNT(id) FROM `tb_k_jawab`  WHERE pertanyaanID = pertanyaan.id) AS jumlah');
 		$this->db->FROM('`tb_k_pertanyaan` `pertanyaan`');
-		$this->db->join('`tb_subbab` `subbab`','`pertanyaan`.`subBabID` = `subbab`.`id`');
+		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
+
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
 		$this->db->order_by('`pertanyaan`.`id`','desc');
 		 $query = $this->db->get();

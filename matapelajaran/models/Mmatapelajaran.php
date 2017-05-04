@@ -38,7 +38,7 @@ class Mmatapelajaran extends CI_Model {
 
         $this->db->from('tb_tingkat-pelajaran tp');
 
-                $this->db->join('tb_bab bab', 'bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_bab bab', 'bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab sub','sub.babID=bab.id');
         $this->db->join('tb_video video','video.subBabID=sub.id');
 
@@ -68,7 +68,7 @@ class Mmatapelajaran extends CI_Model {
 
         $this->db->from('tb_tingkat-pelajaran tp');
 
-                $this->db->join('tb_bab bab', 'bab.tingkatPelajaranID=tp.id');
+        $this->db->join('tb_bab bab', 'bab.tingkatPelajaranID=tp.id');
         $this->db->join('tb_subbab sub','sub.babID=bab.id');
         $this->db->join('tb_video video','video.subBabID=sub.id');
 
@@ -393,6 +393,14 @@ class Mmatapelajaran extends CI_Model {
         return $query->result_array();
     }
 
+    function get_mapel_by_guruID($id_guru){
+        $this->db->select('namaMataPelajaran,mapelID');
+        $this->db->from("(SELECT * FROM `tb_mm-gurumapel` WHERE guruID = $id_guru) AS mapel");
+        $this->db->JOIN('tb_mata-pelajaran mp', 'mp.id = mapel.mapelID');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     function get_bab_by_tingpelID($id_tingkat_pelajaran){
         $this->db->select('bab.id as babID, judulBab');
         $this->db->from('tb_bab bab');
@@ -417,6 +425,16 @@ class Mmatapelajaran extends CI_Model {
         ON mapel.`id` = `tingkatpel`.`mataPelajaranID`";
         $result = $this->db->query($query);
         return $result->result_array();
+    }
+
+    function get_bab_by_mapel($id_mapel){
+        $this->db->select('b.id, b.judulBab');
+        $this->db->from('(SELECT * FROM `tb_mata-pelajaran` m WHERE m.id = '.$id_mapel.') AS mapel');
+        $this->db->JOIN('`tb_tingkat-pelajaran` t','t.mataPelajaranID = mapel.id');
+        $this->db->JOIN('tb_bab b','b.tingkatPelajaranID = t.id');
+        $query = $this->db->get();
+        return $query->result_array();
+
     }
 
 }

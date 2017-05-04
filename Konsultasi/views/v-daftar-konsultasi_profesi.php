@@ -1,4 +1,3 @@
-
  <style type="text/css">
  	.komen {
  		width:80%;
@@ -108,9 +107,9 @@
  							<div class="grid-col-row clear-fix">
  								<div class="grid-col grid-col-4">
  									<select name="" id="" onchange="location = this.value";>
- 										<option value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Seprofesi</option>
- 										<option selected value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
- 										<option value="<?=base_url('konsultasi/pertanyaan_pada_mentor')?>">Pertanyaan Pada Anda</option>
+ 										<option selected value="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"  class="center-text">Pertanyaan Seprofesi</option>
+ 										<option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
+ 										<option value="<?=base_url('konsultasi/pertanyaan_pada_mentor')?>r">Pertanyaan Pada Anda</option>
  									</select>
  								</div>
  								<div class="grid-col grid-col-4">
@@ -121,7 +120,7 @@
  								</div>
 
  								<div class="grid-col grid-col-1">
- 									<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_all') ?>"><i class="fa fa-times"></i> Reset</a>
+ 									<a class="cws-button bt-color-3 icon-left smaller" href="<?=base_url('konsultasi/pertanyaan_seprofesi') ?>"><i class="fa fa-times"></i> Reset</a>
  								</div>
  							</div>
  						</form>
@@ -163,9 +162,9 @@
  									</div>
 
  									<div style="text-align: right">
- 										<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
+ 										<a href="<?=base_url('konsultasi/pertanyaan_seprofesi/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/all') ?>">
  											<i class="fa fa-tag"></i> <?=$question['namaMataPelajaran'] ?></a> |
- 											<a href="<?=base_url('konsultasi/filter/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
+ 											<a href="<?=base_url('konsultasi/pertanyaan_seprofesi/'.str_replace(' ', '_', $question['namaMataPelajaran']).'/'.str_replace(' ', '_', $question['judulBab'])) ?>">
  												<i class="fa fa-puzzle-piece"></i> <?=$question['judulBab'] ?></a> |
  												<span><i class="fa fa-pencil"></i> <?=$question['jumlah'] ?></span> |
  												<?php if (!empty($question['namaGuru'])): ?>
