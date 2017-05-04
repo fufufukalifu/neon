@@ -13,20 +13,9 @@ class Toback extends MX_Controller{
 		$this->load->model('siswa/msiswa');
 		$this->load->model('templating/mtemplating');
 		parent::__construct();
+		        $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
 
-		if ($this->session->userdata('loggedin')==true) {
-			if ($this->session->userdata('HAKAKSES')=='siswa'){
-				redirect('welcome');
-			}else if($this->session->userdata('HAKAKSES')=='guru'){
-               // redirect('guru/dashboard');
-			}else if($this->session->userdata('HAKAKSES')=='admin'){
-               // redirect('guru/dashboard');
-			}else if($this->session->userdata('HAKAKSES')=='admin_cabang'){
-
-			}else{
-				redirect('login');
-			}
-		}
 	}
 
 	#START Function buat TO#
@@ -235,6 +224,7 @@ class Toback extends MX_Controller{
 			$row = array();
 			$row[] = $no;
 			$row[] = $list_siswa ['namaDepan'].' '.$list_siswa ['namaBelakang'];
+			$row[] = $list_siswa ['namaCabang'];
 			$row[] = $list_siswa['aliasTingkat'];
 			$row[] = '
 			<a class="btn btn-sm btn-danger"  title="Hapus" onclick="dropSiswa('."'".$list_siswa['idKey']."'".')"><i class="ico-remove"></i></a>';

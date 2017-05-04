@@ -15,6 +15,8 @@ class Learningline extends MX_Controller {
 		$this->load->model('latihan/mlatihan');
 		$this->load->model('video/mvideos');
 		$this->load->model('komenback/mkomen');
+		    $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
 
 		$this->hakakses = $this->gethakakses();
 	}
@@ -38,8 +40,6 @@ class Learningline extends MX_Controller {
 	        $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
 	        //
 			$this->parser->parse('templating/index-b-guru', $data);
-		}else{
-			echo "forbidden access";    		
 		}
 	}
 	// LOAD PARSER SESUAI HAK AKSES

@@ -43,7 +43,7 @@
    <!-- Start Panel Body ALL -->
    <div class="panel-body">
      <!-- END LIST paket n siswa yang sudah dia ADD -->
-     <div class="col-md-6">
+     <div class="col-md-12">
       <div class="panel panel-teal">
        <div class="panel-heading">
         <h3 class="panel-title">Daftar Yang Akan DI Tambahkan Ke Try</h3>
@@ -149,7 +149,7 @@
 <!--END LIST PAKET dan SISWA -->
 <!-- ########################################### -->
 <!-- START LIST paket n siswa yang sudah dia ADD -->
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="panel panel-teal">
    <div class="panel-heading">
     <h3 class="panel-title">Daftar Soal</h3>
@@ -204,12 +204,21 @@
        <tr>
         <th>ID</th>
         <th>Nama</th>
+        <th>Cabang</th>
         <th>Tingkat</th>
         <th>Aksi</th>
       </tr>
     </thead>
     <tbody>
     </tbody>
+     <tfoot>
+   <th><input class="form-control" type="text" placeholder="ID" /></th>
+   <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+   <th><input class="form-control" type="text" placeholder="Cabang" /></th>
+    <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
+     <th>Aksi</th>
+ </tfoot>
+ </tfoot>
   </table>
 </form>
 <!-- END TABEL SISWA YG SUDAH DI ADD  -->
@@ -308,7 +317,17 @@
             }
           } );
         } );
-      });
+        tblist_siswaAdd.columns().every( function () {
+          var that = this;
+          $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+              that
+              .search( this.value )
+              .draw();
+            }
+          } );
+        } );
+    });
 
     function reload_tblist(){
      tblist_siswaAdd.ajax.reload(null,false);

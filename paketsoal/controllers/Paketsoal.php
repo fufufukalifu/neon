@@ -14,6 +14,8 @@ class paketsoal extends MX_Controller
 		$this->load->library( 'form_validation' );
 		$this->load->helper( array( 'form', 'url' ) );
 		$this->load->model('templating/mtemplating');
+		        $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
 		parent::__construct();
 		if ($this->session->userdata('loggedin')==true) {
 			if ($this->session->userdata('HAKAKSES')=='siswa'){

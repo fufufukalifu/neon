@@ -9,8 +9,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  	function __construct()
  	{
  		$this->load->model('Mlinetopik');
- 		 $this->load->library('parser');
-         $this->load->model('tesonline/mtesonline');
+ 		$this->load->library('parser');
+        $this->load->model('tesonline/mtesonline');
+        $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
+        $this->sessionchecker->cek_token();
+        
  	}
 
  	public function index()

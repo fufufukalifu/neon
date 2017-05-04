@@ -10,6 +10,8 @@ class Materi extends MX_Controller
 		parent::__construct();
 		$this->load->model('Mmateri');
 		$this->load->library('parser');
+		    $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
 	}
 
 	// Menampilkan form materi

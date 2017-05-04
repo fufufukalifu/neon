@@ -11,6 +11,8 @@ class Komenback extends MX_Controller
    $this->load->model('video/mvideos');
    $this->load->model('guru/mguru');
    $this->load->library('generateavatar');
+       $this->load->library('sessionchecker');
+         $this->sessionchecker->checkloggedin();
 
  }
 

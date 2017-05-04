@@ -36,10 +36,13 @@ class Video extends MX_Controller {
         $this->load->model('guru/mguru');
         $this->load->model('komenback/mkomen');
         $this->load->library('parser');
-        $this->load->library('sessionchecker');
                 $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
          $this->load->library('generateavatar');
+        $this->load->library('sessionchecker');
+        //cek login
+        $this->sessionchecker->checkloggedin();
+        $this->sessionchecker->cek_token();
     // 
     }
 

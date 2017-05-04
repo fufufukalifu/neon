@@ -1,7 +1,7 @@
 <?php
 //============================================================+
 // File name   : v-list-siswa.php
-// Begin       : 2017-03-08
+// Begin       : 2017-05-02
 // Last Update : -
 //
 // Description : List pagination siswa
@@ -17,7 +17,7 @@
 
 /**
  * @author MrBebek
- * @since  2017-03-08
+ * @since  2017-05-02
  */
 
  ?>
@@ -199,5 +199,38 @@ function resetPassword(idpengguna){
     });
   });
 }
+
+function resetSandi(penggunaID='',namaPengguna='') {
+         url = base_url + "index.php/guru/resetPassword/";
+         var data;
+      swal({
+        title: "Yakin akan me-reset katasandi "+namaPengguna+"?",
+        text: "Anda tidak dapat membatalkan ini.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya,Tetap me-reset katasandi!",
+        closeOnConfirm: false
+      },
+      function(){
+        var datas = {penggunaID:penggunaID,
+                                    namaPengguna:namaPengguna};
+        $.ajax({
+          dataType:"text",
+          data:datas,
+          type:"POST",
+          url:url,
+          success:function(data){
+
+            swal("kata sandi baru : [namaPengguna]+[tgl sekarang] !", "Katasandi Baru = "+data, "success");
+           // window.location.href =base_url+"videoback/daftarvideo";
+          },
+          error:function(){
+            sweetAlert("Oops...", "Ktasandi gagal di reset!", "error");
+          }
+
+        });
+      });
+    }
 
 </script>

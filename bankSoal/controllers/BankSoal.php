@@ -31,7 +31,10 @@ class Banksoal extends MX_Controller {
         $this->load->model('templating/Mtemplating');
         $this->load->model('komenback/mkomen');
         $this->load->library('parser');
-         $this->load->library('pagination');
+        $this->load->library('pagination');
+        $this->load->library('sessionchecker');
+        //cek login
+        $this->sessionchecker->checkloggedin();
     }
 
     public function index() {

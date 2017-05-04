@@ -230,8 +230,10 @@ label:hover{ /* HIDE RADIO */
 
 
              <div class="col-md-11">
-               <?php if (!empty($key['gambar'])) { ?>       
-               <img src="<?= base_url('./assets/image/soal/' . $key['gambar']) ?>">   
+             <?php $gambar=$key['gambar']; ?>
+               <?php if (!empty($gambar) && $gambar!="" && $gambar!=' ') { ?>  
+
+               <img src="<?= base_url('./assets/image/soal/' . $gambar) ?>">   
                <?php } ?>
 
                <h5><?= $key['soal'] ?></h5>

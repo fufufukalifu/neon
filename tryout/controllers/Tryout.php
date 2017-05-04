@@ -12,21 +12,9 @@ class Tryout extends MX_Controller {
         $this->load->model('tesonline/Mtesonline');
         parent::__construct();
         $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
         $this->sessionchecker->cek_token();
 
-        # check session
-        if ($this->session->userdata('loggedin') == true) {
-            if ($this->session->userdata('HAKAKSES') == 'siswa') {
-
-            } else if ($this->session->userdata('HAKAKSES') == 'guru') {
-                redirect('guru/dashboard');
-            } else {
-                redirect('login');
-            }
-        } else {
-            redirect('login');
-        }
-        ##
     }
 
     public function ajax_get_paket($id_tryout) {
