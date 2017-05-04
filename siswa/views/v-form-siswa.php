@@ -335,7 +335,7 @@ $('select[name=bimbel]').change(function(){
 <script type="text/javascript">
   function loadTingkat() {
   $(document).ready(function () {
-    console.log("ss");
+    
     var tingkat_id = {"tingkat_id": $('#tingkatSekolah').val()};
         var idTingkat;
     $.ajax({

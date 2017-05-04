@@ -223,6 +223,7 @@ class Toback extends MX_Controller{
 			// $no++;
 			$row = array();
 			$row[] = $no;
+			$row[] = $list_siswa ['namaPengguna'];
 			$row[] = $list_siswa ['namaDepan'].' '.$list_siswa ['namaBelakang'];
 			$row[] = $list_siswa ['namaCabang'];
 			$row[] = $list_siswa['aliasTingkat'];
@@ -506,6 +507,7 @@ class Toback extends MX_Controller{
 			$row = array();
 			$row[] = "<input type='checkbox' value=".$list_siswa['id']." >";
 			$row[] = $no;
+			$row[] = $list_siswa ['namaPengguna'];
 			$row[] = $list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'];
 			if($list_siswa['namaCabang']!=null){
 				$row[] = $list_siswa['namaCabang'];

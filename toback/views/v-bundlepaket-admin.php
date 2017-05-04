@@ -103,7 +103,8 @@
     <tr>
      <th width="10%"><input type="checkbox" name="checkall_siswa"></th>
      <th>No</th>
-     <th>Nama Lengkap</th>
+     <th>Nama Pengguna</th>
+     <th>Nama Siswa</th>
      <th>Cabang</th>
      <th>Tingkat</th>
    </tr>
@@ -113,8 +114,9 @@
  </tbody>
  <tfoot>
    <th><i class="ico-search2 text-center"></i></th>
-   <th><input class="form-control" type="text" placeholder="ID" /></th>
-   <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+   <th><input class="form-control" type="text" placeholder="No" /></th>
+   <th><input class="form-control" type="text" placeholder="Nama Pengguna" /></th>
+   <th><input class="form-control" type="text" placeholder="Nama Siswa" /></th>
    <th><input class="form-control" type="text" placeholder="Cabang" /></th>
     <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
  </tfoot>
@@ -243,7 +245,8 @@
       <thead>
        <tr>
         <th>No</th>
-        <th>Nama</th>
+        <th>Nama Pengguna</th>
+        <th>Nama Siswa</th>
         <th>Cabang</th>
         <th>Tingkat</th>
         <th>Aksi</th>
@@ -254,8 +257,9 @@
 
     </tbody>
     <tfoot>
-     <th><input class="form-control" type="text" placeholder="ID" /></th>
-     <th><input class="form-control" type="text" placeholder="Nama Lengkap Siswa" /></th>
+     <th><input class="form-control" type="text" placeholder="No" /></th>
+     <th><input class="form-control" type="text" placeholder="Nama Pengguna" /></th>
+     <th><input class="form-control" type="text" placeholder="Nama Siswa" /></th>
      <th><input class="form-control" type="text" placeholder="Cabang" /></th>
      <th><input class="form-control" type="text" placeholder="Tingkat" /></th>
      <th>Aksi</th>
