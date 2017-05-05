@@ -140,10 +140,13 @@
 								<li>
 									<a href="#">Hallo <?= $this->session->userdata['NAMASISWA']?> </a>
 									<ul>
+									<?php if ($this->session->userdata('HAKAKSES')=='guru'): ?>
+										<li><a href="<?=base_url('guru/dashboard') ?>">Dashboard</a></li>
+									<?php else: ?>
 										<li><a href="<?=base_url('siswa') ?>">Dashboard</a></li>
+									<?php endif ?>	
 										<li><a href="<?=base_url('siswa/profilesetting') ?>">Pengaturan Profil</a></li>
 										<li><a href="<?=base_url('logout') ?>">Logout</a></li>
-
 									</ul>
 								</li>
 

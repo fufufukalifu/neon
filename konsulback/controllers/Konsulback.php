@@ -15,9 +15,9 @@
     $this->load->model('tryout/mtryout');
     $this->load->model('tingkat/mtingkat');
     $this->load->model('matapelajaran/mmatapelajaran');
- $this->load->model('komenback/mkomen');
-          $this->load->library('sessionchecker');
-         $this->sessionchecker->checkloggedin();
+    $this->load->model('komenback/mkomen');
+    $this->load->library('sessionchecker');
+    $this->sessionchecker->checkloggedin();
   }
     //history di guru 
   public function myhistory()
@@ -41,8 +41,15 @@
     $data['poin']=$tamppoin;
       //get data komen untuk tabel histrori komen
     $data['komen']=$this->Mkonsulback->get_komen_love($penggunaID);
+    
 
-         #START cek hakakses#
+    // get data untuk pertanyaan yang ditujukan pada guru tersebut.
+    $id_guru = 37;
+    $jumlah_postingan = $this->mkonsultasi->get_pertanyaan_punya_mentor_number_search($id_guru,$key='');
+    $data['question_to_teacher']=$this->mkonsultasi->get_pertanyaan_punya_mentor($id_guru,'all','all',0,$jumlah_postingan);
+
+    // print_r($data['question_to_teacher']);
+    #START cek hakakses#
     $hakAkses=$this->session->userdata['HAKAKSES'];
     if ($hakAkses=='admin') {
          // jika admin
@@ -167,14 +174,14 @@
 
 
   //## Notification komen video
-  $data['datKomen']=$this->datKomen();
-     $id_guru = $this->session->userdata['id_guru'];
+    $data['datKomen']=$this->datKomen();
+    $id_guru = $this->session->userdata['id_guru'];
   // get jumlah komen yg belum di baca
-  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+    $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
   //## Notification komen video
 
     $this->parser->parse('templating/index-b-guru', $data);
-  
+
 
 
 
@@ -403,15 +410,15 @@ public function konsultasi($id_pertanyaan)
   );
 
 
-  if ($this->hakakses=='admin') {
+ if ($this->hakakses=='admin') {
 
-     redirect('login');
-  }else if($this->hakakses=='guru'){
-     $id_guru = $this->session->userdata['id_guru'];
+   redirect('login');
+ }else if($this->hakakses=='guru'){
+   $id_guru = $this->session->userdata['id_guru'];
   // get jumlah komen yg belum di baca
-  $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-    $this->parser->parse('templating/index-b-guru', $data);
-  }
+   $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+   $this->parser->parse('templating/index-b-guru', $data);
+ }
 
 }
 
@@ -469,16 +476,16 @@ function ajax_add_point($id_jawaban){
 
 }
 // get data komen not read
-  public function datKomen()
-  {
-      $hakAkses = $this->session->userdata['HAKAKSES'];
-      if ($hakAkses == 'admin') {
-          $listKomen = $this->mkomen->get_all_komen();
-      }else{
-        $id_guru = $this->session->userdata['id_guru'];
-         $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
-      }
-
-      return $listKomen;
+public function datKomen()
+{
+  $hakAkses = $this->session->userdata['HAKAKSES'];
+  if ($hakAkses == 'admin') {
+    $listKomen = $this->mkomen->get_all_komen();
+  }else{
+    $id_guru = $this->session->userdata['id_guru'];
+    $listKomen = $this->mkomen->get_komen_by_profesi_notread($id_guru);
   }
+
+  return $listKomen;
+}
 } ?>
