@@ -776,11 +776,17 @@ public function filter($matapelajaran='',$bab=''){
     $this->pagination->initialize($config);
   ##KONFIGURASI UNTUUK PAGINATION
 
-    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+    // $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
 
   // pertanyaan saya.
     $data['my_questions']=$this->mkonsultasi->get_all_questions_filter($bab, $matapelajaran,$config["per_page"],$page);
-
+  $hakAkses = $this->session->userdata('HAKAKSES');
+    
+    if ($hakAkses=='guru') {
+      $data['mapel'] = $this->mmatapelajaran->get_mapel_by_guruID(37);      
+    }else{
+      $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());     
+    }
     $data["links"] = $this->pagination->create_links();
     $data['jumlah_postingan'] = $config['total_rows'];
 
