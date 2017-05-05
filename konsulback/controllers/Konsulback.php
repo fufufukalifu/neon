@@ -52,9 +52,9 @@
         //## Notification komen video
       $data['datKomen']=$this->datKomen();
       $id_guru = $this->session->userdata['id_guru'];
-  // get jumlah komen yg belum di baca
+      // get jumlah komen yg belum di baca
       $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-  //## Notification komen videosss
+      s//## Notification komen videosss
       $this->parser->parse('templating/index-b-guru', $data);
     }else{
         // jika siswa redirect ke welcome
