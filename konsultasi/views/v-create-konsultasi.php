@@ -81,56 +81,56 @@
 							<div class="col-sm-8">
 
 								<label >Kepada Mentor ? :
-								<?php if (empty($mentornya)): ?> <span class="text-danger">Anda belum memiliki mentor</small><?php endif ?></label>
-								<select class="form-control" name="mentor">
-									<option value="NULL">- Tidak -</option>
-									<?php if (!empty($mentornya)): ?>
-										<option value="<?=$mentornya['guruID'] ?>"><?=$mentornya['namaDepan']." ".$mentornya['namaBelakang'] ?></option>
-									<?php endif ?>
-								</select>
-								<br>
-								Judul Pertanyaan
-								<input name="namaPertanyaan" type="text" value="" size="30" aria-required="true" class="col-sm-10"> 
-								<input type="hidden" name="idsub" value="{idsub}">
-							</div>
-							<div class="col-sm-4"><br><br><br><br>
-								<a onclick="show_image()" class="cws-button bt-color-3 alt smalls" style="margin-top: 10px">Lihat Gambar</a>
-							</div>
-						</div>
-						<div class="col-sm-12">
-
-
-
-							<br>
-							Isi Pertanyaan :
-							<textarea  name="editor1" class="form-control" id="isi"></textarea>
-							<br>
-							<form action="<?=base_url('konsultasi/do_upload') ?>" method="post" enctype="multipart/form-data" id="form-gambar">
-								Upload Gambar : 
-								<input type="file" class="cws-button bt-color-3 alt smalls post" name="file" style="display: inline">
-
-								<a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
-								<div id="output" style="display: inline">
-									<a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+									<?php if (empty($mentornya)): ?> <span class="text-danger">Anda belum memiliki mentor</small><?php endif ?></label>
+									<select class="form-control" name="mentor">
+										<option value="NULL">- Tidak -</option>
+										<?php if (!empty($mentornya)): ?>
+											<option value="<?=$mentornya['guruID'] ?>"><?=$mentornya['namaDepan']." ".$mentornya['namaBelakang'] ?></option>
+										<?php endif ?>
+									</select>
+									<br>
+									Judul Pertanyaan
+									<input name="namaPertanyaan" type="text" value="" size="30" aria-required="true" class="col-sm-10"> 
+									<input type="hidden" name="idsub" value="{idsub}">
 								</div>
+								<div class="col-sm-4"><br><br><br><br>
+									<a onclick="show_image()" class="cws-button bt-color-3 alt smalls" style="margin-top: 10px">Lihat Gambar</a>
+								</div>
+							</div>
+							<div class="col-sm-12">
 
-								
-								<input type="submit" class="fa fa-cloud-upload submit-upload" style="margin-top: 3px;display: none" value="Upload">							
-							</a>
-						</form>
-						<br>
-						<a class="cws-button bt-color-3 alt smalls" onclick="preview()">Preview</a> 
-						<a onclick="save()" class="cws-button bt-color-3 alt smalls post">Post</a>
-						<br>
-						<br>
-						<hr>
+
+
+								<br>
+								Isi Pertanyaan :
+								<textarea  name="editor1" class="form-control" id="isi"></textarea>
+								<br>
+								<form action="<?=base_url('konsultasi/do_upload') ?>" method="post" enctype="multipart/form-data" id="form-gambar">
+									Upload Gambar : 
+									<input type="file" class="cws-button bt-color-3 alt smalls post" name="file" style="display: inline">
+
+									<a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
+									<div id="output" style="display: inline">
+										<a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+									</div>
+
+
+									<input type="submit" class="fa fa-cloud-upload submit-upload" style="margin-top: 3px;display: none" value="Upload">							
+								</a>
+							</form>
+							<br>
+							<a class="cws-button bt-color-3 alt smalls" onclick="preview()">Preview</a> 
+							<a onclick="save()" class="cws-button bt-color-3 alt smalls post">Post</a>
+							<br>
+							<br>
+							<hr>
+						</div>
+
 					</div>
-
 				</div>
 			</div>
-		</div>
-	</section>
-</div>
+		</section>
+	</div>
 </main>
 <!-- UPLOAD -->
 <script type="text/javascript"> 
@@ -195,6 +195,8 @@
 
 	
 </script>
+<script src="http://macyjs.com/assets/js/macy.min.js"></script>
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 <!-- UPLOAD -->
 <script>
 	var ckeditor = CKEDITOR.replace( 'editor1' );
@@ -223,29 +225,39 @@
 
 	function save(){
 		var desc = ckeditor.getData();
-		var data = {
+		var datas = {
 			namapertanyaan : $('input[name=namaPertanyaan]').val(),
 			isi : desc+"<br>",
 			bab : $('input[name=babid]').val(),
 			mentorID:$('select[name=mentor]').val()
 		}
 
-		console.log(data);
+		console.log(datas);
 
-		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
+		if (datas.namapertanyaan == "" || datas.namapertanyaan == "") {
 			$('#info').show();
 		}else{
 			url = base_url+"konsultasi/ajax_add_konsultasi/";
 			$.ajax({
 				url : url,
 				type: "POST",
-				data: data,
+				data: datas,
 				dataType: "TEXT",
 				success: function(data)
 				{
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
-                window.location = base_url+"konsultasi/pertanyaan_all";
+                // window.location = base_url+"konsultasi/pertanyaan_all";
+                console.log(data);
+                // Try to connect io
+                var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
+                // throw value to server
+                socket.emit('create_pertanyaan', {
+                	data
+                }
+                );
+
             },
             error: function (jqXHR, textStatus, errorThrown)
             {

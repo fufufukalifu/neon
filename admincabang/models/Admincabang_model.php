@@ -51,6 +51,8 @@ class Admincabang_model extends CI_model {
 		if ($data['paket']!="all") {
 			$this->db->where('mmto.id_paket', $data['paket']);
 		}
+
+		$this->db->where('pk.`tgl_pengerjaan >=','2017-04-15');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -222,6 +224,7 @@ class Admincabang_model extends CI_model {
 		if ($data['paket']!="all") {
 			$this->db->where('mmto.id_paket', $data['paket']);
 		}	
+		$this->db->where('pk.`tgl_pengerjaan >=','2017-04-15');
 
 		$i = 0;
 

@@ -22,8 +22,8 @@
  <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
  <script type="text/javascript" src="<?=base_url('assets/plugins/owl/js/owl.carousel.min.js');?>"></script>
  <!-- socket.io -->
-<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
-<!-- /socket.io -->
+ <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+ <!-- /socket.io -->
  
  <script>var base_url = '<?php echo base_url() ?>'</script>
  <!--/ END META SECTION -->
@@ -43,12 +43,12 @@
  <!--/ Application stylesheet -->
  <!-- END STYLESHEETS -->
 
-  <link rel="stylesheet" href="<?= base_url('assets/plugins/steps/css/jquery-steps.min.css') ?>">
+ <link rel="stylesheet" href="<?= base_url('assets/plugins/steps/css/jquery-steps.min.css') ?>">
 
-<!-- css aoutocomplate -->
-<link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
-<!-- JS aoutocomplate -->
-<script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script>
+ <!-- css aoutocomplate -->
+ <link href='<?php echo base_url();?>assets/css/jquery.autocomplete.css' rel='stylesheet' />
+ <!-- JS aoutocomplate -->
+ <script type='text/javascript' src='<?php echo base_url();?>assets/js/jquery.autocomplete.js'></script>
 
  <!-- START JAVASCRIPT SECTION - Load only modernizr script here -->
  <script src="<?= base_url('assets//library/modernizr/js/modernizr.min.js') ?>"></script>
@@ -59,50 +59,50 @@
 <!-- START Body -->
 <body>
 
-<!-- sound notification -->
-<audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
-<!-- /sound notification -->
+  <!-- sound notification -->
+  <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+  <!-- /sound notification -->
 
- <!-- START Modal ADD BANK SOAL -->
- <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <h4 class="modal-title">Form Modul</h4>
-   </div>
-
-
-   <!-- Start Body modal -->
-   <div class="modal-body">
-    <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
-    <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/modulonline/filtermodul" method="post" >
-      <div  class="form-group">
-       <label class="col-sm-3 control-label">Tingkat</label>
-       <div class="col-sm-8">
-         <!-- stkt = soal tingkat -->
-         <select class="form-control gettkt" name="tingkat" id="stkt">
-           <option>-Pilih Tingkat-</option>
-         </select>
-       </div>
+  <!-- START Modal ADD BANK SOAL -->
+  <div class="modal fade" id="modalmodul" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h4 class="modal-title">Form Modul</h4>
      </div>
 
-     <div  class="form-group">
-       <label class="col-sm-3 control-label">Mata Pelajaran</label>
-       <div class="col-sm-8">
-        <select class="form-control getpel" name="mataPelajaran" id="spel">
 
-        </select>
+     <!-- Start Body modal -->
+     <div class="modal-body">
+      <!--      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/banksoal/listsoal" method="get" > -->
+      <form  class="panel panel-default form-horizontal form-bordered" action="<?=base_url();?>index.php/modulonline/filtermodul" method="post" >
+        <div  class="form-group">
+         <label class="col-sm-3 control-label">Tingkat</label>
+         <div class="col-sm-8">
+           <!-- stkt = soal tingkat -->
+           <select class="form-control gettkt" name="tingkat" id="stkt">
+             <option>-Pilih Tingkat-</option>
+           </select>
+         </div>
+       </div>
+
+       <div  class="form-group">
+         <label class="col-sm-3 control-label">Mata Pelajaran</label>
+         <div class="col-sm-8">
+          <select class="form-control getpel" name="mataPelajaran" id="spel">
+
+          </select>
+        </div>
       </div>
+
+
     </div>
-
-
-</div>
-<!-- END BODY modla-->
-<div class="modal-footer">
-  <button type="submit" id="myFormSubmit" class="btn btn-primary">Proses</button>                
-</div>
-</form> 
+    <!-- END BODY modla-->
+    <div class="modal-footer">
+      <button type="submit" id="myFormSubmit" class="btn btn-primary">Proses</button>                
+    </div>
+  </form> 
 </div><!-- /.modal-content -->
 
 </div><!-- /.modal-dialog -->
@@ -380,16 +380,16 @@
   <span class="meta">
    <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true">
    <span class="icon" id="new_count_komen">
-   <?=$count_komen; ?> 
-  
-   <i class="ico-bell"></i></span>
-   <span class="hasnotification hasnotification-danger"></span>
- </span>
-</a>
+     <?=$count_komen; ?> 
+
+     <i class="ico-bell"></i></span>
+     <span class="hasnotification hasnotification-danger"></span>
+   </span>
+ </a>
 
 
-<!-- Dropdown menu -->
-<div class="dropdown-menu" role="menu">
+ <!-- Dropdown menu -->
+ <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
    <span class="title">Notification <span class="count"></span></span>
    <span class="option text-right"><a href="javascript:void(0);">X</a></span>
@@ -401,8 +401,8 @@
 
    <!-- Message list -->
    <div class="media-list" id="message-tbody">
-  <?php 
-  foreach ($datKomen as $key ): ?>
+    <?php 
+    foreach ($datKomen as $key ): ?>
     <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
       <span class="pull-left">
         <img src="<?=base_url()?>assets\image\photo\siswa\<?=$key['siswa_photo']?>" class="media-object img-circle" alt="">
@@ -416,7 +416,7 @@
       </span>
     </a>
   <?php endforeach ?>
-    
+
 </div>
 <!--/ Message list -->
 </div>
@@ -447,7 +447,7 @@
    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
     <span class="meta">
      <span class="avatar">
-       
+
      </span>
      <span class="text hidden-xs hidden-sm pl5"><?=$this->session->userdata['NAMAGURU'];?></span>
      <span class="caret"></span>
@@ -575,11 +575,11 @@
 </a>
 <ul id="subbanksoal" class="submenu collapse ">
   <li class="submenu-header ellipsis">Sub Bank Soal</li>
-    <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
+  <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
   </a></li>
   <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
   </a></li>
-         <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
+  <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
   </a></li>
   <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
   </a></li>
@@ -738,12 +738,12 @@
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 
-   <script type="text/javascript" src="<?=base_url('assets/javascript/forms/wizard.js')?>"></script>
-    <script type="text/javascript" src="<?=base_url('assets/plugins/parsley/js/parsley.min.js')?>"></script>
-        
-        <script type="text/javascript" src="<?=base_url('assets/plugins/steps/js/jquery.steps.min.js')?>"></script>
-        
-        <script type="text/javascript" src="<?=base_url('assets/plugins/inputmask/js/inputmask.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/javascript/forms/wizard.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/plugins/parsley/js/parsley.min.js')?>"></script>
+
+<script type="text/javascript" src="<?=base_url('assets/plugins/steps/js/jquery.steps.min.js')?>"></script>
+
+<script type="text/javascript" src="<?=base_url('assets/plugins/inputmask/js/inputmask.min.js')?>"></script>
 
 <script type="text/javascript">
   jQuery(document).ready(function () {
@@ -754,10 +754,10 @@
     var obMapel ='';
     var url = "<?= base_url() ?>index.php/guru/ajax_mapelID";
 
-      socket.on( 'new_komen', function( data ) {
-          var userID = data.userID;
-          var mapelID = data.mapelID;
-          var photo = data.photo; 
+    socket.on( 'new_komen', function( data ) {
+      var userID = data.userID;
+      var mapelID = data.mapelID;
+      var photo = data.photo; 
           //ajax untuk get data mapelid guru
           $.ajax({
             url:url,
@@ -782,7 +782,21 @@
             },              
           });
           
-      });
+        });
+
+    socket.on('create_pertanyaan', function(data){
+      obj = JSON.parse(data.data);
+      photo = base_url+"assets/image/photo/siswa/"+obj.photo;
+      status = 
+      if (data.statusRespon==0) {
+        status = 'Belum Direspon';
+      }else{
+        status = 'Sudah Direspon';        
+      }
+      $('#notif_audio')[0].play();
+      //add komen baru ke data notif id message-tbody
+      $( "#message-tbody" ).prepend(' <a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status: '+status+' </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
+    });
   });
 </script>
 
@@ -1068,13 +1082,13 @@ function filter_gallery() {
              });
              }
 
-</script>
-<!-- Cometchat -->
-<link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
-<script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
-<!--/ App and page level script -->
-<!--/ END JAVASCRIPT SECTION -->
+           </script>
+           <!-- Cometchat -->
+           <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
+           <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
+           <!--/ App and page level script -->
+           <!--/ END JAVASCRIPT SECTION -->
 
-</body>
-<!--/ END Body -->
-</html>
+         </body>
+         <!--/ END Body -->
+         </html>

@@ -941,7 +941,7 @@ class Mkonsultasi extends CI_Model
 				return $query->num_rows();					
 			}
 
-						function get_pertanyaan_punya_mentor_search($id_guru,$key,$perpage,$page){
+			function get_pertanyaan_punya_mentor_search($id_guru,$key,$perpage,$page){
 				$this->db->select('k.id AS pertanyaanID, photo, 
 					namaDepan, namaBelakang, judulPertanyaan, 
 					isiPertanyaan, k.date_created, m.namaMataPelajaran,
@@ -989,7 +989,15 @@ class Mkonsultasi extends CI_Model
 				return $query->num_rows();					
 			}
 
-
+			function get_pertanyaan_by_uid($uid){
+				$this->db->select('p.id, p.judulPertanyaan, p.isiPertanyaan,
+					CONCAT(`namaDepan`," ",`namaBelakang`) AS nama_lengkap,
+					s.`photo`,p.date_created');
+				$this->db->join("tb_siswa s","s.`id` = p.siswaID");
+				$this->db->from("(SELECT * FROM `tb_k_pertanyaan` k WHERE k.uuid='".$uid."') AS p");
+				$query = $this->db->get();   
+				return $query->result_array();
+			}
 
 
 		}

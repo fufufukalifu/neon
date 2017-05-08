@@ -256,13 +256,16 @@ function ajax_add_konsultasi(){
   $judul = $this->input->post( 'namapertanyaan' );
   $bab = $this->input->post( 'bab' );
   $mentor = $this->input->post( 'mentorID' );
+  $uid = uniqid();
+  // $uid = '590c34e70696c';
 
   if($mentor=="NULL"){
    $data = array(
     'isiPertanyaan' => $isi,
     'judulPertanyaan' => $judul,
     'babID' =>$bab,
-    'siswaID' =>$this->get_id_siswa()
+    'siswaID' =>$this->get_id_siswa(),
+    'UUID'=>$uid
     );
  }else{
    $data = array(
@@ -270,13 +273,17 @@ function ajax_add_konsultasi(){
     'judulPertanyaan' => $judul,
     'babID' =>$bab,
     'siswaID' =>$this->get_id_siswa(),
-    'mentorID'=>$mentor
+    'mentorID'=>$mentor,
+    'UUID'=>$uid
     );
  }
     // kalo ada mentornya
-
-
  $this->mkonsultasi->insert_konstulasi( $data );
+
+ // SELECT FROM TB_K BIAR BISA DI LEMPAR.
+ $data = $this->mkonsultasi->get_pertanyaan_by_uid($uid)[0];
+
+ echo json_encode($data);
 }
 
 function list_image_uploaded(){
@@ -780,7 +787,7 @@ public function filter($matapelajaran='',$bab=''){
 
   // pertanyaan saya.
     $data['my_questions']=$this->mkonsultasi->get_all_questions_filter($bab, $matapelajaran,$config["per_page"],$page);
-  $hakAkses = $this->session->userdata('HAKAKSES');
+    $hakAkses = $this->session->userdata('HAKAKSES');
     
     if ($hakAkses=='guru') {
       $data['mapel'] = $this->mmatapelajaran->get_mapel_by_guruID(37);      
@@ -1279,7 +1286,7 @@ function pertanyaan_profesi_search($key){
   // pertanyaan saya.
   $data['my_questions']=$this->mkonsultasi->get_pertanyaan_seprofesi_search($key,$id_guru,$config['per_page'],$page);
   $data['jumlah_postingan'] = $config["total_rows"];
- 
+
   $hakAkses = $this->session->userdata('HAKAKSES');
   if ($hakAkses=='guru') {
     $data['mapel'] = $this->mmatapelajaran->get_mapel_by_guruID(37);      
