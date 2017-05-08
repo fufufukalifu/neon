@@ -255,6 +255,8 @@ class Mkonsultasi extends CI_Model
 			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
 		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
+		// $this->db->join('`tb_tingkat` `t`','t.id = tp.tingkatID');
+
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
 		$this->db->where('`siswa`.`id`', $id_siswa )->order_by('`pertanyaan`.`id`','desc');
 		
@@ -270,8 +272,6 @@ class Mkonsultasi extends CI_Model
 
 	//ambil pertanyaan yang memiliki level sama
 	function get_my_question_level($id_tingkat,$perpage,$page,$key=""){
-		
-
 		$this->db->select('`pertanyaan`.`id` AS `pertanyaanID`, `photo`, 
 			`namaDepan`, `namaBelakang`, `judulPertanyaan`, 
 			`isiPertanyaan`, `pertanyaan`.`date_created`, 
@@ -279,10 +279,10 @@ class Mkonsultasi extends CI_Model
 			(SELECT CONCAT(`namaDepan`," ",`namaBelakang`) from tb_guru where id = pertanyaan.mentorID) as namaGuru');
 		$this->db->join('`tb_bab` `bab`','`pertanyaan`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
-
+		$this->db->join('`tb_tingkat` `t`','t.id = tp.tingkatID');
 		$this->db->join('tb_mata-pelajaran mp', 'mp.id = tp.mataPelajaranID');
 		$this->db->join('`tb_siswa` `siswa`','`pertanyaan`.`siswaID` = `siswa`.`id`');
-		$this->db->where('`siswa`.`tingkatID`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
+		$this->db->where('`t`.`id`', $id_tingkat)->order_by('`pertanyaan`.`id`','desc');
 
 		if ($key==!"") {
 			$this->db->where("judulPertanyaan LIKE '%$key%' OR
@@ -318,11 +318,8 @@ class Mkonsultasi extends CI_Model
 		}
 		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`');
 
-		if ($query->result_array()==array()) {
-			return false;
-		} else {
+		
 			return $query->num_rows();
-		}
 
 	}
 
@@ -992,13 +989,22 @@ class Mkonsultasi extends CI_Model
 			function get_pertanyaan_by_uid($uid){
 				$this->db->select('p.id, p.judulPertanyaan, p.isiPertanyaan,
 					CONCAT(`namaDepan`," ",`namaBelakang`) AS nama_lengkap,
-					s.`photo`,p.date_created');
+					s.`photo`,p.date_created,statusRespon,p.mentorID');
 				$this->db->join("tb_siswa s","s.`id` = p.siswaID");
 				$this->db->from("(SELECT * FROM `tb_k_pertanyaan` k WHERE k.uuid='".$uid."') AS p");
 				$query = $this->db->get();   
 				return $query->result_array();
 			}
 
+			function get_pertanyaan_blm_direspon(){
+				$this->db->select('p.id, p.judulPertanyaan, p.isiPertanyaan,
+					CONCAT(`namaDepan`," ",`namaBelakang`) AS nama_lengkap,
+					s.`photo`,p.date_created,statusRespon,p.mentorID');
+				$this->db->join("tb_siswa s","s.`id` = p.siswaID");
+				$this->db->from("(SELECT * FROM `tb_k_pertanyaan` k WHERE k.mentorID=".$this->session->userdata('id_guru')." and k.statusRespon=0) AS p");
+				$query = $this->db->get();   
+				return $query->result_array();
+			}
 
 		}
 

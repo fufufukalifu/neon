@@ -175,7 +175,7 @@ public function pertanyaan_all() {
   $config['first_link'] = "<span title='Page Awal'> << </span>"; 
   $config['last_link'] = "<span title='Page Akhir'> >> </span>";
   $this->pagination->initialize($config);
-  $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
   ##KONFIGURASI UNTUUK PAGINATION
 
 
@@ -218,8 +218,7 @@ public function pertanyaan_grade() {
   ##KONFIGURASI UNTUUK PAGINATION
   $config = array();
   $config["base_url"] = base_url() . "konsultasi/pertanyaan_grade/";
-  $config["total_rows"] = $this->mkonsultasi->get_my_question_level_number($this->get_tingkat_siswa(),$key);
-
+  $config["total_rows"] = $this->mkonsultasi->get_my_question_level_number($this->get_tingkat_for_konsultasi_array(),$key);
   $config["per_page"] = 10;
   $config["uri_segment"] = 3;
 
@@ -231,13 +230,13 @@ public function pertanyaan_grade() {
   $config['first_link'] = "<span title='Page Awal'> << </span>"; 
   $config['last_link'] = "<span title='Page Akhir'> >> </span>";
   $this->pagination->initialize($config);
-  $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
   ##KONFIGURASI UNTUUK PAGINATION
 
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
 
   // pertanyaan saya.
-  $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$config["per_page"], $page,$key);
+  $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_for_konsultasi_array(),$config["per_page"], $page,$key);
   $data["links"] = $this->pagination->create_links();
 
   $this->parser->parse( 'templating/index', $data );
@@ -1359,5 +1358,11 @@ function pertanyaan_pada_mentor_search($key){
 
 function index(){
   $this->pertanyaan_all();
+}
+
+function jumlah_komen(){
+  $data['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
+  $data['new_count_konsultasi'] = $this->db->where('statusRespon = 0 and mentorID='.$this->session->userdata('id_guru'))->count_all_results('tb_k_pertanyaan');
+  echo json_encode($data['new_count_komen'] + $data['new_count_konsultasi']);
 }
 }

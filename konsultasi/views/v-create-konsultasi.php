@@ -232,8 +232,6 @@
 			mentorID:$('select[name=mentor]').val()
 		}
 
-		console.log(datas);
-
 		if (datas.namapertanyaan == "" || datas.namapertanyaan == "") {
 			$('#info').show();
 		}else{
@@ -247,8 +245,6 @@
 				{
                 $('.post').text('Posting..'); //change button text
                 $('.post').attr('disabled',false); //set button enable
-                // window.location = base_url+"konsultasi/pertanyaan_all";
-                console.log(data);
                 // Try to connect io
                 var socket = io.connect( 'http://'+window.location.hostname+':3000' );
 
@@ -257,13 +253,19 @@
                 	data
                 }
                 );
+                // throw value to server
 
+                // window.location = base_url+"konsultasi/pertanyaan_all";
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
             	swal('Error adding / update data');
             }
         });
+
+			// $.getJSON( base_url+"konsultasi/jumlah_komen/", function( data ) {
+			// 	console.log("jumlah"+data);
+			// });
 		}
 	}
 

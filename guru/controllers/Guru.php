@@ -12,6 +12,8 @@ class Guru extends MX_Controller {
       $this->load->model( 'mguru' );
       $this->load->model( 'video/mvideos' );
       $this->load->model( 'komenback/mkomen' );
+      $this->load->model( 'konsultasi/mkonsultasi' );
+
       $this->load->model( 'register/mregister' );
       $this->load->model('templating/mtemplating');
       $this->load->model('siswa/msiswa');
@@ -67,6 +69,7 @@ class Guru extends MX_Controller {
         #Sesudah Tempalting#
         //get data komen yg belum di baca
         $data['datKomen']=$this->datKomen();
+        $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
         $data['judul_halaman'] = "Dashboard";
         $data['files'] = array(
             APPPATH . 'modules/guru/views/v-container-video.php',
@@ -81,7 +84,9 @@ class Guru extends MX_Controller {
           //get id guru
           $id_guru = $this->session->userdata['id_guru'];
           // get jumlah komen yg belum di baca
-          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+          $data['count_konsultasi'] = count($data['konsultasi']);
+
+          $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru) + $data['count_konsultasi'];
           ## count komen
           $data["keahlian"]=$this->get_keahlianGuru($id_guru,0);
           // jika guru

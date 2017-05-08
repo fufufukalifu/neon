@@ -380,10 +380,13 @@
   <span class="meta">
    <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true">
    <span class="icon" id="new_count_komen">
-     <?=$count_komen; ?> 
-
+     <span class="jumlah_notifikasi"><?=$count_komen; ?></span>
      <i class="ico-bell"></i></span>
+
+     <!-- <?php if ($count_komen!=0): ?>
+     <?php echo $count_komen ?> -->
      <span class="hasnotification hasnotification-danger"></span>
+     <!-- <?php endif ?> -->
    </span>
  </a>
 
@@ -391,8 +394,8 @@
  <!-- Dropdown menu -->
  <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
-   <span class="title">Notification <span class="count"></span></span>
-   <span class="option text-right"><a href="javascript:void(0);">X</a></span>
+   <span class="title">Notification <?=$count_komen ?><span class="count"></span></span>
+   <span class="option text-right"><a href="javascript:void(0);" title="Close Notifikasi"><i class="ico-close3"></i></a></span>
  </div>
  <div class="dropdown-body slimscroll">
    <!-- indicator -->
@@ -401,24 +404,33 @@
 
    <!-- Message list -->
    <div class="media-list" id="message-tbody">
-    <?php 
-    foreach ($datKomen as $key ): ?>
-    <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
-      <span class="pull-left">
-        <img src="<?=base_url()?>assets\image\photo\siswa\<?=$key['siswa_photo']?>" class="media-object img-circle" alt="">
-      </span>
-      <span class="media-body">
-        <span class="media-heading"><?=$key['namaPengguna']?></span>
-        <span class="media-text ellipsis nm"><?=$key['isiKomen']?></span>
-        <!-- meta icon -->
-        <span class="media-meta pull-right"><?=$key['date_created']?></span>
-        <!--/ meta icon -->
-      </span>
-    </a>
-  <?php endforeach ?>
 
-</div>
-<!--/ Message list -->
+    <?php foreach ($datKomen as $key ): ?>
+      <a href="<?=base_url()?>komenback/seevideo/<?=$key['videoID']?>/<?=$key['UUID']?>" class="media border-dotted read">
+        <span class="pull-left">
+          <img src="<?=base_url()?>assets\image\photo\siswa\<?=$key['siswa_photo']?>" class="media-object img-circle" alt="">
+        </span>
+        <span class="media-body">
+          <span class="media-heading"><?=$key['namaPengguna']?></span>
+          <span class="media-text ellipsis nm"><?=$key['isiKomen']?></span>
+          <!-- meta icon -->
+          <span class="media-meta pull-right"><?=$key['date_created']?></span>
+          <!--/ meta icon -->
+        </span>
+      </a>
+    <?php endforeach ?>
+    <?php foreach ($konsultasi as $value ): ?>
+      <?php $photos = base_url('assets/image/photo/siswa/'.$value['photo']) ?>
+      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read"><span class="pull-left">
+        <img src='<?=$photos ?>' class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading"><?=$value['nama_lengkap'] ?></span>
+        <span class="media-text ellipsis nm"><span cla>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span>
+        <!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status Belum Direspon
+        | 
+      </span><?=$value['date_created'] ?></span><!--/ meta icon --></span></a>
+    <?php endforeach ?>
+
+  </div>
+  <!--/ Message list -->
 </div>
 </div>
 <!--/ Dropdown menu -->
@@ -749,10 +761,12 @@
   jQuery(document).ready(function () {
     var socket = io.connect( 'http://'+window.location.hostname+':3000' );
     var idPengguna=('<?=$this->session->userdata['id'];?>');
+    var idGuru = ('<?=$this->session->userdata['id_guru']?>');
     var new_count_komen = 0;
     var mapelID=8;
     var obMapel ='';
     var url = "<?= base_url() ?>index.php/guru/ajax_mapelID";
+    console.log(idGuru);
 
     socket.on( 'new_komen', function( data ) {
       var userID = data.userID;
@@ -785,18 +799,27 @@
         });
 
     socket.on('create_pertanyaan', function(data){
+      $.getJSON( base_url+"konsultasi/jumlah_komen/", function( datas ) {
+        $('.jumlah_notifikasi').text(datas)
+;      });
+
       obj = JSON.parse(data.data);
-      photo = base_url+"assets/image/photo/siswa/"+obj.photo;
-      status = 
-      if (data.statusRespon==0) {
-        status = 'Belum Direspon';
-      }else{
-        status = 'Sudah Direspon';        
-      }
-      $('#notif_audio')[0].play();
+      // cek gurunya yang dituju bukan?
+      if (obj.mentorID==idGuru) {
+        photo = base_url+"assets/image/photo/siswa/"+obj.photo;
+        status = null;
+        if (obj.statusRespon==0) {
+          status = 'Belum Direspon';
+        }else{
+          status = 'Sudah Direspon';        
+        }
+        $('#notif_audio')[0].play();
       //add komen baru ke data notif id message-tbody
-      $( "#message-tbody" ).prepend(' <a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status: '+status+' </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
-    });
+      $( "#message-tbody" ).prepend(' <a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
+    } 
+  });
+
+
   });
 </script>
 
