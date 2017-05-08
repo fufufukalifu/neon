@@ -67,7 +67,20 @@
     </div>
   </div>
   <div class="panel-body">
-    <table class="daftartoken table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+    
+    <div  class="form-group">
+      <div class="col-md-2 mb10">
+      <select  class="form-control" name="records_per_page">
+        <!-- <option value="10" selected="true">records per page</option> -->
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    </div>
+    <div>
+      <table class="daftartoken table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
       <thead>
         <tr>
           <th>id</th>
@@ -81,7 +94,8 @@
       <tbody>
 
       </tbody>
-    </table>
+      </table>
+    </div>
      <ul class="pagination pagination-token">
 
     </ul>
@@ -93,19 +107,116 @@
 <!-- TABEL TOKEN -->
 <script type="text/javascript">
 var dataTableToken;
-function nextPage(page='') {
-  dataTableToken = $('.daftartoken').DataTable({
+var meridian=4;
+var prev=1;
+var next=2;
+var records_per_page=10;
+var status="null";
+var masaAktif="all";
+var page;
+var pageVal;
+// next page
+function nextPage() {
+  selectPage(next);
+}
+// prev page
+function prevPage() {
+  selectPage(prev);
+}
+function selectPage(pageVal='0') {
+  page=pageVal;
+  var pageSelek=page*records_per_page;
+    dataTableToken = $('.daftartoken').DataTable({
       "ajax": {
-      "url": base_url+"token/ajaxLisToken/all/null/"+page,
+      "url": base_url+"token/ajaxLisToken/"+masaAktif+"/"+status+"/"+records_per_page+"/"+pageSelek,
       "type": "POST"
     },
       "emptyTable": "Tidak Ada Data Pesan",
       "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
       "bDestroy": true,
       "bPaginate": false,
+      "bInfo" : false,
+      "bFilter": false,
   });
+  //meridian adalah nilai tengah padination
+ $('#page-'+meridian).removeClass('active');
+  var newMeridian=page+1;
+  var loop;
+  var hidePage;
+  var showPage;
+  if (newMeridian<=4) {
+        $("#page-prev").addClass('hide');
+    //banyak pagination yg akan di tampilkan dan sisembunyikan
+    loop=meridian-newMeridian;
+    // start id pagination yg akan ditampilkan
+    var idPaginationshow =1;
+    // start id pagination yg akan sembunyikan
+    var idPaginationhide =9;
+    prev=1;
+    next=7;
+    //lakukan pengulangan sebanyak loop
+    for (var i = 0; i < loop; i++) {
+      hidePagination='#page-'+idPaginationhide;
+      showPagination='#page-'+idPaginationshow;
+      //pagination yg di hide
+      $(showPagination).removeClass('hide');
+      //pagination baru yg ditampilkan
+      $(hidePagination).addClass('hide');
+      idPaginationshow++;
+      idPaginationhide--;
+    }
+  }else if( newMeridian>meridian){
+    $("#page-prev").removeClass('hide');
+        //banyak pagination yg akan di tampilkan dan sisembunyikan
+        loop=newMeridian-meridian;
+        // start id pagination yg akan ditampilkan
+        var idPaginationshow =newMeridian+3;
+        // start id pagination yg akan sembunyikan
+        var idPaginationhide =meridian-3;
+        console.log("ini"+next);
+        //lakukan pengulangan sebanyak loop
+        for (var i = 0; i < loop; i++) {
+          hidePagination='#page-'+idPaginationhide;
+          showPagination='#page-'+idPaginationshow;
+          //pagination yg di hide
+          $(showPagination).removeClass('hide');
+          //pagination baru yg ditampilkan
+          $(hidePagination).addClass('hide');
+                idPaginationshow--;
+          idPaginationhide++;
+        }
+  }else{
+
+    //banyak pagination yg akan di tampilkan dan sisembunyikan
+    loop=meridian-newMeridian;
+    // start id pagination yg akan ditampilkan
+    var idPaginationshow =newMeridian-3;
+    // start id pagination yg akan sembunyikan
+    var idPaginationhide =meridian+3;
+    //lakukan pengulangan sebanyak loop
+    for (var i = 0; i < loop; i++) {
+      hidePagination='#page-'+idPaginationhide;
+      showPagination='#page-'+idPaginationshow;
+      //pagination yg di hide
+      $(showPagination).removeClass('hide');
+      //pagination baru yg ditampilkan
+      $(hidePagination).addClass('hide');
+            idPaginationshow++;
+      idPaginationhide--;
+    }
+  } 
+   prev=newMeridian-2;
+   next=newMeridian;
+   meridian=newMeridian;
+   $('#page-'+meridian).addClass('active');
 }
 $(document).ready(function(){
+  // even untuk jumlah record per halaman
+  $("[name=records_per_page]").change(function(){
+    records_per_page =$('[name=records_per_page]').val();
+    selectPage(0);
+    paginationToken(masaAktif,status,records_per_page);
+  });
   // TABLE TOKEN
   dataTableToken = $('.daftartoken').DataTable({
     "ajax": {
@@ -115,25 +226,43 @@ $(document).ready(function(){
     "emptyTable": "Tidak Ada Data Pesan",
     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
     "bDestroy": true,
-    "bPaginate": false,
+    "bPaginate": false, 
+    "bInfo" : false,
+    "bFilter": false,
+
+  });
+  // even untuk menampilkan jenis token yg sudah digunakan atau belum digunakan 
+  $('input[name=status_token]').click(function(){
+  status = this.value;
+  console.log(page+"ini");
+  selectPage(page);
+  paginationToken(masaAktif,status,records_per_page);
+  });
+
+  // ketika masa aktif radio button di klik
+  $('#masa_aktif_select').on('change', function() {
+    masaAktif = this.value ;
+    selectPage(page);
+    paginationToken(masaAktif,status,records_per_page);
   });
 
     //set pagination
-  function paginationToken() {
-
-        $.ajax({
-      url:base_url+"token/paginationToken",
+  function paginationToken(masaAktif,status,records_per_page) {
+      $.ajax({
+      url:base_url+"token/paginationToken/"+masaAktif+"/"+status+"/"+records_per_page,
    
       type:"POST",
       dataType:"TEXT",
       success:function(data){
+        $('.pagination-token').empty();
         $('.pagination-token').append(JSON.parse(data));
       },error:function(){
         swal('Gagal membuat Token');
       }
     });
   }
-  paginationToken();
+
+  paginationToken(masaAktif,status,records_per_page);
 
   });
 // onclick action
@@ -145,32 +274,6 @@ $('.simpan_token').click(function(){
   addtoken();
   dataTableToken.ajax.reload(null,false); 
 });
-
-$('input[name=status_token]').click(function(){
-  status_token = this.value;
-  data = $('#masa_aktif_select').val();
-  url = base_url+"token/ajax_data_token/"+data+"/"+status_token;
-
-  dataTableToken = $('.daftartoken').DataTable({
-    "ajax": {
-      "url": url,
-      "type": "POST",
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
-
-  console.log(url);
-});
-
-
-// ketika masa aktif radio button di klik
-$('#masa_aktif_select').on('change', function() {
-  masa_aktif = this.value ;
-  get_filtered_token(masa_aktif);
-});
-
 // UDF //
 function addtoken(){
   var data = $('.form-step').serialize();
@@ -187,32 +290,6 @@ function addtoken(){
     }
   })
 }
-
-//fungsi untuk filter token
-function get_filtered_token(data){
-  status_token = $('input[name=status_token]:checked').val();
-  console.log(status_token);
-  if (status_token) {
-  //kalo tidak undfined
-  url = base_url+"token/ajax_data_token/"+data+"/"+status_token;
-}else{
-    //kalo undefined
-    url = base_url+"token/ajax_data_token/"+data;
-  }
-
-  console.log(url);
-
-  dataTableToken = $('.daftartoken').DataTable({
-    "ajax": {
-      "url": url,
-      "type": "POST",
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
-}
-
 
 function reload(){
   dataTableToken.ajax.reload(null,false); 

@@ -794,12 +794,35 @@ JS aoutocomplate
   </a>
 </li>
 
-<li>
+<!-- <li>
   <a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-qrcode"></i></span>
     <span class="text">Token</span>
     <span class="arrow"></span>
   </a>
+</li>
+ -->
+<li>
+  <a href="javascript:void(0);" data-target="#token" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-bubble"></i></span>
+    <span class="text">Token</span>
+    <span class="arrow"></span>
+  </a>
+
+  <ul id="token" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Token</li>
+
+    <li >
+      <a href="<?=  base_url('token/daftartoken')?>">
+        <span class="text">Daftar token</span>
+      </a>
+    </li>
+    <li >
+      <a href="<?=  base_url('token/kirimToken')?>">
+        <span class="text">Kirim Token</span>
+      </a>
+    </li>
+  </ul>
 </li>
 
 </ul>

@@ -239,7 +239,7 @@ $(document).ready(function(){
   // TABLE SISWA
   dataTableSiswa = $('.daftarsiswa').DataTable({
     "ajax": {
-      "url": base_url+"token/ajax_data_siswa",
+      "url": base_url+"token/ajax_data_siswa2",
       "type": "POST"
     },
     "emptyTable": "Tidak Ada Data Pesan",

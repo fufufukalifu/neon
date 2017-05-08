@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Token_model extends CI_Model{
 
-	function get_token($data,$status){
+	function get_token2($data,$status){
 		$this->db->order_by('tb_token.id');
 
 		if ($data!="all") {
@@ -40,7 +40,7 @@ class Token_model extends CI_Model{
 	}
 
 	//get mahasiswa yang belum memiliki voucher
-	function get_siswa_unvoucher(){
+	function get_siswa_unvoucher2(){
 		$query = "SELECT s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,p.`namaPengguna` FROM tb_siswa s 
 		LEFT JOIN `tb_cabang` c
 		ON s.`cabangID` = c.id
@@ -52,9 +52,9 @@ class Token_model extends CI_Model{
 			JOIN tb_siswa s ON s.`id` = t.`siswaID`
 			) AND s.`status`=1";
 
-$result = $this->db->query($query);
-return $result->result_array();
-}
+		$result = $this->db->query($query);
+		return $result->result_array();
+		}
 
 	// get token kosong yang mau di set ke mahasiswa
 	function token_kosong($data){
@@ -107,43 +107,68 @@ return $result->result_array();
 		$this->db->update('tb_token');
 	}
 	//jumlah semua token dengan status 1
-	function jumlah_data_token(){
-			    // $this->db->where('siswaID is null');
+	function jumlah_data_token($masaAktif,$status){
+		if ($masaAktif!="all") {
+			$this->db->where('masaAktif',$masaAktif);
+		}
+		if ($status==1) {
+			$this->db->where('siswaID is not null');
+			$this->db->join('tb_siswa siswa', 'token.siswaID = siswa.id', 'left outer');
+			$this->db->join('tb_pengguna', 'tb_pengguna.id = siswa.penggunaID');
+		}else{
+			$this->db->where('siswaID is null');
 			$this->db->join('tb_siswa siswa', 'token.siswaID = siswa.id', 'left outer');
 			$this->db->join('tb_pengguna', 'tb_pengguna.id = siswa.penggunaID','left outer');
+
+		}
 	    return $this->db->get('tb_token token')->num_rows();
 	}
 
   // data paginataion all soal
-	function data_token($number,$offset){
-	    $this->db->select('token.siswaID,masaAktif,nomorToken,token.id as tokenid,token.status as tokenStatus,siswa.namaDepan,siswa.namaBelakang');
-	    // $this->db->where('siswaID is null');
-			$this->db->join('tb_siswa siswa', 'token.siswaID = siswa.id', 'left outer');
-			$this->db->join('tb_pengguna', 'tb_pengguna.id = siswa.penggunaID','left outer');
-	     $this->db->order_by('token.id', 'asc');
+	function data_token($number,$offset,$masaAktif,$status){
+	    $this->db->select('*,token.siswaID,masaAktif,nomorToken,token.id as tokenid,token.status as tokenStatus,token.tanggal_diaktifkan,siswa.namaDepan,siswa.namaBelakang ');
+	    if ($masaAktif!="all") {
+
+				$this->db->where('masaAktif',$masaAktif);
+			}
+			if ($status==1) {
+
+				$this->db->where('siswaID is not null');
+				$this->db->join('tb_siswa siswa', 'token.siswaID = siswa.id', 'left outer');
+				$this->db->join('tb_pengguna', 'tb_pengguna.id = siswa.penggunaID');
+			}else{
+
+				$this->db->where('siswaID is null');
+				$this->db->join('tb_siswa siswa', 'token.siswaID = siswa.id', 'left outer');
+				$this->db->join('tb_pengguna', 'tb_pengguna.id = siswa.penggunaID','left outer');
+
+			}
+			$this->db->order_by('token.id');
 	    return $query = $this->db->get('tb_token token',$number,$offset)->result();       
 	}
-
-	function get_token22($data,$status){
-		$this->db->order_by('tb_token.id');
-
-		if ($data!="all") {
-			$this->db->where('masaAktif',$data);
-		}
-		if ($status==1) {
-			$this->db->where('siswaID is not null');
-			$this->db->join('tb_siswa', 'tb_token.siswaID = tb_siswa.id', 'left outer');
-			$this->db->join('tb_pengguna', 'tb_pengguna.id = tb_siswa.penggunaID');
-		}else{
-			$this->db->where('siswaID is null');
-			$this->db->join('tb_siswa', 'tb_token.siswaID = tb_siswa.id', 'left outer');
-			$this->db->join('tb_pengguna', 'tb_pengguna.id = tb_siswa.penggunaID','left outer');
-
-		}
-		$this->db->select( '*,tb_token.id as tokenid,tb_token.status as tokenStatus' )->from( 'tb_token' ); 
-
-		$query = $this->db->get(); 
-		return $query->result(); 
+	//get mahasiswa yang belum memiliki voucher
+	function get_siswa_unvoucher($number,$offset){
+		$this->db->select('token.siswaID');
+		$this->db->from('tb_token token');
+		$this->db->join('tb_siswa s','s.id = token.siswaID');
+		$where_clause = $this->db->get_compiled_select();
+		$this->db->select('siswa.id,siswa.namaDepan,siswa.namaBelakang,cabang.namaCabang,pengguna.namaPengguna');
+		$this->db->join("tb_cabang cabang","cabang.id = siswa.cabangID");
+		$this->db->join("tb_pengguna pengguna","pengguna.id = siswa.penggunaID");
+		$this->db->where("`siswa`.`id` not IN ($where_clause)", NULL, FALSE);
+ 		return $query = $this->db->get('tb_siswa siswa',$number,$offset)->result_array(); 
 	}
+	function jumlah_siswa_unvoucher(){
+		$this->db->select('token.siswaID');
+		$this->db->from('tb_token token');
+		$this->db->join('tb_siswa s','s.id = token.siswaID');
+		$where_clause = $this->db->get_compiled_select();
+		$this->db->join("tb_cabang cabang","cabang.id = siswa.cabangID");
+		$this->db->join("tb_pengguna pengguna","pengguna.id = siswa.penggunaID");
+		$this->db->where("`siswa`.`id` not IN ($where_clause)", NULL, FALSE);
+ 		return $this->db->get('tb_siswa siswa')->num_rows();
+	}
+
+
 }
 ?>
