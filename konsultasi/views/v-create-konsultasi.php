@@ -263,9 +263,7 @@
             }
         });
 
-			// $.getJSON( base_url+"konsultasi/jumlah_komen/", function( data ) {
-			// 	console.log("jumlah"+data);
-			// });
+			
 		}
 	}
 

@@ -419,11 +419,22 @@
         </span>
       </a>
     <?php endforeach ?>
+
     <?php foreach ($konsultasi as $value ): ?>
       <?php $photos = base_url('assets/image/photo/siswa/'.$value['photo']) ?>
       <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read"><span class="pull-left">
         <img src='<?=$photos ?>' class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading"><?=$value['nama_lengkap'] ?></span>
-        <span class="media-text ellipsis nm"><span cla>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span>
+        <span class="media-text ellipsis nm"><span>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span><span title="Ditujukan Pada Anda"><i class="ico-star"></i></span>
+        <!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status Belum Direspon
+        | 
+      </span><?=$value['date_created'] ?></span><!--/ meta icon --></span></a>
+    <?php endforeach ?>
+
+     <?php foreach ($notif_pertanyaan_mentor as $value ): ?>
+      <?php $photos = base_url('assets/image/photo/siswa/'.$value['photo']) ?>
+      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read"><span class="pull-left">
+        <img src='<?=$photos ?>' class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading"><?=$value['nama_lengkap'] ?></span>
+        <span class="media-text ellipsis nm"><span>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span><span title="Pelajaran <?=$value['namaMataPelajaran'] ?>"><i class="ico-star-empty"></i></span>
         <!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status Belum Direspon
         | 
       </span><?=$value['date_created'] ?></span><!--/ meta icon --></span></a>
@@ -758,6 +769,8 @@
 <script type="text/javascript" src="<?=base_url('assets/plugins/inputmask/js/inputmask.min.js')?>"></script>
 
 <script type="text/javascript">
+  var keahlian = JSON.parse('<?=$keahlian_detail ?>');
+
   jQuery(document).ready(function () {
     var socket = io.connect( 'http://'+window.location.hostname+':3000' );
     var idPengguna=('<?=$this->session->userdata['id'];?>');
@@ -800,27 +813,66 @@
 
     socket.on('create_pertanyaan', function(data){
       $.getJSON( base_url+"konsultasi/jumlah_komen/", function( datas ) {
-        $('.jumlah_notifikasi').text(datas)
-;      });
+        $('.jumlah_notifikasi').text(datas);
+      });
 
       obj = JSON.parse(data.data);
+      photo = base_url+"assets/image/photo/siswa/"+obj.photo;
+      tampil = false;
+      status =  (obj.statusRespon==0) ? "Belum Direspon" : "Sudah Direspon";
+
       // cek gurunya yang dituju bukan?
       if (obj.mentorID==idGuru) {
-        photo = base_url+"assets/image/photo/siswa/"+obj.photo;
-        status = null;
-        if (obj.statusRespon==0) {
-          status = 'Belum Direspon';
-        }else{
-          status = 'Sudah Direspon';        
+        tampil = true;
+
+        //langsung ke mentor
+        konten = '<a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --> <span title="Ditujukan pada anda"><i class="ico-star"></i></span> <span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>';
+      }else{
+        // jika matapelajaran yang diampu
+        for (i = 0; i < keahlian.length; i++) { 
+          tampil = true;
+          if(keahlian[i].mapelID==obj.mapelID){
+            konten = '<a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --> <span title="Matapelajaran '+keahlian[i].aliasMataPelajaran+'"><i class="ico-star-empty"></i></span> <span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>';
+            break;
+          }else{
+            tampil = false;
+          }
+
         }
+      }
+
+      if (tampil) {
         $('#notif_audio')[0].play();
-      //add komen baru ke data notif id message-tbody
-      $( "#message-tbody" ).prepend(' <a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
-    } 
+        $( "#message-tbody" ).prepend(konten);
+      }
+
+    //     status = null;
+    //     if (obj.statusRespon==0) {
+    //       status = 'Belum Direspon';
+    //     }else{
+    //       status = 'Sudah Direspon';        
+    //     }
+    //     $('#notif_audio')[0].play();
+
+    //   //add komen baru ke data notif id message-tbody
+    //   $( "#message-tbody" ).prepend('');
+    // }else{
+    //   // ini yang bukan mentor..
+    //   for (i = 0; i < keahlian.length; i++) { 
+    //     if(keahlian[i].mapelID==obj.mapelID){
+    //     $('#notif_audio')[0].play();
+
+    //       $( "#message-tbody" ).prepend('<a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --> <span title="Matapelajaran '+keahlian[i].namaMataPelajaran+'"><i class="ico-star-empty"></i></span> <span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
+    //       break;
+    //     }     
+    //   }
+    // }
+
   });
 
 
   });
+
 </script>
 
 <script type="text/javascript">

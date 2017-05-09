@@ -319,7 +319,7 @@ class Mkonsultasi extends CI_Model
 		$query = $this->db->get('`tb_k_pertanyaan` `pertanyaan`');
 
 		
-			return $query->num_rows();
+		return $query->num_rows();
 
 	}
 
@@ -987,10 +987,14 @@ class Mkonsultasi extends CI_Model
 			}
 
 			function get_pertanyaan_by_uid($uid){
-				$this->db->select('p.id, p.judulPertanyaan, p.isiPertanyaan,
+				$this->db->select(' m.`id` AS mapelID, m.`namaMataPelajaran`,p.id, p.judulPertanyaan, p.isiPertanyaan,
 					CONCAT(`namaDepan`," ",`namaBelakang`) AS nama_lengkap,
 					s.`photo`,p.date_created,statusRespon,p.mentorID');
 				$this->db->join("tb_siswa s","s.`id` = p.siswaID");
+				$this->db->join("`tb_bab` b "," b.`id` = p.babID");
+				$this->db->join("`tb_tingkat-pelajaran` tp ","tp.id = b.`tingkatPelajaranID`");
+				$this->db->join("`tb_mata-pelajaran` m "," m.`id` = tp.`mataPelajaranID`");
+
 				$this->db->from("(SELECT * FROM `tb_k_pertanyaan` k WHERE k.uuid='".$uid."') AS p");
 				$query = $this->db->get();   
 				return $query->result_array();
@@ -1004,6 +1008,36 @@ class Mkonsultasi extends CI_Model
 				$this->db->from("(SELECT * FROM `tb_k_pertanyaan` k WHERE k.mentorID=".$this->session->userdata('id_guru')." and k.statusRespon=0) AS p");
 				$query = $this->db->get();   
 				return $query->result_array();
+			}
+
+			function get_pertanyaan_number_mentor($data){
+				$query = "SELECT COUNT(k.`id`) as jmlh FROM (SELECT * FROM `tb_mata-pelajaran` mp WHERE mp.id IN (".$data.")) AS m
+				JOIN `tb_tingkat-pelajaran` t ON t.`mataPelajaranID` = m.`id`
+				JOIN tb_bab b ON b.`tingkatPelajaranID` = t.`id`
+				JOIN `tb_k_pertanyaan` k ON k.`babID` = b.`id`
+				JOIN `tb_mata-pelajaran` mpl ON mpl.`id` = t.`mataPelajaranID`
+				WHERE k.statusRespon = 0
+				AND k.`mentorID` <>".$this->session->userdata('id_guru')." OR k.mentorID IS NULL";
+
+				$result = $this->db->query($query);
+				return $result->result_array()[0]['jmlh'];
+			}
+
+			function get_notif_pertanyaan_to_teacher($data){
+				$query = "SELECT k.id, k.judulPertanyaan, k.isiPertanyaan, k.`id`, k.mentorID,CONCAT(`namaDepan`, ' ' , `namaBelakang`) AS nama_lengkap, 
+				`s`.`photo`, `k`.`date_created`, `statusRespon`,mpl.id AS mapelID, mpl.namaMataPelajaran
+				FROM (SELECT * FROM `tb_mata-pelajaran` mp WHERE mp.id IN (".$data.")) AS m
+				JOIN `tb_tingkat-pelajaran` t ON t.`mataPelajaranID` = m.`id`
+				JOIN tb_bab b ON b.`tingkatPelajaranID` = t.`id`
+				JOIN `tb_k_pertanyaan` k ON k.`babID` = b.`id`
+				JOIN `tb_mata-pelajaran` mpl ON mpl.`id` = t.`mataPelajaranID`
+				JOIN tb_siswa s ON s.`id` = k.siswaID
+				WHERE k.statusRespon = 0
+				AND k.`mentorID`  <> ".$this->session->userdata('id_guru').
+				" OR k.mentorID IS NULL";
+
+				$result = $this->db->query($query);
+				return $result->result_array();
 			}
 
 		}
