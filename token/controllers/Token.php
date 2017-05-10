@@ -293,40 +293,61 @@ class Token extends MX_Controller {
 		$this->loadparser($data);
 	}
 
-	public function ajaxLisToken($masaAktif="all", $status="null",$jumlah_data_per_page="10",$page="0")
-    {
+	public function ajaxLisToken()
+  {
+    	$tb_token=null;
       // code u/pagination
      	$this->load->database();
-       
+  
+     		$masaAktif=$this->input->post("masaAktif");
+     		$status=$this->input->post("status");
+     		$jumlah_data_per_page=$this->input->post("records_per_page");
+     		$page=$this->input->post("pageSelek");
+     		$keySearch=$this->input->post("keySearch");
 
-      $list = $this->token_model->data_token($jumlah_data_per_page,$page,$masaAktif,$status);
-      //cacah data 
-      foreach ( $list as $token_item ) {
-      	$row = array();
-      	$row[] = $token_item->tokenid;
-      	$row[] = $token_item->nomorToken;
-
-      	$row[] = $token_item->masaAktif." Hari";
+      if ($keySearch != '' && $keySearch !=' ' ) {
+      	if ($status==1) {
+  					$list = $this->token_model->data_cari_pengguna_token($jumlah_data_per_page,$page,$masaAktif,$status,$keySearch);
+      	} else {
+      		$list = $this->token_model->data_cari_token($jumlah_data_per_page,$page,$masaAktif,$status,$keySearch);
+      	}
       	
-      		if ($token_item->siswaID == NULL) {
-				$row[] = "Belum Digunakan";
-			}else{
-				$row[] = $token_item->namaDepan." ".$token_item->namaBelakang;
-			}
-      	
-      	$row[] = '<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->tokenid."'".')"><i class="ico-remove"></i></a>';
-      	$data[] = $row;
+      }else{
+      	$list = $this->token_model->data_token($jumlah_data_per_page,$page,$masaAktif,$status);
       }
 
-      $output = array(
-      	"data"=>$data,
-      	);
+      //cacah data 
+      foreach ( $list as $token_item ) {
+      	$siswaID=$token_item->siswaID;
+      	if ($siswaID!=''&&$siswaID!=' '&&$siswaID!=null) {
+      		$nama=$token_item->namaDepan." ".$token_item->namaBelakang;
+      		$namaPengguna=$token_item->namaPengguna;
+      	}else{
+      		$nama="belum digunakan";
+      		$namaPengguna="-";
+      	}
+      	$tb_token.='
+	        <tr>
+	          <td>'.$token_item->tokenid.'</td>
+	          <td>'.$token_item->nomorToken.'</td>
+	          <td>'.$token_item->masaAktif.'</td>
+	          <td>'.$nama.'</td>
+	          <td>'.$namaPengguna.'</td>
+	          <td><a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_token('."'".$token_item->tokenid."'".')"><i class="ico-remove"></i></a></td>
+	      	</tr>
+    		';
+      }
 
-      echo json_encode( $output );
+
+
+      echo json_encode( $tb_token );
     }
     //page adalah variabel untuk menampung jumlah record yg akan di tampilkan pada satu halaman
-    public function paginationToken($masaAktif="all",$status="null",$records_per_page=10)
+    public function paginationToken()
     {
+    	$masaAktif=$this->input->post('masaAktif');
+    	$status=$this->input->post('status');
+    	$records_per_page=$this->input->post('records_per_page');
     	 $jumlah_data = $this->token_model->jumlah_data_token($masaAktif,$status); 
     	 $pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -369,36 +390,69 @@ class Token extends MX_Controller {
 		$this->loadparser($data);
    }
 
-   	function ajax_data_siswa($jumlah_data_per_page="10",$page="0"){
-		$list = $this->token_model->get_siswa_unvoucher($jumlah_data_per_page,$page);
+  public function ajax_data_siswa(){
+  	//   	$jumlah_data_per_page = 10;
+  	// $page = 0;
+
+  	$jumlah_data_per_page = $this->input->post('records_per_page_siswa');
+  	$page = $this->input->post('pageSiswa');
+  	$keySearchSiswa = $this->input->post('keySearchSiswa');
+		$list = $this->token_model->get_siswa_unvoucher($jumlah_data_per_page,$page,$keySearchSiswa);
 		$data = array();
 		$n=1;
+		$tb_siswa=null;
 		//mengambil nilai list
 		$baseurl = base_url();
 		foreach ( $list as $list_siswa ) {
-			$row = array();
-			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-			<input type='checkbox' name="."token".$n." id="."soal".$list_siswa['id']." value=".$list_siswa['id'].">
-			<label for="."soal".$list_siswa['id'].">&nbsp;&nbsp;</label></span>";
-			$row[] = $n;
-			$row[] = $list_siswa['namaDepan']." ".$list_siswa['namaBelakang'];
-			$row[] = $list_siswa['namaPengguna'];
 			if ($list_siswa['namaCabang']=="") {
-			$row[] = "non-neutron";
-			}else{
-			$row[] = $list_siswa['namaCabang'];
+				$namaCabang="non-neutron";
+			} else {
+				$namaCabang=$list_siswa['namaCabang'];
 			}
+			
+      $tb_siswa.='
+	        <tr>
+	          <td><span class="checkbox custom-checkbox custom-checkbox-inverse">
+								<input type="checkbox" name='.'token'.$n.' id='.'soal'.$list_siswa["id"].' value='.$list_siswa["id"].'>
+								<label for='.'soal'.$list_siswa["id"].'>&nbsp;&nbsp;</label></span>
+						</td>
+	          <td>'.$n.'</td>
+	          <td>'.$list_siswa["namaDepan"].' '.$list_siswa["namaBelakang"].'</td>
+	       
+	          <td>'. $list_siswa["namaPengguna"].'</td>
+	          <td>'.$namaCabang.'</td>
+	      	</tr>
+    		';
+    		$n++;
+      }
 
 
-			$data[] = $row;
-			$n++;
 
-		}
+		// foreach ( $list as $list_siswa ) {
+		// 	$row = array();
+		// 	$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+		// 	<input type='checkbox' name="."token".$n." id="."soal".$list_siswa['id']." value=".$list_siswa['id'].">
+		// 	<label for="."soal".$list_siswa['id'].">&nbsp;&nbsp;</label></span>";
+		// 	$row[] = $n;
+		// 	$row[] = $list_siswa['namaDepan']." ".$list_siswa['namaBelakang'];
+		// 	$row[] = $list_siswa['namaPengguna'];
+		// 	if ($list_siswa['namaCabang']=="") {
+		// 	$row[] = "non-neutron";
+		// 	}else{
+		// 	$row[] = $list_siswa['namaCabang'];
+		// 	}
 
-		$output = array(
-			"data"=>$data,
-			);
-		echo json_encode( $output );
+
+		// 	$data[] = $row;
+		// 	$n++;
+
+		// }
+
+		// $output = array(
+		// 	"data"=>$data,
+		// 	);
+		echo json_encode( $tb_siswa );
+
 	}
 	public function paginationSiswa($records_per_page=10)
 	{
@@ -470,7 +524,5 @@ class Token extends MX_Controller {
 			"data"=>$data,
 			);
 		echo json_encode( $output );
-		
-		
 	}
 }
