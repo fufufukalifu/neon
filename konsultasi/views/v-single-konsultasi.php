@@ -384,25 +384,26 @@
 					dataType: "TEXT",
 					success: function(data){
 						if (hak_akses=='guru') {
-							if (statusRespon=!1) {
+							console.log(datas.statusRespon);
+							if (datas.statusRespon!=1) {
+								console.log('masuk');
 								socket.emit('remove_notifikasi', {
 									datas
 								});	
 							}
 
 						// add ke konten yang di insert
-						}
-						$.getJSON( base_url+"konsultasi/get_last_jawaban/", function( datas ) {
-							swal('Posting berhasil...');
-							append_new(datas);
-
-						});
-					},
-					error: function (jqXHR, textStatus, errorThrown)
-					{
-						alert('Error adding / update data');
 					}
-				});
+					$.getJSON( base_url+"konsultasi/get_last_jawaban/", function( datas ) {
+						swal('Posting berhasil...');
+						append_new(datas);
+					});
+				},
+				error: function (jqXHR, textStatus, errorThrown)
+				{
+					alert('Error adding / update data');
+				}
+			});
 
 			}
 
