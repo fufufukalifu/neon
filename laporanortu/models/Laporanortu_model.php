@@ -6,12 +6,15 @@ class Laporanortu_model extends CI_Model{
 	function get_report_ortu($data){
 		$this->db->order_by('s.namaDepan','asc');
 		$this->db->select('p.namaPengguna,
+			o.siswaID,
+			s.penggunaID,
 			c.namaCabang,
 			s.namaBelakang,
 			s.namaDepan,
 			o.namaOrangTua,
 			s.tingkatID,
-			t.aliasTingkat
+			t.aliasTingkat,
+			o.id as id_ortu
 			');
 
 		$this->db->from('tb_orang_tua o');
@@ -59,6 +62,11 @@ class Laporanortu_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result_array();
 	}	
+
+	/*insert DATA UNTUK LAPORAN*/
+	function insert_laporan($data){
+		$this->db->insert( 'tb_laporan_ortu', $data );
+	}
 
 }
 ?>
