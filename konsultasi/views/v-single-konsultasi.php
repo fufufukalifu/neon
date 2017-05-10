@@ -38,7 +38,8 @@
 </style>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/config.js') ?>"></script>
-
+<script src="http://macyjs.com/assets/js/macy.min.js"></script>
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
 
 
@@ -100,6 +101,8 @@
 						<div class="post-info-main">
 							<input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
 							<input type="hidden" value="{id_pengguna}" name="idpengguna">
+							<input type="hidden" value="{statusRespon}" name="statusRespon">
+
 
 							<div class="author-post">by {author}</div>
 						</div>
@@ -218,14 +221,17 @@
 						</div>
 					<?php endforeach ?>
 				<?php endif ?>
+				<div class="blog-post add-pertanyaan">
+					
+				</div>
 				<section>
 
 					<div class="grid-col-row clear-fix">
 
 						<center>
-								<div class="page-pagination clear-fix margin-none" style="width: 100%">
-									<?php echo $links; ?>
-								</div>
+							<div class="page-pagination clear-fix margin-none" style="width: 100%">
+								<?php echo $links; ?>
+							</div>
 						</center>
 
 					</div>
@@ -263,6 +269,36 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			
+
+			function append_new(datas){
+				if (datas.hakAkses=='guru') {
+					photo = base_url+"assets/image/photo/"+datas.hakAkses+"/"+datas.guru_photo;
+				}else{
+					photo = base_url+"assets/image/photo/"+datas.hakAkses+"/"+datas.siswa_photo;
+				}
+				konten = '<div class="blog-post">'+
+				'<article>'+
+				'<div class="row bg-color-2">'+
+				'<div class="container">'+datas.date_created+'|'+
+				'<a title="view single post" href=""> New Post</a></div>'+
+				'</div></div><br>'+
+				'<div class="quotes clear-fix" >'+
+				'<div class="quote-avatar-author clear-fix">'+
+				'<img src="'+photo+'" width="60px">'+
+				'<div class="author-info">'+datas.namaPengguna+'<br><span>'+datas.hakAkses+'</span></div></div>'+
+				'<div>'+
+				'<span style="font-style:italic">'+
+				// '<a title="view single post" href=""><i class="fa fa-arrow-circle-o-right">  </i></a>'+
+				'<div class="komen">'+datas.isiJawaban+'<input type="hidden" name="'+datas.jawabID+'" value="">'+
+				'</div>'+
+				'</div>'+
+				'</div><br>'+
+				'</article>'+
+				'</div>';
+				$('.add-pertanyaan').prepend(konten);
+			}
+
 			function insert(){
 				nama_file = $('.insert').data('nama');
 				url = base_url+"assets/image/konsultasi/"+nama_file;
@@ -326,6 +362,10 @@
 
 			}
 			function simpan_jawaban(){
+				hak_akses = ("<?=$this->session->userdata('HAKAKSES') ?>");
+
+				var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+
 				// get text from ck editor
 				txt = CKEDITOR.instances.isi.getData();
 				
@@ -333,6 +373,7 @@
 					isiJawaban : txt,
 					penggunaID : $('input[name=idpengguna]').val(),
 					pertanyaanID : $('input[name=idpertanyaan]').val(),
+					statusRespon : $('input[name=statusRespon]').val()
 				};
 
 				url = base_url+"konsultasi/ajax_add_jawaban/";
@@ -342,7 +383,20 @@
 					data: datas,
 					dataType: "TEXT",
 					success: function(data){
-						window.location = base_url+"konsultasi/singlekonsultasi/"+datas.pertanyaanID;
+						if (hak_akses=='guru') {
+							if (statusRespon=!1) {
+								socket.emit('remove_notifikasi', {
+									datas
+								});	
+							}
+
+						// add ke konten yang di insert
+						}
+						$.getJSON( base_url+"konsultasi/get_last_jawaban/", function( datas ) {
+							swal('Posting berhasil...');
+							append_new(datas);
+
+						});
 					},
 					error: function (jqXHR, textStatus, errorThrown)
 					{

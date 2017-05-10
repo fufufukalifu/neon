@@ -422,7 +422,7 @@
 
     <?php foreach ($konsultasi as $value ): ?>
       <?php $photos = base_url('assets/image/photo/siswa/'.$value['photo']) ?>
-      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read"><span class="pull-left">
+      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read pertanyaan-<?=$value['id']?>"><span class="pull-left">
         <img src='<?=$photos ?>' class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading"><?=$value['nama_lengkap'] ?></span>
         <span class="media-text ellipsis nm"><span>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span><span title="Ditujukan Pada Anda"><i class="ico-star"></i></span>
         <!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status Belum Direspon
@@ -432,7 +432,7 @@
 
      <?php foreach ($notif_pertanyaan_mentor as $value ): ?>
       <?php $photos = base_url('assets/image/photo/siswa/'.$value['photo']) ?>
-      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read"><span class="pull-left">
+      <a href="<?= base_url('konsultasi/singlekonsultasi/'.$value['id'])?>" class="media border-dotted read pertanyaan-<?=$value['id']?>"><span class="pull-left">
         <img src='<?=$photos ?>' class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading"><?=$value['nama_lengkap'] ?></span>
         <span class="media-text ellipsis nm"><span>Konsultasi :</span> <?=$value['judulPertanyaan'] ?></span><span title="Pelajaran <?=$value['namaMataPelajaran'] ?>"><i class="ico-star-empty"></i></span>
         <!-- meta icon --><span class="media-meta pull-right"><span class="text-info">Status Belum Direspon
@@ -811,6 +811,7 @@
           
         });
 
+    // SOCKET CREATE PERTANYAAN
     socket.on('create_pertanyaan', function(data){
       $.getJSON( base_url+"konsultasi/jumlah_komen/", function( datas ) {
         $('.jumlah_notifikasi').text(datas);
@@ -824,7 +825,6 @@
       // cek gurunya yang dituju bukan?
       if (obj.mentorID==idGuru) {
         tampil = true;
-
         //langsung ke mentor
         konten = '<a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --> <span title="Ditujukan pada anda"><i class="ico-star"></i></span> <span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>';
       }else{
@@ -846,31 +846,24 @@
         $( "#message-tbody" ).prepend(konten);
       }
 
-    //     status = null;
-    //     if (obj.statusRespon==0) {
-    //       status = 'Belum Direspon';
-    //     }else{
-    //       status = 'Sudah Direspon';        
-    //     }
-    //     $('#notif_audio')[0].play();
-
-    //   //add komen baru ke data notif id message-tbody
-    //   $( "#message-tbody" ).prepend('');
-    // }else{
-    //   // ini yang bukan mentor..
-    //   for (i = 0; i < keahlian.length; i++) { 
-    //     if(keahlian[i].mapelID==obj.mapelID){
-    //     $('#notif_audio')[0].play();
-
-    //       $( "#message-tbody" ).prepend('<a href="'+base_url+'konsultasi/singlekonsultasi/'+obj.id+'" class="media border-dotted read"><span class="pull-left"><img src="'+photo+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+obj.nama_lengkap+'</span><span class="media-text ellipsis nm"><span cla>Konsultasi :</span> '+obj.judulPertanyaan+'</span><!-- meta icon --> <span title="Matapelajaran '+keahlian[i].namaMataPelajaran+'"><i class="ico-star-empty"></i></span> <span class="media-meta pull-right"><span class="text-info">Status: '+status+' | </span>'+obj.date_created+'</span><!--/ meta icon --></span></a>');
-    //       break;
-    //     }     
-    //   }
-    // }
-
   });
+    // SOCKET CREATE PERTANYAAN
+    
+    // SOCKET REMOVE NOTIFIKASI
+    socket.on('remove_notifikasi', function(data){
+      console.log(data.datas.pertanyaanID);
+      $('.pertanyaan-'+data.datas.pertanyaanID).remove();
+      $('#notif_audio')[0].play();
+
+      $.getJSON( base_url+"konsultasi/jumlah_komen/", function( datas ) {
+        $('.jumlah_notifikasi').text(datas);
+      });
+
+    });
+    // SOCKET REMOVE NOTIFIKASI
 
 
+  
   });
 
 </script>

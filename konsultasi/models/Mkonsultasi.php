@@ -1040,6 +1040,29 @@ class Mkonsultasi extends CI_Model
 				return $result->result_array();
 			}
 
+			
+			function update_status_respon($data){
+				$this->db->set('statusRespon',1);
+				$this->db->where('id', $data['pertanyaanID']);
+				$this->db->update('tb_k_pertanyaan');
+			}
+
+			function get_last_jawaban(){
+				$this->db->select('*,jawab.id as jawabID,siswa.photo siswa_photo,guru.photo guru_photo');
+				$this->db->from('tb_k_jawab');
+				$this->db->where('jawab.penggunaID',$this->session->userdata('id'));
+				$this->db->from('tb_k_jawab jawab');
+				$this->db->join('tb_k_pertanyaan pertanyaan','jawab.pertanyaanID = pertanyaan.id');
+				$this->db->join('tb_pengguna pengguna','pengguna.id = jawab.penggunaID');
+				$this->db->join('tb_siswa siswa','pengguna.id = siswa.penggunaID','left');
+				$this->db->join('tb_guru guru','pengguna.id = guru.penggunaID','left');
+
+				$this->db->order_by('jawab.date_created','desc');
+
+				$query = $this->db->get();   
+				return $query->result_array()[0];
+			}
+
 		}
 
 		?>

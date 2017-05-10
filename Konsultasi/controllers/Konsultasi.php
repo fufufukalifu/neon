@@ -434,12 +434,22 @@ function ajax_get_jumlah_postingan($id_pertanyaan){
 
 //add jawaban.
 function ajax_add_jawaban(){
-  $data = array(
+  if ($this->input->post()) {
+   $data = array(
     'isiJawaban' => $this->input->post( 'isiJawaban' ),
     'penggunaID' => $this->input->post( 'penggunaID' ),
     'pertanyaanID' =>$this->input->post( 'pertanyaanID' ),
     );
+
+  // kalo penggunanya guru.
+   if ($this->session->userdata('HAKAKSES')=='guru') {
+    // rubah status responya jadi 1
+    $this->mkonsultasi->update_status_respon($data);
+  }
+  // kalo siswa
   $this->mkonsultasi->insert_jawaban($data);
+}
+
 }
 
 function check_point($id_jawaban){
@@ -676,7 +686,8 @@ function singlekonsultasi($id_pertanyaan){
     'id_pengguna'=>$this->session->userdata('id'),
     'tanggal'=>date("d", $timestamp),
     'bulan'=>date("M", $timestamp),
-    'photo'=>base_url("assets/image/photo/siswa/".$single_pertanyaan['photo'])
+    'photo'=>base_url("assets/image/photo/siswa/".$single_pertanyaan['photo']),
+    'statusRespon'=>$single_pertanyaan['statusRespon']
     );
 
   $data['username'] = $single_pertanyaan['namaPengguna'];
@@ -1373,5 +1384,10 @@ function jumlah_komen(){
   $data['keahlian_detail'] = $this->mkonsultasi->get_pertanyaan_number_mentor(substr_replace($mapel_id, "", -1));
   // print_r($data['keahlian_detail']);
   echo json_encode($data['new_count_komen'] + $data['new_count_konsultasi'] + $data['keahlian_detail']);
+}
+
+function get_last_jawaban(){
+  $data = $this->mkonsultasi->get_last_jawaban();
+  echo json_encode($data);
 }
 }
