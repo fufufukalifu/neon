@@ -38,9 +38,7 @@ class Laporanortu extends MX_Controller {
 	public function index()
 	{
 		$data['judul_halaman'] = "Laporan Orang Tua";
-		$data['files'] = array(
-			APPPATH . 'modules/admincabang/views/v-daftar-paket.php',
-			);
+		
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get tingkat
@@ -66,7 +64,6 @@ class Laporanortu extends MX_Controller {
 
 	//laporan ortu ajax
 	public function laporanortu_ajax($cabang="all",$tingkat="all",$kelas="all"){
-		echo "";
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 
@@ -88,11 +85,11 @@ class Laporanortu extends MX_Controller {
 			$row[] = $item ['namaPengguna'];
 			$row[] = $item ['namaCabang'];
 			$row[] = $item ['aliasTingkat'];
-			$row[] = "Ini isi message";
-
+			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
+			// $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' .$item['siswaID'] .'/'. $item['penggunaID']) . '""> Lihat detail</a></i>';
 			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-			<input type='checkbox' name='' id="."soal".$n." value=''>
-			<label for="."soal".$n.">&nbsp;&nbsp;</label></span>";
+			<input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
+			<label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
 			
 			$data[] = $row;
 			$n++;
@@ -110,6 +107,27 @@ class Laporanortu extends MX_Controller {
 		$data = $this->output
 		->set_content_type( "application/json" )
 		->set_output( json_encode( $this->Laporanortu_model->get_kelas( $tingkat ) ) );
+	}
+
+	// FUNGSI INSERT LAPORAN
+	function kirim_laporan(){
+		if ($this->input->post()) {
+			$post = $this->input->post();
+
+			$jumlah_laporan = $post['jumlah_ortu'];
+
+			for ($i=0; $i < $jumlah_laporan; $i++) { 
+				//masukan ke array data laporannya
+				$token_update = array("id_ortu"=>$post['id_ortu'][$i],
+										"jenis"=>$post['jenis_lapor'],
+										"isi"=>$post['isi'][$i]
+					);
+				
+				// insert laporan
+				$this->Laporanortu_model->insert_laporan($token_update);
+			}
+
+		}
 	}
 
 }

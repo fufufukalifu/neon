@@ -1,51 +1,19 @@
-<!-- Start Modal salah upload gambar -->
-<div class="modal fade" id="cekInput" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h2 class="modal-title text-center text-danger">Peringatan</h2>
-      </div>
-      <div class="modal-body">
-        <h3 class="text-center">Silahkan pilih nama cabang, nama tryout dan nama paket ! </h3>
-        <!-- <h5 class="text-center">Type yang bisa di upload hanya ".jpg", ".jpeg", ".bmp", ".gif", ".png"</h5> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div class="row">
   <div class="col-md-12 kirim_token">
     <div class="panel panel-teal">
       <div class="panel-heading">
-        <h3 class="panel-title">Daftar Laporan </h3> 
+        <h3 class="panel-title">Report </h3> 
         <div class="panel-toolbar text-right">
         <div class="col-md-11">
 
-          <div class="col-sm-4">
-            <select class="form-control" name="tingkat_pel">
-              <option value="all">Semua Tingkat</option>
-              <option value="SD">SD</option>
-              <option value="SMP">SMP</option>
-              <option value="SMA">SMA</option>
-            </select>
-          </div>
+        <div class="col-sm-5"></div>
 
-        <div class="kelas col-sm-4">
-          <select class="form-control col-sm-6" name="kelas">
-            <option value="all">Semua Kelas</option>
-          </select>
-        </div>
-
-         <div class="col-sm-4" id="cabang">
-             <select class="form-control" name="cabang">
-              <option value="all">Semua Cabang</option>
-              <?php foreach ($cabang as $item): ?>
-                <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?>
+          <div class="col-sm-7">
+            <select class="form-control" name="jenis">
+              <option value="all">Semua Jenis</option>
+              <option value="nilai">Nilai</option>
+              <option value="absen">Absen</option>
+              <option value="umum">Umum</option>
             </select>
           </div>
 
@@ -55,37 +23,13 @@
 </div>
 
 <div class="panel-body">
-  <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-         <div  class="form-group">
-           <label class="col-sm-2 control-label">Jenis Laporan</label>
-           <div class="col-sm-9">
-             <!-- stkt = soal tingkat -->
-             <select class="form-control" name="jenis">
-              <option value="0">-- Pilih Jenis --</option>
-              <option value="nilai">Nilai</option>
-              <option value="absen">Absen</option>
-              <option value="umum">Umum</option>
-            </select>
-          </div>
-        </div>
-      </form>
-  <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+  <div class="panel panel-default form-horizontal form-bordered">
+     <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
     <thead>
       <tr>
         <th>No</th>
-        <th>Nama Orang Tua</th>
-        <th>Nama Siswa</th>
-        <th>Username</th>
-        <th>Cabang</th>
-        <th>Tingkat</th>
-        <th>Message</th>
-        <!-- <th>Nilai</th> -->
-        <th>
-          <span class="checkbox custom-checkbox check-all">
-            <input type="checkbox" name="checkall" id="check-all">
-              <label for="check-all">&nbsp;&nbsp;</label>
-          </span> 
-        </th>
+        <th>Jenis</th>
+        <th>Pesan</th>
       </tr>
     </thead>
 
@@ -93,7 +37,8 @@
 
     </tbody>
   </table>
-  <a class="btn btn-primary send_laporan">Kirim</a>
+    
+  </div>
 </div>
 
 </div>
@@ -105,7 +50,7 @@ $(document).ready(function(){
   var mySelect = $('select[name=cabang]').val();
   dataTableReport = $('.daftarreport').DataTable({
     "ajax": {
-      "url": base_url+"laporanortu/laporanortu_ajax",
+      "url": base_url+"ortuback/report_ajax",
       "type": "POST"
     },
     "emptyTable": "Tidak Ada Data Pesan",
@@ -117,14 +62,12 @@ $(document).ready(function(){
 });
 
 
-// CABANG KETIKA DI CHANGE
-$('select[name=cabang]').change(function(){
+// JENIS KETIKA DI CHANGE
+$('select[name=jenis]').change(function(){
 
-  cabang = $('select[name=cabang]').val();
-  tingkat = $('select[name=tingkat_pel]').val();
-  kelas = $('select[name=kelas]').val();
+  jenis = $('select[name=jenis]').val();
 
-  url = base_url+"laporanortu/laporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
+  url = base_url+"ortuback/report_ajax/"+jenis;
 
   dataTableReport = $('.daftarreport').DataTable({
     "ajax": {

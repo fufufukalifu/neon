@@ -24,31 +24,19 @@
       </form>
       </div>
       <!-- div masa aktif -->
-      <!-- div seting record dan pencarian   -->
-      <div class="col-md-12" style="background:red;">
-          <!-- div setting record -->
-          <div class="col-md-2 mb2 mt10 pl0">
-            <div  class="form-group">
-              <select  class="form-control" name="records_per_page_siswa">
-                <!-- <option value="10" selected="true">records per page</option> -->
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-          </div>
-          </div>
-          <!-- /div setting record -->
-          <!-- div pencarian  -->
-          <div class="col-md-10 mb10 mt10 pr0">
-            <div class="input-group">
-               <span class="input-group-addon btn" id="cariSiswa"><i class="ico-search"></i></span>
-               <input class="form-control" type="text" name="cariSiswa" placeholder="Cari Data Siswa">
-            </div>
-          </div>
-          <!-- div pencarian -->
+      <!-- div setting record per page -->
+      <div class="col-md-12 ">
+         <div class="col-md-2 mb10">
+          <select  class="form-control" name="records_per_page_siswa">
+            <!-- <option value="10" selected="true">records per page</option> -->
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+         </div>
       </div>
-      <!-- div seting record dan pencarian -->
+      <!-- /div setting record per page -->
       <div class="col-md-12">
         <div  class="form-group">
           <table class="daftarsiswa table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
@@ -65,7 +53,7 @@
                   <th>Cabang</th>
                 </tr>
               </thead>
-              <tbody id="record_siswa">
+              <tbody>
 
               </tbody>
             </table>
@@ -179,12 +167,15 @@
     </div>
   </div>
 </div>
+
+
+
+
 </div>
 <!-- TABEL TOKEN -->
 <script type="text/javascript">
 var dataTableSiswa;
 var dataRekapToken
-// data siswa
 var meridianSiswa=4;
 var prevSiswa=1;
 var nextSiswa=2;
@@ -192,10 +183,7 @@ var records_per_page_siswa=10;
 var statusSiswa="null";
 var pageSiswa;
 var pageValSiswa;
-var tb_siswa;
-var datasSiswa;
-var keySearchSiswa='';
-//data token
+//token
 var meridian=4;
 var prev=1;
 var next=2;
@@ -234,7 +222,20 @@ $(document).ready(function(){
     $("[name=records_per_page_siswa]").change(function(){
     records_per_page_siswa =$('[name=records_per_page_siswa]').val();
     selectPageSiswa(page);
-    paginationSiswa(records_per_page_siswa);
+    paginationSiswa(masaAktif,status,records_per_page_siswa);
+  });
+  // TABLE SISWA
+  dataTableSiswa = $('.daftarsiswa').DataTable({
+    "ajax": {
+      "url": base_url+"token/ajax_data_siswa",
+      "type": "POST"
+    },
+    "emptyTable": "Tidak Ada Data Pesan",
+    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+    "bDestroy": true,
+    "bPaginate": false, 
+    "bInfo" : false,
+    "bFilter": false,
   });
 
     // TABLE REKAP
@@ -251,28 +252,6 @@ $(document).ready(function(){
       "bFilter": false,
     });
 
-    // set tb siswa
-  function set_tb_siswa() {
-    datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageSiswa:pageSiswa,keySearchSiswa:keySearchSiswa};
-    $('#record_siswa').empty();
-    url=base_url+"token/ajax_data_siswa";
-    $.ajax({
-      url:url,
-      data:datasSiswa,
-      dataType:"text",
-      type:"post",
-      success:function(Data)
-      {
-        tb_siswa = JSON.parse(Data);
-        $('#record_siswa').append(tb_siswa);
-      },
-      error:function(e,jqXHR, textStatus, errorThrown)
-      {
-         sweetAlert("Oops...", e, "error");
-      }
-    });
-  }
-set_tb_siswa();
     //set pagination
   function paginationSiswa(records_per_page_siswa) {
       $.ajax({
@@ -308,42 +287,27 @@ set_tb_siswa();
 
   paginationToken(masaAktif,status,records_per_page);
 
-  //event cari siswa
-  $('#cariSiswa').click(function(e){
-
-      //get value dari input name cariToken
-      keySearchSiswa=$('[name=cariSiswa]').val();
-      console.log("ini gemes"+keySearchSiswa);
-      selectPageSiswa(pageValSiswa='0');
-      // paginationSiswa();
-      //
-    });
 
   });
 // untuk tabel siswa
-function selectPageSiswa(pageValSiswa='0') {
-  pageSiswa=pageValSiswa;
-  datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageSiswa:pageSiswa,keySearchSiswa:keySearchSiswa};
-    $('#record_siswa').empty();
-    url=base_url+"token/ajax_data_siswa";
-    $.ajax({
-      url:url,
-      data:datasSiswa,
-      dataType:"text",
-      type:"post",
-      success:function(Data)
-      {
-        tb_siswa = JSON.parse(Data);
-        $('#record_siswa').append(tb_siswa);
-      },
-      error:function(e,jqXHR, textStatus, errorThrown)
-      {
-         sweetAlert("Oops...", e, "error");
-      }
-    });
+function selectPageSiswa(pageVal='0') {
+  page=pageVal;
+  var pageSelek=page*records_per_page_siswa;
+    dataTableSiswa = $('.daftarsiswa').DataTable({
+      "ajax": {
+      "url": base_url+"token/ajax_data_siswa/"+records_per_page_siswa+"/"+pageSelek,
+      "type": "POST"
+    },
+      "emptyTable": "Tidak Ada Data Pesan",
+      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+      "bDestroy": true,
+      "bPaginate": false,
+      "bInfo" : false,
+      "bFilter": false,
+  });
      //meridian adalah nilai tengah padination
  $('#pageSiswa-'+meridianSiswa).removeClass('active');
-  var newMeridian=pageSiswa+1;
+  var newMeridian=page+1;
   var loop;
   var hidePage;
   var showPage;
@@ -355,8 +319,8 @@ function selectPageSiswa(pageValSiswa='0') {
     var idPaginationshow =1;
     // start id pagination yg akan sembunyikan
     var idPaginationhide =9;
-    prevSiswa=1;
-    nextSiswa=7;
+    prev=1;
+    next=7;
     //lakukan pengulangan sebanyak loop
     for (var i = 0; i < loop; i++) {
       hidePagination='#pageSiswa-'+idPaginationhide;
@@ -583,8 +547,7 @@ function set_token_to_mahasiswa(){
         dataType:"TEXT",
         success:function(){
           swal('Token Berhasil Di Kirim');
-          selectPageSiswa(pageSiswa='0');
-          // paginationSiswa(records_per_page_siswa);
+          reload();
         },error:function(){
           swal('Gagal mengirim Token');
         }
