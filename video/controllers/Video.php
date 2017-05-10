@@ -42,7 +42,11 @@ class Video extends MX_Controller {
         $this->load->library('sessionchecker');
         //cek login
         $this->sessionchecker->checkloggedin();
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
         $this->sessionchecker->cek_token();
+    }
     // 
     }
 
@@ -64,7 +68,11 @@ class Video extends MX_Controller {
 
     //halaman tampilkan semua video dalam 1 subab
     public function videobysub($sub_bab_id) {
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
         $this->sessionchecker->cek_token();
+    }
         //tampilkan seluruh video yang diklik bab
         $data['judulbab'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
 
@@ -100,7 +108,11 @@ class Video extends MX_Controller {
 
     //menampilkan materi dari suatu tingkat, IPA untuk SMA, IPS untuk SMA dst.
 public function daftarvideo($tingpelID) {
-$this->sessionchecker->cek_token();
+if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
+        $this->sessionchecker->cek_token();
+    }
 // tampilkan ini matapelajaran apa dan untuk tingkat apa.
         $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
         // print_r($data['meta']);
@@ -127,7 +139,11 @@ $this->sessionchecker->cek_token();
     }
 
     public function daftarallvideo($tingpelID) {
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
         $this->sessionchecker->cek_token();
+    }
         // tampilkan ini matapelajaran apa dan untuk tingkat apa.
         $data['meta'] = $this->load->Mvideos->get_meta_data_tingkat($tingpelID);
         // print_r($data['meta']);
@@ -158,7 +174,11 @@ $this->sessionchecker->cek_token();
     }
 
     public function seevideo($idvideo) {
+       if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
         $this->sessionchecker->cek_token();
+    }
         //data untuk templating
         $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
         $metaMapel = $this->Mvideos->get_meta_mapel($data['videosingle'][0]->subBabID);
@@ -336,9 +356,6 @@ $this->sessionchecker->cek_token();
     //----------# BACK END  #----------#
 
     public function addkomen() {
-
-
-
         $dataKomen['isiKomen'] = $this->input->post('isiKomen');
         $dataKomen['videoID'] = $this->input->post('videoID');
         $dataKomen['userID'] = $this->session->userdata['id'];

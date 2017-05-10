@@ -13,7 +13,11 @@ class Tryout extends MX_Controller {
         parent::__construct();
         $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
         $this->sessionchecker->cek_token();
+        }
 
     }
 
@@ -42,8 +46,12 @@ class Tryout extends MX_Controller {
             APPPATH . 'modules/testimoni/views/v-footer.php',
             
             );
-
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+                //untuk mengambil id siswa jika ortu yang login 
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+        }else{
         $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+    }
         $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
         $this->parser->parse('templating/index', $data);
     }
@@ -57,7 +65,12 @@ class Tryout extends MX_Controller {
         $id_to = $this->session->userdata('id_tryout');
         $datas['id_tryout'] = $id_to;
         $datas['id_pengguna'] = $this->session->userdata('id');
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            //untuk mengambil id siswa jika ortu yang login 
+        $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+        }else{
         $datas['id_siswa'] = $this->msiswa->get_siswaid();
+    }
 
         $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
         $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];

@@ -95,7 +95,11 @@
 
 							<ul class="clear-fix">
 								<li>
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<a href="<?=base_url('ortu') ?>">Home</a>
+									<?php else: ?>
 									<a href="<?=base_url('welcome') ?>">Home</a>
+									<?php endif ?>
 								</li>
 
 								<li>
@@ -138,7 +142,11 @@
 								</li>
 
 								<li>
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<a href="#">Hallo <?= $this->session->userdata['USERNAME']?> </a>
+									<?php else: ?>
 									<a href="#">Hallo <?= $this->session->userdata['NAMASISWA']?> </a>
+									<?php endif ?>
 									<ul>
 									<?php if ($this->session->userdata('HAKAKSES')=='guru'): ?>
 										<li><a href="<?=base_url('guru/dashboard') ?>">Dashboard</a></li>

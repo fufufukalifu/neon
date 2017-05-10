@@ -98,6 +98,17 @@ class Mtryout extends MX_Controller {
         return $query->result()[0]->id;
     }
 
+    public function get_id_siswa_by_ortu() {
+        $this->db->select('siswa.id');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('`tb_orang_tua` `ortu` ',' `siswa`.`id` = `ortu`.`siswaID`');
+        $this->db->join('`tb_pengguna` `pengguna` ',' `ortu`.`penggunaID` = `pengguna`.`id` ');
+        $this->db->where('pengguna.id', $this->session->userdata('id'));
+
+        $query = $this->db->get();
+        return $query->result()[0]->id;
+    }
+
     //# fungsi get data tryout yang hakaksesnya true
     public function get_tryout_akses($data) {
         $id_siswa = $data['id_siswa'];

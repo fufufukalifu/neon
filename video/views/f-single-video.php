@@ -164,6 +164,8 @@
                     <p>{biografi}</p>
                 </section>
                 <hr class="divider-color" />
+                <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+                <?php else: ?>
                 <section class="clear-fix">
                     <form class="login-form" action ="" id="formkomen" method = "post">
                         <div id="info">
@@ -217,6 +219,7 @@
                     <!-- / comments for post -->
 
                 </section>
+                <?php endif ?>
             </main>
         </div>
     </div>

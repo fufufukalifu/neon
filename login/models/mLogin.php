@@ -198,6 +198,37 @@ class Mlogin extends CI_Model {
        
     }
 
+    public function get_ortu($idPengguna)
+    {
+       $this->db->select('id,namaOrangTua');
+       $this->db->from('tb_orang_tua');
+       $this->db->where('penggunaID',$idPengguna);
+       $query = $this->db->get();
+
+       if ($query->num_rows() == 1) {
+            return  $query->result_array()[0]; //if data is true
+        } else {
+            return array(); //if data is wrong
+        }
+       
+    }
+    public function get_ortu2($idortu)
+    {
+       $this->db->select('*');
+       $this->db->from('tb_orang_tua ortu');
+       $this->db->join('tb_siswa siswa ',' ortu.siswaID = siswa.id');
+       $this->db->join('tb_pengguna peng ',' siswa.penggunaID = peng.id');
+       $this->db->where('ortu.id',$idortu);
+       $query = $this->db->get();
+
+       if ($query->num_rows() == 1) {
+            return  $query->result_array()[0]; //if data is true
+        } else {
+            return array(); //if data is wrong
+        }
+       
+    }
+
 
 
 }

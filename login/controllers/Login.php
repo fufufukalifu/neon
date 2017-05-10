@@ -98,7 +98,19 @@ public function validasiLogin() {
                $this->cek_token();
                redirect(site_url('welcome'));
 
-           } elseif ($hakAkses == 'admin_cabang') {
+           } elseif ($hakAkses == 'ortu') {
+                //untuk mengambil id orang tua berdasarkan id_pengguna
+                $tampOrtu=$this->Mlogin->get_ortu($idPengguna)[id];
+                //untuk mengambil nama pengguna anaknya
+                $tampOrtu2=$this->Mlogin->get_ortu2($tampOrtu);
+                
+                $namaOrtu = $tampOrtu2['namaPengguna'];
+                //set session nama ortu diganti dengan nama pengguna siswa
+               $this->session->set_userdata('NAMAORTU', $namaOrtu);
+               $this->cek_token();
+               redirect(site_url('ortu'));
+
+           }elseif ($hakAkses == 'admin_cabang') {
                redirect(site_url('admincabang'));
            } else {
             echo 'tidak ada hak akses';

@@ -13,7 +13,11 @@ class Tesonline extends MX_Controller {
         parent::__construct();
             $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
-    $this->sessionchecker->cek_token();
+    if ($this->session->userdata('HAKAKSES')=='ortu') {
+            # langusung masuk
+        }else{
+        $this->sessionchecker->cek_token();
+    }
 
     }
 
@@ -111,7 +115,14 @@ public function daftarlatihan() {
         // APPPATH . 'modules/homepage/views/v-footer.php',
         APPPATH . 'modules/testimoni/views/v-footer.php',
         );
+
+    if ($this->session->userdata['HAKAKSES']=='ortu') {
+        //untuk mengambil report jika ortu yang login 
+    $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['NAMAORTU']);
+}
+    else{
     $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['USERNAME']);
+}
     $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
 
     $this->session->unset_userdata('id_pembahasan');

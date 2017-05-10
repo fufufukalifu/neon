@@ -107,6 +107,91 @@
             <!-- top -->
 
              <div class="col-md-12">
+             <?php if ($this->session->userdata['HAKAKSES']=='ortu'): ?>
+                 <h3>Daftar Report</h3>
+
+                <div class="col-md-12">
+
+                    <?php if ($report == array()): ?>
+
+                        <h4>Tidak ada Report Latihan.</h4>
+
+                    <?php else: ?>
+
+                        <table class="table 2" style="font-size: 13px">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Id</th>
+
+                                    <th>Nama Latihan</th>
+
+                                    <th>Tingkat Kesulitan</th>
+
+                                    <th>Tanggal Dibuat</th>
+
+                                    <th width="2%">Aksi</th>
+
+                                </tr>
+
+                            </thead>
+
+
+
+                            <tbody>
+
+                                <?php foreach ($report as $reportitem): ?>
+
+                                    <tr>
+
+                                        <td><?= $reportitem['id_latihan'] ?></td>
+
+                                        <td><?= $reportitem['nm_latihan'] ?></td>
+
+                                        <td><?= $reportitem['tingkatKesulitan'] ?></td>
+
+                                        <td><?= $reportitem['tgl_pengerjaan'] ?></td>
+
+
+
+                                        <td>
+
+                                            <a class="btn btn-primary modal-on<?= $reportitem['id_latihan'] ?>" 
+
+                                               title="Lihat score" 
+
+                                               onclick="lihat_grafik(<?= $reportitem['id_latihan'] ?>)" 
+
+                                               data-todo='<?= json_encode($reportitem) ?>'
+
+                                               ><i class="glyphicon glyphicon-list-alt"></i></a>
+
+                                    
+                                            <a class="btn btn-primary modal-on<?= $reportitem['id_latihan'] ?>" 
+
+                                               title="Lihat pembahasan" 
+
+                                                onclick="mulai_pembahasan(<?= $reportitem['id_latihan'] ?>)"
+
+                                               ><i class="glyphicon glyphicon-book"></i></a>
+
+                                        </td>
+
+                                    </tr>
+
+                                <?php endforeach ?>
+
+                            </tbody>
+
+                        </table>
+
+                    <?php endif ?>
+
+                </div>
+
+            <?php else: ?>
 
                 <h3>Daftar Latihan <a href="../tesonline" class="cws-button bt-color-4 border-radius icon-left"><i class="fa fa-plus-square"></i>Buat Latihan</a></h3>
 
@@ -282,6 +367,7 @@
                 </div>
 
             </div>
+            <?php endif ?>
 
 
 <!--            <div class="grid-col col-md-12">

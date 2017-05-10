@@ -60,6 +60,10 @@
     <!-- top -->
 
     <div class="col-md-12">
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+      
+      
+    <?php else: ?>
 
       <h4>Daftar Paket TO yang Belum Dikerjakan</h4>
 
@@ -134,6 +138,7 @@
       <?php endif ?>
 
     </div>
+     <?php endif ?>
 
 
 
