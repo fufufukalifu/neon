@@ -8,6 +8,8 @@ class Konsultasi extends MX_Controller{
 
     $this->load->library( 'parser' );
     $this->load->model('mkonsultasi');
+    $this->load->model('guru/mguru');
+
     $this->load->model('tryout/mtryout');
     $this->load->model('tingkat/mtingkat');
     $this->load->model('matapelajaran/mmatapelajaran');
@@ -1363,6 +1365,13 @@ function index(){
 function jumlah_komen(){
   $data['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
   $data['new_count_konsultasi'] = $this->db->where('statusRespon = 0 and mentorID='.$this->session->userdata('id_guru'))->count_all_results('tb_k_pertanyaan');
-  echo json_encode($data['new_count_komen'] + $data['new_count_konsultasi']);
+  $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+  $mapel_id ="";
+  foreach ($keahlian_detail as $key) {
+    $mapel_id =$mapel_id."".$key['mapelID'].",";
+  }
+  $data['keahlian_detail'] = $this->mkonsultasi->get_pertanyaan_number_mentor(substr_replace($mapel_id, "", -1));
+  // print_r($data['keahlian_detail']);
+  echo json_encode($data['new_count_komen'] + $data['new_count_konsultasi'] + $data['keahlian_detail']);
 }
 }
