@@ -124,6 +124,8 @@ class Token_model extends CI_Model{
 	    return $this->db->get('tb_token token')->num_rows();
 	}
 
+
+
   // data paginataion all token
 	function data_token($number,$offset,$masaAktif,$status){
 	    $this->db->select('*,token.siswaID,masaAktif,nomorToken,token.id as tokenid,token.status as tokenStatus,token.tanggal_diaktifkan,siswa.namaDepan,siswa.namaBelakang,CONCAT((`siswa`.`namaDepan`)," ", (`siswa`.`namaBelakang`)) AS nama_lengkap');
@@ -167,24 +169,43 @@ class Token_model extends CI_Model{
 			$this->db->or_like('nomorToken',$keySearch);
 	    return $query = $this->db->get('view_token_belum_digunakan',$number,$offset)->result();      
 	}
+	public function sum_cari_pengguna_token($masaAktif,$status,$keySearch)
+	{
+			if ($masaAktif!="all") {
+				$this->db->where('masaAktif',$masaAktif);
+			}
+			$this->db->like('tokenid',$keySearch);
+			$this->db->or_like('namaDepan',$keySearch);
+			$this->db->or_like('namaBelakang',$keySearch);
+			$this->db->or_like('nama_lengkap',$keySearch);
+			$this->db->or_like('nomorToken',$keySearch);
+			$this->db->or_like('namaPengguna',$keySearch);
+		return $this->db->get('view_pengguna_token')->num_rows();
+	}
+
+	public function sum_cari_data_token($masaAktif,$status,$keySearch)
+	{
+		$this->db->select('*');
+	   	if ($masaAktif!="all") {
+				$this->db->where('masaAktif',$masaAktif);
+			}
+			$this->db->like('tokenid',$keySearch);
+			$this->db->or_like('nomorToken',$keySearch);
+		return $this->db->get('view_token_belum_digunakan')->num_rows();
+	}
 	//get mahasiswa yang belum memiliki voucher
 	function get_siswa_unvoucher($number,$offset,$keySearchSiswa){
-		$this->db->select('token.siswaID');
-		$this->db->from('tb_token token');
-		$this->db->join('tb_siswa s','s.id = token.siswaID');
-		$where_clause = $this->db->get_compiled_select();
-		$this->db->select('siswa.id,siswa.namaDepan,siswa.namaBelakang,cabang.namaCabang,pengguna.namaPengguna');
-		$this->db->join("tb_cabang cabang","cabang.id = siswa.cabangID");
-		$this->db->join("tb_pengguna pengguna","pengguna.id = siswa.penggunaID");
-		$this->db->where("`siswa`.`id` not IN ($where_clause)", NULL, FALSE);
+
+		$this->db->select('*');
 		if ($keySearchSiswa!='' && $keySearchSiswa!=' ') {
-			 $this->db->like('siswa.namaDepan',$keySearchSiswa);
-			 $this->db->or_like('siswa.namaBelakang',$keySearchSiswa);
-			 $this->db->or_like('cabang.namaCabang',$keySearchSiswa);
-			 $this->db->or_like('pengguna.namaPengguna',$keySearchSiswa);
+			 $this->db->like('namaDepan',$keySearchSiswa);
+			 $this->db->or_like('namaBelakang',$keySearchSiswa);
+			 $this->db->or_like('nama_lengkap',$keySearchSiswa);
+			 $this->db->or_like('namaCabang',$keySearchSiswa);
+			 $this->db->or_like('namaPengguna',$keySearchSiswa);
 		}
 		
- 		return $query = $this->db->get('tb_siswa siswa',$number,$offset)->result_array(); 
+ 		return $query = $this->db->get('view_siswa_unvoucher',$number,$offset)->result_array(); 
 	}
 	function jumlah_siswa_unvoucher(){
 		$this->db->select('token.siswaID');
@@ -195,6 +216,14 @@ class Token_model extends CI_Model{
 		$this->db->join("tb_pengguna pengguna","pengguna.id = siswa.penggunaID");
 		$this->db->where("`siswa`.`id` not IN ($where_clause)", NULL, FALSE);
  		return $this->db->get('tb_siswa siswa')->num_rows();
+	}
+	function jumlah_cari_siswa_unvoucher($keySearchSiswa){
+					 $this->db->like('namaDepan',$keySearchSiswa);
+			 $this->db->or_like('namaBelakang',$keySearchSiswa);
+			 $this->db->or_like('nama_lengkap',$keySearchSiswa);
+			 $this->db->or_like('namaCabang',$keySearchSiswa);
+			 $this->db->or_like('namaPengguna',$keySearchSiswa);
+ 		return $this->db->get('view_siswa_unvoucher')->num_rows();
 	}
 
 

@@ -133,9 +133,10 @@
     </div>
 
     <div class="panel-body">
+     
+      <div class="col-md-12" style="background:red;">
       <!-- recor per page tabel pengguna token -->
-    
-      <div class="col-md-2 mb10">
+      <div class="col-md-2 mb2 mt10 pl0">
         <select  class="form-control" name="records_per_page" >
           <!-- <option value="10" selected="true">records per page</option> -->
           <option value="10">10</option>
@@ -143,6 +144,16 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
+      </div>
+      <!-- /recor per page tabel pengguna token -->
+      <!-- div pencarian  -->
+      <div class="col-md-10 mb10 mt10 pr0">
+        <div class="input-group">
+           <span class="input-group-addon btn" id="cariToken"><i class="ico-search"></i></span>
+           <input class="form-control" type="text" name="cariToken" placeholder="Cari Data">
+        </div>
+      </div>
+      <!-- div pencarian -->
       </div>
       <!-- div tabel -->
       <div class="col-md-12 mb10">
@@ -163,7 +174,7 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody id="record_token">
 
         </tbody>
       </table>
@@ -182,8 +193,6 @@
 </div>
 <!-- TABEL TOKEN -->
 <script type="text/javascript">
-var dataTableSiswa;
-var dataRekapToken
 // data siswa
 var meridianSiswa=4;
 var prevSiswa=1;
@@ -204,6 +213,8 @@ var status="1";
 var masaAktif="all";
 var page;
 var pageVal;
+var pageSelek=0;
+var keySearch='';
 // 
 
 // next page
@@ -237,19 +248,29 @@ $(document).ready(function(){
     paginationSiswa(records_per_page_siswa);
   });
 
-    // TABLE REKAP
-    dataRekapToken = $('.rekap_token').DataTable({
-      "ajax": {
-        "url": base_url+"token/ajax_rekap_penggunaan_token",
-        "type": "POST"
+
+  // set tb rekap_token
+  function set_tb_rekap_token() {
+    datas ={masaAktif:masaAktif,status:status,records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
+    $('#record_token').empty();
+    url=base_url+"token/ajax_rekap_penggunaan_token";
+    $.ajax({
+      url:url,
+      data:datas,
+      dataType:"text",
+      type:"post",
+      success:function(Data)
+      {
+        tb_token = JSON.parse(Data);
+         $('#record_token').append(tb_token);
       },
-      "emptyTable": "Tidak Ada Data Pesan",
-      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-      "bDestroy": true,
-      "bPaginate": false, 
-      "bInfo" : false,
-      "bFilter": false,
+      error:function(e,jqXHR, textStatus, errorThrown)
+      {
+         sweetAlert("Oops...", e, "error");
+      }
     });
+  }
+set_tb_rekap_token();
 
     // set tb siswa
   function set_tb_siswa() {
@@ -275,9 +296,10 @@ $(document).ready(function(){
 set_tb_siswa();
     //set pagination
   function paginationSiswa(records_per_page_siswa) {
+     datasSiswa ={records_per_page_siswa:records_per_page_siswa,keySearchSiswa:keySearchSiswa};
       $.ajax({
-      url:base_url+"token/paginationSiswa/"+records_per_page_siswa,
-   
+      url:base_url+"token/paginationSiswa/",
+      data:datasSiswa,
       type:"POST",
       dataType:"TEXT",
       success:function(data){
@@ -293,15 +315,15 @@ set_tb_siswa();
     //set pagination
   function paginationToken(masaAktif,status,records_per_page) {
       $.ajax({
-      url:base_url+"token/paginationToken/"+masaAktif+"/"+status+"/"+records_per_page,
-   
+      url:base_url+"token/paginationToken/",
+      data:{masaAktif:masaAktif,status:status,records_per_page:records_per_page,keySearch:keySearch},
       type:"POST",
       dataType:"TEXT",
       success:function(data){
         $('.pagination-token').empty();
         $('.pagination-token').append(JSON.parse(data));
       },error:function(){
-        swal('Gagal membuat Token');
+        // swal('Gagal pagination');
       }
     });
   }
@@ -310,12 +332,18 @@ set_tb_siswa();
 
   //event cari siswa
   $('#cariSiswa').click(function(e){
-
       //get value dari input name cariToken
       keySearchSiswa=$('[name=cariSiswa]').val();
-      console.log("ini gemes"+keySearchSiswa);
       selectPageSiswa(pageValSiswa='0');
-      // paginationSiswa();
+      paginationSiswa(records_per_page_siswa);
+      //
+    });
+
+    $('#cariToken').click(function(e){
+      //get value dari input name cariToken
+      keySearch=$('[name=cariToken]').val();
+      selectPage(pageVal='0');
+      paginationToken(masaAktif,status,records_per_page);
       //
     });
 
@@ -415,20 +443,26 @@ function selectPageSiswa(pageValSiswa='0') {
 
 // untuk tabel token
 function selectPage(pageVal='0') {
-  page=pageVal;
-  var pageSelek=page*records_per_page;
-    dataRekapToken = $('.rekap_token').DataTable({
-      "ajax": {
-      "url": base_url+"token/ajax_rekap_penggunaan_token/"+masaAktif+"/"+status+"/"+records_per_page+"/"+pageSelek,
-      "type": "POST"
-    },
-      "emptyTable": "Tidak Ada Data Pesan",
-      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-      "bDestroy": true,
-      "bPaginate": false,
-      "bInfo" : false,
-      "bFilter": false,
-  });
+    page=pageVal;
+  pageSelek=page*records_per_page;
+  $('#record_token').empty();
+  datas ={masaAktif:masaAktif,status:status,records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
+    url=base_url+"token/ajax_rekap_penggunaan_token";
+    $.ajax({
+      url:url,
+      data:datas,
+      dataType:"text",
+      type:"post",
+      success:function(Data)
+      {
+        tb_token = JSON.parse(Data);
+         $('#record_token').append(tb_token);
+      },
+      error:function(e,jqXHR, textStatus, errorThrown)
+      {
+         // sweetAlert("Oops...", e, "error");
+      }
+    });
 //meridian adalah nilai tengah padination
  $('#page-'+meridian).removeClass('active');
   var newMeridian=page+1;
@@ -616,9 +650,7 @@ function get_stok(){
 
 
 function reload(){
-  get_stok(); 
-  dataTableSiswa.ajax.reload(null,false); 
-  dataRekapToken.ajax.reload(null,false); 
+ 
 }
 
 
@@ -642,7 +674,8 @@ function drop_token(data){
       url:url,
       success:function(){
         swal("Terhapus!", "Token berhasil dihapus.", "success");
-        dataRekapToken.ajax.reload(null,false)
+         selectPage(pageVal='0');
+      paginationToken(masaAktif,status,records_per_page);
       },
       error:function(){
         sweetAlert("Oops...", "Data gagal terhapus!", "error");
@@ -674,7 +707,8 @@ function update_token(data){
       url:url,
       success:function(){
         swal("Diaktifkan!", "Token berhasil diaktikan.", "success");
-        dataRekapToken.ajax.reload(null,false)
+                selectPage(pageVal='0');
+      paginationToken(masaAktif,status,records_per_page);
       },
       error:function(){
         sweetAlert("Oops...", "Token gagal diaktikan!", "error");

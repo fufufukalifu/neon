@@ -196,12 +196,12 @@ $(document).ready(function(){
   // });
 
     $('#cariToken').click(function(e){
-    //get value dari input name cariToken
-    keySearch=$('[name=cariToken]').val();
-    selectPage(pageVal='0');
-    paginationToken();
-    //
-  });
+      //get value dari input name cariToken
+      keySearch=$('[name=cariToken]').val();
+      selectPage(pageVal='0');
+      paginationToken();
+      //
+    });
 
   });
     //set pagination
