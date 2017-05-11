@@ -182,8 +182,6 @@ $(document).ready(function(){
     paginationToken();
   });
 
-
-
   paginationToken();
   // di konen dulu karena koneksi tidak mendukung Lol
   // // event pencarian ketika tekan enter
@@ -384,7 +382,6 @@ function drop_token(data){
 
 
 function update_token(data){
-
   url = base_url+"token/aktifkan_token";
   swal({
     title: "Yakin akan aktifkan Token?",

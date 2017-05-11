@@ -217,7 +217,9 @@ class Admincabang extends MX_Controller {
 			//set Max nilai
 			if ($maxNilai<$nilai) {
 				$maxNilai=$nilai;
-			}else if($minNilai>$nilai){
+			}
+			//set Min nilai
+			if($minNilai>$nilai){
 				$minNilai=$nilai;
 			}
 
