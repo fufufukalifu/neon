@@ -12,6 +12,7 @@ class Welcome extends MX_Controller {
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->model( 'video/mvideos' );
         $this->load->model( 'siswa/msiswa' );
+        $this->load->model( 'ortu/mOrtu' );
         $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
         $this->load->library( 'parser' );
@@ -42,6 +43,12 @@ class Welcome extends MX_Controller {
         APPPATH.'modules/welcome/views/v-container-graph.php',
         APPPATH.'modules/testimoni/views/v-footer.php',
         );
+    if ($this->session->userdata('HAKAKSES')=='ortu') {
+        $id_pengguna= $this->session->userdata['id'];
+        $namaDepan=$this->mOrtu->get_siswa($id_pengguna)[0]['namaDepan'];
+        $namaBelakang=$this->mOrtu->get_siswa($id_pengguna)[0]['namaBelakang'];
+        $data['siswa'] =$namaDepan.' '. $namaBelakang ;
+    }
     $data['video'] = $this->mvideos->get_video_limit();
     $data['topik'] = $this->msiswa->persentasi_limit(3);
     $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);

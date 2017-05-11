@@ -379,7 +379,11 @@ public function update_log_tryout($data){
 }
 
 public function get_laporan_to(){
-    $id = $this->session->userdata('id');
+    if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id = $this->session->userdata('USERNAME');  
+        } 
 
     $query = "SELECT t.`nm_tryout` 
     
@@ -388,8 +392,9 @@ public function get_laporan_to(){
     ,SUM(report_paket.jmlh_kosong) AS jumlah_kosong
     ,SUM(jmlh_benar+jmlh_salah+jmlh_kosong) AS jumlah_soal
     ,SUM(jmlh_benar / jumlah_soal * 100) AS nilai
-    FROM (SELECT * FROM `tb_report-paket`
-    WHERE id_pengguna = $id) report_paket
+    FROM (SELECT * FROM `tb_report-paket` `rp`
+    JOIN `tb_pengguna` `pengguna` ON `rp`.`id_pengguna` = `pengguna`.`id`
+    WHERE `pengguna`.`namaPengguna` = '$id') report_paket
     JOIN `tb_mm-tryoutpaket` mmto ON mmto.`id` = report_paket.`id_mm-tryout-paket`
     JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
     JOIN `tb_paket` p ON p.`id_paket` = mmto.`id_paket`

@@ -87,7 +87,11 @@
 
 <div class="page-title" style="background:#2b3036">
   <div class="grid-row">
-    <h1>Halo, <?=$this->session->userdata['USERNAME']?> !  </h1>
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+    <h1>Halo <?=$this->session->userdata['USERNAME']?> , orang tua dari <?=$siswa?>  </h1>
+    <?php else: ?>
+      <h1>Halo, <?=$this->session->userdata['USERNAME']?> !  </h1>
+  <?php endif ?>
 
 
   </div>
@@ -96,8 +100,13 @@
 <!-- PERKEMBANGAN learning Line -->
 <section class="padding-section" style="padding:0;">
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+    <h3>Topik yang baru saja dipelajari <?=$siswa?>..</h3> 
+    Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line dari <?=$siswa?>! <br><br>
+  <?php else: ?>
     <h3>Topik yang baru saja dipelajari..</h3> 
     Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
+    <?php endif ?>
     <a onclick="show_modal_learning()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
       <?php foreach ($topik  as $item): ?>
@@ -129,8 +138,12 @@
 <!-- PERKEMBANGAN learning Line -->
 <section class="padding-section" style="padding:0;">
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
-    <h3>Latihan</h3> 
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+    <h3>Latihan yang telah dikerjakan <?=$siswa?>..</h3> 
+    Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan <?=$siswa?><br><br>
+    <?php else: ?>
     Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan anda<br><br>
+    <?php endif ?>
     <a onclick="show_modal_latihan()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
     <div class="grid-col-row clear-fix">
       <?php foreach ($latihan  as $item): ?>
@@ -164,8 +177,13 @@
 <!-- PERKEMBANGAN TO -->
 <section class="padding-section" style="padding-top: 0;margin-top: 0">
   <div class="grid-row clear-fix">
-    <h3>Grafik Tryout</h3>
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+    <h3>Grafik Tryout dari <?=$siswa?></h3>
+    <p>Dibawah ini adalah grafik perkembangan TO <?=$siswa?>..</p>
+  <?php else: ?>
+     <h3>Grafik Tryout</h3>
     <p>Dibawah ini adalah grafik perkembangan TO kamu, jika nilaninya masih tidak memuaskan jangan khawatir pasti kamu bisa memperbaikinya dengan cara banyak mengikuti latihan. Tetap semangat! </p>
+    <?php endif ?>
 <!--     <label for="" class="">
       Filter Tryout : <select class="form-control tryout_select" name="tryout_select">
       <option value="">-- Cari Berdasarkan Tryout --</option>

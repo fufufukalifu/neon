@@ -95,11 +95,9 @@
 
 							<ul class="clear-fix">
 								<li>
-									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
-									<a href="<?=base_url('ortu') ?>">Home</a>
-									<?php else: ?>
+									
 									<a href="<?=base_url('welcome') ?>">Home</a>
-									<?php endif ?>
+									
 								</li>
 
 								<li>
@@ -108,7 +106,10 @@
 
 								<li>
 
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<?php else: ?>
 									<a href="<?=base_url('konsultasi/pertanyaan_all') ?>">Konsultasi</a>
+									<?php endif ?>
 
 								</li>
 								<li>
@@ -127,11 +128,16 @@
 
 								<li>
 
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<?php else: ?>
 									<a href="<?=base_url('modulonline/allmodul') ?>">Edu Drive</a>
+									<?php endif ?>
 
 								</li>
 
 								<li>
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<?php else: ?>
 									<a >Learning Line</a>
 									<ul>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/1/">SD</a></li>
@@ -139,6 +145,7 @@
 										<li><a href="<?=base_url()?>linetopik/lineMapel/3/">SMA</a></li>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/4/">SMA IPA</a></li>
 									</ul>
+									<?php endif ?>
 								</li>
 
 								<li>
@@ -150,10 +157,15 @@
 									<ul>
 									<?php if ($this->session->userdata('HAKAKSES')=='guru'): ?>
 										<li><a href="<?=base_url('guru/dashboard') ?>">Dashboard</a></li>
+									<?php elseif ($this->session->userdata('HAKAKSES')=='ortu') : ?>
+									<li><a href="<?=base_url('ortuback') ?>">Dashboard</a></li>
 									<?php else: ?>
 										<li><a href="<?=base_url('siswa') ?>">Dashboard</a></li>
 									<?php endif ?>	
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+									<?php else: ?>
 										<li><a href="<?=base_url('siswa/profilesetting') ?>">Pengaturan Profil</a></li>
+									<?php endif ?>	
 										<li><a href="<?=base_url('logout') ?>">Logout</a></li>
 									</ul>
 								</li>

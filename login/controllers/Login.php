@@ -108,7 +108,7 @@ public function validasiLogin() {
                 //set session nama ortu diganti dengan nama pengguna siswa
                $this->session->set_userdata('NAMAORTU', $namaOrtu);
                $this->cek_token();
-               redirect(site_url('ortu'));
+               redirect(site_url('welcome'));
 
            }elseif ($hakAkses == 'admin_cabang') {
                redirect(site_url('admincabang'));
