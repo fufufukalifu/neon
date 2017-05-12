@@ -2,7 +2,7 @@
   <div class="col-md-12 kirim_token">
     <div class="panel panel-teal">
       <div class="panel-heading">
-        <h3 class="panel-title">Daftar Paket TO    </h3> 
+        <h3 class="panel-title">Daftar Paket TO  <span style="color:red;"><b>Maintenis</b></span> </h3> 
         <div class="panel-toolbar text-right">
           <div class="col-md-11">
            <div class="col-sm-4">
@@ -46,7 +46,7 @@
     <table class="daftarpaket table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
       <thead>
         <tr>
-          <th>id</th>
+          <th>No</th>
           <th>Username</th>
           <th>Nama Paket</th>
           <th>Cabang</th>
@@ -60,49 +60,128 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody id="record_daftar_paket">
 
       </tbody>
+
     </table>
+    <!-- div pagination daftar token -->
+    <div class="col-md-12">
+      <ul class="pagination pagination-paket">
+
+      </ul>
+    </div>
+    <!-- div pagination daftar token -->
   </div>
 
 </div>
 </div>   
 </div>
 <script type="text/javascript">
+  var tb_paket;
+  var mySelect
+  var url;
+  var dataPaket;
+  var records_per_page=100;
+  var page=0;
+  var pagination_paket;
+  var pageVal=0;
+  var pageSelek=0;
   $(document).ready(function(){
-    var mySelect = $('select[name=cabang]').val();
+     mySelect = $('select[name=cabang]').val();
 
-    if ($('input[name=filter_paket]').val()) {
-      filter_cabang = $('input[name=filter_cabang]').val();
-      filter_to = $('input[name=filter_to]').val();
-      filter_paket = $('input[name=filter_paket]').val();
-      url = base_url+"admincabang/laporanto/"+filter_cabang+"/"+filter_to+"/"+filter_paket;
+  //   if ($('input[name=filter_paket]').val()) {
+  //     filter_cabang = $('input[name=filter_cabang]').val();
+  //     filter_to = $('input[name=filter_to]').val();
+  //     filter_paket = $('input[name=filter_paket]').val();
+  //     url = base_url+"admincabang/laporanto/"+filter_cabang+"/"+filter_to+"/"+filter_paket;
 
-      // select buat milih cabang dan tonya.
-      $('#select_cabang').val(filter_cabang); 
-      $('#select_to').val(filter_to); 
+  //     // select buat milih cabang dan tonya.
+  //     $('#select_cabang').val(filter_cabang); 
+  //     $('#select_to').val(filter_to); 
 
-      load_paket(filter_to);
+  //     load_paket(filter_to);
 
-    }else{
-      url = base_url+"admincabang/laporanto"
+  //   }else{
+  //     url = base_url+"admincabang/laporanto"
+  //   }
+
+  //   dataTablePaket = $('.daftarpaket').DataTable({
+  //     "ajax": {
+  //       "url": url,
+  //       "type": "POST"
+  //     },
+  //     "emptyTable": "Tidak Ada Data Pesan",
+  //     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  //     "bDestroy": true,
+  //   });
+    function set_tb_paket() { 
+      url=base_url+"admincabang/laporanto";
+      dataPaket={records_per_page:records_per_page,page:pageSelek};
+      $.ajax({
+        url:url,
+        data:dataPaket,
+        dataType:"text",
+        type:"post",
+        success:function(Data)
+        {
+       // console.log(Data);
+          tb_paket = JSON.parse(Data);
+          $('#record_daftar_paket').append(tb_paket);
+        },
+        error:function(){
+
+        },
+      });
+
+      
     }
+    set_tb_paket();
+    function set_pagination_tb_paket() {
+      console.log("ini gemes");
+      url=base_url+"admincabang/pagination_daftar_paket";
+      dataPaket={records_per_page:records_per_page,page:pageSelek};
+      $.ajax({
+        url:url,
+        data:dataPaket,
+        dataType:"text",
+        type:"post",
+        success:function(Data)
+        {
+       // console.log(Data);
+          pagination_paket = JSON.parse(Data);
+          $('.pagination-paket').append(pagination_paket);
+        },
+        error:function(){
 
-
-    dataTablePaket = $('.daftarpaket').DataTable({
-      "ajax": {
-        "url": url,
-        "type": "POST"
-      },
-      "emptyTable": "Tidak Ada Data Pesan",
-      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-      "bDestroy": true,
-    });
-
+        },
+      });
+    }
+    set_pagination_tb_paket();
 
   });
+function selectPagePaket(pageVal='0') {
+  $('#record_daftar_paket').empty();
+    page=pageVal;
+  pageSelek=page*records_per_page;
+  url=base_url+"admincabang/laporanto";
+      dataPaket={records_per_page:records_per_page,page:pageSelek};
+      $.ajax({
+        url:url,
+        data:dataPaket,
+        dataType:"text",
+        type:"post",
+        success:function(Data)
+        {
+       // console.log(Data);
+          tb_paket = JSON.parse(Data);
+          $('#record_daftar_paket').append(tb_paket);
+        },
+        error:function(){
 
+        },
+      });
+}
 
 
 // CABANG KETIKA DI CHANGE

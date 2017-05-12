@@ -291,7 +291,7 @@ class Token extends MX_Controller {
   	// $page = 0;
 
   	$jumlah_data_per_page = $this->input->post('records_per_page_siswa');
-  	$page = $this->input->post('pageSiswa');
+  	$page = $this->input->post('pageSelekSiswa');
   	$keySearchSiswa = $this->input->post('keySearchSiswa');
 		$list = $this->token_model->get_siswa_unvoucher($jumlah_data_per_page,$page,$keySearchSiswa);
 		$data = array();

@@ -68,7 +68,7 @@
   </div>
   <div class="panel-body">
     <!-- div seting record dan pencarian   -->
-    <div class="col-md-12" style="background:red;">
+    <div class="col-md-12" >
       <!-- div setting record -->
       <div class="col-md-2 mb2 mt10 pl0">
         <div  class="form-group">

@@ -18,7 +18,7 @@ class Admincabang_model extends CI_model {
 	var $order = array('id_report' => 'desc','c.namaCabang');
 
 	//get report all
-	function get_report_paket($data){
+	function get_report_paket($data,$records_per_page,$page){
 		$this->db->order_by('s.namaDepan','asc');
 		$this->db->select('id_report,p.namaPengguna,
 			c.namaCabang,
@@ -33,7 +33,7 @@ class Admincabang_model extends CI_model {
 			pk.tgl_pengerjaan,
 			durasi');
 
-		$this->db->from('tb_report-paket pk');
+		// $this->db->from('tb_report-paket pk');
 
 		$this->db->join('tb_siswa s' , 'pk.siswaID=s.id');
 		$this->db->join('tb_pengguna p' , 'p.id = pk.id_pengguna');
@@ -52,11 +52,36 @@ class Admincabang_model extends CI_model {
 			$this->db->where('mmto.id_paket', $data['paket']);
 		}
 
-		$this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get();
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('tb_report-paket pk',$records_per_page,$page);
 		return $query->result_array();
 	}
 
+		//jumlah report all
+	function jumlah_report_paket($data){
+		$this->db->order_by('s.namaDepan','asc');
+
+		$this->db->join('tb_siswa s' , 'pk.siswaID=s.id');
+		$this->db->join('tb_pengguna p' , 'p.id = pk.id_pengguna');
+		$this->db->join('tb_mm-tryoutpaket mmto' , 'mmto.id = pk.id_mm-tryout-paket');
+		$this->db->join('tb_paket pkt' , 'pkt.id_paket = mmto.id_paket');
+		$this->db->join('tb_cabang c' , 'c.id = s.cabangID');
+
+		if ($data['cabang']!="all") {
+			$this->db->where('c.id', $data['cabang']);
+		}
+
+		if ($data['tryout']!="all") {
+			$this->db->where('mmto.id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('mmto.id_paket', $data['paket']);
+		}
+
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('tb_report-paket pk');
+		return $query->num_rows();
+	}
 
 
 

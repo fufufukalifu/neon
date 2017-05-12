@@ -84,63 +84,126 @@ class Admincabang extends MX_Controller {
 	}
 
 	//laporan to ajax
-	public function laporanto($cabang="all",$tryout="all",$paket="all"){
-		echo "";
+	public function laporanto($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0){
+		//data post
+		$records_per_page=$this->input->post('records_per_page');
+		$page=$this->input->post('page');
+		//data post
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
 		$data['to'] = $this->mtoback->get_To();
-
-
 		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-
-		$all_report = $this->admincabang_model->get_report_paket($datas);
-
+		$all_report = $this->admincabang_model->get_report_paket($datas,$records_per_page,$page);
 		$data = array();
-
+		$tb_paket=null;
+		$no=$page+1;
 		foreach ( $all_report as $item ) {
 			$sumBenar=$item ['jmlh_benar'];
 			$sumSalah=$item ['jmlh_salah'];
 			$sumKosong=$item ['jmlh_kosong'];
 			//hitung jumlah soal
 			$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
-			
+			$nama=$item ['namaDepan']." ".$item ['namaBelakang'];
 			$nilai=0;
 			// cek jika pembagi 0
 			if ($jumlahSoal != 0) {
 				//hitung nilai
 				$nilai=$sumBenar/$jumlahSoal*100;
 			}
-			$row = array();
-			$row[] = $item ['id_report'];
-			$row[] = $item ['namaPengguna'];
-			$row[] = $item ['nm_paket'];
-			$row[] = $item ['namaCabang'];
-			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
-			$row[] = $jumlahSoal;
-			$row[] = $item ['jmlh_benar'];
-			$row[] = $item ['jmlh_salah'];
-			$row[] = $item ['jmlh_kosong'];
-			$row[] = number_format($nilai,2);			
-			$row[] = $item['tgl_pengerjaan'];
+			$tb_paket.=	'<tr>
+							<td>'.$no.'</td>	
+							<td>'.$item ['namaPengguna'].'</td>
+							<td>'.$item ['nm_paket'].'</td>
+							<td>'.$item ['namaCabang'].'</td>
+							<td>'.$nama.'</td>
+							<td>'.$jumlahSoal.'</td>							
+							<td>'.$sumBenar.'</td>
+							<td>'.$sumSalah.'</td>
+							<td>'.$sumKosong.'</td>
+							<td>'.number_format($nilai,2).'</td>
+							<td>'.$item['tgl_pengerjaan'].'</td>
+						</tr>';
+			// $sumBenar=$item ['jmlh_benar'];
+			// $sumSalah=$item ['jmlh_salah'];
+			// $sumKosong=$item ['jmlh_kosong'];
+			// //hitung jumlah soal
+			// $jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+			// $nilai=0;
+			// // cek jika pembagi 0
+			// if ($jumlahSoal != 0) {
+			// 	//hitung nilai
+			// 	$nilai=$sumBenar/$jumlahSoal*100;
+			// }
+			// $row = array();
+			// $row[] = $item ['id_report'];
+			// $row[] = $item ['namaPengguna'];
+			// $row[] = $item ['nm_paket'];
+			// $row[] = $item ['namaCabang'];
+			// $row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
+			// $row[] = $jumlahSoal;
+			// $row[] = $item ['jmlh_benar'];
+			// $row[] = $item ['jmlh_salah'];
+			// $row[] = $item ['jmlh_kosong'];
+			// $row[] = number_format($nilai,2);			
+			// $row[] = $item['tgl_pengerjaan'];
 
-			if ($item['jmlh_benar']==0 && $item['jmlh_salah']==0) {
-				$row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a>';
-			}else{
-				$row[] = "-";	
-
-			}	
-			
-			$data[] = $row;
+			// if ($item['jmlh_benar']==0 && $item['jmlh_salah']==0) {
+			// 	$row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a>';
+			// }else{
+			// 	$row[] = "-";	
+			// }	
+			// $data[] = $row;
+						$no++;
 		}
 
-		$output = array(
-			"data"=>$data,
-			);
-
-		echo json_encode( $output );
+		// $output = array(
+		// 	"data"=>$data,
+		// 	);
+	
+		echo json_encode( $tb_paket );
 	}
+	public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0)
+	{
+		//data post
+		// $records_per_page=$this->input->post('records_per_page');
+		// $page=$this->input->post('page');
+		//data post
+		# get cabang
+		$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get to
+		$data['to'] = $this->mtoback->get_To();
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
 
+		$pagination='<li class="hide" id="page-prev-siswa"><a href="javascript:void(0)" onclick="prevPageSiswa()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a></li>';
+
+    	 $pagePagination=1;
+
+    	 $sumPagination=($jumlah_data/$records_per_page);
+
+    	 for ($i=0; $i < $sumPagination; $i++) { 
+    	 	if ($pagePagination<=7) {
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="pageSiswa-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 	}else{
+    	 		    	 	$pagination.='<li class="hide" id="pageSiswa-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+    	 	}
+
+    	 	$pagePagination++;
+    	 }
+
+    	if ($pagePagination>7) {
+    	 	  $pagination.='<li class="" id="page-next-siswa">
+		      								<a href="javascript:void(0)" onclick="nextPageSiswa()" aria-label="Next">
+		        								<span aria-hidden="true">&raquo;</span>
+		      								</a>
+		    								</li>';
+    	 }
+
+		echo json_encode($pagination);
+	}
 	// // laporan paket
 	// public function laporanpaket(){
 	// 	$data['judul_halaman'] = "Laporan Paket TO";
@@ -447,8 +510,6 @@ class Admincabang extends MX_Controller {
 			redirect(site_url('login'));
 		}
 	}
-
-
 
 	public function laporan(){
 		$this->laporan_all_to();

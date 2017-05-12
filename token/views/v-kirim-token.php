@@ -25,7 +25,7 @@
       </div>
       <!-- div masa aktif -->
       <!-- div seting record dan pencarian   -->
-      <div class="col-md-12" style="background:red;">
+      <div class="col-md-12" >
           <!-- div setting record -->
           <div class="col-md-2 mb2 mt10 pl0">
             <div  class="form-group">
@@ -134,7 +134,7 @@
 
     <div class="panel-body">
      
-      <div class="col-md-12" style="background:red;">
+      <div class="col-md-12" >
       <!-- recor per page tabel pengguna token -->
       <div class="col-md-2 mb2 mt10 pl0">
         <select  class="form-control" name="records_per_page" >
@@ -274,7 +274,7 @@ set_tb_rekap_token();
 
     // set tb siswa
   function set_tb_siswa() {
-    datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageSiswa:pageSiswa,keySearchSiswa:keySearchSiswa};
+    datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageValSiswa:pageValSiswa,keySearchSiswa:keySearchSiswa};
     $('#record_siswa').empty();
     url=base_url+"token/ajax_data_siswa";
     $.ajax({
@@ -350,8 +350,9 @@ set_tb_siswa();
   });
 // untuk tabel siswa
 function selectPageSiswa(pageValSiswa='0') {
-  pageSiswa=pageValSiswa;
-  datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageSiswa:pageSiswa,keySearchSiswa:keySearchSiswa};
+      pageSiswa=pageValSiswa;
+  pageSelekSiswa=pageSiswa*records_per_page_siswa;
+  datasSiswa ={records_per_page_siswa:records_per_page_siswa,pageSelekSiswa:pageSelekSiswa,keySearchSiswa:keySearchSiswa};
     $('#record_siswa').empty();
     url=base_url+"token/ajax_data_siswa";
     $.ajax({
