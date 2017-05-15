@@ -384,14 +384,11 @@
 					dataType: "TEXT",
 					success: function(data){
 						if (hak_akses=='guru') {
-							console.log(datas.statusRespon);
 							if (datas.statusRespon!=1) {
-								console.log('masuk');
 								socket.emit('remove_notifikasi', {
 									datas
 								});	
 							}
-
 						// add ke konten yang di insert
 					}
 					$.getJSON( base_url+"konsultasi/get_last_jawaban/", function( datas ) {
@@ -421,62 +418,60 @@
 
 			function komen(data){
 				var isikomentar = $('textarea[name=komentar]').val();
+				url = base_url+"konsultasi/check_point/"+data;
 
-	// url = base_url+"konsultasi/ajax_add_point/"+data;
-	url = base_url+"konsultasi/check_point/"+data;
+				datas = {
+					isiKomentar : isikomentar,
+					idJawaban : data
+				}
+				var stat;
+				$.ajax({
+					url : url,
+					type: "POST",
+					data: datas,
+					dataType: "json",
+					success: function(data, status, jqXHR)
+					{
+						stat = get_data(data, datas);
+					},
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						swal('Error adding / update data');
+					}
+				});
 
-	datas = {
-		isiKomentar : isikomentar,
-		idJawaban : data
-	}
-	var stat;
-	$.ajax({
-		url : url,
-		type: "POST",
-		data: datas,
-		dataType: "json",
-		success: function(data, status, jqXHR)
-		{
-			stat = get_data(data, datas);
-		},
-		error: function (jqXHR, textStatus, errorThrown)
-		{
-			swal('Error adding / update data');
-		}
-	});
-
-}
-
-function get_data(data, datas){
-	status = data;
-	postingan = datas;
-	if (status==1) {
-		swal("Tidak Dapat Memberikan Point")
-	}else{
-		console.log(postingan.idJawaban);
-		url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
-		$.ajax({
-			url : url,
-			type: "POST",
-			data: datas,
-			dataType: "text",
-			success: function()
-			{
-				swal("sudah ditambahkan");
-			},
-			error: function (jqXHR, textStatus, errorThrown)
-			{
-				swal('Error adding / update data');
 			}
-		});
-	}
-}
-</script>
 
-<!-- FUNGSI EDIT -->
-<script>
-	function edit(){
+			function get_data(data, datas){
+				status = data;
+				postingan = datas;
+				if (status==1) {
+					swal("Tidak Dapat Memberikan Point")
+				}else{
+					console.log(postingan.idJawaban);
+					url = base_url+"konsultasi/ajax_add_point/"+postingan.idJawaban;
+					$.ajax({
+						url : url,
+						type: "POST",
+						data: datas,
+						dataType: "text",
+						success: function()
+						{
+							swal("sudah ditambahkan");
+						},
+						error: function (jqXHR, textStatus, errorThrown)
+						{
+							swal('Error adding / update data');
+						}
+					});
+				}
+			}
+		</script>
 
-	}	
-</script>
-<!-- FUNGSI EDIT -->
+		<!-- FUNGSI EDIT -->
+		<script>
+			function edit(){
+
+			}	
+		</script>
+		<!-- FUNGSI EDIT -->

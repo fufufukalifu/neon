@@ -651,7 +651,7 @@
   <li class="submenu-header ellipsis">Konsultasi Forum/li>
 
     <li >
-     <a href="<?= base_url('index.php/konsulback/listkonsul');?>">
+     <a href="<?= base_url('index.php/konsulback/myhistory');?>">
       <span class="text">Daftar Konsultasi Forum</span>
     </a>
   </li>

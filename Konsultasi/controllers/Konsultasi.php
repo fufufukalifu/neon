@@ -1075,7 +1075,7 @@ public function pertanyaan_grade_search($kunci=''){
     $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
 
   // pertanyaan saya.
-    $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_id_siswa(),$config["per_page"], $page, $kunci);
+    $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_for_konsultasi_array(),$config["per_page"], $page, $kunci);
     $data["links"] = $this->pagination->create_links();
     $data['jumlah_postingan'] = $config['total_rows'];
     $this->parser->parse( 'templating/index', $data );
@@ -1109,7 +1109,7 @@ public function pertanyaan_mentor_search($kunci=''){
     $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 
-    $config["total_rows"] = $this->mkonsultasi->get_question_mentor_number($this->get_id_siswa(),$kunci);
+    $config["total_rows"] = $this->mkonsultasi->get_question_mentor_number($this->get_tingkat_for_konsultasi_array(),$kunci);
     $config["per_page"] = 10;
 
   # konfig link
@@ -1122,10 +1122,11 @@ public function pertanyaan_mentor_search($kunci=''){
     $this->pagination->initialize($config);
   ##KONFIGURASI UNTUUK PAGINATION
 
-    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
+    $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_for_konsultasi_array());
 
   // pertanyaan saya.
-    $data['my_questions']=$this->mkonsultasi->get_my_question_level($this->get_tingkat_siswa(),$config["per_page"], $page, $kunci);
+  $data['my_questions']=$this->mkonsultasi->get_question_m($this->get_id_siswa(),$config["per_page"], $page, $kunci);
+
     $data["links"] = $this->pagination->create_links();
     $data['jumlah_postingan'] = $config["total_rows"];
 
