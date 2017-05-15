@@ -88,13 +88,26 @@ class Admincabang extends MX_Controller {
 		//data post
 		$records_per_page=$this->input->post('records_per_page');
 		$page=$this->input->post('page');
+		$cabang=$this->input->post('cabang');
+		$tryout=$this->input->post('tryout');
+		$paket=$this->input->post('paket');
+		$keySearch=$this->input->post('keySearch');
 		//data post
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
 		$data['to'] = $this->mtoback->get_To();
-		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$all_report = $this->admincabang_model->get_report_paket($datas,$records_per_page,$page);
+
+
+		if ($keySearch != '' && $keySearch !=' ' ) {
+			$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+			$all_report = $this->admincabang_model->cari_report_paket($datas,$records_per_page,$page,$keySearch);
+		} else {
+			$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+			$all_report = $this->admincabang_model->get_report_paket($datas,$records_per_page,$page);
+		}
+		
+
 		$data = array();
 		$tb_paket=null;
 		$no=$page+1;
@@ -173,10 +186,13 @@ class Admincabang extends MX_Controller {
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
 		$data['to'] = $this->mtoback->get_To();
+		$cabang=$this->input->post('cabang');
+		$tryout=$this->input->post('tryout');
+		$paket=$this->input->post('paket');
 		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
 		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
 
-		$pagination='<li class="hide" id="page-prev-siswa"><a href="javascript:void(0)" onclick="prevPageSiswa()" aria-label="Previous">
+		$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a></li>';
 
@@ -186,21 +202,26 @@ class Admincabang extends MX_Controller {
 
     	 for ($i=0; $i < $sumPagination; $i++) { 
     	 	if ($pagePagination<=7) {
-    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="pageSiswa-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
     	 	}else{
-    	 		    	 	$pagination.='<li class="hide" id="pageSiswa-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+    	 		    	 	$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
     	 	}
 
     	 	$pagePagination++;
     	 }
 
     	if ($pagePagination>7) {
-    	 	  $pagination.='<li class="" id="page-next-siswa">
-		      								<a href="javascript:void(0)" onclick="nextPageSiswa()" aria-label="Next">
+    	 	  $pagination.='<li class="" id="page-next">
+		      								<a href="javascript:void(0)" onclick="nextPage()" aria-label="Next">
 		        								<span aria-hidden="true">&raquo;</span>
 		      								</a>
 		    								</li>';
     	 }
+
+    	 if ($pagePagination<3) {
+    	 		$pagination='';
+    	 }
+    	 
 
 		echo json_encode($pagination);
 	}
@@ -242,7 +263,7 @@ class Admincabang extends MX_Controller {
 	{
 		$this->load->library('Pdf');
 		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$all_report = $this->admincabang_model->get_report_paket($datas);		
+		$all_report = $this->admincabang_model->get_report_paket_pdf($datas);		
 		$data['all_report'] = array();
 		$no=0;
 		$sumNilai=0;

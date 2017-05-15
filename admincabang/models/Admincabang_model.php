@@ -18,68 +18,88 @@ class Admincabang_model extends CI_model {
 	var $order = array('id_report' => 'desc','c.namaCabang');
 
 	//get report all
-	function get_report_paket($data,$records_per_page,$page){
-		$this->db->order_by('s.namaDepan','asc');
-		$this->db->select('id_report,p.namaPengguna,
-			c.namaCabang,
-			s.namaBelakang,
-			s.namaDepan,
-			jmlh_benar,
-			jmlh_kosong,
-			jmlh_salah,
-			total_nilai,
-			poin,
-			nm_paket,
-			pk.tgl_pengerjaan,
-			durasi');
-
-		// $this->db->from('tb_report-paket pk');
-
-		$this->db->join('tb_siswa s' , 'pk.siswaID=s.id');
-		$this->db->join('tb_pengguna p' , 'p.id = pk.id_pengguna');
-		$this->db->join('tb_mm-tryoutpaket mmto' , 'mmto.id = pk.id_mm-tryout-paket');
-		$this->db->join('tb_paket pkt' , 'pkt.id_paket = mmto.id_paket');
-		$this->db->join('tb_cabang c' , 'c.id = s.cabangID');
-
+	function get_report_paket($data,$records_per_page='',$page=''){
+		$this->db->order_by('namaDepan','asc');
+	
 		if ($data['cabang']!="all") {
-			$this->db->where('c.id', $data['cabang']);
+			$this->db->where('id_cabang', $data['cabang']);
 		}
 
 		if ($data['tryout']!="all") {
-			$this->db->where('mmto.id_tryout', $data['tryout']);
+			$this->db->where('id_tryout', $data['tryout']);
 		}
 		if ($data['paket']!="all") {
-			$this->db->where('mmto.id_paket', $data['paket']);
+			$this->db->where('id_paket', $data['paket']);
 		}
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('tb_report-paket pk',$records_per_page,$page);
+		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
+		return $query->result_array();
+	}
+
+		//cari report all
+	function cari_report_paket($data,$records_per_page='',$page='',$keySearch=''){
+		$this->db->order_by('namaDepan','asc');
+	
+		if ($data['cabang']!="all") {
+			$this->db->where('id_cabang', $data['cabang']);
+		}
+
+		if ($data['tryout']!="all") {
+			$this->db->where('id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('id_paket', $data['paket']);
+		}
+
+		$this->db->like('namaPengguna',$keySearch);
+		$this->db->or_like('nm_paket',$keySearch);
+		$this->db->or_like('namaDepan',$keySearch);
+		$this->db->or_like('namaPengguna',$keySearch);
+		$this->db->or_like('namaBelakang',$keySearch);
+		$this->db->or_like('nama_lengkap',$keySearch);
+
+
+			
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
+		return $query->result_array();
+	}
+
+	function get_report_paket_pdf($data){
+		$this->db->order_by('namaDepan','asc');
+	
+		if ($data['cabang']!="all") {
+			$this->db->where('id_cabang', $data['cabang']);
+		}
+
+		if ($data['tryout']!="all") {
+			$this->db->where('id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('id_paket', $data['paket']);
+		}
+
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('view_laporan_paket_TO');
 		return $query->result_array();
 	}
 
 		//jumlah report all
 	function jumlah_report_paket($data){
-		$this->db->order_by('s.namaDepan','asc');
-
-		$this->db->join('tb_siswa s' , 'pk.siswaID=s.id');
-		$this->db->join('tb_pengguna p' , 'p.id = pk.id_pengguna');
-		$this->db->join('tb_mm-tryoutpaket mmto' , 'mmto.id = pk.id_mm-tryout-paket');
-		$this->db->join('tb_paket pkt' , 'pkt.id_paket = mmto.id_paket');
-		$this->db->join('tb_cabang c' , 'c.id = s.cabangID');
-
 		if ($data['cabang']!="all") {
-			$this->db->where('c.id', $data['cabang']);
+			$this->db->where('id_cabang', $data['cabang']);
 		}
 
 		if ($data['tryout']!="all") {
-			$this->db->where('mmto.id_tryout', $data['tryout']);
+			$this->db->where('id_tryout', $data['tryout']);
 		}
 		if ($data['paket']!="all") {
-			$this->db->where('mmto.id_paket', $data['paket']);
+			$this->db->where('id_paket', $data['paket']);
 		}
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('tb_report-paket pk');
+		$query = $this->db->get('view_laporan_paket_TO');
 		return $query->num_rows();
 	}
 
