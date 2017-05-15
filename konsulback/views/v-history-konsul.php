@@ -84,7 +84,7 @@
      <!-- Start Panel Body -->
      <div class="panel-body">
        <!-- Start Tabel -->
-       <table class="table table-striped" id="zero-configuration1" style="font-size: 12px">
+       <table class="table table-striped respon" style="font-size: 12px">
         <thead>
          <tr>
            <th>No</th>
@@ -99,12 +99,12 @@
         <?php $no=1; ?>
         <?php foreach ($respon as $value): ?>
          <tr>
-          <th><?=$no;?></th>
-          <th><?=$value['judulPertanyaan']?></th>
-          <th><?=$value['isiPertanyaan']?></th>
-          <th><?=htmlspecialchars(substr($value['isiJawaban'], 0, 100))?>...</th>
-          <th><?=$value['tgl']?></th>
-          <th><a class="btn btn-sm bgcolor-success text-center"  title="Detail" href=""><i class="ico-bubble11 fsize23"></i></a></th>
+          <td><?=$no;?></td>
+          <td>><?=$value['judulPertanyaan']?></td>
+          <td><?=$value['isiPertanyaan']?></td>
+          <td><?=htmlspecialchars(substr($value['isiJawaban'], 0, 100))?>...</td>
+          <td><?=$value['tgl']?></td>
+          <td><a class="btn btn-sm bgcolor-success text-center"  title="Detail" href=""><i class="ico-bubble11 fsize23"></i></a></td>
         </tr>
         <?php $no++; ?>
       <?php endforeach ?>
@@ -125,8 +125,8 @@
    <!-- Start Panel Body -->
    <div class="panel-body">
      <!-- Start Tabel -->
-     <table class="table table-striped" id="zero-configuration" style="font-size: 12px">
-      <thead>
+     <table class="table table-striped komen" style="font-size: 12px">
+      <thea d>
        <tr>
          <th>No</th>
          <th>Nama</th>
@@ -138,10 +138,10 @@
       <?php $no='1'; ?>
       <?php foreach ($komen as $rows ): ?>
         <tr>
-          <th><?=$no;?></th>
-          <th><?=$rows['namaDepan'];?> <?=$rows['namaBelakang'];?></th>
-          <th><?=$rows['komentar'];?></th>
-          <th><?=$rows['tgl'];?></th>
+          <td><?=$no;?></td>
+          <td><?=$rows['namaDepan'];?> <?=$rows['namaBelakang'];?></td>
+          <td><?=$rows['komentar'];?></td>
+          <td><?=$rows['tgl'];?></td>
         </tr>
         <?php $no++; ?>
       <?php endforeach ?>
@@ -162,7 +162,7 @@
      <!-- Start Panel Body -->
      <div class="panel-body">
        <!-- Start Tabel -->
-       <table class="table table-striped" id="zero-configuration" style="font-size: 12px">
+       <table class="table table-striped pertanyaan" style="font-size: 12px">
         <thead>
          <tr>
            <th>No</th>
@@ -172,20 +172,19 @@
            <th>Judul Bab</th>
            <th>Respon</th>
            <th>Tanggal</th>
-
          </tr>
        </thead>
        <tbody>
         <?php $no='1'; ?>
         <?php foreach ($question_to_teacher as $rows ): ?>
           <tr>
-            <th><?=$no;?></th>
-            <th><a title="kunjungi <?=$rows['judulPertanyaan'] ?>" href="<?=base_url('konsultasi/singlekonsultasi/'.$rows['pertanyaanID']) ?>"><?=$rows['judulPertanyaan'];?></a></th>
-            <th><?=$rows['isiPertanyaan'];?></th>
-            <th><?=$rows['namaMataPelajaran'];?></th>
-            <th><?=$rows['judulBab'];?></th>
-            <th><?=$rows['jumlah'];?></th>
-            <th><?=$rows['date_created'];?></th>
+            <td><?=$no;?></td>
+            <td><a title="kunjungi <?=$rows['judulPertanyaan'] ?>" href="<?=base_url('konsultasi/singlekonsultasi/'.$rows['pertanyaanID']) ?>"><?=$rows['judulPertanyaan'];?></a></td>
+            <td><?=$rows['isiPertanyaan'];?></td>
+            <td><?=$rows['namaMataPelajaran'];?></td>
+            <td><?=$rows['judulBab'];?></td>
+            <td><?=$rows['jumlah'];?></td>
+            <td><?=$rows['date_created'];?></td>
           </tr>
           <?php $no++; ?>
         <?php endforeach ?>
@@ -205,4 +204,11 @@
   $('#detail-konsul').modal('show');
   console.log('masuk js modal');
 }
+
+
+$(document).ready(function(){
+    $('.pertanyaan').dataTable();
+    $('.respon').dataTable();
+    $('.respon').dataTable();
+});
 </script>

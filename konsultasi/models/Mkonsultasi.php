@@ -396,11 +396,6 @@ class Mkonsultasi extends CI_Model
 			p.mentorID,(SELECT CONCAT(namaDepan,' ',namaBelakang) from tb_guru where id = p.mentorID) as namaGuru,mp.namaMataPelajaran
 			");
 
-		if ($key==!"") {
-			$this->db->where("judulPertanyaan LIKE '%$key%' OR
-				bab.judulBab LIKE '%$key%'
-				")->order_by('`p.date_created`','asc');
-		}
 
 		$this->db->join('`tb_bab` `bab`','`p`.`babID` = `bab`.`id`');
 		$this->db->join('`tb_tingkat-pelajaran` `tp`','`bab`.`tingkatPelajaranID` = `tp`.`id`');
@@ -413,6 +408,14 @@ class Mkonsultasi extends CI_Model
 			(SELECT DISTINCT(mentorID) FROM `tb_k_pertanyaan` 
 			WHERE siswaID='.$id_siswa.' AND mentorID IS NOT NULL
 			)');
+
+
+		if ($key==!"") {
+			$this->db->where("judulPertanyaan LIKE '%$key%' OR
+				bab.judulBab LIKE '%$key%'
+				")->order_by('`p.date_created`','asc');
+		}
+
 		$query = $this->db->get('`tb_k_pertanyaan` `p`',$perpage,$page);
 		return $query->result_array();
 
