@@ -296,6 +296,7 @@ set_tb_rekap_token();
 set_tb_siswa();
     //set pagination
   function paginationSiswa(records_per_page_siswa) {
+
      datasSiswa ={records_per_page_siswa:records_per_page_siswa,keySearchSiswa:keySearchSiswa};
       $.ajax({
       url:base_url+"token/paginationSiswa/",
@@ -499,7 +500,6 @@ function selectPage(pageVal='0') {
         var idPaginationshow =newMeridian+3;
         // start id pagination yg akan sembunyikan
         var idPaginationhide =meridian-3;
-        console.log("ini"+next);
         //lakukan pengulangan sebanyak loop
         for (var i = 0; i < loop; i++) {
           hidePagination='#page-'+idPaginationhide;
