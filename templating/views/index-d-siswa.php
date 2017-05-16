@@ -48,6 +48,10 @@
 <!-- START Body -->
 <body>
 
+<!-- sound notification -->
+  <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+  <!-- /sound notification -->
+
   <!-- START Template Header -->
   <header id="header" class="navbar navbar-fixed-top text-white">
     <!-- START navbar header -->
@@ -78,92 +82,72 @@
  <!-- Offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
  <li class="navbar-main hidden-lg hidden-md hidden-sm">
    <a href="javascript:void(0);" data-toggle="sidebar" data-direction="ltr" rel="tooltip" title="Menu sidebar">
-    <span class="meta">
-     <span class="icon"><i class="ico-paragraph-justify3"></i></span>
+    <input type="int" name="count_komen" value="" hidden="true">
+   <span class="icon" id="new_count_komen">
+     <span class="jumlah_notifikasi"></span>
+     <i class="ico-bell"></i></span>
+
+     <!-- <?php if ($count_komen!=0): ?>
+     <?php echo $count_komen ?> -->
+     <span class="hasnotification hasnotification-danger"></span>
+     <!-- <?php endif ?> -->
    </span>
  </a>
 </li>
 <!--/ Offcanvas left -->
 
 <!-- Notification dropdown -->
-<!-- <li class="dropdown custom" id="header-dd-notification">
+<li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <span class="icon"><i class="ico-bell"></i></span>
-   <span class="hasnotification hasnotification-danger"></span>
- </span>
-</a> -->
+   <input type="int" name="count_komen" value="1" hidden="true">
+   <span class="icon" id="new_count_komen">
+     <span class="jumlah_notifikasi"></span>
+     <i class="ico-bell"></i></span>
+
+     <!-- <?php if ($count_komen!=0): ?>
+     <?php echo $count_komen ?> -->
+     <span class="hasnotification hasnotification-danger"></span>
+     <!-- <?php endif ?> -->
+   </span>
+ </a>
 
 
-<!-- Dropdown menu -->
-<div class="dropdown-menu" role="menu">
+ <!-- Dropdown menu -->
+ <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
-   <span class="title">Notification <span class="count"></span></span>
-   <span class="option text-right"><a href="javascript:void(0);">Clear all</a></span>
+   <span class="title">Notification<nspan class="count"></span></span>
+   <span class="option text-right"><a href="javascript:void(0);" title="Close Notifikasi"><i class="ico-close3"></i></a></span>
  </div>
  <div class="dropdown-body slimscroll">
    <!-- indicator -->
-   <div class="indicator inline"><span class="spinner"></span></div>
+   <!-- <div class="indicator inline"><span class="spinner"></span></div> -->
    <!--/ indicator -->
 
-   <!-- Message list -->
-   <div class="media-list">
-    <a href="javascript:void(0);" class="media read border-dotted">
-     <span class="media-object pull-left">
-      <i class="ico-basket2 bgcolor-info"></i>
-    </span>
-    <span class="media-body">
-      <span class="media-text">Duis aute irure dolor in <span class="text-primary semibold">reprehenderit</span> in voluptate.</span>
-      <!-- meta icon -->
-      <span class="media-meta pull-right">2d</span>
-      <!--/ meta icon -->
-    </span>
-  </a>
+    <!-- Message list -->
+   <div class="media-list" id="message-tbody">
 
-  <a href="javascript:void(0);" class="media read border-dotted">
-   <span class="media-object pull-left">
-    <i class="ico-call-incoming"></i>
-  </span>
-  <span class="media-body">
-    <span class="media-text">Aliquip ex ea commodo consequat.</span>
-    <!-- meta icon -->
-    <span class="media-meta pull-right">1w</span>
-    <!--/ meta icon -->
-  </span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-alarm2"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Excepteur sint <span class="text-primary semibold">occaecat</span> cupidatat non.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">12w</span>
-  <!--/ meta icon -->
-</span>
-</a>
-
-<a href="javascript:void(0);" class="media read border-dotted">
- <span class="media-object pull-left">
-  <i class="ico-checkmark3 bgcolor-success"></i>
-</span>
-<span class="media-body">
-  <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
-  <!-- meta icon -->
-  <span class="media-meta pull-right">14w</span>
-  <!--/ meta icon -->
-</span>
-</a>
-</div>
-<!--/ Message list -->
+       <?php foreach ($datLapor as $key ): ?>
+      <a href="<?=base_url()?>siswa/see_message/<?=$key['UUID']?>" class="media border-dotted read">
+        <span class="pull-left">
+          <img src="<?=base_url()?>assets\image\photo\siswa\>" class="media-object img-circle" alt="">
+        </span>
+        <span class="media-body">
+          <span class="media-heading"><?=$key['namaPengguna']?></span>
+          <span class="media-text ellipsis nm"><?=$key['isi']?></span>
+          <!-- meta icon -->
+          <span class="media-meta pull-right"><?=$key['jenis']?></span>
+          <!--/ meta icon -->
+        </span>
+      </a>
+    <?php endforeach ?>
+  </div>
+  <!--/ Message list -->
 </div>
 </div>
 <!--/ Dropdown menu -->
 </li>
 <!--/ Notification dropdown -->
-
-
 </ul>
 <!--/ END Left nav -->
 
@@ -346,6 +330,66 @@
 <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+
+ <script type="text/javascript">
+
+  jQuery(document).ready(function () {
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    var new_count_komen = 0;
+    var mapelID=8;
+    var obMapel ='';
+    var penggunaID = ('<?=$this->session->userdata['id']?>');
+    var url = "<?= base_url() ?>index.php/siswa/ajax_getsiswa";
+
+    console.log('pengguna',penggunaID);
+     // SOCKET CREATE PERTANYAAN
+      socket.on('pesan_baru', function(data){
+        var id_ortu = data.id_ortu;
+        var jenis_lapor = data.jenis_lapor;
+        var isi = data.isi;
+        var namaPengguna = data.namaPengguna;
+
+        $.ajax({
+            url:url,
+            success:function(data){
+              // ubah type data  dari json ke objek
+              obj =JSON.parse(data);
+              
+               idortu = obj[0].id_ortu;
+               // namaPengguna = obj[0].penggunaID;
+
+               for (i = 0; i < obj.length; i++) { 
+                // cek pengguna yang dituju bukan?
+                if (id_ortu == idortu ) {
+                    // play sound notification
+                    $('#notif_audio')[0].play();
+                    //add komen baru ke data notif id message-tbody
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'siswa/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+                } 
+              }
+
+
+
+             },              
+          });
+
+       
+        
+
+      });
+      // SOCKET CREATE PERTANYAAN
+
+    
+
+  $.getJSON( base_url+"siswa/jumlah_pesan", function( datas ) {
+        $('.jumlah_notifikasi').text(datas);
+      });
+  });
+
+
+</script>
+
 
 </body>
 </htmlf>

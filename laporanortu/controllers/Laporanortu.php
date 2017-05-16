@@ -133,9 +133,9 @@ class Laporanortu extends MX_Controller {
 
 			// //get data komen by UUID
           $datArr=$this->Laporanortu_model->get_laporan_by_id($UUID);
-          // var_dump($datArr);
 
           $dataLaporan['id_ortu']=$datArr[0]['id_ortu'];
+          $dataLaporan['siswaID']=$datArr[0]['siswaID'];
           $dataLaporan['jenis_lapor']=$datArr[0]['jenis'];
           $dataLaporan['isi']=$datArr[0]['isi'];
           $dataLaporan['namaPengguna']=$datArr[0]['namaPengguna'];

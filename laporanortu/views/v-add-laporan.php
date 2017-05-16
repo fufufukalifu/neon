@@ -287,7 +287,7 @@ function kirim_laporan(){
                   isi: data.isi,
                   namaPengguna : data.namaPengguna,
                   UUID: data.UUID,
-
+                  siswaID: data.siswaID
 
                 });
 

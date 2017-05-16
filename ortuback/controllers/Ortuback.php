@@ -159,20 +159,12 @@ class Ortuback extends MX_Controller {
   echo json_encode($arrMapel);
 }
 
-// get jumlah pesan untuk pesan
-function jumlah_pesan($id){
-  // $data['new_count_pesan'] = $this->db->where("read_status = 0 and id_ortu = 2" )->count_all_results('tb_laporan_ortu');
-	$data['new_count_pesan'] = $this->Ortuback_model->get_count($id);
-  // $data['new_count_konsultasi'] = $this->db->where('statusRespon = 0 and mentorID='.$this->session->userdata('id_guru'))->count_all_results('tb_k_pertanyaan');
-  // $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
-  // $mapel_id ="";
-  // foreach ($keahlian_detail as $key) {
-  //   $mapel_id =$mapel_id."".$key['mapelID'].",";
-  // }
-  // $data['keahlian_detail'] = $this->mkonsultasi->get_pertanyaan_number_mentor(substr_replace($mapel_id, "", -1));
-  // print_r($data['keahlian_detail']);
-  echo json_encode($data['new_count_pesan']);
-}
+	// get jumlah pesan untuk pesan
+	function jumlah_pesan($id){
+		$data['new_count_pesan'] = $this->Ortuback_model->get_count($id);
+
+	  echo json_encode($data['new_count_pesan']);
+	}
 
 
 	public function see_message($id)
