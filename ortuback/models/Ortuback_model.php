@@ -80,6 +80,49 @@ class Ortuback_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function get_count($pengguna='')
+	{
+		$this->db->select('count(*) as numrows');
+		$this->db->from('tb_laporan_ortu l');
+		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
+		$this->db->where('l.read_status',0);
+		$this->db->where('o.penggunaID',$pengguna);
+
+		$query = $this->db->get();
+		return $query->result_array()[0]['numrows'];
+	}
+
+	public function get_daftar_pesan($pengguna='')
+	{
+		$this->db->select('*');
+		$this->db->from('tb_laporan_ortu l');
+		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
+		$this->db->where('l.read_status',0);
+		$this->db->where('o.penggunaID',$pengguna);
+		$this->db->order_by('l.id', 'desc');
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_pesan_by_id($id='')
+	{
+		$this->db->select('*');
+		$this->db->from('tb_laporan_ortu l');
+		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
+		$this->db->where('l.UUID',$id);
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function update_read($id)
+	{
+		$this->db->set('read_status',1);
+		$this->db->where('UUID', $id);
+		$this->db->update('tb_laporan_ortu');
+	}
 }
 
 ?>

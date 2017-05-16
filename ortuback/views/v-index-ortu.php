@@ -81,14 +81,22 @@ JS aoutocomplate
         </a>
       </li>
       <!--/ Sidebar shrink -->
-
+<!-- Offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
+<li class="navbar-main hidden-lg hidden-md hidden-sm">
+ <a href="javascript:void(0);" data-toggle="sidebar" data-direction="ltr" rel="tooltip" title="Menu sidebar">
+  <span class="meta">
+   <span class="icon"><i class="ico-paragraph-justify3"></i></span>
+ </span>
+</a>
+</li>
+<!--/ Offcanvas left -->
 
 
 <!-- Notification dropdown -->
 <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <input type="int" name="count_komen" value="" hidden="true">
+   <input type="int" name="count_komen" value="1" hidden="true">
    <span class="icon" id="new_count_komen">
      <span class="jumlah_notifikasi"></span>
      <i class="ico-bell"></i></span>
@@ -115,19 +123,20 @@ JS aoutocomplate
    <!-- Message list -->
    <div class="media-list" id="message-tbody">
 
-      <a href="<?=base_url()?>komenback/seevideo/" class="media border-dotted read">
+       <?php foreach ($datLapor as $key ): ?>
+      <a href="<?=base_url()?>ortuback/see_message/<?=$key['UUID']?>" class="media border-dotted read">
         <span class="pull-left">
-          <img src="<?=base_url()?>assets\image\photo\siswa\" class="media-object img-circle" alt="">
+          <img src="<?=base_url()?>assets\image\photo\siswa\>" class="media-object img-circle" alt="">
         </span>
         <span class="media-body">
-          <span class="media-heading"></span>
-          <span class="media-text ellipsis nm"></span>
+          <span class="media-heading"><?=$key['namaOrangTua']?></span>
+          <span class="media-text ellipsis nm"><?=$key['isi']?></span>
           <!-- meta icon -->
-          <span class="media-meta pull-right"></span>
+          <span class="media-meta pull-right"><?=$key['jenis']?></span>
           <!--/ meta icon -->
         </span>
       </a>
-
+    <?php endforeach ?>
   </div>
   <!--/ Message list -->
 </div>
@@ -259,48 +268,48 @@ JS aoutocomplate
     var new_count_komen = 0;
     var mapelID=8;
     var obMapel ='';
-    var ortuID = ('<?=$this->session->userdata['id']?>');
+    var penggunaID = ('<?=$this->session->userdata['id']?>');
     var url = "<?= base_url() ?>index.php/ortuback/ajax_ortuID";
-    console.log(ortuID);
 
-    socket.on( 'pesan_baru', function( data ) {
+    console.log('pengguna',penggunaID);
+    // SOCKET CREATE LAPORAN
+    socket.on('pesan_baru', function(data){
       var id_ortu = data.id_ortu;
       var jenis_lapor = data.jenis_lapor;
-      var isi = data.isi; 
-          //ajax untuk get data mapelid guru
-           // $('#notif_audio')[0].play();
-          $.ajax({
+      var isi = data.isi;
+      var namaPengguna = data.namaPengguna;
+      $.ajax({
             url:url,
-            success:function(mapel){
-          //     $('#notif_audio')[0].play();
-              // ubah type data mapel id guru dari json ke objek
-              obj =JSON.parse(mapel);
-              // for (i = 0; i < obMapel.length; i++) { 
-                // mapelIdGuru=obMapel[i].mapelID;
-                //cek data koemn jika data komen bukan milik dia dan mapel id sesuai dengan mapel id guru 
-                // if (idPengguna!=userID && mapelID==mapelIdGuru) {
-                if (ortuID==4807) {
-                  //jika true 
-                  // var old_count_komen = parseInt($('[name=count_komen]').val());
-                  // new_count_komen = old_count_komen + 1;
-                  // $('[name=count_komen]').val(new_count_komen);
-                  // $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
-                  // play sound notification
-                  $('#notif_audio')[0].play();
-                  //add komen baru ke data notif id message-tbody
-                  $( "#message-tbody" ).prepend(' <a href="'+base_url+'komenback/seevideo/'+data.isi+'/'+data.isi+'" class="media border-dotted read"><span class="pull-left"><img src="'+isi+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+data.isi+'</span><span class="media-text ellipsis nm">'+data.isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+data.isi+'</span><!--/ meta icon --></span></a>');
-                  console.log('bunyi');
-                  console.log(id_ortu);
-                  console.log('beda',obj);
+            success:function(data){
+              // ubah type data  dari json ke objek
+              obj =JSON.parse(data);
+              
+              id_pengguna = obj[0].penggunaID;
+               // id_pengguna2 = obj[1].penggunaID;
+               // console.log('id',id_pengguna2);
+
+              for (i = 0; i < obj.length; i++) { 
+                if (penggunaID == id_pengguna ) {
+                    // play sound notification
+                    $('#notif_audio')[0].play();
+                    //add komen baru ke data notif id message-tbody
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
                 } else {
-                  console.log('kosong');
-                  console.log(id_ortu);
+                  console.log('bukan');
                 }
-              // }
-            },              
+              }
+
+
+             },              
           });
-          
-        });
+
+      
+    });
+    // SOCKET CREATE LAPORAN
+
+      $.getJSON( base_url+"ortuback/jumlah_pesan/"+penggunaID, function( datas ) {
+        $('.jumlah_notifikasi').text(datas);
+      });
 
     
 
