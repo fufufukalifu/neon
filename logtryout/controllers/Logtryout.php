@@ -9,10 +9,27 @@ class Logtryout extends MX_Controller {
 
 	}
 
-	function ajax_status_to($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0){
+	function ajax_status_to($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0,$keySearch=''){
 
+				//data post
+		$records_per_page=$this->input->post('records_per_page');
+		$page=$this->input->post('page');
+		//data post
+		# get cabang
+		$cabang=$this->input->post('cabang');
+		$tryout=$this->input->post('tryout');
+		$paket=$this->input->post('paket');
+		$keySearch=$this->input->post('keySearch');
+		
 		$data['param'] = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$list = $this->logtryout_model->get_log_tryout($data['param']);
+$list = $this->logtryout_model->get_log_tryout($data['param'],$records_per_page,$page,$keySearch);
+		// if ($keySearch != '' && $keySearch !=' ' ) {
+		// 	$list='';
+		// }
+			
+		// } else {
+		// 	$list = $this->logtryout_model->get_log_tryout($data['param'],$records_per_page,$page);
+		// }
 
 		$no=$page+1;
 		$tb_paket=null;
@@ -53,21 +70,19 @@ class Logtryout extends MX_Controller {
 		echo json_encode( $tb_paket );
 	}
 
-public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0)
+public function pagination_tb_logtryout($cabang="all",$tryout="all",$paket="all",$records_per_page=2,$page=0,$keySearch='')
 	{
 		//data post
-		// $records_per_page=$this->input->post('records_per_page');
+		$records_per_page=$this->input->post('records_per_page');
 		// $page=$this->input->post('page');
 		//data post
 		# get cabang
-		$data['cabang'] = $this->mcabang->get_all_cabang();
-		# get to
-		$data['to'] = $this->mtoback->get_To();
 		$cabang=$this->input->post('cabang');
 		$tryout=$this->input->post('tryout');
 		$paket=$this->input->post('paket');
+		$keySearch=$this->input->post('keySearch');
 		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
+		$jumlah_data = $this->logtryout_model->jumlah_log_tryout($datas);
 
 		$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -79,9 +94,9 @@ public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all"
 
     	 for ($i=0; $i < $sumPagination; $i++) { 
     	 	if ($pagePagination<=7) {
-    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagelogtryout('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
     	 	}else{
-    	 		    	 	$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+    	 		    	 	$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagelogtryout('.$i.')" >'.$pagePagination.'</a></li>';
     	 	}
 
     	 	$pagePagination++;
@@ -96,7 +111,7 @@ public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all"
     	 }
 
     	 if ($pagePagination<3) {
-    	 		// $pagination='';
+    	 		$pagination='';
     	 }
     	 
 
