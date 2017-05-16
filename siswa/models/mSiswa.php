@@ -138,6 +138,7 @@ class Msiswa extends CI_Model {
         $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
         $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
         $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
+         
                 if (!empty($data['key_search'])) {
             $this->db->or_like('s.namaDepan',$data['key_search']);
             $this->db->or_like('p.namaPengguna',$data['key_search']);
@@ -156,7 +157,7 @@ class Msiswa extends CI_Model {
                 $this->db->or_like('tkt.aliasTingkat',$data['key_word']);                
             }
         }
-        $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
+       $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
             ');
         $query = $this->db->get('tb_siswa s');
         return $query->num_rows();

@@ -390,14 +390,14 @@ $('input[name=checkall_siswa]').click(function(){
 
 $('#siswaBlmTo tfoot th').first().append("");
 
-tblist_siswa = $('#siswaBlmTo').DataTable({ 
- "ajax": {
-  "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
-  "type": "POST"
-},
-"processing": true,
-"bDestroy": true,
-});
+// tblist_siswa = $('#siswaBlmTo').DataTable({ 
+//  "ajax": {
+//   "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
+//   "type": "POST"
+// },
+// "processing": true,
+// "bDestroy": true,
+// });
 
 tblist_paket = $('#paket table').DataTable({ 
  "ajax": {
