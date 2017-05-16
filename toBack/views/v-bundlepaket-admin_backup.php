@@ -1,3 +1,5 @@
+  <!-- NEATED BY OPIK SUTISNA PUTRA -->
+
   <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
     <div class="modal-dialog" role="document" style="background: white">
       <div class="modal-content">
@@ -365,495 +367,430 @@
  var idTo =$('#id_to').val();
  var listsoal;
 
- console.log(idTo);
-
-      // Script for getting the dynamic values from database using jQuery and AJAX
-
-
-      $(document).ready(function() {
-        //check all paket
-        $('input[name=checkall]').click(function(){
-          if(this.checked) {
-            $('#tbpaket td input[type=checkbox]').prop('checked', true);
-          }else{
-            $('#tbpaket td input[type=checkbox]').prop('checked', false);
-          }
-        });
+// Script for getting the dynamic values from database using jQuery and AJAX
+$(document).ready(function() {
+//check all paket
+$('input[name=checkall]').click(function(){
+  if(this.checked) {
+    $('#tbpaket td input[type=checkbox]').prop('checked', true);
+  }else{
+    $('#tbpaket td input[type=checkbox]').prop('checked', false);
+  }
+});
         //####---
 
-        // Check all siswa
-        $('input[name=checkall_siswa]').click(function(){
-          if(this.checked) {
-            $('#siswaBlmTo td input[type=checkbox]').prop('checked', true);
-          }else{
-            $('#siswaBlmTo td input[type=checkbox]').prop('checked', false);
-          }
-        });
-        //####---
+// Check all siswa
+$('input[name=checkall_siswa]').click(function(){
+  if(this.checked) {
+    $('#siswaBlmTo td input[type=checkbox]').prop('checked', true);
+  }else{
+    $('#siswaBlmTo td input[type=checkbox]').prop('checked', false);
+  }
+});
 
-        $('#siswaBlmTo tfoot th').first().append("");
+$('#siswaBlmTo tfoot th').first().append("");
 
-      //   tblist_siswa = $('#siswaBlmTo').DataTable({ 
-      //    "ajax": {
-      //     "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
-      //     "type": "POST"
-      //   },
-      //   "processing": true,
-      //   "bDestroy": true,
-      // });
+tblist_siswa = $('#siswaBlmTo').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_list_siswa_belum_to/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
 
-      tblist_paket = $('#paket table').DataTable({ 
-       "ajax": {
-        "url": base_url+"index.php/toback/ajax_list_all_paket/"+idTo,
-        "type": "POST"
-      },
-      "processing": true,
-      "bDestroy": true,
-    });
+tblist_paket = $('#paket table').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_list_all_paket/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
 
-      tblist_paket = $('#pengawas table').DataTable({ 
-       "ajax": {
-        "url": base_url+"index.php/toback/ajax_list_all_pengawas/"+idTo,
-        "type": "POST"
-      },
-      "processing": true,
-      "bDestroy": true,
-    });
+tblist_paket = $('#pengawas table').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_list_all_pengawas/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
 
-          // tabel paket yang sudah di add ke to
-          tblist_paketAdd = $('#listaddpaket').DataTable({ 
-           "ajax": {
-            "url": base_url+"index.php/toback/ajax_listpaket_by_To/"+idTo,
-            "type": "POST"
-          },
-          "processing": true,
-          "bDestroy": true,
-        });
-
-
-          // tabel siswa yang akan mengokuti ujian
-          tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
-           "ajax": {
-            "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
-            "type": "POST"
-          },
-          "processing": true,
-          "bDestroy": true,
-        });
-
-         // tabel pengawas yang diberi akses TO
-         tblist_pengawasAdd = $('#tblist_pengawas').DataTable({ 
-           "ajax": {
-            "url": base_url+"index.php/toback/ajax_listpengawas_by_To/"+idTo,
-            "type": "POST"
-          },
-          "processing": true,
-          "bDestroy": true,
-        });
-
-      // Setup - add a text input to each footer cell
-      // $('#siswaBlmTo tfoot th').each( function () {
-      //     var title = $(this).text();
-      //     $(this).html( '<input class="form-control" type="text" placeholder="Search '+title+'" />' );
-      // } );
-
-      tblist_siswa.columns().every( function () {
-        var that = this;
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-          if ( that.search() !== this.value ) {
-            that
-            .search( this.value )
-            .draw();
-          }
-        } );
-      } );
-      tblist_siswaAdd.columns().every( function () {
-        var that = this;
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-          if ( that.search() !== this.value ) {
-            that
-            .search( this.value )
-            .draw();
-          }
-        } );
-      } );
-    });
-
-      function reload_tblist(){
-       tblist_siswaAdd.ajax.reload(null,false);
-       tblist_paketAdd.ajax.reload(null,false); 
-       tblist_pengawasAdd.ajax.reload(null,false); 
-       tblist_paket.ajax.reload();
-       tblist_siswa.ajax.reload();
-       tblist_pengawas.ajax.reload();
-
-          //reload datatable ajax 
-         // 
-       }
-
-      // function reload_listsiswa(){
-      //     tblist_siswa.reload(null,false);
-      // }
-      function adda() {
-
-       $('.add').click(function(){ 
-        addPaket();
-        addSiswa();
-        addPengawas();
-      });
-
-     }
-     function hide_msg_e_siswa() 
-     {
-       $("#msg_e_siswa").hide();
-     }
-     function hide_msg_e_paket() 
-     {
-       $("#msg_e_paket").hide();
-     }
-     function hide_msg_e_pengawas() 
-     {
-       $("#msg_e_pengawas").hide();
-     }
-     function hide_msg_s_paket()
-     {
-       $("#msg_s_paket").hide();
-     }
-     function hide_msg_s_siswa()
-     {
-       $("#msg_s_siswa").hide();
-     }
-     function hide_msg_s_pengawas()
-     {
-       $("#msg_s_pengawas").hide();
-     }
-     function addPaket(){
-       var idpaket = [];
-       var id_to =$('#id_to').val();
-       var test ='test';
-       $('#tbpaket input:checked').each(function(i){
-        idpaket[i] = $(this).val();
-      });
-       $('#tbpaket input').attr('checked',false);
-
-       if (idpaket.length > 0) {
-        var url = base_url+"index.php/toback/addPaketToTO";
-
-        $.ajax({
-         url : url,
-         type: "POST",
-         data: {idpaket:idpaket,
-          id_to:id_to 
-        },
-                  // cache: false,
-                // dataType: "JSON",
-                success: function(data,respone)
-                {   
-
-                 reload_tblist();
-                 $("#msg_e_paket").hide();
-                 $("#msg_s_paket").show();
-                 $(':checkbox').attr('checked',false);
-
-               },
-               error: function (jqXHR, textStatus, errorThrown)
-               {
+// tabel paket yang sudah di add ke to
+tblist_paketAdd = $('#listaddpaket').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_listpaket_by_To/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
 
 
-                 alert('Error adding / update data');
-               }
-             });
-      }else{
-        $("#msg_s_paket").hide();
-        $("#msg_e_paket").show();
-      }
+// tabel siswa yang akan mengokuti ujian
+tblist_siswaAdd = $('#tblist_siswa').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_listsiswa_by_To/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
+
+// tabel pengawas yang diberi akses TO
+tblist_pengawasAdd = $('#tblist_pengawas').DataTable({ 
+ "ajax": {
+  "url": base_url+"index.php/toback/ajax_listpengawas_by_To/"+idTo,
+  "type": "POST"
+},
+"processing": true,
+"bDestroy": true,
+});
+
+});
+
+function reload_tblist(){
+ tblist_siswaAdd.ajax.reload(null,false);
+ tblist_paketAdd.ajax.reload(null,false); 
+ tblist_pengawasAdd.ajax.reload(null,false); 
+ tblist_paket.ajax.reload();
+ tblist_pengawas.ajax.reload();
+}
+
+function adda() {
+ $('.add').click(function(){ 
+  addPaket();
+  addSiswa();
+  addPengawas();
+});
+}
 
 
+function hide_msg_e_siswa() 
+{
+ $("#msg_e_siswa").hide();
+}
+function hide_msg_e_paket() 
+{
+ $("#msg_e_paket").hide();
+}
+function hide_msg_e_pengawas() 
+{
+ $("#msg_e_pengawas").hide();
+}
+function hide_msg_s_paket()
+{
+ $("#msg_s_paket").hide();
+}
+function hide_msg_s_siswa()
+{
+ $("#msg_s_siswa").hide();
+}
+function hide_msg_s_pengawas()
+{
+ $("#msg_s_pengawas").hide();
+}
+
+function addPaket(){
+ var idpaket = [];
+ var id_to =$('#id_to').val();
+ var test ='test';
+ $('#tbpaket input:checked').each(function(i){
+  idpaket[i] = $(this).val();
+});
+ $('#tbpaket input').attr('checked',false);
+
+ if (idpaket.length > 0) {
+  var url = base_url+"index.php/toback/addPaketToTO";
+
+  $.ajax({
+   url : url,
+   type: "POST",
+   data: {idpaket:idpaket,
+    id_to:id_to 
+  },
+  success: function(data,respone)
+  {   
+   tblist_siswaAdd.ajax.reload(null,false);
+   reload_tblist();
+   $("#msg_e_paket").hide();
+   $("#msg_s_paket").show();
+   $(':checkbox').attr('checked',false);
+ },
+ error: function (jqXHR, textStatus, errorThrown)
+ {
+   alert('Error adding / update data');
+ }
+});
+}else{
+  $("#msg_s_paket").hide();
+  $("#msg_e_paket").show();
+}
+id_paket=null;
+}
 
 
-          // console.log(idpaket);
-          id_paket=null;
-        }
-        function addSiswa(){
-          var idsiswa = [];
-          var id_to =$('#id_to').val();
-          $('#tbsiswa input:checked').each(function(i){
-           idsiswa[i] = $(this).val();
-         });
-          $('#tbsiswa input').attr('checked',false);
+function addSiswa(){
+  var idsiswa = [];
+  var id_to =$('#id_to').val();
+  $('#tbsiswa input:checked').each(function(i){
+   idsiswa[i] = $(this).val();
+ });
+  $('#tbsiswa input').attr('checked',false);
 
-          if (idsiswa.length > 0) {
-           var url = base_url+"index.php/toback/addsiswaToTO";
+  if (idsiswa.length > 0) {
+   var url = base_url+"index.php/toback/addsiswaToTO";
 
-           $.ajax({
-            url : url,
-            type: "POST",
-            data: {idsiswa : idsiswa,
-             id_to:id_to 
-           },
-                  // cache: false,
-                // dataType: "JSON",
-                success: function(data,respone)
-                {   
-                 reload_tblist();
-                 $(':checkbox').attr('checked',false);
-                 $("#msg_s_siswa").show();
-                 $("#msg_e_siswa").hide();
-
-               },
-               error: function (jqXHR, textStatus, errorThrown)
-               {
-                 swal('Error adding / update data');
-               }
-             });
-         } else {
-           $("#msg_s_siswa").hide();
-           $("#msg_e_siswa").show();
-         }
-         idsiswa=null;
-       }
-       // add pengawas
-       function addPengawas(){
-        var idpengawas = [];
-        var id_to =$('#id_to').val();
-        $('#tbpengawas input:checked').each(function(i){
-         idpengawas[i] = $(this).val();
-       });
-        $('#tbpengaws input').attr('checked',false);
-
-        if (idpengawas.length > 0) {
-         var url = base_url+"index.php/toback/addpengawasToTO";
-
-         $.ajax({
-          url : url,
-          type: "POST",
-          data: {idpengawas : idpengawas,
-           id_to:id_to 
-         },
-                  // cache: false,
-                // dataType: "JSON",
-                success: function(data,respone)
-                {   
-                 reload_tblist();
-                 $(':checkbox').attr('checked',false);
-                 $("#msg_s_pengawas").show();
-                 $("#msg_e_pengawas").hide();
-
-               },
-               error: function (jqXHR, textStatus, errorThrown)
-               {
-                 swal('Error adding / update data');
-               }
-             });
-       } else {
-         $("#msg_s_pengawas").hide();
-         $("#msg_e_pengawas").show();
-       }
-       idpengawas=null;
-     }
-     function get_data_json(data){
-        // tableku = $('.modal-body table').dataTable();
-        $('#myModal').modal('show');  
-
-        
-        listsoal = $('.listsoal').dataTable({
-          data:data.data,
-          "language": {
-            "emptyTable": "Tidak Ada Soal",
-            
-          },
-          "bDestroy": true,
-        });
-      }
-      function lihatsoal(id){
-        // var hasil_ajax = new Object();
-        $.ajax({
-          url : base_url+"index.php/paketsoal/get_soal_byid_paket/"+id,
-          type: "POST",
-          dataType:"JSON",
-          success: function(data,respone)
-          {  
-            // alert(data);
-            get_data_json(data);
-          },
-          error: function (jqXHR, textStatus, errorThrown)
-          {
-            swal('Error Retrieve');
-          }});
-      }
-      // function delete paket to to
-      function dropPaket(idKey) {
-       var id_to =$('#id_to').val();
-       if (confirm('Apakah Anda yakin akan menghapus data paket? ')) {
-                 // ajax delete data to database
-                 $.ajax({
-                  url : base_url+"index.php/toback/dropPaketTo/"+idKey,
-                  type: "POST",
-                  dataType: "TEXT",
-                  success: function(data,respone)
-                  {  
-                          //if success reload ajax table
-                          // $('#modal_form').modal('hide');
-                          reload_tblist();
-                        },
-                        error: function (jqXHR, textStatus, errorThrown)
-                        {
-                          swal('Error deleting data');
-                          // console.log(jqXHR);
-                          // console.log(textStatus);
-                          console.log(errorThrown);
-                        }
-                      });
-               }
-             }
-
-
-             function dropSiswa(idKey) {
-              var id_to =$('#id_to').val();
-              if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
-                 // ajax delete data to database
-                 $.ajax({
-                  url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
-                  type: "POST",
-                  dataType: "TEXT",
-                  success: function(data,respone)
-                  {  
-                    reload_tblist();
-                  },
-                  error: function (jqXHR, textStatus, errorThrown)
-                  {
-                    swal('Error deleting data');
-                          // console.log(jqXHR);
-                          // console.log(textStatus);
-                          console.log(errorThrown);
-                        }
-                      });
-               }
-             }
-             function dropPengawas(idKey) {
-              var id_to =$('#id_to').val();
-              if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
-                 // ajax delete data to database
-                 $.ajax({
-                  url : base_url+"index.php/toback/dropPengawasTo/"+idKey,
-                  type: "POST",
-                  dataType: "TEXT",
-                  success: function(data,respone)
-                  {  
-                    reload_tblist();
-                  },
-                  error: function (jqXHR, textStatus, errorThrown)
-                  {
-                    swal('Error deleting data');
-                          // console.log(jqXHR);
-                          // console.log(textStatus);
-                          console.log(errorThrown);
-                        }
-                      });
-               }
-             }
-
-
-             adda();
-
-
-           </script>
-
-           <script>
-    // pagination untuk siswa
-    var properties = {
-      'dataTable':null,
-      'meridian':4,
-      'prev':1,
-      'next':2,
-      'records_per_page':10,
-      'status':"null",
-      'masa_aktif':"all",
-      'page':0,
-      'page_val':"",
-      'key_search':"",
-      'url':null,
-      'tb_siswa':null,
-      'page_select':0,
-      'datas':null,
-      'search_single':false,
-      'key_single':"",
-      'key_word':"",
-
-    };
-    // pagination untuk siswa
-
-    // fungsi set ke table
-    function set_tb_siswa(){
-      param = {
-       masa_aktif:properties.masa_aktif,
-       status:properties.status,
-       records_per_page:properties.records_per_page,
-       page_select:properties.page_select,
-       key_search:properties.key_search,
-       search_single:properties.search_single,
-       key_single:properties.key_single,
-       key_word:properties.key_word
-     };
-
-     $('#record_token').empty();
-
-     url=base_url+"toback/ajax_pagination_siswa_nonto/"+idTo;
-
-     $.ajax({
-      url:url,
-      data:param,
-      dataType:"text",
-      type:"post",
-      success:function(Data)
-      {
-        tb_siswa = JSON.parse(Data);
-        $('#tbsiswa').append(tb_siswa);
-      },
-      error:function(e,jqXHR, textStatus, errorThrown)
-      {
-       sweetAlert("Oops...", e, "error");
-     }
-   });
-   }
-    // end set ke table
-
-  // Pagination
-  function pagination_siswa() {
-    param = {
-     masa_aktif:properties.masa_aktif,
-     status:properties.status,
-     records_per_page:properties.records_per_page,
-     page_select:properties.page_select,
-     key_search:properties.key_search,
-     search_single:properties.search_single,
-     key_single:properties.key_single,
-     key_word:properties.key_word
-   };
    $.ajax({
-    url:base_url+"toback/pagination_siswa/"+idTo,
-    data:param,
-    type:"POST",
-    dataType:"TEXT",
-    success:function(data){
-      $('.pagination-siswa').empty();
-      $('.pagination-siswa').append(JSON.parse(data));
-    },error:function(){
-      swal('Gagal pagination');
+    url : url,
+    type: "POST",
+    data: {idsiswa : idsiswa,
+     id_to:id_to 
+   },
+   success: function(data,respone)
+   {   
+     set_tb_siswa();
+     tblist_siswaAdd.ajax.reload(null,false);
+     $(':checkbox').attr('checked',false);
+     $("#msg_s_siswa").show();
+     $("#msg_e_siswa").hide();
+   },
+   error: function (jqXHR, textStatus, errorThrown)
+   {
+     swal('Error adding / update data');
+   }
+ });
+ } else {
+   $("#msg_s_siswa").hide();
+   $("#msg_e_siswa").show();
+ }
+ idsiswa=null;
+}
+
+// add pengawas
+function addPengawas(){
+  var idpengawas = [];
+  var id_to =$('#id_to').val();
+  $('#tbpengawas input:checked').each(function(i){
+   idpengawas[i] = $(this).val();
+ });
+  $('#tbpengaws input').attr('checked',false);
+
+  if (idpengawas.length > 0) {
+   var url = base_url+"index.php/toback/addpengawasToTO";
+
+   $.ajax({
+    url : url,
+    type: "POST",
+    data: {idpengawas : idpengawas,
+     id_to:id_to 
+   },
+   success: function(data,respone){   
+     reload_tblist();
+     $(':checkbox').attr('checked',false);
+     $("#msg_s_pengawas").show();
+     $("#msg_e_pengawas").hide();
+
+   },
+   error: function (jqXHR, textStatus, errorThrown){
+     swal('Error adding / update data');
+   }
+ });
+ } else {
+   $("#msg_s_pengawas").hide();
+   $("#msg_e_pengawas").show();
+ }
+ idpengawas=null;
+}
+
+function get_data_json(data){
+  $('#myModal').modal('show');  
+
+  listsoal = $('.listsoal').dataTable({
+    data:data.data,
+    "language": {
+      "emptyTable": "Tidak Ada Soal",
+
+    },
+    "bDestroy": true,
+  });
+}
+
+function lihatsoal(id){
+  $.ajax({
+    url : base_url+"index.php/paketsoal/get_soal_byid_paket/"+id,
+    type: "POST",
+    dataType:"JSON",
+    success: function(data,respone){  
+      get_data_json(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown){
+      swal('Error Retrieve');
+    }});
+}
+
+// function delete paket to to
+function dropPaket(idKey) {
+ var id_to =$('#id_to').val();
+ if (confirm('Apakah Anda yakin akan menghapus data paket? ')) {
+// ajax delete data to database
+$.ajax({
+  url : base_url+"index.php/toback/dropPaketTo/"+idKey,
+  type: "POST",
+  dataType: "TEXT",
+  success: function(data,respone){  
+    reload_tblist();
+  },
+  error: function (jqXHR, textStatus, errorThrown){
+    swal('Error deleting data');
+    console.log(errorThrown);
+  }
+});
+}
+}
+
+function dropSiswa(idKey) {
+  var id_to =$('#id_to').val();
+  if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+  // ajax delete data to database
+  $.ajax({
+    url : base_url+"index.php/toback/dropSiswaTo/"+idKey,
+    type: "POST",
+    dataType: "TEXT",
+    success: function(data,respone){  
+      reload_tblist();
+    },
+    error: function (jqXHR, textStatus, errorThrown){
+      swal('Error deleting data');
+      console.log(errorThrown);
     }
   });
+}
+}
+
+function dropPengawas(idKey) {
+  var id_to =$('#id_to').val();
+  if (confirm('Apakah Anda yakin akan menghapus data siswa? ')) {
+    // ajax delete data to database
+    $.ajax({
+      url : base_url+"index.php/toback/dropPengawasTo/"+idKey,
+      type: "POST",
+      dataType: "TEXT",
+      success: function(data,respone)
+      {  
+        reload_tblist();
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+        swal('Error deleting data');
+        console.log(errorThrown);
+      }
+    });
+  }
+}
+
+
+adda();
+</script>
+
+<script>
+// pagination untuk siswa
+var properties = {
+  'dataTable':null,
+  'meridian':4,
+  'prev':1,
+  'next':2,
+  'records_per_page':10,
+  'status':"null",
+  'masa_aktif':"all",
+  'page':0,
+  'page_val':"",
+  'key_search':"",
+  'url':null,
+  'tb_siswa':null,
+  'page_select':0,
+  'datas':null,
+  'search_single':false,
+  'key_single':"",
+  'key_word':"",
+};
+// pagination untuk siswa
+
+// fungsi set ke table
+function set_tb_siswa(){
+  $('#tbsiswa').append('<div class="indicator show"><span class="spinner"></span></div>');
+  param = {
+   masa_aktif:properties.masa_aktif,
+   status:properties.status,
+   records_per_page:properties.records_per_page,
+   page_select:properties.page_select,
+   key_search:properties.key_search,
+   search_single:properties.search_single,
+   key_single:properties.key_single,
+   key_word:properties.key_word
+ };
+
+ url=base_url+"toback/ajax_pagination_siswa_nonto/"+idTo;
+
+ $.ajax({
+  url:url,
+  data:param,
+  dataType:"text",
+  type:"post",
+  success:function(Data)
+  {
+    tb_siswa = JSON.parse(Data);
+    $('#tbsiswa').empty();
+    $('#tbsiswa').append(tb_siswa);
+  },
+  error:function(e,jqXHR, textStatus, errorThrown)
+  {
+   sweetAlert("Oops...", e, "error");
  }
+});
+}
+// end set ke table
+
+// Pagination
+function pagination_siswa() {
+  param = {
+   masa_aktif:properties.masa_aktif,
+   status:properties.status,
+   records_per_page:properties.records_per_page,
+   page_select:properties.page_select,
+   key_search:properties.key_search,
+   search_single:properties.search_single,
+   key_single:properties.key_single,
+   key_word:properties.key_word
+ };
+ $.ajax({
+  url:base_url+"toback/pagination_siswa/"+idTo,
+  data:param,
+  type:"POST",
+  dataType:"TEXT",
+  success:function(data){
+    $('.pagination-siswa').empty();
+    $('.pagination-siswa').append(JSON.parse(data));
+  },error:function(){
+    swal('Gagal pagination');
+  }
+});
+}
   // Pagination
 
-  // next page
-  function nextPage() {
-    selectPage(next);
-  }
+// next page
+function nextPage() {
+  selectPage(next);
+}
+
 // prev page
 function prevPage() {
   selectPage(prev);
 }
+
 function selectPage(pageVal='0') {
+  $('#tbsiswa').append('<div class="indicator show"><span class="spinner"></span></div>');
   page=pageVal;
   pageSelek=page*properties.records_per_page;
   // 
@@ -865,7 +802,8 @@ function selectPage(pageVal='0') {
    page_select:pageSelek,
    search_single:properties.search_single,
    key_single:properties.key_single,
-   key_word:properties.key_word
+   key_word:properties.key_word,
+   key_search:properties.key_search
  };
  $('#tbsiswa').empty();
 
@@ -878,84 +816,85 @@ function selectPage(pageVal='0') {
   success:function(Data)
   {
     tb_siswa = JSON.parse(Data);
+    $('#tbsiswa').empty();
+
     $('#tbsiswa').append(tb_siswa);
   },
   error:function(e,jqXHR, textStatus, errorThrown)
   {
-         // sweetAlert("Oops...", e, "error");
-       }
-     });
-  //meridian adalah nilai tengah padination
-  $('#page-'+properties.meridian).removeClass('active');
-  var newMeridian=page+1;
-  var loop;
-  var hidePage;
-  var showPage;
-  if (newMeridian<=4) {
-    $("#page-prev").addClass('hide');
-    //banyak pagination yg akan di tampilkan dan sisembunyikan
-    loop=properties.meridian-newMeridian;
-    // start id pagination yg akan ditampilkan
-    var idPaginationshow =1;
-    // start id pagination yg akan sembunyikan
-    var idPaginationhide =9;
-    prev=1;
-    next=7;
-    //lakukan pengulangan sebanyak loop
-    for (var i = 0; i < loop; i++) {
-      hidePagination='#page-'+idPaginationhide;
-      showPagination='#page-'+idPaginationshow;
-      //pagination yg di hide
-      $(showPagination).removeClass('hide');
-      //pagination baru yg ditampilkan
-      $(hidePagination).addClass('hide');
-      idPaginationshow++;
-      idPaginationhide--;
-    }
-  }else if( newMeridian>properties.meridian){
-    $("#page-prev").removeClass('hide');
-        //banyak pagination yg akan di tampilkan dan sisembunyikan
-        loop=newMeridian-properties.meridian;
-        // start id pagination yg akan ditampilkan
-        var idPaginationshow =newMeridian+3;
-        // start id pagination yg akan sembunyikan
-        var idPaginationhide =properties.meridian-3;
-        console.log("ini"+next);
-        //lakukan pengulangan sebanyak loop
-        for (var i = 0; i < loop; i++) {
-          hidePagination='#page-'+idPaginationhide;
-          showPagination='#page-'+idPaginationshow;
-          //pagination yg di hide
-          $(showPagination).removeClass('hide');
-          //pagination baru yg ditampilkan
-          $(hidePagination).addClass('hide');
-          idPaginationshow--;
-          idPaginationhide++;
-        }
-      }else{
+   sweetAlert("Oops...", e, "error");
+ }
+});
 
+//meridian adalah nilai tengah padination
+$('#page-'+properties.meridian).removeClass('active');
+var newMeridian=page+1;
+var loop;
+var hidePage;
+var showPage;
+if (newMeridian<=4) {
+  $("#page-prev").addClass('hide');
+  //banyak pagination yg akan di tampilkan dan sisembunyikan
+  loop=properties.meridian-newMeridian;
+  // start id pagination yg akan ditampilkan
+  var idPaginationshow =1;
+  // start id pagination yg akan sembunyikan
+  var idPaginationhide =9;
+  prev=1;
+  next=7;
+  //lakukan pengulangan sebanyak loop
+  for (var i = 0; i < loop; i++) {
+    hidePagination='#page-'+idPaginationhide;
+    showPagination='#page-'+idPaginationshow;
+    //pagination yg di hide
+    $(showPagination).removeClass('hide');
+    //pagination baru yg ditampilkan
+    $(hidePagination).addClass('hide');
+    idPaginationshow++;
+    idPaginationhide--;
+  }
+}else if( newMeridian>properties.meridian){
+  $("#page-prev").removeClass('hide');
     //banyak pagination yg akan di tampilkan dan sisembunyikan
-    loop=properties.meridian-newMeridian;
+    loop=newMeridian-properties.meridian;
     // start id pagination yg akan ditampilkan
-    var idPaginationshow =newMeridian-3;
+    var idPaginationshow =newMeridian+3;
     // start id pagination yg akan sembunyikan
-    var idPaginationhide =properties.meridian+3;
+    var idPaginationhide =properties.meridian-3;
     //lakukan pengulangan sebanyak loop
     for (var i = 0; i < loop; i++) {
       hidePagination='#page-'+idPaginationhide;
       showPagination='#page-'+idPaginationshow;
-      //pagination yg di hide
-      $(showPagination).removeClass('hide');
-      //pagination baru yg ditampilkan
-      $(hidePagination).addClass('hide');
-      idPaginationshow++;
-      idPaginationhide--;
-    }
-  } 
-  properties.prev=newMeridian-2;
-  properties.next=newMeridian;
-  properties.meridian=newMeridian;
-  $('#page-'+properties.meridian).addClass('active');
+    //pagination yg di hide
+    $(showPagination).removeClass('hide');
+    //pagination baru yg ditampilkan
+    $(hidePagination).addClass('hide');
+    idPaginationshow--;
+    idPaginationhide++;
+  }
+}else{
+  //banyak pagination yg akan di tampilkan dan sisembunyikan
+  loop=properties.meridian-newMeridian;
+  // start id pagination yg akan ditampilkan
+  var idPaginationshow =newMeridian-3;
+  // start id pagination yg akan sembunyikan
+  var idPaginationhide =properties.meridian+3;
+  //lakukan pengulangan sebanyak loop
+  for (var i = 0; i < loop; i++) {
+    hidePagination='#page-'+idPaginationhide;
+    showPagination='#page-'+idPaginationshow;
+    //pagination yg di hide
+    $(showPagination).removeClass('hide');
+    //pagination baru yg ditampilkan
+    $(hidePagination).addClass('hide');
+    idPaginationshow++;
+    idPaginationhide--;
+  }
+} 
+properties.prev=newMeridian-2;
+properties.next=newMeridian;
+properties.meridian=newMeridian;
+$('#page-'+properties.meridian).addClass('active');
 }
 
 // next page
@@ -969,12 +908,12 @@ function prevPage() {
 
 
 
-// CARI ALL ATRIBUT
+//## CARI ALL ATRIBUT
   // cari yang di klik
   $('#cari_siswa').click(function(e){
       //get value dari input name cari_siswa
       properties.key_search=$('[name=cari_siswa]').val();
-      // console.log(properties.key_search);
+      properties.search_single = false;
       selectPage(pageVal='0');
       pagination_siswa();
     });
@@ -984,7 +923,7 @@ function prevPage() {
     if (e.keyCode == 13) {
       //get value dari input name cari_siswa
       properties.key_search=$('[name=cari_siswa]').val();
-      // console.log(properties.key_search);
+      properties.search_single = false;
       selectPage(pageVal='0');
       pagination_siswa();
     }
@@ -1003,6 +942,7 @@ $("[name=records_per_page]").change(function(){
 
 
 // PENCARIAN SINGLE
+//#. Pencarian untuk nama siswa
 $('[name=nama_siswa_search]').on('keyup', function (e) {
   if (e.keyCode == 13) {
     properties.key_word = $('[name=nama_siswa_search]').val();
@@ -1012,7 +952,7 @@ $('[name=nama_siswa_search]').on('keyup', function (e) {
     pagination_siswa();
   }
 });
-
+//#. Pencarian untuk nama pengguna
 $('[name=nama_pengguna_search]').on('keyup', function (e) {
   if (e.keyCode == 13) {
     properties.key_word = $('[name=nama_pengguna_search]').val();
@@ -1023,31 +963,30 @@ $('[name=nama_pengguna_search]').on('keyup', function (e) {
   }
 });
 
+//#. Pencarian untuk nama cabang
 $('[name=cabang_search]').on('keyup', function (e) {
   if (e.keyCode == 13) {
     properties.key_word = $('[name=cabang_search]').val();
     properties.key_single =  $('[name=cabang_search]').attr('name');
     properties.search_single =  true;
-    console.log(properties);
     selectPage(0);
     pagination_siswa();
   }
 });
 
+//#. Pencarian untuk tingkat
 $('[name=tingkat_search]').on('keyup', function (e) {
   if (e.keyCode == 13) {
     properties.key_word = $('[name=tingkat_search]').val();
     properties.key_single =  $('[name=tingkat_search]').attr('name');
     properties.search_single =  true;
-    console.log(properties);
     selectPage(0);
     pagination_siswa();
   }
 });
 // PENCARIAN SINGLE
 
-
-
 pagination_siswa();
 set_tb_siswa();
 </script>
+<!-- “OF COURSE BAD CODE CAN BE CLEANED UP. BUT IT’S VERY EXPENSIVE.”  -->

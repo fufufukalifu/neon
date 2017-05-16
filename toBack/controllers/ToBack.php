@@ -623,12 +623,8 @@ class Toback extends MX_Controller{
 
 						$post = $this->input->post();						
 						$post['id_to'] =$id;
-
-							// semua data.
-							$list = $this->msiswa->get_siswa_blm_ikutan_to_pagination($post);
-
-						
-
+						// semua data.
+						$list = $this->msiswa->get_siswa_blm_ikutan_to_pagination($post);
 
 						$data = array();
 						$no=$post['page_select']+1;
@@ -654,6 +650,8 @@ class Toback extends MX_Controller{
 					}
 
 					echo json_encode( $tb_siswa );
+					// echo json_encode( $post );
+
 				}
 ## PAGINATION SISWA YANG BELUM MELAKUKAN TRYOUT
 
