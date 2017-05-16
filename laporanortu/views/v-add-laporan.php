@@ -276,7 +276,7 @@ function kirim_laporan(){
             var socket = io.connect( 'http://'+window.location.hostname+':3000' );
 
           socket.emit('new_count_pesan', { 
-                  new_count_pesan: 10
+                  new_count_pesan: data.new_count_pesan
                 });
 
           console.log(data);
@@ -285,8 +285,9 @@ function kirim_laporan(){
                   id_ortu: data.id_ortu,
                   jenis_lapor: data.jenis_lapor,
                   isi: data.isi,
+                  namaPengguna : data.namaPengguna,
                   UUID: data.UUID,
-                  namaPengguna : data.namaPengguna
+
 
                 });
 
