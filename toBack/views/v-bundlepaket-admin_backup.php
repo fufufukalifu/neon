@@ -66,7 +66,7 @@
         <table class="table table-bordered" style="font-size: 13px">
          <thead>
           <tr>
-           <th> <input type="checkbox" name="checkall"></th>
+           <th width="12px"> <input type="checkbox" name="checkall"></th>
            <th >No</th>
            <th>Nama paket</th>
            <th>Deskripsi</th>
@@ -125,7 +125,7 @@
  <table class="table table-bordered" style="font-size: 13px" id="siswaBlmTo" width="100%">
    <thead>
     <tr>
-     <th width="10%"><input type="checkbox" name="checkall_siswa"></th>
+     <th  width="12px"><input type="checkbox" name="checkall_siswa"></th>
      <th>No</th>
      <th>Nama Pengguna</th>
      <th>Nama Siswa</th>
@@ -821,16 +821,15 @@
   // Pagination
   function pagination_siswa() {
     param = {
-       masa_aktif:properties.masa_aktif,
-       status:properties.status,
-       records_per_page:properties.records_per_page,
-       page_select:properties.page_select,
-       key_search:properties.key_search,
-       search_single:properties.search_single,
-       key_single:properties.key_single,
-       key_word:properties.key_word
-     };
-
+     masa_aktif:properties.masa_aktif,
+     status:properties.status,
+     records_per_page:properties.records_per_page,
+     page_select:properties.page_select,
+     key_search:properties.key_search,
+     search_single:properties.search_single,
+     key_single:properties.key_single,
+     key_word:properties.key_word
+   };
    $.ajax({
     url:base_url+"toback/pagination_siswa/"+idTo,
     data:param,
@@ -859,17 +858,15 @@ function selectPage(pageVal='0') {
   pageSelek=page*properties.records_per_page;
   // 
   $('#record_token').empty();
-param = {
-       masa_aktif:properties.masa_aktif,
-       status:properties.status,
-       records_per_page:properties.records_per_page,
-       page_select:properties.page_select,
-       key_search:properties.key_search,
-       search_single:properties.search_single,
-       key_single:properties.key_single,
-       key_word:properties.key_word
-     };
-
+  param = {
+   masa_aktif:properties.masa_aktif,
+   status:properties.status,
+   records_per_page:properties.records_per_page,
+   page_select:pageSelek,
+   search_single:properties.search_single,
+   key_single:properties.key_single,
+   key_word:properties.key_word
+ };
  $('#tbsiswa').empty();
 
  url=base_url+"toback/ajax_pagination_siswa_nonto/"+idTo;
@@ -1006,33 +1003,51 @@ $("[name=records_per_page]").change(function(){
 
 
 // PENCARIAN SINGLE
-// 
-$("#search1").on('keyup', function (e) {
-  if (e.keyCode == 13) {
-   keyword = $('#search1').val().replace(/ /g,"-");   ;
-   document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
- }
-});
-
 $('[name=nama_siswa_search]').on('keyup', function (e) {
   if (e.keyCode == 13) {
     properties.key_word = $('[name=nama_siswa_search]').val();
     properties.key_single =  $('[name=nama_siswa_search]').attr('name');
     properties.search_single =  true;
     selectPage(0);
-    paginationToken();     
-  }else{
-    console.log(1);
+    pagination_siswa();
   }
 });
 
+$('[name=nama_pengguna_search]').on('keyup', function (e) {
+  if (e.keyCode == 13) {
+    properties.key_word = $('[name=nama_pengguna_search]').val();
+    properties.key_single =  $('[name=nama_pengguna_search]').attr('name');
+    properties.search_single =  true;
+    selectPage(0);
+    pagination_siswa();
+  }
+});
 
-function search_single(data){
+$('[name=cabang_search]').on('keyup', function (e) {
+  if (e.keyCode == 13) {
+    properties.key_word = $('[name=cabang_search]').val();
+    properties.key_single =  $('[name=cabang_search]').attr('name');
+    properties.search_single =  true;
+    console.log(properties);
+    selectPage(0);
+    pagination_siswa();
+  }
+});
 
-}
+$('[name=tingkat_search]').on('keyup', function (e) {
+  if (e.keyCode == 13) {
+    properties.key_word = $('[name=tingkat_search]').val();
+    properties.key_single =  $('[name=tingkat_search]').attr('name');
+    properties.search_single =  true;
+    console.log(properties);
+    selectPage(0);
+    pagination_siswa();
+  }
+});
+// PENCARIAN SINGLE
+
+
 
 pagination_siswa();
 set_tb_siswa();
-
-
 </script>

@@ -103,6 +103,8 @@ class Msiswa extends CI_Model {
         $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
         $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
         $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
+        
+        // kalo user melakukan search secara keseluruhan
         if (!empty($data['key_search'])) {
             $this->db->or_like('s.namaDepan',$data['key_search']);
             $this->db->or_like('p.namaPengguna',$data['key_search']);
@@ -110,9 +112,16 @@ class Msiswa extends CI_Model {
             $this->db->or_like('tkt.aliasTingkat',$data['key_search']);
         }
 
+        // kalo user melakukan search single.
         if($data['search_single']){
             if($data['key_single']=='nama_siswa_search'){
                 $this->db->or_like('s.namaDepan',$data['key_word']);
+            }else if($data['key_single']=='nama_pengguna_search'){
+                $this->db->or_like('p.namaPengguna',$data['key_word']);
+            }else if($data['key_single']=='cabang_search'){
+                $this->db->or_like('c.namaCabang',$data['key_word']);
+            }else{
+                $this->db->or_like('tkt.aliasTingkat',$data['key_word']);                
             }
         }
         
@@ -128,8 +137,23 @@ class Msiswa extends CI_Model {
         $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
         $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
         $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
-        if (!empty($data['key_search'])) {
+                if (!empty($data['key_search'])) {
             $this->db->or_like('s.namaDepan',$data['key_search']);
+            $this->db->or_like('p.namaPengguna',$data['key_search']);
+            $this->db->or_like('c.namaCabang',$data['key_search']);
+            $this->db->or_like('tkt.aliasTingkat',$data['key_search']);
+        }
+
+        if($data['search_single']){
+            if($data['key_single']=='nama_siswa_search'){
+                $this->db->or_like('s.namaDepan',$data['key_word']);
+            }else if($data['key_single']=='nama_pengguna_search'){
+                $this->db->or_like('p.namaPengguna',$data['key_word']);
+            }else if($data['key_single']=='cabang_search'){
+                $this->db->or_like('c.namaCabang',$data['key_word']);
+            }else{
+                $this->db->or_like('tkt.aliasTingkat',$data['key_word']);                
+            }
         }
         $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
             ');
