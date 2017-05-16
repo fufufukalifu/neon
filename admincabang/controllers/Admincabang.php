@@ -137,46 +137,14 @@ class Admincabang extends MX_Controller {
 							<td>'.number_format($nilai,2).'</td>
 							<td>'.$item['tgl_pengerjaan'].'</td>
 						</tr>';
-			// $sumBenar=$item ['jmlh_benar'];
-			// $sumSalah=$item ['jmlh_salah'];
-			// $sumKosong=$item ['jmlh_kosong'];
-			// //hitung jumlah soal
-			// $jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
-			// $nilai=0;
-			// // cek jika pembagi 0
-			// if ($jumlahSoal != 0) {
-			// 	//hitung nilai
-			// 	$nilai=$sumBenar/$jumlahSoal*100;
-			// }
-			// $row = array();
-			// $row[] = $item ['id_report'];
-			// $row[] = $item ['namaPengguna'];
-			// $row[] = $item ['nm_paket'];
-			// $row[] = $item ['namaCabang'];
-			// $row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
-			// $row[] = $jumlahSoal;
-			// $row[] = $item ['jmlh_benar'];
-			// $row[] = $item ['jmlh_salah'];
-			// $row[] = $item ['jmlh_kosong'];
-			// $row[] = number_format($nilai,2);			
-			// $row[] = $item['tgl_pengerjaan'];
 
-			// if ($item['jmlh_benar']==0 && $item['jmlh_salah']==0) {
-			// 	$row[] = '<a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a>';
-			// }else{
-			// 	$row[] = "-";	
-			// }	
-			// $data[] = $row;
 						$no++;
 		}
 
-		// $output = array(
-		// 	"data"=>$data,
-		// 	);
 	
 		echo json_encode( $tb_paket );
 	}
-	public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0)
+	public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0,$keySearch='')
 	{
 		//data post
 		// $records_per_page=$this->input->post('records_per_page');
@@ -189,8 +157,16 @@ class Admincabang extends MX_Controller {
 		$cabang=$this->input->post('cabang');
 		$tryout=$this->input->post('tryout');
 		$paket=$this->input->post('paket');
+		$keySearch=$this->input->post('keySearch');
 		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
+		if ($keySearch != '' && $keySearch !=' ' ) {
+			$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+			$jumlah_data = $this->admincabang_model->jumlah_cari_report_paket($datas,$keySearch);
+		} else {
+			$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+			$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
+		}
+		
 
 		$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>

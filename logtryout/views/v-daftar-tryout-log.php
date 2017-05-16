@@ -38,7 +38,7 @@
       <thead>
         <tr>
 
-          <th>ID</th>
+          <th>No</th>
           <th>Nama Pengguna</th>
           <th>Nama Lengkap</th>
           <th>Waktu perngerjaan</th>
@@ -50,7 +50,7 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody id="record_siswa">
 
       </tbody>
     </table>
@@ -64,18 +64,53 @@
 </div>
 
 <script>
+var meridian=4;
+var prev=1;
+var next=2;
+var records_per_page=10;
+var status="1";
+var masaAktif="all";
+var page;
+var pageVal;
+var pageSelek=0;
+var keySearch='';
+var url;
+var datas;
   $(document).ready(function(){
 
-    url = base_url+"logtryout/ajax_status_to";
-    dataTablePaket = $('.daftarlog').DataTable({
-      "ajax": {
-        "url": url,
-        "type": "POST"
+    // url = base_url+"logtryout/ajax_status_to";
+    // dataTablePaket = $('.daftarlog').DataTable({
+    //   "ajax": {
+    //     "url": url,
+    //     "type": "POST"
+    //   },
+    //   "emptyTable": "Tidak Ada Data Pesan",
+    //   "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+    //   "bDestroy": true,
+    // });
+
+      // set tb siswa
+  function set_tb_trout_log() {
+    datas ={records_per_page:records_per_page,pageVal:pageVal,keySearch:keySearch};
+    $('#record_siswa').empty();
+    url=base_url+"logtryout/ajax_status_to";
+    $.ajax({
+      url:url,
+      data:datas,
+      dataType:"text",
+      type:"post",
+      success:function(Data)
+      {
+        tb_siswa = JSON.parse(Data);
+        $('#record_siswa').append(tb_siswa);
       },
-      "emptyTable": "Tidak Ada Data Pesan",
-      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-      "bDestroy": true,
+      error:function(e,jqXHR, textStatus, errorThrown)
+      {
+         sweetAlert("Oops...", e, "error");
+      }
     });
+  }
+  set_tb_trout_log();
 
   });
 

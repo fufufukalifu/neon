@@ -9,56 +9,98 @@ class Logtryout extends MX_Controller {
 
 	}
 
-	function ajax_status_to($cabang="all",$tryout="all",$paket="all"){
+	function ajax_status_to($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0){
 
 		$data['param'] = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
 		$list = $this->logtryout_model->get_log_tryout($data['param']);
 
-		$data = array();
+		$no=$page+1;
+		$tb_paket=null;
+		$no=$page+1;
 		foreach ( $list as $list_item ) {
-			$row = array();
-			$row[]=$list_item['id'];
-			$row[]=$list_item['namaPengguna'];
 
-			$row[]=$list_item['namaDepan'].' '.$list_item['namaBelakang'];
-			$row[]=$list_item['waktu_mulai'];
 			$waktu_mulai = date('Y-m-d H:i:s',strtotime($list_item['waktu_mulai']));
-
 			$date_mulai =  new DateTime($waktu_mulai);
-
 			$waktu_minggat = $date_mulai->modify('+'.$list_item['durasi'].' minutes');
-
-			// var_dump($waktu_minggat);
-			// echo "<br>";
-
 			$sekarang = new DateTime('now');
-			// var_dump($sekarang);
-			
-			$row[]=$list_item['nm_tryout'];
-			$row[]=$list_item['nm_paket'];
 
 
 			if ($list_item['status_pengerjaan']=="") {
 				if ($sekarang>=$waktu_minggat) {
-					$row[]="<i class='ico-paper-plane text-danger' title='meninggalkan'></i>";
+					$status="<i class='ico-paper-plane text-danger' title='meninggalkan'></i>";
 				}else{
-					$row[]="<i class='ico-pencil3 text-primary' title='sedang mengerjakan'></i>";
+					$status="<i class='ico-pencil3 text-primary' title='sedang mengerjakan'></i>";
 				}
 			} else {
 				// jika waktu mulai + durasinya >= sekarang
 				// artikan dia sebagai minggat
-				$row[]="<i class='ico-checkmark3 text-success' title='selesai mengerjakan'></i>";
+				$status="<i class='ico-checkmark3 text-success' title='selesai mengerjakan'></i>";
 				
 			}
-			
-			$data[] = $row;
 
+			$tb_paket.=	'<tr>
+			<td>'.$no.'</td>	
+			<td>'.$list_item ['namaPengguna'].'</td>
+			<td>'.$list_item['namaDepan'].' '.$list_item['namaBelakang'].'</td>
+			<td>'.$list_item['waktu_mulai'].'</td>
+			<td>'.$list_item['nm_tryout'].'</td>
+			<td>'.$list_item['nm_paket'].'</td>
+			<td>'.$status.'</td>
+			</tr>';
+
+		$no++;
 		}
+		echo json_encode( $tb_paket );
+	}
 
-		$output = array(
-			"data"=>$data,
-			);
-		echo json_encode( $output );
+public function pagination_daftar_paket($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0)
+	{
+		//data post
+		// $records_per_page=$this->input->post('records_per_page');
+		// $page=$this->input->post('page');
+		//data post
+		# get cabang
+		$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get to
+		$data['to'] = $this->mtoback->get_To();
+		$cabang=$this->input->post('cabang');
+		$tryout=$this->input->post('tryout');
+		$paket=$this->input->post('paket');
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
+
+		$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a></li>';
+
+    	 $pagePagination=1;
+
+    	 $sumPagination=($jumlah_data/$records_per_page);
+
+    	 for ($i=0; $i < $sumPagination; $i++) { 
+    	 	if ($pagePagination<=7) {
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 	}else{
+    	 		    	 	$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+    	 	}
+
+    	 	$pagePagination++;
+    	 }
+
+    	if ($pagePagination>7) {
+    	 	  $pagination.='<li class="" id="page-next">
+		      								<a href="javascript:void(0)" onclick="nextPage()" aria-label="Next">
+		        								<span aria-hidden="true">&raquo;</span>
+		      								</a>
+		    								</li>';
+    	 }
+
+    	 if ($pagePagination<3) {
+    	 		// $pagination='';
+    	 }
+    	 
+
+		echo json_encode($pagination);
 	}
 }
 ?>
