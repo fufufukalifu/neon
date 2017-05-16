@@ -80,20 +80,20 @@
           </select>
         </div>
       </div>
-       <!-- /div setting record -->
+      <!-- /div setting record -->
       <!-- div pencarian  -->
       <div class="col-md-10 mb10 mt10 pr0">
         <div class="input-group">
-           <span class="input-group-addon btn" id="cariToken"><i class="ico-search"></i></span>
-           <input class="form-control" type="text" name="cariToken" placeholder="Cari Data">
-        </div>
-      </div>
-      <!-- div pencarian -->
-    </div>
-    <!-- div seting record dan pencarian -->
-    <!-- div tabel daftar token -->
-    <div class="col-md-12">
-      <table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+         <span class="input-group-addon btn" id="cariToken"><i class="ico-search"></i></span>
+         <input class="form-control" type="text" name="cariToken" placeholder="Cari Data">
+       </div>
+     </div>
+     <!-- div pencarian -->
+   </div>
+   <!-- div seting record dan pencarian -->
+   <!-- div tabel daftar token -->
+   <div class="col-md-12">
+    <table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
       <thead>
         <tr>
           <th>id</th>
@@ -103,12 +103,12 @@
           <th>Nama Pengguna</th>
           <th width="15%">Aksi</th>
         </tr>
-      <tbody id="record_token">
+        <tbody id="record_token">
 
-      </tbody>
+        </tbody>
       </table>
     </div>
-     <!-- /div tabel daftar token -->
+    <!-- /div tabel daftar token -->
     <!-- div pagination daftar token -->
     <div class="col-md-12">
       <ul class="pagination pagination-token">
@@ -123,25 +123,26 @@
 </div>
 <!-- TABEL TOKEN -->
 <script type="text/javascript">
-var dataTableToken;
-var meridian=4;
-var prev=1;
-var next=2;
-var records_per_page=10;
-var status="null";
-var masaAktif="all";
-var page=0;
-var pageVal;
-var keySearch='';
-var url;
-var tb_token;
-var pageSelek=0;
-var datas ;
-$(document).ready(function(){
+  var dataTableToken;
+  var meridian=4;
+  var prev=1;
+  var next=2;
+  var records_per_page=10;
+  var status="null";
+  var masaAktif="all";
+  var page=0;
+  var pageVal;
+  var keySearch='';
+  var url;
+  var tb_token;
+  var pageSelek=0;
+  var datas ;
+  $(document).ready(function(){
   //set tb_token
   function set_tb_token() {
     datas ={masaAktif:masaAktif,status:status,records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
     $('#record_token').empty();
+    
     url=base_url+"token/ajaxLisToken";
     $.ajax({
       url:url,
@@ -151,13 +152,13 @@ $(document).ready(function(){
       success:function(Data)
       {
         tb_token = JSON.parse(Data);
-         $('#record_token').append(tb_token);
+        $('#record_token').append(tb_token);
       },
       error:function(e,jqXHR, textStatus, errorThrown)
       {
-         sweetAlert("Oops...", e, "error");
-      }
-    });
+       sweetAlert("Oops...", e, "error");
+     }
+   });
 
   }
   set_tb_token();
@@ -169,10 +170,10 @@ $(document).ready(function(){
   });
   // even untuk menampilkan jenis token yg sudah digunakan atau belum digunakan 
   $('input[name=status_token]').click(function(){
-  status = this.value;
-  console.log(page+"ini");
-  selectPage(page);
-  paginationToken();
+    status = this.value;
+    console.log(page+"ini");
+    selectPage(page);
+    paginationToken();
   });
 
   // ketika masa aktif radio button di klik
@@ -193,7 +194,7 @@ $(document).ready(function(){
   //   //
   // });
 
-    $('#cariToken').click(function(e){
+  $('#cariToken').click(function(e){
       //get value dari input name cariToken
       keySearch=$('[name=cariToken]').val();
       selectPage(pageVal='0');
@@ -201,22 +202,22 @@ $(document).ready(function(){
       //
     });
 
-  });
+});
     //set pagination
-  function paginationToken() {
+    function paginationToken() {
       $.ajax({
-      url:base_url+"token/paginationToken/",
-      data:{masaAktif:masaAktif,status:status,records_per_page:records_per_page,keySearch:keySearch},
-      type:"POST",
-      dataType:"TEXT",
-      success:function(data){
-        $('.pagination-token').empty();
-        $('.pagination-token').append(JSON.parse(data));
-      },error:function(){
+        url:base_url+"token/paginationToken/",
+        data:{masaAktif:masaAktif,status:status,records_per_page:records_per_page,keySearch:keySearch},
+        type:"POST",
+        dataType:"TEXT",
+        success:function(data){
+          $('.pagination-token').empty();
+          $('.pagination-token').append(JSON.parse(data));
+        },error:function(){
         // swal('Gagal pagination');
       }
     });
-  }
+    }
 // next page
 function nextPage() {
   selectPage(next);
@@ -231,30 +232,30 @@ function selectPage(pageVal='0') {
   // 
   $('#record_token').empty();
   datas ={masaAktif:masaAktif,status:status,records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
-    url=base_url+"token/ajaxLisToken";
-    $.ajax({
-      url:url,
-      data:datas,
-      dataType:"text",
-      type:"post",
-      success:function(Data)
-      {
-        tb_token = JSON.parse(Data);
-         $('#record_token').append(tb_token);
-      },
-      error:function(e,jqXHR, textStatus, errorThrown)
-      {
+  url=base_url+"token/ajaxLisToken";
+  $.ajax({
+    url:url,
+    data:datas,
+    dataType:"text",
+    type:"post",
+    success:function(Data)
+    {
+      tb_token = JSON.parse(Data);
+      $('#record_token').append(tb_token);
+    },
+    error:function(e,jqXHR, textStatus, errorThrown)
+    {
          // sweetAlert("Oops...", e, "error");
-      }
-    });
+       }
+     });
   //meridian adalah nilai tengah padination
- $('#page-'+meridian).removeClass('active');
+  $('#page-'+meridian).removeClass('active');
   var newMeridian=page+1;
   var loop;
   var hidePage;
   var showPage;
   if (newMeridian<=4) {
-        $("#page-prev").addClass('hide');
+    $("#page-prev").addClass('hide');
     //banyak pagination yg akan di tampilkan dan sisembunyikan
     loop=meridian-newMeridian;
     // start id pagination yg akan ditampilkan
@@ -291,10 +292,10 @@ function selectPage(pageVal='0') {
           $(showPagination).removeClass('hide');
           //pagination baru yg ditampilkan
           $(hidePagination).addClass('hide');
-                idPaginationshow--;
+          idPaginationshow--;
           idPaginationhide++;
         }
-  }else{
+      }else{
 
     //banyak pagination yg akan di tampilkan dan sisembunyikan
     loop=meridian-newMeridian;
@@ -310,14 +311,14 @@ function selectPage(pageVal='0') {
       $(showPagination).removeClass('hide');
       //pagination baru yg ditampilkan
       $(hidePagination).addClass('hide');
-            idPaginationshow++;
+      idPaginationshow++;
       idPaginationhide--;
     }
   } 
-   prev=newMeridian-2;
-   next=newMeridian;
-   meridian=newMeridian;
-   $('#page-'+meridian).addClass('active');
+  prev=newMeridian-2;
+  next=newMeridian;
+  meridian=newMeridian;
+  $('#page-'+meridian).addClass('active');
 }
 
 // onclick action
@@ -330,6 +331,7 @@ $('.simpan_token').click(function(){
   selectPage();
   paginationToken();
 });
+
 // UDF //
 function addtoken(){
   var data = $('.form-step').serialize();
@@ -340,8 +342,8 @@ function addtoken(){
     dataType:"TEXT",
     success:function(){
       swal('Token Berhasil Di Tambahkan');
-       selectPage();
-       paginationToken();
+      selectPage();
+      paginationToken();
     },error:function(){
       swal('Gagal membuat Token');
     }
@@ -401,8 +403,8 @@ function update_token(data){
       url:url,
       success:function(){
         swal("Diaktifkan!", "Token berhasil diaktikan.", "success");
-         selectPage();
-         paginationToken();
+        selectPage();
+        paginationToken();
       },
       error:function(){
         sweetAlert("Oops...", "Token gagal diaktikan!", "error");

@@ -160,6 +160,7 @@ class Token_model extends CI_Model{
 			$this->db->or_like('namaPengguna',$keySearch);
 	    return $query = $this->db->get('view_pengguna_token',$number,$offset)->result();      
 	}
+	
 	function data_cari_token($number,$offset,$masaAktif,$status,$keySearch){
 	   	$this->db->select('*');
 	   	if ($masaAktif!="all") {

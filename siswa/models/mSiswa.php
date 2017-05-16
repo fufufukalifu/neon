@@ -96,6 +96,48 @@ class Msiswa extends CI_Model {
         return $query->result_array();
     }
 
+
+    #query get siswa belum to
+    public function get_siswa_blm_ikutan_to_pagination($data) {
+        $this->db->select('s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,tkt.`aliasTingkat`,p.`namaPengguna`');
+        $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
+        $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+        $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
+        if (!empty($data['key_search'])) {
+            $this->db->or_like('s.namaDepan',$data['key_search']);
+            $this->db->or_like('p.namaPengguna',$data['key_search']);
+            $this->db->or_like('c.namaCabang',$data['key_search']);
+            $this->db->or_like('tkt.aliasTingkat',$data['key_search']);
+        }
+
+        if($data['search_single']){
+            if($data['key_single']=='nama_siswa_search'){
+                $this->db->or_like('s.namaDepan',$data['key_word']);
+            }
+        }
+        
+
+        $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
+            ');
+        $query = $this->db->get('tb_siswa s', $data['records_per_page'], $data['page_select']);
+        return $query->result_array();
+    }
+
+    public function get_siswa_blm_ikutan_to_pagination_number($data) {
+        $this->db->select('s.`id`');
+        $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
+        $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+        $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
+        if (!empty($data['key_search'])) {
+            $this->db->or_like('s.namaDepan',$data['key_search']);
+        }
+        $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
+            ');
+        $query = $this->db->get('tb_siswa s');
+        return $query->num_rows();
+    }
+    ##query get siswa belum to.
+
     #query get siswa belum to
 
     public function get_siswa_blm_ikutan_to($id) {
@@ -140,15 +182,15 @@ class Msiswa extends CI_Model {
     }
 
 
-function get_siswa_byid($idsiswa, $idpengguna) {
-    $this->db->select('siswa.id as idsiswa,siswa.namaDepan,siswa.namaBelakang,siswa.alamat,siswa.noKontak,siswa.tingkatID as kelasID,siswa.namaSekolah,siswa.alamatSekolah,siswa.cabangID,tkt.depedensi as tingkatID');
-    $this->db->from('tb_siswa siswa');
-    $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
-    $this->db->join('tb_tingkat tkt','tkt.id = siswa.tingkatID');
-    $this->db->where('pengguna.id', $idpengguna);
-    $query = $this->db->get();
-    return $query->result_array();
-}
+    function get_siswa_byid($idsiswa, $idpengguna) {
+        $this->db->select('siswa.id as idsiswa,siswa.namaDepan,siswa.namaBelakang,siswa.alamat,siswa.noKontak,siswa.tingkatID as kelasID,siswa.namaSekolah,siswa.alamatSekolah,siswa.cabangID,tkt.depedensi as tingkatID');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
+        $this->db->join('tb_tingkat tkt','tkt.id = siswa.tingkatID');
+        $this->db->where('pengguna.id', $idpengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
 
     function get_reportlatihan_siswa($idpengguna) {
@@ -243,20 +285,20 @@ function get_siswa_byid($idsiswa, $idpengguna) {
     }
     //cari Siswa
 
-public function get_cari_siswa($data)
-{   
-    $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,p.namaPengguna,s.penggunaID');
-    $this->db->from('tb_siswa s');
-    $this->db->join('tb_pengguna p','p.id=s.penggunaID');
+    public function get_cari_siswa($data)
+    {   
+        $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,p.namaPengguna,s.penggunaID');
+        $this->db->from('tb_siswa s');
+        $this->db->join('tb_pengguna p','p.id=s.penggunaID');
 
-    $this->db->like('namaDepan',$data);
-    $this->db->or_like('namaBelakang',$data);
-    $this->db->or_like('p.namaPengguna',$data);
+        $this->db->like('namaDepan',$data);
+        $this->db->or_like('namaBelakang',$data);
+        $this->db->or_like('p.namaPengguna',$data);
 
-    $this->db->where('s.status',1);
-    $query = $this->db->get();
-    return $query->result_array();
-}
+        $this->db->where('s.status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
 
 
@@ -321,7 +363,7 @@ public function get_cari_siswa($data)
         SUM(latihan.jmlh_kosong) AS total_kosong
 
         FROM (SELECT * FROM `tb_report-latihan` repo 
-            JOIN `tb_pengguna` `pengguna` ON `pengguna`.id = `repo`.`id_pengguna` WHERE `namaPengguna` = '$id') AS latihan
+        JOIN `tb_pengguna` `pengguna` ON `pengguna`.id = `repo`.`id_pengguna` WHERE `namaPengguna` = '$id') AS latihan
         JOIN `tb_mm_sol_lat` mmsol ON mmsol.`id_latihan` = latihan.id_latihan
         JOIN `tb_latihan` l ON l.`id_latihan` = latihan.id_latihan
         JOIN `tb_banksoal` bank ON bank.`id_soal` = mmsol.`id_soal`
@@ -336,50 +378,50 @@ public function get_cari_siswa($data)
         return $result->result_array();
     }
 
-public function sum_cari_siswa($key='')
-{
+    public function sum_cari_siswa($key='')
+    {
         $this->db->select('s.id');
-    $this->db->from('tb_siswa s');
-    $this->db->join('tb_pengguna p','p.id=s.penggunaID');
+        $this->db->from('tb_siswa s');
+        $this->db->join('tb_pengguna p','p.id=s.penggunaID');
 
-    $this->db->like('s.namaDepan',$key);
-    $this->db->or_like('s.namaBelakang',$key);
-    $this->db->or_like('p.namaPengguna',$key);
-
-    $this->db->where('s.status',1);
-    return $this->db->get()->num_rows();
-}
-
-function data_siswa_cari($number,$offset,$key=''){
-    $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail,cabang.namaCabang');
-    $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
-    $this->db->join('tb_cabang cabang','cabang.id = s.cabangID');
         $this->db->like('s.namaDepan',$key);
-    $this->db->or_like('s.namaBelakang',$key);
-    $this->db->or_like('p.namaPengguna',$key);
-    $this->db->where('s.status','1');
-    $this->db->where('p.status','1');
-    $this->db->order_by('s.namaDepan', 'asc');
-    return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
-}
-public function get_kelas()
-{
-    $this->db->select('id,aliasTingkat as kelas');
-    $this->db->from('tb_tingkat');
-    $this->db->where('status',2);
-    $query=$this->db->get();
-    return $query->result_array();
+        $this->db->or_like('s.namaBelakang',$key);
+        $this->db->or_like('p.namaPengguna',$key);
 
-}
-public function get_tingkat_siswa($status,$tingkatID)
-{
-    $this->db->select('id,aliasTingkat');
-    $this->db->from('tb_tingkat');
-    $this->db->where('status',$status);
-$this->db->where('depedensi',$tingkatID);
-    $query=$this->db->get();
-    return $query->result_array();
-}
+        $this->db->where('s.status',1);
+        return $this->db->get()->num_rows();
+    }
+
+    function data_siswa_cari($number,$offset,$key=''){
+        $this->db->select('s.id as idsiswa,s.namaDepan,s.namaBelakang,s.alamat,s.noKontak,s.namaSekolah,s.alamatSekolah,s.penggunaID,p.namaPengguna,p.eMail,cabang.namaCabang');
+        $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
+        $this->db->join('tb_cabang cabang','cabang.id = s.cabangID');
+        $this->db->like('s.namaDepan',$key);
+        $this->db->or_like('s.namaBelakang',$key);
+        $this->db->or_like('p.namaPengguna',$key);
+        $this->db->where('s.status','1');
+        $this->db->where('p.status','1');
+        $this->db->order_by('s.namaDepan', 'asc');
+        return $query = $this->db->get('tb_siswa s',$number,$offset)->result_array();       
+    }
+    public function get_kelas()
+    {
+        $this->db->select('id,aliasTingkat as kelas');
+        $this->db->from('tb_tingkat');
+        $this->db->where('status',2);
+        $query=$this->db->get();
+        return $query->result_array();
+
+    }
+    public function get_tingkat_siswa($status,$tingkatID)
+    {
+        $this->db->select('id,aliasTingkat');
+        $this->db->from('tb_tingkat');
+        $this->db->where('status',$status);
+        $this->db->where('depedensi',$tingkatID);
+        $query=$this->db->get();
+        return $query->result_array();
+    }
 
 }
 
