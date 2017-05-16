@@ -25,6 +25,7 @@ class Siswa extends MX_Controller {
         $this->load->model('tryout/mtryout');
         $this->load->model('learningline/learning_model');
         $this->load->model('konsultasi/mkonsultasi');
+        $this->load->model('ortuback/Ortuback_model');
         
         $this->load->helper('session');
         $this->load->library('parser');
@@ -86,6 +87,8 @@ class Siswa extends MX_Controller {
             $data['files'] = array( 
                 APPPATH.'modules/siswa/views/t-profile-siswa.php',
                 );
+
+            $data['datLapor'] = $this->msiswa->get_daftar_pesan();
 
             $this->parser->parse( 'templating/index-d-siswa', $data );
         }else{
@@ -1012,6 +1015,52 @@ public function message()
 
     $this->parser->parse( 'templating/coba-index', $data );
 }
+
+    public function ajax_getsiswa()
+{
+  $siswaID=$this->session->userdata['id'];
+  $arrSiswa=$this->msiswa->get_siswa_id($siswaID);
+  echo json_encode($arrSiswa);
+}
+
+    public function see_message($id)
+    {
+        $data['judul_halaman'] = "Pesan Orang Tua";
+
+        $hakAkses = $this->session->userdata['HAKAKSES'];
+
+        $id_pengguna= $this->session->userdata['id'];
+
+        $data['datLapor'] = $this->msiswa->get_daftar_pesan();
+
+            $data['files'] = array(
+                APPPATH . 'modules/ortuback/views/v-single-pesan.php',
+                );
+            $all_report = $this->Ortuback_model->get_pesan_by_id($id);
+
+            // update status read menjadi 1
+            $this->Ortuback_model->update_read($id);
+
+        $n=1;
+        $data['pesan']=array(); 
+        foreach ( $all_report as $item ) {
+        
+            $data['pesan'][]=array(
+                'namaortu'=>$item['namaOrangTua'],
+                'isi'=>$item['isi']
+               );
+        }
+
+        $this->parser->parse('templating/index-d-siswa', $data);
+        
+    }
+
+    // get jumlah pesan untuk pesan
+    function jumlah_pesan(){
+        $data['new_count_pesan'] = $this->msiswa->get_count();
+
+      echo json_encode($data['new_count_pesan']);
+    }
 
 }
 ?>

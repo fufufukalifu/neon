@@ -271,7 +271,6 @@ JS aoutocomplate
     var penggunaID = ('<?=$this->session->userdata['id']?>');
     var url = "<?= base_url() ?>index.php/ortuback/ajax_ortuID";
 
-    console.log('pengguna',penggunaID);
     // SOCKET CREATE LAPORAN
     socket.on('pesan_baru', function(data){
       var id_ortu = data.id_ortu;
@@ -289,14 +288,13 @@ JS aoutocomplate
                // console.log('id',id_pengguna2);
 
               for (i = 0; i < obj.length; i++) { 
+                // cek pengguna yang dituju bukan?
                 if (penggunaID == id_pengguna ) {
                     // play sound notification
                     $('#notif_audio')[0].play();
                     //add komen baru ke data notif id message-tbody
                     $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
-                } else {
-                  console.log('bukan');
-                }
+                } 
               }
 
 

@@ -462,6 +462,50 @@ public function get_pesan() {
         return $result->result_array();
     }
 
+    public function get_siswa_id($pengguna='')
+    {
+        $this->db->select('o.id as id_ortu, s.penggunaID');
+        $this->db->from('tb_siswa s');
+        $this->db->join('tb_orang_tua o', 's.id=o.siswaID');
+        $this->db->where('s.penggunaID',$pengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // tampil pesan untuk siswa
+    public function get_daftar_pesan()
+    {
+        $penggunaID = $this->session->userdata['id'];
+        $query = "SELECT l.id, l.`jenis`, l.`isi`, os.namaPengguna, l.UUID FROM (
+                SELECT o.id AS id_ortu, p.`namaPengguna` FROM tb_siswa s
+                JOIN `tb_orang_tua` o
+                ON s.id= o.`siswaID` 
+                JOIN `tb_pengguna` p
+                ON s.`penggunaID`=p.id
+                WHERE s.penggunaID=$penggunaID)
+                AS os JOIN `tb_laporan_ortu` l
+                ON os.id_ortu=l.`id_ortu`
+                WHERE l.read_status=0
+                ORDER BY l.id DESC";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
+    // ambil jumlah pesan untuk siswa
+    public function get_count()
+    {
+        $penggunaID = $this->session->userdata['id'];
+        $query = "SELECT COUNT(*) AS `numrows` FROM
+                ( SELECT o.`id` AS id_ortu FROM tb_siswa s
+                JOIN `tb_orang_tua` o
+                ON s.id=o.`siswaID`
+                WHERE s.penggunaID=$penggunaID) AS os
+                JOIN `tb_laporan_ortu` l
+                WHERE l.read_status='0' AND os.id_ortu = l.`id_ortu`";
+        $result = $this->db->query($query);
+        return $result->result_array()[0]['numrows'];
+    }
+
 
 }
 

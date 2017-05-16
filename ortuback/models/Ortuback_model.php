@@ -123,6 +123,8 @@ class Ortuback_model extends CI_Model{
 		$this->db->where('UUID', $id);
 		$this->db->update('tb_laporan_ortu');
 	}
+
+	
 }
 
 ?>
