@@ -27,7 +27,7 @@ class Ortuback extends MX_Controller {
 	// LOAD PARSER SESUAI HAK AKSES
 	public function loadparser($data){
 		$this->hakakses = $this->gethakakses();
-		if ($this->hakakses=='admin') {
+		if ($this->hakakses=='ortu') {
 			$this->parser->parse('ortuback/v-index-ortu', $data);
 		}else{
 			echo "forbidden access";    		
@@ -61,7 +61,12 @@ class Ortuback extends MX_Controller {
 
 	//laporan ortu ajax
 	public function index(){
-		$data['judul_halaman'] = "Laporan Orang Tua";
+		$id_pengguna= $this->session->userdata['id'];
+
+		$namadepan = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaDepan'];
+		$namabelakang = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaBelakang'];
+			
+		$data['judul_halaman'] = "Laporan $namadepan $namabelakang";
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 
@@ -70,15 +75,16 @@ class Ortuback extends MX_Controller {
 		);
 		
 		// get report berdasarkan nilai
-		$report_nilai = $this->Ortuback_model->get_report_nilai(4);
+		$report_nilai = $this->Ortuback_model->get_report_nilai($id_pengguna);
 
 		// get report berdasarkan absen
-		$report_absen = $this->Ortuback_model->get_report_absen(4);
+		$report_absen = $this->Ortuback_model->get_report_absen($id_pengguna);
 
 		// get report berdasarkan umum
-		$report_umum = $this->Ortuback_model->get_report_umum(4);
+		$report_umum = $this->Ortuback_model->get_report_umum($id_pengguna);
 
 		$data['namaortu'] = $report_nilai[0]['namaOrangTua'];
+
 		$n=1;
 
 		// untuk nampung report nilai
@@ -144,6 +150,13 @@ class Ortuback extends MX_Controller {
 
 		echo json_encode( $output );
 	}
+
+	public function ajax_ortuID()
+{
+  $guruID=$this->session->userdata['id'];
+  $arrMapel=$this->Ortuback_model->get_Ortu($guruID);
+  echo json_encode($arrMapel);
+}
 }
 
 ?>

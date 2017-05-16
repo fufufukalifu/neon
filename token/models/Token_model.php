@@ -209,21 +209,14 @@ class Token_model extends CI_Model{
  		return $query = $this->db->get('view_siswa_unvoucher',$number,$offset)->result_array(); 
 	}
 	function jumlah_siswa_unvoucher(){
-		$this->db->select('token.siswaID');
-		$this->db->from('tb_token token');
-		$this->db->join('tb_siswa s','s.id = token.siswaID');
-		$where_clause = $this->db->get_compiled_select();
-		$this->db->join("tb_cabang cabang","cabang.id = siswa.cabangID");
-		$this->db->join("tb_pengguna pengguna","pengguna.id = siswa.penggunaID");
-		$this->db->where("`siswa`.`id` not IN ($where_clause)", NULL, FALSE);
- 		return $this->db->get('tb_siswa siswa')->num_rows();
+ 		return $this->db->get('view_siswa_unvoucher')->num_rows();
 	}
 	function jumlah_cari_siswa_unvoucher($keySearchSiswa){
-					 $this->db->like('namaDepan',$keySearchSiswa);
-			 $this->db->or_like('namaBelakang',$keySearchSiswa);
-			 $this->db->or_like('nama_lengkap',$keySearchSiswa);
-			 $this->db->or_like('namaCabang',$keySearchSiswa);
-			 $this->db->or_like('namaPengguna',$keySearchSiswa);
+			$this->db->like('namaDepan',$keySearchSiswa);
+			$this->db->or_like('namaBelakang',$keySearchSiswa);
+			$this->db->or_like('nama_lengkap',$keySearchSiswa);
+			$this->db->or_like('namaCabang',$keySearchSiswa);
+			$this->db->or_like('namaPengguna',$keySearchSiswa);
  		return $this->db->get('view_siswa_unvoucher')->num_rows();
 	}
 

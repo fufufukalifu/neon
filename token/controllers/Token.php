@@ -326,10 +326,10 @@ class Token extends MX_Controller {
 		echo json_encode( $tb_siswa );
 
 	}
-	public function paginationSiswa($records_per_page=10)
+	public function paginationSiswa()
 	{	
      		
-     		$jumlah_data_per_page=$this->input->post("records_per_page");
+     		$jumlah_data_per_page=$this->input->post("records_per_page_siswa");
      		$keySearch=$this->input->post("keySearchSiswa");
      		if ($keySearch!='' && $keySearch!=' ') {
      				   $jumlah_data = $this->token_model->jumlah_cari_siswa_unvoucher($keySearch); 
@@ -343,7 +343,7 @@ class Token extends MX_Controller {
       </a></li>';
     	 $pagePagination=1;
 
-    	 $sumPagination=($jumlah_data/$records_per_page);
+    	 $sumPagination=($jumlah_data/$jumlah_data_per_page);
     	
     	 for ($i=0; $i < $sumPagination; $i++) { 
     	 	if ($pagePagination<=7) {

@@ -63,16 +63,16 @@ class Laporanortu extends MX_Controller {
 	}
 
 	//laporan ortu ajax
-	public function laporanortu_ajax($cabang="all",$tingkat="all",$kelas="all"){
+	public function laporanortu_ajax($cabang="all",$tingkat="all",$kelas="all",$jenis="all"){
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 
 		# get tingkat
 		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
 
-		$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
+		$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas,'jenis'=>$jenis];
 
-		$all_report = $this->Laporanortu_model->get_report_ortu($datas);
+		$all_report = $this->Laporanortu_model->get_report_ortu_all($datas);
 
 		$data = array();
 		$n=1;
@@ -83,13 +83,12 @@ class Laporanortu extends MX_Controller {
 			$row[] = $item ['namaOrangTua'];
 			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
 			$row[] = $item ['namaPengguna'];
-			$row[] = $item ['namaCabang'];
-			$row[] = $item ['aliasTingkat'];
-			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
+			$row[] = $item ['isi'];
+			// $row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
 			// $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' .$item['siswaID'] .'/'. $item['penggunaID']) . '""> Lihat detail</a></i>';
-			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-			<input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
-			<label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
+			// $row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+			// <input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
+			// <label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
 			
 			$data[] = $row;
 			$n++;
@@ -115,20 +114,111 @@ class Laporanortu extends MX_Controller {
 			$post = $this->input->post();
 
 			$jumlah_laporan = $post['jumlah_ortu'];
+			$id=$post['id_ortu'];
+			$jenis=$post['jenis_lapor'];
+			$isi=$post['isi'];
+			$UUID=uniqid();
 
 			for ($i=0; $i < $jumlah_laporan; $i++) { 
 				//masukan ke array data laporannya
-				$token_update = array("id_ortu"=>$post['id_ortu'][$i],
-										"jenis"=>$post['jenis_lapor'],
-										"isi"=>$post['isi'][$i]
+				$token_update = array("id_ortu"=>$id[$i],
+										"jenis"=>$jenis,
+										"isi"=>$post['isi'][$i],
+										"UUID"=>$UUID
 					);
 				
 				// insert laporan
 				$this->Laporanortu_model->insert_laporan($token_update);
 			}
 
+			// //get data komen by UUID
+          $datArr=$this->Laporanortu_model->get_laporan_by_id($UUID);
+          // var_dump($datArr);
+
+          $dataLaporan['id_ortu']=$datArr[0]['id_ortu'];
+          $dataLaporan['jenis_lapor']=$datArr[0]['jenis'];
+          $dataLaporan['isi']=$datArr[0]['isi'];
+          $dataLaporan['namaPengguna']=$datArr[0]['namaPengguna'];
+          $dataLaporan['success']=true;
+
+          echo json_encode($dataLaporan);
+
 		}
 	}
+
+	// fungsi add laporan
+	public function addlaporan()
+	{
+		$data['judul_halaman'] = "Laporan Orang Tua";
+		
+		# get cabang
+		$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get tingkat
+		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
+
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+		if ($hakAkses == 'admin_cabang') {
+			$this->parser->parse('v-index-admincabang', $data);
+		} elseif ($hakAkses == 'admin') {
+			$data['files'] = array(
+				APPPATH . 'modules/laporanortu/views/v-add-laporan.php',
+				);
+			$this->loadparser($data);
+		} elseif ($hakAkses == 'guru') {
+			redirect(site_url('guru/dashboard/'));
+		} elseif ($hakAkses == 'siswa') {
+			redirect(site_url('welcome'));
+		} else {
+			redirect(site_url('login'));
+		}
+		
+	}
+
+	//laporan ortu ajax
+	public function addlaporanortu_ajax($cabang="all",$tingkat="all",$kelas="all"){
+		# get cabang
+		$data['cabang'] = $this->mcabang->get_all_cabang();
+
+		# get tingkat
+		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
+
+		$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
+
+		$all_report = $this->Laporanortu_model->get_report_ortu($datas);
+
+		$data = array();
+		$n=1;
+		foreach ( $all_report as $item ) {
+		
+			$row = array();
+			$row[] = $n;
+			$row[] = $item ['namaOrangTua'];
+			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
+			$row[] = $item ['namaPengguna'];
+			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
+			// $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' .$item['siswaID'] .'/'. $item['penggunaID']) . '""> Lihat detail</a></i>';
+			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
+			<input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
+			<label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
+			
+			$data[] = $row;
+			$n++;
+		}
+
+		$output = array(
+			"data"=>$data,
+			);
+
+		echo json_encode( $output );
+	}
+
+	// function get kelas
+	public function set_cabang( $tingkat ) {
+		$data = $this->output
+		->set_content_type( "application/json" )
+		->set_output( json_encode( $this->Laporanortu_model->get_nc( $tingkat ) ) );
+	}
+
 
 }
 
