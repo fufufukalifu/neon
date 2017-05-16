@@ -49,6 +49,10 @@ JS aoutocomplate
 <!--/ END Head -->
 <!-- START Body -->
 <body>
+
+<!-- sound notification -->
+  <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+  <!-- /sound notification -->
   
 
 <!-- START Template Header -->
@@ -80,56 +84,57 @@ JS aoutocomplate
 
 
 
-      <!-- Notification dropdown -->
-      <li class="dropdown custom" id="header-dd-notification">
-        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-          <span class="meta">
-            <span class="icon"><i class="ico-bell"></i></span>
-            <span class="hasnotification hasnotification-danger"></span>
-          </span>
-        </a>
+<!-- Notification dropdown -->
+<li class="dropdown custom" id="header-dd-notification">
+ <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+  <span class="meta">
+   <input type="int" name="count_komen" value="" hidden="true">
+   <span class="icon" id="new_count_komen">
+     <span class="jumlah_notifikasi"></span>
+     <i class="ico-bell"></i></span>
 
-        <!-- Dropdown menu -->
-        <div class="dropdown-menu" role="menu">
-          <div class="dropdown-header">
-            <span class="title">Notification <span class="count"></span></span>
-            <span class="option text-right"><a href="javascript:void(0);">Clear all</a></span>
-          </div>
-          <div class="dropdown-body slimscroll">
-            <!-- indicator -->
-            <div class="indicator inline"><span class="spinner"></span></div>
-            <!--/ indicator -->
+     <!-- <?php if ($count_komen!=0): ?>
+     <?php echo $count_komen ?> -->
+     <span class="hasnotification hasnotification-danger"></span>
+     <!-- <?php endif ?> -->
+   </span>
+ </a>
 
-            <!-- Message list -->
-            <div class="media-list">
-              <a href="javascript:void(0);" class="media read border-dotted">
-                <span class="media-object pull-left">
-                  <i class="ico-checkmark3 bgcolor-success"></i>
-                </span>
-                <span class="media-body">
-                  <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
-                  <!-- meta icon -->
-                  <span class="media-meta pull-right">14w</span>
-                  <!--/ meta icon -->
-                </span>
-              </a>
-            </div>
-            <!--/ Message list -->
-          </div>
-        </div>
-        <!--/ Dropdown menu -->
-      </li>
-      <!--/ Notification dropdown -->
 
-      <!-- Search form toggler  -->
-      <li>
-        <a href="javascript:void(0);" data-toggle="dropdown" data-target="#dropdown-form">
-          <span class="meta">
-            <span class="icon"><i class="ico-search"></i></span>
-          </span>
-        </a>
-      </li>
-      <!--/ Search form toggler -->
+ <!-- Dropdown menu -->
+ <div class="dropdown-menu" role="menu">
+  <div class="dropdown-header">
+   <span class="title">Notification<nspan class="count"></span></span>
+   <span class="option text-right"><a href="javascript:void(0);" title="Close Notifikasi"><i class="ico-close3"></i></a></span>
+ </div>
+ <div class="dropdown-body slimscroll">
+   <!-- indicator -->
+   <!-- <div class="indicator inline"><span class="spinner"></span></div> -->
+   <!--/ indicator -->
+
+   <!-- Message list -->
+   <div class="media-list" id="message-tbody">
+
+      <a href="<?=base_url()?>komenback/seevideo/" class="media border-dotted read">
+        <span class="pull-left">
+          <img src="<?=base_url()?>assets\image\photo\siswa\" class="media-object img-circle" alt="">
+        </span>
+        <span class="media-body">
+          <span class="media-heading"></span>
+          <span class="media-text ellipsis nm"></span>
+          <!-- meta icon -->
+          <span class="media-meta pull-right"></span>
+          <!--/ meta icon -->
+        </span>
+      </a>
+
+  </div>
+  <!--/ Message list -->
+</div>
+</div>
+<!--/ Dropdown menu -->
+</li>
+<!--/ Notification dropdown -->
     </ul>
     <!--/ END Left nav -->
 
@@ -245,6 +250,65 @@ JS aoutocomplate
 <!--<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/zeroclipboard.js') ?>"></script>-->
 <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+  <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+
+   <script type="text/javascript">
+
+  jQuery(document).ready(function () {
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    var new_count_komen = 0;
+    var mapelID=8;
+    var obMapel ='';
+    var ortuID = ('<?=$this->session->userdata['id']?>');
+    var url = "<?= base_url() ?>index.php/ortuback/ajax_ortuID";
+    console.log(ortuID);
+
+    socket.on( 'pesan_baru', function( data ) {
+      var id_ortu = data.id_ortu;
+      var jenis_lapor = data.jenis_lapor;
+      var isi = data.isi; 
+          //ajax untuk get data mapelid guru
+           // $('#notif_audio')[0].play();
+          $.ajax({
+            url:url,
+            success:function(mapel){
+          //     $('#notif_audio')[0].play();
+              // ubah type data mapel id guru dari json ke objek
+              obj =JSON.parse(mapel);
+              // for (i = 0; i < obMapel.length; i++) { 
+                // mapelIdGuru=obMapel[i].mapelID;
+                //cek data koemn jika data komen bukan milik dia dan mapel id sesuai dengan mapel id guru 
+                // if (idPengguna!=userID && mapelID==mapelIdGuru) {
+                if (ortuID==4807) {
+                  //jika true 
+                  // var old_count_komen = parseInt($('[name=count_komen]').val());
+                  // new_count_komen = old_count_komen + 1;
+                  // $('[name=count_komen]').val(new_count_komen);
+                  // $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+                  // play sound notification
+                  $('#notif_audio')[0].play();
+                  //add komen baru ke data notif id message-tbody
+                  $( "#message-tbody" ).prepend(' <a href="'+base_url+'komenback/seevideo/'+data.isi+'/'+data.isi+'" class="media border-dotted read"><span class="pull-left"><img src="'+isi+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+data.isi+'</span><span class="media-text ellipsis nm">'+data.isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+data.isi+'</span><!--/ meta icon --></span></a>');
+                  console.log('bunyi');
+                  console.log(id_ortu);
+                  console.log('beda',obj);
+                } else {
+                  console.log('kosong');
+                  console.log(id_ortu);
+                }
+              // }
+            },              
+          });
+          
+        });
+
+    
+
+  
+  });
+
+
+</script>
 
 <!--/ END JAVASCRIPT SECTION -->
 </body>

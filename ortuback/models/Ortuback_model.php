@@ -7,7 +7,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.id", 4);
+		$this->db->where("o.penggunaID", $id_ortu);
 		$this->db->where("l.jenis = 'nilai'");
 
 		$query = $this->db->get();
@@ -19,7 +19,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.id", 4);
+		$this->db->where("o.penggunaID", $id_ortu);
 		$this->db->where("l.jenis = 'absen'");
 
 		$query = $this->db->get();
@@ -31,7 +31,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.id", 4);
+		$this->db->where("o.penggunaID", $id_ortu);
 		$this->db->where("l.jenis = 'umum'");
 
 		$query = $this->db->get();
@@ -53,6 +53,33 @@ class Ortuback_model extends CI_Model{
 		return $query->result_array();
 	}	
 
+	/*Mengambil report berdasarkan nilai*/
+	function get_nama($id_ortu){
+		$this->db->select('s.id, s.namaDepan, s.namaBelakang, o.namaOrangTua');
+		$this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s', 'o.siswaID=s.id');
+		$this->db->where("o.penggunaID", $id_ortu);
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}	
+
+	 public function namasiswa($id) {
+        $query = "SELECT * FROM `tb_orang_tua` ortu 
+                JOIN tb_siswa sis ON ortu.siswaID = sis.id
+                WHERE ortu.penggunaID = $id";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
+    public function get_Ortu($ortuID='')
+	{
+		$this->db->select('*');
+		$this->db->from('tb_orang_tua');
+		$this->db->where('penggunaID',$ortuID);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
 
 ?>

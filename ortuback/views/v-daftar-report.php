@@ -2,7 +2,7 @@
   <div class="col-md-12 kirim_token">
     <div class="panel panel-teal">
       <div class="panel-heading">
-        <h3 class="panel-title">Report </h3> 
+        <h3 class="panel-title">Report <?=$namaortu?></h3> 
         <div class="panel-toolbar text-right">
         <div class="col-md-11">
 

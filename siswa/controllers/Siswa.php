@@ -991,5 +991,27 @@ public function getKelasSiswa( $tingkatID ) {
   ->set_content_type( "application/json" )
   ->set_output( json_encode( $this->msiswa->get_tingkat_siswa($status,$tingkatID) ) ) ;
 }
+
+public function message()
+{
+    $data = array(
+        'judul_halaman' => 'Neon - Welcome',
+        'judul_header' =>'Video',
+        'judul_header2' =>'Video Belajar'
+        );
+
+    $data['files'] = array( 
+        APPPATH.'modules/homepage/views/v-header-login.php',
+        APPPATH.'modules/siswa/views/v-message.php',
+        APPPATH.'modules/testimoni/views/v-footer.php',
+        );
+   
+   // get message 
+   $data['pesan'] = $this->msiswa->get_pesan();
+
+
+    $this->parser->parse( 'templating/coba-index', $data );
+}
+
 }
 ?>

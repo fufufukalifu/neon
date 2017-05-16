@@ -381,6 +381,21 @@ $this->db->where('depedensi',$tingkatID);
     return $query->result_array();
 }
 
+public function get_pesan() {
+        $penggunaID = $this->session->userdata['id'];
+        
+        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu FROM tb_siswa s
+                JOIN `tb_orang_tua` o
+                ON s.`id` = o.`siswaID`
+                WHERE s.`penggunaID`=$penggunaID) AS j 
+                JOIN `tb_laporan_ortu` l 
+                ON j.id_ortu = l.`id_ortu`
+                WHERE l.`id_ortu` = j.id_ortu";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
+
 }
 
 ?>
