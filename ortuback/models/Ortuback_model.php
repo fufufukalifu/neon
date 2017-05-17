@@ -100,6 +100,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
 		$this->db->where('l.read_status',0);
 		$this->db->where('o.penggunaID',$pengguna);
+		$this->db->limit(3);
 		$this->db->order_by('l.id', 'desc');
 
 		$query = $this->db->get();

@@ -87,7 +87,7 @@ class Siswa extends MX_Controller {
             $data['files'] = array( 
                 APPPATH.'modules/siswa/views/t-profile-siswa.php',
                 );
-
+            $data['count_laporan'] = $this->msiswa->get_count();
             $data['datLapor'] = $this->msiswa->get_daftar_pesan();
 
             $this->parser->parse( 'templating/index-d-siswa', $data );
@@ -1051,13 +1051,13 @@ public function message()
                );
         }
 
-        $this->parser->parse('templating/index-d-siswa', $data);
+        $this->parser->parse('templating/index', $data);
         
     }
 
     // get jumlah pesan untuk pesan
     function jumlah_pesan(){
-        $data['new_count_pesan'] = $this->msiswa->get_count();
+        $data['new_count_pesan'] = (int)$this->msiswa->get_count();
 
       echo json_encode($data['new_count_pesan']);
     }

@@ -26,6 +26,8 @@
 
 </head>
 <body>
+
+
     <script type="text/javascript">var base_url = "<?= base_url() ?>"</script>
     <script src="<?= base_url('assets/back/js/jquery.min.js') ?>"></script>
     <?php
@@ -71,6 +73,7 @@
     <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/tabletools/js/tabletools.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/plugins/datatables/js/jquery.datatables-custom.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
+
 </body>
 
 </html>

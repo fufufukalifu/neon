@@ -487,7 +487,8 @@ public function get_pesan() {
                 AS os JOIN `tb_laporan_ortu` l
                 ON os.id_ortu=l.`id_ortu`
                 WHERE l.read_status=0
-                ORDER BY l.id DESC";
+                ORDER BY l.id DESC
+                limit 3";
         $result = $this->db->query($query);
         return $result->result_array();
     }

@@ -35,30 +35,6 @@ class Ortuback extends MX_Controller {
 	}
 	// LOAD PARSER SESUAI HAK AKSES
 
-	public function test()
-	{
-		$data['judul_halaman'] = "Laporan Orang Tua";
-
-		$hakAkses = $this->session->userdata['HAKAKSES'];
-
-			$data['files'] = array(
-				APPPATH . 'modules/ortuback/views/v-daftar-report.php',
-				);
-			$all_report = $this->Ortuback_model->get_report(4);
-
-		$n=1;
-		$data['report']=array(); 
-		foreach ( $all_report as $item ) {
-		
-			$data['report'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-               );
-		}
-
-			$this->loadparser($data);
-
-	}
-
 	//laporan ortu ajax
 	public function index(){
 		$id_pengguna= $this->session->userdata['id'];
@@ -68,8 +44,10 @@ class Ortuback extends MX_Controller {
 			
 		$data['judul_halaman'] = "Laporan $namadepan $namabelakang";
 		$data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
+		$data['new_count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
+		
 
 		$data['files'] = array(
 			APPPATH . 'modules/ortuback/views/v-daftar-report.php',
@@ -184,6 +162,8 @@ class Ortuback extends MX_Controller {
 
 			// update status read menjadi 1
 			$this->Ortuback_model->update_read($id);
+
+			$data['new_count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 
 		$n=1;
 		$data['pesan']=array(); 

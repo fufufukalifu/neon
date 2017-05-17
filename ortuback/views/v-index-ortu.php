@@ -1,3 +1,4 @@
+<!-- index ortu backup -->
 <!DOCTYPE html>
 <html class="backend">
 <!-- START Head -->
@@ -96,9 +97,9 @@ JS aoutocomplate
 <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <input type="int" name="count_komen" value="1" hidden="true">
+   <input type="int" name="count_komen" value="<?=$new_count_pesan;?>" hidden="true">
    <span class="icon" id="new_count_komen">
-     <span class="jumlah_notifikasi"></span>
+     <span class="jumlah_notifikasi"><?=$new_count_pesan;?></span>
      <i class="ico-bell"></i></span>
 
      <!-- <?php if ($count_komen!=0): ?>
@@ -112,7 +113,7 @@ JS aoutocomplate
  <!-- Dropdown menu -->
  <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
-   <span class="title">Notification<nspan class="count"></span></span>
+   <span class="title">Notification <?=$new_count_pesan;?><span class="count"></span></span>
    <span class="option text-right"><a href="javascript:void(0);" title="Close Notifikasi"><i class="ico-close3"></i></a></span>
  </div>
  <div class="dropdown-body slimscroll">
@@ -270,13 +271,18 @@ JS aoutocomplate
     var obMapel ='';
     var penggunaID = ('<?=$this->session->userdata['id']?>');
     var url = "<?= base_url() ?>index.php/ortuback/ajax_ortuID";
+    console.log('penggunaID', penggunaID);
 
     // SOCKET CREATE LAPORAN
     socket.on('pesan_baru', function(data){
+         $.getJSON( base_url+"ortuback/jumlah_pesan/"+penggunaID, function( datas ) {
+          $('.jumlah_notifikasi').text(datas);
+        });
       var id_ortu = data.id_ortu;
       var jenis_lapor = data.jenis_lapor;
       var isi = data.isi;
       var namaPengguna = data.namaPengguna;
+      var tampil=false;
       $.ajax({
             url:url,
             success:function(data){
@@ -284,30 +290,29 @@ JS aoutocomplate
               obj =JSON.parse(data);
               
               id_pengguna = obj[0].penggunaID;
-               // id_pengguna2 = obj[1].penggunaID;
-               // console.log('id',id_pengguna2);
+              // ambil id ortu dari objek 
+              ortuID = obj[0].id;
+
 
               for (i = 0; i < obj.length; i++) { 
                 // cek pengguna yang dituju bukan?
-                if (penggunaID == id_pengguna ) {
+                if (id_ortu == ortuID ) {
                     // play sound notification
                     $('#notif_audio')[0].play();
+                    // tampil=true;
                     //add komen baru ke data notif id message-tbody
                     $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
-                } 
+                }  
               }
 
 
              },              
           });
-
       
     });
     // SOCKET CREATE LAPORAN
 
-      $.getJSON( base_url+"ortuback/jumlah_pesan/"+penggunaID, function( datas ) {
-        $('.jumlah_notifikasi').text(datas);
-      });
+     
 
     
 
