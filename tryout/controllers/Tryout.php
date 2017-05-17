@@ -10,6 +10,7 @@ class Tryout extends MX_Controller {
         $this->load->model('siswa/msiswa');
 
         $this->load->model('tesonline/Mtesonline');
+        $this->load->model( 'ortuback/Ortuback_model' );
         parent::__construct();
         $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
@@ -49,6 +50,10 @@ class Tryout extends MX_Controller {
         if ($this->session->userdata('HAKAKSES')=='ortu') {
                 //untuk mengambil id siswa jika ortu yang login 
             $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+            // ini buat ambil pesan ortu
+            $id_pengguna= $this->session->userdata['id'];
+            $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
+            $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
         }else{
         $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
     }
@@ -67,10 +72,11 @@ class Tryout extends MX_Controller {
         $datas['id_pengguna'] = $this->session->userdata('id');
         if ($this->session->userdata('HAKAKSES')=='ortu') {
             //untuk mengambil id siswa jika ortu yang login 
-        $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+
         }else{
-        $datas['id_siswa'] = $this->msiswa->get_siswaid();
-    }
+            $datas['id_siswa'] = $this->msiswa->get_siswaid();
+        }
 
         $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
         $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
@@ -121,6 +127,10 @@ class Tryout extends MX_Controller {
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
             $data['paket'] = $this->Mtryout->get_paket_undo($datas);
             $data['status_to'] = $status_to;
+             // ini buat pesan ortu
+            $id_pengguna= $this->session->userdata['id'];
+            $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
+            $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 
 
             $this->parser->parse('templating/index', $data);

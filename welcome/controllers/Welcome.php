@@ -50,7 +50,7 @@ class Welcome extends MX_Controller {
         $namaDepan=$this->mOrtu->get_siswa($id_pengguna)[0]['namaDepan'];
         $namaBelakang=$this->mOrtu->get_siswa($id_pengguna)[0]['namaBelakang'];
         $data['siswa'] =$namaDepan.' '. $namaBelakang ;
-            // ini buat ortu
+        // ini buat ortu
         $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
         $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 

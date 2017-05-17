@@ -86,7 +86,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->select('count(*) as numrows');
 		$this->db->from('tb_laporan_ortu l');
 		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
-		$this->db->where('l.read_status',0);
+		$this->db->where('l.read_status_ortu',0);
 		$this->db->where('o.penggunaID',$pengguna);
 
 		$query = $this->db->get();
@@ -98,7 +98,7 @@ class Ortuback_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tb_laporan_ortu l');
 		$this->db->join('tb_orang_tua o', 'l.id_ortu=o.id');
-		$this->db->where('l.read_status',0);
+		$this->db->where('l.read_status_ortu',0);
 		$this->db->where('o.penggunaID',$pengguna);
 		$this->db->limit(3);
 		$this->db->order_by('l.id', 'desc');
@@ -120,7 +120,7 @@ class Ortuback_model extends CI_Model{
 
 	public function update_read($id)
 	{
-		$this->db->set('read_status',1);
+		$this->db->set('read_status_ortu',1);
 		$this->db->where('UUID', $id);
 		$this->db->update('tb_laporan_ortu');
 	}

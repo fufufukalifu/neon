@@ -10,6 +10,7 @@ class Tesonline extends MX_Controller {
         $this->load->model('mtesonline');
         $this->load->model('latihan/mlatihan');
         $this->load->library('parser');
+        $this->load->model( 'ortuback/Ortuback_model' );
         parent::__construct();
             $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
@@ -118,7 +119,11 @@ public function daftarlatihan() {
 
     if ($this->session->userdata['HAKAKSES']=='ortu') {
         //untuk mengambil report jika ortu yang login 
-    $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['NAMAORTU']);
+        $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['NAMAORTU']);
+        // ini buat ortu
+        $id_pengguna= $this->session->userdata['id'];
+        $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
+        $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 }
     else{
     $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['USERNAME']);

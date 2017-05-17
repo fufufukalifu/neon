@@ -100,42 +100,7 @@
 								
 								</li>
 
-								<!-- Notification dropdown -->
-								<li>
-									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
-								
-									<a href="#"> 
-										<span class="meta">
-										   <input type="int" name="count_komen" value="<?=$count_pesan; ?>" hidden="true">
-										   <span class="icon" id="new_count_komen">
-										     <span class="jumlah_notifikasi"><?=$count_pesan; ?></span>
-										     <i class="ico-bell"></i></span>
-
-										     <span class="hasnotification hasnotification-danger"></span>
-										</span><i class="fa fa-envelope"></i>
-										Pesan
-									</a>
-									<ul>
-											 <!-- Message list -->
-											   <div class="media-list" id="message-tbody-ortu">
-													
-											       <?php foreach ($datLapor as $key ): ?>
-											       	<li>
-											      	<a href="<?=base_url()?>siswa/see_message/<?=$key['UUID']?>" class="media border-dotted read">
-											      	<?php
-							                            echo substr($key['isi'], 0, 10) ?>
-											       
-											      </a>
-											      </li>
-											    <?php endforeach ?>
-											  </div>
-											  <!--/ Message list -->
-										<li><a href="<?=base_url()?>siswa/see_message/<?=$key['UUID']?>" class="media border-dotted read">Selengkapnya</a></li>
-									</ul>
-								
-								<?php endif; ?>
-								</li>
-								<!-- Notification dropdown -->
+						
 
 								<li>
 									<a href="<?=base_url('video') ?>">Video</a>
@@ -162,6 +127,48 @@
 									<a href="<?=base_url('tesonline/daftarlatihan') ?>">Latihan</a>
 
 								</li>
+
+
+								<li>
+									<?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+										<!-- Notification dropdown -->
+										<a href="#"> 
+											<span class="meta">
+											   <input type="int" name="count_komen" value="<?=$count_pesan; ?>" hidden="true">
+											   <span class="icon" id="new_count_komen">
+											<!--      <span class="jumlah_notifikasi"><?=$count_pesan; ?></span>
+											     <i class="ico-bell"></i></span> -->
+
+											     <span class="badge badge-danger jumlah_notifikasi" style="background-color: #f27c66;"><?=$count_pesan; ?></span>
+											</span><i class="fa fa-envelope"></i>
+											Pesan
+										</a>
+										<ul>
+												 <!-- Message list -->
+												   <div class="media-list" id="message-tbody">
+														
+												       <?php foreach ($datLapor as $key ): ?>
+												       	<li>
+												      	<a href="<?=base_url()?>ortuback/see_message/<?=$key['UUID']?>" class="media border-dotted read">
+												      	<?php
+								                            echo substr($key['isi'], 0, 10) ?>
+												       
+												      </a>
+												      </li>
+												    <?php endforeach ?>
+												  </div>
+												  <!--/ Message list -->
+											<li><a href="<?=base_url()?>ortuback/see_message/<?=$key['UUID']?>" class="media border-dotted read">Selengkapnya</a></li>
+										</ul>
+										<!-- Notification dropdown -->
+
+									<?php else : ?>
+										<li>
+											<a href="<?=base_url('tesonline/daftarlatihan') ?>">Pesan</a>
+										</li>
+									<?php endif; ?>
+								</li>
+								
 
 								<li>
 

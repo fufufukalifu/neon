@@ -78,8 +78,7 @@
         <th>Nama Orang Tua</th>
         <th>Nama Siswa</th>
         <th>Username</th>
-        <th>Message</th>
-        <!-- <th>Nilai</th> -->
+        <th>Pesan</th>
         <th>
           <span class="checkbox custom-checkbox check-all">
             <input type="checkbox" name="checkall" id="check-all">
@@ -234,13 +233,13 @@ function kirim_laporan(){
   //tampung id ortu
   id_ortu = [];
 
-  // tamopung isi pesan
+  // tampung isi pesan
   pesan = [];
   
   //tampung jenis laporan
   jenis_lapor = $('select[name=jenis]').val();
 
-  //cek kalo belum set masa aktif
+  //cek kalo belum set jenis laporan
   if (jenis_lapor==0) {
     swal('silahkan tentukan jenis terlebih dahulu');
     $('select[name=jenis]').focus();
@@ -250,63 +249,72 @@ function kirim_laporan(){
    }); 
 
    $('.pesan').each(function(i){
-     pesan[i] = $(this).val();
+    tempt_pesan = $(this).val();
+     
    }); 
-   
+
    jumlah_ortu = id_ortu.length;
 
    // cek jumlah ortu yang dipilih
-   if (jumlah_ortu==0) {
-    swal('Silahkan tentukan ortu terlebih dahulu');
-  }else{
-      $.ajax({
-        type:"POST",
-        url:base_url+"laporanortu/kirim_laporan",
-        data:{id_ortu:id_ortu,
-        jumlah_ortu:jumlah_ortu,
-        jenis_lapor:jenis_lapor,
-        isi:pesan},
-        dataType: "json",
-        cache : false,
-        success: function(data){
+      if (jumlah_ortu==0) {
+        swal('Silahkan tentukan ortu terlebih dahulu');
+      }else{
+          // cek dulu isi pesannya kosong gak?
+          if (tempt_pesan==null || tempt_pesan=="") {
+            swal('Pesan tidak boleh kosong');
+          }else{
+            // ini buat ngehapus array
+            pesan.push(tempt_pesan);        
+         
+            $.ajax({
+              type:"POST",
+              url:base_url+"laporanortu/kirim_laporan",
+              data:{id_ortu:id_ortu,
+              jumlah_ortu:jumlah_ortu,
+              jenis_lapor:jenis_lapor,
+              isi:pesan},
+              dataType: "json",
+              cache : false,
+              success: function(data){
 
-          // AWAL IO
-          if(data.success == true){
-          
-            var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+                // AWAL IO
+                if(data.success == true){
+                
+                  var socket = io.connect( 'http://'+window.location.hostname+':3000' );
 
-          socket.emit('new_count_pesan', { 
-                  new_count_pesan: data.new_count_pesan
-                });
+                socket.emit('new_count_pesan', { 
+                        new_count_pesan: data.new_count_pesan
+                      });
 
-          console.log(data);
+                console.log(data);
 
-          socket.emit('pesan_baru', { 
-                  id_ortu: data.id_ortu,
-                  jenis_lapor: data.jenis_lapor,
-                  isi: data.isi,
-                  namaPengguna : data.namaPengguna,
-                  UUID: data.UUID,
-                  siswaID: data.siswaID
+                socket.emit('pesan_baru', { 
+                        id_ortu: data.id_ortu,
+                        jenis_lapor: data.jenis_lapor,
+                        isi: data.isi,
+                        namaPengguna : data.namaPengguna,
+                        UUID: data.UUID,
+                        siswaID: data.siswaID
 
-                });
+                      });
 
-          swal('Laporan Berhasil Di Kirim');
-          reload();
+                swal('Laporan Berhasil Di Kirim');
+                reload();
 
 
-           } else if(data.success == false){
-                console.log("gagal");
+                 } else if(data.success == false){
+                      console.log("gagal");
+                    }
+
+                // END IO
+              },error:function(){
+                swal('Gagal mengirim Laporan');
               }
-
-          // END IO
-        },error:function(){
-          swal('Gagal mengirim Laporan');
-        }
-      });
-    
-  }
-}
+            });
+          }
+        
+      }
+    }
 
 }
 

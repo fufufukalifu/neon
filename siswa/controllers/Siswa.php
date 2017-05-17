@@ -58,8 +58,10 @@ class Siswa extends MX_Controller {
         }
     }
 
-    public function index() {        
-        if ($this->get_status_login()) {
+    public function index() {      
+        $hak_akses = $this->get_hak_akses();
+
+        if ($this->get_status_login() && $hak_akses=="siswa") {
             $data['siswa'] = $this->msiswa->get_datsiswa()[0];
             if ($data['siswa']['biografi']=="") {
                 $bio = "ini masih malu-malu nyeritain tentang dirinya";
