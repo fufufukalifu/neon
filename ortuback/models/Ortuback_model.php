@@ -6,10 +6,12 @@ class Ortuback_model extends CI_Model{
 	function get_report_nilai($id_ortu){
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s ',' o.siswaID = s.id');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.penggunaID", $id_ortu);
+		$this->db->join('tb_pengguna peng ',' peng.id = s.penggunaID');
+		$this->db->where("peng.namaPengguna", $id_ortu);
 		$this->db->where("l.jenis = 'nilai'");
-
+		$this->db->order_by("l.id", 'desc');
 		$query = $this->db->get();
 		return $query->result_array();
 	}	
@@ -18,9 +20,12 @@ class Ortuback_model extends CI_Model{
 	function get_report_absen($id_ortu){
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s ',' o.siswaID = s.id');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.penggunaID", $id_ortu);
+		$this->db->join('tb_pengguna peng ',' peng.id = s.penggunaID');
+		$this->db->where("peng.namaPengguna", $id_ortu);
 		$this->db->where("l.jenis = 'absen'");
+		$this->db->order_by("l.id", 'desc');
 
 		$query = $this->db->get();
 		return $query->result_array();
@@ -30,20 +35,26 @@ class Ortuback_model extends CI_Model{
 	function get_report_umum($id_ortu){
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s ',' o.siswaID = s.id');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.penggunaID", $id_ortu);
+		$this->db->join('tb_pengguna peng ',' peng.id = s.penggunaID');
+		$this->db->where("peng.namaPengguna", $id_ortu);
 		$this->db->where("l.jenis = 'umum'");
+		$this->db->order_by("l.id", 'desc');
 
 		$query = $this->db->get();
 		return $query->result_array();
 	}	
 
 	/*Mengambil semua report*/
-	function get_report_all($data){
+	function get_report_all($data,$id){
 		$this->db->select('o.namaOrangTua, l.jenis, l.isi');
 		$this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s ',' o.siswaID = s.id');
 		$this->db->join('tb_laporan_ortu l', 'o.id=l.id_ortu');
-		$this->db->where("o.id", 4);
+		$this->db->join('tb_pengguna peng ',' peng.id = s.penggunaID');
+		$this->db->where("peng.namaPengguna",$id );
+		$this->db->order_by("l.id", 'desc');
 
 		if ($data['jenis']!="all") {
 			$this->db->where('l.jenis', $data['jenis']);
@@ -66,8 +77,9 @@ class Ortuback_model extends CI_Model{
 
 	 public function namasiswa($id) {
         $query = "SELECT * FROM `tb_orang_tua` ortu 
-                JOIN tb_siswa sis ON ortu.siswaID = sis.id
-                WHERE ortu.penggunaID = $id";
+				JOIN tb_siswa sis ON ortu.siswaID = sis.id 
+				JOIN `tb_pengguna` peng ON peng.id = sis.penggunaID 
+				WHERE `peng`.`namaPengguna`= '$id'";
         $result = $this->db->query($query);
         return $result->result_array();
     }

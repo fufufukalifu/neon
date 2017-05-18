@@ -708,6 +708,11 @@ function ajax_report_tryout($id=""){
         }
         $row[] = $no;
         $row[] = $list_item['nm_paket'];
+        //kondisi jika orang tua yang login maka akan ditampikan nama tryout
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $row[] = $list_item['nm_tryout'];
+        }else{
+        }
         $row[] = $list_item['jumlah_soal'];
         $row[] = $list_item['jmlh_benar'];
         $row[] = $list_item['jmlh_salah'];
@@ -719,10 +724,16 @@ function ajax_report_tryout($id=""){
             "id_mm_tryout_paket"=>$list_item['id_mm-tryout-paket'],
             "id_paket"=>$list_item['id_mm-tryout-paket']);
 
+        //kondisi jika orang tua yang login maka aksi tidak akan ditampilkan 
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+        }else{
+
+
         $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
         data-todo='.htmlspecialchars(json_encode($array)).' 
 
         title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+        }
 
         $list[] = $row;   
 

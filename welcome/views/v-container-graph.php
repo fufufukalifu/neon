@@ -84,6 +84,45 @@
 </div>
 <!-- MODAL LATIHAN PERSENTASE-->
 
+<!-- MODAL LATIHAN PERSENTASE-->
+<div class="modal fade" tabindex="-1" role="dialog" id="laporan_tryout">
+  <div class="modal-dialog" role="document" style="width: 80%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Laporan Semua Paket Tryout</h3>
+
+      </div>
+      <div class="modal-body">
+
+        <table class="table rpaket" width=100% style="font-size: 13px">
+          <thead>
+            <tr>
+             <th>no</th>
+            <th>Nama Paket</th>
+            <th>Nama Tryout</th>
+            <th>Jumlah Soal</th>
+            <th>Benar</th>
+            <th>Salah</th>
+            <th>Kosong</th>
+            <th>Nilai</th>
+            <th>Waktu Mengerjakan</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer bg-color-3">
+        <button type="button" class="cws-button bt-color-1 alt small selesai" data-dismiss="modal">Batal</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- MODAL LATIHAN PERSENTASE-->
+
 
 <div class="page-title" style="background:#2b3036">
   <div class="grid-row">
@@ -99,6 +138,45 @@
 
 <!-- PERKEMBANGAN learning Line -->
 <section class="padding-section" style="padding:0;">
+
+
+<div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
+    <h3>Pesan</h3> 
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+    Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah pesan.<br><br>
+    <?php else: ?>
+      Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah pesan. Tetap semangat!<br><br>
+  <?php endif ?>
+
+  <a href="<?=base_url('ortuback') ?>" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br> 
+ 
+    
+    <div class="grid-col-row clear-fix">
+      <?php foreach ($pesan as $key ) : ?>
+        <div class="grid-col grid-col-4" title="10%">
+          <div class="portfolio-item">
+            <div class="picture">
+              <div class="course-item">
+                <div class="course-date bg-color-3 clear-fix skill-bar">
+                  <h3 style="margin:0;"><a href="">Pesan</a></h3>
+                  <hr style="margin-bottom: 5px">  
+                  <div class="day"><?=$key['jenis']?></div><br>
+                   <?php if ($key['isi']== null): ?>
+                    <div class="day">{Tidak ada pesan}</div>
+                      <?php else: ?>
+                  <div class="day"><?php $c = $key['isi']; echo substr($c, 0, 50) ?></div>
+                  <?php endif ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>    
+      <?php endforeach ?>
+    </div>
+
+  </div>
+
+
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
     <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
     <h3>Topik yang baru saja dipelajari <?=$siswa?>..</h3> 
@@ -183,6 +261,11 @@
   <?php else: ?>
      <h3>Grafik Tryout</h3>
     <p>Dibawah ini adalah grafik perkembangan TO kamu, jika nilaninya masih tidak memuaskan jangan khawatir pasti kamu bisa memperbaikinya dengan cara banyak mengikuti latihan. Tetap semangat! </p>
+    <?php endif ?>
+    <br>
+    <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+      <a onclick="show_modal_tryout()" class="cws-button bt-color-3 alt small">Selengkapnya</a> 
+    <?php else: ?>
     <?php endif ?>
 <!--     <label for="" class="">
       Filter Tryout : <select class="form-control tryout_select" name="tryout_select">
@@ -276,6 +359,20 @@ dataTableLearningLine = $('.lpersentase').DataTable({
 });
 // ## datatable line log
 
+// ## datatable report tryout
+url = base_url+"siswa/ajax_report_tryout";
+
+dataTableReportPaket = $('.rpaket').DataTable({
+  "ajax": {
+    "url": url,
+    "type": "POST",
+  },
+  "emptyTable": "Tidak Ada Data Pesan",
+  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+  "bDestroy": true,
+});
+// ## datatable report tryout
+
 })
 </script>
 <!-- LOAD GRAFIK PERSENTASE TO -->
@@ -343,5 +440,9 @@ $('.tryout_select').change(function () {
 
   function show_modal_learning() {
     $('#learning_persentase').modal('show');
+  }
+
+  function show_modal_tryout() {
+    $('#laporan_tryout').modal('show');
   }
 </script>

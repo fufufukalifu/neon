@@ -1,14 +1,24 @@
-<div class="row">
-  <div class="col-md-12 kirim_token">
-    <div class="panel panel-teal">
-      <div class="panel-heading">
-        <h3 class="panel-title">Report <?=$namaortu?></h3> 
-        <div class="panel-toolbar text-right">
-        <div class="col-md-11">
+<section class="section bgcolor-white"> 
+<div class="container">
+ <div class="row">
+            <style type="text/css">
 
-        <div class="col-sm-5"></div>
+                .table th:hover{
 
-          <div class="col-sm-7">
+                    cursor: hand;
+
+                }
+
+                .pagination li:before{
+
+                    color:white;
+
+                }
+
+</style>
+<div class="col-md-12">
+<h3>Daftar Pesan</h3>
+<div  style="right: 13px; width: 49%;" >
             <select class="form-control" name="jenis">
               <option value="all">Semua Jenis</option>
               <option value="nilai">Nilai</option>
@@ -16,15 +26,8 @@
               <option value="umum">Umum</option>
             </select>
           </div>
-
-        </div>
-    </div>
-
-</div>
-
-<div class="panel-body">
-  <div class="panel panel-default form-horizontal form-bordered">
-     <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+         <br>
+     <table class=" table daftarreport nowrap" style="font-size: 13px">
     <thead>
       <tr>
         <th>No</th>
@@ -37,13 +40,13 @@
 
     </tbody>
   </table>
-    
+      </div>
   </div>
-</div>
 
 </div>
 </div>   
 </div>
+ </section>
 <script type="text/javascript">
 var dataTableReport;
 $(document).ready(function(){

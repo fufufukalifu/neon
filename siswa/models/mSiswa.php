@@ -450,15 +450,22 @@ class Msiswa extends CI_Model {
     }
 
 public function get_pesan() {
-        $penggunaID = $this->session->userdata['id'];
+         $limit = 3; 
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $penggunaID  = $this->session->userdata('NAMAORTU');  
+        }else{
+            $penggunaID  = $this->session->userdata('USERNAME');
+        } 
         
-        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu FROM tb_siswa s
-                JOIN `tb_orang_tua` o
-                ON s.`id` = o.`siswaID`
-                WHERE s.`penggunaID`=$penggunaID) AS j 
-                JOIN `tb_laporan_ortu` l 
-                ON j.id_ortu = l.`id_ortu`
-                WHERE l.`id_ortu` = j.id_ortu";
+        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis 
+                    FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu 
+                    FROM tb_siswa s 
+                    JOIN `tb_orang_tua` o ON s.`id` = o.`siswaID` 
+                    JOIN `tb_pengguna` peng ON `peng`.`id` = `s`.`penggunaID`
+                    WHERE `peng`.`namaPengguna`='$penggunaID') AS j 
+                    JOIN `tb_laporan_ortu` l ON j.id_ortu = l.`id_ortu` WHERE l.`id_ortu` = j.id_ortu
+                    ORDER BY `l`.`id` DESC
+                    LIMIT $limit";
         $result = $this->db->query($query);
         return $result->result_array();
     }

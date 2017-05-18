@@ -60,6 +60,7 @@ class Welcome extends MX_Controller {
     $data['video'] = $this->mvideos->get_video_limit();
     $data['topik'] = $this->msiswa->persentasi_limit(3);
     $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
+    $data['pesan'] = $this->msiswa->get_pesan();
 
     $this->parser->parse( 'templating/index', $data );
 
