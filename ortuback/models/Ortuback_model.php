@@ -130,10 +130,11 @@ class Ortuback_model extends CI_Model{
 		return $query->result_array();
 	}
 
-	public function update_read($id)
+	// update status read ortu jadi 1
+	public function update_read($UUID)
 	{
 		$this->db->set('read_status_ortu',1);
-		$this->db->where('UUID', $id);
+		$this->db->where('UUID', $UUID);
 		$this->db->update('tb_laporan_ortu');
 	}
 

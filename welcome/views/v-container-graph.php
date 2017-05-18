@@ -148,7 +148,7 @@
       Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah pesan. Tetap semangat!<br><br>
   <?php endif ?>
 
-  <a href="<?=base_url('ortuback') ?>" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br> 
+  <a href="<?=base_url('ortuback/pesan') ?>" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br> 
  
     
     <div class="grid-col-row clear-fix">

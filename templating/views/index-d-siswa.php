@@ -125,7 +125,7 @@
    <div class="media-list" id="message-tbody">
 
        <?php foreach ($datLapor as $key ): ?>
-      <a href="<?=base_url()?>siswa/see_message/<?=$key['UUID']?>" class="media border-dotted read">
+      <a href="<?=base_url()?>ortuback/pesan/<?=$key['UUID']?>" class="media border-dotted read">
         <span class="pull-left">
           <img src="<?=base_url()?>assets\image\photo\siswa\>" class="media-object img-circle" alt="">
         </span>
@@ -369,7 +369,7 @@
                     // play sound notification
                     $('#notif_audio')[0].play();
                     //add komen baru ke data notif id message-tbody
-                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'siswa/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
                 } 
               }
 

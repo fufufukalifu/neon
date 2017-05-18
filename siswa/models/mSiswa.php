@@ -493,7 +493,7 @@ public function get_pesan() {
                 WHERE s.penggunaID=$penggunaID)
                 AS os JOIN `tb_laporan_ortu` l
                 ON os.id_ortu=l.`id_ortu`
-                WHERE l.read_status=0
+                WHERE l.read_status_siswa=0
                 ORDER BY l.id DESC
                 limit 3";
         $result = $this->db->query($query);
@@ -510,9 +510,17 @@ public function get_pesan() {
                 ON s.id=o.`siswaID`
                 WHERE s.penggunaID=$penggunaID) AS os
                 JOIN `tb_laporan_ortu` l
-                WHERE l.read_status='0' AND os.id_ortu = l.`id_ortu`";
+                WHERE l.read_status_siswa='0' AND os.id_ortu = l.`id_ortu`";
         $result = $this->db->query($query);
         return $result->result_array()[0]['numrows'];
+    }
+
+    // update statu read siswa jadi 1
+    public function update_read_siswa($UUID)
+    {
+        $this->db->set('read_status_siswa',1);
+        $this->db->where('UUID', $UUID);
+        $this->db->update('tb_laporan_ortu');
     }
 
 

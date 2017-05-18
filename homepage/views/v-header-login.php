@@ -149,7 +149,7 @@
 														
 												       <?php foreach ($datLapor as $key ): ?>
 												       	<li>
-												      	<a href="<?=base_url()?>ortuback/see_message/<?=$key['UUID']?>" class="media border-dotted read">
+												      	<a href="<?=base_url()?>ortuback/pesan/<?=$key['UUID']?>" class="media border-dotted read">
 												      	<?php
 								                            echo substr($key['isi'], 0, 10) ?>
 												       
@@ -158,13 +158,13 @@
 												    <?php endforeach ?>
 												  </div>
 												  <!--/ Message list -->
-											<li><a href="<?=base_url()?>ortuback/see_message/<?=$key['UUID']?>" class="media border-dotted read">Selengkapnya</a></li>
+											<li><a href="<?=base_url()?>ortuback/pesan/<?=$key['UUID']?>" class="media border-dotted read">Selengkapnya</a></li>
 										</ul>
 										<!-- Notification dropdown -->
 
 									<?php else : ?>
 										<li>
-											<a href="<?=base_url('tesonline/daftarlatihan') ?>">Pesan</a>
+											<a href="<?=base_url()?>ortuback/pesan">Pesan</a>
 										</li>
 									<?php endif; ?>
 								</li>
@@ -320,7 +320,7 @@
                     // play sound notification
                     $('#notif_audio')[0].play();
                     //add laporan baru ke data notif id message-tbody
-                    $( "#message-tbody" ).prepend('<li> <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read">'+isi_sub+'</a></li>');
+                    $( "#message-tbody" ).prepend('<li> <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read">'+isi_sub+'</a></li>');
                     // $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read">'+isi+'</a>');
                 } 
               }
