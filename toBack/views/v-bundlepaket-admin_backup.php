@@ -1,5 +1,4 @@
   <!-- NEATED BY OPIK SUTISNA PUTRA -->
-
   <div class="modal fade " tabindex="-1" role="dialog" id="myModal">
     <div class="modal-dialog" role="document" style="background: white">
       <div class="modal-content">
@@ -817,7 +816,6 @@ function selectPage(pageVal='0') {
   {
     tb_siswa = JSON.parse(Data);
     $('#tbsiswa').empty();
-
     $('#tbsiswa').append(tb_siswa);
   },
   error:function(e,jqXHR, textStatus, errorThrown)
@@ -958,6 +956,7 @@ $('[name=nama_pengguna_search]').on('keyup', function (e) {
     properties.key_word = $('[name=nama_pengguna_search]').val();
     properties.key_single =  $('[name=nama_pengguna_search]').attr('name');
     properties.search_single =  true;
+     properties.key_search = '';
     selectPage(0);
     pagination_siswa();
   }
@@ -969,6 +968,7 @@ $('[name=cabang_search]').on('keyup', function (e) {
     properties.key_word = $('[name=cabang_search]').val();
     properties.key_single =  $('[name=cabang_search]').attr('name');
     properties.search_single =  true;
+     properties.key_search = '';
     selectPage(0);
     pagination_siswa();
   }
@@ -980,6 +980,7 @@ $('[name=tingkat_search]').on('keyup', function (e) {
     properties.key_word = $('[name=tingkat_search]').val();
     properties.key_single =  $('[name=tingkat_search]').attr('name');
     properties.search_single =  true;
+     properties.key_search = '';
     selectPage(0);
     pagination_siswa();
   }
