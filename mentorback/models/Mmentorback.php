@@ -5,28 +5,61 @@
  class Mmentorback extends CI_Model
  {
  	
- 	function get_siswa($records_per_page='',$page='',$cabang)
+ 	function get_siswa($records_per_page='',$page='',$cabang,$status_mentor,$keySearch='',$id_guru='')
  	{
-
- 		$this->db->select("s.id as id_siswa,s.namaDepan, s.namaBelakang,p.namaPengguna,c.namaCabang");
+ 		$this->db->group_by("namaDepan","asc");
+ 		$this->db->select("s.id as id_siswa,s.namaDepan, s.namaBelakang,p.namaPengguna,c.namaCabang,GROUP_CONCAT(distinct(g.namaBelakang)) as nm_mentor");
  		$this->db->join("tb_pengguna p","s.penggunaID=p.id");
  		$this->db->join("tb_cabang c","s.cabangID=c.id");
+ 		if ($status_mentor==0) {
+ 			$this->db->join("tb_mm_mentor_siswa mentor","mentor.siswaID=s.id", 'left outer');
+ 			$this->db->join("tb_guru g","g.id=mentor.guruID", 'left outer');
+ 		} else if($status_mentor==1) {
+ 			$this->db->join("tb_mm_mentor_siswa mentor","mentor.siswaID=s.id");
+ 			$this->db->join("tb_guru g","g.id=mentor.guruID");
+ 		} else{
+ 			$this->db->where('mentor.siswaID is null');
+ 			 	$this->db->join("tb_mm_mentor_siswa mentor","mentor.siswaID=s.id", 'left outer');
+ 				$this->db->join("tb_guru g","g.id=mentor.guruID", 'left outer');
+ 		}
+ 		
+ 		if ($id_guru!="all") {
+ 			$this->db->where("mentor.guruID",$id_guru);
+ 		} 
+ 		
+
  		if ($cabang!="all") {
 			$this->db->where('c.id', $cabang);
 		}
  		$this->db->where("p.status",1);
- 		$this->db->order_by("namaDepan","asc");
  		$query=$this->db->get("tb_siswa s",$records_per_page,$page);
  		return $query->result();
  	}
  	// get data guru mentor
- 	function get_mentor($records_per_page='10',$page='0')
+ 	function get_mentor($records_per_page='',$page='',$mapel,$status_mentor)
  	{
-
- 		$this->db->select("g.id as id_guru,g.namaDepan, g.namaBelakang,p.namaPengguna");
+ 		$this->db->group_by("p.namaPengguna");
+ 		$this->db->select("g.id as id_guru,g.namaDepan, g.namaBelakang,p.namaPengguna,GROUP_CONCAT(distinct(mp.aliasMataPelajaran)) as mapel,mentor.id as mentorID,(count(mentor.id)) as sum_siswa");
  		$this->db->join("tb_pengguna p","g.penggunaID=p.id");
+ 		$this->db->join("tb_mm-gurumapel mg","mg.guruID=g.id", 'left outer');
+ 		if ($status_mentor==0) {
+ 			 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id", 'left outer');
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id",'left outer');
+ 		} else if($status_mentor==1) {
+ 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id");
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id");
+ 		} else{
+ 			$this->db->where('mentor.guruID is null');
+ 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id", 'left outer');
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id",'left outer');
+ 		}
+ 		
+ 		if ($mapel!="all") {
+ 			$this->db->where("mg.mapelID",$mapel);
+ 		} 
+ 		
+
  		$this->db->where("p.status",1);
- 		$this->db->order_by("namaDepan","asc");
  		$query=$this->db->get("tb_guru g",$records_per_page,$page);
  		return $query->result();
  	}
@@ -49,9 +82,8 @@
  	}
 
  	// get jumlah siswa
- 	public function jumlah_siswa($cabang)
+ 	public function jumlah_siswa($cabang,$status_mentor,$keySearch)
  	{
- 	
  		$this->db->join("tb_pengguna p","s.penggunaID=p.id");
  		$this->db->join("tb_cabang c","s.cabangID=c.id");
  		if ($cabang!="all") {
@@ -72,5 +104,44 @@
  		$this->db->where("mentor.guruID",$id_guru);
  		$query = $this->db->get();
  		return $query->result();
+ 	}
+
+ 	//get matapelajaran
+ 	public function get_mapel()
+ 	{
+ 		$this->db->select("mp.id as mapelID, mp.aliasMataPelajaran");
+ 		$this->db->from("tb_mata-pelajaran mp");
+ 		$this->db->where('status',1);
+ 		$query=$this->db->get();
+ 		return $query->result();
+
+ 	}
+
+ 	 	// get jumlah siswa
+ 	public function jumlah_mentor($mapel,$status_mentor,$keySearch)
+ 	{
+ 		$this->db->group_by("p.namaPengguna");
+ 		$this->db->join("tb_pengguna p","g.penggunaID=p.id");
+ 		$this->db->join("tb_mm-gurumapel mg","mg.guruID=g.id", 'left outer');
+ 		if ($status_mentor==0) {
+ 			 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id", 'left outer');
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id",'left outer');
+ 		} else if($status_mentor==1) {
+ 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id");
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id");
+ 		} else{
+ 			$this->db->where('mentor.guruID is null');
+ 		$this->db->join("tb_mata-pelajaran mp","mg.mapelID=mp.id", 'left outer');
+ 		$this->db->join("tb_mm_mentor_siswa mentor","mentor.guruID=g.id",'left outer');
+ 		}
+ 		
+ 		if ($mapel!="all") {
+ 			$this->db->where("mg.mapelID",$mapel);
+ 		} 
+ 		
+
+ 		$this->db->where("p.status",1);
+ 		$query=$this->db->get("tb_guru g");
+ 		return $query->num_rows();
  	}
  } ?>
