@@ -59,10 +59,6 @@ class Admincabang_model extends CI_model {
 		if ($data['paket']!="all") {
 			$this->db->where('id_paket', $data['paket']);
 		}
-
-		
-
-
 			
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
 		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);

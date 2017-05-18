@@ -307,25 +307,33 @@ class Mtryout extends MX_Controller {
     // ambil jumlah paket yang sudah di kerjakan oleh siswa tertentu.
     public function get_report_paket($id_tryout){
 
-        $id = $this->session->userdata('id');
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id = $this->session->userdata('USERNAME');  
+        } 
         if ($id_tryout=="") {
          $query = "
-         SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+         SELECT mmto.`id_tryout`,t.`nm_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
          p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
          hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
          (SELECT * FROM `tb_report-paket` rp
-         WHERE `id_pengguna` = $id) hasil
+         JOIN `tb_pengguna` `pengguna` ON `rp`.`id_pengguna` = `pengguna`.`id`
+         WHERE `pengguna`.`namaPengguna` = '$id') hasil
          JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+         JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
          JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  order by mmto.id_tryout
          ";
      } else {
          $query = "
-         SELECT mmto.`id_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+         SELECT mmto.`id_tryout`,t.`nm_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
          p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
          hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
          (SELECT * FROM `tb_report-paket` rp
-         WHERE `id_pengguna` = $id) hasil
+         JOIN `tb_pengguna` `pengguna` ON `rp`.`id_pengguna` = `pengguna`.`id`
+         WHERE `pengguna`.`namaPengguna` = '$id') hasil
          JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+         JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
          JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
          WHERE mmto.`id_tryout` = $id_tryout
          ORDER BY mmto.id_tryout

@@ -63,6 +63,7 @@
                   <th>Nama Mahasiswa</th>
                   <th>Nama Pengguna</th>
                   <th>Cabang</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody id="record_siswa">

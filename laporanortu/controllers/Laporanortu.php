@@ -141,7 +141,7 @@ class Laporanortu extends MX_Controller {
           $dataLaporan['namaPengguna']=$datArr[0]['namaPengguna'];
           $dataLaporan['UUID']=$datArr[0]['UUID'];
           $idortu= $datArr[0]['id_ortu'];
-          $dataKomen['new_count_pesan'] = $this->db->where("read_status = 0 and id_ortu =$idortu" )->count_all_results('tb_laporan_ortu');
+          $dataKomen['new_count_pesan'] = $this->db->where("read_status_ortu = 0 and id_ortu =$idortu" )->count_all_results('tb_laporan_ortu');
           $dataLaporan['success']=true;
 
           echo json_encode($dataLaporan);
@@ -199,7 +199,6 @@ class Laporanortu extends MX_Controller {
 			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
 			$row[] = $item ['namaPengguna'];
 			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
-			// $row[] = '<a href="' . base_url('index.php/siswa/reportSiswa/' .$item['siswaID'] .'/'. $item['penggunaID']) . '""> Lihat detail</a></i>';
 			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
 			<input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
 			<label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";

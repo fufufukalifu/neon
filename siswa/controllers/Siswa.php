@@ -58,8 +58,10 @@ class Siswa extends MX_Controller {
         }
     }
 
-    public function index() {        
-        if ($this->get_status_login()) {
+    public function index() {      
+        $hak_akses = $this->get_hak_akses();
+
+        if ($this->get_status_login() && $hak_akses=="siswa") {
             $data['siswa'] = $this->msiswa->get_datsiswa()[0];
             if ($data['siswa']['biografi']=="") {
                 $bio = "ini masih malu-malu nyeritain tentang dirinya";
@@ -87,7 +89,7 @@ class Siswa extends MX_Controller {
             $data['files'] = array( 
                 APPPATH.'modules/siswa/views/t-profile-siswa.php',
                 );
-
+            $data['count_laporan'] = $this->msiswa->get_count();
             $data['datLapor'] = $this->msiswa->get_daftar_pesan();
 
             $this->parser->parse( 'templating/index-d-siswa', $data );
@@ -706,6 +708,11 @@ function ajax_report_tryout($id=""){
         }
         $row[] = $no;
         $row[] = $list_item['nm_paket'];
+        //kondisi jika orang tua yang login maka akan ditampikan nama tryout
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $row[] = $list_item['nm_tryout'];
+        }else{
+        }
         $row[] = $list_item['jumlah_soal'];
         $row[] = $list_item['jmlh_benar'];
         $row[] = $list_item['jmlh_salah'];
@@ -717,10 +724,16 @@ function ajax_report_tryout($id=""){
             "id_mm_tryout_paket"=>$list_item['id_mm-tryout-paket'],
             "id_paket"=>$list_item['id_mm-tryout-paket']);
 
+        //kondisi jika orang tua yang login maka aksi tidak akan ditampilkan 
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+        }else{
+
+
         $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
         data-todo='.htmlspecialchars(json_encode($array)).' 
 
         title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+        }
 
         $list[] = $row;   
 
@@ -1051,13 +1064,13 @@ public function message()
                );
         }
 
-        $this->parser->parse('templating/index-d-siswa', $data);
+        $this->parser->parse('templating/index', $data);
         
     }
 
     // get jumlah pesan untuk pesan
     function jumlah_pesan(){
-        $data['new_count_pesan'] = $this->msiswa->get_count();
+        $data['new_count_pesan'] = (int)$this->msiswa->get_count();
 
       echo json_encode($data['new_count_pesan']);
     }

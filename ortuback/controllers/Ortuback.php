@@ -12,6 +12,7 @@ class Ortuback extends MX_Controller {
 		$this->load->model('Laporanortu/Laporanortu_model');
 		$this->load->model('admincabang/admincabang_model');
 		$this->load->model('tingkat/Mtingkat');
+		$this->load->model('siswa/msiswa');
 		$this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
 
@@ -28,51 +29,41 @@ class Ortuback extends MX_Controller {
 	public function loadparser($data){
 		$this->hakakses = $this->gethakakses();
 		if ($this->hakakses=='ortu') {
-			$this->parser->parse('ortuback/v-index-ortu', $data);
-		}else{
-			echo "forbidden access";    		
+			$this->parser->parse('templating/index', $data);
+		}elseif ($this->hakakses=='siswa'){
+			$this->parser->parse('templating/index', $data); 		
+		}else {
+			echo "forbidden access";   
 		}
 	}
 	// LOAD PARSER SESUAI HAK AKSES
 
-	public function test()
-	{
-		$data['judul_halaman'] = "Laporan Orang Tua";
-
-		$hakAkses = $this->session->userdata['HAKAKSES'];
-
-			$data['files'] = array(
-				APPPATH . 'modules/ortuback/views/v-daftar-report.php',
-				);
-			$all_report = $this->Ortuback_model->get_report(4);
-
-		$n=1;
-		$data['report']=array(); 
-		foreach ( $all_report as $item ) {
-		
-			$data['report'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-               );
-		}
-
-			$this->loadparser($data);
-
-	}
-
 	//laporan ortu ajax
 	public function index(){
-		$id_pengguna= $this->session->userdata['id'];
-
+		$id = $this->session->userdata('id'); 
+		// kodisi jika login sebagai ortu, maka id pengguna yang digunakan berbeda dengan siswa
+		if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id_pengguna = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id_pengguna = $this->session->userdata('USERNAME');  
+        } 
 		$namadepan = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaDepan'];
 		$namabelakang = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaBelakang'];
 			
 		$data['judul_halaman'] = "Laporan $namadepan $namabelakang";
-		$data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
+		$data = array(
+        'judul_halaman' => 'Neon - Daftar Latihan',
+        'judul_header' => 'History Pesan',
+        'judul_tingkat' => '',
+        );
 
 		$data['files'] = array(
+			APPPATH.'modules/homepage/views/v-header-login.php',
+			APPPATH . 'modules/templating/views/t-f-pagetitle.php',
 			APPPATH . 'modules/ortuback/views/v-daftar-report.php',
+			APPPATH.'modules/testimoni/views/v-footer.php',
 		);
 		
 		// get report berdasarkan nilai
@@ -121,16 +112,110 @@ class Ortuback extends MX_Controller {
                );
 		}
 
+		$data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id);
+		$data['count_pesan'] = $this->Ortuback_model->get_count($id);
+
 		$this->loadparser($data);
 
+	}
+
+	// FUNGSI UNTUK VIEW PESAN ORTU DAN SISWA
+	public function pesan($UUID="")
+	{
+		$id = $this->session->userdata('id'); 
+		// kodisi jika login sebagai ortu, maka id pengguna yang digunakan berbeda dengan siswa
+		if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id_pengguna = $this->session->userdata('NAMAORTU');
+            // update status read menjadi 1
+			$this->Ortuback_model->update_read($UUID);  
+        }else{
+            $id_pengguna = $this->session->userdata('USERNAME'); 
+            // update status read menjadi 1
+            $this->msiswa->update_read_siswa($UUID);
+ 
+        } 
+		$namadepan = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaDepan'];
+		$namabelakang = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaBelakang'];
+			
+		$data['judul_halaman'] = "Laporan $namadepan $namabelakang";
+
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+		$data = array(
+        'judul_halaman' => 'Neon - Daftar Latihan',
+        'judul_header' => 'History Pesan',
+        'judul_tingkat' => '',
+        );
+
+		$data['files'] = array(
+			APPPATH.'modules/homepage/views/v-header-login.php',
+			APPPATH . 'modules/templating/views/t-f-pagetitle.php',
+			APPPATH . 'modules/ortuback/views/v-daftar-report.php',
+			APPPATH.'modules/testimoni/views/v-footer.php',
+		);
+		
+		// get report berdasarkan nilai
+		$report_nilai = $this->Ortuback_model->get_report_nilai($id_pengguna);
+
+		// get report berdasarkan absen
+		$report_absen = $this->Ortuback_model->get_report_absen($id_pengguna);
+
+		// get report berdasarkan umum
+		$report_umum = $this->Ortuback_model->get_report_umum($id_pengguna);
+
+		$data['namaortu'] = $report_nilai[0]['namaOrangTua'];
+
+		$n=1;
+
+		// untuk nampung report nilai
+		$data['nilai']=array(); 
+		foreach ( $report_nilai as $item ) {
+		
+			$data['nilai'][]=array(
+                'namaortu'=>$item['namaOrangTua'],
+                'jenis'=>$item['jenis'],
+                'isi'=>$item['isi'],
+               );
+		}
+
+		// untuk nampung report absen
+		$data['absen']=array(); 
+		foreach ( $report_absen as $item ) {
+		
+			$data['absen'][]=array(
+                'namaortu'=>$item['namaOrangTua'],
+                'jenis'=>$item['jenis'],
+                'isi'=>$item['isi'],
+               );
+		}
+
+		// untuk nampung report umum
+		$data['umum']=array(); 
+		foreach ( $report_umum as $item ) {
+		
+			$data['umum'][]=array(
+                'namaortu'=>$item['namaOrangTua'],
+                'jenis'=>$item['jenis'],
+                'isi'=>$item['isi'],
+               );
+		}
+
+		$data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id);
+		$data['count_pesan'] = $this->Ortuback_model->get_count($id);
+
+		$this->loadparser($data);
 	}
 
 	//laporan ortu ajax
 	public function report_ajax($jenis="all"){
 
 		$datas = ['jenis'=>$jenis];
-
-		$all_report = $this->Ortuback_model->get_report_all($datas);
+		// kodisi jika login sebagai ortu, maka id pengguna yang digunakan berbeda dengan siswa
+		if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id_pengguna = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id_pengguna = $this->session->userdata('USERNAME');  
+        } 
+		$all_report = $this->Ortuback_model->get_report_all($datas,$id_pengguna);
 
 		$data = array();
 		$n=1;
@@ -184,6 +269,8 @@ class Ortuback extends MX_Controller {
 
 			// update status read menjadi 1
 			$this->Ortuback_model->update_read($id);
+
+			$data['new_count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
 
 		$n=1;
 		$data['pesan']=array(); 

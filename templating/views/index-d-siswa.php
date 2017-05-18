@@ -100,15 +100,12 @@
 <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <input type="int" name="count_komen" value="1" hidden="true">
+   <input type="int" name="count_komen" value="<?=$count_laporan; ?>" hidden="true">
    <span class="icon" id="new_count_komen">
-     <span class="jumlah_notifikasi"></span>
+     <span class="jumlah_notifikasi"><?=$count_laporan; ?></span>
      <i class="ico-bell"></i></span>
 
-     <!-- <?php if ($count_komen!=0): ?>
-     <?php echo $count_komen ?> -->
      <span class="hasnotification hasnotification-danger"></span>
-     <!-- <?php endif ?> -->
    </span>
  </a>
 
@@ -116,7 +113,7 @@
  <!-- Dropdown menu -->
  <div class="dropdown-menu" role="menu">
   <div class="dropdown-header">
-   <span class="title">Notification<nspan class="count"></span></span>
+   <span class="title">Notification <?=$count_laporan; ?><span class="count"></span></span>
    <span class="option text-right"><a href="javascript:void(0);" title="Close Notifikasi"><i class="ico-close3"></i></a></span>
  </div>
  <div class="dropdown-body slimscroll">
@@ -128,7 +125,7 @@
    <div class="media-list" id="message-tbody">
 
        <?php foreach ($datLapor as $key ): ?>
-      <a href="<?=base_url()?>siswa/see_message/<?=$key['UUID']?>" class="media border-dotted read">
+      <a href="<?=base_url()?>ortuback/pesan/<?=$key['UUID']?>" class="media border-dotted read">
         <span class="pull-left">
           <img src="<?=base_url()?>assets\image\photo\siswa\>" class="media-object img-circle" alt="">
         </span>
@@ -342,9 +339,11 @@
     var penggunaID = ('<?=$this->session->userdata['id']?>');
     var url = "<?= base_url() ?>index.php/siswa/ajax_getsiswa";
 
-    console.log('pengguna',penggunaID);
      // SOCKET CREATE PERTANYAAN
       socket.on('pesan_baru', function(data){
+        $.getJSON( base_url+"siswa/jumlah_pesan", function( datas ) {
+        $('.jumlah_notifikasi').text(datas);
+      });
         var id_ortu = data.id_ortu;
         var jenis_lapor = data.jenis_lapor;
         var isi = data.isi;
@@ -362,10 +361,15 @@
                for (i = 0; i < obj.length; i++) { 
                 // cek pengguna yang dituju bukan?
                 if (id_ortu == idortu ) {
+                  //jika true 
+                  var old_count_komen = parseInt($('[name=count_komen]').val());
+                  new_count_komen = old_count_komen + 1;
+                  $('[name=count_komen]').val(new_count_komen);
+                  $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
                     // play sound notification
                     $('#notif_audio')[0].play();
                     //add komen baru ke data notif id message-tbody
-                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'siswa/see_message/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
                 } 
               }
 
@@ -382,9 +386,7 @@
 
     
 
-  $.getJSON( base_url+"siswa/jumlah_pesan", function( datas ) {
-        $('.jumlah_notifikasi').text(datas);
-      });
+ 
   });
 
 

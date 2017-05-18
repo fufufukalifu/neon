@@ -480,15 +480,22 @@ class Msiswa extends CI_Model {
     }
 
     public function get_pesan() {
-        $penggunaID = $this->session->userdata['id'];
+         $limit = 3; 
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $penggunaID  = $this->session->userdata('NAMAORTU');  
+        }else{
+            $penggunaID  = $this->session->userdata('USERNAME');
+        } 
         
-        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu FROM tb_siswa s
-        JOIN `tb_orang_tua` o
-        ON s.`id` = o.`siswaID`
-        WHERE s.`penggunaID`=$penggunaID) AS j 
-        JOIN `tb_laporan_ortu` l 
-        ON j.id_ortu = l.`id_ortu`
-        WHERE l.`id_ortu` = j.id_ortu";
+        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis 
+                    FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu 
+                    FROM tb_siswa s 
+                    JOIN `tb_orang_tua` o ON s.`id` = o.`siswaID` 
+                    JOIN `tb_pengguna` peng ON `peng`.`id` = `s`.`penggunaID`
+                    WHERE `peng`.`namaPengguna`='$penggunaID') AS j 
+                    JOIN `tb_laporan_ortu` l ON j.id_ortu = l.`id_ortu` WHERE l.`id_ortu` = j.id_ortu
+                    ORDER BY `l`.`id` DESC
+                    LIMIT $limit";
         $result = $this->db->query($query);
         return $result->result_array();
     }
@@ -508,16 +515,17 @@ class Msiswa extends CI_Model {
     {
         $penggunaID = $this->session->userdata['id'];
         $query = "SELECT l.id, l.`jenis`, l.`isi`, os.namaPengguna, l.UUID FROM (
-        SELECT o.id AS id_ortu, p.`namaPengguna` FROM tb_siswa s
-        JOIN `tb_orang_tua` o
-        ON s.id= o.`siswaID` 
-        JOIN `tb_pengguna` p
-        ON s.`penggunaID`=p.id
-        WHERE s.penggunaID=$penggunaID)
-        AS os JOIN `tb_laporan_ortu` l
-        ON os.id_ortu=l.`id_ortu`
-        WHERE l.read_status=0
-        ORDER BY l.id DESC";
+                SELECT o.id AS id_ortu, p.`namaPengguna` FROM tb_siswa s
+                JOIN `tb_orang_tua` o
+                ON s.id= o.`siswaID` 
+                JOIN `tb_pengguna` p
+                ON s.`penggunaID`=p.id
+                WHERE s.penggunaID=$penggunaID)
+                AS os JOIN `tb_laporan_ortu` l
+                ON os.id_ortu=l.`id_ortu`
+                WHERE l.read_status_siswa=0
+                ORDER BY l.id DESC
+                limit 3";
         $result = $this->db->query($query);
         return $result->result_array();
     }
@@ -527,17 +535,23 @@ class Msiswa extends CI_Model {
     {
         $penggunaID = $this->session->userdata['id'];
         $query = "SELECT COUNT(*) AS `numrows` FROM
-        ( SELECT o.`id` AS id_ortu FROM tb_siswa s
-        JOIN `tb_orang_tua` o
-        ON s.id=o.`siswaID`
-        WHERE s.penggunaID=$penggunaID) AS os
-        JOIN `tb_laporan_ortu` l
-        WHERE l.read_status='0' AND os.id_ortu = l.`id_ortu`";
+                ( SELECT o.`id` AS id_ortu FROM tb_siswa s
+                JOIN `tb_orang_tua` o
+                ON s.id=o.`siswaID`
+                WHERE s.penggunaID=$penggunaID) AS os
+                JOIN `tb_laporan_ortu` l
+                WHERE l.read_status_siswa='0' AND os.id_ortu = l.`id_ortu`";
         $result = $this->db->query($query);
         return $result->result_array()[0]['numrows'];
     }
 
-
+    // update statu read siswa jadi 1
+    public function update_read_siswa($UUID)
+    {
+        $this->db->set('read_status_siswa',1);
+        $this->db->where('UUID', $UUID);
+        $this->db->update('tb_laporan_ortu');
+    }
 }
 
 ?>
