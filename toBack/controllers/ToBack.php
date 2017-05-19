@@ -10,6 +10,8 @@ class Toback extends MX_Controller{
 		$this->load->model( 'paketsoal/mpaketsoal' );
 		$this->load->model('siswa/msiswa');
 		$this->load->model('templating/mtemplating');
+        $this->load->model('konsultasi/mkonsultasi');
+
 		parent::__construct();
 		$this->load->library('sessionchecker');
 		$this->sessionchecker->checkloggedin();
@@ -253,8 +255,6 @@ class Toback extends MX_Controller{
 	#START Function di halaman daftar TO#
 	//menampilkan halaman list TO
 	public function listTO(){
-		 $data['datKomen']=$this->datKomen();
-    $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
 		$data['files'] = array(
 			APPPATH . 'modules/toback/views/v-list-to.php',
 			);
@@ -264,6 +264,8 @@ class Toback extends MX_Controller{
   // jika admin
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif($hakAkses=='guru'){
+			
+    $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
   // jika guru
   // notification
 			$data['datKomen']=$this->datKomen();
