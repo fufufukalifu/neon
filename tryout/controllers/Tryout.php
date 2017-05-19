@@ -9,6 +9,7 @@ class Tryout extends MX_Controller {
         $this->load->model('Mtryout');
         $this->load->model('siswa/msiswa');
 
+
         $this->load->model('tesonline/Mtesonline');
         $this->load->model( 'ortuback/Ortuback_model' );
         parent::__construct();
