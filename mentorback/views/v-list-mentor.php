@@ -77,8 +77,8 @@
 							<!-- div pencarian  -->
 							<div class="col-md-6 mb10 mt10 pr0">
 								<div class="input-group">
-									<span class="input-group-addon btn" id="cariDat"><i class="ico-search"></i></span>
-									<input class="form-control" type="text" name="cariDat" placeholder="Cari Data">
+									<span class="input-group-addon btn" id="cariDatSiswa"><i class="ico-search"></i></span>
+									<input class="form-control" type="text" name="cariDatSiswa" placeholder="Cari Data">
 								</div>
 							</div>
 							<!-- div pencarian -->
@@ -145,7 +145,7 @@
 								<!-- div pencarian  -->
 								<div class="col-md-6 mb10 mt10 pr0">
 									<div class="input-group">
-										<span class="input-group-addon btn" id="cariDat"><i class="ico-search"></i></span>
+										<span class="input-group-addon btn" id="cariDatGuru"><i class="ico-search"></i></span>
 										<input class="form-control" type="text" name="cariDatGuru" placeholder="Cari Data">
 									</div>
 								</div>
@@ -212,7 +212,7 @@
 	var status_mentor_siswa="0";
 	var records_per_page_siswa=10;
 	var paginationSiswa;
-
+	var id_guru="all";
 	// property Mentor
 	var urlMentor;
 	var datasMentor;
@@ -234,11 +234,12 @@
 	$(document).ready(function(){
 		function set_tb_siswa() {
 			datasSiswa={
-									records_per_page_siswa:records_per_page_siswa,
-									page:pageSelekSiswa,
-									cabang:cabang,
-									status_mentor_siswa:status_mentor_siswa,
-									keySearchSiswa:keySearchSiswa
+				records_per_page_siswa:records_per_page_siswa,
+				page:pageSelekSiswa,
+				cabang:cabang,
+				status_mentor_siswa:status_mentor_siswa,
+				keySearchSiswa:keySearchSiswa,
+				id_guru:id_guru
 			};
 			
 			urlSiswa=base_url+"mentorback/ajax_list_siswa";
@@ -267,6 +268,7 @@
 			datasSiswa={
 				records_per_page_siswa:records_per_page_siswa,
 				page:pageSelekSiswa,
+				cabang:cabang,
 				status_mentor_siswa:status_mentor_siswa,
 				keySearchSiswa:keySearchSiswa
 			};
@@ -277,6 +279,7 @@
 				type:"POST",
 				dataType:"TEXT",
 				success:function(Data){
+					$("#pagination-siswa").empty();
 					paginationSiswa=JSON.parse(Data);
 					$("#pagination-siswa").append(paginationSiswa);
 				},
@@ -401,24 +404,29 @@
 
 		      // even untuk jumlah record per halaman siswa
     $("[name=records_per_page_siswa]").change(function(){
+    				pageSelekSiswa=0;
+			pageValSiswa=0;
       records_per_page_siswa =$('[name=records_per_page_siswa]').val();
         set_tb_siswa();
-        // set_pagination_tb_paket();
+       set_pagination_tb_siswa();
     });
 
 		// even untuk filtering tb siswa
 		$('[name=cabang]').change(function(){
 			pageSelekSiswa=0;
+			pageValSiswa=0;
 			cabang = $('[name=cabang]').val();
 			set_tb_siswa();
+			set_pagination_tb_siswa();
 		});
 
 				// even untuk filtering tb siswa
 		$('[name=status_mentor]').change(function(){
 			pageSelekSiswa=0;
+			pageValSiswa=0;
 			status_mentor_siswa = $('[name=status_mentor]').val();
 			set_tb_siswa();
-			set_pagination_tb_mentor();
+			set_pagination_tb_siswa();
 		});
 
 		$("[name=records_per_page_mentor]").change(function(){
@@ -440,7 +448,21 @@
       mapel =$('[name=mapel]').val();
       console.log(mapel);
         set_tb_mentor();
-        // set_pagination_tb_paket();
+        set_pagination_tb_mentor();
+    });
+
+    //even onclik cari siswa 
+
+    $("#cariDatSiswa").click(function(){
+    	keySearchSiswa=$("[name=cariDatSiswa]").val();
+    			set_tb_siswa();
+			set_pagination_tb_siswa();
+    });
+
+     $("#cariDatGuru").click(function(){
+    	keySearchMentor=$("[name=cariDatGuru]").val();
+    		  set_tb_mentor();
+        set_pagination_tb_mentor();
     });
 
 	});
@@ -516,11 +538,12 @@
 		pageSiswa=pageValSiswa;
 		pageSelekSiswa=pageSiswa*records_per_page_siswa;
 		datasSiswa={
-									records_per_page_siswa:records_per_page_siswa,
-									page:pageSelekSiswa,
-									cabang:cabang,
-									status_mentor_siswa:status_mentor_siswa,
-									keySearchSiswa:keySearchSiswa
+				records_per_page_siswa:records_per_page_siswa,
+				page:pageSelekSiswa,
+				cabang:cabang,
+				status_mentor_siswa:status_mentor_siswa,
+				keySearchSiswa:keySearchSiswa,
+				id_guru:id_guru
 			};
 			urlSiswa=base_url+"mentorback/ajax_list_siswa";
 
@@ -623,7 +646,7 @@ function prevPageSiswa() {
 
 
 
-    function selectPageMentor(pageValMentor=0){
+function selectPageMentor(pageValMentor=0){
     pageMentor=pageValMentor;
     pageSelekMentor=pageMentor*records_per_page_mentor;
 			datasMentor={
@@ -730,6 +753,8 @@ function nextPageMentor() {
 function prevPageMentor() {
   selectPageMentor(prevMentor);
 }
+
+
 
 
 </script>

@@ -50,8 +50,9 @@
  		$page=$this->input->post("page");
  		$cabang=$this->input->post("cabang");
  		$status_mentor=$this->input->post("status_mentor_siswa");
-
+		$id_guru=$this->input->post("id_guru");
  		$keySearch=$this->input->post("keySearchSiswa");
+
  		$tb_Siswa=null;
  		$arrSiswa=$this->Mmentorback->get_siswa($records_per_page,$page,$cabang,$status_mentor,$keySearch,$id_guru);
  		$no=$page+1;
@@ -101,6 +102,7 @@
  		$page=$this->input->post("page");
  		$mapel=$this->input->post("mapel");
  		$status_mentor=$this->input->post("status_mentor_guru");
+ 		$keySearch=$this->input->post("keySearchMentor");
 
  		$tb_guru=null;
  		 		$arrGuru=$this->Mmentorback->get_mentor($records_per_page,$page,$mapel,$status_mentor,$keySearch,$id_guru);
@@ -180,6 +182,12 @@
  	public function pagination_siswa($records_per_page='10',$cabang="all",$status_mentor='0',$keySearch='',$id_guru='all')
  	{
 
+ 		$records_per_page=$this->input->post('records_per_page_siswa');
+ 		$cabang=$this->input->post("cabang");
+ 		$status_mentor=$this->input->post("status_mentor_siswa");
+
+ 		$keySearch=$this->input->post("keySearchSiswa");
+ 		$id_guru=$this->input->post("id_guru");
  		$jumlah_data = $this->Mmentorback->jumlah_siswa($cabang,$status_mentor,$keySearch,$id_guru);
 
  		$pagination='<li class="hide" id="page-prevSiswa"><a href="javascript:void(0)" onclick="prevPageSiswa()" aria-label="Previous">
@@ -260,50 +268,51 @@
 
  	 	public function detail_mentor_guru($id_guru='')
  	{
- 		
  		$data['files'] = array(
 			APPPATH . 'modules/mentorback/views/v-detail-mentor.php',
 			);
 		$data['judul_halaman'] = "List Siswa Mentor X";
 		$datMentoring=$this->Mmentorback->get_siswa($records_per_page='10',$page='0',$cabang="all",$status_mentor='all',$keySearch='',$id_guru);
+		$data['jumlah_siswa']=$this->Mmentorback->jumlah_siswa($cabang="all",$status_mentor='all',$keySearch='',$id_guru);
+		$data["id_guru"]=$id_guru;
 		$tb_siswa='';
 		$n=1;
 		$no=1;
 		// record table siswa
-		foreach ($datMentoring as $val) {
-			 		$nama=$val->namaDepan." ".$val->namaBelakang;
- 		$nm_depan=$val->namaDepan;
- 		$namaPengguna=$val->namaPengguna;
- 		//nama pengguna untuk di lempar ke msg js
- 		$js_namaPengguna="'$val->namaPengguna'";
- 		$nm_depan_mentor=$val->nm_mentor;
+		// foreach ($datMentoring as $val) {
+		// 	 		$nama=$val->namaDepan." ".$val->namaBelakang;
+ 	// 	$nm_depan=$val->namaDepan;
+ 	// 	$namaPengguna=$val->namaPengguna;
+ 	// 	//nama pengguna untuk di lempar ke msg js
+ 	// 	$js_namaPengguna="'$val->namaPengguna'";
+ 	// 	$nm_depan_mentor=$val->nm_mentor;
 
 
- 		if ($nm_depan_mentor == '' || $nm_depan_mentor == ' ' ) {
- 			$mentor="<span style='color:red;'>Belum ada mentor</span>";
- 		} else {
- 			$mentor="<span'>".$nm_depan_mentor."</span>";
- 		}
-			$tb_siswa.='
-	        <tr>
-	        	<td><span class="checkbox custom-checkbox custom-checkbox-inverse">
-								<input type="checkbox" name='.'siswa'.$n.' id='.'siswa'.$val->id_siswa.' value='.$val->id_siswa.'>
-								<label for='.'siswa'.$val->id_siswa.'>&nbsp;&nbsp;</label></span>
-						</td>
-	          <td>'.$no.'</td>
-	          <td>'.$namaPengguna.'</td>
-	          <td>'.$nama.'</td>
-	          <td>'.$val->namaCabang.'</td>
-	          <td>'.$mentor.'</td>
-	           <td> <a class="btn btn-sm btn-danger" onclick="removeMentor('.$val->id_siswa.','.$js_namaPengguna.')"><i class="ico-remove" ></i></a></td>
-	      	</tr>
-    		';
-    		$n++;
-    		$no++;
-		}
+ 	// 	if ($nm_depan_mentor == '' || $nm_depan_mentor == ' ' ) {
+ 	// 		$mentor="<span style='color:red;'>Belum ada mentor</span>";
+ 	// 	} else {
+ 	// 		$mentor="<span'>".$nm_depan_mentor."</span>";
+ 	// 	}
+		// 	$tb_siswa.='
+	 //        <tr>
+	 //        	<td><span class="checkbox custom-checkbox custom-checkbox-inverse">
+		// 						<input type="checkbox" name='.'siswa'.$n.' id='.'siswa'.$val->id_siswa.' value='.$val->id_siswa.'>
+		// 						<label for='.'siswa'.$val->id_siswa.'>&nbsp;&nbsp;</label></span>
+		// 				</td>
+	 //          <td>'.$no.'</td>
+	 //          <td>'.$namaPengguna.'</td>
+	 //          <td>'.$nama.'</td>
+	 //          <td>'.$val->namaCabang.'</td>
+	 //          <td>'.$mentor.'</td>
+	 //           <td> <a class="btn btn-sm btn-danger" onclick="removeMentor('.$val->id_siswa.','.$js_namaPengguna.')"><i class="ico-remove" ></i></a></td>
+	 //      	</tr>
+  //   		';
+  //   		$n++;
+  //   		$no++;
+		// }
 
-		// /record table siswa
-		$data["tb_siswa"]=$tb_siswa;
+		// // /record table siswa
+		// $data["tb_siswa"]=$tb_siswa;
 
 		$hakAkses=$this->session->userdata['HAKAKSES'];
                 // cek hakakses 
@@ -319,6 +328,20 @@
 			redirect(site_url('welcome'));
 		}
  		// var_dump($datMentoring);
+ 	}
+
+ 	public function remove_batch_siswa()
+ 	{
+
+
+ 		$id_guru=$this->input->post("id_guru");
+ 		$id_siswa=$this->input->post("id_siswa");
+ 		$this->Mmentorback->del_batch_siswa($id_guru,$id_siswa);
+
+ 		$jumlah_siswa=$this->Mmentorback->jumlah_siswa($cabang="all",$status_mentor='all',$keySearch='',$id_guru);
+
+ 		echo json_encode($jumlah_siswa) ;
+ 		
  	}
 
  } ?>
