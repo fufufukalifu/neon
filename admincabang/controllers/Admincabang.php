@@ -551,9 +551,7 @@ class Admincabang extends MX_Controller {
 		$data['files'] = array(
 			APPPATH . 'modules/logtryout/views/v-daftar-tryout-log.php',
 			);
-
 		$this->parser->parse('v-index-admincabang', $data);
-
 	}
 	// LAPORAN PENGERJAAN TO //
 

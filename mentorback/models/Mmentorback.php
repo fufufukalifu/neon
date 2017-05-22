@@ -43,6 +43,8 @@
  		$query=$this->db->get("tb_siswa s",$records_per_page,$page);
  		return $query->result();
  	}
+
+
  	// get data guru mentor
  	function get_mentor($records_per_page='',$page='',$mapel,$status_mentor,$keySearch,$id_guru)
  	{
