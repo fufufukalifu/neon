@@ -415,6 +415,30 @@ JS aoutocomplate
         </a>
       </li>
 
+
+       <li>
+        <a href="javascript:void(0);" data-target="#admincabang" data-toggle="submenu" data-parent=".topmenu">
+          <span class="figure"><i class="ico-bubble-user"></i></span>
+          <span class="text">Admincabang</span>
+          <span class="arrow"></span>
+        </a>
+
+        <ul id="admincabang" class="submenu collapse ">
+          <li class="submenu-header ellipsis">Admincabang</li>
+          <li >
+            <a href="<?=base_url('admincabangback/tambah_admincabang')?>">
+              <span class="text">Registrasi Admincabang</span>
+            </a>
+          </li>
+          <li >
+            <a href="<?=base_url('admincabangback/list_admincabang') ?>">
+              <span class="text">Daftar Guru</span>
+            </a>
+          </li>
+        </ul>
+
+      </li>
+
       <li>
         <a href="javascript:void(0);" data-target="#guru" data-toggle="submenu" data-parent=".topmenu">
           <span class="figure"><i class="ico-bubble-user"></i></span>
