@@ -250,6 +250,12 @@ function kirim_laporan(){
 
    $('.pesan').each(function(i){
     tempt_pesan = $(this).val();
+          // cek dulu isi pesannya kosong gak?
+          if (tempt_pesan==null || tempt_pesan=="") {
+          }else{
+            // ini buat ngehapus array
+            pesan.push(tempt_pesan);   
+          }
      
    }); 
 
@@ -259,14 +265,13 @@ function kirim_laporan(){
       if (jumlah_ortu==0) {
         swal('Silahkan tentukan ortu terlebih dahulu');
       }else{
-          // cek dulu isi pesannya kosong gak?
-          if (tempt_pesan==null || tempt_pesan=="") {
-            swal('Pesan tidak boleh kosong');
-          }else{
-            // ini buat ngehapus array
-            pesan.push(tempt_pesan);        
-         
-            $.ajax({
+          // cek udah diceklis blm siswanya?
+          if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
+            // cek dulu isi pesannya kosong gak?
+            if (tempt_pesan==null || tempt_pesan=="") {
+              swal('Pesan tidak boleh kosong');
+            } else {
+              $.ajax({
               type:"POST",
               url:base_url+"laporanortu/kirim_laporan",
               data:{id_ortu:id_ortu,
@@ -311,6 +316,10 @@ function kirim_laporan(){
                 swal('Gagal mengirim Laporan');
               }
             });
+            }
+          } else {
+         
+           swal('Pesan tidak boleh');
           }
         
       }
