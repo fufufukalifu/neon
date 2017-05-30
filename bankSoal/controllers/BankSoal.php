@@ -210,6 +210,8 @@ class Banksoal extends MX_Controller {
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses=='admin') {
                 $this->parser->parse('admin/v-index-admin', $data);
+        } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification
@@ -250,7 +252,8 @@ class Banksoal extends MX_Controller {
                  $this->parser->parse('admin/v-index-admin', $data);
             }
 
-
+ } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
                     // jika guru
             //cek jika sniping url
@@ -778,6 +781,8 @@ class Banksoal extends MX_Controller {
         if ($hakAkses=='admin') {
 
                 $this->parser->parse('admin/v-index-admin', $data);  
+        } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
             
         } elseif($hakAkses=='guru'){
           // jika guru
@@ -924,7 +929,8 @@ class Banksoal extends MX_Controller {
         if ($hakAkses=='admin') {
             // jika admin
             $this->parser->parse('admin/v-index-admin', $data);
-           
+            } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
             
         } elseif($hakAkses=='guru'){
           // jika guru
@@ -1333,7 +1339,13 @@ class Banksoal extends MX_Controller {
             } else {
                 $this->parser->parse('admin/v-index-admin', $data);
             }
-            
+        } elseif( $hakAkses=='admin_cabang' ){
+          
+                        if ($data['subBabID'] == null || $UUID == null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admincabang/v-index-admincabang', $data);
+            }
         } elseif($hakAkses=='guru'){
             // jika guru
             if ($data['subBabID'] == null || $UUID == null) {

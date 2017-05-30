@@ -327,6 +327,13 @@ class Modulonline extends MX_Controller {
                  $this->parser->parse('admin/v-index-admin', $data);
             }
 
+        } elseif( $hakAkses=='admin_cabang' ){
+          
+          if ($tingkatID==null) {
+                redirect(site_url('admin'));
+            } else {
+                $this->parser->parse('admincabang/v-index-admincabang', $data);
+            }
 
         } elseif($hakAkses=='guru'){
                     // jika guru
@@ -481,7 +488,8 @@ class Modulonline extends MX_Controller {
 
                 $this->parser->parse('admin/v-index-admin', $data);
            
-            
+        } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification
@@ -584,6 +592,8 @@ class Modulonline extends MX_Controller {
         if ($hakAkses=='admin') {
             // jika admin
             $this->parser->parse('admin/v-index-admin', $data);
+             } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
             //get data komen yg belum di baca
             $data['datKomen']=$this->datKomen();
@@ -710,7 +720,13 @@ class Modulonline extends MX_Controller {
             } else {
                 $this->parser->parse('admin/v-index-admin', $data);
             }
-            
+        } elseif( $hakAkses=='admin_cabang' ){
+          
+                      if ($data['id_tingkatpelajaran'] == null || $UUID == null) {
+                redirect(site_url('admincabang'));
+            } else {
+               $this->parser->parse('admincabang/v-index-admincabang', $data);
+            }
         } elseif($hakAkses=='guru'){
             // jika guru
             if ($data['id_tingkatpelajaran'] == null || $uuid == null) {

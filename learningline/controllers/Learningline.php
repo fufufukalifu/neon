@@ -32,6 +32,8 @@ class Learningline extends MX_Controller {
 		$this->hakakses = $this->gethakakses();
 		if ($this->hakakses=='admin') {
 			$this->parser->parse('admin/v-index-admin', $data);
+			 } elseif( $this->hakakses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
 		} else if($this->hakakses=='guru'){
 			// notification
 	        $data['datKomen']=$this->datKomen();

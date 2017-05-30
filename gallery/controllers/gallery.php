@@ -35,6 +35,8 @@
         if ($hakAkses=='admin') {
         // jika admin
          $this->parser->parse('admin/v-index-admin', $data);
+          } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // notification
           $data['datKomen']=$this->datKomen();
@@ -70,7 +72,8 @@
         // jika admin
          $this->parser->parse('admin/v-index-admin', $data);
 
-
+          } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           //get data komen yg belum di baca
@@ -127,6 +130,8 @@
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses =='admin') {
           $this->parser->parse('admin/v-index-admin', $data);
+           } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification
@@ -161,6 +166,8 @@
         if ($hakAkses =='admin') {
            
                 $this->parser->parse('admin/v-index-admin', $data);
+         } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification
@@ -195,7 +202,9 @@
         $hakAkses=$this->session->userdata['HAKAKSES'];
         if ($hakAkses =='admin') {
            
-                $this->parser->parse('admin/v-index-admin', $data);
+        $this->parser->parse('admin/v-index-admin', $data);
+         } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification

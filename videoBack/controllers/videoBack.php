@@ -160,8 +160,10 @@ public function formupvideo() {
   if ($hakAkses=='admin') {
             // jika admin
     $this->parser->parse('admin/v-index-admin', $data);
-  } elseif($hakAkses=='guru'){
-    // jika guru
+  } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
+  }elseif($hakAkses=='guru' || $hakAkses=='admin_cabang'  ){
+    // jika guru atau admin_cabang
     // notification
     $data['datKomen']=$this->datKomen();
     $id_guru = $this->session->userdata['id_guru'];
@@ -193,6 +195,8 @@ public function formUpdateVideo($UUID) {
  if ($hakAkses=='admin') {
   // jika admin
   $this->parser->parse('admin/v-index-admin', $data);
+   } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
 } elseif($hakAkses=='guru'){
   // jika guru
   // notification
@@ -228,7 +232,9 @@ public function managervideo() {
   if ($hakAkses=='admin') {
                     // jika admin
     $this->parser->parse('admin/v-index-admin', $data);
-  } elseif($hakAkses=='guru'){
+     } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
+  } elseif($hakAkses=='guru' ){
                     // jika guru
     $this->parser->parse('templating/index-b-guru', $data);
   }elseif($hakAkses=='siswa'){
@@ -629,6 +635,8 @@ public function video_by_subbab($subbab)
     );
                     // jika admin
    $this->parser->parse('admin/v-index-admin', $data);
+    } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
  } elseif($hakAkses=='guru'){
                     // jika guru
   $this->parser->parse('templating/index-b-guru', $data);
@@ -688,6 +696,8 @@ public function video_by_mapel($pelajaran)
     );
                     // jika admin
    $this->parser->parse('admin/v-index-admin', $data);
+    } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
  } elseif($hakAkses=='guru'){
                     // jika guru
   $this->parser->parse('templating/index-b-guru', $data);
@@ -717,6 +727,8 @@ public function video_by_tingkat($tingkat)
     );
                     // jika admin
    $this->parser->parse('admin/v-index-admin', $data);
+    } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
  } elseif($hakAkses=='guru'){
                     // jika guru
   $this->parser->parse('templating/index-b-guru', $data);
@@ -746,6 +758,8 @@ public function listvideo()
     );
     // jika admin
    $this->parser->parse('admin/v-index-admin', $data);
+    } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
 
  } elseif($hakAkses=='guru'){
     // jika guru
@@ -1314,10 +1328,12 @@ public function tampVideo($list='')
                 );
     }
 
-    #START cek hakakses#
+    #START cek hakakses# ||
         $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
+        if ($hakAkses=='admin' ) {
                 $this->parser->parse('admin/v-index-admin', $data);
+        } elseif( $hakAkses=='admin_cabang' ){
+          $this->parser->parse('admincabang/v-index-admincabang', $data);
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification

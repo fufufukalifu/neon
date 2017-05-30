@@ -214,14 +214,14 @@
 
 
 <li>
- <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
+ <a href="javascript:void(0);" data-target="#laporantryout" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Try Outs</span>
+  <span class="text">Laporan Try Out </span>
   <span class="arrow"></span>
 </a>
 
-<ul id="tryout" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Try Out</li>
+<ul id="laporantryout" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Laporan Try Out</li>
 
   <li>
    <a href="<?= base_url('index.php/admincabang/laporanpaket');?>">
@@ -252,7 +252,167 @@
 
 </ul>
 </li>
+<!-- menu tambahan -->
+  <li>
+   <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-facetime-video"></i></span>
+    <span class="text">Video</span>
+    <span class="arrow"></span>
+  </a>
 
+  <ul id="video" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Video</li>
+
+    <li >
+     <a href="<?=base_url('index.php/videoback/formupvideo')?>">
+      <span class="text">Upload Video</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
+
+      <span class="text">Daftar video</span>
+
+      <span class="arrow"></span>
+
+    </a>
+
+    <ul id="filtervideo" class="submenu collapse ">
+
+      <li class="submenu-header ellipsis">Daftar video</li>
+
+      <li><a href="<?=base_url()?>index.php/videoback/managervideo"><span class="text">My video</span></a></li>
+      <li >
+       <a href="<?=base_url('/index.php/videoback/daftarvideo')?>">
+        <span class="text">Daftar Semua video</span>
+      </a>
+    </li>
+
+    <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span></a></li>
+  </ul>
+</li>
+</ul>
+</li>
+<li>
+  <a href="javascript:void(0);" data-target="#gallery" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-images"></i></span>
+    <span class="text">Gallery</span>
+    <span class="arrow"></span>
+  </a>
+
+  <ul id="gallery" class="submenu collapse ">
+    <li class="submenu-header ellipsis">gallery</li>
+    <li >
+      <a href="<?=base_url('index.php/gallery')?>">
+        <span class="text">Gallery</span>
+      </a>
+    </li>
+    <li >
+      <a href="javascript:void(0)" onclick="filter_gallery()">
+        <span class="text">Filter Gallery</span>
+      </a>
+    </li>
+    <li >
+      <a href="javascript:void(0)" onclick="add_gallery()">
+        <span class="text">Tambahkan gallery</span> 
+      </a>
+    </li>
+
+  </ul>
+</li>
+<li>
+ <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard2"></i></span>
+  <span class="text">Bank Soal</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="banksoal" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Bank Soal</li>
+
+  <li >
+   <a href="javascript:void(0);" onclick="add_soal()">
+    <span class="text">Tambahkan Bank Soal</span> 
+  </a>
+</li>
+<li >
+ <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
+  <span class="text">Daftar Bank Soal</span>
+  <span class="arrow"></span>
+</a>
+<ul id="subbanksoal" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Sub Bank Soal</li>
+  <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
+  </a></li>
+  <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
+  </a></li>
+  <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
+  </a></li>
+  <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
+  </a></li>
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+<li>
+ <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard"></i></span>
+  <span class="text">Try Outs</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="tryout" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Try Out</li>
+
+  <li >
+   <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
+    <span class="text">Paket Soal</span>
+  </a>
+</li>
+
+<li >
+ <a href="<?= base_url('index.php/toback/listTo');?>">
+  <span class="text">Daftar Try Out</span>
+</a>
+</li>
+
+</ul>
+</li>
+
+
+
+
+<li>
+ <a href="javascript:void(0);" data-target="#modulonline" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard2"></i></span>
+  <span class="text">Modul Online</span>
+  <span class="arrow"></span>
+</a>
+
+<ul id="modulonline" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Modul Online</li>
+
+  <li >
+   <a href="javascript:void(0);" onclick="add_modul()">
+    <span class="text">Tambahkan Modul</span> 
+  </a>
+</li>
+<li >
+ <a href="<?=base_url('index.php/modulonline/allsoal')?>" data-target="#submodul" data-toggle="submenu"  >
+  <span class="text">Daftar Modul</span>
+</a>
+</li>
+
+</ul>
+</li>
+
+</ul>
+<!-- menu tambahan -->
 </ul>
 <!--/ END Template Navigation/Menu -->
 </section>
