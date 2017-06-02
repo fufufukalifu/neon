@@ -383,6 +383,7 @@ public function savesiswa(){
         $namaPengguna = htmlspecialchars($this->input->post('namapengguna'));
         $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
         $email = htmlspecialchars($this->input->post('email'));
+        $id_kk=htmlspecialchars($this->input->post('kk'));
         $hakAkses = 'siswa';
 
         //data array akun
@@ -415,7 +416,8 @@ public function savesiswa(){
             'penggunaID' => $penggunaID,
             'tingkatID' => $tingkatID,
             'cabangID' => $cabangID,
-            'noIndukNeutron' => $noIndukNeutron
+            'noIndukNeutron' => $noIndukNeutron,
+            'id_kelompok_kelas'=>$id_kk
             );
 
             //melempar data guru ke function insert_guru di kelas model
@@ -444,7 +446,6 @@ public function deleteSiswa() {
     //tgl 30 Oktober
 function updateSiswa($idsiswa, $idpengguna) {
    $hak_akses = $this->get_hak_akses();
-    
     if ($this->get_status_login()&& $hak_akses=="admin") {  
         if ($idsiswa == null || $idpengguna == 0) {
             echo 'kosong';
@@ -453,7 +454,6 @@ function updateSiswa($idsiswa, $idpengguna) {
          $data['cabang'] = $this->mcabang->get_all_cabang();
          $idsiswa = $idsiswa;
          $idpengguna = $idpengguna;
-
          $datSiswa = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
          $data['siswa']=$datSiswa[0];
          $data['datKelas']=$this->msiswa->get_kelas();
@@ -461,7 +461,22 @@ function updateSiswa($idsiswa, $idpengguna) {
          $data['files'] = array(
             APPPATH . 'modules/siswa/views/v-update-siswa.php',
             );
-
+         $optionKk=null;
+         $id_cabang=$datSiswa[0]["cabangID"];
+         $id_kelompok_kelas=$datSiswa[0]["id_kelompok_kelas"];
+         $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
+         foreach ($arrKk as $val) {
+          if ($id_kelompok_kelas==$val->id_kk) {
+            $optionKk.='
+            <option value="'.$val->id_kk.'" selected>'.$val->kelompokKelas.'</option>';
+          } else {
+            $optionKk.='
+            <option value="'.$val->id_kk.'">'.$val->kelompokKelas.'</option>';
+          }
+          
+          
+         }
+         $data['kelompokKelas']=$optionKk;
          $this->parser->parse('admin/v-index-admin', $data);
      }
  }else{
@@ -797,14 +812,14 @@ public function editSiswa(){
             $noKontak = htmlspecialchars($this->input->post('nokontak'));
             $idsiswa=htmlspecialchars($this->input->post('idsiswa'));
 
-
             $tingkatID = htmlspecialchars($this->input->post('tingkatID'));
             $namaSekolah = htmlspecialchars($this->input->post('namasekolah'));
             $alamatSekolah = htmlspecialchars($this->input->post('alamatsekolah'));
             $cabangID = htmlspecialchars($this->input->post('cabang'));
             $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
+            $id_kelompok_kelas=htmlentities($this->input->post('kk'));
 
-    //data array siswa
+            //data array siswa
             $data_post = array(
                 'namaDepan' => $namaDepan,
                 'namaBelakang' => $namaBelakang,
@@ -814,7 +829,8 @@ public function editSiswa(){
                 'alamatSekolah' => $alamatSekolah,
                 'tingkatID' => $tingkatID,
                 'cabangID' => $cabangID,
-                'noIndukNeutron' => $noIndukNeutron
+                'noIndukNeutron' => $noIndukNeutron,
+                'id_kelompok_kelas'=>$id_kelompok_kelas
                 );
             $this->msiswa->update_siswa1($data_post,$idsiswa);
 
@@ -1073,6 +1089,27 @@ public function message()
         $data['new_count_pesan'] = (int)$this->msiswa->get_count();
 
       echo json_encode($data['new_count_pesan']);
+    }
+
+    // get kelompok kelas siswa neutron
+    public function get_kk_siswa($value='')
+    {
+        $id_cabang=$this->input->post("id_cabang");
+        //get data kelompok keahlian berdasrkan id_cabang yg di post
+        $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
+        
+        $optionKk='<option value="">- Pilih Kelompok Kelas -</option>';
+        $no=0;
+        foreach ($arrKk as $val) {
+            $optionKk.='
+             <option value="'.$val->id_kk.'">'.$val->kelompokKelas.'</option>
+            ';
+            $no++;
+        }
+        if ($arrKk==null) {
+            $optionKk='<option value="">Belum kelompok Kelas</option>';
+        }
+        echo json_encode($optionKk);
     }
 
 }

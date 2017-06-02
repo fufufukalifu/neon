@@ -337,4 +337,14 @@ class Admincabang_model extends CI_model {
 		return $this->db->count_all_results();
 	}
 
+	public function get_idCabang_adminCabang($id_pengguna='')
+	{
+		$this->db->select("c.id as id_cabang,c.namaCabang");
+		$this->db->from("tb_pengguna p");
+		$this->db->join("tb_cabang c","c.idPengguna=p.id");
+		$this->db->where("c.idPengguna",$id_pengguna);
+		$query=$this->db->get();
+		return $query->result_array();
+	}
+
 }

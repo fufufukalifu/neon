@@ -239,11 +239,11 @@ class Msiswa extends CI_Model {
 
 
     function get_siswa_byid($idsiswa, $idpengguna) {
-        $this->db->select('siswa.id as idsiswa,siswa.namaDepan,siswa.namaBelakang,siswa.alamat,siswa.noKontak,siswa.tingkatID as kelasID,siswa.namaSekolah,siswa.alamatSekolah,siswa.cabangID,tkt.depedensi as tingkatID');
+        $this->db->select('siswa.id as idsiswa,siswa.namaDepan,siswa.namaBelakang,siswa.alamat,siswa.noKontak,siswa.tingkatID as kelasID,siswa.namaSekolah,siswa.alamatSekolah,siswa.cabangID,tkt.depedensi as tingkatID,siswa.id_kelompok_kelas');
         $this->db->from('tb_siswa siswa');
         $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
         $this->db->join('tb_tingkat tkt','tkt.id = siswa.tingkatID');
-        $this->db->where('pengguna.id', $idpengguna);
+        $this->db->where('siswa.penggunaID', $idpengguna);
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -551,6 +551,16 @@ class Msiswa extends CI_Model {
         $this->db->set('read_status_siswa',1);
         $this->db->where('UUID', $UUID);
         $this->db->update('tb_laporan_ortu');
+    }
+
+    // select kelompok kelas berdasarkan cabang id
+    public function get_kk_by_idCabang($id_cabang='')
+    {  
+        $this->db->select("k.id as id_kk,k.kelompokKelas");
+        $this->db->from("tb_kelompok_kelas k");
+        $this->db->where("k.cabangID",$id_cabang);
+        $query=$this->db->get();
+        return  $query->result();
     }
 }
 

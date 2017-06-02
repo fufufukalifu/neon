@@ -188,6 +188,7 @@
 										<li><a href="<?=base_url()?>linetopik/lineMapel/2/">SMP</a></li>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/3/">SMA</a></li>
 										<li><a href="<?=base_url()?>linetopik/lineMapel/4/">SMA IPA</a></li>
+										<li><a href="<?=base_url()?>linetopik/lineMapel/5/">SMA IPS</a></li>
 									</ul>
 									<?php endif ?>
 								</li>

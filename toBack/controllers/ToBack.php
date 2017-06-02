@@ -65,7 +65,13 @@ class Toback extends MX_Controller{
 				} else {
 					$this->parser->parse('admin/v-index-admin', $data);
 				}
-
+			} else if( $hakAkses=='admin_cabang'){
+				if ($babID == null) {
+					redirect(site_url('admincabang'));
+				} else {
+					$this->parser->parse('admincabang/v-index-admincabang', $data);
+				}
+         		 
 			} else if($hakAkses=='guru'){
 				if ($babID == null) {
 					redirect(site_url('guru/dashboard/'));
@@ -111,6 +117,12 @@ class Toback extends MX_Controller{
 				APPPATH . 'modules/toback/views/v-bundlepaket-admin_backup.php',
 				);
 			$this->parser->parse('admin/v-index-admin', $data);
+		} else if( $hakAkses=='admin_cabang'){
+		$data['files'] = array(
+				APPPATH . 'modules/toback/views/v-bundlepaket.php',
+				);
+				$this->parser->parse('admincabang/v-index-admincabang', $data);
+			
 		} elseif($hakAkses=='guru'){
    // jika guru
 

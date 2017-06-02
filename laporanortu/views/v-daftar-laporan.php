@@ -27,10 +27,10 @@
 
            <div class="col-sm-4" id="cabang">
              <select class="form-control" name="cabang">
-              <option value="all">Semua Cabang</option>
+              <!-- <option value="all">Semua Cabang</option>
               <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?>
+              <?php endforeach ?> -->
             </select>
           </div>
 
@@ -104,21 +104,48 @@
 <script type="text/javascript">
 var dataTableReport;
 $(document).ready(function(){
+
+  function get_cabang(){
+      var url_get_cabang=base_url+"admincabang/get_idCabang";
+      $.ajax({
+        url:url_get_cabang,
+        dataType:"text",
+        type:"post",
+        success:function(Data){
+          var ob_cabang = JSON.parse(Data);
+
+          cabang=ob_cabang.id_cabang;
+          // info cabang
+          $("[name=cabang]").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
+          $("[name=cabang]").attr("disabled","true");
+           // <option value="all">Semua Cabang</option>
+
+
+            dataTableReport = $('.daftarreport').DataTable({
+              "ajax": {
+                "url": base_url+"laporanortu/laporanortu_ajax/"+cabang,
+                "type": "POST"
+              },
+              "emptyTable": "Tidak Ada Data Pesan",
+              "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+              "bDestroy": true,
+            });
+
+        },
+        error:function(){
+
+        }
+      });
+
+    }
+    get_cabang();
+
   var mySelect = $('select[name=cabang]').val();
-  dataTableReport = $('.daftarreport').DataTable({
-    "ajax": {
-      "url": base_url+"laporanortu/laporanortu_ajax",
-      "type": "POST"
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
 
 
-});
 
 
+ });
 // CABANG KETIKA DI CHANGE
 $('select[name=cabang]').change(function(){
 

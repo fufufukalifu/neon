@@ -14,10 +14,10 @@
              <?php endif ?>
              <!-- kalo gada yang di filter -->
              <select class="form-control" id="select_cabang">
-              <option value="all">Semua Cabang</option>
+             <!--  <option value="all">Semua Cabang</option>
               <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?>
+              <?php endforeach ?> -->
             </select>
           </div>
 
@@ -112,7 +112,7 @@
   var meridian=4;
   var prev=1;
   var next=2;
-  var cabang="all";
+  var cabang= "all";
   var tryout="all";
   var paket="all";
   var keySearch='';
@@ -125,8 +125,33 @@ function prevPage() {
   selectPagePaket(prev);
 }
   $(document).ready(function(){
+    function get_cabang(){
+      var url_get_cabang=base_url+"admincabang/get_idCabang";
+      $.ajax({
+        url:url_get_cabang,
+        dataType:"text",
+        type:"post",
+        success:function(Data){
+          var ob_cabang = JSON.parse(Data);
+
+          cabang=ob_cabang.id_cabang;
+          // info cabang
+          $("#select_cabang").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
+          $("#select_cabang").attr("disabled","true");
+          set_tb_paket();
+          set_pagination_tb_paket()
+           // <option value="all">Semua Cabang</option>
+        },
+        error:function(){
+
+        }
+      });
+
+    }
+    get_cabang();
     mySelect = $('select[name=cabang]').val();
     function set_tb_paket() { 
+      console.log(cabang);
       url=base_url+"admincabang/laporanto";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
       $.ajax({
@@ -146,7 +171,7 @@ function prevPage() {
 
       
     }
-    set_tb_paket();
+    
     function set_pagination_tb_paket() {
       url=base_url+"admincabang/pagination_daftar_paket";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
@@ -166,7 +191,7 @@ function prevPage() {
         },
       });
     }
-    set_pagination_tb_paket();
+    
 
       // even untuk jumlah record per halaman
     $("[name=records_per_page]").change(function(){

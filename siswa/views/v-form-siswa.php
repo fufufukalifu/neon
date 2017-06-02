@@ -251,6 +251,17 @@
                             </div>
 
                             <div class="form-group Keaktivan hide">
+                                <div class="col-sm-10 col-md-offset-1">
+                                    <select class="form-control" name="kk">
+                                        
+                                       
+                                    </select>
+                                    <!-- untuk menampilkan pesan kesalaha penginputan nama pengguna -->
+                                    <span class="text-danger"><?php echo form_error('cabang'); ?></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group Keaktivan hide">
 
                                 <div class="col-sm-10 col-md-offset-1">
 
@@ -320,7 +331,7 @@
 </section>
 
  <!-- END Template Main -->
- <script type="text/javascript">
+<script type="text/javascript">
 $('select[name=bimbel]').change(function(){
     var bimbel = $('select[name=bimbel]').val();
     if (bimbel=='Neutron') {
@@ -329,6 +340,28 @@ $('select[name=bimbel]').change(function(){
         $('.Keaktivan').addClass('hide animate');
 
     }
+});
+//event cabang ketika ada perubahann pafa cabang maka 
+// dropdown kelompok keahlian akan menampilkan kelokmpok berdasakan cbang yg di pilh
+$('[name=cabang]').change(function(){
+  var id_cabang = $('[name=cabang]').val();
+  var url=base_url+"siswa/get_kk_siswa";
+  $.ajax({
+    url:url,
+    data:{id_cabang:id_cabang},
+    dataType:"text",
+    type:"post",
+    success:function(Data){
+      var optionKk=JSON.parse(Data);
+        $("[name=kk]").empty();
+       $("[name=kk]").append(optionKk);
+       $(".kelompok-kelas").removeClass("hide");
+
+    },
+    error:function(){
+
+    },
+  });
 });
 </script>
 <!-- ajax dropdown depedensi -->
@@ -385,4 +418,5 @@ $('select[name=bimbel]').change(function(){
         }
       });
   }
+
 </script>

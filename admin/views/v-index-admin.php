@@ -818,6 +818,14 @@ JS aoutocomplate
   </a>
 </li>
 
+<li>
+  <a href="<?=base_url('ortuback/list_ortu') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-comments"></i></span>
+    <span class="text">Orang Tua</span>
+    <span class="arrow"></span>
+  </a>
+</li>
+
 <!-- <li>
   <a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-qrcode"></i></span>
@@ -848,6 +856,8 @@ JS aoutocomplate
     </li>
   </ul>
 </li>
+
+
 
 </ul>
 <!--/ END Template Navigation/Menu -->

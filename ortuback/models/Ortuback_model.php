@@ -138,7 +138,97 @@ class Ortuback_model extends CI_Model{
 		$this->db->update('tb_laporan_ortu');
 	}
 
-	
+	public function get_siswa_not_ortu($records_per_page,$pageSelek,$keySearch)
+	{
+		$this->db->select("s.id as idSiswa,s.namaDepan,s.namaBelakang,p.email,p.namaPengguna, c.namaCabang");
+		$this->db->join("tb_pengguna p","p.id=s.penggunaID");
+		$this->db->join("tb_cabang c","c.id=s.cabangID");
+		$this->db->join("tb_orang_tua tua","tua.siswaID=s.id",'left outer');
+		$this->db->where("tua.id is null");
+		$this->db->where("p.status",1);
+		$query=$this->db->get("tb_siswa s",$records_per_page,$pageSelek);
+		return $query->result();
+
+	}
+
+	public function get_ortu_siswa($records_per_page,$pageSelek,$keySearch)
+	{
+		$this->db->select("s.id as idSiswa,s.namaDepan,s.namaBelakang,penggunaSiswa.email,penggunaSiswa.namaPengguna as np_siswa,penggunaOrtu.namaPengguna as np_ortu, c.namaCabang,tua.namaOrangTua");
+		$this->db->join("tb_pengguna penggunaSiswa","penggunaSiswa.id=s.penggunaID");
+		$this->db->join("tb_orang_tua tua","tua.siswaID=s.id");
+		$this->db->join("tb_pengguna penggunaOrtu","penggunaOrtu.id=tua.penggunaID");
+		$this->db->join("tb_cabang c","c.id=s.cabangID");
+		
+		$query=$this->db->get("tb_siswa s",$records_per_page,$pageSelek);
+		return $query->result();
+
+	}
+
+	public function jumlah_ortu_siswa($value='')
+	{
+		$this->db->join("tb_pengguna penggunaSiswa","penggunaSiswa.id=s.penggunaID");
+		$this->db->join("tb_orang_tua tua","tua.siswaID=s.id");
+		$this->db->join("tb_pengguna penggunaOrtu","penggunaOrtu.id=tua.penggunaID");
+		$this->db->join("tb_cabang c","c.id=s.cabangID");
+		
+		$query=$this->db->get("tb_siswa s");
+		return $query->num_rows();
+	}
+
+	public function jumlah_siswa_not_ortu($value='')
+	{
+		$this->db->join("tb_pengguna p","p.id=s.penggunaID");
+		$this->db->join("tb_cabang c","c.id=s.cabangID");
+		$this->db->join("tb_orang_tua tua","tua.siswaID=s.id",'left outer');
+		$query=$this->db->get("tb_siswa s");
+		return $query->num_rows();
+	}
+	public function get_siswa_batch($id_siswa)
+	{
+		$this->db->select("s.id as siswaID,s.namaDepan, p.namaPengguna");
+		$this->db->from("tb_siswa s");
+		$this->db->join("tb_pengguna  p","p.id=s.penggunaID");
+		$this->db->where("p.status",1);
+		for ($i=0; $i <count($id_siswa) ; $i++) { 
+			if ($i==0) {
+				$this->db->where("s.id",$id_siswa[$i]);
+			}else{
+				// $this->db->where("s.id",$id_siswa[$i]);
+				$this->db->or_where("s.id",$id_siswa[$i]);
+			}
+			
+		}
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	public function in_pengguna_ortu($pengguna='')
+	{
+		$this->db->insert_batch('tb_pengguna', $pengguna);
+	}
+
+	public function get_penggunaOrtu($id_siswa='')
+	{
+		$this->db->select("p.id , keterangan as id_siswa,p.namaPengguna");
+		$this->db->from("tb_pengguna p");
+		$this->db->where("p.status",1);
+		for ($i=0; $i <count($id_siswa) ; $i++) { 
+			if ($i==0) {
+				$this->db->where("p.keterangan",$id_siswa[$i]);
+			}else{
+				// $this->db->where("s.id",$id_siswa[$i]);
+				$this->db->or_where("p.keterangan",$id_siswa[$i]);
+			}
+			
+		}
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	public function in_data_ortu($ortu='')
+	{
+		$this->db->insert_batch('tb_orang_tua', $ortu);
+	}
 }
 
 ?>

@@ -84,6 +84,7 @@
                         <thead>
                             <tr>
                                 <th width="10%">Id</th>
+                                <th>Urutan</th>
                                 <th>Step</th>
                                 <th>jenis</th>
                                 <th width="20%">Aksi</th>

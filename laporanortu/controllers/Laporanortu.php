@@ -40,13 +40,16 @@ class Laporanortu extends MX_Controller {
 		$data['judul_halaman'] = "Laporan Orang Tua";
 		
 		# get cabang
-		$data['cabang'] = $this->mcabang->get_all_cabang();
+		// $data['cabang'] = $this->mcabang->get_all_cabang();
 		# get tingkat
 		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
-			$this->parser->parse('v-index-admincabang', $data);
+			$data['files'] = array(
+				APPPATH . 'modules/laporanortu/views/v-daftar-laporan.php',
+				);
+			$this->parser->parse('admincabang/v-index-admincabang', $data);
 		} elseif ($hakAkses == 'admin') {
 			$data['files'] = array(
 				APPPATH . 'modules/laporanortu/views/v-daftar-laporan.php',
@@ -161,7 +164,10 @@ class Laporanortu extends MX_Controller {
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
-			$this->parser->parse('v-index-admincabang', $data);
+			$data['files'] = array(
+				APPPATH . 'modules/laporanortu/views/v-add-laporan.php',
+				);
+			$this->parser->parse('admincabang/v-index-admincabang', $data);
 		} elseif ($hakAkses == 'admin') {
 			$data['files'] = array(
 				APPPATH . 'modules/laporanortu/views/v-add-laporan.php',

@@ -6,10 +6,10 @@
           <div class="col-md-12">
            <div class="col-sm-4">
              <select class="form-control" id="select_cabang">
-              <option value="all">Semua Cabang</option>
-              <?php foreach ($cabang as $item): ?>
+              <!-- <option value="all">Semua Cabang</option> -->
+             <!--  <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?>
+              <?php endforeach ?> -->
             </select>
           </div>
 
@@ -123,6 +123,30 @@ var keySearch='';
     //   "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
     //   "bDestroy": true,
     // });
+        function get_cabang(){
+      var url_get_cabang=base_url+"admincabang/get_idCabang";
+      $.ajax({
+        url:url_get_cabang,
+        dataType:"text",
+        type:"post",
+        success:function(Data){
+          var ob_cabang = JSON.parse(Data);
+
+          cabang=ob_cabang.id_cabang;
+          // info cabang
+          $("#select_cabang").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
+          $("#select_cabang").attr("disabled","true");
+          set_tb_trout_log();
+          set_pagination_tb_logtryout()
+           // <option value="all">Semua Cabang</option>
+        },
+        error:function(){
+
+        }
+      });
+
+    }
+    get_cabang();
       // set tb siswa
   function set_tb_trout_log() {
     datas ={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
@@ -145,7 +169,7 @@ var keySearch='';
       }
     });
   }
-  set_tb_trout_log();
+
 
  function set_pagination_tb_logtryout() {
       url=base_url+"logtryout/pagination_tb_logtryout";
@@ -167,7 +191,7 @@ var keySearch='';
         },
       });
     }
-  set_pagination_tb_logtryout();
+
   // CABANG KETIKA DI CHANGE
     $('#select_cabang').change(function(){
       cabang = $('#select_cabang').val();

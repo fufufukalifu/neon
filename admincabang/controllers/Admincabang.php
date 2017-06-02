@@ -487,8 +487,8 @@ class Admincabang extends MX_Controller {
 		$data['files'] = array(
 			APPPATH . 'modules/admincabang/views/v-daftar-paket.php',
 			);
-		# get cabang
-		$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get cabang sementara tidak di pakai karena laporan sesuai admincabang
+		// $data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
 		$data['to'] = $this->mtoback->get_To();
 		$hakAkses = $this->session->userdata['HAKAKSES'];
@@ -543,7 +543,7 @@ class Admincabang extends MX_Controller {
 	// LAPORAN PENGERJAAN TO //
 	function pengerjaan(){
 		# get cabang
-		$data['cabang'] = $this->mcabang->get_all_cabang();
+		// $data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
 		$data['to'] = $this->mtoback->get_To();
 
@@ -603,6 +603,15 @@ class Admincabang extends MX_Controller {
 		$array[] = ['label'=>"Paket Soal Gagal Dikerjakan ".$datas['jumlah_paket_gagal'],  "y"=>(int)$datas['jumlah_paket_gagal']];
 
 		echo json_encode($array);
+	}
+
+	public function get_idCabang()
+	{
+		$id_pengguna=$this->session->userdata["id"];
+		$arrPengguna=$this->admincabang_model->get_idCabang_adminCabang($id_pengguna);
+		$data["id_cabang"]=$arrPengguna[0]["id_cabang"];
+		$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
+		echo json_encode($data);
 	}
 }
 ?>

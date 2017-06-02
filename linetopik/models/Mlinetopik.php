@@ -31,7 +31,9 @@
  		$this->db->join('tb_tingkat-pelajaran tp','tp.id=bab.tingkatPelajaranID');
  		$this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
  		$this->db->where('bab.id',$babID);
- 		$this->db->order_by('topik.namaTopik');
+        $this->db->where('step.status',1);
+        $this->db->where('topik.status',1);
+ 		$this->db->order_by('topik.urutan');
  		$this->db->order_by('step.urutan', 'asc');
  		$query=$this->db->get();
  		return  $query->result_array();
@@ -88,6 +90,7 @@
  		$this->db->join('tb_tingkat tkt','tkt.id=tp.tingkatID');
  		$this->db->where('topik.UUID',$UUIDTopik
  			);
+        $this->db->where('step.status',1);
         $this->db->order_by('topik.namaTopik');
  		$this->db->order_by('step.urutan', 'asc');
  		$query=$this->db->get();
@@ -132,7 +135,7 @@
  		$this->db->where('topik.babID',$babID);
  		$this->db->where('topik.status',1);
  		$this->db->where('topik.statusLearning',1);
- 		$this->db->order_by('topik.namaTopik');
+ 		$this->db->order_by('topik.urutan');
  		$query=$this->db->get();
  		return $query->result_array();
  	}

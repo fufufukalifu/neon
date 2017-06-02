@@ -286,6 +286,197 @@ class Ortuback extends MX_Controller {
 		
 	}
 
+
+	// kelola ortu back
+	public function list_ortu()
+	{
+		$data['judul_halaman'] = "List Orang Tua Siswa dan Siswa";
+
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+				$data['files'] = array(
+		APPPATH . 'modules/ortuback/views/v-list-ortu.php',
+			);
+		$this->parser->parse('admin/v-index-admin', $data);
+	}
+	//get siswa yg belum ada akun orangtua
+	public function ajax_siswa_not_ortu($records_per_page='10',$pageSelek='0',$keySearch='')
+	{	
+		$pageSelek=$this->input->post("pageSelek_siswa");
+		$datArr=$this->Ortuback_model->get_siswa_not_ortu($records_per_page,$pageSelek,$keySearch);
+		$tb_siswa=null;
+		$n=1;
+		$no=$pageSelek+1;
+		foreach ($datArr as $value) {
+			$nama=$value->namaDepan." ".$value->namaBelakang;
+			if ($value->namaCabang=="") {
+				$namaCabang="non-neutron";
+			} else {
+				$namaCabang=$value->namaCabang;
+			}
+			 $tb_siswa.='<tr>
+			 	 <td><span class="checkbox custom-checkbox custom-checkbox-inverse">
+								<input type="checkbox" name='.'token'.$n.' id='.'soal'.$value->idSiswa.' value='.$value->idSiswa.'>
+								<label for='.'soal'.$value->idSiswa.'>&nbsp;&nbsp;</label></span>
+						</td>
+						<td>'.$no.'</td>
+						<td>'.$value->namaPengguna.'</td>
+						<td>'.$nama.'</td>
+						<td>'.$value->email.'</td>
+						<td>'.$namaCabang.'</td>
+			 </tr>
+			 ';
+			$n++;
+    	$no++;
+		}
+		echo json_encode($tb_siswa);
+	}
+
+		public function ajax_ortu($records_per_page='10',$pageSelek='0',$keySearch='')
+	{	
+		$records_per_page=$this->input->post("records_per_page_ortu");
+		$pageSelek=$this->input->post("pageSelek_ortu");
+		$keySearch=$this->input->post("keySearch_ortu");
+		$datArr=$this->Ortuback_model->get_ortu_siswa($records_per_page,$pageSelek,$keySearch);
+		$tb_ortu=null;
+		$n=1;
+		$no=$pageSelek+1;
+		foreach ($datArr as $value) {
+			$nama=$value->namaDepan." ".$value->namaBelakang;
+		 	 // <td><span class="checkbox custom-checkbox custom-checkbox-inverse">
+					// 			<input type="checkbox" name='.'token'.$n.' id='.'soal'.$value->idSiswa.' value='.$value->idSiswa.'>
+					// 			<label for='.'soal'.$value->idSiswa.'>&nbsp;&nbsp;</label></span>
+					// 	</td>
+			 $tb_ortu.='<tr>
+						
+						<td>'.$no.'</td>
+						<td>'.$value->np_ortu.'</td>
+						<td>'.$value->namaOrangTua.'</td>
+						<td>'.$value->np_siswa.'</td>
+						<td>'.$nama.'</td>
+						<td>
+							<button class="btn btn-sm btn-danger"><i class="ico-key2"></i></button>
+							<button class="btn btn-sm btn-danger"><i class="ico-close3"></i></button>
+						</td>
+			 </tr>
+			 ';
+			$n++;
+    	$no++;
+		}
+		echo json_encode($tb_ortu);
+	}
+
+	public function pagination_siswa_not_ortu($records_per_page='10',$pageSelek='0',$keySearch='')
+	{
+		// $jumlah_data_per_page=$this->input->post("records_per_page_siswa");
+    //  		$keySearch=$this->input->post("keySearchSiswa");
+    //  		if ($keySearch!='' && $keySearch!=' ') {
+    //  				   $jumlah_data = $this->token_model->jumlah_cari_siswa_unvoucher($keySearch); 
+    //  		} else {
+    //  				   $jumlah_data = $this->token_model->jumlah_siswa_unvoucher(); 
+    //  		}
+     		 $jumlah_data = $this->Ortuback_model->jumlah_siswa_not_ortu($keySearch);
+	
+    	 $pagination='<li class="hide" id="page-prev-siswa"><a href="javascript:void(0)" onclick="prevPageSiswa()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a></li>';
+    	 $pagePagination=1;
+
+    	 $sumPagination=($jumlah_data/$records_per_page);
+    	
+    	 for ($i=0; $i < $sumPagination; $i++) { 
+    	 	if ($pagePagination<=7) {
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPageSiswa('.$i.')" id="pageSiswa-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 	}else{
+    	 		    	 	$pagination.='<li class="hide" id="pageSiswa-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPageSiswa('.$i.')" >'.$pagePagination.'</a></li>';
+    	 	}
+
+    	 	$pagePagination++;
+    	 }
+    	 if ($pagePagination>7) {
+    	 	  $pagination.='<li class="" id="page-next-siswa">
+		      								<a href="javascript:void(0)" onclick="nextPageSiswa()" aria-label="Next">
+		        								<span aria-hidden="true">&raquo;</span>
+		      								</a>
+		    								</li>';
+    	 }
+    	     	 // cek jika halaman pagination hanya satu set pagination menjadi null
+    	 if ($sumPagination<=1) {
+    	 		$pagination='';
+    	 		# code...
+    	 }
+    	 echo json_encode ($pagination);
+	}
+
+		public function pagination_ortu($records_per_page='10',$pageSelek='0',$keySearch='')
+	{
+			 $jumlah_data = $this->Ortuback_model->jumlah_ortu_siswa($keySearch);
+	
+    	 $pagination='<li class="hide" id="page-prev-Ortu"><a href="javascript:void(0)" onclick="prevPageOrtu()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a></li>';
+    	 $pagePagination=1;
+
+    	 $sumPagination=($jumlah_data/$records_per_page);
+    	
+    	 for ($i=0; $i < $sumPagination; $i++) { 
+    	 	if ($pagePagination<=7) {
+    	 		    	 	$pagination.='<li ><a href="javascript:void(0)" onclick="selectPageOrtu('.$i.')" id="pageOrtu-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+    	 	}else{
+    	 		    	 	$pagination.='<li class="hide" id="pageOrtu-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPageOrtu('.$i.')" >'.$pagePagination.'</a></li>';
+    	 	}
+
+    	 	$pagePagination++;
+    	 }
+    	 if ($pagePagination>7) {
+    	 	  $pagination.='<li class="" id="page-next-Ortu">
+		      								<a href="javascript:void(0)" onclick="nextPageOrtu()" aria-label="Next">
+		        								<span aria-hidden="true">&raquo;</span>
+		      								</a>
+		    								</li>';
+    	 }
+    	     	 // cek jika halaman pagination hanya satu set pagination menjadi null
+    	 if ($sumPagination<=1) {
+    	 		$pagination='';
+    	 		# code...
+    	 }
+    	 echo json_encode ($pagination);	
+
+	}
+
+	public function set_ortu($value='')
+	{
+		$datArrOrtu=array();
+		$arrIdSiswa=$this->input->post("id_siswa");
+		// for ($i=0; $i < count($arrIdSiswa) ; $i++) { 
+		// 	$id_siswa = $arrIdSiswa[$i];
+		$siswa=$this->Ortuback_model->get_siswa_batch($arrIdSiswa);
+		// }
+		$pengguna_ortu=array();
+		foreach ($siswa as $value) {
+			$pengguna[]=array(
+				"namaPengguna"=>"P_".$value->namaPengguna,
+				"kataSandi"=>md5("P_".$value->namaPengguna."123"),
+				"hakakses"=>"ortu",
+				"aktivasi"=>"1",
+				"status"=>"1",
+				"keterangan"=>$value->siswaID
+				);
+		}
+		$this->Ortuback_model->in_pengguna_ortu($pengguna);
+
+
+		//get id pengguna ortu berdasarkan id_siswa
+		$arrPengguna_ortu=$this->Ortuback_model->get_penggunaOrtu($arrIdSiswa);
+		foreach ($arrPengguna_ortu as $val) {
+			$ortu[]=array(
+				"namaOrangTua"=>$val->namaPengguna,
+				"siswaID"=>$val->id_siswa,
+				"penggunaID"=>$val->id
+				);
+		}
+		$this->Ortuback_model->in_data_ortu($ortu);
+		echo json_encode($ortu);
+	}
 }
 
 ?>
