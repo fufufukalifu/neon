@@ -140,18 +140,20 @@ class Ortuback_model extends CI_Model{
 
 	public function get_siswa_not_ortu($records_per_page,$pageSelek,$keySearch)
 	{
+		$this->db->where("tua.id is null");
+		$this->db->where("p.status",1);
 		$this->db->select("s.id as idSiswa,s.namaDepan,s.namaBelakang,p.email,p.namaPengguna, c.namaCabang");
 		$this->db->join("tb_pengguna p","p.id=s.penggunaID");
 		$this->db->join("tb_cabang c","c.id=s.cabangID");
 		$this->db->join("tb_orang_tua tua","tua.siswaID=s.id",'left outer');
-			if ($keySearch!='' && $keySearch!=' ') {
+
+		if ($keySearch!='' && $keySearch!=' ') {
 			$this->db->like("p.namaPengguna",$keySearch);
 			$this->db->or_like("s.namaDepan",$keySearch);
 			$this->db->or_like("s.namaBelakang",$keySearch);
+			// $this->db->where("tua.id is null");
+		}
 
-		} 
-		$this->db->where("tua.id is null");
-		$this->db->where("p.status",1);
 		$query=$this->db->get("tb_siswa s",$records_per_page,$pageSelek);
 		return $query->result();
 
@@ -213,7 +215,7 @@ class Ortuback_model extends CI_Model{
 	}
 	public function get_siswa_batch($id_siswa)
 	{
-		$this->db->select("s.id as siswaID,s.namaDepan, p.namaPengguna");
+		$this->db->select("s.id as siswaID,s.namaDepan, p.namaPengguna,p.kataSandi");
 		$this->db->from("tb_siswa s");
 		$this->db->join("tb_pengguna  p","p.id=s.penggunaID");
 		$this->db->where("p.status",1);

@@ -209,7 +209,7 @@
 			});
 		}
 		set_tb_ortu();
-			function set_pagination_ortu(){
+		function set_pagination_ortu(){
 				var url = base_url+"ortuback/pagination_ortu"
 			var datas ={records_per_page_ortu:records_per_page_ortu,pageSelek_ortu:pageSelek_ortu,keySearch_ortu:keySearch_ortu};
 			$.ajax({
@@ -457,23 +457,27 @@ function add_ortu(){
 	$('.daftarsiswa tbody td :checkbox:checked').each(function(i){
      id_siswa[i] = $(this).val();
    }); 
-	var url = base_url+"ortuback/set_ortu";
-	$.ajax({
-		url:url,
-		data:{id_siswa:id_siswa},
-		dataType:"text",
-		type:"post",
-		success:function(Data){
-			selectPageSiswa(pageValSiswa='0');
-			selectPageOrtu(pageValOrtu='0');
-			console.log(Data);
-			sweetAlert("oops","Yaya","success");
-		},
-		error:function(){
+	var jumlah_siswa=id_siswa.length;
+	if (jumlah_siswa==0) {
+		sweetAlert("Oops","Silahkan pilih siswa","error");
+	} else if(jumlah_siswa>0) {
+		var url = base_url+"ortuback/set_ortu";
+			$.ajax({
+			url:url,
+			data:{id_siswa:id_siswa},
+			dataType:"text",
+			type:"post",
+			success:function(Data){
+				selectPageSiswa(pageValSiswa='0');
+				selectPageOrtu(pageValOrtu='0');
+				console.log(Data);
+				sweetAlert("OK","Data Orang Tua Berhasil Ditambahkan.","success");
+			},
+			error:function(){
 
-		}
-	});
-	// console.log(id_siswa);
+			}
+		});
+	}
 }
 
 //reset katasandi pengguna ortu

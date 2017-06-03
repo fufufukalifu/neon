@@ -33,23 +33,30 @@ class Ortu extends MX_Controller {
 
     public function index() {    
 
-       $data = array(
-        'judul_halaman' => 'Neon - Welcome',
-        'judul_header' =>'Video',
-        'judul_header2' =>'Video Belajar'
-        );
+     $data = array(
+      'judul_halaman' => 'Neon - Welcome',
+      'judul_header' =>'Video',
+      'judul_header2' =>'Video Belajar'
+      );
 
-    $data['files'] = array( 
-        APPPATH.'modules/homepage/views/v-header-login.php',
-        APPPATH.'modules/ortu/views/v-home-ortu.php',
-        APPPATH.'modules/testimoni/views/v-footer.php',
-        );
-    $id_pengguna= $this->session->userdata['id'];
-    $namaDepan=$this->mOrtu->get_siswa($id_pengguna)[0]['namaDepan'];
-    $data['siswa'] =$namaDepan;
+     $data['files'] = array( 
+      APPPATH.'modules/homepage/views/v-header-login.php',
+      APPPATH.'modules/ortu/views/v-home-ortu.php',
+      APPPATH.'modules/testimoni/views/v-footer.php',
+      );
+     $id_pengguna= $this->session->userdata['id'];
+     $namaDepan=$this->mOrtu->get_siswa($id_pengguna)[0]['namaDepan'];
+     $data['siswa'] =$namaDepan;
 
-    $this->parser->parse( 'templating/index', $data );
-    }
+     $hakAkses=$this->session->userdata['HAKAKSES'];
+
+     if ($hakAkses=="ortu") {
+        $this->parser->parse( 'templating/index', $data );
+     }  else {
+       redirect(site_url('login'));
+     }
+     
+   }
 
   
 }
