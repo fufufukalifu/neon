@@ -14,9 +14,11 @@ class Modulonline extends MX_Controller {
         $this->load->model('templating/Mtemplating');
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
+        $this->load->model( 'konsultasi/mkonsultasi' );
+        $this->load->model( 'guru/mguru' );
         $this->load->library('parser');
-            $this->load->library('sessionchecker');
-         $this->sessionchecker->checkloggedin();
+        $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
      
     }
 
@@ -497,7 +499,14 @@ class Modulonline extends MX_Controller {
           $id_guru = $this->session->userdata['id_guru'];
           // get jumlah komen yg belum di baca
           $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-          //
+          //notif konsul
+          $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+          $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+          $mapel_id ="";
+          foreach ($keahlian_detail as $key) {
+            $mapel_id =$mapel_id."".$key['mapelID'].",";
+        }
+        $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
           $this->parser->parse('templating/index-b-guru', $data);            
         }else{
             // jika siswa redirect ke welcome
@@ -603,6 +612,13 @@ class Modulonline extends MX_Controller {
             // get jumlah komen yg belum di baca
             $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
             ## count komen
+            $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+            $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+            $mapel_id ="";
+            foreach ($keahlian_detail as $key) {
+                $mapel_id =$mapel_id."".$key['mapelID'].",";
+            }
+            $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
             // jika guru
             $this->parser->parse('templating/index-b-guru', $data);
         }else{
@@ -737,7 +753,13 @@ class Modulonline extends MX_Controller {
               $id_guru = $this->session->userdata['id_guru'];
               // get jumlah komen yg belum di baca
               $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-              //
+              $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+              $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+              $mapel_id ="";
+              foreach ($keahlian_detail as $key) {
+                $mapel_id =$mapel_id."".$key['mapelID'].",";
+              }
+              $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
               $this->parser->parse('templating/index-b-guru', $data);
             }
             

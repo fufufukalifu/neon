@@ -444,8 +444,9 @@ class Ortuback extends MX_Controller {
 	public function set_ortu()
 	{
 		// $datArrOrtu=array();
-		$arrIdSiswa=$this->input->post("id_siswa");
-		if ($arrIdSiswa!=null && $arrIdSiswa!=' ' ) {
+		
+		if ($this->input->post() ) {
+			$arrIdSiswa=$this->input->post("id_siswa");
 				$siswa=$this->Ortuback_model->get_siswa_batch($arrIdSiswa);
 
 			// }

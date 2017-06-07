@@ -244,10 +244,12 @@
             $('#info .lengkapi').removeClass('hide');
             $('#info .sukses').addClass('hide');
             $('#info .gagal').addClass('hide');
+
         }else{
+
            $.ajax({
             type: "POST",
-            url: base_url+"/video/addkomen",
+            url: base_url+"komenback/addkomen",
             data: {isiKomen: isiKomen, videoID: videoID},
             dataType: "json",
                 cache : false,
@@ -284,14 +286,16 @@
               }
 
              // 
-                            },
-                            error: function ()
-                            {
-                                $('#info .lengkapi').removeClass('hide');
-                                $('#info .sukses').addClass('hide');
-                                $('#info .gagal').removeClass('hide');
-                            }
-                        }); 
+           },
+           error: function (e)
+           {
+            console.log(e);
+            console.log(videoID);
+            $('#info .lengkapi').removeClass('hide');
+            $('#info .sukses').addClass('hide');
+            $('#info .gagal').removeClass('hide');
+          }
+        }); 
        }
    }
 </script>

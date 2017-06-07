@@ -355,49 +355,8 @@ if ($this->session->userdata('HAKAKSES')=='ortu') {
     }
     //----------# BACK END  #----------#
 
-    public function addkomen() {
-        $dataKomen['isiKomen'] = $this->input->post('isiKomen');
-        $dataKomen['videoID'] = $this->input->post('videoID');
-        $dataKomen['userID'] = $this->session->userdata['id'];
-        $UUID=uniqid();
-        $dataKomen['UUID']=$UUID;
-        $this->Mvideos->insertComment($dataKomen);
+   
 
-        #START cek hakakses#
-        $hakAkses=$this->session->userdata['HAKAKSES'];
-        if ($hakAkses=='admin') {
-           // jika admin
-          //get data komen by UUID
-          $datArr=$this->mkomen->get_komen_by_UUID($UUID);
-        } elseif($hakAkses=='guru'){
-         // jika guru
-         //get data komen by UUID
-          $datArr=$this->mkomen->get_komenGuru_by_UUID($UUID);
-         }else{
-            // jika siswa redirect ke welcome
-          //get data komen by UUID
-          $datArr=$this->mkomen->get_komenSiswa_by_UUID($UUID);
-        }
-
-        #cek Photo
-        $photo=$datArr[0]['photo'];
-        $namaPengguna = $datArr[0]['namaPengguna'];
-        if ($photo!='' && $photo!=' ' && $photo!='default') {
-          $dataKomen['photo']=base_url().'assets/image/photo/'.$hakAkses.'/'.$photo;
-        } else {
-           $photo= $this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
-           $dataKomen['photo']=$photo;
-        }
-        
-        $dataKomen['namaPengguna']=$namaPengguna;
-        $dataKomen['date_created']=$datArr[0]['date_created'];
-        $dataKomen['videoID']=$datArr[0]['videoID'];
-        $dataKomen['mapelID']=$datArr[0]['mataPelajaranID'];
-        $dataKomen['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
-          $dataKomen['success']=true;
-
-        echo json_encode($dataKomen);
-    }
 
 }
 

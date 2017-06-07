@@ -10,6 +10,8 @@ class Komenback extends MX_Controller
    $this->load->model('mkomen');
    $this->load->model('video/mvideos');
    $this->load->model('guru/mguru');
+   $this->load->model('konsultasi/mkonsultasi');
+
    $this->load->library('generateavatar');
        $this->load->library('sessionchecker');
          $this->sessionchecker->checkloggedin();
@@ -38,6 +40,14 @@ class Komenback extends MX_Controller
   $data['files'] = array(
    APPPATH . 'modules/komenback/views/v-table-komen.php',
    );
+  //notif konsul
+  $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+  $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+  $mapel_id ="";
+  foreach ($keahlian_detail as $key) {
+    $mapel_id =$mapel_id."".$key['mapelID'].",";
+  }
+  $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
    $this->parser->parse('templating/index-b-guru', $data);
 
  } elseif ($hakAkses == 'siswa') {
@@ -84,26 +94,26 @@ function ajax_data_komen(){
 }
 
 
-public function addkomen() {
-      //select dulu data dari komen berdasarkan komen
-  $idKomen = $this->input->post('idKomen');
-  $komenpost = $this->input->post('isiKomen');
+// public function addkomen() {
+//       //select dulu data dari komen berdasarkan komen
+//   $idKomen = $this->input->post('idKomen');
+//   $komenpost = $this->input->post('isiKomen');
 
-  $komen = $this->mkomen->get_komen_by_idkomen($idKomen);
-  if ($komen!=array()) {
-   $isikomen = "<blockquote>".$komen[0]['isiKomen']."</blockquote>".$komenpost;
-   $datas = array('isikomen'=>$isikomen,
-    'videoID'=>$komen[0]['videoID'],
-    'userID'=>$this->session->userdata('id'),
-    'status'=>1
-    );
-   $this->mvideos->insertComment($datas);
+//   $komen = $this->mkomen->get_komen_by_idkomen($idKomen);
+//   if ($komen!=array()) {
+//    $isikomen = "<blockquote>".$komen[0]['isiKomen']."</blockquote>".$komenpost;
+//    $datas = array('isikomen'=>$isikomen,
+//     'videoID'=>$komen[0]['videoID'],
+//     'userID'=>$this->session->userdata('id'),
+//     'status'=>1
+//     );
+//    $this->mvideos->insertComment($datas);
 
- }else{
-  echo "gagal";
-}
+//  }else{
+//   echo "gagal";
+// }
 
-}
+// }
 
 
   // LOAD PARSER SESUAI HAK AKSES
@@ -115,7 +125,15 @@ public function addkomen() {
     } else if($this->hakakses=='guru'){
         $id_guru = $this->session->userdata['id_guru'];
   // get jumlah komen yg belum di baca
+         $data['keahlian_detail']=json_encode($this->mguru->get_m_keahlianGuru($id_guru));
   $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
+  $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+      $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+      $mapel_id ="";
+      foreach ($keahlian_detail as $key) {
+        $mapel_id =$mapel_id."".$key['mapelID'].",";
+      }
+      $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
       $this->parser->parse('templating/index-b-guru', $data);
     }else{
       echo "forbidden access";        
@@ -125,8 +143,7 @@ public function addkomen() {
 
 
 function seevideo($idvideo){
-
-        //data untuk templating
+  //data untuk templating
   $this->mkomen->ch_stat_read($idvideo);
   $data['videosingle'] = $this->load->mvideos->get_single_video($idvideo);
 
@@ -166,6 +183,7 @@ function seevideo($idvideo){
        $biografi=$penulis[0]['biografi'] ;
        $photo=base_url('assets/image/photo/guru/').$penulis[0]['photo'] ;
        $namaBelakang=$penulis[0]['namaBelakang'];
+       $nama= $namaDepan.' '.$namaBelakang;
       } else{
         $nama="Admin"; 
        $biografi= "-";
@@ -264,5 +282,53 @@ function seevideo($idvideo){
 
       return $listKomen;
   }
+
+   public function addkomen() {
+        $dataKomen['isiKomen'] = $this->input->post('isiKomen');
+        $dataKomen['videoID'] = $this->input->post('videoID');
+        $dataKomen['userID'] = $this->session->userdata['id'];
+        $UUID=uniqid();
+        $dataKomen['UUID']=$UUID;
+        $this->mvideos->insertComment($dataKomen);
+
+        #START cek hakakses#
+        $hakAkses=$this->session->userdata['HAKAKSES'];
+        if ($hakAkses=='admin') {
+           // jika admin
+          //get data komen by UUID
+          $datArr=$this->mkomen->get_komen_by_UUID($UUID);
+        } elseif($hakAkses=='guru'){
+         // jika guru
+         //get data komen by UUID
+          $datArr=$this->mkomen->get_komenGuru_by_UUID($UUID);
+         }else{
+            // jika siswa redirect ke welcome
+          //get data komen by UUID
+          $datArr=$this->mkomen->get_komenSiswa_by_UUID($UUID);
+        }
+
+        #cek Photo
+        $photo=$datArr[0]['photo'];
+        $namaPengguna = $datArr[0]['namaPengguna'];
+        if ($photo!='' && $photo!=' ' && $photo!='default') {
+          $dataKomen['photo']=base_url().'assets/image/photo/'.$hakAkses.'/'.$photo;
+        } else {
+           $photo= $this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
+           $dataKomen['photo']=$photo;
+        }
+        
+        $dataKomen['namaPengguna']=$namaPengguna;
+        $dataKomen['date_created']=$datArr[0]['date_created'];
+        $dataKomen['videoID']=$datArr[0]['videoID'];
+        $dataKomen['mapelID']=$datArr[0]['mataPelajaranID'];
+        $dataKomen['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
+          $dataKomen['success']=true;
+
+        echo json_encode($dataKomen);
+    }
+
+
+  
+
 }
 ?>

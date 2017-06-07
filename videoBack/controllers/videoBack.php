@@ -3,7 +3,7 @@
 //============================================================+
 // File name   : videoBack.php
 // Begin       : -
-// Last Update : 2017-04-13
+// Last Update : 2017-06-06
 //
 // Description : controller model video back
 //               
@@ -35,6 +35,7 @@ class Videoback extends MX_Controller {
     $this->load->library('pagination');
     $this->load->library('generateavatar');
     $this->load->model('komenback/mkomen');
+    $this->load->model('konsultasi/mkonsultasi');
         $this->load->library('sessionchecker');
          $this->sessionchecker->checkloggedin();
 
@@ -169,7 +170,14 @@ public function formupvideo() {
     $id_guru = $this->session->userdata['id_guru'];
     // get jumlah komen yg belum di baca
     $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-   //
+    //notif konsul
+    $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+    $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+    $mapel_id ="";
+    foreach ($keahlian_detail as $key) {
+      $mapel_id =$mapel_id."".$key['mapelID'].",";
+    }
+    $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
     $this->parser->parse('templating/index-b-guru', $data);
   }elseif($hakAkses=='siswa'){
             // jika siswa redirect ke welcome
@@ -204,7 +212,14 @@ public function formUpdateVideo($UUID) {
   $id_guru = $this->session->userdata['id_guru'];
   // get jumlah komen yg belum di baca
   $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
- //
+ //notif konsul
+  $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+  $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+  $mapel_id ="";
+  foreach ($keahlian_detail as $key) {
+    $mapel_id =$mapel_id."".$key['mapelID'].",";
+  }
+  $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
   $this->parser->parse('templating/index-b-guru', $data);
 }elseif($hakAkses=='siswa'){
   // jika siswa redirect ke welcome
@@ -235,7 +250,7 @@ public function managervideo() {
      } elseif( $hakAkses=='admin_cabang' ){
           $this->parser->parse('admincabang/v-index-admincabang', $data);
   } elseif($hakAkses=='guru' ){
-                    // jika guru
+    // jika guru
     $this->parser->parse('templating/index-b-guru', $data);
   }elseif($hakAkses=='siswa'){
                     // jika siswa redirect ke welcome
@@ -1341,7 +1356,14 @@ public function tampVideo($list='')
           $id_guru = $this->session->userdata['id_guru'];
            // get jumlah komen yg belum di baca
           $data['count_komen']=$this->mkomen->get_count_komen_guru($id_guru);
-          //
+          //notif konsul
+           $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
+             $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+          $mapel_id ="";
+          foreach ($keahlian_detail as $key) {
+            $mapel_id =$mapel_id."".$key['mapelID'].",";
+          }
+          $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
           $this->parser->parse('templating/index-b-guru', $data);
         }else{
             // jika siswa redirect ke welcome
