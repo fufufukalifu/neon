@@ -42,16 +42,17 @@ class Kelompokkelas extends MX_Controller {
 	function ajax_data($data){
 		$list = $this->kelompokkelas_model->get_kelompok_kelas_byid_cabang($data);
 		$data = array();
+		$no=1;
 		foreach ( $list as $item ) {
 			$row = array();
-			$row[] = $item->id;
+			$row[] = $no;
 			$row[] = $item->KelompokKelas;
 
-			$row[] =  ' <a class="btn btn-sm btn-default"  title="Tambah Kelas" onclick="add_kelas('."'".$item->id."'".')"><i class="ico-plus"></i></a> '.
-			'<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_cabang('."'".$item->id."'".')"><i class="ico-remove"></i></a>'.
-			' <a class="btn btn-sm btn-info detail-'.$item->id.'"  title="Detail Cabang" data-id='."'".json_encode($item)."'".' onclick="detail_cabang('."'".$item->id."'".')" ><i class="ico-copy2"></i></a>'.
-			' <a class="btn btn-sm btn-success"  title="Edit Cabang" onclick="edit_cabang('."'".$item->id."'".')"><i class="ico-pencil5"></i></a>';
+			$row[] =  
+			'<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_kelas('."'".$item->id_kk."'".')"><i class="ico-remove"></i></a>'.
+			' <a class="btn btn-sm btn-warning kelas-'.$item->id_kk.'"  title="Edit Kelas" data-id='."'".json_encode($item)."'".'  onclick="edit_kelas('."'".$item->id_kk."'".')"><i class="ico-pencil5"></i></a>';
 			$data[] = $row;
+			$no++;
 		}
 
 		$output = array(
@@ -84,6 +85,21 @@ class Kelompokkelas extends MX_Controller {
 			"kodeCabang"=>$post['kodecabang']);
 		$this->mcabang->update_cabang($data);
 		}
+	}
+
+	// hapus data kelas
+	// status kelas di-update menjadi 0
+	function del_kelompok_kelas(){
+		$id_kk=$this->input->post('id');
+		$this->kelompokkelas_model->up_status($id_kk);
+	}
+
+	function update_kelompok_kelas(){
+		$post=$this->input->post();
+		$id_kk=$post['id_kk'];
+		$kk=$post['kk'];
+		$this->kelompokkelas_model->ch_kelompokKelas($id_kk,$kk);
+		
 	}
 }
 ?>

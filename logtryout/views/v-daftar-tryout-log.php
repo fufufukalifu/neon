@@ -1,11 +1,11 @@
   <div class="col-md-12 kirim_token">
-    <div class="panel panel-default">
+    <div class="panel panel-teal">
       <div class="panel-heading">
         <h3 class="panel-title">Daftar Laporan Pengerjaan</h3> 
         <div class="panel-toolbar text-right">
           <div class="col-md-12">
-           <div class="col-sm-4">
-             <select class="form-control" id="select_cabang">
+           <div class="col-sm-4 hide">
+             <select class="form-control " id="select_cabang">
               <!-- <option value="all">Semua Cabang</option> -->
              <!--  <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
@@ -26,8 +26,14 @@
          <select class="form-control col-sm-6" id="select_paket">
           <option value="all">Semua paket</option>
         </select>
-        <!-- <button class="btn btn-sm btn-inverse " onclick="pdf()">PDF</button> -->
       </div>
+
+        <div class="col-sm-4">
+         <select class="form-control col-sm-6" id="select_kk">
+        <option value="all">Semua Kelas</option>
+        </select>
+      </div>
+
     </div>
   </div>
 </div>
@@ -39,8 +45,8 @@
       <div class="col-md-2 mb2 mt10 pl0">
         <select  class="form-control" name="records_per_page" >
           <!-- <option value="10" selected="true">records per page</option> -->
-          <option value="2" selected="true">2</option>
-          <option value="10">10</option>
+      
+          <option value="10" selected="true">10</option>
           <option value="25">25</option>
           <option value="50" >50</option>
           <option value="100">100</option>
@@ -97,7 +103,7 @@
 var meridian=4;
 var prev=1;
 var next=2;
-var records_per_page=2;
+var records_per_page=10;
 var status="1";
 var masaAktif="all";
 var page;
@@ -111,6 +117,7 @@ var cabang="all";
 var tryout="all";
 var paket="all";
 var keySearch='';
+var kelas='all';
 
   $(document).ready(function(){
     // url = base_url+"logtryout/ajax_status_to";
@@ -138,6 +145,7 @@ var keySearch='';
           $("#select_cabang").attr("disabled","true");
           set_tb_trout_log();
           set_pagination_tb_logtryout()
+           set_kk();
            // <option value="all">Semua Cabang</option>
         },
         error:function(){
@@ -147,9 +155,32 @@ var keySearch='';
 
     }
     get_cabang();
+    //get set option kelompok kelas
+    function set_kk(){
+
+      var url_kk=base_url+"logtryout/ajax_kelas";
+      $.ajax({
+        url:url_kk,
+        data:{cabang:cabang},
+        dataType:"text",
+        type:"post",
+        success:function(Data){
+          var ob_kk = JSON.parse(Data);
+          $("#select_kk").empty();
+          $("#select_kk").append('<option value="all">'+ob_kk+'</option>');
+         
+           // <option value="all">Semua Cabang</option>
+        },
+        error:function(){
+
+        }
+      });
+
+    }
+   
       // set tb siswa
   function set_tb_trout_log() {
-    datas ={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
+    datas ={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch,kelas:kelas};
     $('#record_logtryout').empty();
     url=base_url+"logtryout/ajax_status_to";
     $.ajax({
@@ -173,7 +204,7 @@ var keySearch='';
 
  function set_pagination_tb_logtryout() {
       url=base_url+"logtryout/pagination_tb_logtryout";
-      datas={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
+      datas={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch,kelas:kelas};
       $.ajax({
         url:url,
         data:datas,
@@ -229,13 +260,19 @@ var keySearch='';
     set_pagination_tb_logtryout();
     });
 
-      $('#cariDat').click(function(e){
+    $('#cariDat').click(function(e){
       //get value dari input name cariDat
       keySearch=$('[name=cariDat]').val();
-
       selectPagelogtryout();
-    set_pagination_tb_logtryout();
+      set_pagination_tb_logtryout();
       //
+    });
+
+    $('#select_kk').change(function(){
+      kelas = $('#select_kk').val();
+            selectPagelogtryout();
+      set_pagination_tb_logtryout();
+      console.log(kelas);
     });
 
   });
@@ -243,7 +280,7 @@ var keySearch='';
   function selectPagelogtryout(pageVal='0') {
   page=pageVal;
   pageSelek=page*records_per_page;
-  datas ={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
+  datas ={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch,kelas:kelas};
     $('#record_logtryout').empty();
     url=base_url+"logtryout/ajax_status_to";
     $.ajax({

@@ -440,6 +440,102 @@ JS aoutocomplate
       </li>
 
       <li>
+        <a href="javascript:void(0);" data-target="#mapel" data-toggle="submenu" data-parent=".topmenu">
+          <span class="figure"><i class="ico-notebook"></i></span>
+          <span class="text">Atribut</span>
+          <span class="arrow"></span>
+        </a>
+
+        <ul id="mapel" class="submenu collapse ">
+          <li class="submenu-header ellipsis">Atribut</li>
+          <li >
+            <a href="<?=base_url('index.php/admin/daftarmatapelajaran')?>">
+              <span class="text">Mata Pelajaran</span>
+            </a>
+          </li>
+          <li >
+            <a href="<?=base_url('index.php/admin/daftartingkatpelajaran')?>">
+              <span class="text">Tingkat</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
+          <span class="figure"><i class="ico-clipboard2"></i></span>
+          <span class="text">Bank Soal</span>
+          <span class="arrow"></span>
+        </a>
+
+        <ul id="banksoal" class="submenu collapse ">
+          <li class="submenu-header ellipsis">Bank Soal</li>
+
+          <li >
+            <a href="javascript:void(0);" onclick="add_soal()">
+              <span class="text">Tambahkan Bank Soal</span> 
+            </a>
+          </li>
+          <li >
+            <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
+              <span class="text">Daftar Bank Soal</span>
+              <span class="arrow"></span>
+            </a>
+            <ul id="subbanksoal" class="submenu collapse ">
+              <li class="submenu-header ellipsis">Sub Bank Soal</li>
+              <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
+              </a></li>
+              <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
+              </a></li>
+              <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
+              </a></li>
+              <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
+              </a></li>
+
+
+            </ul>
+          </li>
+
+        </ul>
+      </li>
+
+      <li>
+        <a href="<?=base_url('cabang') ?>" data-toggle="submenu" data-parent=".topmenu">
+          <span class="figure"><i class="ico-home11"></i></span>
+          <span class="text">Cabang</span>
+          <span class="arrow"></span>
+        </a>
+      </li>
+
+      <li>
+        <a href="javascript:void(0);" data-target="#gallery" data-toggle="submenu" data-parent=".topmenu">
+          <span class="figure"><i class="ico-images"></i></span>
+          <span class="text">Gallery</span>
+          <span class="arrow"></span>
+        </a>
+
+        <ul id="gallery" class="submenu collapse ">
+          <li class="submenu-header ellipsis">gallery</li>
+          <li >
+            <a href="<?=base_url('index.php/gallery')?>">
+              <span class="text">Gallery</span>
+            </a>
+          </li>
+          <li >
+            <a href="javascript:void(0)" onclick="filter_gallery()">
+              <span class="text">Filter Gallery</span>
+            </a>
+          </li>
+          <li >
+            <a href="javascript:void(0)" onclick="add_gallery()">
+              <span class="text">Tambahkan gallery</span> 
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li>
         <a href="javascript:void(0);" data-target="#guru" data-toggle="submenu" data-parent=".topmenu">
           <span class="figure"><i class="ico-bubble-user"></i></span>
           <span class="text">Guru</span>
@@ -463,122 +559,44 @@ JS aoutocomplate
       </li>
 
       <li>
-        <a href="javascript:void(0);" data-target="#msiswa" data-toggle="submenu" data-parent=".topmenu">
-          <span class="figure"><i class="ico-users3"></i></span>
-          <span class="text">Siswa</span>
-          <span class="arrow"></span>
-        </a>
+  <a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-comments"></i></span>
+    <span class="text">Komen</span>
+    <span class="arrow"></span>
+  </a>
+</li>
+<!--Start menu konsultasi -->
+<li>
+ <a href="javascript:void(0);" data-target="#konsultasi" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-clipboard"></i></span>
+  <span class="text">Konsultasi Forum</span>
+  <span class="arrow"></span>
+</a>
 
-        <ul id="msiswa" class="submenu collapse ">
-          <li class="submenu-header ellipsis">Siswa</li>
-          <li>
-            <a href="<?=base_url('siswa/daftarsiswa') ?>">
-              <span class="text">Registrasi Siswa</span>
-            </a>
-          </li>
-          <li>
-            <a href="<?=base_url('siswa/listSiswa') ?>">
-              <span class="text">Daftar Siswa</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+<ul id="konsultasi" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Konsultasi Forum/li>
 
-      <li>
-        <a href="javascript:void(0);" data-target="#mapel" data-toggle="submenu" data-parent=".topmenu">
-          <span class="figure"><i class="ico-notebook"></i></span>
-          <span class="text">Atribut</span>
-          <span class="arrow"></span>
-        </a>
+    <li >
+     <a href="javascript:void(0);">
+      <span class="text">Daftar Konsultasi Forum</span>
+    </a>
+  </li>
 
-        <ul id="mapel" class="submenu collapse ">
-          <li class="submenu-header ellipsis">Atribut</li>
-          <li >
-            <a href="<?=base_url('index.php/admin/daftarmatapelajaran')?>">
-              <span class="text">Mata Pelajaran</span>
-            </a>
-          </li>
-          <li >
-            <a href="<?=base_url('index.php/admin/daftartingkatpelajaran')?>">
-              <span class="text">Tingkat</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+  <li>
+   <a href="<?= base_url('index.php/konsulback/aq_konsul');?>">
+    <span class="text">Akumulasi Poin Konsultasi</span>
+  </a>
+</li>
 
-
-
-      <li>
-       <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
-        <span class="figure"><i class="ico-facetime-video"></i></span>
-        <span class="text">Video</span>
-        <span class="arrow"></span>
-      </a>
-
-      <ul id="video" class="submenu collapse ">
-        <li class="submenu-header ellipsis">Video</li>
-
-        <li >
-         <a href="<?=base_url('index.php/videoback/formupvideo')?>">
-          <span class="text">Upload Video</span>
-        </a>
-      </li>
-
-      <li>
-       <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
-
-        <span class="text">Daftar video</span>
-
-        <span class="arrow"></span>
-
-      </a>
-
-      <ul id="filtervideo" class="submenu collapse ">
-
-        <li class="submenu-header ellipsis">Daftar video</li>
-
-        <li><a href="<?=base_url('/index.php/videoback/daftarvideo')?>"><span class="text">Daftar Semua video</span>
-
-        </a></li>
-
-        <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
-
-        </a></li>
-
-      </ul>
-    </li>
-
-  </ul>
+</ul>
 </li>
 
 <li>
-  <a href="javascript:void(0);" data-target="#gallery" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-images"></i></span>
-    <span class="text">Gallery</span>
-    <span class="arrow"></span>
-  </a>
-
-  <ul id="gallery" class="submenu collapse ">
-    <li class="submenu-header ellipsis">gallery</li>
-    <li >
-      <a href="<?=base_url('index.php/gallery')?>">
-        <span class="text">Gallery</span>
-      </a>
-    </li>
-    <li >
-      <a href="javascript:void(0)" onclick="filter_gallery()">
-        <span class="text">Filter Gallery</span>
-      </a>
-    </li>
-    <li >
-      <a href="javascript:void(0)" onclick="add_gallery()">
-        <span class="text">Tambahkan gallery</span> 
-      </a>
-    </li>
-
-  </ul>
+ <a href="<?= base_url('learningline') ?>">
+  <span class="figure"><i class="ico-list-ol"></i></span>
+  <span class="text">Learningline</span>
+</a>
 </li>
-
 <li>
   <a href="javascript:void(0);" data-target="#materi" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-files"></i></span>
@@ -602,80 +620,20 @@ JS aoutocomplate
 
   </ul>
 </li>
-
 <li>
-  <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-clipboard2"></i></span>
-    <span class="text">Bank Soal</span>
+  <a href="<?=base_url('ortuback/list_ortu') ?>" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-comments"></i></span>
+    <span class="text">Orang Tua</span>
     <span class="arrow"></span>
   </a>
-
-  <ul id="banksoal" class="submenu collapse ">
-    <li class="submenu-header ellipsis">Bank Soal</li>
-
-    <li >
-      <a href="javascript:void(0);" onclick="add_soal()">
-        <span class="text">Tambahkan Bank Soal</span> 
-      </a>
-    </li>
-    <li >
-      <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
-        <span class="text">Daftar Bank Soal</span>
-        <span class="arrow"></span>
-      </a>
-      <ul id="subbanksoal" class="submenu collapse ">
-        <li class="submenu-header ellipsis">Sub Bank Soal</li>
-        <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
-        </a></li>
-        <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
-        </a></li>
-        <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
-        </a></li>
-        <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
-        </a></li>
-
-
-      </ul>
-    </li>
-
-  </ul>
 </li>
 <li>
- <a href="<?= base_url('learningline') ?>">
-  <span class="figure"><i class="ico-list-ol"></i></span>
-  <span class="text">Learningline</span>
-</a>
-</li>
-<li>
- <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Try Outs</span>
+ <a href="<?=base_url('bug') ?>" data-target="" data-toggle="submenu" data-parent=".topmenu">
+  <span class="figure"><i class="ico-bug"></i></span>
+  <span class="text">Pelaporan Bug</span>
   <span class="arrow"></span>
 </a>
-
-<ul id="tryout" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Try Out</li>
-
-  <li >
-   <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
-    <span class="text">Paket Soal</span>
-  </a>
 </li>
-
-<li >
- <a href="<?= base_url('index.php/toback/listTo');?>">
-  <span class="text">Daftar Try Out</span>
-</a>
-</li>
-<li >
- <a href="<?= base_url('admincabang/laporanpaket');?>">
-  <span class="text">Laporan Tryout</span>
-</a>
-</li>
-
-</ul>
-</li>
-
 <li>
  <a href="javascript:void(0);" data-target="#mpengawas" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard"></i></span>
@@ -726,24 +684,30 @@ JS aoutocomplate
 
   </ul>
 </li>
+
+<!--END menu konsultasi -->
 <li>
-  <a href="javascript:void(0);" data-target="#testi" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-bubble-user"></i></span>
-    <span class="text">Testimoni</span>
+  <a href="javascript:void(0);" data-target="#msiswa" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-users3"></i></span>
+    <span class="text">Siswa</span>
     <span class="arrow"></span>
   </a>
 
-  <ul id="testi" class="submenu collapse ">
-    <li class="submenu-header ellipsis">Testimoni</li>
-
-    <li >
-      <a href="<?=  base_url('index.php/testimoni')?>">
-        <span class="text">Daftar Testimoni</span>
+  <ul id="msiswa" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Siswa</li>
+    <li>
+      <a href="<?=base_url('siswa/daftarsiswa') ?>">
+        <span class="text">Registrasi Siswa</span>
       </a>
     </li>
-
+    <li>
+      <a href="<?=base_url('siswa/listSiswa') ?>">
+        <span class="text">Daftar Siswa</span>
+      </a>
+    </li>
   </ul>
 </li>
+
 <li>
   <a href="javascript:void(0);" data-target="#subscribe" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-envelop2"></i></span>
@@ -768,72 +732,54 @@ JS aoutocomplate
   </ul>
 </li>
 
-<!--Start menu konsultasi -->
 <li>
- <a href="javascript:void(0);" data-target="#konsultasi" data-toggle="submenu" data-parent=".topmenu">
+  <a href="javascript:void(0);" data-target="#testi" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-bubble-user"></i></span>
+    <span class="text">Testimoni</span>
+    <span class="arrow"></span>
+  </a>
+
+  <ul id="testi" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Testimoni</li>
+
+    <li >
+      <a href="<?=  base_url('index.php/testimoni')?>">
+        <span class="text">Daftar Testimoni</span>
+      </a>
+    </li>
+
+  </ul>
+</li>     
+<li>
+ <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Konsultasi Forum</span>
+  <span class="text">Try Outs</span>
   <span class="arrow"></span>
 </a>
 
-<ul id="konsultasi" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Konsultasi Forum/li>
+<ul id="tryout" class="submenu collapse ">
+  <li class="submenu-header ellipsis">Try Out</li>
 
-    <li >
-     <a href="javascript:void(0);">
-      <span class="text">Daftar Konsultasi Forum</span>
-    </a>
-  </li>
-
-  <li>
-   <a href="<?= base_url('index.php/konsulback/aq_konsul');?>">
-    <span class="text">Akumulasi Poin Konsultasi</span>
+  <li >
+   <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
+    <span class="text">Paket Soal</span>
   </a>
+</li>
+
+<li >
+ <a href="<?= base_url('index.php/toback/listTo');?>">
+  <span class="text">Daftar Try Out</span>
+</a>
+</li>
+<li >
+ <a href="<?= base_url('admincabang/laporanpaket');?>">
+  <span class="text">Laporan Tryout</span>
+</a>
 </li>
 
 </ul>
 </li>
 
-<li>
-  <a href="<?=base_url('cabang') ?>" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-home11"></i></span>
-    <span class="text">Cabang</span>
-    <span class="arrow"></span>
-  </a>
-</li>
-
-<li>
- <a href="<?=base_url('bug') ?>" data-target="" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-bug"></i></span>
-  <span class="text">Pelaporan Bug</span>
-  <span class="arrow"></span>
-</a>
-</li>
-<!--END menu konsultasi -->
-<li>
-  <a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-comments"></i></span>
-    <span class="text">Komen</span>
-    <span class="arrow"></span>
-  </a>
-</li>
-
-<li>
-  <a href="<?=base_url('ortuback/list_ortu') ?>" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-comments"></i></span>
-    <span class="text">Orang Tua</span>
-    <span class="arrow"></span>
-  </a>
-</li>
-
-<!-- <li>
-  <a href="<?=base_url('token') ?>" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-qrcode"></i></span>
-    <span class="text">Token</span>
-    <span class="arrow"></span>
-  </a>
-</li>
- -->
 <li>
   <a href="javascript:void(0);" data-target="#token" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-bubble"></i></span>
@@ -856,6 +802,50 @@ JS aoutocomplate
     </li>
   </ul>
 </li>
+
+      <li>
+       <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
+        <span class="figure"><i class="ico-facetime-video"></i></span>
+        <span class="text">Video</span>
+        <span class="arrow"></span>
+      </a>
+
+      <ul id="video" class="submenu collapse ">
+        <li class="submenu-header ellipsis">Video</li>
+
+        <li >
+         <a href="<?=base_url('index.php/videoback/formupvideo')?>">
+          <span class="text">Upload Video</span>
+        </a>
+      </li>
+
+      <li>
+       <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
+
+        <span class="text">Daftar video</span>
+
+        <span class="arrow"></span>
+
+      </a>
+
+      <ul id="filtervideo" class="submenu collapse ">
+
+        <li class="submenu-header ellipsis">Daftar video</li>
+
+        <li><a href="<?=base_url('/index.php/videoback/daftarvideo')?>"><span class="text">Daftar Semua video</span>
+
+        </a></li>
+
+        <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
+
+        </a></li>
+
+      </ul>
+    </li>
+
+  </ul>
+</li>
+
 
 
 

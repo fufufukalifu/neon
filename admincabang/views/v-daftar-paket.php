@@ -13,7 +13,7 @@
                <input name="filter_paket" type="hidden" value="<?=$post['paket']  ?>">
              <?php endif ?>
              <!-- kalo gada yang di filter -->
-             <select class="form-control" id="select_cabang">
+             <select class="form-control hide" id="select_cabang">
              <!--  <option value="all">Semua Cabang</option>
               <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>

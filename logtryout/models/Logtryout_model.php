@@ -31,6 +31,10 @@ class Logtryout_model extends CI_Model {
 		if ($data['paket']!="all") {
 			$this->db->where('p.id_paket',$data['paket']);
 		}
+		if ($data['kelas']!='all') {
+			// $this->db->join('tb_kelompok_kelas kk','kk.id=s.id_kelompok_kelas');
+			$this->db->where('s.id_kelompok_kelas',$data['kelas']);
+		}
 		$query = $this->db->get('tb_log_pengerjaan_to l',$records_per_page,$page);
 		return $query->result_array();
 	}
@@ -64,6 +68,16 @@ class Logtryout_model extends CI_Model {
 		
 		$query=$this->db->get();
 		return  $query->num_rows();
+	}
+
+	public function get_kelompokKelas($cabangID='')
+	{
+		$this->db->select('id,KelompokKelas');
+		$this->db->from('tb_kelompok_kelas');
+		$this->db->where('status',1);
+		$this->db->where('cabangID',$cabangID);
+		$query=$this->db->get();
+		return $query->result();
 	}
 
 }

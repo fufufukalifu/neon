@@ -20,9 +20,10 @@ class Logtryout extends MX_Controller {
 		$tryout=$this->input->post('tryout');
 		$paket=$this->input->post('paket');
 		$keySearch=$this->input->post('keySearch');
+		$kelas=$this->input->post('kelas');
 		
-		$data['param'] = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-$list = $this->logtryout_model->get_log_tryout($data['param'],$records_per_page,$page,$keySearch);
+		$data['param'] = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket,'kelas'=>$kelas];
+		$list = $this->logtryout_model->get_log_tryout($data['param'],$records_per_page,$page,$keySearch);
 		// if ($keySearch != '' && $keySearch !=' ' ) {
 		// 	$list='';
 		// }
@@ -116,6 +117,18 @@ public function pagination_tb_logtryout($cabang="all",$tryout="all",$paket="all"
     	 
 
 		echo json_encode($pagination);
+	}
+
+	public function ajax_kelas()
+	{
+		$cabangID=$this->input->post('cabang');
+		$arrKK=$this->logtryout_model->get_kelompokKelas($cabangID);
+		$op_kk='<option value="all" selected>-- Semua Kelas --</option>';
+		foreach ($arrKK as $value) {
+			$op_kk.='<option value="'.$value->id.'">'.$value->KelompokKelas.'</option>';
+		}
+
+		echo json_encode($op_kk);
 	}
 }
 ?>

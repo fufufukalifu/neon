@@ -15,6 +15,7 @@
                      <div  class="form-group">
                        <label class="col-sm-2 control-label">Kelas</label>
                        <div class="col-sm-5">
+                        <input type="text" name="id_kk" hidden="true">
                          <input type="text" class="form-control" name="kelas">
 
                        </div>
@@ -32,7 +33,7 @@
                    <table class="daftar_kelompok_kelas table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
                     <thead>
                       <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Kelompok Kelas</th>
                         <th>Aksi</th>
                       </tr>
@@ -47,7 +48,6 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -229,9 +229,19 @@
 // KELOMPOK KELAS
 function add_kk(){
   kelas = $('input[name=kelas]').val();
+  id_kk = $('[name=id_kk]').val();
+  metod = $('.buat_kk').html();
   if (kelas) {
-    datas = {kk:kelas,cabang:$('input[name=idCabang]').val()};
-    url = base_url+"kelompokkelas/insert_kelompokkelas_ajax";
+    
+    
+    if (metod=='Simpan') {
+      datas = {kk:kelas,cabang:$('input[name=idCabang]').val()};
+      url = base_url+"kelompokkelas/insert_kelompokkelas_ajax";
+    } else {
+     
+      datas = {kk:kelas,id_kk:id_kk};
+      url = base_url+"kelompokkelas/update_kelompok_kelas";
+    }
     $.ajax({
       dataType:"text",
       data:datas,
@@ -249,5 +259,44 @@ function add_kk(){
   }else{
     swal('Isi kelas terlebih dahulu!');
   }
+}
+
+function drop_kelas(data){
+  url = base_url+"kelompokkelas/del_kelompok_kelas";
+  swal({
+    title: "Yakin akan hapus Kelas?",
+    text: "Anda tidak dapat membatalkan ini.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Ya,Tetap hapus!",
+    closeOnConfirm: false
+  },
+  function(){
+    var datas = {id:data};
+    $.ajax({
+      dataType:"text",
+      data:datas,
+      type:"POST",
+      url:url,
+      success:function(){
+        swal("Terhapus!", "Kelas berhasil dihapus.", "success");
+        dataTableKelompokKelas.ajax.reload(null,false);
+        $('.form-kelas')[0].reset();
+      },
+      error:function(){
+        sweetAlert("Oops...", "Data gagal terhapus!", "error");
+      }
+
+    });
+  });
+}
+function edit_kelas(data){
+  $('.buat_kk').html('Perbaharui');
+  var kelas = '.kelas-'+data;
+  var datas = $(kelas).data('id');
+  $name = $('[name=kelas]').val(datas.KelompokKelas);
+  $id_kk = $('[name=id_kk]').val(datas.id_kk);
+  console.log(datas);
 }
 </script>
