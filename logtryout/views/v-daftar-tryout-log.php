@@ -70,8 +70,8 @@
           <th>No</th>
           <th>Nama Pengguna</th>
           <th>Nama Lengkap</th>
+          <th>Kelompok Kelas</th>
           <th>Waktu perngerjaan</th>
-
           <th>Nama Tryout</th>
           <th>Nama Paket</th>
           <th>Status Tryout</th>

@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
  	public function index()
  	{
- 		echo "kikikikikiki";
+ 		$this->list_admincabang();
  	}
 
  	public function tambah_admincabang($value='')
@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		$data['cabang']=$optionCabang;
 		$data['judul_halaman'] = "Form Admin Cabang";
 		$data['files'] = array(
-			APPPATH . 'modules/Admincabangback/views/v-form_admin_cabang.php',
+			APPPATH . 'modules/admincabangback/views/v-form_admin_cabang.php',
 			);
 		
 		$hakAkses = $this->session->userdata['HAKAKSES'];
@@ -54,7 +54,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  	{
  		$data['judul_halaman'] = "Form Admin Cabang";
 		$data['files'] = array(
-			APPPATH . 'modules/Admincabangback/views/v-list_admincabang.php',
+			APPPATH . 'modules/admincabangback/views/v-list_admincabang.php',
 			);
 		
 		$hakAkses = $this->session->userdata['HAKAKSES'];
@@ -73,7 +73,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  	{
  		$namaPengguna=$this->input->post("username");
  		$dataP["namaPengguna"]=$namaPengguna;
- 		$dataP["kataSandi"]=$this->input->post("password");
+ 		$dataP["kataSandi"]=md5($this->input->post("password"));
  		$dataP["eMail"]=$this->input->post("email");
  		$dataP["hakAkses"]="admin_cabang";
  		//insert pengguna kemudian meretrun idpengguna

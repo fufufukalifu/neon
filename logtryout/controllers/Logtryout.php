@@ -60,6 +60,7 @@ class Logtryout extends MX_Controller {
 			<td>'.$no.'</td>	
 			<td>'.$list_item ['namaPengguna'].'</td>
 			<td>'.$list_item['namaDepan'].' '.$list_item['namaBelakang'].'</td>
+			<td>'.$list_item['KelompokKelas'].'</td>
 			<td>'.$list_item['waktu_mulai'].'</td>
 			<td>'.$list_item['nm_tryout'].'</td>
 			<td>'.$list_item['nm_paket'].'</td>

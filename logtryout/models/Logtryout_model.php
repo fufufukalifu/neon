@@ -2,7 +2,7 @@
 class Logtryout_model extends CI_Model {
 
 	public function get_log_tryout($data,$records_per_page,$page,$keySearch){
-		$this->db->select('l.id, siswa_id ,s.`namaDepan`, s.`namaBelakang`, waktu_mulai, waktu_selesai, status_pengerjaan, p.`nm_paket`, t.`nm_tryout`,p.`durasi`,u.namaPengguna');
+		$this->db->select('l.id, siswa_id ,s.`namaDepan`, s.`namaBelakang`, waktu_mulai, waktu_selesai, status_pengerjaan, p.`nm_paket`, t.`nm_tryout`,p.`durasi`,u.namaPengguna,kk.KelompokKelas');
 
 		$this->db->join('tb_mm-tryoutpaket mt','mt.id = l.mm_tryout_paket_id');
 		$this->db->join('tb_paket p','p.id_paket=mt.id_paket');
@@ -11,7 +11,7 @@ class Logtryout_model extends CI_Model {
 		$this->db->join('tb_pengguna u','s.penggunaID = u.id');
 
 		$this->db->join('tb_cabang c', 'c.id = s.cabangID');
-
+		$this->db->join('tb_kelompok_kelas kk','kk.id=s.id_kelompok_kelas','left_outer');
 		if ($keySearch != '' && $keySearch !=' ' ) {
 			$this->db->like('u.namaPengguna',$keySearch);
 			$this->db->or_like('p.nm_paket',$keySearch);
@@ -32,7 +32,7 @@ class Logtryout_model extends CI_Model {
 			$this->db->where('p.id_paket',$data['paket']);
 		}
 		if ($data['kelas']!='all') {
-			// $this->db->join('tb_kelompok_kelas kk','kk.id=s.id_kelompok_kelas');
+			
 			$this->db->where('s.id_kelompok_kelas',$data['kelas']);
 		}
 		$query = $this->db->get('tb_log_pengerjaan_to l',$records_per_page,$page);
