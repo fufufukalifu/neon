@@ -33,7 +33,7 @@ class Admincabang_model extends CI_model {
 		}
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
+		$query = $this->db->get('view_laporan_paket_to',$records_per_page,$page);
 		return $query->result_array();
 	}
 
@@ -61,7 +61,7 @@ class Admincabang_model extends CI_model {
 		}
 			
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
+		$query = $this->db->get('view_laporan_paket_to',$records_per_page,$page);
 		return $query->result_array();
 	}
 
@@ -80,7 +80,7 @@ class Admincabang_model extends CI_model {
 		}
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('view_laporan_paket_TO');
+		$query = $this->db->get('view_laporan_paket_to');
 		return $query->result_array();
 	}
 
@@ -98,7 +98,7 @@ class Admincabang_model extends CI_model {
 		}
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('view_laporan_paket_TO');
+		$query = $this->db->get('view_laporan_paket_to');
 		return $query->num_rows();
 	}
 
@@ -122,7 +122,7 @@ class Admincabang_model extends CI_model {
 		$this->db->or_like('tgl_pengerjaan',$keySearch);
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
-		$query = $this->db->get('view_laporan_paket_TO');
+		$query = $this->db->get('view_laporan_paket_to');
 		return $query->num_rows();
 	}
 

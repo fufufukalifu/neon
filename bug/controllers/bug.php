@@ -40,7 +40,7 @@ class Bug extends MX_Controller {
             // var_dump($list);
 
 
-	// 	$data = array();
+		$data = array();
 
 		foreach ( $list as $bug_item ) {
 			$row = array();

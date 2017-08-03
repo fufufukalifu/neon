@@ -11,7 +11,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12" >
-						<!-- recor per page tabel pengguna token -->
+						<!-- recor per page tabel pengguna admin -->
 						<div class="col-md-2 mb2 mt10 pl0">
 							<select  class="form-control" name="records_per_page" >
 								<!-- <option value="10" selected="true">records per page</option> -->
@@ -226,7 +226,6 @@
 	function selectPage(pageVal='0'){
 		page=pageVal;
   	pageSelek=page*records_per_page;
-
   	datas ={records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
 			$.ajax({
 				url:url,
